@@ -127,7 +127,7 @@ DrawBar (int BarCode, int Wert, unsigned char *Parameter_Screen)
  * string.
  * ---------------------------------------------------------------------- */
 void 
-GiveItemDescription ( char* ItemDescText , item* CurItem )
+GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 {
   char linebuf[1000];
 
@@ -137,7 +137,15 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   strcpy( ItemDescText , "" );
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
   strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
-  strcat( ItemDescText , "\n" );
+
+  if ( ForShop )
+    {
+      strcat( ItemDescText , "\n             " );
+    }
+  else
+    {
+      strcat( ItemDescText , "\n" );
+    }
 
   // --------------------
   // If it's a weapon, then we give out the damage value of that weapon as well
@@ -180,7 +188,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
     }
   else if ( ItemMap [ CurItem->type ].item_can_be_installed_in_influ )
     {
-      strcat( ItemDescText , " Indestructable " );
+      strcat( ItemDescText , " Indestructable" );
     };
   // --------------------
   // If this item has some strength or dex or magic requirements, we say so
@@ -188,7 +196,8 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   if ( ( ItemMap[ CurItem->type ].item_require_strength  != ( -1 ) ) || 
        ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) ) )
     {
-      strcat ( ItemDescText , "\nRequired:" );
+      if ( ! ForShop ) strcat ( ItemDescText , "\n" );
+      strcat ( ItemDescText , " Required:" );
       if ( ItemMap[ CurItem->type ].item_require_strength != ( -1 ) )
 	{
 	  sprintf( linebuf , "   Pow: %d" , ItemMap[ CurItem->type ].item_require_strength );
@@ -200,18 +209,22 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
 	  strcat( ItemDescText , linebuf );
 	}
     }
+  else if ( ForShop )
+    {
+      strcat ( ItemDescText , " , No required attributes " );
+    }
 
 
   // --------------------
   // If it's a usable item, then we say, that it can be used via right-clicking on it
   //
-  if ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat )
+  if ( ( ItemMap[ CurItem->type ].item_can_be_applied_in_combat ) && ( !ForShop ) )
     {
       sprintf( linebuf , "Right click to use" );
       strcat( ItemDescText , linebuf );
     }
 
-}; // void GiveItemDescription ( char* ItemDescText , item* CurItem )
+}; // void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
 
 /* ----------------------------------------------------------------------
  * This function writes the description of a droid into the description
@@ -361,43 +374,43 @@ ShowCurrentTextWindow ( void )
 	  // DebugPrintf( 0 , "\nInv Index targeted: %d." , InvIndex );
 	  if ( InvIndex != (-1) )
 	    {
-	      GiveItemDescription ( ItemDescText , &(Me.Inventory[ InvIndex ]) );
+	      GiveItemDescription ( ItemDescText , &(Me.Inventory[ InvIndex ]) , FALSE );
 	    }
 	} 
       else if ( CursorIsInWeaponRect ( CurPos.x , CurPos.y ) )
 	{
 	  if ( Druidmap [ Me.type ].weapon_item.type > 0 )
-	    GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].weapon_item) );
+	    GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].weapon_item) , FALSE );
 	}
       else if ( CursorIsInDriveRect ( CurPos.x , CurPos.y ) )
 	{
 	  if ( Druidmap [ Me.type ].drive_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].drive_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].drive_item) , FALSE );
 	}
       else if ( CursorIsInShieldRect ( CurPos.x , CurPos.y ) )
 	{
 	   if ( Druidmap [ Me.type ].shield_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].shield_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].shield_item) , FALSE );
 	}
       else if ( CursorIsInArmourRect ( CurPos.x , CurPos.y ) )
 	{
 	   if ( Druidmap [ Me.type ].armour_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].armour_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].armour_item) , FALSE );
 	}
       else if ( CursorIsInAux1Rect ( CurPos.x , CurPos.y ) )
 	{
 	   if ( Druidmap [ Me.type ].aux1_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux1_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux1_item) , FALSE );
 	}
       else if ( CursorIsInAux2Rect ( CurPos.x , CurPos.y ) )
 	{
 	   if ( Druidmap [ Me.type ].aux2_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux2_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].aux2_item) , FALSE );
 	}
       else if ( CursorIsInSpecialRect ( CurPos.x , CurPos.y ) )
 	{
 	   if ( Druidmap [ Me.type ].special_item.type > 0 )
-	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].special_item) );
+	   GiveItemDescription ( ItemDescText , &(Druidmap[ Me.type ].special_item) , FALSE );
 	}
 
     } // if nothing is 'held in hand' && inventory-screen visible
@@ -422,7 +435,7 @@ ShowCurrentTextWindow ( void )
 	  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
 	       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
 	    {
-	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) );
+	      GiveItemDescription ( ItemDescText , &(CurLevel->ItemList[ i ]) , FALSE );
 	      // strcpy( ItemDescText , ItemMap[ CurLevel->ItemList[ i ].type ].ItemName );
 	    }
 	}

@@ -241,7 +241,6 @@ Level_Editor(void)
   int i,j,k;
   int SpecialMapValue;
   int NewItemCode;
-  int ItemIndex;
   int OriginWaypoint = (-1);
   char* NumericInputString;
   char* NewCommentOnThisSquare;

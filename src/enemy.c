@@ -766,8 +766,6 @@ void
 MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  int RandItem;
-  int i;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
