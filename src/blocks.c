@@ -3002,6 +3002,21 @@ init_obstacle_data( void )
   obstacle_map [ ISO_RED_CHAIR_W ] . block_area_parm_2 = 1.6 ;
   obstacle_map [ ISO_RED_CHAIR_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_RED_CHAIR_W ] . filename = "iso_chairs_0007.png" ;
+
+  // bodies
+  obstacle_map [ ISO_BODY_RED_GUARD_N ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_N ] . filename = "iso_body_0001.png" ;
+  obstacle_map [ ISO_BODY_RED_GUARD_N ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_E ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_E ] . filename = "iso_body_0002.png" ;
+  obstacle_map [ ISO_BODY_RED_GUARD_E ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_S ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_S ] . filename = "iso_body_0003.png" ;
+  obstacle_map [ ISO_BODY_RED_GUARD_S ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_W ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BODY_RED_GUARD_W ] . filename = "iso_body_0004.png" ;
+  obstacle_map [ ISO_BODY_RED_GUARD_W ] . needs_pre_put = TRUE ;
+
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
   // simple but often required computations in advance:  Calculating the offsets
