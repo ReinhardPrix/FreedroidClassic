@@ -783,7 +783,7 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   planned_step_x = Me [ player_num ] . speed . x * Frame_Time ();
   planned_step_y = Me [ player_num ] . speed . y * Frame_Time ();
 
-  DebugPrintf ( -1000 , "\nPlanned step: x=%f y=%f." ,  planned_step_x , planned_step_y );
+  // DebugPrintf ( -1000 , "\nPlanned step: x=%f y=%f." ,  planned_step_x , planned_step_y );
 
   //--------------------
   // Maybe the Tux is just executing a weapon strike.  In this case, there should
@@ -904,7 +904,7 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
   moderately_finepoint planned_step;
   float length;
 
-  DebugPrintf ( -1000 , "\nmove_tux_thowards_raw_position: player_num = %d." , player_num );
+  // DebugPrintf ( -1000 , "\nmove_tux_thowards_raw_position: player_num = %d." , player_num );
 
   //--------------------
   // We do not move any players, who's statuses are 'OUT'.
@@ -1541,7 +1541,7 @@ move_tux_thowards_intermediate_point ( int player_num )
   int i;
   Level PlayerLevel;
 
-  DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
+  // DebugPrintf ( -1000 , "\nmove_tux_thowards_intermediate_point: player_num = %d." , player_num );
 
   //--------------------
   // If there is no intermediate course, we don't need to do anything
@@ -1641,7 +1641,7 @@ MoveInfluence ( int player_num )
 {
   Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
 
-  DebugPrintf ( -1000 , "\nMoveInfluence: player_num = %d." , player_num );
+  // DebugPrintf ( -1000 , "\nMoveInfluence: player_num = %d." , player_num );
 
   //--------------------
   // We store the influencers position for the history record and so that others
