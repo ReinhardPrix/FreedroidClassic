@@ -821,17 +821,17 @@ blit_open_gl_cheap_light_radius ( void )
 
   window_offset_x = - ( SCREEN_WIDTH / 2 ) + UserCenter_x ;
 
-  for ( our_height = 0 ; our_height < 20 ; our_height ++ )
+  for ( our_height = 0 ; our_height < 40 ; our_height ++ )
     {
-      for ( our_width = 0 ; our_width < 20 ; our_width ++ )
+      for ( our_width = 0 ; our_width < 40 ; our_width ++ )
 	{
 	  if ( our_width % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 	  if ( our_height % LIGHT_RADIUS_CRUDENESS_FACTOR ) continue;
 
-	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 32 - UserCenter_x + 32 ,
-							   ( 0 + our_height ) * 24 - UserCenter_y + 32 , TRUE );
-	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 32 - UserCenter_x + 32 ,
-							   ( 0 + our_height ) * 24 - UserCenter_y + 32 , FALSE );
+	  target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 32 ,
+							   ( 0 + our_height ) * 12 - UserCenter_y + 32 , TRUE );
+	  target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + our_width ) * 16 - UserCenter_x + 32 ,
+							   ( 0 + our_height ) * 12 - UserCenter_y + 32 , FALSE );
 
 	  light_strength = (int) ( sqrt ( ( Me [ 0 ] . pos . x - target_pos . x ) * ( Me [ 0 ] . pos . x - target_pos . x ) + ( Me [ 0 ] . pos . y - target_pos . y ) * ( Me [ 0 ] . pos . y - target_pos . y ) ) * 4.0 ) - light_bonus ;
 
@@ -844,10 +844,10 @@ blit_open_gl_cheap_light_radius ( void )
 	  glColor4ub( r , g , b , a );
 	  
 	  glBegin(GL_QUADS);
-	  glVertex2i( ( 0 + our_width ) * 32 , ( 1 + our_height ) * 24 ) ;
-	  glVertex2i( ( 0 + our_width ) * 32 , ( 0 + our_height ) * 24 ) ;
-	  glVertex2i( ( 1 + our_width ) * 32 , ( 0 + our_height ) * 24 ) ;
-	  glVertex2i( ( 1 + our_width ) * 32 , ( 1 + our_height ) * 24 ) ;
+	  glVertex2i( ( 0 + our_width ) * 16 , ( 1 + our_height ) * 12 ) ;
+	  glVertex2i( ( 0 + our_width ) * 16 , ( 0 + our_height ) * 12 ) ;
+	  glVertex2i( ( 1 + our_width ) * 16 , ( 0 + our_height ) * 12 ) ;
+	  glVertex2i( ( 1 + our_width ) * 16 , ( 1 + our_height ) * 12 ) ;
 	  glEnd( );
 
 	}
