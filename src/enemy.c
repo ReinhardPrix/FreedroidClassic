@@ -856,106 +856,6 @@ RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
 }; // float RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
- * This function swaps two enemys in the AllEnemys array.
- * ---------------------------------------------------------------------- */
-void
-SwapEnemys ( int First , int Second ) 
-{
-  enemy Zwisch;
-  int i;
-
-  //--------------------
-  // This function swaps two enemies.  However this can not be done
-  // without taking also the target index of the mouse move for the
-  // influecner into account.
-  //
-  for ( i = 0 ; i < MAX_PLAYERS ; i ++ )
-    {
-      if ( Me [ i ] . mouse_move_target_is_enemy == First )
-	{
-	  Me [ i ] .  mouse_move_target_is_enemy = Second ;
-	}
-      else if ( Me [ i ] . mouse_move_target_is_enemy == Second )
-	{
-	  Me [ i ] .  mouse_move_target_is_enemy = First ;
-	}
-    }
-	   
-  //--------------------
-  // Now we can swap the two enemies as desired...
-  //
-  memcpy ( &Zwisch , & ( AllEnemys[ First ] ) , sizeof( enemy ) );
-  memcpy ( & ( AllEnemys[ First ] ) , & ( AllEnemys [ Second ] ) , sizeof( enemy ) );
-  memcpy ( & ( AllEnemys[ Second ] ) , & Zwisch , sizeof( enemy ) );
-
-}; // void SwapEnemys ( int First , int Second ) 
-
-/* ----------------------------------------------------------------------
- * In order to make sure that dead robots are blitted first, we swap them
- * to the beginning of the AllEnemys array.
- * ---------------------------------------------------------------------- */
-void
-SwapThisRobotToFrontPosition ( enemy* ThisRobot )
-{
-  int i, j;
-
-  //--------------------
-  // This function is only for servers and single player games...
-  //
-  if ( ClientMode ) return; 
-
-  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i++ )
-    {
-      if ( AllEnemys[ i ] .Status != OUT )
-	{
-
-	  //--------------------
-	  // Now we find out the number of the second robot for the
-	  // swap operation, so that we can send it to the client later.
-	  //
-	  for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
-	    {
-	      if ( & ( AllEnemys [ j ] ) == ThisRobot ) break;
-	    }
-	  if ( i == j ) return ; // in this case, no swap is at all nescessary and no signal as well...
-	  if ( j == Number_Of_Droids_On_Ship )
-	    {
-	      DebugPrintf ( 0 , "\nSEVERE ERROR IN SwapThisRobotToFrontPosition ( enemy* ThisRobot )! \nTerminatin..." );
-	      Terminate ( ERR ) ;
-	    }
-
-	  //--------------------
-	  // Now if this is the server, it must inform the clients
-	  // about the recent swap in the enemy array.
-	  //
-	  if ( ServerMode && ( ! ClientMode ) ) 
-	    {
-	      SendEnemySwapSignalToClient ( 0 , i , j );
-	    }
-
-	  //--------------------
-	  // Finally, the swap operation should be done on the server too...
-	  //
-	  SwapEnemys ( i , j ) ;
-
-	  /*
-	  memcpy ( &Zwisch , & ( AllEnemys[ i ] ) , sizeof( enemy ) );
-	  memcpy ( & ( AllEnemys[ i ] ) , ThisRobot , sizeof( enemy ) );
-	  memcpy ( ThisRobot , & Zwisch , sizeof( enemy ) );
-	  */
-
-	  //--------------------
-	  // And of course we return, cause further swapping after that does
-	  // not seem to make sense.
-	  //
-	  return;
-	}
-    }
-
-}; // void SwapThisRobotToFrontPosition ( enemy* ThisRobot )
-
-
-/* ----------------------------------------------------------------------
  * This function tells if a given level is active in the sence that there
  * is one ore more player character on the level, so that need exists to
  * move all the enemies on this level etc.
@@ -1140,8 +1040,6 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 
     }
   
-  if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
-
 }; // void InitiateDeathOfEnemy ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------

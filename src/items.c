@@ -2812,6 +2812,7 @@ ManageInventoryScreen ( void )
 			  Me [ 0 ] . mana -= SpellCost;
 			  Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
 			  Play_Spell_ForceToEnergy_Sound( );
+			  Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
 			}
 		      else
 			{

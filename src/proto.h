@@ -556,7 +556,6 @@ EXTERN int CheckEnemyEnemyCollision (int enemynum);
 EXTERN void MoveEnemys (void);
 EXTERN void AttackInfluence (int enemynum);
 EXTERN void ClearEnemys (void);
-EXTERN void SwapEnemys ( int First , int Second ) ;
 EXTERN int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 , int z );
 EXTERN int CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , Enemy ExceptedRobot , int ExceptTux ) ;
 EXTERN void start_gethit_animation_if_applicable ( enemy* ThisRobot ) ;
@@ -694,7 +693,6 @@ EXTERN void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
 EXTERN void SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int inv_x , int inv_y ) ;
 EXTERN void PrintServerStatusInformation ( void ) ;
 EXTERN void SendPeriodicServerMessagesToAllClients ( void );
-EXTERN void SendEnemySwapSignalToClient ( int , int , int ) ;
 
 // takeover.c 
 #undef EXTERN
