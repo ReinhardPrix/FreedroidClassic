@@ -153,6 +153,8 @@ EXTERN int View[INTERNHOEHE + 1][INTERNBREITE];
 #define EXTERN extern
 #endif
 
+EXTERN float Current_BG_Music_Volume;
+EXTERN float Current_Sound_FX_Volume;
 
 #undef EXTERN
 #ifdef _graphics_c
@@ -196,7 +198,8 @@ EXTERN unsigned char *ShieldBlocks;
 #define EXTERN extern
 #endif
 
-
+EXTERN float Current_Gamma_Correction;
+EXTERN int Draw_Framerate;
 EXTERN SDL_Surface *screen;
 EXTERN SDL_Surface *ScaledSurface;
 

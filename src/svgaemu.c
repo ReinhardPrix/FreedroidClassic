@@ -157,6 +157,12 @@ PrepareScaledSurface(int With_Screen_Update)
 
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  Screens have been unlocked again...");
 
+  if (Draw_Framerate)
+    {
+      PrintStringFont (ScaledSurface , Font1, 0, RAHMENHOEHE*2 , "FPS: %d", 
+		       (int)(rintf(1/Frame_Time())) );
+    }
+
   if (With_Screen_Update) Update_SDL_Screen();
 
   DebugPrintf("\n\nvoid PrepareScaledSurface(void):  End of function has been reached...");
@@ -451,6 +457,7 @@ int vga_setmode(int mode)
 
   // SDL_SetGamma( 1.4 , 2.5 , 2.5 );
   SDL_SetGamma( 2 , 2 , 2 );
+  Current_Gamma_Correction=2;
 
   // SDL_CreateRGBSurface( SDL_SWSURFACE , 640, 480, 8, screen->Rmask, screen->Gmask, screen->Bmask, screen->Amask);
   screen = SDL_CreateRGBSurface( SDL_SWSURFACE , 320, 200, 8, 0, 0, 0, 0 );

@@ -110,6 +110,18 @@ unsigned char v = 128;
 int SampleLaenge;
 
 
+void 
+Set_BG_Music_Volume(float NewVolume)
+{
+  Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+} // void Set_BG_Music_Volume(float NewVolume)
+
+void 
+Set_Sound_FX_Volume(float NewVolume)
+{
+  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
+} // void Set_BG_Music_Volume(float NewVolume)
+
 /*@Function============================================================
 @Desc: 
 
@@ -338,8 +350,8 @@ Switch_Background_Music_To (int Tune)
 
       Music_Parameters.repeats = 0;
       Music_Parameters.total_repeats = -1;	// -1 here means to repeat indefinately
-      Music_Parameters.left_volume = 0.5;
-      Music_Parameters.right_volume = 0.5;
+      Music_Parameters.left_volume = Current_BG_Music_Volume;
+      Music_Parameters.right_volume = Current_BG_Music_Volume;
       Music_Parameters.sample_rate =
 	BackgroundMusic_sndobj_attrib.sample_rate;
       Music_Parameters.length = BackgroundMusic_sndobj_attrib.sample_size;

@@ -632,7 +632,7 @@ enum
 	    case OPTIONS_POSITION:
 	      while (EnterPressed() || SpacePressed() );
 	      OptionsMenu();
-	      Weiter = TRUE;   /* jp forgot this... ;) */
+	      // Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
 	    case QUIT_POSITION:
 	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
@@ -675,7 +675,7 @@ OptionsMenu (void)
 
 #define OPTIONS_MENU_ITEM_POS_X (BLOCKBREITE/2)
 enum
-  { SET_BG_MUSIC_VOLUME=1, SET_SOUND_FX_VOLUME=2, SET_GAMMA_CORRECTION=3, SET_FULLSCREEN_FLAG=4, LEAVE_OPTIONS_MENU=5 };
+  { SET_BG_MUSIC_VOLUME=1, SET_SOUND_FX_VOLUME=2, SET_GAMMA_CORRECTION=3, SET_FULLSCREEN_FLAG=4, TOGGLE_FRAMERATE=5, LEAVE_OPTIONS_MENU=6 };
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -702,25 +702,85 @@ enum
       PrepareScaledSurface(FALSE);
 
       // PrintStringFont          (screen, Font2,0, 4*h2+100,"%2.0f %s",10.0," funny lib!" ); 
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    "Background Music Volume:");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),    "Sound Effects Volume:");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),    "Gamma Correction:");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 7*FontHeight(Font1),    "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    "Show Framerates: ");
-      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    "Back");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 4*FontHeight(Font1),    
+		       "Background Music Volume: %1.2f" , Current_BG_Music_Volume );
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 5*FontHeight(Font1),    
+		       "Sound Effects Volume: %1.2f", Current_Sound_FX_Volume );
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 6*FontHeight(Font1),    
+		       "Gamma Correction: %1.2f", Current_Gamma_Correction );
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 7*FontHeight(Font1),    
+		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 8*FontHeight(Font1),    
+		       "Show Framerates: %s", Draw_Framerate? "ON" : "OFF");
+      PrintStringFont (ScaledSurface , Font1, 2*BLOCKBREITE , 9*FontHeight(Font1),    
+		       "Back");
 
       SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
 
       // Wait until the user does SOMETHING
 
       while( !SpacePressed() && !EnterPressed() && !UpPressed()
-	     && !DownPressed() && !EscapePressed() ) ;
+	     && !DownPressed() && !LeftPressed() && !RightPressed() && !EscapePressed() ) ;
 
       if ( EscapePressed() )
 	{
 	  while ( EscapePressed() );
 	  Weiter=!Weiter;
 	}
+
+      // Some menu options can be controlled by pressing right or left
+      // These options are gamma corrections, sound volume and the like
+      // Therefore left and right key must be resprected.  This is done here:
+      if (RightPressed() || LeftPressed() ) 
+	{
+	  if (MenuPosition == SET_BG_MUSIC_VOLUME ) 
+	    {
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  if ( Current_BG_Music_Volume < 1 ) Current_BG_Music_Volume += 0.05;
+		  Set_BG_Music_Volume( Current_BG_Music_Volume );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  if ( Current_BG_Music_Volume > 0 ) Current_BG_Music_Volume -= 0.05;
+		  Set_BG_Music_Volume( Current_BG_Music_Volume );
+		}
+	    }
+	  if (MenuPosition == SET_SOUND_FX_VOLUME ) 
+	    {
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  if ( Current_Sound_FX_Volume < 1 ) Current_Sound_FX_Volume += 0.05;
+		  Set_Sound_FX_Volume( Current_Sound_FX_Volume );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  if ( Current_Sound_FX_Volume > 0 ) Current_Sound_FX_Volume -= 0.05;
+		  Set_Sound_FX_Volume( Current_Sound_FX_Volume );
+		}
+	    }
+	  if (MenuPosition == SET_GAMMA_CORRECTION ) 
+	    {
+	      if (RightPressed()) 
+		{
+		  while (RightPressed());
+		  Current_Gamma_Correction+=0.05;
+		  SDL_SetGamma( Current_Gamma_Correction , Current_Gamma_Correction , Current_Gamma_Correction );
+		}
+	      if (LeftPressed()) 
+		{
+		  while (LeftPressed());
+		  Current_Gamma_Correction-=0.05;
+		  SDL_SetGamma( Current_Gamma_Correction , Current_Gamma_Correction , Current_Gamma_Correction );
+		}
+	    }
+	}
+
+
       if (EnterPressed() || SpacePressed() ) 
 	{
 	  MenuItemSelectedSound();
@@ -732,9 +792,18 @@ enum
 	      SinglePlayerMenu();
 	      Weiter = TRUE;   /* jp forgot this... ;) */
 	      break;
+	    case SET_FULLSCREEN_FLAG:
+	      while (EnterPressed() || SpacePressed() );
+	      SDL_WM_ToggleFullScreen (ScaledSurface);
+	      fullscreen_on = !fullscreen_on;
+	      break;
+	    case TOGGLE_FRAMERATE:
+	      while (EnterPressed() || SpacePressed() );
+	      Draw_Framerate=!Draw_Framerate;
+	      break;
 	    case LEAVE_OPTIONS_MENU:
-	      DebugPrintf("\nvoid OptionsMenu(void): Quit Requested by user.  Terminating...");
-	      Terminate(0);
+	      while (EnterPressed() || SpacePressed() );
+	      Weiter=TRUE;
 	      break;
 	    default: 
 	      break;
@@ -749,7 +818,7 @@ enum
 	}
       if (DownPressed()) 
 	{
-	  if (MenuPosition < 5) MenuPosition++;
+	  if (MenuPosition < 6) MenuPosition++;
 	  MoveMenuPositionSound();
 	  while (DownPressed());
 	}

@@ -345,6 +345,9 @@ InitNewGame (void)
   Title ();
 #endif
 
+  Draw_Framerate=TRUE;
+  Current_BG_Music_Volume=0.5;
+
   DebugPrintf
     ("\nvoid InitNewGame(void): The title signaton has been successfully displayed...:");
 
@@ -412,6 +415,7 @@ InitParaplus (void)
   HighestScoreOfDay = 1000;
   GreatScore = 101;
 
+  Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
 
   DebugPrintf
