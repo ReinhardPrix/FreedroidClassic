@@ -2384,10 +2384,15 @@ enum
 	  Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
 	  Me[0].Inventory[ 3 ].inventory_position.x = 1;
 	  Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_WARRIOR;
+	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
+	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
+	  
 	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2412,9 +2417,15 @@ enum
 	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
 	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
 	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_SNIPER;
+	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
+	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
+
 	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
+	  
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );
@@ -2438,9 +2449,13 @@ enum
 	  Me[0].Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
 	  Me[0].Inventory[ 2 ].inventory_position.x = 1;
 	  Me[0].Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
+	  Me[0].Inventory[ 4 ].type = ITEM_START_PLUGIN_HACKER;
+	  Me[0].Inventory[ 4 ].inventory_position.x = 5;
+	  Me[0].Inventory[ 4 ].inventory_position.y = 0;
 	  FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
 	  FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
+	  FillInItemProperties ( & Me[0].Inventory[ 4 ] , TRUE , 0 );
 
 	  Get_New_Character_Name( );
 	  return ( TRUE );

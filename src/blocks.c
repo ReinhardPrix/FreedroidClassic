@@ -185,10 +185,10 @@ Load_Item_Surfaces( void )
   ItemImageList[ 39 ].inv_size.y = 2;
   ItemImageList[ 40 ].inv_size.x = 2;
   ItemImageList[ 40 ].inv_size.y = 3;
-  ItemImageList[ 41 ].inv_size.x = 2;
-  ItemImageList[ 41 ].inv_size.y = 3;
-  ItemImageList[ 42 ].inv_size.x = 2;
-  ItemImageList[ 42 ].inv_size.y = 2;
+  ItemImageList[ 41 ].inv_size.x = 1;
+  ItemImageList[ 41 ].inv_size.y = 1;
+  ItemImageList[ 42 ].inv_size.x = 1;
+  ItemImageList[ 42 ].inv_size.y = 1;
   ItemImageList[ 43 ].inv_size.x = 2;
   ItemImageList[ 43 ].inv_size.y = 2;
   ItemImageList[ 44 ].inv_size.x = 2;
