@@ -143,7 +143,7 @@ This problem is not severe, so this is a warning message only.",
 	  Terminate(ERR);
 	}
       
-      switch ( BulletLevel->map[ map_y ] [ map_x ] )
+      switch ( BulletLevel->map[ map_y ] [ map_x ]  . floor_value )
 	{
 	case CONVEY_L:
 	  CurBullet->pos.x += Conveyor_Belt_Speed * Frame_Time();

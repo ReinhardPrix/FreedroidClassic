@@ -283,7 +283,7 @@ void Init_Joy (void)
 void 
 ReactToSpecialKeys(void)
 {
-  int i;
+  int i , j ;
   static int IPressed_LastFrame;
   static int CPressed_LastFrame;
   static int SPressed_LastFrame;
@@ -446,6 +446,24 @@ ReactToSpecialKeys(void)
   else
     {
       Number9PressedLastFrame = FALSE;
+    }
+
+  //--------------------
+  // For debugging purposes, we introduce a key, that causes several 
+  // floor values around the Tux to be printed out.
+  //
+  if ( NPressed() )
+    {
+      DebugPrintf( 0 , "\n--------------------\nStarting at x=%d/y=%d.\n" , 
+		   (int) Me [ 0 ] . pos . x - 5 , (int) Me [ 0 ] . pos . y - 5 );
+      for ( i = Me [ 0 ] . pos . y - 5 ; i < Me [ 0 ] . pos . y + 5 ; i ++ )
+	{
+	  for ( j = Me [ 0 ] . pos . x - 5 ; j < Me [ 0 ] . pos . x + 5 ; j ++ )
+	    {
+	      DebugPrintf( 0 , "%d " , CurLevel -> map [ i ] [ j ] . floor_value );
+	    }
+	  DebugPrintf( 0 , "\n" );
+	}
     }
 
   //--------------------

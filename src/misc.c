@@ -1086,7 +1086,7 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
       else
 	{
 	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
-	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
+	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  . floor_value  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
 	  
 	  GetAllAnimatedMapTiles ( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
 	}

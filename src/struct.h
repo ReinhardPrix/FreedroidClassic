@@ -833,6 +833,13 @@ obstacle, *Obstacle;
 
 typedef struct
 {
+  Uint16 floor_value;
+  int obstacles_glued_to_here[ MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ];
+}
+map_tile, *Map_tile;
+
+typedef struct
+{
   // int empty;
   int levelnum;	/* Number of this level */
   char *Levelname;		/* Name of this level */
@@ -844,7 +851,7 @@ typedef struct
   int xlen;		/* X dimension */
   int ylen;
   int color;
-  Uint16 *map[MAX_MAP_LINES];	// this is a vector of pointers
+  map_tile *map[MAX_MAP_LINES];	// this is a vector of pointers
   int jump_threshold_north;
   int jump_threshold_south;
   int jump_threshold_east;
@@ -919,7 +926,5 @@ typedef struct
   float block_area_size;
 }
 obstacle_spec, *Obstacle_spec;
-
-
 
 #endif

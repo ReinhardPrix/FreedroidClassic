@@ -421,7 +421,7 @@ MoveTuxAccordingToHisSpeed ( PlayerNum )
   // Now if the influencer is on some form of conveyor belt, we adjust the planned step
   // accoringly
   //
-  switch ( MoveLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ] )
+  switch ( MoveLevel->map[ (int) rintf( Me [ PlayerNum ] . pos.y) ] [ (int) rintf( Me [ PlayerNum ] . pos.x ) ]  . floor_value )
     {
     case CONVEY_L:
       planned_step_x += Conveyor_Belt_Speed*Frame_Time();

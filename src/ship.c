@@ -1167,7 +1167,7 @@ ShowDeckMap (Level deck)
   int ExitNow;
   int SelectedFunction = NO_FUNCTION ;
   point TargetSquare;
-  char MapValue;
+  Uint16 MapValue;
   int ClearanceIndex = -1 ;
   int PasswordIndex = -1 ;
   int GunTypeSelected = -1 ;
@@ -1460,18 +1460,18 @@ ShowDeckMap (Level deck)
 			   ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
 			   ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
 		    {
-		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value ;
 		      DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
 		      if ( MapValue == LOCKED_H_SHUT_DOOR )
 			{
-			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_SHUT_DOOR ;
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = H_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			}
 		      if ( MapValue == LOCKED_V_SHUT_DOOR )
 			{
-			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_SHUT_DOOR ;
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = V_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
@@ -1492,12 +1492,12 @@ ShowDeckMap (Level deck)
 			   ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
 			   ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
 		    {
-		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+		      MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value ;
 		      DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
 		      if ( ( MapValue == AUTOGUN_R ) || ( MapValue == AUTOGUN_L ) || 
 			   ( MapValue == AUTOGUN_D ) || ( MapValue == AUTOGUN_U ) )
 			{
-			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = BLOCK1 ;
+			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = BLOCK1 ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
 			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
@@ -1536,7 +1536,7 @@ ShowDeckMap (Level deck)
 			       ( TargetSquare.x + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> xlen ) ||
 			       ( TargetSquare.y + 1 >= curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ylen ) ) )
 			{
-			  MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] ;
+			  MapValue = curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value ;
 			  DebugPrintf ( 0 , "Map value found at click location: %d. " , MapValue );
 			  
 			  // if ( ( MapValue == BLOCK1 ) || ( GunTypeSelected > 0 ) )
@@ -1547,16 +1547,16 @@ ShowDeckMap (Level deck)
 				  switch ( GunTypeSelected )
 				    {
 				    case 1:
-				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_R ;
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = AUTOGUN_R ;
 				      break;
 				    case 2:
-				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_D ;
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = AUTOGUN_D ;
 				      break;
 				    case 3:
-				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_L ;
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = AUTOGUN_L ;
 				      break;
 				    case 4:
-				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = AUTOGUN_U ;
+				      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ]  . floor_value = AUTOGUN_U ;
 				      break;
 				    default:
 				      break;

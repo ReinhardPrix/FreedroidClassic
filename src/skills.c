@@ -253,9 +253,9 @@ CreateTeleportal ( gps PortalTarget )
     {
       Me[0].mana -= SpellCost;
 
-      if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] == FLOOR )
+      if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value == FLOOR )
 	{
-	  curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] = TELE_1 ;
+	  curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value = TELE_1 ;
 	}
 
       Play_Spell_ForceToEnergy_Sound( );

@@ -444,17 +444,17 @@ void
 InsertColumnVeryEast ( Level EditLevel )
 {
   int i;
-  Uint16* OldMapPointer;
+  map_tile* OldMapPointer;
 
   EditLevel->xlen++;
   // In case of enlargement, we need to do more:
   for ( i = 0 ; i < EditLevel->ylen ; i++ )
     {
       OldMapPointer=EditLevel->map[i];
-      EditLevel->map[i] = MyMalloc( EditLevel->xlen +1) ;
+      EditLevel->map[i] = MyMalloc ( sizeof ( map_tile ) * ( EditLevel->xlen +1) ) ;
       memcpy( EditLevel->map[i] , OldMapPointer , EditLevel->xlen-1 );
       // We don't want to fill the new area with junk, do we? So we make it floor tiles
-      EditLevel->map[ i ] [ EditLevel->xlen-1 ] = FLOOR;  
+      EditLevel->map[ i ] [ EditLevel->xlen-1 ] . floor_value = FLOOR;  
     }
 
 }; // void InsertColumnVeryEast ( Level EditLevel )
@@ -492,7 +492,7 @@ InsertColumnEasternInterface( Level EditLevel )
       memmove ( & ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] ) ,
 		& ( EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 2 ] ) ,
 		EditLevel->jump_threshold_east );
-      EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] = FLOOR ;
+      EditLevel->map [ i ] [ EditLevel->xlen - EditLevel->jump_threshold_east - 1 ] . floor_value = FLOOR ;
     }
 
   MoveWaypointsEastOf ( EditLevel->xlen - EditLevel->jump_threshold_east - 1 , +1 , EditLevel ) ;
@@ -637,7 +637,7 @@ RemoveColumnVeryWest ( Level EditLevel )
 void
 InsertLineSouthernInterface ( Level EditLevel )
 {
-  Uint16* temp;
+  map_tile* temp;
   int i;
 
   //--------------------
@@ -1820,18 +1820,18 @@ CreateNewMapLevel( void )
 
       if ( i == 0 )
 	{
-	  NewLevel->map[i][0] = CORNER_LU;
-	  NewLevel->map[i][ NewLevel->xlen -1 ] = CORNER_RU;
+	  NewLevel->map[i][0] . floor_value = CORNER_LU;
+	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = CORNER_RU;
 	}
       else if ( i == NewLevel->ylen -1 )
 	{
-	  NewLevel->map[i][0] = CORNER_LD;
-	  NewLevel->map[i][ NewLevel->xlen -1 ] = CORNER_RD;
+	  NewLevel->map[i][0] . floor_value = CORNER_LD;
+	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = CORNER_RD;
 	}
       else
 	{
-	  NewLevel->map[i][0] = V_WALL;
-	  NewLevel->map[i][ NewLevel->xlen -1 ] = V_WALL;
+	  NewLevel->map[i][0] . floor_value = V_WALL;
+	  NewLevel->map[i][ NewLevel->xlen -1 ]  . floor_value = V_WALL;
 	}
 
     }
@@ -1864,7 +1864,7 @@ PrintCodepanelInformationOfThisSquare ( Level EditLevel )
   int CodepanelIndex;
   char PanelText[5000]="";
 
-  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ]  . floor_value )
     {
     case CODEPANEL_L:
     case CODEPANEL_R:
@@ -2181,7 +2181,7 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   //
   if ( TPressed()) 
     {
-      EditLevel -> map [ BlockY ] [ BlockX ] = TELE_1 ;
+      EditLevel -> map [ BlockY ] [ BlockX ]  . floor_value = TELE_1 ;
     }
   
   //--------------------
@@ -2191,165 +2191,165 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (Number1Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=BOX_1;
+	EditLevel->map[BlockY][BlockX] . floor_value =BOX_1;
       else
-	EditLevel->map[BlockY][BlockX]=BLOCK1;
+	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK1;
     }
   if (Number2Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=BOX_2;
+	EditLevel->map[BlockY][BlockX] . floor_value =BOX_2;
       else
-	EditLevel->map[BlockY][BlockX]=BLOCK2;
+	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK2;
     }
   if (Number3Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=BOX_3;
+	EditLevel->map[BlockY][BlockX] . floor_value =BOX_3;
       else
-	EditLevel->map[BlockY][BlockX]=BLOCK3;
+	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK3;
     }
   if (Number4Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=BOX_4;
+	EditLevel->map[BlockY][BlockX] . floor_value =BOX_4;
       else
-	EditLevel->map[BlockY][BlockX]=BLOCK4;
+	EditLevel->map[BlockY][BlockX] . floor_value =BLOCK4;
     }
   if (Number5Pressed()) 
     {
-      EditLevel->map[BlockY][BlockX]=BLOCK5;
+      EditLevel->map[BlockY][BlockX] . floor_value =BLOCK5;
     }
   if (LPressed()) 
     {
-      EditLevel->map[BlockY][BlockX]=LIFT;
+      EditLevel->map[BlockY][BlockX] . floor_value =LIFT;
     }
   if (KP_PLUS_Pressed()) 
     {
-      EditLevel->map[BlockY][BlockX]=V_WALL;
-      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_V_WALL;
+      EditLevel->map[BlockY][BlockX] . floor_value =V_WALL;
+      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_V_WALL;
     }
   if (KP0Pressed()) 
     {
-      EditLevel->map[BlockY][BlockX]=H_WALL;
-      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_H_WALL;
+      EditLevel->map[BlockY][BlockX] . floor_value =H_WALL;
+      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_H_WALL;
     }
   if (KP1Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_L;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LD;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LD;
-      else EditLevel->map[BlockY][BlockX]=CORNER_LD;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_L;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_LD;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_LD;
+      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_LD;
     }
   if (KP2Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=CONSOLE_D;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_D;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CODEPANEL_D;
+	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_D;
       else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_D;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_D;
       else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CONVEY_D;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_D;
       else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_D;
-      else EditLevel->map[BlockY][BlockX]=T_D;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_D;
+      else EditLevel->map[BlockY][BlockX] . floor_value =T_D;
     }
   if (KP3Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_U;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RD;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RD;
-      else EditLevel->map[BlockY][BlockX]=CORNER_RD;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_U;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_RD;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_RD;
+      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_RD;
     }
   if (KP4Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=CONSOLE_L;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_L;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CODEPANEL_L;
+	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_L;
       else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_L;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_L;
       else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CONVEY_R;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_R;
       else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_R;
-      else EditLevel->map[BlockY][BlockX]=T_L;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_R;
+      else EditLevel->map[BlockY][BlockX] . floor_value =T_L;
     }
   if (KP5Pressed()) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=VOID;
+	EditLevel->map[BlockY][BlockX] . floor_value =VOID;
       else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET;
       else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CAVE_FLOOR;
-      else EditLevel->map[BlockY][BlockX]=KREUZ;
+	EditLevel->map[BlockY][BlockX] . floor_value =CAVE_FLOOR;
+      else EditLevel->map[BlockY][BlockX] . floor_value =KREUZ;
     }
   if (KP6Pressed()) 
     {
       if ( LeftShiftWasPressed() )
-	EditLevel->map[BlockY][BlockX]=CONSOLE_R;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_R;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CODEPANEL_R;
+	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_R;
       else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_R;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_R;
       else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CONVEY_L;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_L;
       else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_L;
-      else EditLevel->map[BlockY][BlockX]=T_R;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_L;
+      else EditLevel->map[BlockY][BlockX] . floor_value =T_R;
     }
   if (KP7Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_D;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LU;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LU;
-      else EditLevel->map[BlockY][BlockX]=CORNER_LU;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_D;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_LU;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_LU;
+      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_LU;
     }
   if ( KP8Pressed() ) 
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=CONSOLE_U;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONSOLE_U;
       else if ( LeftCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CODEPANEL_U;
+	EditLevel->map[BlockY][BlockX] . floor_value =CODEPANEL_U;
       else if ( RightCtrlWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_U;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CARPET_U;
       else if ( LeftAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=CONVEY_U;
+	EditLevel->map[BlockY][BlockX] . floor_value =CONVEY_U;
       else if ( RightAltWasPressed() ) 
-	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_U;
-      else EditLevel->map[BlockY][BlockX]=T_U;
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR_CAVE_U;
+      else EditLevel->map[BlockY][BlockX] . floor_value =T_U;
     }
   if (KP9Pressed()) 
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_R;
-      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RU;
-      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RU;
-      else EditLevel->map[BlockY][BlockX]=CORNER_RU;
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =AUTOGUN_R;
+      else if ( CtrlWasPressed() ) EditLevel->map[BlockY][BlockX] . floor_value =ENHANCER_RU;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX] . floor_value =CAVE_CORNER_RU;
+      else EditLevel->map[BlockY][BlockX] . floor_value =CORNER_RU;
     }
   if (APressed())
     {
-      EditLevel->map[BlockY][BlockX]=ALERT;	      
+      EditLevel->map[BlockY][BlockX] . floor_value =ALERT;	      
     }
   if (RPressed())
     {
-      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX] = CONSUMER_1;
-      else EditLevel->map[BlockY][BlockX] = REFRESH1;	            
+      if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]  . floor_value = CONSUMER_1;
+      else EditLevel->map[BlockY][BlockX]  . floor_value = REFRESH1;	            
     }
   if (DPressed())
     {
       if ( !CtrlWasPressed())
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX]=V_SHUT_DOOR;	            	      
-	  else EditLevel->map[BlockY][BlockX]=H_SHUT_DOOR;	            	      
+	    EditLevel->map[BlockY][BlockX] . floor_value =V_SHUT_DOOR;	            	      
+	  else EditLevel->map[BlockY][BlockX] . floor_value =H_SHUT_DOOR;	            	      
 	}
       else
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX]=LOCKED_V_SHUT_DOOR;	            	      
-	  else EditLevel->map[BlockY][BlockX]=LOCKED_H_SHUT_DOOR;	            	      
+	    EditLevel->map[BlockY][BlockX] . floor_value =LOCKED_V_SHUT_DOOR;	            	      
+	  else EditLevel->map[BlockY][BlockX] . floor_value =LOCKED_H_SHUT_DOOR;	            	      
 	}
     }
   if (UPressed())
@@ -2357,22 +2357,22 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
       if ( !CtrlWasPressed())
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX]=CHEST_U;	            	      
-	  else EditLevel->map[BlockY][BlockX]=CHEST_D;	            	      
+	    EditLevel->map[BlockY][BlockX] . floor_value =CHEST_U;	            	      
+	  else EditLevel->map[BlockY][BlockX] . floor_value =CHEST_D;	            	      
 	}
       else
 	{
 	  if (Shift_Was_Pressed())
-	    EditLevel->map[BlockY][BlockX]=CHEST_L;	            	      
-	  else EditLevel->map[BlockY][BlockX]=CHEST_R;	            	      
+	    EditLevel->map[BlockY][BlockX] . floor_value =CHEST_L;	            	      
+	  else EditLevel->map[BlockY][BlockX] . floor_value =CHEST_R;	            	      
 	}
     }
   if (SpacePressed() && !axis_is_active )
     {
       if ( Shift_Was_Pressed() )
-	EditLevel->map[BlockY][BlockX]=FINE_GRID;	            	      	    
+	EditLevel->map[BlockY][BlockX] . floor_value =FINE_GRID;	            	      	    
       else
-	EditLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
+	EditLevel->map[BlockY][BlockX] . floor_value =FLOOR;	            	      	    
     }
   
 }; // void HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
@@ -2612,7 +2612,7 @@ EditCodepanelData ( Level EditLevel )
   SetCurrentFont( FPS_Display_BFont );
 
   // First we check if we really are directly on a codepanel:
-  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ] )
+  switch ( EditLevel->map [ (int)rintf( Me[0].pos.y) ] [ (int)rintf( Me[0].pos.x ) ]  . floor_value )
     {
     case CODEPANEL_L:
     case CODEPANEL_R:
@@ -2758,28 +2758,28 @@ EditMapLabelData ( Level EditLevel )
 void
 RecFillMap ( Level EditLevel , int BlockY , int BlockX , int SpecialMapValue )
 {
-  int SourceAreaTileType=EditLevel->map[BlockY][BlockX];
+  int SourceAreaTileType = EditLevel->map[BlockY][BlockX] . floor_value ;
 
-  EditLevel->map[BlockY][BlockX] = SpecialMapValue ;
+  EditLevel->map[BlockY][BlockX]  . floor_value = SpecialMapValue ;
 
   if ( BlockX > 0 )
     {
-      if ( EditLevel->map[BlockY][BlockX-1] == SourceAreaTileType )
+      if ( EditLevel->map[BlockY][BlockX-1]  . floor_value == SourceAreaTileType )
 	RecFillMap ( EditLevel , BlockY , BlockX -1 , SpecialMapValue );
     }
   if ( BlockX < EditLevel->xlen -1 )
     {
-      if ( EditLevel->map[BlockY][BlockX+1] == SourceAreaTileType )
+      if ( EditLevel->map[BlockY][BlockX+1]  . floor_value == SourceAreaTileType )
 	RecFillMap ( EditLevel , BlockY , BlockX +1 , SpecialMapValue );
     }
   if ( BlockY > 0 )
     {
-      if ( EditLevel->map[BlockY-1][BlockX] == SourceAreaTileType )
+      if ( EditLevel->map[BlockY-1][BlockX]  . floor_value == SourceAreaTileType )
 	RecFillMap ( EditLevel , BlockY-1 , BlockX , SpecialMapValue );
     }
   if ( BlockY < EditLevel->ylen -1 )
     {
-      if ( EditLevel->map[BlockY+1][BlockX] == SourceAreaTileType )
+      if ( EditLevel->map[BlockY+1][BlockX]  . floor_value == SourceAreaTileType )
 	RecFillMap ( EditLevel , BlockY+1 , BlockX , SpecialMapValue );
     }
 };
@@ -3103,7 +3103,7 @@ LevelEditor(void)
 		}
 	      else
 		{
-		  EditLevel->map[BlockY][BlockX]=SpecialMapValue;
+		  EditLevel->map[BlockY][BlockX] . floor_value =SpecialMapValue;
 		}
 	    }
 
@@ -3296,7 +3296,7 @@ LevelEditor(void)
 		   ( TargetSquare . x <= EditLevel->xlen-1 ) &&
 		   ( TargetSquare . y >= 0 ) &&
 		   ( TargetSquare . y <= EditLevel->ylen-1 ) )
-		EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ] = Highlight ;	      
+		EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ]  . floor_value = Highlight ;	      
 	    }
 
 	  if (QPressed())

@@ -1498,38 +1498,6 @@ load_one_isometric_floor_tile ( int tile_type )
 
   get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
 
-  /*
-  //--------------------
-  // Now we load the single tile image file and check for errors while loading...
-  //
-  Whole_Image = IMG_Load( fpath );
-  if ( Whole_Image == NULL )
-    {
-      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-      GiveStandardErrorMessage ( "load_one_isometric_floor_tile ( int tile_type )" , "\
-Freedroid was unable to load a certain single map tile from the hard disk\n\
-into memory.\n\
-This error indicates some installation problem with freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-
-  //--------------------
-  // Now we convert this to display format and set alpha and colorkey
-  // properties right...
-  //
-  // SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-  iso_floor_surface_pointer [ tile_type ] = SDL_DisplayFormatAlpha( Whole_Image );
-  SDL_SetColorKey( iso_floor_surface_pointer [ tile_type ] , 0 , 0 );
-  // SDL_SetAlpha( iso_floor_surface_pointer [ tile_type ] , 0 , 0 );
-
-  //--------------------
-  // Now that this is all done, we can mark the map tile as loaded (later)
-  // and free the small image we have loaded from the disk.
-  //
-  SDL_FreeSurface( Whole_Image );
-  */
-
-  
 }; // void load_one_isometric_floor_tile ( int tile_type ) 
 
 /* ----------------------------------------------------------------------

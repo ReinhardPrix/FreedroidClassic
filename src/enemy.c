@@ -165,7 +165,7 @@ SetDirectCourseToConsole( int EnemyNum )
     {
       for ( j = 0 ; j < ThisBotsLevel->ylen ; j ++ )
 	{
-	  switch ( ThisBotsLevel->map[j][i] )
+	  switch ( ThisBotsLevel->map[j][i]  . floor_value )
 	    {
 	    case CONSOLE_D:
 	    case CONSOLE_U:

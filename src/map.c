@@ -597,7 +597,7 @@ generate_wallobstacles_from_level_map ( int level_num )
     {
       for ( x = 0 ; x < loadlevel -> xlen ; x++ )
 	{
-	  switch ( loadlevel -> map [ y ] [ x ] )
+	  switch ( loadlevel -> map [ y ] [ x ]  . floor_value )
 	    {
 	    case H_WALL:
 	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
@@ -681,7 +681,7 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      break;
 
 	    default:
-	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ] ) ) 
+	      if ( IsWallBlock ( loadlevel -> map [ y ] [ x ]  . floor_value ) ) 
 		{
 		  loadlevel -> obstacle_list [ obstacle_counter ] . type = 4 ;
 		  loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5;
@@ -973,7 +973,7 @@ CollectAutomapData ( void )
     {
       for ( x = start_x ; x < end_x ; x ++ )
 	{
-	  if ( IsWallBlock( AutomapLevel->map[y][x] ) ) 
+	  if ( IsWallBlock( AutomapLevel->map[y][x]  . floor_value ) ) 
 	    {
 	      //--------------------
 	      // First we check, if there are some right sides of walls visible
@@ -1035,13 +1035,13 @@ SmashBox ( float x , float y )
   // first we see if there are any destructible map tiles, that need to
   // be destructed this way...
   //
-  switch ( BoxLevel->map[ map_y ][ map_x ] )
+  switch ( BoxLevel->map[ map_y ][ map_x ]  . floor_value )
     { 
     case BOX_4:
     case BOX_3:
     case BOX_2:
     case BOX_1:
-      BoxLevel->map[ map_y ][ map_x ] = FLOOR;
+      BoxLevel->map[ map_y ][ map_x ]  . floor_value = FLOOR;
       StartBlast( map_x , map_y , BoxLevel->levelnum , DRUIDBLAST );
       DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
       break;
@@ -1093,7 +1093,7 @@ GetMapBrick (Level deck, float x, float y)
       Terminate (-1);
     }
 
-  BrickWanted = deck->map[ RoundY ][ RoundX ] ;
+  BrickWanted = deck -> map[ RoundY ][ RoundX ] . floor_value ;
   if ( BrickWanted >= NUM_MAP_BLOCKS )
     {
       GiveStandardErrorMessage ( "GetMapBrick(...)" , "\
@@ -1106,6 +1106,7 @@ map tiles.",
     }
 
   return BrickWanted;
+
 }; // int GetMapBrick( ... ) 
  
 /* ---------------------------------------------------------------------- 
@@ -1270,7 +1271,7 @@ AnimateRefresh (void)
       if (x == 0 || y == 0)
 	break;
 
-      RefreshLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
+      RefreshLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + REFRESH1;
 
     }				/* for */
 
@@ -1301,7 +1302,7 @@ AnimateConsumer (void)
       if (x == 0 || y == 0)
 	break;
 
-      ConsumerLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
+      ConsumerLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + CONSUMER_1;
 
     }				/* for */
 
@@ -1332,7 +1333,7 @@ AnimateTeleports (void)
       if (x == 0 || y == 0)
 	break;
 
-      TeleporterLevel->map[y][x] = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
+      TeleporterLevel->map[y][x]  . floor_value = (((int) rintf (InnerWaitCounter)) % 4) + TELE_1;
 
     }				/* for */
 
@@ -1370,27 +1371,25 @@ LoadShip (char *filename)
   // This is done by searching for the LEVEL_END_STRING again and again
   // until it is no longer found in the ship file.  good.
   //
-
   level_anz = 0;
   endpt = ShipData;
   LevelStart[level_anz] = ShipData;
-
   while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
     {
       endpt += strlen (LEVEL_END_STRING);
       level_anz++;
       LevelStart[level_anz] = endpt + 1;
     }
+  curShip . num_levels = level_anz;
 
-  // init the level-structs 
-  curShip.num_levels = level_anz;
-
+  //--------------------
+  // Now we can start to take apart the information about each level...
+  //
   for (i = 0; i < curShip.num_levels; i++)
     {
-      
       curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 
-      TranslateMap ( curShip . AllLevels [ i ] ) ;
+      decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
 
       //--------------------
       // The level structure contains an array with the locations of all
@@ -2489,12 +2488,13 @@ GetAllAnimatedMapTiles ( Level Lev )
   for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
     Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
 
-  /* now find the doors */
+  //--------------------
+  // now find the doors 
   for (line = 0; line < ylen; line++)
     {
       for (col = 0; col < xlen; col++)
 	{
-	  brick = Lev->map[line][col];
+	  brick = Lev->map[line][col] . floor_value ;
 
 	  switch ( brick )
 	    {
@@ -2510,7 +2510,7 @@ GetAllAnimatedMapTiles ( Level Lev )
 	    case V_OPEN_DOOR:
 	      Lev->doors[curdoor].x = col;
 	      Lev->doors[curdoor++].y = line;
-	      if (curdoor > MAX_DOORS_ON_LEVEL)
+	      if ( curdoor > MAX_DOORS_ON_LEVEL)
 		{
 		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_DOORS_ON_LEVEL: %d \n" , 
 			   Lev->levelnum , MAX_DOORS_ON_LEVEL );
@@ -2623,35 +2623,35 @@ TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLeng
     {
       for(i=0; i< Lev->ylen; i++)
 	{
-	  switch ( Lev->map[i][col] )
+	  switch ( Lev->map[i][col]  . floor_value )
 	    {
 	    case V_SHUT_DOOR:
 	    case V_HALF_DOOR1:
 	    case V_HALF_DOOR2:
 	    case V_HALF_DOOR3:
 	    case V_OPEN_DOOR:
-	      Lev->map[i][col]=V_SHUT_DOOR;
+	      Lev->map[i][col] . floor_value =V_SHUT_DOOR;
 	      break;
 	    case H_SHUT_DOOR:
 	    case H_HALF_DOOR1:
 	    case H_HALF_DOOR2:
 	    case H_HALF_DOOR3:
 	    case H_OPEN_DOOR:
-	      Lev->map[i][col]=H_SHUT_DOOR;
+	      Lev->map[i][col] . floor_value =H_SHUT_DOOR;
 	      break;
 	      /*
 	    case REFRESH1:
 	    case REFRESH2:
 	    case REFRESH3:
 	    case REFRESH4:
-	      Lev->map[i][col]=REFRESH1;
+	      Lev->map[i][col] . floor_value =REFRESH1;
 	      break;
 	      */
 	    case TELE_1:
 	    case TELE_2:
 	    case TELE_3:
 	    case TELE_4:
-	      Lev->map[i][col]=TELE_1;
+	      Lev->map[i][col] . floor_value =TELE_1;
 	      break;
 	    default:
 	      break;
@@ -2673,47 +2673,38 @@ TranslateToHumanReadable ( Uint16* HumanReadable , Uint16* MapInfo, int LineLeng
 }; // void TranslateToHumanReadable( ... )
 
 /* -----------------------------------------------------------------
- * @Desc: When the ship is loaded from disk, the data of the map 
- *        are initally in a human readable form with sensible
- *        ascii characters.  This however is NOT the format and
- *        the map encoding actually used by the game engine.
- *        Therefore a translation of human readable format to
- *        game-engine format has to occur and that is what this
- *        function achieves.
  *
- * @Ret: OK | ERR
  *
  *-----------------------------------------------------------------*/
 int
-TranslateMap (Level Lev)
+decode_floor_tiles_of_this_level (Level Lev)
 {
   int xdim = Lev->xlen;
   int ydim = Lev->ylen;
   int row, col;
-  Uint16 *Buffer;
+  map_tile *Buffer;
   int tmp;
 
-  DebugPrintf (2, "\n\nStarting to translate the map from human readable disk format into game-engine format.");
+  DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
 
-  // first round: transpose all ascii-mapdata to internal numbers for map 
   for (row = 0; row < ydim  ; row++)
     {
 
-      Buffer = MyMalloc( sizeof ( Uint16 ) * ( xdim + 10 ) );
+      Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
 
       for (col = 0; col < xdim  ; col++)
 	{
-	  sscanf( (char*)(Lev->map[row] + 4 / 2 * col) , "%d " , &tmp);
-	  Buffer[col] = tmp;
+	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%d " , &tmp);
+	  Buffer[col] . floor_value = tmp;
 	}
 
-      Lev->map[row]=Buffer;
+      Lev -> map [ row ] = Buffer;
     }				/* for (row=0..) */
 
-  DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
+  DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
 
   return OK;
-}; // int Translate Map( Level lev )
+}; // int decode_floor_tiles_of_this_level ( Level lev )
 
 /* ----------------------------------------------------------------------
  * This function is used to calculate the number of the droids on the 
@@ -3145,7 +3136,7 @@ MoveLevelDoors ( int PlayerNum )
 	  break;
 	}
 
-      Pos = & ( DoorLevel -> map [doory] [doorx] ) ;
+      Pos = & ( DoorLevel -> map [doory] [doorx]  . floor_value ) ;
 
       //--------------------
       // First we see if one of the players is close enough to the
@@ -3280,7 +3271,7 @@ WorkLevelGuns ( int PlayerNum )
       if ( ( autogunx == 0 ) && ( autoguny == 0 ) )
 	break;
 
-      Pos = & ( GunLevel -> map [autoguny] [autogunx] ) ;
+      Pos = & ( GunLevel -> map [autoguny] [autogunx]  . floor_value ) ;
 
       //--------------------
       // From here on goes the bullet code, that originally came from
