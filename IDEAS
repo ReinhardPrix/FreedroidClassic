@@ -1,0 +1,33 @@
+
+
+New graphics design, Possible solutions:
+    1. Stay with Ball and number design
+       + simpler
+       + easyer to tell droids apart and to classify a droid
+       + less renderings and images required
+       + design stays invariant under direction changes of the droid
+
+    2. Change to individual renderings of all droids
+       + possibly better graphical impression
+       - requires handling of the directions a droid is facing
+       - requires renderings of ALL droids
+       - might make it difficult to tell droid types apart
+
+For now, we stick to the first path, I think all aggreed.  Additions? Comments? jp.
+
+Extension idea:  Friendly droid communication
+  I thought of the following nice idea, which would also reposition the game more into
+the adventure/roleplaying genre.  Recently, friendly droids were introduced.  They can
+be defined easily from the droids file of a mission.  But what happens when you try to
+takeover one of those friendly droids?  ---  We might just cause some text interaction
+like in a dialog where you can talk to the droid, ask it to do this or that.  With this,
+we could reshape the game so that the influencer at some point of the mission comes into
+towns with robots, where you can talk to a lot of "people" and solve difficult problems
+not only with fighting, but also with non-violent interaction with droids.  You might
+also find some droids to accompany you in your travels.
+
+Now this is of course all far away.  We might just stick to the interaction possibility
+for now.  Change of missions and story line that way can also be discussed later.
+But what do you think?  Would that be the type of game you would like to see implemented
+or would you prefer to stick to acion/arcade contents?  Comments?  Addisions?  jp.
+
