@@ -266,7 +266,7 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   //--------------------
   // In case of a suffix modifier, we need to apply the suffix...
   //
-  if ( BonusItem->suffix_code != ( -1 ) )
+  if ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) )
     {
       Me.Strength  += BonusItem->bonus_to_str + BonusItem->bonus_to_all_attributes ;
       Me.Dexterity += BonusItem->bonus_to_dex + BonusItem->bonus_to_all_attributes ;
@@ -274,12 +274,6 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
       Me.Vitality  += BonusItem->bonus_to_vit + BonusItem->bonus_to_all_attributes ;
     }
 
-  //--------------------
-  // In case of a prefix modifier, we need to apply the suffix...
-  if ( BonusItem->prefix_code != ( -1 ) )
-    {
-
-    }
 }; // void AddInfluencerItemAttributeBonus( item* BonusItem )
 
 /* ----------------------------------------------------------------------
@@ -295,9 +289,9 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
   if ( BonusItem->type == ( -1 ) ) return;
 
   //--------------------
-  // In case of a suffix modifier, we need to apply the suffix...
+  // In case of present suffix or prefix modifiers, we need to apply the suffix...
   //
-  if ( BonusItem->suffix_code != ( -1 ) )
+  if ( ( BonusItem->suffix_code != ( -1 ) ) || ( BonusItem->prefix_code != ( -1 ) ) )
     {
       Me.to_hit    += BonusItem->bonus_to_tohit ;
       Me.maxmana   += BonusItem->bonus_to_force ;
@@ -309,15 +303,6 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
       Me.resist_electricity += BonusItem->bonus_to_resist_electricity ;
 
     }
-
-  //--------------------
-  // In case of a prefix modifier, we need to apply the suffix...
-  //
-  if ( BonusItem->prefix_code != ( -1 ) )
-    {
-
-    }
-
 
 }; // void AddInfluencerItemSecondaryBonus( item* BonusItem )
 

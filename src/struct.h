@@ -322,7 +322,9 @@ typedef struct
 {
   finepoint pos;
   int type;
-  int currently_held_in_hand;
+  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
+  int is_identified;  // is the item identified already?
+
   int condition;
   int prefix_code;
   int suffix_code;
