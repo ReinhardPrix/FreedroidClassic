@@ -10,12 +10,8 @@ Outstanding release-critical bugs (priority: high)
        rp: might be related to framerate, I have ~40 fps ?!
        jp: --> couldn't reproduce this with 20 fps on Irenes maching
                perhaps it was due to the "level gray"-change delay?!?
-
-- (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5) 
-  then also had some ghost bullets coming from nowhere on other
-  (no-empty) levels
-  ---> has already been removed.  That was only a symtom while I was
-       extending.  Problem is fixed I think.
+       rp: nope. Recently reproduced: jumped across a wall inside
+       level after a melee
 
 - The console picture, i.e. the picture for the menu at the console is a terrible mess.
   Someone must sooner or later set up something more proper for the ne_cons.bmp file
@@ -26,10 +22,8 @@ Outstanding release-critical bugs (priority: high)
        too.  I don't experience many bugs, because the constants are well suited
        for my 1400 Mhz machine.  I could use the 166 Mhz Pentium of Irene.
 
-
 Outstanding normal bugs (priority: normal)
 ------------------------------------------
-
 - (rp) missing "takeover announcement" of droid opponent
 
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
@@ -40,9 +34,6 @@ Outstanding tuning/design bugs and general TODO (priority: low)
 - (jp) some missing "color rotations": bullets, takeover-mode 
 
 - (rp) put some proper Highscore-list
-
-- (rp) sensitivity in takeover-game too high (single steps difficult)
-  (is BETTER NOW)
 
 - Walls are too "sticky", would be better playable if one could "slide"
   (jp:)  That has been completely resolved, at least for my machine!!
@@ -234,3 +225,11 @@ Resolved bugs
 - (rp) Joystick shooting should determine direction more precisely
        (difficult to shoot "straight")
        (DONE)
+- (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5) 
+  then also had some ghost bullets coming from nowhere on other
+  (no-empty) levels
+  ---> has already been removed.  That was only a symtom while I was
+       extending.  Problem is fixed I think.
+
+- (rp) sensitivity in takeover-game too high (single steps difficult)
+  (is BETTER NOW)
