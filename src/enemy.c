@@ -670,6 +670,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
       ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
       ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
 
+      //--------------------
       // This statement should make hostile droids with aggresssion
       // wait, if they see the influencer and are at their waypoint now.
       // Then they (in some other function) open fire and should do
@@ -677,7 +678,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
       // to go into a hunting mode. (to be implemented later).
       //
       if ( Druidmap[ThisRobot->type].aggression &&
-	   IsVisible ( &(ThisRobot->pos) ) &&
+	   IsVisible ( & ( ThisRobot -> pos ) , 0 ) && // WARNING!  Player 0 here always is wrong
 	   // ! ItemMap [ Druidmap [ ThisRobot->type ].weapon_item.type ].item_gun_angle_change  &&
 	   ! ThisRobot->Friendly )
 	{
@@ -754,7 +755,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  // Terminate(ERR);
 	}
       
-      /* setze neuen Waypoint */
+      // set new waypoint...
       ThisRobot->nextwaypoint = trywp;
     }			/* if */
 }; // void MoveThisRobotAdvanced ( int EnemyNum )
@@ -782,6 +783,34 @@ SwapThisRobotToFrontPosition ( enemy* ThisRobot )
     }
 }; // void SwapThisRobotToFrontPosition ( enemy* ThisRobot )
 
+
+/* ----------------------------------------------------------------------
+ * This function tells if a given level is active in the sence that there
+ * is one ore more player character on the level, so that need exists to
+ * move all the enemies on this level etc.
+ * ---------------------------------------------------------------------- */
+int 
+IsActiveLevel ( int levelnum ) 
+{
+  int PlayerNum;
+
+  //--------------------
+  // Now we check for alive players on this level, and if we find
+  // some, the level is an 'active' level.
+  //
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    {
+      if ( Me [ PlayerNum ] . status == OUT ) continue;
+      if ( Me [ PlayerNum ] . pos . z == levelnum ) return TRUE;
+    }
+
+  //--------------------
+  // But if we didn't find any, then the level is not 'active'.
+  //
+  return FALSE;
+
+}; // int IsActiveLevel ( int levelnum ) 
+
 /* ----------------------------------------------------------------------
  * This function moves a single enemy.  It is used by MoveEnemys().
  * ---------------------------------------------------------------------- */
@@ -797,7 +826,8 @@ MoveThisEnemy( int EnemyNum )
   //
 
   // ignore robots on other levels, except, it it's following influ's trail
-  if ( ( ThisRobot->pos.z != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
+  // if ( ( ThisRobot->pos.z != CurLevel->levelnum) && (!ThisRobot->FollowingInflusTail) ) return;
+  if ( ( ! IsActiveLevel ( ThisRobot->pos.z ) )  && ( ! ThisRobot -> FollowingInflusTail ) ) return;
 
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
@@ -882,7 +912,7 @@ MoveThisEnemy( int EnemyNum )
 }; // void MoveThisEnemy ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
- * This function moves all enemys individually, using MoveThisEnems(i)
+ * This function moves all enemys individually, using MoveThisEnemy(i)
  * and it also initiates the robots fireing behaviour via 
  * AttackInfluence (i) all individually.
  * ---------------------------------------------------------------------- */
@@ -935,14 +965,14 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     }
   if ( NewBullet == NULL )
     {
-      DebugPrintf ( 0 , "\nvoid AttackInfluencer(void):  Ran out of Bullets.... Terminating....");
+      DebugPrintf ( 0 , "\nvoid RawStartEnemysShot ( ... ) :  Ran out of Bullets.... Terminating....");
       Terminate (ERR);
     }
   
   //--------------------
   // determine the direction of the shot, so that it will go into the direction of
   // the target
-  
+  //
   if (fabsf (xdist) > fabsf (ydist))
     {
       NewBullet->speed.x = bullet_speed;
@@ -1018,6 +1048,40 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
 /* ----------------------------------------------------------------------
+ * This function should determine the closest visible player to this 
+ * enemy droid.
+ * ---------------------------------------------------------------------- */
+int
+ClosestVisiblePlayer ( Enemy ThisRobot ) 
+{
+  int PlayerNum;
+  int BestTarget = 0 ;
+  int BestDistance = 10000 ;
+
+  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    {
+      //--------------------
+      // A player on a different level can never be the closest player.
+      //
+      if ( ThisRobot -> pos . z != Me [ PlayerNum ] . pos . z ) continue;
+
+      //--------------------
+      // A dead or deactivated player can never be the closest player.
+      //
+      if ( Me [ PlayerNum ] . status == OUT ) continue;
+
+      //--------------------
+      // A dead or deactivated player can never be the closest player.
+      //
+      
+
+
+    }
+  return 0;
+
+};
+
+/* ----------------------------------------------------------------------
  * determine the distance vector to the target of this shot.  The target
  * depends of course on wheter it's a friendly device or a hostile device.
  * ---------------------------------------------------------------------- */
@@ -1025,6 +1089,7 @@ void
 DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_target )
 {
   int j;
+  int TargetPlayerNum;
 
   if ( ThisRobot->Friendly == TRUE )
     {
@@ -1048,8 +1113,11 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
     }
   else
     {
+
+      TargetPlayerNum = ClosestVisiblePlayer ( ThisRobot ) ;
       vect_to_target->x = Me[0].pos.x - ThisRobot->pos.x;
       vect_to_target->y = Me[0].pos.y - ThisRobot->pos.y;
+
     }
 
   // Add some security against division by zero
@@ -1078,7 +1146,8 @@ AttackInfluence (int enemynum)
   //
 
   // ignore robots on other levels 
-  if ( ThisRobot->pos.z != CurLevel->levelnum) return;
+  // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
+  if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
 
   // ignore dead robots as well...
   if ( ThisRobot->Status == OUT ) return;
@@ -1119,7 +1188,7 @@ AttackInfluence (int enemynum)
 
   if ( ( dist2 >= FIREDIST2 ) && ( ThisRobot->Friendly == FALSE ) ) return; // distance limitation only for MS mechs
 
-  if ( !IsVisible ( &ThisRobot->pos ) && ( ThisRobot->Friendly == FALSE ) ) return;
+  if ( ! IsVisible ( &ThisRobot->pos , 0 ) && ( ThisRobot->Friendly == FALSE ) ) return; // WARNING! Player 0 always is wrong
 
   //--------------------
   // At this point we know, that the influencer is visible!  Perhaps we have

@@ -86,7 +86,9 @@ ShowAutomapData( void )
 #define AUTOMAP_COLOR 0x0FFFF
   int i;
   int TuxColor = SDL_MapRGB( Screen->format, 0 , 0 , 255 ); 
+  int FriendColor = SDL_MapRGB( Screen->format, 0 , 255 , 0 ); 
   int BoogyColor = SDL_MapRGB( Screen->format, 255 , 0 , 0 ); 
+  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   //--------------------
   // Of course we only display the automap on demand of the user...
@@ -97,29 +99,29 @@ ShowAutomapData( void )
   // At first, we only blit the known data about the pure wall-type
   // obstacles on this level
   //
-  for ( y = 0 ; y < CurLevel->ylen ; y ++ )
+  for ( y = 0 ; y < AutomapLevel->ylen ; y ++ )
     {
-      for ( x = 0 ; x < CurLevel->xlen ; x ++ )
+      for ( x = 0 ; x < AutomapLevel->xlen ; x ++ )
 	{
-	  if ( Me[0].Automap[y][x].r_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . r_wall )
 	    {
 	      putpixel ( Screen , 3*x+2 , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me[0].Automap[y][x].l_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . l_wall )
 	    {
 	      putpixel ( Screen , 3*x , 3*y+0 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+1 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x , 3*y+2 , AUTOMAP_COLOR );
 	    }
-	  if ( Me[0].Automap[y][x].u_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . u_wall )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+2 , 3*y , AUTOMAP_COLOR );
 	    }
-	  if ( Me[0].Automap[y][x].d_wall )
+	  if ( Me [ 0 ] . Automap [ y ] [ x ] . d_wall )
 	    {
 	      putpixel ( Screen , 3*x+0 , 3*y+2 , AUTOMAP_COLOR );
 	      putpixel ( Screen , 3*x+1 , 3*y+2 , AUTOMAP_COLOR );
@@ -134,8 +136,8 @@ ShowAutomapData( void )
   //
   for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
-      if ( AllEnemys[i].Status == OUT ) continue;
-      if ( AllEnemys[i].pos.z != CurLevel->levelnum ) continue;
+      if ( AllEnemys [ i ] . Status  == OUT ) continue;
+      if ( AllEnemys [ i ] . pos . z != AutomapLevel -> levelnum ) continue;
 
       for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
 	{
@@ -148,14 +150,26 @@ ShowAutomapData( void )
     }
 
   //--------------------
-  // Now that the automap is drawn so far, we add a red dot for the
-  // tux himself.
+  // Now that the automap is drawn so far, we add a blue dot for the
+  // tux himself and also for colleagues, that are on this level and alive.
   //
   for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
     {
       for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
 	{
-	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me[0].pos.x + x , AUTOMAP_SQUARE_SIZE * Me[0].pos.y + y , TuxColor );
+	  putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ 0 ] . pos . y + y , TuxColor );
+	  
+	  for ( i = 1 ; i < MAX_PLAYERS ; i ++ )
+	    {
+	      //--------------------
+	      // We don't blit other players, that are either dead or not
+	      // on this level...
+	      //
+	      if ( Me [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
+	      if ( Me [ i ] . status == OUT  ) continue;
+
+	      putpixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . y + y , FriendColor );
+	    }
 	}
     }
 
@@ -606,9 +620,12 @@ PutInfluence ( int x , int y , int PlayerNum )
       // into the game field at it's apropriate location.
       //
       // Well, for game purposes, we do not need to blit anything if the
-      // tux is out, so we'll query for that first.
+      // tux is out, so we'll query for that first, as well as for the case
+      // of other players that are not on this level.
       //
       if ( Me [ PlayerNum ] . status == OUT ) return;
+      if ( Me [ PlayerNum ] . pos . z != Me [ 0 ] . pos . z ) return;
+      
 
       UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
@@ -804,7 +821,7 @@ PutEnemy (int Enum , int x , int y)
     }
 
   // if the enemy is out of signt, we need not do anything more here
-  if ((!show_all_droids) && (!IsVisible (&AllEnemys[Enum].pos)) )
+  if ( ( ! show_all_droids ) && ( ! IsVisible ( & AllEnemys [ Enum ] . pos , 0 ) ) )
     {
       DebugPrintf (3, "\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;

@@ -196,7 +196,7 @@ EXTERN void AnimateRefresh (void);
 EXTERN void MoveLevelDoors ( int PlayerNum ) ;
 EXTERN int IsPassable ( float x , float y , int z , int Checkpos ) ;
 EXTERN int DruidPassable ( float x , float y , int z );
-EXTERN int IsVisible ( GPS objpos);
+EXTERN int IsVisible ( GPS objpos , int PlayerNum ) ;
 EXTERN int TranslateMap (Level Lev);
 
 /* sound.c  OR nosound.c */
