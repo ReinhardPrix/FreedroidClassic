@@ -946,22 +946,29 @@ insert_one_blast_into_blitting_list ( int blast_num )
 void
 insert_enemies_into_blitting_list ( void )
 {
-  int i;
-  float enemy_norm;
-  float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
-  enemy* ThisRobot = & ( AllEnemys [ 0 ] ) ;
-  
-  ThisRobot -- ;
-  for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+    int i;
+    float enemy_norm;
+    float tux_norm = Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ;
+    enemy* ThisRobot = & ( AllEnemys [ 0 ] ) ;
+    
+    ThisRobot -- ;
+    for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     {
-      ThisRobot ++ ;
-      if ( ( ThisRobot -> Status == OUT ) && ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] == 0 ) ) continue;
-      if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) continue;
-      enemy_norm = ThisRobot -> pos . x + ThisRobot -> pos . y ;
-      
-      if ( fabsf ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
+	ThisRobot ++ ;
+	if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z ) continue;
+	if ( ( ThisRobot -> Status == OUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
+	{
+	    // asdf 
+	    // DebugPrintf ( -4 , "\n%s():  enemy blitting suppressed because of status and no animation..." , __FUNCTION__ );
+	    // continue;
+	}
 
-      insert_one_enemy_into_blitting_list ( i );
+
+	enemy_norm = ThisRobot -> pos . x + ThisRobot -> pos . y ;
+	
+	if ( fabsf ( enemy_norm - tux_norm ) > FLOOR_TILES_VISIBLE_AROUND_TUX + FLOOR_TILES_VISIBLE_AROUND_TUX ) continue;
+	
+	insert_one_enemy_into_blitting_list ( i );
     }
       
 }; // void insert_enemies_into_blitting_list ( void )
@@ -1030,28 +1037,28 @@ insert_thrown_items_into_blitting_list ( void )
 void
 set_up_ordered_blitting_list ( int mask )
 {
-  //--------------------
-  // First we need to clear out the blitting list.  We do this using
-  // memset for optimal performance...
-  //
-  memset ( & ( blitting_list [ 0 ] ) , 0 , sizeof ( blitting_list_element ) * MAX_ELEMENTS_IN_BLITTING_LIST );
-  number_of_objects_currently_in_blitting_list = 0 ;
-
-  //--------------------
-  // Now we can start to fill in the obstacles around the
-  // tux...
-  //
-  insert_obstacles_into_blitting_list ( mask );
-
-  insert_tux_into_blitting_list ();
-
-  insert_enemies_into_blitting_list ( );
-
-  insert_bullets_into_blitting_list ( ); 
-
-  insert_blasts_into_blitting_list ( ); 
-
-  insert_thrown_items_into_blitting_list ( ); 
+    //--------------------
+    // First we need to clear out the blitting list.  We do this using
+    // memset for optimal performance...
+    //
+    memset ( & ( blitting_list [ 0 ] ) , 0 , sizeof ( blitting_list_element ) * MAX_ELEMENTS_IN_BLITTING_LIST );
+    number_of_objects_currently_in_blitting_list = 0 ;
+    
+    //--------------------
+    // Now we can start to fill in the obstacles around the
+    // tux...
+    //
+    insert_obstacles_into_blitting_list ( mask );
+    
+    insert_tux_into_blitting_list ();
+    
+    insert_enemies_into_blitting_list ( );
+    
+    insert_bullets_into_blitting_list ( ); 
+    
+    insert_blasts_into_blitting_list ( ); 
+    
+    insert_thrown_items_into_blitting_list ( ); 
 
 }; // void set_up_ordered_blitting_list ( void )
 
@@ -3419,8 +3426,12 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
     // do anything else here...
     //
     if ( ( phase == DROID_PHASES ) &&
-	 ( last_death_animation_image [ ThisRobot -> type ] - first_walk_animation_image [ ThisRobot -> type ] <= 0 ) )
-	return;
+	 ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) )
+    {
+	// asdf
+	// DebugPrintf ( -4 , "\n%s(): Droid blitting omitted because of no death and no animation." , __FUNCTION__ );
+	// return;
+    }
     
     //--------------------
     // Some extra security against strange or undefined animation phases
@@ -3490,15 +3501,15 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	{
 	    if ( use_open_gl )
 	    {
-		if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+		if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		{
 		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		}
-		else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		else if ( ThisRobot -> poison_duration_left != 0 ) 
 		{
 		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		}
-		else if ( AllEnemys[Enum].frozen != 0 ) 
+		else if ( ThisRobot -> frozen != 0 ) 
 		{
 		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
 		}
@@ -3523,22 +3534,22 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    //--------------------
 	    // Maybe we've got to do with some old bots, that don't have any movement
 	    // animation phases yet, until Basse will provide them at some later point.
-	    // This case must be handles separatedly...
+	    // This case must be handled separatedly...
 	    //
-	    if ( last_death_animation_image [ RotationModel ] - first_walk_animation_image [ RotationModel ] == 0 )
+	    if ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file )
 	    {
 		if ( use_open_gl )
 		{
 		    
-		    if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
+		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
 		    }
-		    else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
 		    }
-		    else if ( AllEnemys[Enum].frozen != 0 ) 
+		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
@@ -3573,19 +3584,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 							 ThisRobot -> pos . x , ThisRobot -> pos . y );
 			
 		    }
-		    else if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
+		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
-		    else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
-		    else if ( AllEnemys[Enum].frozen != 0 ) 
+		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
@@ -3612,17 +3623,17 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    {
 		if ( use_open_gl )
 		{
-		    if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
+		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> pos . x , ThisRobot -> pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		    }
-		    else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		    }
-		    else if ( AllEnemys[Enum].frozen != 0 ) 
+		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> pos . x , ThisRobot -> pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
@@ -3662,19 +3673,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    {
 			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
-		    else if ( AllEnemys [ Enum ] . paralysation_duration_left != 0 ) 
+		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
-		    else if ( AllEnemys[Enum].poison_duration_left != 0 ) 
+		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> pos . x , ThisRobot -> pos . y );
 		    }
-		    else if ( AllEnemys[Enum].frozen != 0 ) 
+		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
 			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
@@ -3693,9 +3704,9 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	
 	
 	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , TRUE );
+	    translate_map_point_to_screen_pixel ( ThisRobot -> pos.x , ThisRobot -> pos.y , TRUE );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( AllEnemys[Enum].pos.x , AllEnemys[Enum].pos.y , FALSE )
+	    translate_map_point_to_screen_pixel ( ThisRobot -> pos.x , ThisRobot -> pos.y , FALSE )
 	    - ENEMY_ENERGY_BAR_OFFSET_Y ;
 	
 	if ( use_open_gl )
@@ -3733,52 +3744,52 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 void
 PutEnemy ( int Enum , int x , int y , int mask , int highlight )
 {
-  SDL_Rect TargetRectangle;
-
-  //--------------------
-  // We check for things like visibility and distance and the like,
-  // so that we know whether to consider this enemy for blitting to
-  // the screen or not.  Since there are many things to consider, we
-  // got a special function for this job.
-  //
-  if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
-
-  //--------------------
-  // We check for incorrect droid types, which sometimes might occor, especially after
-  // heavy editing of the crew initialisation functions ;)
-  //
-  if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
+    SDL_Rect TargetRectangle;
+    
+    //--------------------
+    // We check for things like visibility and distance and the like,
+    // so that we know whether to consider this enemy for blitting to
+    // the screen or not.  Since there are many things to consider, we
+    // got a special function for this job.
+    //
+    if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
+    
+    //--------------------
+    // We check for incorrect droid types, which sometimes might occor, especially after
+    // heavy editing of the crew initialisation functions ;)
+    //
+    if ( AllEnemys[Enum].type >= Number_Of_Droid_Types )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid type on this level, that does not really exist.",
-				 PLEASE_INFORM, IS_FATAL );
-      AllEnemys[Enum].type = 0;
+				   PLEASE_INFORM, IS_FATAL );
+	AllEnemys[Enum].type = 0;
     }
-
-  //--------------------
-  // Since we will need that several times in the sequel, we find out the correct
-  // target location on the screen for our surface blit once and remember it for
-  // later.  ( THE TARGET RECTANGLE GETS MODIFIED IN THE SDL BLIT!!! )
-  //
-  if ( x == (-1) ) 
+    
+    //--------------------
+    // Since we will need that several times in the sequel, we find out the correct
+    // target location on the screen for our surface blit once and remember it for
+    // later.  ( THE TARGET RECTANGLE GETS MODIFIED IN THE SDL BLIT!!! )
+    //
+    if ( x == (-1) ) 
     {
-      TargetRectangle.x = 0 ;
-      TargetRectangle.y = 0 ;
+	TargetRectangle.x = 0 ;
+	TargetRectangle.y = 0 ;
     }
-  else
+    else
     {
-      TargetRectangle.x = x ;
-      TargetRectangle.y = y ;
+	TargetRectangle.x = x ;
+	TargetRectangle.y = y ;
     }
-
-  PutIndividuallyShapedDroidBody ( Enum , TargetRectangle , mask , highlight );
-
-  //--------------------
-  // Only if this robot is not dead, we consider printing the comments
-  // this robot might have to make on the current situation.
-  //
-  if ( AllEnemys [ Enum ] . Status != OUT) PrintCommentOfThisEnemy ( Enum );
-
+    
+    PutIndividuallyShapedDroidBody ( Enum , TargetRectangle , mask , highlight );
+    
+    //--------------------
+    // Only if this robot is not dead, we consider printing the comments
+    // this robot might have to make on the current situation.
+    //
+    if ( AllEnemys [ Enum ] . Status != OUT) PrintCommentOfThisEnemy ( Enum );
+    
 }; // void PutEnemy(int Enum , int x , int y) 
 
 /* ----------------------------------------------------------------------

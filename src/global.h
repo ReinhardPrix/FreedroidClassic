@@ -98,7 +98,6 @@ EXTERN const SDL_Rect Menu_Rect;
 
 EXTERN int Number_Of_Droid_Types;
 EXTERN int InitBars;
-EXTERN int PreTakeEnergy;
 EXTERN int QuitProgram;
 EXTERN int GameOver;
 EXTERN int Alert;

@@ -153,7 +153,6 @@ Takeover ( int enemynum )
 {
     int row;
     int FinishTakeover = FALSE;
-    static int RejectEnergy = 0;	// your energy if you're rejected 
     char *message;
     int ClearanceIndex;
     int Finished = FALSE;
@@ -238,7 +237,7 @@ Takeover ( int enemynum )
 	CapsuleCurRow[VIOLETT] = 0;
 	
 	DroidNum = enemynum;
-	OpponentType = AllEnemys[enemynum].type;
+	OpponentType = AllEnemys [ enemynum ] . type;
 	// NumCapsules[YOU] = 3 + ClassOfDruid (Me[0].type);
 	NumCapsules[YOU] = 3 + Me [ 0 ] . hacking_skill ;
 	NumCapsules[ENEMY] = 4 + Druidmap [ OpponentType ] . class ;
@@ -251,19 +250,24 @@ Takeover ( int enemynum )
 	our_SDL_flip_wrapper (Screen);
 	
 	ChooseColor ();
-	
+
+	//--------------------
+	// This following function plays the takeover game, until one
+	// of THREE states is reached, i.e. until YOU WON, YOU LOST
+	// or until DEADLOCK is reached.  Well, so maybe after that
+	// the takeover game is finished, but if it's a deadlock, then
+	// the game must be played again in the next loop...
+	//
 	PlayGame ();
 	
-	// evaluate the final score of the game and return it
+	//--------------------
+	// We we evaluate the final score of the game.  Maybe we're done
+	// already, maybe not...
+	//
 	if ( LeaderColor == YourColor ) 
 	{
 	    // SwitchBackgroundMusicTo (SILENCE);
 	    Takeover_Game_Won_Sound ();
-	    if ( Me [ 0 ] . type == DRUID001 )
-	    {
-		RejectEnergy = Me [ 0 ] . energy;
-		PreTakeEnergy = Me [ 0 ] . energy;
-	    }
 	    
 	    //--------------------
 	    // We allow to gain the current energy/full health that was still in the 
@@ -299,55 +303,74 @@ Takeover ( int enemynum )
 	    Me [ 0 ] . type = AllEnemys [enemynum ] . type;
 	    Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
 	    Me [ 0 ] . Experience += Druidmap [ OpponentType ] . experience_reward;
+
+	    //--------------------
+	    // Maybe the enemy in question was a kind of 'boss monster' or it had
+	    // some special item, that is relevant to a mission or quest.  In that
+	    // case (like also when the bot is finally destroyed, the quest item
+	    // should be dropped after the successful takeover process, even if the
+	    // enemy isn't completely dead yet...
+	    //
 	    if ( AllEnemys [ enemynum ] . on_death_drop_item_code != (-1) )
 	    {
 		DropItemAt( AllEnemys [ enemynum ] . on_death_drop_item_code , AllEnemys [ enemynum ] . pos . x , 
 			    AllEnemys [ enemynum ] . pos . y , -1 , -1 , 2 , 1 );
 	    }  
-	    
+
+	    //--------------------
+	    // The enemy is now taken over.  Therefore it will get some energy
+	    // bonus, such that the new henchman of the Tux will not be destroyed
+	    // that easily after the big success in that takeover game...
+	    //
+	    AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
+
+	    //--------------------
+	    // After takeover, the enemy suddenly becomes friendly and will also have
+	    // a much nicer default 'combat state'...  the enemy can still start to
+	    // fight from that nicer state, maybe on the Tux side, this time :)
+	    //
+	    AllEnemys [ enemynum ] . is_friendly = TRUE ;
+	    if ( AllEnemys [ enemynum ] .  stick_to_waypoint_system_by_default )
+		AllEnemys [ enemynum ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    else
+		AllEnemys [ enemynum ] . combat_state = WAYPOINTLESS_WANDERING ;
+
+	    //--------------------
+	    // When the bot is taken over, it should not turn hostile when
+	    // the rest of his former combat group (identified by having the
+	    // same marker) is attacked by the Tux.
+	    //
+	    AllEnemys [ enemynum ] . marker = 0 ;
+
+	    //--------------------
+	    // The takeover game earlier had some status banner, where the 
+	    // status of the takeover game would be displayed.  This isn't 
+	    // very much relevant any more in the freedroidRPG variant....
+	    //
 	    if ( LeaderColor != YourColor )	// only won because of InvincibleMode 
 		message = "You cheat";
 	    else				// won the proper way 
 		message = "Complete";
 	    
+	    //--------------------
+	    // Ok.  The whole takeover is done now.  We can return...
+	    //
 	    FinishTakeover = TRUE;
 	}				// LeaderColor == YourColor 
-	else if (LeaderColor == OpponentColor)
+	else if ( LeaderColor == OpponentColor )
 	{
 	    Takeover_Game_Lost_Sound ();
 	    message = "Rejected";
 	    Me [ 0 ] . energy *= 0.5 ;
+	    AllEnemys [ enemynum ] . energy = Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ;
 	    FinishTakeover = TRUE;
-	    //--------------------
-	    // When the bot is taken over, it should not turn hostile when
-	    // the rest of his former group is attacked by the Tux.
-	    //
-	    AllEnemys [ enemynum ] . marker = 0 ;
 	}			// if LeadColor == OpponentColor 
 	else
 	{
 	    Takeover_Game_Deadlock_Sound ();
 	    message = "Deadlock";
-	}			// LeadColor == DRAW
-	
-	// don't display enemy if we're finished 
-	if (FinishTakeover) 
-	{
-	    if ( LeaderColor == YourColor )
-	    {
-		// AllEnemys[enemynum].Status = OUT;
-		// AllEnemys[enemynum].energy = -1.0; 
-		// AllEnemys [ enemynum ] . energy =  100.0; 
-		AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
-		AllEnemys [ enemynum ] . is_friendly = TRUE ;
-		OpponentType = -1;	/* dont display enemy any more */
-	    }
-	    else
-	    {
-		AllEnemys[enemynum].energy = Druidmap [ AllEnemys[enemynum].type ] . maxenergy ;
-	    }
-	}
-	
+	}			// LeadColor == DRAW	
+
 	ShowPlayground ();
 	to_show_banner (message, NULL);
 	our_SDL_flip_wrapper (Screen);
@@ -889,41 +912,39 @@ GetTakeoverGraphics (void)
 void
 ShowPlayground ( void )
 {
-  int i, j;
-  int color, player;
-  int block;
-  int xoffs, yoffs;
-  SDL_Rect Target_Rect;
+    int i, j;
+    int color, player;
+    int block;
+    int xoffs, yoffs;
+    SDL_Rect Target_Rect;
+    
+    xoffs = User_Rect.x + ( User_Rect.w - 2 * 290 ) / 2 ;
+    yoffs = User_Rect.y + ( User_Rect.h - 2 * 140 ) / 2 ;
+    
+    //  SDL_SetColorKey (Screen, 0, 0);
+    SDL_SetClipRect (Screen , &User_Rect);
+    
+    blit_special_background ( TAKEOVER_BACKGROUND_CODE );
+    
+    blit_tux ( xoffs + DruidStart [ YourColor ] . x ,
+	       yoffs + DruidStart [ YourColor ] . y + 30 , 0 );
 
-  xoffs = User_Rect.x + ( User_Rect.w - 2 * 290 ) / 2 ;
-  yoffs = User_Rect.y + ( User_Rect.h - 2 * 140 ) / 2 ;
-
-  //  SDL_SetColorKey (Screen, 0, 0);
-  SDL_SetClipRect (Screen , &User_Rect);
-
-  blit_special_background ( TAKEOVER_BACKGROUND_CODE );
-
-  blit_tux ( xoffs + DruidStart [ YourColor ] . x ,
-	     yoffs + DruidStart [ YourColor ] . y + 30 , 0 );
-
-  if ( AllEnemys [ DroidNum ] . Status != OUT )
-    PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
-	      yoffs + DruidStart[!YourColor].y , FALSE , FALSE );
-
-
-  Set_Rect ( Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
-	     User_Rect.w, User_Rect.h);
-
-
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_OBEN ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_OBEN ] . surface , NULL , Screen, &Target_Rect );
-
-  Target_Rect . y += GROUNDBLOCKHEIGHT;
-
-  for ( i = 0 ; i < 12 ; i++ )
+    if ( AllEnemys [ DroidNum ] . Status != OUT )
+	PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
+		  yoffs + DruidStart[!YourColor].y , FALSE , FALSE );
+    
+    Set_Rect ( Target_Rect, xoffs + LEFT_OFFS_X, yoffs + LEFT_OFFS_Y,
+	       User_Rect.w, User_Rect.h);
+    
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_OBEN ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_OBEN ] . surface , NULL , Screen, &Target_Rect );
+    
+    Target_Rect . y += GROUNDBLOCKHEIGHT;
+    
+    for ( i = 0 ; i < 12 ; i++ )
     {
 	if ( use_open_gl ) 
 	    blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_MITTE ] , Target_Rect . x ,
@@ -932,152 +953,152 @@ ShowPlayground ( void )
 	    our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_MITTE ] . surface , NULL , Screen, &Target_Rect );
 	Target_Rect.y += GROUNDBLOCKHEIGHT;
     } 
-
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_UNTEN ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_UNTEN ] . surface , NULL , Screen, &Target_Rect );
-
-  // the middle column
-  Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
-
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( ToLeaderBlock , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( ToLeaderBlock . surface , NULL , Screen, &Target_Rect);
-
-  Target_Rect.y += LEADERBLOCKHEIGHT;
-  for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += COLUMNBLOCKHEIGHT )
-  {
-      if ( use_open_gl ) 
-	  blit_open_gl_texture_to_screen_position ( ToColumnBlock , Target_Rect . x ,
-						    Target_Rect . y , TRUE ) ;
-      else
-	  our_SDL_blit_surface_wrapper ( ToColumnBlock . surface , NULL , Screen, &Target_Rect );
-    }
-
-
-  // the right column
-  Set_Rect ( Target_Rect , xoffs + RIGHT_OFFS_X , yoffs + RIGHT_OFFS_Y , 0 , 0 );
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_OBEN ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_OBEN ] . surface , NULL , Screen , &Target_Rect );
-
-  Target_Rect.y += GROUNDBLOCKHEIGHT;
-
-  for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += GROUNDBLOCKHEIGHT )
-  {
-      if ( use_open_gl ) 
-	  blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_MITTE ] , Target_Rect . x ,
-						    Target_Rect . y , TRUE ) ;
-      else
-	  our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_MITTE ] . surface , NULL , Screen, &Target_Rect );
-  }
-
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_UNTEN ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_UNTEN ] . surface , NULL , Screen, &Target_Rect );
-
-  // Fill the leader-LED with its color 
-  Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
-
-  Target_Rect.y += FILL_BLOCK_HEIGHT;
-  if ( use_open_gl ) 
-      blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
-						Target_Rect . y , TRUE ) ;
-  else
-      our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
-
-  // Fill the display column with its colors 
-  for ( i = 0 ; i < NUM_LINES ; i++ )
+    
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ GELB_UNTEN ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( ToGroundBlocks [ GELB_UNTEN ] . surface , NULL , Screen, &Target_Rect );
+    
+    // the middle column
+    Set_Rect (Target_Rect, xoffs + MID_OFFS_X, yoffs + MID_OFFS_Y,0, 0);
+    
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( ToLeaderBlock , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( ToLeaderBlock . surface , NULL , Screen, &Target_Rect);
+    
+    Target_Rect.y += LEADERBLOCKHEIGHT;
+    for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += COLUMNBLOCKHEIGHT )
     {
-      Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
-		yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( ToColumnBlock , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( ToColumnBlock . surface , NULL , Screen, &Target_Rect );
+    }
+    
+    
+    // the right column
+    Set_Rect ( Target_Rect , xoffs + RIGHT_OFFS_X , yoffs + RIGHT_OFFS_Y , 0 , 0 );
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_OBEN ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_OBEN ] . surface , NULL , Screen , &Target_Rect );
+    
+    Target_Rect.y += GROUNDBLOCKHEIGHT;
+    
+    for ( i = 0 ; i < 12 ; i++ , Target_Rect.y += GROUNDBLOCKHEIGHT )
+    {
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_MITTE ] , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_MITTE ] . surface , NULL , Screen, &Target_Rect );
+    }
+    
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( ToGroundBlocks [ VIOLETT_UNTEN ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( ToGroundBlocks [ VIOLETT_UNTEN ] . surface , NULL , Screen, &Target_Rect );
+    
+    // Fill the leader-LED with its color 
+    Set_Rect (Target_Rect, xoffs + LEADERLED_X, yoffs + LEADERLED_Y, 0, 0);
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
+    
+    Target_Rect.y += FILL_BLOCK_HEIGHT;
+    if ( use_open_gl ) 
+	blit_open_gl_texture_to_screen_position ( FillBlocks [ LeaderColor ] , Target_Rect . x ,
+						  Target_Rect . y , TRUE ) ;
+    else
+	our_SDL_blit_surface_wrapper ( FillBlocks [ LeaderColor ] . surface , NULL , Screen, &Target_Rect );
+    
+    // Fill the display column with its colors 
+    for ( i = 0 ; i < NUM_LINES ; i++ )
+    {
+	Set_Rect (Target_Rect, xoffs + LEDCOLUMN_X,
+		  yoffs + LEDCOLUMN_Y + i*(FILL_BLOCK_HEIGHT+2),
 		0, 0);
-      if ( use_open_gl ) 
-	  blit_open_gl_texture_to_screen_position ( FillBlocks [ DisplayColumn [ i ] ] , Target_Rect . x ,
-						    Target_Rect . y , TRUE ) ;
-      else
-	  our_SDL_blit_surface_wrapper ( FillBlocks [ DisplayColumn [ i ] ] . surface , NULL , Screen, &Target_Rect );
+	if ( use_open_gl ) 
+	    blit_open_gl_texture_to_screen_position ( FillBlocks [ DisplayColumn [ i ] ] , Target_Rect . x ,
+						      Target_Rect . y , TRUE ) ;
+	else
+	    our_SDL_blit_surface_wrapper ( FillBlocks [ DisplayColumn [ i ] ] . surface , NULL , Screen, &Target_Rect );
     }
-
-
-  // Show the yellow playground 
-  for (i = 0; i < NUM_LAYERS - 1; i++)
-    for (j = 0; j < NUM_LINES; j++)
-      {
-	Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
-		  yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
-	block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
-	if ( use_open_gl ) 
-	    blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
-						      Target_Rect . y , TRUE ) ;
-	else
-	    our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
-      }
-
-
-  // Show the violett playground 
-  for ( i = 0 ; i < NUM_LAYERS - 1 ; i++ )
-    for ( j = 0 ; j < NUM_LINES ; j++ )
-      {
-	Set_Rect (Target_Rect,
-		  xoffs + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
-		  yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
-	block = ToPlayground[VIOLETT][i][j]+
-	  (NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
-	if ( use_open_gl ) 
-	    blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
-						      Target_Rect . y , TRUE ) ;
-	else
-	    our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
-      }
-
-  // Show the capsules left for each player 
-  for (player = 0; player < 2; player++)
-    {
-      if (player == YOU)
-	color = YourColor;
-      else
-	color = OpponentColor;
-
-      Set_Rect (Target_Rect, xoffs + CurCapsuleStart[color].x, 
-		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
-		0,0);
-      if ( NumCapsules [ player ] )
-      {
-	  if ( use_open_gl ) 
-	      blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
-							Target_Rect . y , TRUE ) ;
-	  else
-	      our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
-      }
-
-      for ( i = 0 ; i < NumCapsules [ player ] - 1 ; i++ )
+    
+    
+    // Show the yellow playground 
+    for (i = 0; i < NUM_LAYERS - 1; i++)
+	for (j = 0; j < NUM_LINES; j++)
 	{
-	  Set_Rect ( Target_Rect , xoffs + LeftCapsulesStart [ color ] . x ,
-		    yoffs + LeftCapsulesStart [ color ] . y + i * CAPSULE_HEIGHT , 0 , 0 );
-	  if ( use_open_gl ) 
-	      blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
-							Target_Rect . y , TRUE ) ;
-	  else
-	      our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
+	    Set_Rect (Target_Rect, xoffs + PlaygroundStart[GELB].x + i * TO_BLOCKLEN,
+		      yoffs + PlaygroundStart[GELB].y + j * TO_BLOCKHEIGHT, 0, 0);
+	    block = ToPlayground[GELB][i][j] + ActivationMap[GELB][i][j]*TO_BLOCKS;
+	    if ( use_open_gl ) 
+		blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
+							  Target_Rect . y , TRUE ) ;
+	    else
+		our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
+	}
+    
+    
+    // Show the violett playground 
+    for ( i = 0 ; i < NUM_LAYERS - 1 ; i++ )
+	for ( j = 0 ; j < NUM_LINES ; j++ )
+	{
+	    Set_Rect (Target_Rect,
+		      xoffs + PlaygroundStart[VIOLETT].x +(NUM_LAYERS-i-2)*TO_BLOCKLEN,
+		      yoffs + PlaygroundStart[VIOLETT].y + j * TO_BLOCKHEIGHT, 0, 0);
+	    block = ToPlayground[VIOLETT][i][j]+
+		(NUM_PHASES+ActivationMap[VIOLETT][i][j])*TO_BLOCKS;
+	    if ( use_open_gl ) 
+		blit_open_gl_texture_to_screen_position ( ToGameBlocks [ block ] , Target_Rect . x ,
+							  Target_Rect . y , TRUE ) ;
+	    else
+		our_SDL_blit_surface_wrapper ( ToGameBlocks [ block ] . surface , NULL , Screen, &Target_Rect );
+	}
+    
+    // Show the capsules left for each player 
+    for (player = 0; player < 2; player++)
+    {
+	if (player == YOU)
+	    color = YourColor;
+	else
+	    color = OpponentColor;
+	
+	Set_Rect (Target_Rect, xoffs + CurCapsuleStart[color].x, 
+		  yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color]*(CAPSULE_HEIGHT+2),
+		  0,0);
+	if ( NumCapsules [ player ] )
+	{
+	    if ( use_open_gl ) 
+		blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
+							  Target_Rect . y , TRUE ) ;
+	    else
+		our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
+	}
+	
+	for ( i = 0 ; i < NumCapsules [ player ] - 1 ; i++ )
+	{
+	    Set_Rect ( Target_Rect , xoffs + LeftCapsulesStart [ color ] . x ,
+		       yoffs + LeftCapsulesStart [ color ] . y + i * CAPSULE_HEIGHT , 0 , 0 );
+	    if ( use_open_gl ) 
+		blit_open_gl_texture_to_screen_position ( CapsuleBlocks [ color ] , Target_Rect . x ,
+							  Target_Rect . y , TRUE ) ;
+	    else
+		our_SDL_blit_surface_wrapper ( CapsuleBlocks [ color ] . surface , NULL , Screen, &Target_Rect );
 	} // for capsules 
     } // for player 
-
-  return;
-
+    
+    return;
+    
 }; // ShowPlayground 
 
 /*-----------------------------------------------------------------

@@ -136,9 +136,7 @@ respawn_level ( int level_num )
 	    if ( AllEnemys [ i ] . stick_to_waypoint_system_by_default )
 		AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
 	    else
-	    {
 		AllEnemys [ i ] . combat_state = WAYPOINTLESS_WANDERING ;
-	    }
 
 	    AllEnemys [ i ] . has_greeted_influencer = FALSE ;
 	    AllEnemys [ i ] . state_timeout = 0 ;

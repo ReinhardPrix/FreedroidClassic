@@ -621,54 +621,55 @@ item types.  This indicates a severe bug in Freedroid.",
 void
 DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange )
 {
-  int i;
+    int i;
 
-  //--------------------
-  // If given a non-existent item type, we don't do anything
-  // of course (and also don't produce a SEGFAULT or something...)
-  //
-  if ( ItemType == ( -1 ) ) return;
-  if ( ItemType >= Number_Of_Item_Types ) 
+    //--------------------
+    // If given a non-existent item type, we don't do anything
+    // of course (and also don't produce a SEGFAULT or something...)
+    //
+    if ( ItemType == ( -1 ) ) return;
+    if ( ItemType >= Number_Of_Item_Types ) 
     {
-      fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an item code for an item to drop given to the function \n\
 DropItemAt( ... ), which is pointing beyond the scope of the known\n\
 item types.  This indicates a severe bug in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // At first we must find a free item index on this level,
-  // so that we can enter the new item there.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    
+    //--------------------
+    // At first we must find a free item index on this level,
+    // so that we can enter the new item there.
+    //
+    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurLevel->ChestItemList[ i ].type == (-1) ) 
+	if ( CurLevel->ChestItemList[ i ].type == (-1) ) 
 	{
-	  break;
+	    break;
 	}
     }
-  if ( i >= MAX_ITEMS_PER_LEVEL )
+    if ( i >= MAX_ITEMS_PER_LEVEL )
     {
-      DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
-      Terminate( ERR );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+No more items dropable into this level!!  Fatal (for now..).",
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // Now we can construct the new item
-  //
-  CurLevel->ChestItemList[ i ].type = ItemType;
-  CurLevel->ChestItemList[ i ].pos.x = x;
-  CurLevel->ChestItemList[ i ].pos.y = y;
-  CurLevel->ChestItemList[ i ].prefix_code = prefix;
-  CurLevel->ChestItemList[ i ].suffix_code = suffix;
-
-  FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
-
-  // PlayItemSound( ItemMap[ ItemType ].sound_number );
-  play_item_sound( ItemType );
-
+    
+    //--------------------
+    // Now we can construct the new item
+    //
+    CurLevel->ChestItemList[ i ].type = ItemType;
+    CurLevel->ChestItemList[ i ].pos.x = x;
+    CurLevel->ChestItemList[ i ].pos.y = y;
+    CurLevel->ChestItemList[ i ].prefix_code = prefix;
+    CurLevel->ChestItemList[ i ].suffix_code = suffix;
+    
+    FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
+    
+    // PlayItemSound( ItemMap[ ItemType ].sound_number );
+    play_item_sound( ItemType );
+    
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
@@ -679,14 +680,14 @@ int
 item_type_cannot_be_equipped ( int drop_item_type )
 {
 
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_weapon_slot ) return ( FALSE ) ;
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_drive_slot ) return ( FALSE ) ;
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_armour_slot ) return ( FALSE ) ;
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_shield_slot ) return ( FALSE ) ;
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_special_slot ) return ( FALSE ) ;
-  if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_aux_slot ) return ( FALSE ) ;
-
-  return ( TRUE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_weapon_slot ) return ( FALSE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_drive_slot ) return ( FALSE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_armour_slot ) return ( FALSE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_shield_slot ) return ( FALSE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_special_slot ) return ( FALSE ) ;
+    if ( ItemMap [ drop_item_type ] . item_can_be_installed_in_aux_slot ) return ( FALSE ) ;
+    
+    return ( TRUE ) ;
 }; // int item_type_cannot_be_equipped ( int drop_item_type )
 
 /* ----------------------------------------------------------------------
@@ -706,7 +707,7 @@ count_suffixes_available ( void )
     {
 	if ( ! strcmp ( SuffixList [ i ] . bonus_name , "*** END OF SUFFIX LIST ***" ) )
 	{
-	    DebugPrintf ( -4 , "\n%s(): End of Suffix list found at pos: %d.\n" , __FUNCTION__ , i );
+	    DebugPrintf ( 1 , "\n%s(): End of Suffix list found at pos: %d.\n" , __FUNCTION__ , i );
 	    return ( i ) ;
 	}
     }
@@ -734,7 +735,7 @@ count_prefixes_available ( void )
     {
 	if ( ! strcmp ( PrefixList [ i ] . bonus_name , "*** END OF PREFIX LIST ***" ) )
 	{
-	    DebugPrintf ( -4 , "\n%s(): End of Prefix list found at pos: %d.\n" , __FUNCTION__ , i );
+	    DebugPrintf ( 1 , "\n%s(): End of Prefix list found at pos: %d.\n" , __FUNCTION__ , i );
 	    return ( i ) ;
 	}
     }
@@ -777,7 +778,7 @@ count_treasure_chests_in_use ( void )
     // We return the number of the highest trease chest + 1 because the
     // treasure chests are numbered starting at 0, not at 1 
     //
-    DebugPrintf ( -4 , "\n%s(): treasure chests total: %d.\n" , __FUNCTION__ , max_treasure_chest_in_use + 1 ) ;
+    DebugPrintf ( 1 , "\n%s(): treasure chests total: %d.\n" , __FUNCTION__ , max_treasure_chest_in_use + 1 ) ;
     return ( max_treasure_chest_in_use + 1 );
 
 }; // int count_treasure_chests_in_use ( void )

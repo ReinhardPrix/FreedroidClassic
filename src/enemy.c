@@ -328,57 +328,55 @@ PermanentHealRobots (void)
 void
 ClearEnemys ( void )
 {
-  int i , j;
+    int i , j;
+    enemy* our_bot;
 
-  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-      AllEnemys[i].type = -1;
-      AllEnemys[i].pos.z = AllEnemys[i].energy = 0;
-      AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint = 0;
-      AllEnemys[i].Status = OUT;
-      AllEnemys[i].warten = 0;
-      AllEnemys[i].frozen = 0;
-      AllEnemys[i].poison_duration_left = 0;
-      AllEnemys[i].poison_damage_per_sec = 0;
-      AllEnemys[i].firewait = 0;
-      AllEnemys[i].energy = 0;
-      AllEnemys[i].SpecialForce = 0;
-      AllEnemys[i].AdvancedCommand = 0;
-      AllEnemys[i].CompletelyFixed = 0;
-      AllEnemys[i].Parameter1 = 0;
-      AllEnemys[i].Parameter2 = 0;
-      AllEnemys[i] . marker = 0;
-      AllEnemys[i].is_friendly = 0;
-      AllEnemys[i].attack_target_type = ATTACK_TARGET_IS_NOTHING ;
-      AllEnemys[i].attack_target_index = (-1) ;
-      AllEnemys[i].is_friendly = 0;
-      AllEnemys[i].TextVisibleTime = 0;
-      AllEnemys[i].TextToBeDisplayed = "";
-      AllEnemys[i].persuing_given_course = FALSE;
-      AllEnemys[i].FollowingInflusTail = FALSE;
-      AllEnemys[i].StayHowManySecondsBehind = 5;
+	our_bot = & ( AllEnemys [ i ] ) ;
 
-      AllEnemys[i].phase = 0;
-      AllEnemys[i].animation_type = WALK_ANIMATION ;
-      AllEnemys[i].animation_phase = 0.0 ;
-
-      AllEnemys[i].previous_angle = 0 ;         // which angle has this robot been facing the frame before?
-      AllEnemys[i].current_angle = 0 ;          // which angle will the robot be facing now?
-      AllEnemys[i].last_phase_change = 100 ;      // when did the robot last change his (8-way-)direction of facing
-      AllEnemys[i].previous_phase = 0 ;         // which (8-way) direction did the robot face before?
-      AllEnemys[i].has_greeted_influencer = FALSE ;   // has this robot issued his first-time-see-the-Tux message?
-      AllEnemys[i].will_rush_tux = FALSE ; 
-      AllEnemys[i].last_combat_step = 100 ;       // when did this robot last make a step to move in closer or farther away from Tux in combat?      
-      for ( j=0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
+	our_bot -> type = -1;
+	our_bot -> pos.z = our_bot -> energy = 0;
+	our_bot -> nextwaypoint = our_bot -> lastwaypoint = 0;
+	our_bot -> Status = OUT;
+	our_bot -> warten = 0;
+	our_bot -> frozen = 0;
+	our_bot -> poison_duration_left = 0;
+	our_bot -> poison_damage_per_sec = 0;
+	our_bot -> firewait = 0;
+	our_bot -> energy = 0;
+	our_bot -> SpecialForce = 0;
+	our_bot -> AdvancedCommand = 0;
+	our_bot -> CompletelyFixed = 0;
+	our_bot -> Parameter1 = 0;
+	our_bot -> Parameter2 = 0;
+	our_bot -> marker = 0;
+	our_bot -> is_friendly = 0;
+	our_bot -> attack_target_type = ATTACK_TARGET_IS_NOTHING ;
+	our_bot -> attack_target_index = (-1) ;
+	our_bot -> TextVisibleTime = 0;
+	our_bot -> TextToBeDisplayed = "";
+	our_bot -> persuing_given_course = FALSE;
+	our_bot -> FollowingInflusTail = FALSE;
+	our_bot -> StayHowManySecondsBehind = 5;
+	
+	our_bot -> phase = 0;
+	our_bot -> animation_type = WALK_ANIMATION ;
+	our_bot -> animation_phase = 0.0 ;
+	
+	our_bot -> previous_angle = 0 ;         // which angle has this robot been facing the frame before?
+	our_bot -> current_angle = 0 ;          // which angle will the robot be facing now?
+	our_bot -> last_phase_change = 100 ;      // when did the robot last change his (8-way-)direction of facing
+	our_bot -> previous_phase = 0 ;         // which (8-way) direction did the robot face before?
+	our_bot -> has_greeted_influencer = FALSE ;   // has this robot issued his first-time-see-the-Tux message?
+	our_bot -> will_rush_tux = FALSE ; 
+	our_bot -> last_combat_step = 100 ;       // when did this robot last make a step to move in closer or farther away from Tux in combat?      
+	for ( j = 0 ; j < MAX_STEPS_IN_GIVEN_COURSE ; j++ )
 	{
-	  AllEnemys[i].PrivatePathway[j].x=0;
-	  AllEnemys[i].PrivatePathway[j].y=0;
+	    our_bot -> PrivatePathway [ j ] . x = 0 ;
+	    our_bot -> PrivatePathway [ j ] . y = 0 ;
 	}
-
     }
-
-  return;
-
 }; // void ClearEnemys ( void ) 
 
 
@@ -748,6 +746,11 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     {
 	ThisRobot -> animation_type = WALK_ANIMATION ;
 	ThisRobot -> animation_phase = 0.0 ;
+
+	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
+	{
+	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
+	}
     }
     
     //--------------------
@@ -793,8 +796,8 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
     // walking...
     //
     // ThisRobot -> animation_type = WALK_ANIMATION ; 
-    if ( ThisRobot -> animation_phase == 0 )
-	ThisRobot -> animation_phase = 0.1 ;
+    // if ( ThisRobot -> animation_phase == 0 )
+    // ThisRobot -> animation_phase = 0.1 ;
     
 }; // void RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 
@@ -1185,31 +1188,31 @@ DropEnemyTreasure ( Enemy ThisRobot )
 int
 MakeSureEnemyIsInsideThisLevel ( Enemy ThisRobot )
 {
-  //--------------------
-  // If the enemy is outside of the current map, 
-  // that's an error and needs to be correted.
-  //
-  if ( ( ThisRobot -> pos . x <= 0 ) || 
-       ( ThisRobot -> pos . x >= curShip.AllLevels[ ThisRobot -> pos . z ] -> xlen ) ||
-       ( ThisRobot -> pos . y <= 0 ) || 
-       ( ThisRobot -> pos . y >= curShip.AllLevels[ ThisRobot -> pos . z ] -> ylen ) )
+    //--------------------
+    // If the enemy is outside of the current map, 
+    // that's an error and needs to be correted.
+    //
+    if ( ( ThisRobot -> pos . x <= 0 ) || 
+	 ( ThisRobot -> pos . x >= curShip.AllLevels[ ThisRobot -> pos . z ] -> xlen ) ||
+	 ( ThisRobot -> pos . y <= 0 ) || 
+	 ( ThisRobot -> pos . y >= curShip.AllLevels[ ThisRobot -> pos . z ] -> ylen ) )
     {
-
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid found outside the bounds of this level.\n\
 This is an error and should not occur, but most likely it does since\n\
 the bots are allowed some motion without respect to existing waypoints\n\
 in Freedroid RPG.\n\
 The offending bot will be deleted silently.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-      ThisRobot -> type = (-1) ;
-      ThisRobot -> Status = (OUT) ;
-
-      //--------------------
-      // This droid must not be blitted!!
-      //
-      return ( FALSE );
-      // Terminate(ERR);
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	ThisRobot -> type = (-1) ;
+	ThisRobot -> Status = (OUT) ;
+	
+	//--------------------
+	// This droid must not be blitted!!
+	//
+	return ( FALSE );
+	// Terminate(ERR);
     }
 
   return ( TRUE );
@@ -1226,63 +1229,77 @@ The offending bot will be deleted silently.",
 void 
 InitiateDeathOfEnemy ( Enemy ThisRobot )
 {
-  //--------------------
-  // If the Tux has killed his friend, he will regret it, or at least
-  // say so.
-  //
-  if ( ThisRobot->is_friendly )
+
+    DebugPrintf ( 1 , "\n%s():  another death of a bot/human initiated..." , __FUNCTION__ );
+
+    //--------------------
+    // If the Tux has killed his friend, he will regret it, or at least
+    // say so.
+    //
+    if ( ThisRobot->is_friendly )
     {
-      Activate_Conservative_Frame_Computation();
-      PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
+	Activate_Conservative_Frame_Computation();
+	PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
     }
-  else
+    else
     {
-      //--------------------
-      // The Tux gains experience from this, only for non-friends
-      //
-      Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].experience_reward;
+	//--------------------
+	// The Tux gains experience from this, only for non-friends
+	//
+	Me [ 0 ] . Experience += Druidmap[ ThisRobot->type ].experience_reward;
     }
-
-  ThisRobot->Status = OUT;
-
-  //--------------------
-  // The dead enemy will now explode and drop treasure, provided that 
-  // it was still on this map
-  //
-  if ( MakeSureEnemyIsInsideThisLevel ( ThisRobot ) ) 
+    
+    ThisRobot->Status = OUT;
+    
+    //--------------------
+    // The dead enemy will now explode and drop treasure, provided that 
+    // it was still on this map
+    //
+    if ( MakeSureEnemyIsInsideThisLevel ( ThisRobot ) ) 
     {
-      Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
-      //--------------------
-      // Maybe that robot did have something with him?  The item should then
-      // fall to the floor with it's clanc
-      //
-      // Maybe the robots was also a boss monster.  Then some additional items
-      // must be dropped and they must always be magical.
-      //
-      DropEnemyTreasure ( ThisRobot ) ;
+	Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
+	//--------------------
+	// Maybe that robot did have something with him?  The item should then
+	// fall to the floor with it's clanc
+	//
+	// Maybe the robots was also a boss monster.  Then some additional items
+	// must be dropped and they must always be magical.
+	//
+	DropEnemyTreasure ( ThisRobot ) ;
 
-      //--------------------
-      // Maybe this robot is already fully animated or has at least one
-      // 'death' image.  Then we'll activate it.
-      //
-      if ( last_death_animation_image [ ThisRobot -> type ] != 1 )
+	//--------------------
+	// Maybe this robot is already fully animated or has at least one
+	// 'death' image.  Then we'll activate it.
+	//
+	if ( Druidmap [ ThisRobot -> type ] . use_image_archive_file )
 	{
-	  ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) - 1 + 0.1 ;
-	  ThisRobot -> animation_type = DEATH_ANIMATION;
-	  play_death_sound_for_bot ( ThisRobot );
+
+	    //--------------------
+	    // NOTE:  We reset the animation phase to the first death animation image
+	    //        here.  But this may be WRONG!  In the case that the enemy graphics
+	    //        hasn't been loaded yet, this will result in '1' for the animation
+	    //        phase.  That however is unlikely to happen unless the bot is killed
+	    //        right now and hasn't been ever visible in the game yet.  Also it
+	    //        will lead only to minor 'prior animation' before the real death
+	    //        phase is reached and so serious bugs other than that, so I think it 
+	    //        will be tolerable this way.
+	    //
+	    ThisRobot -> animation_phase = ( ( float ) first_death_animation_image [ ThisRobot -> type ] ) - 1 + 0.1 ;
+	    ThisRobot -> animation_type = DEATH_ANIMATION;
+	    play_death_sound_for_bot ( ThisRobot );
 	}
-      else
+	else
 	{
-	  StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+	    StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
 	}
-
-      //--------------------
-      // And, not that the enemy is dead, some more blood will be spilled...
-      //
-      enemy_spray_blood ( ThisRobot ) ;
-      enemy_spray_blood ( ThisRobot ) ;
-      enemy_spray_blood ( ThisRobot ) ;
-
+	
+	//--------------------
+	// And, not that the enemy is dead, some more blood will be spilled...
+	//
+	enemy_spray_blood ( ThisRobot ) ;
+	enemy_spray_blood ( ThisRobot ) ;
+	enemy_spray_blood ( ThisRobot ) ;
+	
     }
   
 }; // void InitiateDeathOfEnemy ( Enemy ThisRobot )
@@ -1534,221 +1551,233 @@ I seem to have run out of free bullet entries.  This can't normally happen.  -->
 void 
 RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 {
-  int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
-  float bullet_speed = (float) ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
-  int j;
-  float OffsetFactor;
-  bullet* NewBullet=NULL;
-  int bullet_index = 0 ;
-  enemy* target_robot;
-
-  // if ( ThisRobot -> animation_phase > 0 ) return ;
-  if ( ( ThisRobot -> animation_type != WALK_ANIMATION ) && ( ThisRobot -> animation_type != STAND_ANIMATION ) ) return ;
-
-  //--------------------
-  // find a bullet entry, that isn't currently used... 
-  //
-  bullet_index = find_free_bullet_index ();
-  NewBullet = & ( AllBullets [ bullet_index ] );
-
-  //--------------------
-  // We send the bullet onto it's way thowards the given target
-  //
-  set_bullet_speed_to_target_direction ( NewBullet , bullet_speed , xdist , ydist );
+    int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
+    float bullet_speed = (float) ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
+    int j;
+    float OffsetFactor;
+    bullet* NewBullet=NULL;
+    int bullet_index = 0 ;
+    enemy* target_robot;
+    
+    //--------------------
+    // If the robot is not in walk or stand animation, i.e. if it's in
+    // gethit, death or attack animation, then we can't start another
+    // shot/attack right now...
+    //
+    if ( ( ThisRobot -> animation_type != WALK_ANIMATION ) && 
+	 ( ThisRobot -> animation_type != STAND_ANIMATION ) ) return ;
+    
+    //--------------------
+    // find a bullet entry, that isn't currently used... 
+    //
+    bullet_index = find_free_bullet_index ();
+    NewBullet = & ( AllBullets [ bullet_index ] );
+    
+    //--------------------
+    // We send the bullet onto it's way thowards the given target
+    //
+    set_bullet_speed_to_target_direction ( NewBullet , bullet_speed , xdist , ydist );
   
-  //--------------------
-  // Newly, also enemys have to respect the angle modifier in their weapons...
-  //
-  RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+    //--------------------
+    // Newly, also enemys have to respect the angle modifier in their weapons...
+    //
+    RotateVectorByAngle ( & ( NewBullet->speed ) , ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_start_angle_modifier );
+    
+    NewBullet->angle = - ( 90 + 45 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
+    
+    //--------------------
+    // At this point we mention, that when not moving anywhere, the robot should also
+    // face into the direction of the shot
+    //
+    ThisRobot->previous_angle = NewBullet->angle + 180 ;
   
-  NewBullet->angle = - ( 90 + 45 + 180 * atan2 ( NewBullet->speed.y,  NewBullet->speed.x ) / M_PI );  
-
-  //--------------------
-  // At this point we mention, that when not moving anywhere, the robot should also
-  // face into the direction of the shot
-  //
-  ThisRobot->previous_angle = NewBullet->angle + 180 ;
-  
-  // now we set the bullet type right
-  // DebugPrintf( 0 , "Setting gun type : %d." , guntype );
-  NewBullet->type = guntype;
-  
-  // Now we set the damage of this bullet to the correct value
-  NewBullet->damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
-  
-  NewBullet->time_in_seconds = 0;
-  NewBullet->time_in_frames = 0;
-
-  //--------------------
-  // Most enemy shots will not have any special 'magic' property...
-  //
-  NewBullet->poison_duration = 0;
-  NewBullet->poison_damage_per_sec = 0;
-  NewBullet->freezing_level = 0;
-  NewBullet->paralysation_duration = 0;
-
-  NewBullet->bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
-  
-  NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
-  NewBullet->fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
-  NewBullet->owner_pos = & ( ThisRobot->pos );
-  NewBullet->ignore_wall_collisions = 
-    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
-  memset( NewBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-  NewBullet->miss_hit_influencer = FALSE;
-  NewBullet->to_hit = Druidmap [ ThisRobot->type ].to_hit ;
-  NewBullet->was_reflected = FALSE;
-  NewBullet->pass_through_explosions = 
-    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_explosions;
-  NewBullet->reflect_other_bullets = 
-    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_reflect_other_bullets;
-  NewBullet->pass_through_hit_bodies = 
-    ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
-  
-  // start all bullets in the center of the shooter first...
-  NewBullet -> pos.x = ThisRobot -> pos.x;
-  NewBullet -> pos.y = ThisRobot -> pos.y;
-  NewBullet -> pos.z = ThisRobot -> pos.z;
-  
-  // fire bullets so, that they don't hit the shooter...
-  if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
-  NewBullet->pos.x +=
-    (NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
-  NewBullet->pos.y +=
-    (NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
-  
-  // wait for as long as is usual for this weapon type until making the next shot
-  ThisRobot -> firewait = 
-      ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
-  
-
-  //--------------------
-  // Maybe this robot doesn't really generate any bullets, but rather the
-  // attack is built into the droid animation itself.  Then of course we
-  // can delete the bullet that might have been created and just apply some
-  // damage to the Tux if the Tux was sufficiently close
-  //
-  if ( ( last_attack_animation_image [ ThisRobot -> type ] - first_attack_animation_image [ ThisRobot -> type ] > 0 ) ) // && ( ThisRobot -> animation_phase == 0 ) )
+    // now we set the bullet type right
+    // DebugPrintf( 0 , "Setting gun type : %d." , guntype );
+    NewBullet->type = guntype;
+    
+    // Now we set the damage of this bullet to the correct value
+    NewBullet->damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
+    
+    NewBullet->time_in_seconds = 0;
+    NewBullet->time_in_frames = 0;
+    
+    //--------------------
+    // Most enemy shots will not have any special 'magic' property...
+    //
+    NewBullet->poison_duration = 0;
+    NewBullet->poison_damage_per_sec = 0;
+    NewBullet->freezing_level = 0;
+    NewBullet->paralysation_duration = 0;
+    
+    NewBullet->bullet_lifetime = ItemMap [ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_lifetime;
+    
+    NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
+    NewBullet->fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
+    NewBullet->owner_pos = & ( ThisRobot->pos );
+    NewBullet->ignore_wall_collisions = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
+    memset( NewBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+    NewBullet->miss_hit_influencer = FALSE;
+    NewBullet->to_hit = Druidmap [ ThisRobot->type ].to_hit ;
+    NewBullet->was_reflected = FALSE;
+    NewBullet->pass_through_explosions = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_explosions;
+    NewBullet->reflect_other_bullets = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_reflect_other_bullets;
+    NewBullet->pass_through_hit_bodies = 
+	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
+    
+    // start all bullets in the center of the shooter first...
+    NewBullet -> pos.x = ThisRobot -> pos.x;
+    NewBullet -> pos.y = ThisRobot -> pos.y;
+    NewBullet -> pos.z = ThisRobot -> pos.z;
+    
+    // fire bullets so, that they don't hit the shooter...
+    if ( NewBullet->angle_change_rate == 0 ) OffsetFactor = 0.5; else OffsetFactor = 1;
+    NewBullet->pos.x +=
+	(NewBullet->speed.x) / (bullet_speed) * OffsetFactor ;
+    NewBullet->pos.y +=
+	(NewBullet->speed.y) / (bullet_speed) * OffsetFactor ;
+    
+    // wait for as long as is usual for this weapon type until making the next shot
+    ThisRobot -> firewait = 
+	ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
+    
+    
+    //--------------------
+    // Maybe this robot doesn't really generate any bullets, but rather the
+    // attack is built into the droid animation itself.  Then of course we
+    // can delete the bullet that might have been created and just apply some
+    // damage to the Tux if the Tux was sufficiently close
+    //
+    if ( Druidmap [ ThisRobot -> type ] . use_image_archive_file )
     {
-      ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
-      ThisRobot -> animation_type = ATTACK_ANIMATION;
-      
-      if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
-      {
-	  DeleteBullet ( bullet_index , FALSE );
-	  //--------------------
-	  // Built-in attacks also don't use the recharge value of the
-	  // weapon item.
-	  //
-	  ThisRobot -> firewait = 1.7 ;
-      }
-
-      ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
-
-      if ( ThisRobot -> is_friendly )
+	
+	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
 	{
-	  DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
-	  for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
+	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
+	}
+	
+	ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
+	ThisRobot -> animation_type = ATTACK_ANIMATION;
+	
+	
+	
+	if ( Druidmap [ ThisRobot -> type ] . suppress_bullet_generation_when_attacking )
+	{
+	    DeleteBullet ( bullet_index , FALSE );
+	    //--------------------
+	    // Built-in attacks also don't use the recharge value of the
+	    // weapon item.
+	    //
+	    ThisRobot -> firewait = 1.7 ;
+	}
+	
+	ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
+	
+	if ( ThisRobot -> is_friendly )
+	{
+	    DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
+	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; j < Number_Of_Droids_On_Ship ; j ++ , target_robot ++ )
 	    {
-	      if ( target_robot -> Status == OUT ) continue ;
-	      if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
-	      if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
-	      if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
-	      if ( target_robot == ThisRobot ) continue;
-	      DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID: NOW APPLYING DAMAGE!" );
-	      target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
+		if ( target_robot -> Status == OUT ) continue ;
+		if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
+		if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
+		if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
+		if ( target_robot == ThisRobot ) continue;
+		DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID: NOW APPLYING DAMAGE!" );
+		target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
 	    }
 	}
-      else
+	else
 	{
-	  //--------------------
-	  // There can be two cases:  The hostile bot is attacking a player i.e. 
-	  // a Tux or the hostile bot is attacking a friendly bot.
-	  //
-	  switch ( ThisRobot -> attack_target_type )
+	    //--------------------
+	    // There can be two cases:  The hostile bot is attacking a player i.e. 
+	    // a Tux or the hostile bot is attacking a friendly bot.
+	    //
+	    switch ( ThisRobot -> attack_target_type )
 	    {
-	    case ATTACK_TARGET_IS_ENEMY:
-	      DebugPrintf ( -4 , "\nNow hostile bot is trying to hurt friendly bot!" );
-	      //--------------------
-	      // For now we use a constant of 70% hit chance of hostile bots against
-	      // any friendly bots.  This might be replaced by something more sophisticated
-	      // some time later.
-	      //
-	      if ( MyRandom ( 100 ) <= 70 )
-		{
-		  //--------------------
-		  // If the bot hit, we reduce the energy of the other bot and maybe there
-		  // should also be some kind of scream of the victimized bot?
-		  //
-		  AllEnemys [ ThisRobot -> attack_target_index ] . energy -= 
-		    Druidmap [ ThisRobot -> type ] . physical_damage ;
+		case ATTACK_TARGET_IS_ENEMY:
+		    DebugPrintf ( -4 , "\nNow hostile bot is trying to hurt friendly bot!" );
+		    //--------------------
+		    // For now we use a constant of 70% hit chance of hostile bots against
+		    // any friendly bots.  This might be replaced by something more sophisticated
+		    // some time later.
+		    //
+		    if ( MyRandom ( 100 ) <= 70 )
+		    {
+			//--------------------
+			// If the bot hit, we reduce the energy of the other bot and maybe there
+			// should also be some kind of scream of the victimized bot?
+			//
+			AllEnemys [ ThisRobot -> attack_target_index ] . energy -= 
+			    Druidmap [ ThisRobot -> type ] . physical_damage ;
 		  if ( MyRandom ( 100 ) <= 20 ) 
-		    play_death_sound_for_bot ( & AllEnemys [ ThisRobot -> attack_target_index ] ) ;
-		}
-	      else
-		{
-		  //--------------------
-		  // If the bot missed the other bot, we do nothing...
-		  //
-		}
-	      break;
-
-	    case ATTACK_TARGET_IS_PLAYER:
-	      //--------------------
-	      // For now, we just damage the Tux according to this enemys 'damage' value.  We
-	      // don't fuss around whether the Tux is close at all or not.  
-	      // In later releases, a more complex ruleset,
-	      // taking into account position, maybe even bocks with the shield, should
-	      // be implemented here.
-	      //
-	      if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
-		{
-		  //--------------------
-		  // If the bot hit, we reduce the energy of the Tux and maybe there
-		  // should also be some kind of scream of the Tux?
-		  //
-		  Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
-		  if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
-		}
-	      else
-		{
-		  //--------------------
-		  // If the bot missed, we do nothing...
-		  //
-		}
-	      break;
-
-	    case ATTACK_TARGET_IS_NOTHING:
-	      DebugPrintf ( -4 , "\nSuspicious:  attack made while attack_target_type set to NOTHING." );
-	      break;
-
-	    default:
-	      GiveStandardErrorMessage ( __FUNCTION__  , 
-					 "unhandled attack_target_type encountered!",
-					 PLEASE_INFORM, IS_FATAL );
-	      break;
+		      play_death_sound_for_bot ( & AllEnemys [ ThisRobot -> attack_target_index ] ) ;
+		    }
+		    else
+		    {
+			//--------------------
+			// If the bot missed the other bot, we do nothing...
+			//
+		    }
+		    break;
+		    
+		case ATTACK_TARGET_IS_PLAYER:
+		    //--------------------
+		    // For now, we just damage the Tux according to this enemys 'damage' value.  We
+		    // don't fuss around whether the Tux is close at all or not.  
+		    // In later releases, a more complex ruleset,
+		    // taking into account position, maybe even bocks with the shield, should
+		    // be implemented here.
+		    //
+		    if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
+		    {
+			//--------------------
+			// If the bot hit, we reduce the energy of the Tux and maybe there
+			// should also be some kind of scream of the Tux?
+			//
+			Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
+			if ( MyRandom ( 100 ) <= 20 ) tux_scream_sound ( );
+		    }
+		    else
+		    {
+			//--------------------
+			// If the bot missed, we do nothing...
+			//
+		    }
+		    break;
+		    
+		case ATTACK_TARGET_IS_NOTHING:
+		    DebugPrintf ( -4 , "\nSuspicious:  attack made while attack_target_type set to NOTHING." );
+		    break;
+		    
+		default:
+		    GiveStandardErrorMessage ( __FUNCTION__  , 
+					       "unhandled attack_target_type encountered!",
+					       PLEASE_INFORM, IS_FATAL );
+		    break;
 	    }
 	}
-	  
-      //--------------------
-      // While we don't have sound samples for individual attack motions,
-      // we'll use the death sound sample here too, even if noone is dying.
-      // So far, that seems to work well, but it would be good, if sooner or
-      // later bots could have separate attack and death sound samples, maybe
-      // in some later release...
-      //
-      play_death_sound_for_bot ( ThisRobot );
+	
+	//--------------------
+	// While we don't have sound samples for individual attack motions,
+	// we'll use the death sound sample here too, even if noone is dying.
+	// So far, that seems to work well, but it would be good, if sooner or
+	// later bots could have separate attack and death sound samples, maybe
+	// in some later release...
+	//
+	play_death_sound_for_bot ( ThisRobot );
     }
-  else
+    else
     {
-      //--------------------
-      // Only in case of a conventional sword strike, i.e. no real animation
-      // yet will we start the sound for that 'bullet'.
-      //
-      Fire_Bullet_Sound ( guntype );
+	//--------------------
+	// Only in case of a conventional sword strike, i.e. no real animation
+	// yet will we start the sound for that 'bullet'.
+	//
+	Fire_Bullet_Sound ( guntype );
     }
-
-
+    
 }; // void RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
 /* ----------------------------------------------------------------------
@@ -2402,18 +2431,18 @@ SetRestOfGroupToState ( Enemy ThisRobot , int NewState )
 void 
 robot_group_turn_hostile ( int enemy_num )
 {
-  int MarkerCode;
-  int i;
-  enemy* ThisRobot = & ( AllEnemys [ enemy_num ] ) ;
+    int MarkerCode;
+    int i;
+    enemy* ThisRobot = & ( AllEnemys [ enemy_num ] ) ;
 
-  MarkerCode = ThisRobot -> marker ;
+    MarkerCode = ThisRobot -> marker ;
+    
+    // if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
 
-  // if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
-
-  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {
-      if ( AllEnemys [ i ] . marker == MarkerCode )
-	AllEnemys [ i ] . is_friendly = FALSE ;
+	if ( AllEnemys [ i ] . marker == MarkerCode )
+	    AllEnemys [ i ] . is_friendly = FALSE ;
     }
 
 }; // void robot_group_turn_hostile ( int enemy_num )
@@ -2832,6 +2861,18 @@ ProcessAttackStateMachine ( int enemynum )
     else if ( ThisRobot -> combat_state == MAKE_ATTACK_RUN )
     {
 	MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+	//--------------------
+	// If the bot is now friendly, it should switch to 'normal'
+	// operation again...
+	//
+	if ( ThisRobot -> is_friendly )
+	{
+	    if ( ThisRobot -> stick_to_waypoint_system_by_default )
+		ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    else
+		ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+	}
+	
     }
     else if ( ThisRobot -> combat_state == FIGHT_ON_TUX_SIDE )
     {
@@ -3028,15 +3069,20 @@ CheckEnemyEnemyCollision (int enemynum)
 void
 start_gethit_animation_if_applicable ( enemy* ThisRobot ) 
 {
-  //--------------------
-  // Maybe this robot is already fully animated.  In this case, after getting
-  // hit, the gethit animation should be displayed, which we'll initiate here.
-  //
-  if ( ( last_gethit_animation_image [ ThisRobot -> type ] - first_gethit_animation_image [ ThisRobot -> type ] > 0 ) )
+    //--------------------
+    // Maybe this robot is already fully animated.  In this case, after getting
+    // hit, the gethit animation should be displayed, which we'll initiate here.
+    //
+    if ( ( last_gethit_animation_image [ ThisRobot -> type ] - first_gethit_animation_image [ ThisRobot -> type ] > 0 ) )
     {
-      ThisRobot -> animation_phase = ((float)first_gethit_animation_image [ ThisRobot -> type ]) + 0.1 ;
-      ThisRobot -> animation_type = GETHIT_ANIMATION;
+	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
+	{
+	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
+	}
+	ThisRobot -> animation_phase = ((float)first_gethit_animation_image [ ThisRobot -> type ]) + 0.1 ;
+	ThisRobot -> animation_type = GETHIT_ANIMATION;
     }
+
 }; // void start_gethit_animation_if_applicable ( enemy* ThisRobot ) 
 
 /* ----------------------------------------------------------------------
@@ -3046,128 +3092,159 @@ start_gethit_animation_if_applicable ( enemy* ThisRobot )
 void
 AnimateEnemys (void)
 {
-  int i;
-  enemy* our_enemy;
-
-  // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
-  for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
+    int i;
+    enemy* our_enemy;
+    
+    // for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+    for ( i = 0; i < Number_Of_Droids_On_Ship ; i++ )
     {
       
-      our_enemy = & ( AllEnemys [ i ] ) ;
+	our_enemy = & ( AllEnemys [ i ] ) ;
+	
+	/* ignore enemys that are dead or on other levels or dummys */
+	// if (AllEnemys[i].type == DEBUG_ENEMY) continue;
+	// if (AllEnemys[i].pos.z != CurLevel->levelnum)
+	if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
+	    continue;
 
-      /* ignore enemys that are dead or on other levels or dummys */
-      // if (AllEnemys[i].type == DEBUG_ENEMY) continue;
-      // if (AllEnemys[i].pos.z != CurLevel->levelnum)
-      if ( our_enemy -> pos . z != Me [ 0 ] . pos . z )
-	continue;
-
-      //--------------------
-      // While the old 'phase' doesn't have much meaning today any more, the
-      // new animation phase does.
-      //
-      // First the walkphases,
-      // Then the attack phases
-      // then the gethit phases
-      // finally the death phases
-      //
-      if ( our_enemy -> animation_phase > 0 )
+	//--------------------
+	// While the old 'phase' doesn't have much meaning today any more, the
+	// new animation phase does.
+	//
+	// First the walkphases,
+	// Then the attack phases
+	// then the gethit phases
+	// finally the death phases
+	//
+	// if ( our_enemy -> animation_phase > 0 )
+	// {
+	if ( Druidmap [ our_enemy -> type ] . use_image_archive_file == TRUE )
 	{
-	  switch ( our_enemy -> animation_type )
+	    switch ( our_enemy -> animation_type )
 	    {
-	    case WALK_ANIMATION:
-	      our_enemy -> animation_phase += Frame_Time() * droid_walk_animation_speed_factor [ our_enemy -> type ] ;
+		case WALK_ANIMATION:
+		    our_enemy -> animation_phase += 
+			Frame_Time() * droid_walk_animation_speed_factor [ our_enemy -> type ] ;
+		    
+		    //--------------------
+		    // While we're in the walk animation cycle, we have the walk animation
+		    // images cycle.
+		    //
+		    if ( our_enemy -> animation_phase >= last_walk_animation_image [ our_enemy -> type ] )
+		    {
+			our_enemy -> animation_phase = 0 ;
+			our_enemy -> animation_type = WALK_ANIMATION;
+		    }
+		    //--------------------
+		    // But as soon as the walk stops and the 'bot' is standing still, we switch
+		    // to the standing cycle...
+		    //
+		    if ( ( fabsf ( our_enemy -> speed . x ) < 0.1 ) && ( fabsf ( our_enemy -> speed . y ) < 0.1 ) )
+		    {
+			our_enemy -> animation_type = STAND_ANIMATION ;
+			our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
+			// DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
+		    }
 
-	      //--------------------
-	      // While we're in the walk animation cycle, we have the walk animation
-	      // images cycle.
-	      //
-	      if ( our_enemy -> animation_phase >= last_walk_animation_image [ our_enemy -> type ] )
-		{
-		  our_enemy -> animation_phase = 0 ;
-		  our_enemy -> animation_type = WALK_ANIMATION;
-		}
-	      //--------------------
-	      // But as soon as the walk stops and the 'bot' is standing still, we switch
-	      // to the standing cycle...
-	      //
-	      if ( ( fabsf ( our_enemy -> speed . x ) < 0.1 ) && ( fabsf ( our_enemy -> speed . y ) < 0.1 ) )
-		{
-		  our_enemy -> animation_type = STAND_ANIMATION ;
-		  our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
-		  // DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
-		}
-	      break;
-	    case ATTACK_ANIMATION:
-	      our_enemy -> animation_phase += Frame_Time() * droid_attack_animation_speed_factor [ our_enemy -> type ] ;
+		    if ( our_enemy -> Status == OUT )
+		    {
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in WALK phase ... " , __FUNCTION__ );
+		    }
 
-	      if ( our_enemy -> animation_phase >= last_attack_animation_image [ our_enemy -> type ] )
-		{
-		  our_enemy -> animation_phase = 0 ;
-		  our_enemy -> animation_type = WALK_ANIMATION;
-		}
-	      break;
-	    case GETHIT_ANIMATION:
-	      our_enemy -> animation_phase += Frame_Time() * droid_gethit_animation_speed_factor [ our_enemy -> type ] ;
+		    break;
+		case ATTACK_ANIMATION:
+		    our_enemy -> animation_phase += 
+			Frame_Time() * droid_attack_animation_speed_factor [ our_enemy -> type ] ;
+		    
+		    if ( our_enemy -> animation_phase >= last_attack_animation_image [ our_enemy -> type ] )
+		    {
+			our_enemy -> animation_phase = 0 ;
+			our_enemy -> animation_type = WALK_ANIMATION;
+		    }
 
-	      if ( our_enemy -> animation_phase >= last_gethit_animation_image [ our_enemy -> type ] )
-		{
-		  our_enemy -> animation_phase = 0 ;
-		  our_enemy -> animation_type = WALK_ANIMATION;
-		}
-	      break;
-	    case DEATH_ANIMATION:
-	      our_enemy -> animation_phase += Frame_Time() * droid_death_animation_speed_factor [ our_enemy -> type ] ;
+		    if ( our_enemy -> Status == OUT )
+		    {
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in ATTACK phase... " , __FUNCTION__ );
+		    }
 
-	      if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] - 1 )
-		{
-		  our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
-		  our_enemy -> animation_type = DEATH_ANIMATION ;
-		}
-	      break;
-	    case STAND_ANIMATION:
-	      our_enemy -> animation_phase += Frame_Time() * droid_stand_animation_speed_factor [ our_enemy -> type ] ;
+		    break;
+		case GETHIT_ANIMATION:
+		    our_enemy -> animation_phase += 
+			Frame_Time() * droid_gethit_animation_speed_factor [ our_enemy -> type ] ;
+		    
+		    if ( our_enemy -> animation_phase >= last_gethit_animation_image [ our_enemy -> type ] )
+		    {
+			our_enemy -> animation_phase = 0 ;
+			our_enemy -> animation_type = WALK_ANIMATION;
+		    }
 
-	      if ( our_enemy -> animation_phase >= last_stand_animation_image [ our_enemy -> type ] - 1 )
-		{
-		  our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
-		  our_enemy -> animation_type = STAND_ANIMATION;
-		}
-	      break;
+		    if ( our_enemy -> Status == OUT )
+		    {
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in GETHIT phase ... " , __FUNCTION__ );
+		    }
 
-	    default:
-	      fprintf ( stderr , "\nThe animation type found is: %d.", our_enemy -> animation_type );
-	      GiveStandardErrorMessage ( __FUNCTION__  , "\
+		    break;
+		case DEATH_ANIMATION:
+		    our_enemy -> animation_phase += 
+			Frame_Time() * droid_death_animation_speed_factor [ our_enemy -> type ] ;
+
+		    if ( our_enemy -> animation_phase >= last_death_animation_image [ our_enemy -> type ] - 1 )
+		    {
+			our_enemy -> animation_phase = last_death_animation_image [ our_enemy -> type ] - 1 ;
+			our_enemy -> animation_type = DEATH_ANIMATION ;
+		    }
+		    break;
+		case STAND_ANIMATION:
+		    our_enemy -> animation_phase += 
+			Frame_Time() * droid_stand_animation_speed_factor [ our_enemy -> type ] ;
+		    
+		    if ( our_enemy -> animation_phase >= last_stand_animation_image [ our_enemy -> type ] - 1 )
+		    {
+			our_enemy -> animation_phase = first_stand_animation_image [ our_enemy -> type ] - 1 ;
+			our_enemy -> animation_type = STAND_ANIMATION;
+		    }
+
+		    if ( our_enemy -> Status == OUT )
+		    {
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in STAND phase... " , __FUNCTION__ );
+		    }
+
+		    break;
+		    
+		default:
+		    fprintf ( stderr , "\nThe animation type found is: %d.", our_enemy -> animation_type );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was an animation type encountered that isn't defined in FreedroidRPG.\n\
 That means:  Something is going *terribly* wrong!" ,
-					 PLEASE_INFORM, IS_FATAL );
-	      break;
+					       PLEASE_INFORM, IS_FATAL );
+		    break;
 	    }
 	}
-
-
-      if ( our_enemy -> Status == OUT)
+	
+	
+	if ( our_enemy -> Status == OUT)
 	{
-	  our_enemy -> phase = DROID_PHASES ;
-	  continue;
+	    our_enemy -> phase = DROID_PHASES ;
+	    continue;
 	}
-
-      if ( our_enemy -> energy <= 0 ) 
+	
+	if ( our_enemy -> energy <= 0 ) 
 	{
-	  DebugPrintf( 1 , "\nAnimateEnemys: WARNING: Enemy with negative energy encountered.  Phase correction forced..." );
-	  our_enemy -> phase = 0 ;
+	    DebugPrintf( 1 , "\n%s(): WARNING: Enemy with negative energy encountered.  Phase correction forced..." , __FUNCTION__ );
+	    our_enemy -> phase = 0 ;
 	}
-      else
+	else
 	{
-	  our_enemy -> phase +=
-	    ( our_enemy -> energy / Druidmap [ our_enemy -> type ] . maxenergy ) *
-	    Frame_Time () * DROID_PHASES * 2.5;
+	    our_enemy -> phase +=
+		( our_enemy -> energy / Druidmap [ our_enemy -> type ] . maxenergy ) *
+		Frame_Time () * DROID_PHASES * 2.5;
 	}
-
-      if ( our_enemy -> phase >= DROID_PHASES)
+	
+	if ( our_enemy -> phase >= DROID_PHASES)
 	{
-	  our_enemy -> phase = 0;
+	    our_enemy -> phase = 0;
 	}
-
+	
     }
 }; // void AnimateEnemys ( void )
 

@@ -2523,38 +2523,39 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 void
 printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 {
-  va_list args;
-  int i;
-
-  char *tmp;
-  va_start (args, fmt);
-
-  if (x == -1) x = MyCursorX;
-  else MyCursorX = x;
-
-  if (y == -1) y = MyCursorY;
-  else MyCursorY = y;
-
-  tmp = (char *) MyMalloc (10000 + 1);
-  vsprintf (tmp, fmt, args);
-  PutString (screen, x, y, tmp);
-
-  // our_SDL_flip_wrapper (screen);
-
-  if (tmp[strlen(tmp)-1] == '\n')
+    va_list args;
+    int i;
+    
+    char *tmp;
+    va_start (args, fmt);
+    
+    if (x == -1) x = MyCursorX;
+    else MyCursorX = x;
+    
+    if (y == -1) y = MyCursorY;
+    else MyCursorY = y;
+    
+    tmp = (char *) MyMalloc (10000 + 1);
+    vsprintf ( tmp , fmt , args );
+    PutString (screen, x, y, tmp);
+    
+    // our_SDL_flip_wrapper (screen);
+    
+    if (tmp[strlen(tmp)-1] == '\n')
     {
-      MyCursorX = x;
-      MyCursorY = y+ 1.1* (GetCurrentFont()->h);
+	MyCursorX = x;
+	MyCursorY = y+ 1.1* (GetCurrentFont()->h);
     }
-  else
+    else
     {
-      for ( i = 0 ; i < ( ( int ) strlen ( tmp ) ) ; i ++ )
-	MyCursorX += CharWidth ( GetCurrentFont ( ) , tmp [ i ] );
-      MyCursorY = y;
+	for ( i = 0 ; i < ( ( int ) strlen ( tmp ) ) ; i ++ )
+	    MyCursorX += CharWidth ( GetCurrentFont ( ) , tmp [ i ] );
+	MyCursorY = y;
     }
 
-  free (tmp);
-  va_end (args);
+    free (tmp);
+    va_end (args);
+
 }; // void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
 

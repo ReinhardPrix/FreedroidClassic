@@ -991,59 +991,59 @@ void
 LoadAndFadeInBackgroundMusic ( void )
 {
 #ifndef HAVE_LIBSDL_MIXER
-  return;
+    return;
 #else
-
-  static int MOD_Music_Channel = -1;
-  char* fpath;
-  char filename_raw[5000];
-
-  if ( !sound_on ) return;
-
-  if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
+    
+    static int MOD_Music_Channel = -1;
+    char* fpath;
+    char filename_raw[5000];
+    
+    if ( !sound_on ) return;
+    
+    if ( filename_raw == SILENCE ) // SILENCE is defined as -1 I think
     {
-      //printf("\nOld Background music channel has been halted.");
-      // fflush(stdout);
-      Mix_HaltMusic( ); // this REALLY is a VOID-argument function!!
-      MOD_Music_Channel = -1;
-      return;
+	//printf("\nOld Background music channel has been halted.");
+	// fflush(stdout);
+	Mix_HaltMusic( ); // this REALLY is a VOID-argument function!!
+	MOD_Music_Channel = -1;
+	return;
     }
-
-  //--------------------
-  // Now we LOAD the music file from disk into memory!!
-  // But before we free the old music.  This is not a danger, cause the music
-  // is first initialized in InitAudio with some dummy mod files, so that there
-  // is always something allocated, that we can free here.
-  //
-  // The loading of music and sound files is
-  // something that was previously done only in the initialisatzion funtion
-  // of the audio thing.  But now we want to allow for dynamic specification of
-  // music files via the mission files and that.  So we load the music now.
-  //
-
-  if ( Loaded_MOD_Files[ 0 ] != NULL )
+    
+    //--------------------
+    // Now we LOAD the music file from disk into memory!!
+    // But before we free the old music.  This is not a danger, cause the music
+    // is first initialized in InitAudio with some dummy mod files, so that there
+    // is always something allocated, that we can free here.
+    //
+    // The loading of music and sound files is
+    // something that was previously done only in the initialisatzion funtion
+    // of the audio thing.  But now we want to allow for dynamic specification of
+    // music files via the mission files and that.  So we load the music now.
+    //
+    
+    if ( Loaded_MOD_Files[ 0 ] != NULL )
     {
-      Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
-      Loaded_MOD_Files [ 0 ] = NULL ;
+	Mix_FreeMusic( Loaded_MOD_Files [ 0 ] );  
+	Loaded_MOD_Files [ 0 ] = NULL ;
     }
-
-  strcpy ( filename_raw , "music/" );
-  strcat ( filename_raw , NewMusicTargetFileName );
-  fpath = find_file_for_callbacks ( filename_raw , SOUND_DIR, FALSE);
-  Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
-  if ( Loaded_MOD_Files[ 0 ] == NULL )
+    
+    strcpy ( filename_raw , "music/" );
+    strcat ( filename_raw , NewMusicTargetFileName );
+    fpath = find_file_for_callbacks ( filename_raw , SOUND_DIR, FALSE);
+    Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
+    if ( Loaded_MOD_Files[ 0 ] == NULL )
     {
-      DebugPrintf (0, "The music file %s could not be loaded!\n" , NewMusicTargetFileName );
-      return;
+	DebugPrintf (0, "The music file %s could not be loaded!\n" , NewMusicTargetFileName );
+	return;
     }
-  else
-    DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
-
-  // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
-  // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
-  MOD_Music_Channel = Mix_FadeInMusic ( Loaded_MOD_Files[ 0 ] , -1 , 5000 );
-
-  Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
+    else
+	DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
+    
+    // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
+    // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
+    MOD_Music_Channel = Mix_FadeInMusic ( Loaded_MOD_Files[ 0 ] , -1 , 5000 );
+    
+    Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
 }; // void LoadAndFadeInBackgroundMusic ( void )

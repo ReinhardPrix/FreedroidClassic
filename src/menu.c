@@ -1091,9 +1091,9 @@ Cheatmenu (void)
 		
 	    case 'l': // robot list of this deck 
 		l = 0;  // l is counter for lines of display of enemy output
-		for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
+		for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
 		{
-		    if (AllEnemys[i].pos.z == CurLevel->levelnum) 
+		    if ( AllEnemys [ i ] . pos . z == CurLevel -> levelnum ) 
 		    {
 			if (l && !(l%20)) 
 			{
@@ -1106,24 +1106,56 @@ Cheatmenu (void)
 			{
 			    ClearGraphMem ();
 			    printf_SDL (Screen, x0, y0,
-					" NR.   ID  X    Y   ENERGY   speedX Status Friendly\n");
+					"NR.   ID  X    Y   ENERGY   speedX Status Friendly An-type An-Phase \n");
 			    printf_SDL (Screen, -1, -1,
 					"---------------------------------------------\n");
 			}
 			
 			l ++;
-			printf_SDL (Screen, 15, -1,
-				    "%d.   %s   %3.1f   %3.1f   %d    %g ", i,
-				    Druidmap[AllEnemys[i].type].druidname,
-				    AllEnemys[i].pos.x,
-				    AllEnemys[i].pos.y,
-				    (int)AllEnemys[i].energy,
-				    AllEnemys[i].speed.x );
+			if ( ( AllEnemys [ i ] . type >= 0 ) &&
+			     ( AllEnemys [ i ] . type <= Number_Of_Droid_Types ) )
+			{
+			    printf_SDL (Screen, 15, -1,
+					"%4d. %s   %3.1f   %3.1f   %4d    %g ", 
+					i,
+					Druidmap[AllEnemys[i].type].druidname,
+					AllEnemys[i].pos.x,
+					AllEnemys[i].pos.y,
+					(int)AllEnemys[i].energy,
+					AllEnemys[i].speed.x );
+			}
+			else
+			{
+			    printf_SDL ( Screen , 15 , -1 , "SEVERE ERROR: Type=%d. " , 
+					 AllEnemys [ i ] . type ) ;
+			}
 			if ( AllEnemys[i].Status == MOBILE ) printf_SDL (Screen, -1, -1, "MOB" );
 			else if ( AllEnemys[i].Status == OUT ) printf_SDL (Screen, -1, -1, "OUT" );
 			else printf_SDL (Screen, -1, -1, "ERROR-UNKNOWN" );
 			if ( AllEnemys[i].is_friendly ) printf_SDL (Screen, -1, -1, " YES" );
-			else printf_SDL (Screen, -1, -1, " NO" );
+			else printf_SDL (Screen, -1, -1, "  NO" );
+			switch ( AllEnemys [ i ] . animation_type ) 
+			{
+			    case WALK_ANIMATION:
+				printf_SDL (Screen, -1, -1, " Walk" );
+				break;
+			    case ATTACK_ANIMATION:
+				printf_SDL (Screen, -1, -1, " Atta" );
+				break;
+			    case GETHIT_ANIMATION:
+				printf_SDL (Screen, -1, -1, " GHit" );
+				break;
+			    case DEATH_ANIMATION:
+				printf_SDL (Screen, -1, -1, " Deth" );
+				break;
+			    case STAND_ANIMATION:
+				printf_SDL (Screen, -1, -1, " Stnd" );
+				break;
+			    default:
+				printf_SDL (Screen, -1, -1, " ERROR!" );
+				break;
+			}
+			printf_SDL (Screen, -1, -1, " %4.1f" , AllEnemys [ i ] . animation_phase );
 			printf_SDL (Screen, -1, -1, "\n" );
 			
 		    } // if (enemy on current level)  

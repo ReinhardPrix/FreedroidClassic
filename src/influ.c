@@ -836,37 +836,25 @@ void
 CheckIfCharacterIsStillOk ( int player_num ) 
 {
 
-  //--------------------
-  // This is something, that needs to be done ONLY for the 
-  // one character of this client programm!!!!
-  //
-  if ( player_num != 0 ) return;
-
-  //------------------------------
-  // Now we check if the main character is really still ok.
-  //
-  if ( Me [ player_num ] . energy <= 0 )
+    //--------------------
+    // This is something, that needs to be done ONLY for the 
+    // one character of this client programm!!!!
+    //
+    if ( player_num != 0 ) return;
+    
+    //------------------------------
+    // Now we check if the main character is really still ok.
+    //
+    if ( Me [ player_num ] . energy <= 0 )
     {
-      if ( Me [ player_num ] .type != DRUID001 )
-	{
-	  Me [ player_num ] .type = DRUID001;
-	  Me [ player_num ] .speed.x = 0;
-	  Me [ player_num ] .speed.y = 0;
-	  Me [ player_num ] .energy = PreTakeEnergy;
-	  Me [ player_num ] .health = BLINKENERGY;
-	  StartBlast ( Me [ player_num ] .pos.x, Me [ player_num ] .pos.y, Me [ player_num ] .pos.z , DRUIDBLAST );
-	}
-      else
-	{
-	  Me [ player_num ] . status = OUT;
-
-	  if ( !ServerMode ) ThouArtDefeated ();
-	  
-	  DebugPrintf (2, "\nvoid CheckIfCharacterIsStillOk( int player_num ):  Alternate end of function reached.");
-	  return;
-	}
+	Me [ player_num ] . status = OUT;
+	
+	if ( !ServerMode ) ThouArtDefeated ();
+	
+	DebugPrintf ( 1 , "\n%s():  Alternate end of function reached." , __FUNCTION__ );
+	return;
     }
-
+    
 }; // void CheckIfCharacterIsStillOk ( int player_num ) 
 
 /* ----------------------------------------------------------------------
