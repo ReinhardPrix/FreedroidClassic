@@ -777,11 +777,11 @@ void RotateColors(register int ColNum1,register int ColNum2)
   //}
   
   /* Farben im Speicher um eins rotieren */
-  //MyMemcpy(Zwisch,FarbFeldPointer, 3);
+  //memcpy(Zwisch,FarbFeldPointer, 3);
 	
-  //MyMemcpy(FarbFeldPointer,FarbFeldPointer+3, (AnzColors-1)*3 );
+  //memcpy(FarbFeldPointer,FarbFeldPointer+3, (AnzColors-1)*3 );
   
-  //MyMemcpy(FarbFeldPointer+(AnzColors-1)*3, Zwisch, 3);
+  //memcpy(FarbFeldPointer+(AnzColors-1)*3, Zwisch, 3);
   
   /* Farben aus dem Speicher zurueck in die DAC-Register schreiben */
   //asm{

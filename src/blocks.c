@@ -191,7 +191,7 @@ void IsolateBlock(
 	tmp = target;
 	
 	for( row = 0; row < Blockhoehe; row ++ ) {
-		MyMemcpy(tmp, source, Blockbreite);
+		memcpy(tmp, source, Blockbreite);
 		tmp += Blockbreite;
 		source += SCREENLEN;
 	}
@@ -353,7 +353,7 @@ void DisplayBlock(
 	screenpos = screen + y*SCREENLEN + x;
 
 	for( row = 0; row < height; row++ ) {
-		MyMemcpy(screenpos, source, len);
+		memcpy(screenpos, source, len);
 		screenpos += SCREENLEN;
 		source += len;
 	}

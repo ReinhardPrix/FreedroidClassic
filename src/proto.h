@@ -270,11 +270,8 @@ EXTERN void Terminate(int);
 EXTERN void KillQueue(void);
 EXTERN void PutMessages(void);
 EXTERN void InsertMessage(char* MText);
-EXTERN void* MyMemcpy(void*,void*,unsigned int);
 EXTERN void* MyMalloc(long);
 EXTERN void DirToVect(int dir, Vect vector);
-EXTERN void TurnIntVects(void);
-EXTERN void RestoreIntVects(void);
 
 EXTERN long my_sqrt(long);
 EXTERN int my_abs(int);

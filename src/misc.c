@@ -311,40 +311,13 @@ void InsertNewMessage(void) {
 * $Function----------------------------------------------------------*/
 void Terminate(int ExitCode){
 
-  //
-  // THIS COMES IN FOR THE PORT AND IS NEW!
-  //
-
   printf("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf("GameOver : %i\n",GameOver);
-  printf("Diese Meldung wurde durch PRINTF ausgegeben VOR dem Umschalten auf Textmode.\n");
   keyboard_close();
   vga_setmode(TEXT);
-  printf("Diese Meldung wurde durch PRINTF ausgegeben NACH dem Umschalten auf Textmode.\n");
   exit(ExitCode);
   return;
 
-  //
-  // THIS WAS IN BEFORE THE PORT AND WILL NO LONGER BE EXECUTED,
-  // EVEN IF IT IS NOT COMMENTED OUT
-  //
-
-  if (ExitCode) getchar();
-  /* Interruptvektoren wieder restaurieren */
-  RestoreIntVects();
-  /* Soundblaster soll keine Toene mehr spucken */
-  // PORT sbfm_silence();
-#ifdef MODSCHASEIN	
-  // PORT StopModPlayer();
-#endif
-  /* Videomodus wieder restaurieren */
-  RestoreVideoMode();
-  
-  /* Tastaturwiederholung wieder schnell setzen */
-  SetTypematicRate(TYPEMATIC_FAST);
-  
-  /* Zur"uck nach DOS */
-  exit(ExitCode);
 } // void Terminate(int ExitCode)
 
 
@@ -580,18 +553,6 @@ void InsertMessage(char* MText)
 }
 
 /* **********************************************************************
-	Diese Funktion kopiert ist ein "Aquivalent zu memset, kopiert jedoch
-	"uber DMA-Zugriff.
-	**********************************************************************/
-void* MyMemcpy(void* Ziel,void* Quelle,unsigned int Laenge){
-  unsigned int ZOfs,ZSeg,QOfs,QSeg;
-  unsigned char PCFlag,DirFlag;
-
-  return(memcpy(Ziel,Quelle,Laenge));
-
-}
-
-/* **********************************************************************
 	Diese Funktion erledigt ein normales Malloc, trifft zuerst aber ein
 	Par Sicherheitsvorkehrungen.
 	**********************************************************************/
@@ -665,105 +626,6 @@ void DirToVect(int dir, Vect vector) {
 	} /* switch */
 
 } /* DirToVect */
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-//void interrupt Interrupt1C(void){
-//	int i;
-//	static unsigned char Palwert;
-
-	//	TimerFlag = TRUE;
-	//
-	//	ThisMessageTime ++;			/* Message Timer */
-	//	
-	//	if (Me.firewait > 0) Me.firewait--;
-	//	
-	//	if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
-	//	if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
-	//	
-	//	if ( CurLevel->empty > 2) CurLevel->empty--;
-	//
-	//	if(RealScore > ShowScore) ShowScore++;
-	//	if(RealScore < ShowScore) ShowScore--;
-	//
-	//
-	//	if (InterruptInfolineUpdate) {
-	//		UpdateInfoline();
-	//		SetInfoline();
-	//	}
-
-	
-	/*
-	 * Das Ausf"uhren des alten Interrupts ist nicht essentiell,
-	 * h"alt aber schon zuvor installierte Interruptfunktionen
-	 * am laufenden
-	 */
-	//	OldInt1Ch();
-//}
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-//void interrupt Interrupt23(void){
-//	GameOver=TRUE;
-//	QuitProgram=TRUE;
-////	OldInt23h();
-//}
-
-/*@Function============================================================
-@Desc: Diese Funktion haengt die Adressen der Funktionen Interrupt09(void)
-	und Interrupt1C an die jeweiligen Interrupthandler im Biosvariablenbereich
-	ab der Adresse 0000:0000 ein. Zuvor ist es notwendig, die alten Vektoren
-	der Interrupts zu sichern, nicht nur, um sie bei Beendigung des Programms
-	wieder restaurieren zu koennen sondern auch, um sie durch die neuen
-	Interruptfuktionen auszufuehren, da es immerhin moeglich ist, das bereits
-	andere residente Programme sich dort "hineigehaengt" haben.
-
-	Nun ist auch eine Sicherheitsabfrage gegen doppeltes Verbiegen dazugekommen.
-@Ret: keiner
-@Int:
-* $Function----------------------------------------------------------*/
-void TurnIntVects(void){
-//	if (!VectsHaveBeenTurned) {
-//		OldInt09h=getvect(0x09);
-//		OldInt1Ch=getvect(0x1C);
-//		OldInt23h=getvect(0x23);
-//		setvect(0x09,Interrupt09);
-  //		setvect(0x1C,Interrupt1C);
-  //		setvect(0x23,Interrupt23);
-  //		VectsHaveBeenTurned=1;
-  //	} else {
-  //		printf(" Die Interruptvektoren waren ja schon verbogen !\n");
-  //		getchar();
-  //	}
-}
-
-/*@Function============================================================
-@Desc: Diese Funktion restauriert die Interruptvektoren 1Ch und 09h. Sie
-	wird bei Beendigung des Programms aufgerufen um einen Absturz zu
-	verhindern.
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void RestoreIntVects(void){
-  //	if (VectsHaveBeenTurned) {
-  //		setvect(0x09,OldInt09h);
-  //		setvect(0x1C,OldInt1Ch);
-  //		setvect(0x23,OldInt23h);
-  // 	} else {
-  //		printf(" Die Interruptvektoren waren noch gar nicht verbogen!\n");
-  //		getchar();
-  //	}
-}
-
 
 /*@Function============================================================
 @Desc: my_sqrt:		Quadrat-Wurzel

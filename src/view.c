@@ -254,7 +254,7 @@ void GetInternFenster(void)
       if( (MapBrick=View[line][col]) != INVISIBLE_BRICK) {
 	source = MapBlocks + MapBrick*BLOCKMEM;
 	for(i=0; i<BLOCKHOEHE; i++) {
-	  MyMemcpy(target, source, BLOCKBREITE);
+	  memcpy(target, source, BLOCKBREITE);
 	  target += INTERNBREITE*BLOCKBREITE;
 	  source += BLOCKBREITE;
 	}
@@ -443,7 +443,7 @@ void PutInfluence(void)
     PutObject(Me.pos.x, Me.pos.y, source, FALSE);
   } else {
     for (i=0;i<BLOCKHOEHE;i++) {
-      // MyMemcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
+      // memcpy(target+BLOCKBREITE*INTERNBREITE*i+BeamLine,source+BLOCKHOEHE*i+BeamLine,(BLOCKBREITE/2+1-BeamLine)*2);
       for (j=0;j<(BLOCKBREITE/2+1-BeamLine)*2;j++) {
 	if (*(source+BLOCKHOEHE*i+BeamLine+j) != TRANSPARENTCOLOR)
 	  *(target+BLOCKBREITE*INTERNBREITE*i+BeamLine+j)=*(source+BLOCKHOEHE*i+BeamLine+j);
@@ -835,7 +835,7 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
   printf("\nvoid ShowRobotPicture(...): Function call confirmed.");
 
   for(j=0;j<ROBOTBILDHOEHE;j++){
-    // PORT MyMemcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
+    // PORT memcpy(Screen+PosX+(PosY+j)*SCREENBREITE,Robotptr+((Number/8)+j)*
     // PORT	     SCREENBREITE+(Number % 8)*ROBOTBILDBREITE,ROBOTBILDBREITE);
   }
 

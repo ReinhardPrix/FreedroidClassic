@@ -736,11 +736,6 @@ void InitParaplus(void)
 
   printf("\nvoid InitParaplus(void): GetShieldBlocks(void) ist fehlerfrei zurueckgekehrt....");
 
-  /* verbiegen der Interrupts */
-#if USEINTSOFF == 0
-  TurnIntVects();
-#endif
-
   /* richtige Paletten-Werte einstellen */
   InitPalette();
 
