@@ -304,13 +304,13 @@ ChooseColor (void)
 
   while (!ColorChosen)
     {
-      if (RightPressed() || WheelDownPressed())
+      if (RightPressedR() || WheelDownPressed())
 	{
 	  if (YourColor != VIOLETT) MoveMenuPositionSound();
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
-      if (LeftPressed() || WheelUpPressed())
+      if (LeftPressedR() || WheelUpPressed())
 	{
 	  if (YourColor != GELB) MoveMenuPositionSound();
 	  YourColor = GELB;
@@ -320,7 +320,6 @@ ChooseColor (void)
       if (FirePressedR())
 	{
 	  ColorChosen = TRUE;
-	  MoveMenuPositionSound();
 	}
 
       /* wait for next countdown tick */
