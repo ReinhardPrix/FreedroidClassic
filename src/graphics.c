@@ -1,8 +1,8 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: graphical functions
- *	 
+ * @Desc: Graphics primitived, such as functions to load LBM or PCX images, to change the vga color table,
+ *        to activate or deachtivate monitor signal, to set video modes etc.
  * 	
  * $Revision$
  * $State$

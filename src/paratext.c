@@ -1,3 +1,17 @@
+/*=@Header==============================================================
+ * $Source$
+ *
+ * @Desc: contains all functions dealing with the HUGE, BIG font used for the top status line, the score and
+ *	  the text displayed during briefing and highscore inverview.  This has NOTHING to do with the fonts
+ *	  of the SVGALIB or the fonts used for the horizontal srolling message line!
+ * 	
+ * $Revision$
+ * $State$
+ *
+ * $Author$
+ *
+ *-@Header------------------------------------------------------------*/
+
 #define _paratext_c
 
 #include <stdio.h>

@@ -1,9 +1,8 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc:	Rahmen - related functions 
+ * @Desc: contains functions to update and draw the top status line with score and status etc...
  *	 
- * 	
  * $Revision$
  * $State$
  *

@@ -1,4 +1,4 @@
-CFLAGS= -g
+CFLAGS= -g -Wall
 INC =-I/usr/src/linux/include/ 
 STDLIBS = -lvgagl -lvga -lm 
 SOUNDLIBS = -lasound -lY2

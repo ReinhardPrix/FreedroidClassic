@@ -1,7 +1,7 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc:
+ * @Desc:  all functions dealing with sound are contained in this file.
  *	 
  * 	
  * $Revision$
@@ -10,6 +10,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.9  1997/06/08 14:49:40  jprix
+ * Added file FILES describing the files of this project.
+ * Added more doku while writing the files description.
+ * Added -Wall compilerflag for maximal generation of sane warnings.
+ *
  * Revision 1.8  1997/06/05 23:47:38  jprix
  * added some doku.  cleaned out some old doku and old code, that was allready commented out.
  *
@@ -453,38 +458,6 @@ void Play_YIFF_Server_Sound(int Tune){
 #endif
 
 } // void Play_OSS(int Tune)
-
-
-/*@Function============================================================
-@Desc: Funktion zur Ausgabe eines Wertes an einen Registerport.
-		 Diese Funktion ist im SB-Profibuch S.66 zu finden.
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-
-void out_sb(unsigned char sb_reg, unsigned char sb_data){
-  //  outportb(0x388,sb_reg); 			
-  //  sb_register[sb_reg]=sb_data;	
-  //  delay(1);								
-  //  outportb(0x389,sb_data);			
-  //  delay(1);								
-};
-
-
-/*@Function============================================================
-@Desc: Funktion zum Winlesen eines Wertes vom virtuellen Registerport.
-		 Diese Funktion ist im SB-Profibuch auf S.66 zu finden.
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-
-unsigned char in_sb(unsigned char sb_reg)
-{
-  // return(sb_register[sb_reg]);	/* RÅckgabe des gepufferten Wertes */
-};
-
-
-
 
 /*@Function============================================================
 @Desc: 

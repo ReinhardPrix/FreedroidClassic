@@ -1,7 +1,7 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: Bullet AND Blast - related functions 
+ * @Desc: all Bullet AND Blast - related functions.
  *	 
  * 	
  * $Revision$
@@ -10,6 +10,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/08 14:49:40  jprix
+ * Added file FILES describing the files of this project.
+ * Added more doku while writing the files description.
+ * Added -Wall compilerflag for maximal generation of sane warnings.
+ *
  * Revision 1.6  1997/06/05 09:24:15  jprix
  * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
  *
@@ -27,8 +32,9 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+
+/* static const char RCSid[]=\
+   "$Id$ "; */ 
 
 #define _bullet_c
 

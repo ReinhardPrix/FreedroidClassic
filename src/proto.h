@@ -214,9 +214,8 @@ EXTERN int TranslateMap(Level Lev);
 EXTERN void YIFF_Server_Check_Events(void);
 EXTERN int Init_YIFF_Sound_Server(void);
 EXTERN void YIFF_Server_Close_Connections(void);
+EXTERN void Play_YIFF_Server_Sound(int);
 EXTERN void StartSound(int);
-EXTERN void out_sb(unsigned char, unsigned char);
-EXTERN unsigned char in_sb(unsigned char);
 EXTERN void GotHitSound(void);
 EXTERN void GotIntoBlastSound(void);
 EXTERN void CrySound(void);
@@ -229,7 +228,6 @@ EXTERN void BounceSound(void);
 EXTERN int InitModPlayer(void);
 EXTERN void StopModPlayer(void);
 EXTERN void PlayMod(char *modfile);
-EXTERN void sbfm_silence(void); 
 
 /* keyboard.c */
 #undef EXTERN

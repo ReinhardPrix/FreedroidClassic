@@ -1,14 +1,12 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: miscellaeous helpful functions for paraplus
- *	 
+ * @Desc: functions to make keyboard access via svgalib somewhat easyer.
  * 	
  * $Revision$
  * $State$
  *
  * $Author$
- *
  *
  *-@Header------------------------------------------------------------*/
 

@@ -1,8 +1,11 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: block operating functions
- *	 
+ * @Desc: contains block operating functions, that is when you want to put something on the visible screen
+ *        of the paradroid, DO NOT DO IT YOURSELF!  Use one of the functions in here, e.g. DisplayBlock(..),
+ *        DisplayMergeBlock(..), CopyMergeBlock(...),.. .
+ *        These functions already take into acount the position of the paradoid, so you do not have to worry
+ *        about where to put anything, and only have to supply map coordinates.  Very handy.
  * 	
  * $Revision$
  * $State$

@@ -1,7 +1,9 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: enemy related functions 
+ * @Desc: All enemy - realted functions.  This includes their whole behaviour, healing, initialization,
+ * 	  shuffling them around after evevator-transitions of the paradroid, deleting them, collisions of
+ *	  enemys among themselves, their fireing, animation and such.
  *
  * $Revision$
  *
@@ -11,8 +13,8 @@
  *
  *-@Header------------------------------------------------------------*/
 
-// static const char RCSid[]=\
-// "$Id$";
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 #define _enemy_c
 
@@ -171,14 +173,12 @@ void ShuffleEnemys(void)
 * $Function----------------------------------------------------------*/
 void MoveEnemys(void){
 	int i;
-	int j;
 	point Restweg;
 	Waypoint WpList;	/* Pointer to waypoint-liste */
 	int nextwp;
 	point nextwp_pos;
 	int trywp;
 	int PossibleConnections;
-	int swap;
 
 	if (BeamLine) return;
 	
@@ -277,91 +277,89 @@ void MoveEnemys(void){
 * $Function----------------------------------------------------------*/
 void AttackInfluence(int enemynum)
 {
-	int j;
-	int guntype;
-	int xdist, ydist;
-	long dist2;
-	int dummy;
+  int j;
+  int guntype;
+  int xdist, ydist;
+  long dist2;
 	
-	/* Ermittlung des Abstandsvektors zum Influencer */
-	xdist = Me.pos.x-Feindesliste[enemynum].pos.x;
-	ydist =Me.pos.y-Feindesliste[enemynum].pos.y;
+  /* Ermittlung des Abstandsvektors zum Influencer */
+  xdist = Me.pos.x-Feindesliste[enemynum].pos.x;
+  ydist =Me.pos.y-Feindesliste[enemynum].pos.y;
 	
-	/* Sicherheit gegen Division durch 0 */
-	if (abs(xdist) < 2) xdist = 2;
-	if (abs(ydist) < 2) ydist = 2;
+  /* Sicherheit gegen Division durch 0 */
+  if (abs(xdist) < 2) xdist = 2;
+  if (abs(ydist) < 2) ydist = 2;
 
-	/* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
-	guntype = Druidmap[Feindesliste[enemynum].type].gun;
+  /* wenn die Vorzeichen gut sind einen Schuss auf den 001 abgeben */
+  guntype = Druidmap[Feindesliste[enemynum].type].gun;
+  
+  dist2 = (xdist*xdist+ydist*ydist);
+  if (  (dist2 < (long)FIREDIST2) &&
+	( !Feindesliste[enemynum].firewait ) &&
+	IsVisible( &Feindesliste[enemynum].pos) )
+    {
+      if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
+	/* Diesmal nicht schiessen */
+	Feindesliste[enemynum].firewait =
+	  MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
+	return;
+      }
+      
+      FireBulletSound();
+      
+      /* Einen bulleteintragg suchen, der noch nicht belegt ist */
+      for (j=0;j<MAXBULLETS;j++) {
+	if (AllBullets[j].type == OUT) break; 
+      }
 
-	dist2 = (xdist*xdist+ydist*ydist);
-	if (  (dist2 < (long)FIREDIST2) &&
-		( !Feindesliste[enemynum].firewait ) &&
-		IsVisible( &Feindesliste[enemynum].pos) )
-	{
- 		if( MyRandom(AGGRESSIONMAX) >= Druidmap[Feindesliste[enemynum].type].aggression) {
- 			/* Diesmal nicht schiessen */
-			Feindesliste[enemynum].firewait =
-				MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18;
-			return;
-		}
+      /* Schussrichtung festlegen */
+      if (abs(xdist) > abs(ydist) ) {
+	AllBullets[j].SX=Bulletmap[guntype].speed;
+	AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
+	if (xdist < 0) {
+	  AllBullets[j].SX=-AllBullets[j].SX;
+	  AllBullets[j].SY=-AllBullets[j].SY;
+	}
+      } 
+      
+      if (abs(xdist) < abs(ydist) ) {
+	AllBullets[j].SY=Bulletmap[guntype].speed;
+	AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
+	if (ydist < 0) {
+	  AllBullets[j].SX=-AllBullets[j].SX;
+	  AllBullets[j].SY=-AllBullets[j].SY;
+	}
+      }
 		
-		FireBulletSound();
-			
-		/* Einen bulleteintragg suchen, der noch nicht belegt ist */
-		for (j=0;j<MAXBULLETS;j++) {
-			if (AllBullets[j].type == OUT) break; 
-		}
+      /* Schussphase festlegen ( ->phase=Schussbild ) */
+      AllBullets[j].phase=NOSTRAIGHTDIR;
+      if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
+      if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
+      if (AllBullets[j].phase == NOSTRAIGHTDIR) {
+	if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
+	  AllBullets[j].phase=RECHTSUNTEN;
+	else AllBullets[j].phase=RECHTSOBEN;
+      }
+      
+      /* Bullets im Zentrum des Schuetzen starten */
+      AllBullets[j].PX=Feindesliste[enemynum].pos.x;
+      AllBullets[j].PY=Feindesliste[enemynum].pos.y;
+      
+      /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
+      AllBullets[j].PX+=AllBullets[j].SX;
+      AllBullets[j].PY+=AllBullets[j].SY;
+      AllBullets[j].PX+=Feindesliste[enemynum].speed.x;
+      AllBullets[j].PY+=Feindesliste[enemynum].speed.y;
+      
+      /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
+      
+      Feindesliste[enemynum].firewait=
+	MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
+      
+      /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+      AllBullets[j].type=guntype;
 
-		/* Schussrichtung festlegen */
-		if (abs(xdist) > abs(ydist) ) {
-			AllBullets[j].SX=Bulletmap[guntype].speed;
-			AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
-			if (xdist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		} 
-  		
-		if (abs(xdist) < abs(ydist) ) {
-			AllBullets[j].SY=Bulletmap[guntype].speed;
-			AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
-			if (ydist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		}
-		
-		/* Schussphase festlegen ( ->phase=Schussbild ) */
-		AllBullets[j].phase=NOSTRAIGHTDIR;
-		if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
-		if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
-		if (AllBullets[j].phase == NOSTRAIGHTDIR) {
-			if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-				AllBullets[j].phase=RECHTSUNTEN;
-				else AllBullets[j].phase=RECHTSOBEN;
-		}
-
-		/* Bullets im Zentrum des Schuetzen starten */
-		AllBullets[j].PX=Feindesliste[enemynum].pos.x;
-		AllBullets[j].PY=Feindesliste[enemynum].pos.y;
-		
-		/* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-		AllBullets[j].PX+=AllBullets[j].SX;
-		AllBullets[j].PY+=AllBullets[j].SY;
-		AllBullets[j].PX+=Feindesliste[enemynum].speed.x;
-		AllBullets[j].PY+=Feindesliste[enemynum].speed.y;
-			
-		/* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
-
-		Feindesliste[enemynum].firewait=
-			MyRandom(Druidmap[Feindesliste[enemynum].type].firewait)*18+4;
-					
-		/* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
-		AllBullets[j].type=guntype;
-			
-	} /* if */
-		
+    } /* if */
 
 } /* AttackInfluence */
 

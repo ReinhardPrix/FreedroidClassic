@@ -1,16 +1,19 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: influence - related functions 
+ * @Desc: all features, movement, fireing, collision and extras of the influencer are done in here.
  *	 
- * 	
+ *
  * $Revision$
  * $State$
  *
  * $Author$
  *
- * $Log$
- * Revision 1.2  1994/06/19 16:22:55  prix
+ * $Log: influ.c,v 
+ * Revision 1.5  1997/05/31 13:30:31  rpri
+ * Further update by johannes. (sent to me in tar.gz
+ *
+ * Revision 1.2  1994/06/19  16:22:55  prix
  * Wed Jun 08 13:52:40 1994: Influ moves only when beam finished
  *
  * Revision 1.1  1993/08/04  16:27:43  prix
@@ -18,17 +21,14 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _influ_c
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <dos.h>
 #include <math.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -66,106 +66,106 @@ signed long MyAbs(signed long Wert){
 @Int:
 * $Function----------------------------------------------------------*/
 void AutoFireBullet(void){
-	int j,i;
-	int TargetNum= -1;
-	signed long BestDist=200000;
-	int enemynum, guntype;
-	int xdist, ydist;
-	signed long LDist,LXDist,LYDist;
-	
-	if (CurLevel->empty) return;
+  int j,i;
+  int TargetNum= -1;
+  signed long BestDist=200000;
+  int enemynum, guntype;
+  int xdist, ydist;
+  signed long LDist,LXDist,LYDist;
+  
+  if (CurLevel->empty) return;
+  
+  if (Me.firewait) return;
+  Me.firewait=Bulletmap[Druidmap[Me.type].gun].WaitNextTime;
+  
+  // Nummer der Schu"szieles herausfinden
+  for (i=0;i<MAX_ENEMYS_ON_SHIP;i++) {
+    if (Feindesliste[i].Status == OUT) continue;
+    if (Feindesliste[i].levelnum != CurLevel->levelnum) continue;
+    if (!IsVisible( &Feindesliste[i].pos)) continue;
+    LXDist=(Feindesliste[i].pos.x-Me.pos.x);
+    LYDist=(Feindesliste[i].pos.y-Me.pos.y);
+    LDist=LXDist*LXDist + LYDist*LYDist;
+    if (LDist <= 0) { printf(" ERROR determination of LDist !!."); getchar(); Terminate(-1); }
+    if ( LDist < BestDist) {
+      TargetNum=i;
+      enemynum=i;
+      BestDist=LDist;
+    }
+  }
+  if (TargetNum == -1) {
+    //			gotoxy(1,1);
+    //			printf(" Sorry, nobody in reach.");
+    //			getchar();
+    //			Terminate(-1);
+    return;
+  }
 
-	if (Me.firewait) return;
-		Me.firewait=Bulletmap[Druidmap[Me.type].gun].WaitNextTime;
-	
-		// Nummer der Schu"szieles herausfinden
-		for (i=0;i<MAX_ENEMYS_ON_SHIP;i++) {
-			if (Feindesliste[i].Status == OUT) continue;
-			if (Feindesliste[i].levelnum != CurLevel->levelnum) continue;
-			if (!IsVisible( &Feindesliste[i].pos)) continue;
-			LXDist=(Feindesliste[i].pos.x-Me.pos.x);
-			LYDist=(Feindesliste[i].pos.y-Me.pos.y);
-			LDist=LXDist*LXDist + LYDist*LYDist;
-			if (LDist <= 0) { printf(" ERROR determination of LDist !!."); getch(); Terminate(-1); }
-			if ( LDist < BestDist) {
-				TargetNum=i;
-				enemynum=i;
-				BestDist=LDist;
-			}
-		}
-		if (TargetNum == -1) {
-//			gotoxy(1,1);
-//			printf(" Sorry, nobody in reach.");
-//			getch();
-//			Terminate(-1);
-			return;
-		}
+  FireBulletSound();
 
-		FireBulletSound();
+  xdist=Feindesliste[enemynum].pos.x-Me.pos.x;
+  ydist=Feindesliste[enemynum].pos.y-Me.pos.y;
 
-		xdist=Feindesliste[enemynum].pos.x-Me.pos.x;
-		ydist=Feindesliste[enemynum].pos.y-Me.pos.y;
-
-		// Sicherheit gegen Divisionen durch Null !!!!
-		if (xdist == 0) xdist=2;
-		if (ydist == 0) ydist=2;
-		if (xdist == 1) xdist=2;
-		if (ydist == 1) ydist=2;
-		if (xdist == -1) xdist=2;
-		if (ydist == -1) ydist=2;
+  // Sicherheit gegen Divisionen durch Null !!!!
+  if (xdist == 0) xdist=2;
+  if (ydist == 0) ydist=2;
+  if (xdist == 1) xdist=2;
+  if (ydist == 1) ydist=2;
+  if (xdist == -1) xdist=2;
+  if (ydist == -1) ydist=2;
 		
-		guntype=Druidmap[Me.type].gun;
+  guntype=Druidmap[Me.type].gun;
 		
-		/* Einen bulleteintragg suchen, der noch nicht belegt ist */
-		for (j=0;j<MAXBULLETS-1;j++) {
-			if (AllBullets[j].type == OUT) break; 
-		}
-
-		/* Schussrichtung festlegen */
-		if (abs(xdist) > abs(ydist) ) {
-			AllBullets[j].SX=Bulletmap[guntype].speed;
-			AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
-			if (xdist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		} 
+  /* Einen bulleteintragg suchen, der noch nicht belegt ist */
+  for (j=0;j<MAXBULLETS-1;j++) {
+    if (AllBullets[j].type == OUT) break; 
+  }
+  
+  /* Schussrichtung festlegen */
+  if (abs(xdist) > abs(ydist) ) {
+    AllBullets[j].SX=Bulletmap[guntype].speed;
+    AllBullets[j].SY=ydist*AllBullets[j].SX/xdist;
+    if (xdist < 0) {
+      AllBullets[j].SX=-AllBullets[j].SX;
+      AllBullets[j].SY=-AllBullets[j].SY;
+    }
+  } 
   		
-		if (abs(xdist) < abs(ydist) ) {
-			AllBullets[j].SY=Bulletmap[guntype].speed;
-			AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
-			if (ydist < 0) {
-				AllBullets[j].SX=-AllBullets[j].SX;
-				AllBullets[j].SY=-AllBullets[j].SY;
-			}
-		}
+  if (abs(xdist) < abs(ydist) ) {
+    AllBullets[j].SY=Bulletmap[guntype].speed;
+    AllBullets[j].SX=xdist*AllBullets[j].SY/ydist;
+    if (ydist < 0) {
+      AllBullets[j].SX=-AllBullets[j].SX;
+      AllBullets[j].SY=-AllBullets[j].SY;
+    }
+  }
 
-		/* Schussphase festlegen ( ->phase=Schussbild ) */
-		AllBullets[j].phase=NOSTRAIGHTDIR;
-		if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
-		if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
-		if (AllBullets[j].phase == NOSTRAIGHTDIR) {
-			if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
-				AllBullets[j].phase=RECHTSUNTEN;
-				else AllBullets[j].phase=RECHTSOBEN;
-		}
-
-		if (AllBullets[j].SX==0) AllBullets[j].phase=OBEN;
-		if (AllBullets[j].SY==0) AllBullets[j].phase=RECHTS;
-		
-		/* Bullets im Zentrum des Schuetzen starten */
-		AllBullets[j].PX=Me.pos.x;
-		AllBullets[j].PY=Me.pos.y;
-		
-		/* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
-		AllBullets[j].PX+=AllBullets[j].SX;
-		AllBullets[j].PY+=AllBullets[j].SY;
-		AllBullets[j].PX+=Me.speed.x;
-		AllBullets[j].PY+=Me.speed.y;
-			
-		/* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
-		AllBullets[j].type=guntype;
-}
+  /* Schussphase festlegen ( ->phase=Schussbild ) */
+  AllBullets[j].phase=NOSTRAIGHTDIR;
+  if ((abs(xdist)*2/3)/abs(ydist)) AllBullets[j].phase=RECHTS;
+  if ((abs(ydist)*2/3)/abs(xdist)) AllBullets[j].phase=OBEN;
+  if (AllBullets[j].phase == NOSTRAIGHTDIR) {
+    if (((xdist < 0) && (ydist < 0)) || ((xdist > 0) && (ydist > 0)))
+      AllBullets[j].phase=RECHTSUNTEN;
+    else AllBullets[j].phase=RECHTSOBEN;
+  }
+  
+  if (AllBullets[j].SX==0) AllBullets[j].phase=OBEN;
+  if (AllBullets[j].SY==0) AllBullets[j].phase=RECHTS;
+  
+  /* Bullets im Zentrum des Schuetzen starten */
+  AllBullets[j].PX=Me.pos.x;
+  AllBullets[j].PY=Me.pos.y;
+  
+  /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
+  AllBullets[j].PX+=AllBullets[j].SX;
+  AllBullets[j].PY+=AllBullets[j].SY;
+  AllBullets[j].PX+=Me.speed.x;
+  AllBullets[j].PY+=Me.speed.y;
+  
+  /* Bullettype gemaes dem ueblichen guntype fuer den robottyp setzen */
+  AllBullets[j].type=guntype;
+}  // void AutoFireBullet(void)
 
 
 /*@Function============================================================
@@ -177,66 +177,71 @@ void AutoFireBullet(void){
 * $Function----------------------------------------------------------*/
 void MoveInfluence(void)
 {
-	unsigned char MapBrick;
-	signed int accel = Druidmap[Me.type].accel;
-	static TransferCounter = 0;
-	/* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
-	static int counter=-1;
+  unsigned char MapBrick;
+  signed int accel = Druidmap[Me.type].accel;
+  static TransferCounter = 0;
+  /* zum Bremsen der Drehung, wenn man auf der Taste bleibt: */
+  static int counter=-1;
 
-  	if (BeamLine) return;
+  printf("\nvoid MoveInfluence(void):  Real function call confirmed.");
+  printf("\nvoid MoveInfluence(void):  accel ist jetzt: %d.",accel);
+
+  if (BeamLine) return;
 	
-	counter ++;
-	counter %= BREMSDREHUNG;		/* Wird mal vom Druid abhaengen */
+  counter ++;
+  counter %= BREMSDREHUNG;		/* Wird mal vom Druid abhaengen */
 
-	PermanentLoseEnergy();			/* influ permanently loses energy */
+  PermanentLoseEnergy();			/* influ permanently loses energy */
+  
+  /* Checken, ob Influencer noch OK */
+  if( Me.energy <= 0) {
+    if (Me.type != DRUID001) {
+      Me.type = DRUID001;
+      RedrawInfluenceNumber();
+      Me.speed.x = 0;
+      Me.speed.y = 0;
+      Me.energy = PreTakeEnergy;
+      Me.health = BLINKENERGY;
+      StartBlast(Me.pos.x,Me.pos.y,DRUIDBLAST);
+    } else {
+      Me.status = OUT;
+      ThouArtDefeated();
+      printf("\nvoid MoveInfluence(void):  Alternate end of function reached.");
+      return;
+    }
+  }
+
+  /* Time passed before entering Transfermode ?? */
+  if( TransferCounter && (TransferCounter-- == 1) ) Me.status = TRANSFERMODE;
 	
-	/* Checken, ob Influencer noch OK */
-	if( Me.energy <= 0) {
-		if (Me.type != DRUID001) {
-			Me.type = DRUID001;
-			RedrawInfluenceNumber();
-			Me.speed.x = 0;
-			Me.speed.y = 0;
-			Me.energy = PreTakeEnergy;
-			Me.health = BLINKENERGY;
-			StartBlast(Me.pos.x,Me.pos.y,DRUIDBLAST);
-		} else {
-			Me.status = OUT;
-			ThouArtDefeated();
-		}
-	}
+  if (UpPressed()) SpeedY-= accel;
+  if (DownPressed()) SpeedY+= accel;
+  if (LeftPressed()) SpeedX-= accel;
+  if (RightPressed()) SpeedX+= accel;
+  
+  if (!SpacePressed()) Me.status=MOBILE;
 
-	/* Time passed before entering Transfermode ?? */
-	if( TransferCounter && (TransferCounter-- == 1) ) Me.status = TRANSFERMODE;
-	
-	if (UpPressed) SpeedY-= accel;
-	if (DownPressed) SpeedY+= accel;
-	if (LeftPressed) SpeedX-= accel;
-	if (RightPressed) SpeedX+= accel;
-
-	if (!SpacePressed) Me.status=MOBILE;
-
-	if( TransferCounter == 1 ) {
-		Me.status = TRANSFERMODE;
-		TransferCounter = 0;
-	}
-	
-	if ((SpacePressed) && (NoDirectionPressed()) &&
-			(Me.status!=WEAPON) && (Me.status != TRANSFERMODE) && (!TransferCounter) )
-		TransferCounter = WAIT_TRANSFERMODE;
-		
-	if ((SpacePressed) && (!NoDirectionPressed()) &&
-			(Me.status != TRANSFERMODE) )
-		Me.status=WEAPON;
-
-	if (Me.autofire) AutoFireBullet(); else
-		if ((SpacePressed) && (!NoDirectionPressed()) && (Me.status == WEAPON) &&
-			(Me.firewait == 0) && (NoInfluBulletOnWay())) FireBullet();
-
-	/* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
-	ActSpecialField(Me.pos.x, Me.pos.y);
-
-	
+  if( TransferCounter == 1 ) {
+    Me.status = TRANSFERMODE;
+    TransferCounter = 0;
+  }
+  
+  if ((SpacePressed()) && (NoDirectionPressed()) &&
+      (Me.status!=WEAPON) && (Me.status != TRANSFERMODE) && (!TransferCounter) )
+    TransferCounter = WAIT_TRANSFERMODE;
+  
+  if ((SpacePressed()) && (!NoDirectionPressed()) &&
+      (Me.status != TRANSFERMODE) )
+    Me.status=WEAPON;
+  
+  if (Me.autofire) AutoFireBullet(); else
+    if ((SpacePressed()) && (!NoDirectionPressed()) && (Me.status == WEAPON) &&
+	(Me.firewait == 0) && (NoInfluBulletOnWay())) FireBullet();
+  
+  /* Checken, ob auf Sonder-Feld (Lift, Konsole) und im Transfermode */
+  ActSpecialField(Me.pos.x, Me.pos.y);
+  
+  printf("\nvoid MoveInfluence(void):  Usual end of function reached.");
 } /* MoveInfluence */
 
 
@@ -251,6 +256,7 @@ int NoInfluBulletOnWay(void)
 	int i;
 
 	if (PlusExtentionsOn) return TRUE;
+
 	if (!Bulletmap[Druidmap[Me.type].gun].oneshotonly) return TRUE;
 	
 	for (i=0;i<MAXBULLETS;i++) {
@@ -307,7 +313,7 @@ void AnimateInfluence(void) {
 	if ((Me.energy <= BLINKENERGY) && (blinkwaiter == 0)) {
 //		Palwert+=15;
 //		if(Palwert>63) Palwert=0;
-		Palwert=random(64);
+		Palwert=MyRandom(64);
 		if (Me.status == TRANSFERMODE) SetPalCol(INFLUENCEFARBWERT,63,Palwert,Palwert);
 		else SetPalCol(INFLUENCEFARBWERT,Palwert,Palwert,Palwert);
 	}
@@ -331,104 +337,105 @@ void AnimateInfluence(void) {
 
 /*@Function============================================================
 @Desc: BounceInfluencer: prueft Kollisionen mit Tueren und Mauer
-								mit DruidPassable() und wirft Influencer
-								entsprechend zurueck
+mit DruidPassable() und wirft Influencer
+entsprechend zurueck
 
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void BounceInfluencer(void)
-{	int sign;
-	int SX=SpeedX, SY=SpeedY;
-	point lastpos;
-	int res;		/* Ergebnis aus DruidPassable() */
-	int fx, fy;		/* Feinkoordinaten */
-	int gx, gy;		/* Grobkoordinaten */
-	int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
-
-	int crashx = FALSE, crashy = FALSE;		/* Merker wo kollidiert wurde */
-	
-	lastpos.x = Me.pos.x - SX;
-	lastpos.y = Me.pos.y - SY;
-
-	res=DruidPassable(Me.pos.x, Me.pos.y);
-	switch (res) {
-		case -1:
-			/* Influence ist blockiert: zurueckwerfen */
-   
-		   /* Festellen, in welcher Richtung die Mauer lag,
-			und den Influencer entsprechend stoppen */
-			if (SX && (DruidPassable(lastpos.x+SX, lastpos.y) != CENTER) ) {
-				crashx = TRUE;		/* In X wurde gecrasht */
-				sign = (SX < 0) ? -1 : 1;
-				SX = abs(SX);
-				while( --SX && (DruidPassable(lastpos.x+sign*SX,lastpos.y)!=CENTER));
-				Me.pos.x = lastpos.x + SX*sign;
-				SpeedX = 0;
-				
+{
+  int sign;
+  int SX=SpeedX, SY=SpeedY;
+  point lastpos;
+  int res;		/* Ergebnis aus DruidPassable() */
+  int fx, fy;		/* Feinkoordinaten */
+  int gx, gy;		/* Grobkoordinaten */
+  int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
+  
+  int crashx = FALSE, crashy = FALSE;		/* Merker wo kollidiert wurde */
+  
+  lastpos.x = Me.pos.x - SX;
+  lastpos.y = Me.pos.y - SY;
+  
+  res=DruidPassable(Me.pos.x, Me.pos.y);
+  switch (res) {
+  case -1:
+    /* Influence ist blockiert: zurueckwerfen */
+    
+    /* Festellen, in welcher Richtung die Mauer lag,
+       und den Influencer entsprechend stoppen */
+    if (SX && (DruidPassable(lastpos.x+SX, lastpos.y) != CENTER) ) {
+      crashx = TRUE;		/* In X wurde gecrasht */
+      sign = (SX < 0) ? -1 : 1;
+      SX = abs(SX);
+      while( --SX && (DruidPassable(lastpos.x+sign*SX,lastpos.y)!=CENTER));
+      Me.pos.x = lastpos.x + SX*sign;
+      SpeedX = 0;
+      
 				/* falls Influencer weggestossen werden muss ! */
-				safty_sx = (-1)*sign*PUSHSPEED;
-			}
-			
-			if (SY && (DruidPassable(lastpos.x, lastpos.y+SY)!= CENTER) ) {
-				crashy = TRUE;		/* in Y wurde gecrasht */
-				sign = (SY < 0) ? -1 : 1;
-				SY = abs(SY);
-				while(--SY && (DruidPassable(lastpos.x,lastpos.y+sign*SY)!=CENTER));
-				Me.pos.y = lastpos.y + SY*sign;
-				SpeedY = 0;
-
+      safty_sx = (-1)*sign*PUSHSPEED;
+    }
+    
+    if (SY && (DruidPassable(lastpos.x, lastpos.y+SY)!= CENTER) ) {
+      crashy = TRUE;		/* in Y wurde gecrasht */
+      sign = (SY < 0) ? -1 : 1;
+      SY = abs(SY);
+      while(--SY && (DruidPassable(lastpos.x,lastpos.y+sign*SY)!=CENTER));
+      Me.pos.y = lastpos.y + SY*sign;
+      SpeedY = 0;
+      
 				/* Falls Influencer weggestossen werden muss */
-				safty_sy = (-1)*sign*PUSHSPEED;
-			}
-
-			/* Hat das nichts geholfen, noch etwas wegschubsen */
-			if( DruidPassable(Me.pos.x, Me.pos.y) != CENTER) {
-				if (crashx) {
-					Me.speed.x = safty_sx;
-					Me.pos.x += Me.speed.x;
-				}
-				
-				if (crashy) {
-					Me.speed.y = safty_sy;
-					Me.pos.y += Me.speed.y;
-				}
-			}
+      safty_sy = (-1)*sign*PUSHSPEED;
+    }
+    
+    /* Hat das nichts geholfen, noch etwas wegschubsen */
+    if( DruidPassable(Me.pos.x, Me.pos.y) != CENTER) {
+      if (crashx) {
+	Me.speed.x = safty_sx;
+	Me.pos.x += Me.speed.x;
+      }
+      
+      if (crashy) {
+	Me.speed.y = safty_sy;
+	Me.pos.y += Me.speed.y;
+      }
+    }
+    
+    break;
 			
-			break;
-			
-		/* Von Tuerrand wegschubsen */
-		case OBEN:
-			Me.speed.y = -PUSHSPEED;
-			Me.pos.y += Me.speed.y;
-			break;
-			
-		case UNTEN:
-			Me.speed.y = PUSHSPEED;
-			Me.pos.y += Me.speed.y;
-			break;
-			
-		case RECHTS:
-			Me.speed.x = PUSHSPEED;
-			Me.pos.x += Me.speed.x;
-			break;
-			
-		case LINKS:
-			Me.speed.x = -PUSHSPEED;
-			Me.pos.x += Me.speed.x;
-			break;
-
-		/* Not blocked at all ! */
-		case CENTER:
-			break;
-		
-		default:
-			printf("Illegal return value from DruidPassable() ");
-			Terminate(-1);
-			break;
-				
-
-	} /* switch */
+    /* Von Tuerrand wegschubsen */
+  case OBEN:
+    Me.speed.y = -PUSHSPEED;
+    Me.pos.y += Me.speed.y;
+    break;
+    
+  case UNTEN:
+    Me.speed.y = PUSHSPEED;
+    Me.pos.y += Me.speed.y;
+    break;
+    
+  case RECHTS:
+    Me.speed.x = PUSHSPEED;
+    Me.pos.x += Me.speed.x;
+    break;
+    
+  case LINKS:
+    Me.speed.x = -PUSHSPEED;
+    Me.pos.x += Me.speed.x;
+    break;
+    
+    /* Not blocked at all ! */
+  case CENTER:
+    break;
+    
+  default:
+    printf("Illegal return value from DruidPassable() ");
+    Terminate(-1);
+    break;
+    
+    
+  } /* switch */
 } /* BounceInfluencer */
 
 /*@Function============================================================
@@ -439,13 +446,13 @@ void BounceInfluencer(void)
 * $Function----------------------------------------------------------*/
 void AdjustSpeed(void)
 {
-int maxspeed=Druidmap[Me.type].maxspeed;
-	if (Me.speed.x > maxspeed) Me.speed.x = maxspeed;
-   if (Me.speed.x < (-maxspeed)) Me.speed.x = (-maxspeed);
+  int maxspeed=Druidmap[Me.type].maxspeed;
+  if (Me.speed.x > maxspeed) Me.speed.x = maxspeed;
+  if (Me.speed.x < (-maxspeed)) Me.speed.x = (-maxspeed);
    
-	if (Me.speed.y > maxspeed) Me.speed.y = maxspeed;
-   if (Me.speed.y < (-maxspeed) ) Me.speed.y = (-maxspeed);
-}
+  if (Me.speed.y > maxspeed) Me.speed.y = maxspeed;
+  if (Me.speed.y < (-maxspeed) ) Me.speed.y = (-maxspeed);
+}  // void AdjustSpeed(void)
 
 
 /*@Function============================================================
@@ -456,15 +463,15 @@ int maxspeed=Druidmap[Me.type].maxspeed;
 
 * $Function----------------------------------------------------------*/
 void Reibung(void){
-	if ( !UpPressed && !DownPressed) {
-		if (SpeedY < 0) SpeedY ++;
-		if (SpeedY > 0) SpeedY --;
-	}
-	if ( !RightPressed && !LeftPressed) {
-		if (SpeedX < 0) SpeedX ++;
-		if (SpeedX > 0) SpeedX --;
-	}
-}
+  if ( !UpPressed() && !DownPressed()) {
+    if (SpeedY < 0) SpeedY ++;
+    if (SpeedY > 0) SpeedY --;
+  }
+  if ( !RightPressed() && !LeftPressed()) {
+    if (SpeedX < 0) SpeedX ++;
+    if (SpeedX > 0) SpeedX --;
+  }
+} // void Reibung(void)
 
 /*@Function============================================================
 @Desc: ExplodeInfluencer(): generiert eine grosse Explosion an
@@ -475,25 +482,26 @@ void Reibung(void){
 * $Function----------------------------------------------------------*/
 void ExplodeInfluencer(void)
 {
-	int i;
-	int counter;
+  int i;
+  int counter;
 	
-	Me.status = OUT;
+  Me.status = OUT;
 
-	
-	/* ein paar versetze Explosionen */
-	for(i = 0; i<4; i++) {
-		/* freien Blast finden */
-		counter = 0;
-		while( AllBlasts[counter++].type != OUT);
-		counter -= 1;
-		AllBlasts[counter].type = DRUIDBLAST;
-		AllBlasts[counter].PX = Me.pos.x -DRUIDRADIUSX/2 + random(DRUIDRADIUSX);
-		AllBlasts[counter].PY = Me.pos.y - DRUIDRADIUSY/2 + random(DRUIDRADIUSY);
-		AllBlasts[counter].phase = i;
-	}
-	
-	
+  printf("\nvoid ExplodeInfluencer(void): Real function call confirmed.");
+
+  /* ein paar versetze Explosionen */
+  for(i = 0; i<4; i++) {
+    /* freien Blast finden */
+    counter = 0;
+    while( AllBlasts[counter++].type != OUT);
+    counter -= 1;
+    AllBlasts[counter].type = DRUIDBLAST;
+    AllBlasts[counter].PX = Me.pos.x -DRUIDRADIUSX/2 + MyRandom(DRUIDRADIUSX);
+    AllBlasts[counter].PY = Me.pos.y - DRUIDRADIUSY/2 + MyRandom(DRUIDRADIUSY);
+    AllBlasts[counter].phase = i;
+  }
+  
+  printf("\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 } /* ExplodeInfluencer */
 
 /*@Function============================================================
@@ -503,74 +511,76 @@ void ExplodeInfluencer(void)
 @Int:
 * $Function----------------------------------------------------------*/
 void InfluenceEnemyCollision(void) {
-	int i;
-	int xdist;
-	int ydist;
-	long dist2;
-	int swap;
-	int first_collision = TRUE;		/* marker */
+  int i;
+  int xdist;
+  int ydist;
+  long dist2;
+  int swap;
+  int first_collision = TRUE;		/* marker */
 	
-	for (i=0;i<NumEnemys;i++) {
-		/* ignore debug-enemys */
-		if( Feindesliste[i].type == DEBUG_ENEMY ) continue;
-		
-		/* ignore enemy that are not on this level or dead */
-		if ( Feindesliste[i].levelnum != CurLevel->levelnum ) continue;
-		if ( Feindesliste[i].Status == OUT ) continue;
+  for (i=0;i<NumEnemys;i++) {
+    /* ignore debug-enemys */
+    if( Feindesliste[i].type == DEBUG_ENEMY ) continue;
+    
+    /* ignore enemy that are not on this level or dead */
+    if ( Feindesliste[i].levelnum != CurLevel->levelnum ) continue;
+    if ( Feindesliste[i].Status == OUT ) continue;
 
-		xdist = Me.pos.x - Feindesliste[i].pos.x;
-		ydist = Me.pos.y - Feindesliste[i].pos.y;
+    xdist = Me.pos.x - Feindesliste[i].pos.x;
+    ydist = Me.pos.y - Feindesliste[i].pos.y;
+    
+    if( abs(xdist) > BLOCKBREITE ) continue;
+    if( abs(ydist) > BLOCKHOEHE  ) continue;
 		
-		if( abs(xdist) > BLOCKBREITE ) continue;
-		if( abs(ydist) > BLOCKHOEHE  ) continue;
-		
-		dist2 = (long)xdist*xdist + ydist*ydist;
-		if( dist2 > (long)4*DRUIDRADIUSX*DRUIDRADIUSY ) continue;
+    dist2 = (long)xdist*xdist + ydist*ydist;
+    if( dist2 > (long)4*DRUIDRADIUSX*DRUIDRADIUSY ) continue;
 
 				
-		if (Me.status != TRANSFERMODE) {
+    if (Me.status != TRANSFERMODE) {
 
-			if( first_collision ) { /* nur beim ersten mal !!! */
+      if( first_collision ) { /* nur beim ersten mal !!! */
 				/* den Geschwindigkeitsvektor des Influencers invertieren */
-			  	Me.speed.x = - Me.speed.x ;
-			  	Me.speed.y = - Me.speed.y ;
-				if( SpeedX != 0 )
-					Me.speed.x += COLLISION_PUSHSPEED * (SpeedX/abs(SpeedX));
-				else if( xdist)
-					Me.speed.x = COLLISION_PUSHSPEED * (xdist/abs(xdist));
-				if( SpeedY != 0 )
-					Me.speed.y += COLLISION_PUSHSPEED * (SpeedY/abs(SpeedY));
-				else if( ydist)
-					Me.speed.y = COLLISION_PUSHSPEED * (ydist/abs(ydist));
-				
+	Me.speed.x = - Me.speed.x ;
+	Me.speed.y = - Me.speed.y ;
+	if( SpeedX != 0 )
+	  Me.speed.x += COLLISION_PUSHSPEED * (SpeedX/abs(SpeedX));
+	else if( xdist)
+	  Me.speed.x = COLLISION_PUSHSPEED * (xdist/abs(xdist));
+	if( SpeedY != 0 )
+	  Me.speed.y += COLLISION_PUSHSPEED * (SpeedY/abs(SpeedY));
+	else if( ydist)
+	  Me.speed.y = COLLISION_PUSHSPEED * (ydist/abs(ydist));
+	
 				/* den Influencer etwas aus dem Feind hinausschieben */	 
-				Me.pos.x += SpeedX;
-				Me.pos.y += SpeedY;
+	Me.pos.x += SpeedX;
+	Me.pos.y += SpeedY;
 
 				/* etwaige Wand - collisionen beruecksichtigen */
-				BounceInfluencer();
+	BounceInfluencer();
 
-				BounceSound();
-				
-			} /* if first_collision */
+	BounceSound();
 			
-			/* Den Feind kurz stoppen und dann umdrehen */
-			if( !Feindesliste[i].warten ) {
-				Feindesliste[i].warten = WAIT_COLLISION;
-				swap = Feindesliste[i].nextwaypoint;
-				Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint;
-				Feindesliste[i].lastwaypoint = swap;
-			} 
-			BounceLoseEnergy(i); /* someone loses energy ! */
+	InsertMessage("void InfEnemColl: Collision detected");
 
-		} else {
-			Takeover(i);
-				
-			if (LevelEmpty()) CurLevel->empty=WAIT_LEVELEMPTY;
+      } /* if first_collision */
 			
-		} /* if !Transfer else .. */
+      /* Den Feind kurz stoppen und dann umdrehen */
+      if( !Feindesliste[i].warten ) {
+	Feindesliste[i].warten = WAIT_COLLISION;
+	swap = Feindesliste[i].nextwaypoint;
+	Feindesliste[i].nextwaypoint = Feindesliste[i].lastwaypoint;
+	Feindesliste[i].lastwaypoint = swap;
+      } 
+      BounceLoseEnergy(i); /* someone loses energy ! */
+
+    } else {
+      Takeover(i);
+      
+      if (LevelEmpty()) CurLevel->empty=WAIT_LEVELEMPTY;
+      
+    } /* if !Transfer else .. */
 		
-	} /* for */
+  } /* for */
 	
 } /* InfluenceEnemyCollision */
 
@@ -612,14 +622,14 @@ void FireBullet(void){
    CurBullet->mine = TRUE;
    CurBullet->owner = -1;
 
-	if (DownPressed) firedir=UNTEN;
-	if (UpPressed) firedir=OBEN;
-	if (LeftPressed) firedir=LINKS;
-	if (RightPressed) firedir=RECHTS;
-	if (RightPressed && DownPressed) firedir=RECHTSUNTEN;
-	if (LeftPressed && DownPressed) firedir=LINKSUNTEN;
-	if (LeftPressed && UpPressed) firedir=LINKSOBEN; 
-	if (RightPressed && UpPressed) firedir=RECHTSOBEN;
+	if (DownPressed()) firedir=UNTEN;
+	if (UpPressed()) firedir=OBEN;
+	if (LeftPressed()) firedir=LINKS;
+	if (RightPressed()) firedir=RECHTS;
+	if (RightPressed() && DownPressed()) firedir=RECHTSUNTEN;
+	if (LeftPressed() && DownPressed()) firedir=LINKSUNTEN;
+	if (LeftPressed() && UpPressed()) firedir=LINKSOBEN; 
+	if (RightPressed() && UpPressed()) firedir=RECHTSOBEN;
 
 	switch (firedir) {
 		case OBEN:
@@ -744,7 +754,7 @@ void BounceLoseEnergy(int enemynum)
 		if( InvincibleMode ) return;
 		Me.energy -= (Druidmap[enemytype].class - Druidmap[Me.type].class)*BOUNCE_LOSE_FACT;
 	} else Feindesliste[enemynum].energy -=
-		(Druidmap[Me.type].class - Druidmap[enemynum].class)*BOUNCE_LOSE_FACT;
+		(Druidmap[Me.type].class - Druidmap[enemytype].class)*BOUNCE_LOSE_FACT;
 		
 //	else Feindesliste[enemynum].energy -= BOUNCE_LOSE_ENERGY;
 		
@@ -777,3 +787,4 @@ void PermanentLoseEnergy(void)
 }
 
 #undef _influ_c
+

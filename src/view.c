@@ -1,7 +1,10 @@
 /*=@Header==============================================================
  * $Source$
  *
- * @Desc: all the functions managing the things one gets to see
+ * @Desc: all the functions managing the things one gets to see.  That includes assembling of enemys,
+ *        assembling the currently relevant porting of the map (the bricks I mean), drawing all visible
+ *        elements like bullets, blasts, enemys or influencer in a nonvisible place in memory at first, 
+ *	  and finally drawing them to the visible screen for the user.
  *	 
  * 	
  * $Revision$
@@ -10,8 +13,9 @@
  * $Author$
  *
  *-@Header------------------------------------------------------------*/
-// static const char RCSid[]=\
-// "$Id$";
+
+/* static const char RCSid[]=\
+   "$Id$"; */
 
 /*
  * Dieses Modul enth"alt Funktionen, die dem Aufbau des Bildes dienen.
@@ -31,6 +35,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <vga.h>
+#include <vgagl.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -39,6 +45,7 @@
 #include "proto.h"
 #include "colodefs.h"
 
+void GetConceptInternFenster(void);
 void FlashWindow(int Flashcolor);
 void RecFlashFill(int LX,int LY,int Color,unsigned char* screen, int SBreite);
 int Cent(int);
@@ -231,10 +238,8 @@ void GetInternFenster(void)
 {
   Blast CurBlast = &(AllBlasts[0]);
   int MapBrick;
-  int line;
-  int col;
-  int i;
-  int LX,LY,j;
+  int line, col;
+  int i, j;
   
   unsigned char *source;		/* the current block to copy */
   unsigned char *target;
@@ -415,11 +420,10 @@ void PutInfluence(void)
   // SONST GIBTS NACH CA. 10 BILDERN DEN ERSTEN SEGMENTATION FAULT!!!!
   //
 
-  int InternFensterOffset;
   unsigned char *target;
   unsigned char *source;		/* the druid-block to copy */
   int i,j;
-  static BeamDelay=1;
+  static int BeamDelay=1;
 
   printf("\nvoid PutInfluence(void): REAL function called.");
 
@@ -461,43 +465,40 @@ void PutInfluence(void)
 
 /*@Function============================================================
 @Desc: PutEnemy: setzt Enemy der Nummer Enum ins InternWindow
-					 dazu wird dir Function PutObject verwendet
+                 dazu wird dir Function PutObject verwendet
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
 void PutEnemy(int Enum){
-	int i;
-	int j;
-
-	unsigned char *Enemypic;	
-	int enemyX, enemyY;
-	const char *druidname;		/* the number-name of the Enemy */
-	int phase;
+  unsigned char *Enemypic;	
+  int enemyX, enemyY;
+  const char *druidname;		/* the number-name of the Enemy */
+  int phase;
 	
-	/* if enemy is on other level, return */
-	if (Feindesliste[Enum].levelnum != CurLevel->levelnum) return;
+  /* if enemy is on other level, return */
+  if (Feindesliste[Enum].levelnum != CurLevel->levelnum) return;
 
-	/* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
-	if (Feindesliste[Enum].Status == OUT ) return;
+  /* wenn dieser Feind abgeschossen ist kann sofort zurueckgekehrt werden */
+  if (Feindesliste[Enum].Status == OUT ) return;
 
-	/* Wenn Feind nicht sichtbar: weiter */
-	if( ! IsVisible(&Feindesliste[Enum].pos) ) {
-		Feindesliste[Enum].onscreen=FALSE;
-		return;
-	} else Feindesliste[Enum].onscreen=TRUE;
+  /* Wenn Feind nicht sichtbar: weiter */
+  if( ! IsVisible(&Feindesliste[Enum].pos) ) {
+    Feindesliste[Enum].onscreen=FALSE;
+    return;
+  } else Feindesliste[Enum].onscreen=TRUE;
 
-	/* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
-	druidname = Druidmap[Feindesliste[Enum].type].druidname;
-	phase = Feindesliste[Enum].feindphase;
+  /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
+  druidname = Druidmap[Feindesliste[Enum].type].druidname;
+  phase = Feindesliste[Enum].feindphase;
 
-	Enemypic = FeindZusammenstellen(druidname,phase);
+  Enemypic = FeindZusammenstellen(druidname,phase);
 
-	enemyX = Feindesliste[Enum].pos.x;
-	enemyY = Feindesliste[Enum].pos.y;
+  enemyX = Feindesliste[Enum].pos.x;
+  enemyY = Feindesliste[Enum].pos.y;
 	
-	PutObject(enemyX, enemyY, Enemypic, FALSE);
-	
-}
+  PutObject(enemyX, enemyY, Enemypic, FALSE);
+
+} // void PutEnemy(int Enum) 
 
 
 /*@Function============================================================
@@ -672,11 +673,12 @@ int PutObject(int x, int y, unsigned char *pic, int check)
 * $Function----------------------------------------------------------*/
 void PutInternFenster(void)
 {
-  // MODIFIED FOR THE PORT!!!!!!!!!!!
   int StartX, StartY;
-  int i,j;
+  int i;
+#ifdef SLOW_VIDEO_CALLS     
+  int j;
+#endif
 
-  unsigned char *target;
   unsigned char *source;
 
   printf("void PutInternFenster(void) wurde ECHT aufgerufen..."); 
@@ -720,24 +722,22 @@ void PutInternFenster(void)
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-void RedrawInfluenceNumber(){
-unsigned char* LSource;
-unsigned char* LDest;
-int i;
-int j;
-int k;
-int LPhase=0;
-unsigned char LDigit=0;
+void RedrawInfluenceNumber(void){
+  unsigned char* LSource;
+  unsigned char* LDest;
+  int LPhase=0;
+  unsigned char LDigit=0;
+  int j;
 
-	for (LPhase=0;LPhase<ENEMYPHASES;LPhase++) {
-		for (j=0;j<3;j++) {
-			LDigit=*(Druidmap[Me.type].druidname+j)-'0';
-			LSource=Digitpointer+LDigit*9*9;
-			LDest=Influencepointer+LPhase*BLOCKBREITE*BLOCKHOEHE+j*8+NUMBEROFS;
-			DrawDigit(LSource,LDest);
-		}
-	}
-}
+  for (LPhase=0;LPhase<ENEMYPHASES;LPhase++) {
+    for (j=0;j<3;j++) {
+      LDigit=*(Druidmap[Me.type].druidname+j)-'0';
+      LSource=Digitpointer+LDigit*9*9;
+      LDest=Influencepointer+LPhase*BLOCKBREITE*BLOCKHOEHE+j*8+NUMBEROFS;
+      DrawDigit(LSource,LDest);
+    } // for
+  } // for
+} // void RedrawInfluenceNumber(void)
 
 
 /*@Function============================================================
@@ -767,7 +767,7 @@ void DrawDigit(unsigned char* Src, unsigned char* Dst) {
 * $Function----------------------------------------------------------*/
 void RotateBulletColor(void){
 	static int BulColNum;
-	int rot,gruen,blau;
+
 	static color BulletColors[MAXBULCOL]=
 		{BULLETCOLOR1, BULLETCOLOR2, BULLETCOLOR3, BULLETCOLOR4, BULLETCOLOR5 };
 	BulColNum++;
@@ -777,7 +777,7 @@ void RotateBulletColor(void){
 
 	SetPalCol(BULLETCOLOR,BulletColors[BulColNum].rot,
 		BulletColors[BulColNum].gruen, BulletColors[BulColNum].blau);
-}
+} // void RotateBulletColor(void)
 
 
 /*@Function============================================================
@@ -787,17 +787,12 @@ void RotateBulletColor(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void FlashWindow(int Flashcolor){
-	int i;
-
-	/*
-	 * das ganze Fenster kann durch einen einzigen Aufruf vom memset
-	 * auf den gew"unschten Wert gesetzt werden
-	 */
-
-	memset(InternWindow,Flashcolor,
-		INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE);
-	
-}
+  /*
+   * das ganze Fenster kann durch einen einzigen Aufruf vom memset
+   * auf den gew"unschten Wert gesetzt werden
+   */
+  memset(InternWindow,Flashcolor,INTERNBREITE*INTERNHOEHE*BLOCKBREITE*BLOCKHOEHE);
+} // void FlashWindow(int Flashcolor)
 
 /*@Function============================================================
 @Desc: void SetUserfenster(int color): Setzt die Hintergrundfarbe fuer das
