@@ -64,6 +64,7 @@ Common factor for all droids energyloss values: 0.05
 Common factor for all droids aggression values: 1.0
 Common factor for all droids score values: 2.0
 Common factor for all droids recovery time after hit: 1.0
+Common factor for all droids range of vision: 2.8
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
