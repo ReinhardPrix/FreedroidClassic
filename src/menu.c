@@ -602,10 +602,10 @@ enum
   while (!Weiter)
     {
       strcpy (theme_string, "Theme: ");
-      if (strstr (GameConfig.Theme_SubPath, "default"))
-	strcat (theme_string, "default");
+      if (strstr (GameConfig.Theme_SubPath, "classic"))
+	strcat (theme_string, "Classic");
       else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
-	strcat (theme_string, "lanzz");
+	strcat (theme_string, "Lanzz");
       else
 	strcat (theme_string, "unknown");
 
@@ -645,13 +645,13 @@ enum
 	  break;
 	case SET_THEME:
 	  while (EnterPressed() || SpacePressed() );
-	  if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+	  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
 	    {
 	      GameConfig.Theme_SubPath="lanzz_theme/";
 	    }
 	  else
 	    {
-	      GameConfig.Theme_SubPath="default_theme/";
+	      GameConfig.Theme_SubPath="classic_theme/";
 	    }
 	  ReInitPictures();
 	  
