@@ -45,42 +45,6 @@
 /* *********************************************************************** */
 
 /*-----------------------------------------------------------------
- *@Desc: Diese Prozedur isoliert einzelne Teile aus *screen
- *	 angezeigten Bild und legt diese in *target
- *
- * Parameter: screen: Screen, auf dem Grafik steht
- *	      target: Ziel, in das der Block kopiert wird
- *		==> muss schon reserviert sein !!
- *					
- *	Links/Oben : Koordinaten des linken oberen Eck des Blocks
- *
- * @Ret: void
- *
- *-----------------------------------------------------------------*/
-void
-IsolateBlock (unsigned char *Parameter_screen,
-	      unsigned char *target,
-	      int BlockEckLinks,
-	      int BlockEckOben, int Blockbreite, int Blockhoehe)
-{
-  int row;
-  unsigned char *source;
-  unsigned char *tmp;
-
-  source = Parameter_screen + BlockEckOben * SCREENLEN + BlockEckLinks;
-  tmp = target;
-
-  for (row = 0; row < Blockhoehe; row++)
-    {
-      memcpy (tmp, source, Blockbreite);
-      tmp += Blockbreite;
-      source += SCREENLEN;
-    }
-
-}				/* IsolateBlock */
-
-
-/*-----------------------------------------------------------------
  * @Desc: loads picture file, transfers blocks into main block-surface
  *        (ne_blocks), and fills SDL_Rect array with the appropriate 
  *        coordinates. 
@@ -113,7 +77,8 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
       Terminate (ERR);
     }
 
-  SDL_SetAlpha( tmp , 0 ,  0 ); // this command is used to TAKE THE ALPHA CHANNEL WITH US IN THE BLIT AND 
+  SDL_SetAlpha( tmp , 0 ,  0 ); // this command is used to TAKE THE ALPHA */
+				// CHANNEL WITH US IN THE BLIT AND 
                                 // NOT APPLY IT HERE
 
   if (!blocks_per_line) /* only one line here */
