@@ -75,8 +75,11 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
  C ... Open/Close Character Screen
  S ... Open/Close Spells&Skills Screen
  L ... Show Quest Status Log
+ T ... Toggle wall transparency
  P ... Turn on/off Pause Mode
  Tab ... Turn on/off automap display
+ LEFT SHIFT ... make item names flash up, so that no items can be
+    missed easily
  CTRL ... Running motion (hold down CTRL-key)
  Escape ... Pops up the main menu
  F1-F9 Quick-Switch to skill/ability/spells 1-9
