@@ -48,11 +48,6 @@
 #include "global.h"
 #include "proto.h"
 
-#define DIGITLENGTH 9
-#define DIGITHEIGHT 9
-#define DIGITNUMBER 20
-#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
-
 /*@Function============================================================
 @Desc: 
 
@@ -219,7 +214,7 @@ GetDigits (void)
 		    Digitpointer + DIGITHEIGHT * DIGITLENGTH * i,
 		    i * DIGITLENGTH, 0, DIGITLENGTH, DIGITHEIGHT);
     }
-}				// void GetDigits(void)
+} // void GetDigits(void)
 
 /* *********************************************************************** */
 

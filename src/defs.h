@@ -161,6 +161,12 @@ enum _sounds
 
 /* Dimensionen von Bloecken und Bildern */
 
+// Little Digits to be filled into robot pictures.
+#define DIGITLENGTH 9
+#define DIGITHEIGHT 9
+#define DIGITNUMBER 22
+#define DIGITMEM DIGITHEIGHT*DIGITLENGTH*DIGITNUMBER
+
 /* Rahmen */
 #define RAHMENBREITE		SCREENBREITE
 #define RAHMENHOEHE		32

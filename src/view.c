@@ -153,15 +153,65 @@ FeindZusammenstellen (const char *FZahl, int FPhase)
   unsigned char *LSrce;
   unsigned char *LDest;
   int i;
+  int Verschiebung;
+  int ZielVerschiebung;
+
+  DebugPrintf
+    ("\nunsigned char * FeindZusammenstellen(...): real function call confirmed.\n");
+
+  printf( "\n Zuletzt berichtete Phase in FeindZusammenstellen(...) is: %d." , FPhase );
+  printf( "\n Zuletzt berichtete Zahl is: %s.\n\n" , FZahl );
 
   for (i = 0; i < 3; i++)
     {
-      LSrce = Digitpointer + 10 * 9 * 9 + (*(FZahl + i) - '0') * 9 * 9;
-      LDest = Enemypointer + NUMBEROFS + i * 8 + BLOCKMEM * FPhase;
-      DrawDigit (LSrce, LDest);
+      printf("\n Variable i ist jetzt: %d.",i);
+
+      Verschiebung = (*(FZahl + i) - '1' + 11 ) * 9 * 9;
+
+      if (Verschiebung < 0) 
+	{
+	  printf(" SUSPICIOUS Verschiebung in FeindZusammenstellen: NEGATIVE. Terminating.");
+	  Terminate(ERR);
+	}
+      
+      if (Verschiebung >= DIGITMEM) 
+	{
+	  printf(" SUSPICIOUS Verschiebung in FeindZusammenstellen: > DIGITMEM!. Terminating.");
+	  Terminate(ERR);
+	}
+
+      /*
+      if ( ( (*(FZahl + i)) - '1' -1 ) < 0 )
+	{
+	  printf(" Digit das kein Digit ist in FeindZusammenstellen?: Terminiere.");
+	  Terminate(ERR);
+	}
+      */
+
+      ZielVerschiebung =  NUMBEROFS + i * 8 + BLOCKMEM * FPhase; 
+
+      if ( ZielVerschiebung < 0) 
+	{
+	  printf(" SUSPICIOUS ZielVerschiebung in FeindZusammenstellen: NEGATIVE. Terminating.");
+	  Terminate(ERR);
+	}
+      
+      if ( ZielVerschiebung >= ENEMYPHASES * BLOCKMEM ) 
+	{
+	  printf(" SUSPICIOUS ZielVerschiebung in FeindZusammenstellen: > ENEMYPHASES * BLOCKMEM!. Terminating.");
+	  Terminate(ERR);
+	}
+
+      LSrce = Digitpointer + Verschiebung;
+      LDest = Enemypointer + ZielVerschiebung;
+      DrawDigit ( LSrce , LDest );
     }
+
+  DebugPrintf
+    ("\nunsigned char * FeindZusammenstellen(...): usual end of function reached.\n");
+
   return (Enemypointer + FPhase * BLOCKMEM);
-}
+} // unsigned char * FeindZusammenstellen (...)
 
 
 /*@Function============================================================
@@ -597,7 +647,7 @@ PutEnemy (int Enum)
   if (Feindesliste[Enum].levelnum != CurLevel->levelnum)
     {
       DebugPrintf
-	("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+	("\nvoid PutEnemy(int Enum): DIFFERENT LEVEL-->usual end of function reached.\n");
       return;
     }
 
@@ -605,7 +655,7 @@ PutEnemy (int Enum)
   if (Feindesliste[Enum].Status == OUT)
     {
       DebugPrintf
-	("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+	("\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
       return;
     }
 
@@ -614,12 +664,15 @@ PutEnemy (int Enum)
     {
       Feindesliste[Enum].onscreen = FALSE;
       DebugPrintf
-	("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+	("\nvoid PutEnemy(int Enum): ONSCREEN=FALSE --> usual end of function reached.\n");
       return;
 
     }
   else
     Feindesliste[Enum].onscreen = TRUE;
+
+  DebugPrintf
+    ("\nvoid PutEnemy(int Enum): it seems that we must draw this one on the screen....\n");
 
   /* Bild des Feindes mit richtiger Nummer in der richtigen Phase darstellen */
   druidname = Druidmap[Feindesliste[Enum].type].druidname;
@@ -632,7 +685,7 @@ PutEnemy (int Enum)
 
   PutObject (enemyX, enemyY, Enemypic, FALSE);
 
-  DebugPrintf ("\nvoid PutEnemy(int Enum): usual end of function reached.\n");
+  DebugPrintf ("\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
 }				// void PutEnemy(int Enum) 
 
@@ -778,6 +831,10 @@ PutObject (int x, int y, unsigned char *pic, int check)
   unsigned int InternWindowOffset;
   unsigned char *source, *target;
   int ret = FALSE;
+  int Return_Value;
+
+  DebugPrintf
+    ("\nint PutObject(...): real function call confirmed.\n");
 
   /* Verschiebung zum Influencer (which is the center of screen */
   DifX = x - Me.pos.x;
@@ -818,9 +875,17 @@ PutObject (int x, int y, unsigned char *pic, int check)
 
   source = pic;
 
-  return (MergeBlockToWindow
+  DebugPrintf
+    ("\nint PutObject(...): usual end of function reached.\n");
+
+  Return_Value=(MergeBlockToWindow
 	  (source, target, INTERNBREITE * BLOCKBREITE, check));
-}
+
+  DebugPrintf
+    ("\nint PutObject(...): usual end of function reached.\n");
+
+  return (Return_Value);
+} // int PutObject(...)
 
 
 /*@Function============================================================
@@ -929,15 +994,19 @@ DrawDigit (unsigned char *Src, unsigned char *Dst)
   int i;
   int j;
 
+  DebugPrintf ("\nvoid DrawDigit(...): real function call confirmed.");
 
-  for (i = 0; i < 9; i++)
+  for (i = 0; i < DIGITHEIGHT; i++)
     {
-      for (j = 0; j < 8; j++)
+      for (j = 0; j < DIGITLENGTH; j++)
 	{
 	  *(Dst + i * BLOCKBREITE + j) = *(Src + i * 9 + j);
 	}
     }
-}
+
+  DebugPrintf ("\nvoid DrawDigit(...): end of usual function reached.");
+
+} // void DrawDigit(,..)
 
 
 /*@Function============================================================

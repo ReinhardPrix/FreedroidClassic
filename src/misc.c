@@ -344,10 +344,18 @@ Cheatmenu (void)
 	  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
 	    {
 	      if (Feindesliste[i].levelnum == CurLevel->levelnum)
-		gl_printf (-1, -1, "%d.\t%s\t%d\t%d\t%d.\n", i,
-			   Druidmap[Feindesliste[i].type].druidname,
-			   Feindesliste[i].pos.x, Feindesliste[i].pos.y,
-			   Feindesliste[i].energy);
+		{
+		  if ( ( Feindesliste[i].type < 0 ) || ( Feindesliste[i].type >= ALLDRUIDTYPES ) )
+		    {
+		      printf("\n\n WARNING!  Illegal Druidtype encoutered!  Terminating...");
+		      printf("\n               The details are: Type=%d.\n\n", Feindesliste[i].type );
+		      Terminate(ERR);
+		    }
+		  gl_printf (-1, -1, "%d.\t%s\t%f\t%f\t%f.\n", i,
+			     Druidmap[Feindesliste[i].type].druidname,
+			     Feindesliste[i].pos.x, Feindesliste[i].pos.y,
+			     Feindesliste[i].energy);
+		}
 	    }
 	  getchar ();
 	  break;
