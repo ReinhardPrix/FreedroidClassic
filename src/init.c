@@ -1859,6 +1859,9 @@ InitNewMissionList ( char *MissionName )
   Me[0].exp_level = 1;
   Me[0].Gold = 100;
 
+  //--------------------
+  // Now we initialize the skills of the new hero...
+  //
   Me[0].readied_skill = 0;
   for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
     {

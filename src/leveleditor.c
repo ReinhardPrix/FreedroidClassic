@@ -2981,9 +2981,19 @@ LevelEditor(void)
 		}
 	    }
 
+	  //--------------------
+	  // With the right mouse button, it should be possible to actually 'draw'
+	  // something into the level.  This seems to work so far.  Caution is nescessary
+	  // to prevent segfault due to writing outside the level, but that's easily
+	  // accomplished.
+	  //
 	  if ( MouseRightPressed() )
 	    {
-	      EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ] = Highlight ;	      
+	      if ( ( TargetSquare . x >= 0 ) &&
+		   ( TargetSquare . x <= EditLevel->xlen-1 ) &&
+		   ( TargetSquare . y >= 0 ) &&
+		   ( TargetSquare . y <= EditLevel->ylen-1 ) )
+		EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ] = Highlight ;	      
 	    }
 
 	  if (QPressed())

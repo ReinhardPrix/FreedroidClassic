@@ -219,6 +219,8 @@ EXTERN int TranslateMap (Level Lev);
 #else
 #define EXTERN extern
 #endif
+EXTERN void LoadAllStaticWavFiles( void );
+EXTERN void LoadAllStaticModFiles( void );
 EXTERN void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting );
 EXTERN void InitAudio(void);
 EXTERN void SetBGMusicVolume(float);

@@ -3184,6 +3184,7 @@ IsPassable ( float x , float y , int z , int Checkpos)
     case TELE_2:
     case TELE_3:
     case TELE_4:
+    case CAVE_WITH_WAY_TILE:
       ret = CENTER;		/* these are passable */
       break;
 
