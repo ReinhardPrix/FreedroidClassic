@@ -3002,6 +3002,15 @@ IsPassable ( float x , float y , int z , int Checkpos)
       break;
 
 
+    case BLOCK1:
+    case BLOCK2:
+    case BLOCK3:
+      if ((fy < WALLPASS) || (fy > 1 - WALLPASS) || (fx < WALLPASS) || (fx > 1 - WALLPASS))
+	ret = CENTER;
+      else
+	ret = -1;
+      break;
+
 
     case H_WALL:
       if ((fy < WALLPASS) || (fy > 1 - WALLPASS))
