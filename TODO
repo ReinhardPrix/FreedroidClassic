@@ -7,11 +7,6 @@ Preparing "final" release 1.0.0:
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
-- (rp) when SoundInit fails: get SegFault instead of proper termination
-      (also bad because corrupts highscore file apparently)
-
-- (rp) frame-rate neglected when counting out after takeover finished
-
 - (rp) sometimes droids get created in "piles", i.e. on top of each other...
 
 -  Collision with robo can still kick you out of level.. ??
@@ -261,3 +256,7 @@ Resolved bugs
 - !! We should have a common bug/patch mailing address somewhere !!
   freedroid@....
 
+- (rp) frame-rate neglected when counting out after takeover finished
+
+- (rp) when SoundInit fails: get SegFault instead of proper termination
+      (also bad because corrupts highscore file apparently)
