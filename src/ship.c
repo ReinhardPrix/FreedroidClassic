@@ -1435,14 +1435,14 @@ ShowDeckMap (Level deck)
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = H_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
-			  GetDoors( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			  GetAllAnimatedMapTiles ( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
 			}
 		      if ( MapValue == LOCKED_V_SHUT_DOOR )
 			{
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = V_SHUT_DOOR ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Door_Successfully_Unlocked_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
-			  GetDoors( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
 			}                                         
 		    }
 		}
@@ -1468,7 +1468,7 @@ ShowDeckMap (Level deck)
 			  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> map [ TargetSquare.y ] [ TargetSquare.x ] = BLOCK1 ;
 			  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Gun_Successfully_Deactivated_0.wav" , FALSE );
 			  SelectedFunction = NO_FUNCTION;
-			  GetAutoguns( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			  GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
 			}
 		    }
 		}
@@ -1537,8 +1537,7 @@ ShowDeckMap (Level deck)
 				  PlayOnceNeededSoundSample ( "../effects/CONSOLE_Please_Specify_Gun_0.wav" , FALSE );
 				}
 
-
-			      GetAutoguns( curShip.AllLevels[ Me [ 0 ] . pos . z ]  );
+			      GetAllAnimatedMapTiles ( curShip.AllLevels [ Me [ 0 ] . pos . z ] );
 			    }
 			}
 		    }

@@ -154,8 +154,8 @@ CursorIsOnButton( int ButtonIndex , int x , int y )
   //
   if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {
-      GiveStandardErrorMessage ( "CursorIsOnButton(...)" , 
-"A Button that should be checked for mouse contact was requested, but the\n\
+      GiveStandardErrorMessage ( "CursorIsOnButton(...)" , "\
+A Button that should be checked for mouse contact was requested, but the\n\
 button index given exceeds the number of buttons defined in freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
@@ -1360,7 +1360,8 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 	{
 	  DebugPrintf( 1 , "\nvoid ExecuteEvent ( int EventNumber ) : Change map Event correctly specified. confirmed.");
 	  curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]->map [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.y ] [ AllTriggeredActions[ EventNumber ].ChangeMapLocation.x ]  = AllTriggeredActions[ EventNumber ].ChangeMapTo ;
-	  GetDoors( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
+	  
+	  GetAllAnimatedMapTiles ( curShip.AllLevels[ AllTriggeredActions[ EventNumber ].ChangeMapLevel ]  );
 	}
     }
 

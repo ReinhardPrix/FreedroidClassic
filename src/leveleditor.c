@@ -741,10 +741,7 @@ EditLevelDimensions ( void )
 	case (-1):
 	case BACK_TO_LE_MAIN_MENU:
 	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
-	  GetDoors ( EditLevel );
-	  GetRefreshes ( EditLevel );
-	  GetTeleports ( EditLevel );
-	  GetAutoguns ( EditLevel );
+	  GetAllAnimatedMapTiles ( EditLevel );
 	  Weiter=!Weiter;
 	  break;
 
@@ -1186,10 +1183,8 @@ ExportLevelInterface ( int LevelNum )
 		   curShip . AllLevels [ LevelNum ] -> map[ AreaHeight-1 - y ] ,
 		   AreaWidth ) ;
 	}
-      GetDoors ( curShip . AllLevels [ TargetLevel ] );
-      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
-      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
-      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
+      
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1222,10 +1217,7 @@ ExportLevelInterface ( int LevelNum )
 		   curShip . AllLevels [ LevelNum ] -> map[ TargetStartLine - y ] ,
 		   AreaWidth ) ;
 	}
-      GetDoors ( curShip . AllLevels [ TargetLevel ] );
-      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
-      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
-      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1259,10 +1251,7 @@ ExportLevelInterface ( int LevelNum )
 		    curShip . AllLevels [ LevelNum ] -> xlen - 0 - AreaWidth ,
 		   AreaWidth ) ;
 	}
-      GetDoors ( curShip . AllLevels [ TargetLevel ] );
-      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
-      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
-      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
     }
 
   //--------------------
@@ -1296,10 +1285,7 @@ ExportLevelInterface ( int LevelNum )
 		   ( curShip . AllLevels [ LevelNum ] -> map[ y ] ) + 0 , 
 		   AreaWidth ) ;
 	}
-      GetDoors ( curShip . AllLevels [ TargetLevel ] );
-      GetRefreshes ( curShip . AllLevels [ TargetLevel ] );
-      GetTeleports ( curShip . AllLevels [ TargetLevel ] );
-      GetAutoguns ( curShip . AllLevels [ TargetLevel ] );
+      GetAllAnimatedMapTiles ( curShip . AllLevels [ TargetLevel ] );
     }
 
 }; // void SynchronizeLevelInterfaces ( void )
@@ -2539,10 +2525,7 @@ LevelEditor(void)
 	  BlockY=rintf(Me[0].pos.y);
 	  
 	  EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;	  
-	  GetDoors ( EditLevel );
-	  GetTeleports ( EditLevel );
-	  GetRefreshes ( EditLevel );
-	  GetAutoguns ( EditLevel );
+	  GetAllAnimatedMapTiles ( EditLevel );
 
 	  VanishingMessageDisplayTime += ( SDL_GetTicks ( ) - OldTicks ) / 1000.0 ;
 	  OldTicks = SDL_GetTicks ( ) ;

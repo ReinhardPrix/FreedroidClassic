@@ -1896,13 +1896,14 @@ I need to know that for saving. Abort.\n");
     }
   else
     {
-      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  Either it couldn't open the directory for the saved games\n\
+      fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
+      GiveStandardErrorMessage ( "Load_Existing_Hero_Menu(...)" , "\
+Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\
-Freedroid will continue execution now, since this problem will be dealt with in-game.\n\
-The problem occured in the function 'int Load_Existing_Hero_Menu ( void )'.\n\
-----------------------------------------------------------------------\n" , Saved_Games_Dir );
+Freedroid will continue execution now, since this problem\n\
+ will be dealt with in-game.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 
       MenuTexts[0]="BACK";
       MenuTexts[1]="";
@@ -2028,13 +2029,14 @@ I need to know that for saving. Abort.\n");
     }
   else
     {
-      DebugPrintf( 0 , "\n----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:  Either it couldn't open the directory for the saved games\n\
+      fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
+      GiveStandardErrorMessage ( "Delete_Existing_Hero_Menu(...)" , "\
+Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\
-Freedroid will continue execution now, since this problem will be dealt with in-game.\n\
-The problem occured in the function 'int Load_Existing_Hero_Menu ( void )'.\n\
-----------------------------------------------------------------------\n" , Saved_Games_Dir );
+Freedroid will continue execution now, since this problem\n\
+ will be dealt with in-game.",
+				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 
       MenuTexts[0]="BACK";
       MenuTexts[1]="";

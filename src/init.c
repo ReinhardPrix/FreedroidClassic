@@ -295,13 +295,11 @@ Get_Item_Data ( char* DataPointer )
     }
   else
     {
-      DebugPrintf ( 1 , "\n----------------------------------------------------------------------\n
-Freedroid has encountered a problem:  There seem to be more item definitions in freedroid.ruleset\n\
-than the maximum allowance for item types in the ALL_ITEMS constant.\n\
-Please correct the constant, recompile and restart freedroid or simply inform the developers about\n\
-the problem, as usual best by sending email to freedroid-discussion@lists.sourceforge.net.\n\
-We have counted %d different item types in the game data file.\n\
-----------------------------------------------------------------------\n" , Number_Of_Item_Types );
+      fprintf ( stderr, "\n\nNumber_Of_Item_Types: '%d'.\n" , Number_Of_Item_Types );
+      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+There seem to be more item definitions in freedroid.item_archetypes\n\
+than the maximum allowance for item types in the ALL_ITEMS constant.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -329,23 +327,12 @@ We have counted %d different item types in the game data file.\n\
 	}
       else
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+The item specification of an item in freedroid.item_archetypes should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
 This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
+the item specification section.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       // Now we read in if this item can be installed by a mechanics bot
@@ -360,23 +347,12 @@ Sorry...\n\
 	}
       else
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The item specification of an item in freedroid.ruleset should contain an \n\
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
+The item specification of an item in freedroid.item_archetypes should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
 This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
+the item specification section.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       // Now we read the label telling us in which slot the item can be installed
@@ -417,27 +393,12 @@ Sorry...\n\
 	}
       else
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf(stderr, "\n\nItemIndex: %d.\n" ,ItemIndex ); 
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
 answer for the slot installation possiblieties, that was neither 
-'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  \n\
-\n\
-The item specification number, where the error occured was: %d.\n\
-\n\
-Please correct the error or send mail to the freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , ItemIndex );
-	  Terminate( ERR );
+'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       //--------------------
@@ -459,23 +420,10 @@ Sorry...\n\
 	}
       else
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate( ERR );
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
 
       //--------------------
@@ -542,23 +490,10 @@ Sorry...\n\
 	    }
 	  else
 	    {
-	      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	      Terminate( ERR );
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	  
 	  // Now we read in if this weapons bullets will reflect other bullets or not
@@ -573,23 +508,10 @@ Sorry...\n\
 	    }
 	  else
 	    {
-	      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	      Terminate( ERR );
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	  
 	  // Now we read in if this weapons bullets will reflect other bullets or not
@@ -604,23 +526,10 @@ Sorry...\n\
 	    }
 	  else
 	    {
-	      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	      Terminate( ERR );
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	  
 	  // Now we read in if this weapons bullets will reflect other bullets or not
@@ -635,23 +544,10 @@ Sorry...\n\
 	    }
 	  else
 	    {
-	      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	      GiveStandardErrorMessage ( "Get_Item_Data(...)" , "\
 The item specification of an item in freedroid.ruleset should contain an \n\
-answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\n\
-\n\
-This indicated a corrupted freedroid.ruleset file with an error at least in\n\
-the item specification section.  Please correct the error or send mail to the\n\
-freedroid development team.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the initialisation problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	      Terminate( ERR );
+answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
+					 PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	  
 	  // Now we read in the recharging time this weapon will need
@@ -1235,8 +1131,6 @@ Get_Robot_Data ( void* DataPointer )
 
   for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
     {
-      // Druidmap[i].maxspeed *= maxspeed_calibrator;
-      // Druidmap[i].accel *= acceleration_calibrator;
       Druidmap[i].maxenergy *= maxenergy_calibrator;
       Druidmap[i].lose_health *= energyloss_calibrator;
       Druidmap[i].aggression *= aggression_calibrator;

@@ -313,21 +313,12 @@ CheckForTuxOutOfMap ( PlayerNum )
        ( (int) rintf( Me [ PlayerNum ] . pos.y ) <  0              ) ||
        ( (int) rintf( Me [ PlayerNum ] . pos.x ) <  0              ) )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A Player (influencer/tux) was found outside the map in MoveInfluence.\n\
-\n\
-This indicates a bug or unimplemented functionality in Freedroid.\n\
-The PlayerNum of the offending player on this machine was: %d.\n\
-\n\
-Freedroid will terminate now to draw attention \n\
-to the internal problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , PlayerNum );
-      Terminate(ERR);
+      fprintf ( stderr, "\n\nPlayerNum: '%d'.\n" , PlayerNum );
+      GiveStandardErrorMessage ( "CheckForTuxOutOfMap(...)" , "\
+A player's Tux was found outside the map in MoveInfluence.\n\
+This indicates either a bug in the Freedroid RPG code or\n\
+a bug in the currently used map system of Freedroid RPG.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 }; // void CheckForTuxOutOfMap ( PlayerNum )
 

@@ -437,24 +437,12 @@ DropItemAt( int ItemType , float x , float y , int prefix , int suffix , int Tre
   if ( ItemType == ( -1 ) ) return;
   if ( ItemType >= Number_Of_Item_Types ) 
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      fprintf ( stderr, "\n\nItemType: '%d'.\n" , ItemType );
+      GiveStandardErrorMessage ( "DropItemAt(...)" , "\
 There was an item code for an item to drop given to the function \n\
 DropItemAt( ... ), which is pointing beyond the scope of the known\n\
-item types.  This indicates a severe bug in Freedroid.\n\
-\n\
-The given item type was : %d.\n\
-\n\
-Please inform the Freedroid developers about the problem.\n\
-For now Freedroid will terminate to draw attention \n\
-to the item problem it could not resolve.\n\
-Sorry if that stops a major game of yours....\n\
-----------------------------------------------------------------------\n\
-\n" , ItemType );
-      Terminate(ERR);
-      return;
+item types.  This indicates a severe bug in Freedroid.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   //--------------------
@@ -1719,27 +1707,12 @@ GetFreeInventoryIndex( void )
   // occured, an error message must be printed out and the program
   // must be terminated.
   //
-  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a severe problem:\n\
+  GiveStandardErrorMessage ( "GetFreeInventoryIndex(...)" , "\
 A FREE INVENTORY INDEX POSITION COULD NOT BE FOUND.\n\
-\n\
 This is an internal error, that must never happen unless there are\n\
-severe bugs in the inventory system.\n\
-\n\
-If you receive this error, PLEASE INFORM THE FREEDROID DEVELOPERS ABOUT IT!!\n\
-Thanks a lot!!!\n\
-\n\
-For now Freedroid will terminate to draw attention \n\
-to the internal problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-  Terminate(ERR);
-
-  // to make compilers happy...
-  return ( 0 ); 
+severe bugs in the inventory system.",
+				 PLEASE_INFORM, IS_FATAL );
+  return ( -1 ) ; // just to make compilers happy.
 }; // int GetFreeInventoryIndex( void )
 
 /* ----------------------------------------------------------------------

@@ -168,21 +168,11 @@ ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer )
       if ( PositionPointer->x != ( -1 ) ) return;
     }
 
-  DebugPrintf ( 0 , "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Resolving map label '%s' failed on the complete ship!\n\
-This is a severe error in the game data of Freedroid.\n\
-\n\
-Please inform the developers about the problem, best by sending e-mail\n\
-to freedroid-discussion@lists.sourceforge.net\n\
-\n\
-Thanks a lot in advance and sorry if this interrupts a major game of yours.\n\
-But for now Freedroid will terminate to draw attention to the internal game\n\
-data problem it could not resolve...\n\
-----------------------------------------------------------------------\n" ,
-		MapLabel );
-  Terminate ( ERR );
+  fprintf ( stderr, "\n\nMapLabel: '%s'.\n" , MapLabel );
+  GiveStandardErrorMessage ( "ResolveMapLabelOnShip(...)" , "\
+Resolving a certain map label failed on the complete ship!\n\
+This is a severe error in the game data of Freedroid.",
+			     PLEASE_INFORM, IS_FATAL );
 
 }; // void ResolveMapLabelOnShip ( char* MapLabel , grob_point* PositionPointer , int LevelNum )
 
@@ -260,25 +250,11 @@ void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
 
   if ( loadlevel->ylen >= MAX_MAP_LINES ) 
     {
-	  fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "DecodeDimensionsOfThisLevel(...)" , "\
 A maplevel Freedroid was supposed to load has more map lines than allowed\n\
 for a map level as by the constant MAX_MAP_LINES in defs.h.\n\
-\n\
-Sorry, but unless this constant is raised, I'll refuse to load this map.\n\
-\n\
-If you receive this error message, either raise the constant yourself and recompile or\n\
-contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the map loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
+Sorry, but unless this constant is raised, Freedroid will refuse to load this map.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 }; // void DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer );
 
@@ -661,26 +637,13 @@ GetMapBrick (Level deck, float x, float y)
   BrickWanted = deck->map[((int) rintf (y)) ][((int) rintf (x)) ] ;
   if ( BrickWanted >= NUM_MAP_BLOCKS )
     {
-      fprintf( stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+      GiveStandardErrorMessage ( "GetMapBrick(...)" , "\
 A maplevel in Freedroid contained a brick type, that does not have a\n\
 real graphical representation.  This is a severe error, that really \n\
 shouldn't be occuring in normal game, except perhaps if the level editor\n\
 was just used to add/remove some new doors or refreshes or other animated\n\
-map tiles.\n\
-\n\
-If you receive this error message, you might aid the Freedroid project by\n\
-sending e-mail about the problem to freedroid-discussion@lists.sourceforge.net.\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention \n\
-to the map loading problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate ( ERR ) ;
+map tiles.",
+				 PLEASE_INFORM, IS_FATAL );
     }
 
   return BrickWanted;
@@ -1897,17 +1860,29 @@ DecodeLoadedLeveldata ( char *data )
 }; // Level DecodeLoadedLeveldata (char *data)
 
 /* ----------------------------------------------------------------------
- * This function initializes the Doors array of the given level structure
- * Of course the level data must be in the structure already!!
- *
- * Return value: the number of doors found or ERR
+ * Some structures within Freedroid rpg maps are animated in the sense
+ * that the map tiles used on the secected square rotates through a number
+ * of different map tile types.
+ * Now of course it would be possible to search all the map all the time
+ * for tiles of this type and then update only those again and again.
+ * But this would loose a lot of time checking 100x100 map tiles for a
+ * lot of cases again and again.
+ * Therefore it seems favorable to generate a list of these tiles in 
+ * advance and then update only according to the current list of such
+ * map tiles.  
+ * Not this function is here to assemble such a list of animated map
+ * tiles for one particular map level.
  * ---------------------------------------------------------------------- */
-int
-GetDoors (Level Lev)
+void
+GetAllAnimatedMapTiles ( Level Lev )
 {
   int i, line, col;
   int xlen, ylen;
   int curdoor = 0;
+  int curautogun = 0;
+  int curref = 0;
+  int curcons = 0;
+  int curtele = 0;
   char brick;
 
   xlen = Lev->xlen;
@@ -1923,289 +1898,112 @@ GetDoors (Level Lev)
       for (col = 0; col < xlen; col++)
 	{
 	  brick = Lev->map[line][col];
-	  // if (brick == '=' || brick == '"')
-	  if ( brick == V_SHUT_DOOR || brick == H_SHUT_DOOR )
+
+	  switch ( brick )
 	    {
+	    case H_SHUT_DOOR:
+	    case H_HALF_DOOR1:
+	    case H_HALF_DOOR2:
+	    case H_HALF_DOOR3:
+	    case H_OPEN_DOOR:
+	    case V_SHUT_DOOR:
+	    case V_HALF_DOOR1:
+	    case V_HALF_DOOR2:
+	    case V_HALF_DOOR3:
+	    case V_OPEN_DOOR:
 	      Lev->doors[curdoor].x = col;
 	      Lev->doors[curdoor++].y = line;
-
 	      if (curdoor > MAX_DOORS_ON_LEVEL)
 		{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of doors found in level %d seems to be greater than the number\n\
-of doors currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of doors currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_DOORS_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_DOORS_ON_LEVEL );
-		  Terminate(ERR);
+		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_DOORS_ON_LEVEL: %d \n" , 
+			   Lev->levelnum , MAX_DOORS_ON_LEVEL );
+		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of doors found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					     PLEASE_INFORM, IS_FATAL );
 		}
-
-	    }			/* if */
-	}			/* for */
-    }				/* for */
-
-  return curdoor;
-}; // int GetDoors (...)
-
-/* ----------------------------------------------------------------------
- * This function initializes the Autogun array of the given level structure
- * Of course the level data must be in the structure already!!
- *
- * Return value: the number of guns found or ERR
- * ---------------------------------------------------------------------- */
-int
-GetAutoguns (Level Lev)
-{
-  int i, line, col;
-  int xlen, ylen;
-  int curautogun = 0;
-  char brick;
-
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
-
-  // init autoguns array to 0 */
-  for (i = 0; i < MAX_AUTOGUNS_ON_LEVEL; i++)
-    Lev->autoguns[i].x = Lev->autoguns[i].y = 0;
-
-  /* now find the autoguns */
-  for (line = 0; line < ylen; line++)
-    {
-      for (col = 0; col < xlen; col++)
-	{
-	  brick = Lev->map[line][col];
-	  // if (brick == '=' || brick == '"')
-	  if ( brick == AUTOGUN_L || brick == AUTOGUN_R || brick == AUTOGUN_U || brick == AUTOGUN_D )
-	    {
+	    break;
+	    
+	    case AUTOGUN_L:
+	    case AUTOGUN_R:
+	    case AUTOGUN_U:
+	    case AUTOGUN_D:
 	      Lev->autoguns[curautogun].x = col;
 	      Lev->autoguns[curautogun++].y = line;
 
 	      if (curautogun > MAX_AUTOGUNS_ON_LEVEL)
 		{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of autoguns found in level %d seems to be greater than the number\n\
-of autoguns currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of autoguns currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_AUTOGUNS_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_AUTOGUNS_ON_LEVEL );
-		  Terminate(ERR);
+		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_AUTOGUNS_ON_LEVEL: %d \n" , 
+			   Lev->levelnum , MAX_AUTOGUNS_ON_LEVEL );
+		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of autoguns found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					     PLEASE_INFORM, IS_FATAL );
 		}
+	      break;
 
-	    }			/* if */
+	    case REFRESH1:
+	    case REFRESH2:
+	    case REFRESH3:
+	    case REFRESH4:
+	      Lev->refreshes[curref].x = col;
+	      Lev->refreshes[curref++].y = line;
+
+	      if (curref >= MAX_REFRESHES_ON_LEVEL)
+		{
+		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_REFRESHES_ON_LEVEL: %d \n" , 
+			   Lev->levelnum , MAX_REFRESHES_ON_LEVEL );
+		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of refreshes found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	      break;
+
+	    case CONSUMER_1:
+	    case CONSUMER_2:
+	    case CONSUMER_3:
+	    case CONSUMER_4:
+	      Lev->consumers[curcons].x = col;
+	      Lev->consumers[curcons++].y = line;
+
+	      if (curcons >= MAX_CONSUMERS_ON_LEVEL)
+		{
+		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_CONSUMERS_ON_LEVEL: %d \n" , 
+			   Lev->levelnum , MAX_CONSUMERS_ON_LEVEL );
+		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of consumers found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	    break;
+
+	    case TELE_1:
+	    case TELE_2:
+	    case TELE_3:
+	    case TELE_4:
+	      Lev->teleporters[curtele].x = col;
+	      Lev->teleporters[curtele++].y = line;
+
+	      if (curtele > MAX_TELEPORTERS_ON_LEVEL)
+		{
+		  fprintf( stderr , "\n\nLev->levelnum : %d MAX_TELEPORTERS_ON_LEVEL: %d \n" , 
+			   Lev->levelnum , MAX_TELEPORTERS_ON_LEVEL );
+		  GiveStandardErrorMessage ( "GetAllAnimatedMapTiles(...)" , "\
+The number of teleporters found in a level seems to be greater than the number\n\
+of doors currently allowed in a Freedroid map.",
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	      break;
+
+	    default:
+	      // if no animated tile, even better...
+	      break;
+	    }
 	}			/* for */
     }				/* for */
-
-  return curautogun;
-}; // int GetAutoguns (...)
-
-/* ----------------------------------------------------------------------
- * This function initialized the array of Refreshes for animation
- * within the level
- * 
- * Return value: the number of refreshes found or ERR
- * ---------------------------------------------------------------------- */
-int
-GetRefreshes (Level Lev)
-{
-  int i, row, col;
-  int xlen, ylen;
-  int curref = 0;
-
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
-
-  /* init refreshes array to 0 */
-  for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
-    Lev->refreshes[i].x = Lev->refreshes[i].y = 0;
-
-  /* now find all the refreshes */
-  for (row = 0; row < ylen; row++)
-    for (col = 0; col < xlen; col++)
-      {
-	if ( (Lev->map[row][col] == REFRESH1 ) || (Lev->map[row][col] == REFRESH2 ) || (Lev->map[row][col] == REFRESH3 ) || (Lev->map[row][col] == REFRESH4 ) )
-	  {
-	    Lev->refreshes[curref].x = col;
-	    Lev->refreshes[curref++].y = row;
-
-	    if (curref >= MAX_REFRESHES_ON_LEVEL)
-	      {
-		fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of refreshes found in level %d seems to be greater than the number\n\
-of refreshes currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of refreshes currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_REFRESHES_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_REFRESHES_ON_LEVEL );
-		Terminate(ERR);
-		return ERR;
-	      }
-	  }			/* if */
-      }				/* for */
-  return curref;
-}; // int GetRefreshes (Level lev)
-
-/* ----------------------------------------------------------------------
- * This function initialized the array of Consumers for animation
- * within the level
- * 
- * Return value: the number of consumers found or ERR
- * ---------------------------------------------------------------------- */
-int
-GetConsumers (Level Lev)
-{
-  int i, row, col;
-  int xlen, ylen;
-  int curref = 0;
-
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
-
-  /* init consumers array to 0 */
-  for (i = 0; i < MAX_CONSUMERS_ON_LEVEL; i++)
-    Lev->consumers[i].x = Lev->consumers[i].y = 0;
-
-  /* now find all the consumers */
-  for (row = 0; row < ylen; row++)
-    for (col = 0; col < xlen; col++)
-      {
-	if ( ( Lev->map[row][col] == CONSUMER_1 ) || ( Lev->map[row][col] == CONSUMER_2 ) || ( Lev->map[row][col] == CONSUMER_3 ) || ( Lev->map[row][col] == CONSUMER_4 ) )
-	  {
-	    Lev->consumers[curref].x = col;
-	    Lev->consumers[curref++].y = row;
-
-	    if (curref >= MAX_CONSUMERS_ON_LEVEL)
-	      {
-		fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of consumers found in level %d seems to be greater than the number\n\
-of consumers currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of consumers currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_CONSUMERS_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_CONSUMERS_ON_LEVEL );
-		Terminate(ERR);
-		return ERR;
-	      }
-	  }			/* if */
-      }				/* for */
-  return curref;
-}; // int GetConsumers (Level lev)
-
-/* ----------------------------------------------------------------------
- * This function initialized the array of Teleports for animation
- * within the level
- *
- * Return value:  number of teleporters found or ERR
- * ---------------------------------------------------------------------- */
-int
-GetTeleports (Level Lev)
-{
-  int i, row, col;
-  int xlen, ylen;
-  int curref = 0;
-
-  xlen = Lev->xlen;
-  ylen = Lev->ylen;
-
-  // init teleporters array to 0 
-  for (i = 0; i < MAX_TELEPORTERS_ON_LEVEL; i++)
-    Lev->teleporters[i].x = Lev->teleporters[i].y = 0;
-
-  // now find all the teleporters 
-  for (row = 0; row < ylen; row++)
-    for (col = 0; col < xlen; col++)
-      {
-	if (Lev->map[row][col] == TELE_1 )
-	  {
-	    Lev->teleporters[curref].x = col;
-	    Lev->teleporters[curref++].y = row;
-
-	    if (curref > MAX_TELEPORTERS_ON_LEVEL)
-	      {
-		fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The number of teleporters found in level %d seems to be greater than the number\n\
-of teleporters currently allowed in a freedroid map.\n\
-\n\
-The constant for the maximum number of refreshes currently is set to %d in the\n\
-freedroid defs.h file.  You can enlarge the constant there, then start make\n\
-and make install again, and the map will be loaded without complaint.\n\
-\n\
-The constant in defs.h is names 'MAX_TELEPORTERS_ON_LEVEL'.  If you received this \n\
-message, please also tell the developers of the freedroid project, that they\n\
-should enlarge the constant in all future versions as well.\n\
-\n\
-Thanks a lot.\n\
-\n\
-But for now Freedroid will terminate to draw attention to this small map problem.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , Lev->levelnum , MAX_TELEPORTERS_ON_LEVEL );
-		Terminate(ERR);
-	      }
-	  }			/* if */
-      }				/* for */
-  return curref;
-}; // int GetTeleports(Level lev)
+  
+}; // void GetAllAnimatedMapTiles ( Level Lev )
 
 /* ----------------------------------------------------------------------
  * This function translates map data into human readable map code, that
@@ -2323,23 +2121,7 @@ TranslateMap (Level Lev)
   // list is prepared in advance, so that we don't have to search for doors
   // on all of the map during program runtime.
   //
-  GetDoors ( Lev );
-
-  //--------------------
-  // Same as for the doors also holds for the autocannons
-  //
-  GetAutoguns ( Lev );
-
-  // NumWaypoints = GetWaypoints (loadlevel);
-
-  // Get Refreshes 
-  GetRefreshes ( Lev );
-
-  // Get Consumers 
-  GetConsumers ( Lev );
-
-  // Get Teleports
-  GetTeleports ( Lev );
+  GetAllAnimatedMapTiles ( Lev );
 
   DebugPrintf (2, "\nint TranslateMap(Level Lev): end of function reached.");
   return OK;
@@ -2611,27 +2393,15 @@ GetThisLevelsSpecialForces ( char* SearchPointer , int OurLevelNumber , int Free
 	}
       if ( ListIndex == Number_Of_Droid_Types )
 	{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+	  fprintf ( stderr, "\n\nTypeIndicationString: '%s' OurLevelNumber: %d .\n" , 
+		    TypeIndicationString , OurLevelNumber );
+	  GiveStandardErrorMessage ( "GetThisLevelsSpecialForces(...)" , "\
 The function reading and interpreting the crew file stunbled into something:\n\
-\n\
 It was unable to assign the SPECIAL FORCE droid type identification string '%s' found \n\
 in the entry of the droid types allowed for level %d to an entry in\n\
 the List of droids obtained from the gama data specification\n\
-file you use.  \n\
-\n\
-Please check that this type really is spelled correctly, that it consists of\n\
-only three characters and that it really has a corresponding entry in the\n\
-game data file with all droid type specifications.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the sound problem\n\
-it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , TypeIndicationString , OurLevelNumber );
-	  Terminate(ERR);
+file you use.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       else
 	{
@@ -2743,27 +2513,18 @@ GetThisLevelsDroids( char* SectionPointer )
 	}
       if ( ListIndex >= Number_Of_Droid_Types )
 	{
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-FREEDROID HAS ENCOUNTERED A PROBLEM:\n\
+	  fprintf ( stderr, "\n\nTypeIndicationString: '%s' OurLevelNumber: %d .\n" , 
+		    TypeIndicationString , OurLevelNumber );
+	  GiveStandardErrorMessage ( "GetThisLevelsDroids(...)" , "\
 The function reading and interpreting the crew file stunbled into something:\n\
-\n\
 It was unable to assign the droid type identification string '%s' found \n\
 in the entry of the droid types allowed for level %d to an entry in\n\
 the List of droids obtained from the gama data specification\n\
 file you use.  \n\
-\n\
 Please check that this type really is spelled correctly, that it consists of\n\
 only three characters and that it really has a corresponding entry in the\n\
-game data file with all droid type specifications.\n\
-\n\
-But for now Freedroid will terminate to draw attention to the sound problem\n\
-it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , TypeIndicationString , OurLevelNumber );
-	  Terminate(ERR);
+game data file with all droid type specifications.",
+				     PLEASE_INFORM, IS_FATAL );
 	}
       else
 	{
@@ -3077,18 +2838,11 @@ WorkLevelGuns ( int PlayerNum )
 	  speed.y = +1.0;
 	  break;
 	default:
-	  fprintf( stderr, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
+	  fprintf ( stderr, "\n\n*Pos: '%d'.\n" , *Pos );
+	  GiveStandardErrorMessage ( "WorkLevelGuns(...)" , "\
 There seems to be an autogun in the autogun list of this level, but it\n\
-is not really an autogun.  Instead it's a: %d \n\
-\n\
-For now Freedroid will terminate to draw attention \n\
-to the autogun handling problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , *Pos );
-	  Terminate ( ERR ) ;
+is not really an autogun.  Instead it's something else.",
+				     PLEASE_INFORM, IS_FATAL );
 	  break;
 	}
 

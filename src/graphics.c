@@ -1094,12 +1094,8 @@ LoadThemeConfigurationFile(void)
       ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
       if ( BulletIndex >= Number_Of_Bullet_Types )
 	{
-	  fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* LoadThemeConfigurationFile ( ... ):\n\
-\n\
+	  GiveStandardErrorMessage ( "LoadThemeConfigurationFile(...)" , "\
+A BLAST WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
 The theme configuration file seems to be BOGUS!!!\n\
 The number of bullettypes mentioned therein does not match the number\n\
 of bullettypes mentioned in the freedroid.ruleset file!!!\n\
@@ -1110,18 +1106,8 @@ been assigned a number of phases in the themes config file.\n\
 \n\
 This might indicate that either the ruleset file is corrupt or the \n\
 theme.config configuration file is corrupt or (less likely) that there\n\
-is a severe bug in the reading function.\n\
-\n\
-Please check that your theme and ruleset files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
+is a severe bug in the reading function.",
+				     NO_NEED_TO_INFORM, IS_FATAL );
 	}
       ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
 			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
@@ -1136,12 +1122,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   //
   if ( NumberOfBulletTypesInConfigFile != Number_Of_Bullet_Types )
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-In function 'char* LoadThemeConfigurationFile ( ... ):\n\
-\n\
+      GiveStandardErrorMessage ( "LoadThemeConfigurationFile(...)" , "\
 The theme configuration file seems to be COMPLETELY BOGUS!!!\n\
 The number of bullettypes mentioned therein does not match the number\n\
 of bullettypes mentioned in the freedroid.ruleset file!!!\n\
@@ -1152,18 +1133,8 @@ been assigned a number of phases in the themes config file.\n\
 \n\
 This might indicate that either the ruleset file is corrupt or the \n\
 theme.config configuration file is corrupt or (less likely) that there\n\
-is a severe bug in the reading function.\n\
-\n\
-Please check that your theme and ruleset files are properly set up.\n\
-\n\
-Please also don't forget, that you might have to run 'make install'\n\
-again after you've made modifications to the data files in the source tree.\n\
-\n\
-Freedroid will terminate now to draw attention to the data problem it could\n\
-not resolve.... Sorry, if that interrupts a major game of yours.....\n\
-----------------------------------------------------------------------\n\
-\n" );
-	  Terminate(ERR);
+is a severe bug in the reading function.",
+				 NO_NEED_TO_INFORM, IS_FATAL );
 	}
 
 
@@ -1343,6 +1314,54 @@ InitPictures (void)
   return (TRUE);
 };  // int InitPictures ( void )
 
+/* ----------------------------------------------------------------------
+ * This function should load all the fonts we'll be using via the SDL
+ * BFont library in Freedroid.
+ * ---------------------------------------------------------------------- */
+void
+InitOurBFonts ( void )
+{
+#define ALL_BFONTS_WE_LOAD 6
+  char* fpath;
+  int i;
+  char* MenuFontFiles[ALL_BFONTS_WE_LOAD] =
+    {
+      MENU_FONT_FILE,
+      MENU_FILLED_FONT_FILE,
+      PARA_FONT_FILE,
+      FPS_FONT_FILE,
+      RED_FONT_FILE,
+      BLUE_FONT_FILE,
+      
+    };
+  BFont_Info** MenuFontPointers[ALL_BFONTS_WE_LOAD] =
+    {
+      &Menu_BFont,
+      &Menu_Filled_BFont,
+      &Para_BFont,
+      &FPS_Display_BFont,
+      &Red_BFont,
+      &Blue_BFont
+    };
+
+  for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
+    {
+      fpath = find_file ( MenuFontFiles [ i ] , GRAPHICS_DIR , FALSE);
+      if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
+	{
+	  fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
+	  GiveStandardErrorMessage ( "InitOurBFonts(...)" , "\
+A font file for the BFont library was not found.",
+				     PLEASE_INFORM, IS_FATAL );
+	} 
+      else
+	{
+	  DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
+	}
+    }
+
+}; // InitOutBFonts ( void )
+
 /* -----------------------------------------------------------------
  * This funciton initialises the video display and opens up a 
  * window for graphics display.
@@ -1378,137 +1397,8 @@ InitVideo (void)
   /* clean up on exit */
   atexit (SDL_Quit);
 
+  InitOurBFonts ( );
 
-  //--------------------
-  // Now we initialize the fonts needed by BFont functions.
-  //
-  fpath = find_file ( MENU_FONT_FILE , GRAPHICS_DIR , FALSE);
-  if ( ( Menu_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , MENU_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
-  
-  fpath = find_file ( MENU_FILLED_FONT_FILE , GRAPHICS_DIR , FALSE);
-  if ( ( Menu_Filled_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , MENU_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Menu Font initialisation successful.\n");
-  
-  fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, FALSE);
-  if ( ( Para_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , PARA_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Para Font initialisation successful.\n");
-
-  fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, FALSE);
-  if ( ( FPS_Display_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , FPS_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL FPS Display Font initialisation successful.\n");
-
-  fpath = find_file ( RED_FONT_FILE, GRAPHICS_DIR, FALSE);
-  if ( ( Red_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , RED_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Red Font initialisation successful.\n");
-
-  fpath = find_file ( BLUE_FONT_FILE, GRAPHICS_DIR, FALSE);
-  if ( ( Blue_BFont = LoadFont (fpath) ) == NULL )
-    {
-      fprintf (stderr,
-	     "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-A font file named %s it wanted to load was not found.\n\
-\n\
-Please check that the file is present and not corrupted\n\
-in your distribution of Freedroid.\n\
-\n\
-Freedroid will terminate now to point at the error.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , BLUE_FONT_FILE );
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Blue Font initialisation successful.\n");
-
-  //  SetCurrentFont(Menu_BFont);
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
