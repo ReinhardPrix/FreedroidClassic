@@ -1462,6 +1462,131 @@ PutItem( int ItemNumber )
 void
 PutRadialBlueSparks( float PosX, float PosY , float Radius )
 {
+#define FIXED_NUMBER_OF_SPARK_ANGLES 12
+#define FIXED_NUMBER_OF_PROTOTYPES 4
+
+  SDL_Rect TargetRectangle;
+  static SDL_Surface* SparkPrototypeSurface [ FIXED_NUMBER_OF_PROTOTYPES ] = { NULL , NULL , NULL , NULL };
+  static SDL_Surface* PrerotatedSparkSurfaces [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
+  SDL_Surface* tmp_surf;
+  char* fpath;
+  int NumberOfPicturesToUse;
+  int i , k ;
+  float Angle;
+  int PrerotationIndex;
+  moderately_finepoint Displacement;
+  int PictureType;
+  char ConstructedFilename[5000];
+
+  //--------------------
+  // We do some sanity check against too small a radius
+  // given as parameter.  This can be loosened later.
+  //
+  if ( Radius <= 1.0 ) return;
+
+  //--------------------
+  // We do some phase rotation for now.  Later we might leave this again...
+  //
+  PictureType = 1;
+
+  //--------------------
+  // Now if we do not yet have all the prototype images in memory,
+  // we need to load them now and for once...
+  //
+  if ( SparkPrototypeSurface[0] == NULL )
+    {
+      for ( k = 0 ; k < FIXED_NUMBER_OF_PROTOTYPES ; k ++ )
+	{
+	  sprintf( ConstructedFilename , "blue_sparks_%d.png" , k );
+	  fpath = find_file ( ConstructedFilename , GRAPHICS_DIR, FALSE );
+
+	  tmp_surf = IMG_Load( fpath );
+	  if ( tmp_surf == NULL )
+	    {
+	      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid wanted to load a certain image file into memory, but the SDL\n\
+function used for this did non succeed.\n\
+\n\
+There file name used as parameter was: %s.\n\
+\n\
+This indicates that there is a file missing in your Freedroid RPG installation.\n\
+\n\
+Freedroid will terminate now to draw attention to the problem\n\
+it could not resolve.\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	      Terminate(ERR);
+	    }
+
+	  // SDL_SetColorKey( tmp_surf , 0 , 0 ); 
+	  SparkPrototypeSurface[k] = SDL_DisplayFormatAlpha ( tmp_surf );
+	  SDL_FreeSurface( tmp_surf );
+
+
+
+	  //--------------------
+	  // Now that the loading is successfully done, we can do the
+	  // prerotation of the images...using a constant for simplicity...
+	  //
+	  for ( i = 0 ; i < FIXED_NUMBER_OF_SPARK_ANGLES ; i++ )
+	    {
+	      Angle = 360.0 * (float)i / (float)FIXED_NUMBER_OF_SPARK_ANGLES ;
+	      
+	      tmp_surf = 
+		rotozoomSurface( SparkPrototypeSurface [ k ] , Angle , 1.0 , FALSE );
+	      
+	      PrerotatedSparkSurfaces [ k ] [ i ] = SDL_DisplayFormatAlpha ( tmp_surf );
+	      
+	      SDL_FreeSurface ( tmp_surf );
+	    }
+	}
+
+    }
+
+	  
+  
+
+
+  NumberOfPicturesToUse = ( 2 * Radius * Block_Width * 3.14 ) / (float) SparkPrototypeSurface[ PictureType ] -> w;
+  NumberOfPicturesToUse += 3 ; // we want some overlap
+
+  //--------------------
+  // Now we blit all the pictures we like to use...in this case using
+  // multiple dynamic rotations (oh god!)...
+  //
+  for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
+    {
+      Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
+      
+      Displacement . x = 0 ; Displacement . y = - Radius * Block_Height ;
+
+      RotateVectorByAngle ( &Displacement , Angle );
+
+      PrerotationIndex = rintf ( Angle * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
+      if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
+
+      TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - PosX ) * Block_Width  + Displacement . x - ( ( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] -> w) / 2 );
+      TargetRectangle . y = UserCenter_y - ( Me [ 0 ] . pos . y - PosY ) * Block_Height + Displacement . y - ( ( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] -> h) / 2 );
+      
+      SDL_BlitSurface( PrerotatedSparkSurfaces [ PictureType ] [ PrerotationIndex ] , NULL , Screen , &TargetRectangle);
+
+    }
+
+  // DebugPrintf ( 0 , "\nSparks drawn!! " );
+
+}; // void PutRadialBlueSparks( float PosX, float PosY , float Radius )
+
+/* ----------------------------------------------------------------------
+ * This function draws an item into the combat window.
+ * The only given parameter is the number of the item within
+ * the AllItems array.
+ * ---------------------------------------------------------------------- */
+void
+PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
+{
   SDL_Rect TargetRectangle;
   static SDL_Surface* SparkPrototypeSurface=NULL;
   SDL_Surface* tmp_surf;
@@ -1540,7 +1665,7 @@ it could not resolve.\n\
 
   // DebugPrintf ( 0 , "\nSparks drawn!! " );
 
-}; // void PutItem( int ItemNumber );
+}; // void PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
 
 /* ----------------------------------------------------------------------
  * This function draws a blast into the combat window.
