@@ -151,7 +151,7 @@ EXTERN void PutPixel_open_gl ( int x, int y, Uint32 pixel);
 EXTERN void blit_rotated_open_gl_texture_with_center ( iso_image our_floor_iso_image , int x , int y , float angle_in_degree ) ;
 EXTERN void remove_open_gl_blending_mode_again ( void );
 EXTERN void prepare_open_gl_for_blending_textures( void );
-
+EXTERN void GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 
 #ifdef HAVE_LIBGL
 EXTERN int initGL( GLvoid );
@@ -215,6 +215,7 @@ EXTERN int InitPictures (void);
 EXTERN void InitTimer (void);
 EXTERN void InitVideo (void);
 EXTERN void ClearGraphMem ( void );
+EXTERN void SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN int do_graphical_number_selection_in_range ( int lower_range , int upper_range );
 

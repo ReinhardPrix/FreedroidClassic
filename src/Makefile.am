@@ -16,7 +16,3 @@ DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 
 INCLUDES        = @GTK_CFLAGS@
 LDADD           = @GTK_LIBS@
-
-man_MANS = freedroidRPG.6
-
-EXTRA_DIST = $(man_MANS)

@@ -36,10 +36,6 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 
-#ifdef HAVE_LIBGL
-#include <GL/gl.h>
-#endif 
-
 /* ----------------------------------------------------------------------
  *
  *
@@ -1139,5 +1135,48 @@ PutPixel_open_gl ( int x, int y, Uint32 pixel)
 #endif
 
 }; // void PutPixel_open_gl ( x , y , pixel ) ;
+
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
+{
+#ifdef HAVE_LIBGL
+  SDL_Rect* dstrect = & Area ;
+
+  glRasterPos2i ( 0 , 0 ); 
+  glDisable ( GL_ALPHA_TEST );
+  glEnable ( GL_BLEND );
+  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+  glColor4ub( 255 , 255 , 255 , 200 );
+  if ( dstrect == NULL )
+    {
+      glBegin(GL_QUADS);
+      glVertex2i( 0       , 480 );
+      glVertex2i( 0       ,   0 );
+      glVertex2i( 0 + 639 ,   0 );
+      glVertex2i( 0 + 639 , 480 );
+      glEnd( );
+    }
+  else
+    {
+      glBegin(GL_QUADS);
+      glVertex2i( dstrect -> x                , dstrect -> y );
+      glVertex2i( dstrect -> x                , dstrect -> y + dstrect -> h );
+      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y + dstrect -> h );
+      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y );
+      glEnd( );
+    }
+#endif
+
+  return;
+
+}; // void GL_HighlightRectangle
+
+
 
 #undef _open_gl_c

@@ -84,11 +84,17 @@ You need the Vorbis libs installed if you want
 Freedroid to be able to play Ogg files (e.g. the Intro theme)
 --------------------------------------------------]))
 
+AC_CHECK_LIB([GL], [glEnable],, AC_MSG_WARN([
+--------------------------------------------------
+OpenGL development libs/header not found!
+Building FreedroidRPG without OpenGL support.
+--------------------------------------------------]))
+
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h getopt.h sys/soundcard.h])
+			  unistd.h dirent.h getopt.h sys/soundcard.h GL/gl.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

@@ -26,6 +26,8 @@
 #ifndef _struct_h
 #define _struct_h
 
+#include "system.h"
+
 #ifndef _BYTE
 typedef unsigned char byte;
 #define _BYTE
@@ -37,10 +39,6 @@ typedef unsigned word;
 #ifndef _BOOL
 typedef char bool;
 #define _BOOL
-#endif
-
-#ifdef HAVE_LIBGL
-#include <GL/gl.h>
 #endif
 
 typedef struct

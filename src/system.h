@@ -28,7 +28,6 @@
  */
 
 
-
 /* 
  * well, for the time being we actually don't care too much about the 
  * AC-defined conditionals and pretend it's standard linux
@@ -102,3 +101,6 @@
 #include "SDL_net.h"
 #endif
 
+#ifdef HAVE_GL_GL_H
+#include "GL/gl.h"
+#endif

@@ -37,9 +37,6 @@
 #include "colodefs.h"
 #endif
 
-#define HAVE_LIBGL
-// #undef HAVE_LIBGL
-
 //--------------------
 // Some technical definitions...
 //
