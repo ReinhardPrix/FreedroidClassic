@@ -118,6 +118,8 @@ label.pos.x=27 label.pos.y=12 label.label_name="PendragonStartGameSquare"
 label.pos.x=24 label.pos.y=17 label.label_name="614StartGameSquare1"
 label.pos.x=32 label.pos.y=42 label.label_name="614StartGameSquare3"
 label.pos.x=29 label.pos.y=41 label.label_name="614StartGameSquare2"
+label.pos.x=40 label.pos.y=31 label.label_name="NorthernMaintainanceTeleporter"
+label.pos.x=40 label.pos.y=32 label.label_name="NorthernMaintainanceTeleporterReturn"
 End of pure map label information for this level
 Start of pure statement information for this level
 PosX=5 PosY=11 Statement="This must be the entrance to the teleporter room.  I think GNU will open the door."

@@ -351,7 +351,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=29 Y=22 Lev=0
-Use map location from map label="NO_LABEL_DEFINED_YET"
+Use map location from map label="NorthernMaintainanceTeleporter"
 Event Action to be triggered by this trigger="teleport_from_camp_to_north_maintainance"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
@@ -603,7 +603,7 @@ Action label for this action="teleport_from_north_maintainance_to_camp"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=29 TelY=23 TelLev=0
-Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Use map label for teleport target="NorthernMaintainanceTeleporterReturn"
 Action is Influencer say="Arrived back at camp from north maintainance...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *

@@ -727,6 +727,7 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_ACTION_TELEPORT_POS_X_STRING "Teleport to TelX="
 #define EVENT_ACTION_TELEPORT_POS_Y_STRING " TelY="
 #define EVENT_ACTION_TELEPORT_LEVEL_STRING " TelLev="
+#define EVENT_ACTION_TELEPORT_TARGET_LABEL_STRING "Use map label for teleport target=\""
 
 #define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer say=\""
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
@@ -735,12 +736,9 @@ Get_Game_Events ( char* EventSectionPointer )
 #define EVENT_TRIGGER_POS_X_STRING "Influencer must be at X="
 #define EVENT_TRIGGER_POS_Y_STRING " Y="
 #define EVENT_TRIGGER_POS_MAPLEVEL_STRING " Lev="
-  // #define EVENT_TRIGGER_POS_X_STRING "Influencer must be at x-coordinate="
-  // #define EVENT_TRIGGER_POS_Y_STRING "Influencer must be at y-coordinate="
-  // #define EVENT_TRIGGER_POS_MAPLEVEL_STRING "Influencer must be at maplevel="
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
-
+#define EVENT_TRIGGER_LABEL_STRING "Use map location from map label=\""
 
   // Delete all events and event triggers
   for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
@@ -824,14 +822,30 @@ Get_Game_Events ( char* EventSectionPointer )
 	  DebugPrintf ( 0 , "\nMapchange label unused..." );
 	}
 
-
+      //--------------------
       // Now we read in the teleport target position in x and y and level coordinates
+      //
       ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_POS_X_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].TeleportTarget.x , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_POS_Y_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].TeleportTarget.y , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_ACTION_TELEPORT_LEVEL_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].TeleportTargetLevel , EndOfEvent );
+      // but maybe there was a label given.  This will override the pure coordinates...
+      TempMapLabelName = 
+	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_TELEPORT_TARGET_LABEL_STRING , "\"" ) ;
+      if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
+	{
+	  DebugPrintf ( 0 , "\nTeleport target coordinates overridden by map label %s." , TempMapLabelName );
+	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
+	  AllTriggeredActions [ EventActionNumber ] . TeleportTarget . x = TempLocation . x ;
+	  AllTriggeredActions [ EventActionNumber ] . TeleportTarget . y = TempLocation . y ;
+	  AllTriggeredActions [ EventActionNumber ] . TeleportTargetLevel = TempLocation . level ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nTeleport target label unused..." );
+	}
 
       // Now we read in the new value for that map tile
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
@@ -872,15 +886,29 @@ Get_Game_Events ( char* EventSectionPointer )
       // Now we decode the details of this event trigger section
       //
 
-      // Now we read in the triggering position in x and y coordinates
+      // Now we read in the triggering position in x and y and z coordinates
       ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_X_STRING , "%d" , 
 			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.x , EndOfEvent );
       ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_Y_STRING , "%d" , 
 			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Point.y , EndOfEvent );
-
-      // Now we read in the triggering position in levels
       ReadValueFromString( EventPointer , EVENT_TRIGGER_POS_MAPLEVEL_STRING , "%d" , 
 			   &AllEventTriggers[ EventTriggerNumber ].Influ_Must_Be_At_Level , EndOfEvent );
+      // but maybe there was a label given.  This will override the pure coordinates...
+      TempMapLabelName = 
+	ReadAndMallocStringFromData ( EventPointer , EVENT_TRIGGER_LABEL_STRING , "\"" ) ;
+      if ( strcmp ( TempMapLabelName , "NO_LABEL_DEFINED_YET" ) )
+	{
+	  DebugPrintf ( 0 , "\nTrigger coordinates overridden by map label %s." , TempMapLabelName );
+	  ResolveMapLabelOnShip ( TempMapLabelName , &TempLocation );
+	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . x = TempLocation . x ;
+	  AllEventTriggers [ EventTriggerNumber ] . Influ_Must_Be_At_Point . y = TempLocation . y ;
+	  AllEventTriggers[ EventTriggerNumber ] . Influ_Must_Be_At_Level = TempLocation . level ;
+	}
+      else
+	{
+	  DebugPrintf ( 0 , "\nTrigger label unused..." );
+	}
+
 
       // Now we read whether or not to delete the trigger after being triggerd
       ReadValueFromString( EventPointer , EVENT_TRIGGER_DELETED_AFTER_TRIGGERING , "%d" , 
