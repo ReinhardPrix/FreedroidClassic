@@ -1603,6 +1603,12 @@ I need to know that for saving. Abort.\n");
 /* ----------------------------------------------------------------------
  * This function provides the single player menu.  It offers to start a
  * new hero, to load an old one and to go back.
+ *
+ * The return value indicates, whether the calling function (StartupMenu)
+ * can really enter the new game after this function (cause a new player
+ * has been set up properly) or not, cause no player is specified yet and
+ * nothing is known.
+ *
  * ---------------------------------------------------------------------- */
 int
 Single_Player_Menu (void)
@@ -1637,6 +1643,7 @@ enum
 	{
 	case (-1):
 	  Weiter=!Weiter;
+	  return ( FALSE );
 	  break;
 	case NEW_HERO_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
