@@ -411,16 +411,16 @@ MoveInfluence (void)
   switch ( CurLevel->map[ (int) rintf(Me.pos.y) ] [ (int) rintf( Me. pos.x ) ] )
     {
     case CONVEY_L:
-      planned_step_x+=10*Frame_Time();
+      planned_step_x+=Conveyor_Belt_Speed*Frame_Time();
       break;
     case CONVEY_D:
-      planned_step_y+=10*Frame_Time();
+      planned_step_y+=Conveyor_Belt_Speed*Frame_Time();
       break;
     case CONVEY_R:
-      planned_step_x-=10*Frame_Time();
+      planned_step_x-=Conveyor_Belt_Speed*Frame_Time();
       break;
     case CONVEY_U:
-      planned_step_y-=10*Frame_Time();
+      planned_step_y-=Conveyor_Belt_Speed*Frame_Time();
       break;
     default:
       break;

@@ -48,25 +48,19 @@
 // #define DRUIDHITDIST2		0
 
 
-/*@Function============================================================
-@Desc: this function moves all the bullets according to their speeds.
-
-NEW: this function also takes into accoung the current framerate.
-
-@Ret: keiner
-
-@Int: keiner
-* $Function----------------------------------------------------------*/
-
+/* ----------------------------------------------------------------------
+ * This function moves all the bullets according to their speeds and the
+ * current frame rate of course.
+ * ---------------------------------------------------------------------- */
 void
 MoveBullets (void)
 {
-
-  /* lokale Variablen der Funktion: */
   int i;
+  int map_x;
+  int map_y;
   Bullet CurBullet;
 
-  /* Bewegung der Bullets */
+  // movement of hte bullets
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
       if (CurBullet->type == OUT)
@@ -78,6 +72,26 @@ MoveBullets (void)
       CurBullet->time_in_frames++;
       CurBullet->time_in_seconds += Frame_Time();
 
+      map_x= (int) rintf( CurBullet->pos.x );
+      map_y= (int) rintf( CurBullet->pos.y );
+
+      switch ( CurLevel->map[ map_y ] [ map_x ] )
+	{
+	case CONVEY_L:
+	  CurBullet->pos.x += Conveyor_Belt_Speed * Frame_Time();
+	  break;
+	case CONVEY_R:
+	  CurBullet->pos.x -= Conveyor_Belt_Speed * Frame_Time();
+	  break;
+	case CONVEY_U:
+	  CurBullet->pos.y -= Conveyor_Belt_Speed * Frame_Time();
+	  break;
+	case CONVEY_D:
+	  CurBullet->pos.y += Conveyor_Belt_Speed * Frame_Time();
+	  break;
+	default:
+	  break;
+	}
       /*
          UM ZU VERHINDERN, DASS DIE BULLETS, DIE ETWAS TREFFEN, NICHT MEHR
          DARGESTELLT WERDEN, PASSIERT DIE BULLETKOLLISIONSABFRAGE ERST NACH
