@@ -448,13 +448,16 @@ void
 ThouArtDefeated (void)
 {
   int i, j;
+  int now;
 
   DebugPrintf ("\nvoid ThouArtDefeated(void): Real function call confirmed.");
   Me.status = TERMINATED;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 
-  for (i = 0; i < WAIT_AFTER_KILLED; i++)
+  now=SDL_GetTicks();
+
+  while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
     {
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE | ALSO_UPDATE_EXTERIORS );
       ExplodeBlasts ();
@@ -464,7 +467,6 @@ ThouArtDefeated (void)
       for (j = 0; j < MAXBULLETS; j++)
 	CheckBulletCollisions (j);
       RotateBulletColor ();
-      usleep (10000);
     }
 
 #ifdef NEW_ENGINE
