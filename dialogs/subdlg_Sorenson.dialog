@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Mind +1 (costs 1 ability point)"
+New Option Nr=3  OptionText=" Mind +1 (costs 1 training point)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=316  PositionY=298  
 ChangeOption=3 ChangeToValue=0
@@ -60,7 +60,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Mind +5 (costs 5 ability points)"
+New Option Nr=4  OptionText=" Mind +5 (costs 5 training points)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=313  PositionY=213  
 ChangeOption=4 ChangeToValue=0
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Improve spellcasting ability (cost 10 ability points, 100 cash) "
+New Option Nr=5  OptionText=" Improve spellcasting ability (cost 10 training points, 100 cash) "
 OptionSample="Tux_SOR_I_Want_Learn_0.wav"
 PositionX=311  PositionY=146  
 ChangeOption=5 ChangeToValue=0

@@ -61,7 +61,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Extract Plasma Transistor (costs 1 learning point, 50 bucks)"
+New Option Nr=4  OptionText="Extract Plasma Transistor (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=424  PositionY=396  
 OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=11
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="Extract Superconductors (costs 1 learning point, 50 bucks)"
+New Option Nr=5  OptionText="Extract Superconductors (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=428  PositionY=317  
 OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=14
@@ -77,7 +77,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Extract Antimatter Matter Converters (costs 1 learning point, 50 bucks)"
+New Option Nr=6  OptionText="Extract Antimatter Matter Converters (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=421  PositionY=251  
 OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=15
@@ -85,7 +85,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Extract Entropy Inverters (costs 1 learning point, 50 bucks)"
+New Option Nr=7  OptionText="Extract Entropy Inverters (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=418  PositionY=188  
 OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=16
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText="Extract Tachyon Condensators (costs 1 learning point, 50 bucks)"
+New Option Nr=8  OptionText="Extract Tachyon Condensators (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=430  PositionY=474  
 OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=17

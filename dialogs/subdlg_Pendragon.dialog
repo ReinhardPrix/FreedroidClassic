@@ -50,7 +50,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Melee weapons level 1 (cost: 10 skill points 100 bucks)"
+New Option Nr=2  OptionText=" Melee weapons level 1 (cost: 10 training points 100 bucks)"
 OptionSample="Tux_PEN_I_Want_To_0.wav"
 PositionX=183  PositionY=304  
 ChangeOption=2 ChangeToValue=0

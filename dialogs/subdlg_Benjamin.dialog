@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Dexterity +1 (costs 1 ability point)"
+New Option Nr=3  OptionText=" Dexterity +1 (costs 1 training point)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=488  PositionY=386  
 OnCondition="PointsToDistributeAtLeast:1" JumpToOption=7 ElseGoto=8
@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Dexterity +5 (costs 5 ability points)"
+New Option Nr=4  OptionText=" Dexterity +5 (costs 5 training points)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=482  PositionY=295  
 OnCondition="PointsToDistributeAtLeast:5" JumpToOption=9 ElseGoto=8
@@ -67,7 +67,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Improve ranged weapon skill (cost 5 ability points, 100 cash) "
+New Option Nr=5  OptionText=" Improve ranged weapon skill (cost 5 training points, 100 cash) "
 OptionSample="Tux_SOR_I_Want_Learn_0.wav"
 PositionX=487  PositionY=173  
 OnCondition="GoldIsLessThan:100" JumpToOption=10 ElseGoto=11
