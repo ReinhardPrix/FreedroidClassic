@@ -119,41 +119,6 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
 --start of real debug log--\n\n" );
 #endif
     
-    
-    //--------------------
-    // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
-    //           means the following 'feenableexcept' might not be completely
-    //           portable (and also cause a warning about missing prototype at
-    //           compile time).  However, this is not severe.  The feenableexcept
-    //           just helps for debugging the code.  Feel free to slimply cut away
-    //           these instructions in case they give you any porting problems...
-    //--------------------
-#ifndef __WIN32__
-    // feenableexcept ( FE_ALL_EXCEPT );
-    // feenableexcept ( FE_INEXACT ) ;
-    feenableexcept ( FE_DIVBYZERO ) ;
-    // feenableexcept ( FE_UNDERFLOW ) ;
-    // feenableexcept ( FE_OVERFLOW ) ;
-    feenableexcept ( FE_INVALID ) ;
-#endif
-    
-    /*
-      if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
-      {
-      DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
-      exit ( 0 );
-      }
-      else
-      {
-      DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
-      }
-    */
-    /*
-      test_float_1 = 3.1 ;
-      test_float_2 = 0.0 ; 
-      test_float_3 = test_float_1 / test_float_2 ;
-    */
-    
     DebugPrintf ( 1 , "\nNumber of obstacles: %d." , NUMBER_OF_OBSTACLE_TYPES ) ;
     DebugPrintf ( 1 , "\nNumber of ISO_V_BATHTUB : %d." , ISO_V_BATHTUB ) ;
     DebugPrintf ( 1 , "\nNumber of ISO_ROOM_WALL_V_RED : %d." , ISO_ROOM_WALL_V_RED ) ;

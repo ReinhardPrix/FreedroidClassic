@@ -242,8 +242,7 @@ EXTERN void TakeScreenshot( void );
 EXTERN void DisplayImage(char *file_name);
 EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );
 EXTERN void SetCombatScaleTo(float);
-EXTERN int ReInitPictures (void);
-EXTERN int InitPictures (void);
+EXTERN void InitPictures (void);
 EXTERN void InitTimer (void);
 EXTERN void InitVideo (void);
 EXTERN void ClearGraphMem ( void );
@@ -536,7 +535,8 @@ EXTERN int GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle
 #else
 #define EXTERN extern
 #endif
-EXTERN void print_trace (void);
+EXTERN void print_trace ( int signum );
+EXTERN void implant_backtrace_into_signal_handlers ( void ) ;
 EXTERN void GiveStandardErrorMessage ( char* FunctionName , char* ProblemDescription, int InformDevelopers , int IsFatal );
 EXTERN void UpdateScreenOverButtonFromList ( int ButtonIndex );
 EXTERN void ShowGenericButtonFromList ( int ButtonIndex );

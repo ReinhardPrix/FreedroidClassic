@@ -1327,81 +1327,76 @@ UNABLE TO LOAD STANDARD TILE!",
  * later have the bitmaps in perfect form in memory, ready for blitting
  * them to the screen.
  * ----------------------------------------------------------------- */
-int
+void
 InitPictures (void)
 {
-  //--------------------
-  // First thing to do is get the size of a typical isometric
-  // floor tile, i.e. height and width of the corresponding graphics
-  // bitmap
-  //
-  get_standard_iso_floor_tile_size ();
+    //--------------------
+    // First thing to do is get the size of a typical isometric
+    // floor tile, i.e. height and width of the corresponding graphics
+    // bitmap
+    //
+    get_standard_iso_floor_tile_size ();
+    
+    // Loading all these pictures might take a while...
+    // and we do not want do deal with huge frametimes, which
+    // could box the influencer out of the ship....
+    Activate_Conservative_Frame_Computation();
+    
+    ShowStartupPercentage ( 18 ) ; 
+    
+    // In the following we will be reading in image information.  But the number
+    // of images to read in and the way they are displayed might be strongly dependant
+    // on the theme.  That is not at all a problem.  We just got to read in the
+    // theme configuration file again.  After that is done, the following reading
+    // commands will do the right thing...
+    LoadThemeConfigurationFile();
+    
+    ShowStartupPercentage ( 20 ) ; 
+    
+    set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
+    
+    ShowStartupPercentage ( 22 ) ; 
+    
+    load_all_isometric_floor_tiles (  );
+    
+    ShowStartupPercentage ( 25 ) ; 
+    
+    load_all_obstacles (  ) ;
+    
+    ShowStartupPercentage ( 26 ) ; 
+    
+    DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
+
+    Load_Enemy_Surfaces();
+    
+    ShowStartupPercentage ( 38 ) ; 
+    
+    ShowStartupPercentage ( 43 ) ; 
+    
+    clear_all_loaded_tux_images ( FALSE ) ;
+    
+    ShowStartupPercentage ( 65 ) ; 
+    
+    DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
+    Load_Blast_Surfaces();
+    
+    ShowStartupPercentage ( 70 ) ; 
+    
+    DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load items image file." );
+    
+    ShowStartupPercentage ( 75 ) ; 
+    
+    Load_Mouse_Move_Cursor_Surfaces( );
+    
+    ShowStartupPercentage ( 80 ) ; 
+    
+    DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
+    DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+    iso_load_bullet_surfaces();
+    
+    ShowStartupPercentage ( 92 ) ; 
   
-  // Loading all these pictures might take a while...
-  // and we do not want do deal with huge frametimes, which
-  // could box the influencer out of the ship....
-  Activate_Conservative_Frame_Computation();
-
-  ShowStartupPercentage ( 18 ) ; 
-
-  // In the following we will be reading in image information.  But the number
-  // of images to read in and the way they are displayed might be strongly dependant
-  // on the theme.  That is not at all a problem.  We just got to read in the
-  // theme configuration file again.  After that is done, the following reading
-  // commands will do the right thing...
-  LoadThemeConfigurationFile();
-
-  ShowStartupPercentage ( 20 ) ; 
-
-  set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
-
-  ShowStartupPercentage ( 22 ) ; 
-
-  load_all_isometric_floor_tiles (  );
-
-  ShowStartupPercentage ( 25 ) ; 
-
-  load_all_obstacles (  ) ;
-
-  ShowStartupPercentage ( 26 ) ; 
-
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
-
-  Load_Enemy_Surfaces();
-
-  ShowStartupPercentage ( 38 ) ; 
-
-  ShowStartupPercentage ( 43 ) ; 
-
-  clear_all_loaded_tux_images ( FALSE ) ;
-
-  ShowStartupPercentage ( 65 ) ; 
-
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
-  Load_Blast_Surfaces();
-
-  ShowStartupPercentage ( 70 ) ; 
-
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load items image file." );
-
-  // Load_Item_Surfaces();
-
-  ShowStartupPercentage ( 75 ) ; 
-
-  Load_Mouse_Move_Cursor_Surfaces( );
-
-  // Load_Skill_Level_Button_Surfaces( );
-
-  ShowStartupPercentage ( 80 ) ; 
-
-  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
-  iso_load_bullet_surfaces();
-
-  ShowStartupPercentage ( 92 ) ; 
-  
-  return (TRUE);
-};  // int InitPictures ( void )
+};  // void InitPictures ( void )
 
 /* ----------------------------------------------------------------------
  * This function should load all the fonts we'll be using via the SDL

@@ -3045,7 +3045,7 @@ blit_tux ( int x , int y , int player_num )
     Text_Rect . h = ( User_Rect . h / 2 );
     
     DebugPrintf ( 2 , "\nvoid blit_tux(void): real function call confirmed." ) ;
-    
+
     if ( x == -1 ) 
     {
 	//--------------------

@@ -1856,183 +1856,220 @@ void
 InitFreedroid ( void )
 {
 #ifndef USE_SDL_FRAMERATE
-  struct timeval timestamp;
+    struct timeval timestamp;
 #endif
-  struct stat statbuf;
+    struct stat statbuf;
 
-  //--------------------
-  // We want DisplayChar to produce visible results by default...
-  //
-  display_char_disabled = FALSE ;
+    //--------------------
+    // We want DisplayChar to produce visible results by default...
+    //
+    display_char_disabled = FALSE ;
+    
+    //--------------------
+    // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
+    //           means the following 'feenableexcept' might not be completely
+    //           portable (and also cause a warning about missing prototype at
+    //           compile time).  However, this is not severe.  The feenableexcept
+    //           just helps for debugging the code.  Feel free to slimply cut away
+    //           these instructions in case they give you any porting problems...
+    //--------------------
+#ifndef __WIN32__
+    // feenableexcept ( FE_ALL_EXCEPT );
+    // feenableexcept ( FE_INEXACT ) ;
+    feenableexcept ( FE_DIVBYZERO ) ;
+    // feenableexcept ( FE_UNDERFLOW ) ;
+    // feenableexcept ( FE_OVERFLOW ) ;
+    feenableexcept ( FE_INVALID ) ;
+#endif
+    
+    /*
+      if ( feraiseexcept ( FE_ALL_EXCEPT ) != 0 )
+      {
+      DebugPrintf ( -100 , "\nCouldn't set floating point exceptions to be raised...\nTerminating..." );
+      exit ( 0 );
+      }
+      else
+      {
+      DebugPrintf ( -100 , "\nFloating point exceptions to be raised set successfully!\n" );
+      }
+    */
+    /*
+      test_float_1 = 3.1 ;
+      test_float_2 = 0.0 ; 
+      test_float_3 = test_float_1 / test_float_2 ;
+    */
+    
 
-  // feenableexcept ( FE_ALL_EXCEPT );
-  // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
-  // fesetexceptflag (const fexcept_t *flagp, int excepts);
- 
-  //--------------------
-  // That will cause the memory to be allocated later...
-  //
-  Bulletmap = NULL;  
+    // feenableexcept ( FE_ALL_EXCEPT );
+    // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
+    // fesetexceptflag (const fexcept_t *flagp, int excepts);
+    
+    //--------------------
+    // We hack the default signal handlers to print out a backtrace
+    // in case of a fatal error of type 'segmentation fault' or the
+    // like...
+    //
+    implant_backtrace_into_signal_handlers ( ) ;
 
-  //--------------------
-  // We set these dummy values, so that when the title plays (and banner and
-  // therefore energy bars are displayed, there won't be any floating point
-  // exception problems...)
-  //
-  Me [ 0 ] . mana = 0 ;
-  Me [ 0 ] . maxmana = 10 ;
-  Me [ 0 ] . energy = 1 ;
-  Me [ 0 ] . maxenergy = 10 ;
+    //--------------------
+    // That will cause the memory to be allocated later...
+    //
+    Bulletmap = NULL;  
 
-  //--------------------
-  // It might happen, that the uninitialized AllBullets array contains a 1
-  // somewhere and that the bullet is deleted and the surface freed, where
-  // it never has been allocated, resulting in a SEGFAULT.  This has never
-  // happend, but for security, we add this loop to clean out these important 
-  // flags.       It should be sufficient to do this here, since the flag
-  // will never be set again if not Surfaces are allocated too and then they
-  // can of course also be freed as well.
-  //
-  GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
-
-  clear_out_arrays_for_fresh_game ();
-
-  ServerMode = FALSE;
-  ClientMode = FALSE;
-  RespectVisibilityOnMap = TRUE ; 
-  timeout_from_item_drop = 0 ; 
-
-  global_ignore_doors_for_collisions_flag = FALSE ;
-
-  Overall_Average = 0.041 ;
-  SkipAFewFrames = 0;
-  Me [ 0 ] . TextVisibleTime = 0;
-  Me [ 0 ] . readied_skill = 0;
-  Me [ 0 ] . walk_cycle_phase = 0 ;
-  CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-  Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
-  
-  // --------------------
-  //
-  InventorySize.x = INVENTORY_GRID_WIDTH ;
-  InventorySize.y = INVENTORY_GRID_HEIGHT ;
-
-  ResetGameConfigToDefaultValues ();
-  
+    //--------------------
+    // We set these dummy values, so that when the title plays (and banner and
+    // therefore energy bars are displayed, there won't be any floating point
+    // exception problems...)
+    //
+    Me [ 0 ] . mana = 0 ;
+    Me [ 0 ] . maxmana = 10 ;
+    Me [ 0 ] . energy = 1 ;
+    Me [ 0 ] . maxenergy = 10 ;
+    
+    //--------------------
+    // It might happen, that the uninitialized AllBullets array contains a 1
+    // somewhere and that the bullet is deleted and the surface freed, where
+    // it never has been allocated, resulting in a SEGFAULT.  This has never
+    // happend, but for security, we add this loop to clean out these important 
+    // flags.       It should be sufficient to do this here, since the flag
+    // will never be set again if not Surfaces are allocated too and then they
+    // can of course also be freed as well.
+    //
+    GameConfig . level_editor_edit_mode = LEVEL_EDITOR_SELECTION_FLOOR ;
+    
+    clear_out_arrays_for_fresh_game ();
+    
+    ServerMode = FALSE;
+    ClientMode = FALSE;
+    RespectVisibilityOnMap = TRUE ; 
+    timeout_from_item_drop = 0 ; 
+    
+    global_ignore_doors_for_collisions_flag = FALSE ;
+    
+    Overall_Average = 0.041 ;
+    SkipAFewFrames = 0;
+    Me [ 0 ] . TextVisibleTime = 0;
+    Me [ 0 ] . readied_skill = 0;
+    Me [ 0 ] . walk_cycle_phase = 0 ;
+    CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
+    Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+    
+    // --------------------
+    //
+    InventorySize.x = INVENTORY_GRID_WIDTH ;
+    InventorySize.y = INVENTORY_GRID_HEIGHT ;
+    
+    ResetGameConfigToDefaultValues ();
+    
 #if __WIN32__
-  homedir = ".";
+    homedir = ".";
 #else
-  // first we need the user's homedir for loading/saving stuff
-  if ( (homedir = getenv("HOME")) == NULL )
+    // first we need the user's homedir for loading/saving stuff
+    if ( (homedir = getenv("HOME")) == NULL )
     {
-      DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
+	DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
 I will try to use local directory instead\n");
-      homedir = ".";
+	homedir = ".";
     }
 #endif
-
-  ConfigDir = MyMalloc( strlen (homedir) + 20 );
-  sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
-  
-  if (stat(ConfigDir, &statbuf) == -1) 
+    
+    ConfigDir = MyMalloc( strlen (homedir) + 20 );
+    sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
+    
+    if (stat(ConfigDir, &statbuf) == -1) 
     {
-      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
 You seem not to have the directory %s in your home directory.\n\
 This directory is used by freedroid to store saved games and your personal settings.\n\
 So I'll try to create it now...\n\
 ----------------------------------------------------------------------\n", ConfigDir);
 #if __WIN32__
-    _mkdir (ConfigDir);
-    DebugPrintf (1, "ok\n");
+	_mkdir ( ConfigDir );
+	DebugPrintf ( 1 , "ok\n" );
 #else
-    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
-      {
-	DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+	if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+	{
+	    DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
 WARNING: Failed to create config-dir: %s. Giving up...\n\
 I will not be able to load or save games or configurations\n\
 ----------------------------------------------------------------------\n", ConfigDir);
-	free(ConfigDir);
-	ConfigDir = NULL;
-      }
-      else
+	    free(ConfigDir);
+	    ConfigDir = NULL;
+	}
+	else
 	{
-	  DebugPrintf ( 1 , "ok\n" );
+	    DebugPrintf ( 1 , "ok\n" );
 	}
 #endif
     }
 
-  //Load user config file if it exists...
-  LoadGameConfig ();
-
-  Copy_Rect (Full_User_Rect, User_Rect);
-
-  InitTimer ();
-
-  InitVideo ();
-
-  ShowStartupPercentage ( 2 ) ; 
-
-  InitAudio ();
-
-  ShowStartupPercentage ( 4 ) ; 
+    //Load user config file if it exists...
+    LoadGameConfig ();
+    
+    Copy_Rect (Full_User_Rect, User_Rect);
+    
+    InitTimer ();
+    
+    InitVideo ();
+    
+    ShowStartupPercentage ( 2 ) ; 
+    
+    InitAudio ();
+    
+    ShowStartupPercentage ( 4 ) ; 
   
-  LoadAllStaticModFiles();
-
-  ShowStartupPercentage ( 8 ) ; 
-
-  //--------------------
-  // Now that the music files have been loaded successfully, it's time to set
-  // the music and sound volumes accoridingly, i.e. as specifies by the users
-  // configuration.
-  //
-  // THIS MUST NOT BE DONE BEFORE THE SOUND SAMPLES HAVE BEEN LOADED!!
-  //
-  SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
-
-  Init_Joy ();
-
-  ShowStartupPercentage ( 10 ) ; 
-
-  //--------------------
-  // Now we prepare the automap data for later use
-  //
-  GameConfig . Automap_Visible = TRUE;
-
-  Init_Network ();
-
-  ShowStartupPercentage ( 14 ) ; 
-
-  Init_Game_Data( NULL ); 
-
-  ShowStartupPercentage ( 16 ) ; 
-
-  // The default should be, that no rescaling of the
-  // combat window at all is done.
-  CurrentCombatScaleFactor = 1;
-
-  /* 
-   * Initialise random-number generator in order to make 
-   * level-start etc really different at each program start
-   */
+    LoadAllStaticModFiles();
+    
+    ShowStartupPercentage ( 8 ) ; 
+    
+    //--------------------
+    // Now that the music files have been loaded successfully, it's time to set
+    // the music and sound volumes accoridingly, i.e. as specifies by the users
+    // configuration.
+    //
+    // THIS MUST NOT BE DONE BEFORE THE SOUND SAMPLES HAVE BEEN LOADED!!
+    //
+    SetSoundFXVolume( GameConfig.Current_Sound_FX_Volume );
+    
+    Init_Joy ();
+    
+    ShowStartupPercentage ( 10 ) ; 
+    
+    //--------------------
+    // Now we prepare the automap data for later use
+    //
+    GameConfig . Automap_Visible = TRUE;
+    
+    Init_Network ();
+    
+    ShowStartupPercentage ( 14 ) ; 
+    
+    Init_Game_Data( NULL ); 
+    
+    ShowStartupPercentage ( 16 ) ; 
+    
+    // The default should be, that no rescaling of the
+    // combat window at all is done.
+    CurrentCombatScaleFactor = 1;
+    
+    /* 
+     * Initialise random-number generator in order to make 
+     * level-start etc really different at each program start
+     */
 #ifndef USE_SDL_FRAMERATE
-  gettimeofday(&timestamp, NULL);
-  srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
+    gettimeofday(&timestamp, NULL);
+    srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 #endif
-
-  MinMessageTime = 55;
-  MaxMessageTime = 850;
-
-  CurLevel = NULL; // please leave this here BEFORE InitPictures
-
-  /* Now fill the pictures correctly to the structs */
-  if (!InitPictures ())
-    {		
-      DebugPrintf (1, "\n Error in InitPictures reported back...\n");
-      Terminate(ERR);
-    }
-
-  ShowStartupPercentage ( 100 ) ; 
-
+    
+    MinMessageTime = 55;
+    MaxMessageTime = 850;
+    
+    CurLevel = NULL; // please leave this here BEFORE InitPictures
+    
+    InitPictures ( ) ;
+    
+    ShowStartupPercentage ( 100 ) ; 
+    
 }; // void InitFreedroid ( void ) 
 
 /* ----------------------------------------------------------------------
