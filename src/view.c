@@ -2725,10 +2725,14 @@ There was a rotation model type given, that exceeds the number of rotation model
 void
 PutEnemy ( int Enum , int x , int y , int mask )
 {
-  char *druidname;	// the number-name of the Enemy 
   SDL_Rect TargetRectangle;
-  point UpperLeftBlitCorner;
 
+  //--------------------
+  // We check for things like visibility and distance and the like,
+  // so that we know whether to consider this enemy for blitting to
+  // the screen or not.  Since there are many things to consider, we
+  // got a special function for this job.
+  //
   if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
 
   //--------------------
@@ -2750,35 +2754,22 @@ There was a droid type on this level, that does not really exist.",
   //
   if ( x == (-1) ) 
     {
-      UpperLeftBlitCorner.x = 0 ;
-      UpperLeftBlitCorner.y = 0 ;
+      TargetRectangle.x = 0 ;
+      TargetRectangle.y = 0 ;
     }
   else
     {
-      UpperLeftBlitCorner.x = x ;
-      UpperLeftBlitCorner.y = y ;
+      TargetRectangle.x = x ;
+      TargetRectangle.y = y ;
     }
-
-  //--------------------
-  // First blit just the enemy hat and shoes.
-  // The number will be blittet later
-  //
-  druidname = Druidmap[AllEnemys[Enum].type].druidname;
-
-  TargetRectangle.x = UpperLeftBlitCorner.x ;
-  TargetRectangle.y = UpperLeftBlitCorner.y ;
-  // DebugPrintf( 0 , "X: %d." , TargetRectangle.x ); fflush(stdout);
 
   PutIndividuallyShapedDroidBody ( Enum , TargetRectangle , mask );
 
-  // if this enemy is dead, we need not do anything more here
-  if (AllEnemys[Enum].Status == OUT)
-    {
-      // DebugPrintf (3, "\nvoid PutEnemy(int Enum): STATUS==OUT --> usual end of function reached.\n");
-      return;
-    }
-
-  PrintCommentOfThisEnemy ( Enum );
+  //--------------------
+  // Only if this robot is not dead, we consider printing the comments
+  // this robot might have to make on the current situation.
+  //
+  if ( AllEnemys [ Enum ] . Status != OUT) PrintCommentOfThisEnemy ( Enum );
 
 }; // void PutEnemy(int Enum , int x , int y) 
 
@@ -3016,7 +3007,7 @@ function used for this did not succeed.",
 	      //
 	      if ( use_open_gl )
 		{
-		  flip_image_horizontally ( & ( PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] ) ) ;
+		  flip_image_horizontally ( PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] . surface ) ;
 		  make_texture_out_of_surface ( & ( PrerotatedSparkSurfaces [ SparkType ] [ k ] [ i ] ) ) ;
 		}
 	      

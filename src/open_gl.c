@@ -277,8 +277,13 @@ our_SDL_display_format_wrapperAlpha ( SDL_Surface *surface )
 };
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function flips a given SDL_Surface around the x-axis, i.e. up-down.
+ * 
+ * This is particularly nescessary, since OpenGL has a different native
+ * coordinate system than SDL and therefore images often appear flipped
+ * around if one doesn't counter this effect with OpenGL by flipping the
+ * images just once more in the same fashion.  That is what this function
+ * does.
  * ---------------------------------------------------------------------- */
 void
 flip_image_horizontally ( SDL_Surface* tmp1 ) 
@@ -323,8 +328,12 @@ our_IMG_load_wrapper( const char *file )
 }; // SDL_Surface* our_IMG_load_wrapper( const char *file )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * There is need to do some padding, cause OpenGL textures need to have
+ * a format: width and length both each a power of two.  Therefore some
+ * extra alpha to the sides must be inserted.  This is what this function
+ * is supposed to do:  manually adding hte proper amount of padding to
+ * the surface, so that the dimensions will reach the next biggest power
+ * of two in both directions, width and length.
  * ---------------------------------------------------------------------- */
 SDL_Surface*
 pad_image_for_texture ( SDL_Surface* our_surface ) 
@@ -392,7 +401,20 @@ pad_image_for_texture ( SDL_Surface* our_surface )
 }; // SDL_Surface* pad_image_for_texture ( SDL_Surface* our_surface ) 
 
 /* ----------------------------------------------------------------------
+ * If OpenGL is in use, we need to make textured quads out of our normal
+ * SDL surfaces, so that the image information can reside in texture 
+ * memory and that means ON THE GRAPHICS CARD, avoiding the bottleneck
+ * of the AGP port for *much* faster blitting of the graphics.
+ * 
+ * So this function should create appropriate OpenGL textures.  It relys
+ * on and checks the fact, that a proper amount of OpenGL textures has
+ * been requested in the beginning, knowing that this texture creation
+ * call MUST ONLY BE CALLED AT MOST ONCE, SEE NEHE TUTORIALS AND SIMILAR
+ * SOURCES, OR YOUR OLD TEXTURES WILL GET OVERWRITTEN AGAIN AND AGAIN!
  *
+ * There is need to do some padding, cause OpenGL textures need to have
+ * a format: width and length both each a power of two.  Therefore some
+ * extra alpha to the sides must be inserted.
  *
  * ---------------------------------------------------------------------- */
 void
@@ -412,12 +434,6 @@ make_texture_out_of_surface ( iso_image* our_image )
   
   our_image -> texture_width = right_sized_image -> w ;
   our_image -> texture_height = right_sized_image -> h ;
-
-  //--------------------
-  // 
-  // The following code can be tested to check if the pagging procedure
-  // above really does what it should.
-  //
 
   //--------------------
   // Having prepared the raw image it's now time to create the real
@@ -578,12 +594,6 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our
   int image_end_x;
   int image_start_y;
   int image_end_y;
-
-  /*
-  if ( ( our_floor_iso_image . texture_width >= 256 ) || 
-       ( our_floor_iso_image . texture_height >= 256 ) )
-    return;
-  */
 
   //--------------------
   // At first we need to enable texture mapping for all of the following.
