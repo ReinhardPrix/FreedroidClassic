@@ -302,15 +302,6 @@ EXTERN point input_axis;  /* joystick (and mouse) axis values */
 EXTERN int axis_is_active;  /* is firing to use axis-values or not */
 
 #undef EXTERN
-#ifdef _highscore_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN highscore_entry **Highscores;
-EXTERN int num_highscores;  /* total number of entries in our list (fixed) */
-
-#undef EXTERN
 #ifdef _takeover_c
 #define EXTERN
 #else

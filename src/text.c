@@ -24,9 +24,10 @@
  */
 
 /* ----------------------------------------------------------------------
- * This file contains all functions dealing with the HUGE, BIG font used for
- * the top status line, the score and the text displayed during briefing
- * and highscore inverview.  
+ * This file contains all functions dealing with texts on the screen,
+ * that have to be blitted somehow, using bitmaps or OpenGL texturers,
+ * but at least strongly rely on graphics concepts, not pure internal
+ * text-processing.
  * ---------------------------------------------------------------------- */
 
 #define _text_c

@@ -1876,9 +1876,6 @@ InitFreedroid ( void )
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 #endif
 
-  // initialize the highscore list 
-  Init_Highscores ();
- 
   MinMessageTime = 55;
   MaxMessageTime = 850;
 
@@ -1952,9 +1949,6 @@ ThouArtDefeated (void)
       ComputeFPSForThisFrame();
 
     }
-
-  // update_highscores ();
-  // EscapeMenu();
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
   DebugPrintf (1, "\n\n DefeatedDone \n\n");
