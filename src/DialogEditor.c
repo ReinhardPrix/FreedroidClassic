@@ -101,6 +101,8 @@ static int currently_marked_dialog_option = (-1);
 static int DialogOptionCovered = (-1);
 static GtkWidget *popup_meta_tool_tip = NULL ;
 
+static char file_name_found[10000] = "NO_NAME_GIVEN" ;
+
 // GtkWidget *hpaned;
 GtkWidget *vpaned;
 GdkPixmap *icon;
@@ -1986,78 +1988,44 @@ gint button_release_event (GtkWidget *widget, GdkEventButton *event, gpointer da
     return TRUE;
 }
 
-// key pressed in Drawing Area
-gint key_press_event ( GtkWidget *widget , GdkEventButton *event , gpointer data )
+/* ----------------------------------------------------------------------
+ * It appears like this handler will be called whenever there is a 
+ * keypress inside the drawing area detected.  Well, that's cool, because
+ * that allows for some keyboard controls, that might work better than
+ * some of the click-around menus, especially under win32 when using our
+ * current unreliable cross-compilation.
+ * ---------------------------------------------------------------------- */
+gint 
+key_press_event ( GtkWidget *widget , GdkEventButton *event , gpointer data )
 {
 
-  DebugPrintf ( 1 , "\ngint key_press_event ( ... ) : real function call confirmed..." );
-
-  switch ( ( ( GdkEventKey* ) event) -> keyval )
-    {
-    case GDK_BackSpace:
-    case GDK_Delete:
-      dialog_option_delete_marked ( wnd , NULL , (gpointer) NULL ) ;
-      // currently_mouse_grabbed_option = (-1) ;
-      // DebugPrintf ( 1 , "\n Now the 'Drop' in 'Drag and Drop' has occured..." );
-      break;
-    case GDK_Insert:
-
-      break;
-
-    default:
-      DebugPrintf ( 1 , "\nKey press event encountered..." );
-      break;
-    }
-
-  /*
-    GuiGraph *graph = (GuiGraph *) data;
-    DlgPoint point ((int) event->x, (int) event->y);
+    DebugPrintf ( 1 , "\ngint key_press_event ( ... ) : real function call confirmed..." );
     
-    // Left button released
-    if (event->button == 1)
+    switch ( ( ( GdkEventKey* ) event) -> keyval )
     {
-        switch (graph->mode ())
-        {
-            // nothing selected
-            case IDLE:
-            {
-                // select the node under the cursor, if any
-                if (!graph->selectNode (point))
-                    // otherwise create a new circle at that position
-                    if (GuiDlgedit::window->mode () != L10N_PREVIEW)
-                        graph->newCircle (point);
-                
-                break;
-            }
+	case GDK_BackSpace:
+	case GDK_Delete:
+	    dialog_option_delete_marked ( wnd , NULL , (gpointer) NULL ) ;
+	    // currently_mouse_grabbed_option = (-1) ;
+	    // DebugPrintf ( 1 , "\n Now the 'Drop' in 'Drag and Drop' has occured..." );
+	    break;
+	case GDK_Insert:
+	    break;
+	    
+	case GDK_S:
+	case GDK_s:
+	    enforce_authors_notes (  );
+	    strcpy ( LastUsedFileName , file_name_found ) ;
+	    save_dialog_roster_to_file ( file_name_found );
+	    break;
 
-            // node selected
-            case NODE_SELECTED:
-            {
-                // ignore edit command if in preview mode
-                if (GuiDlgedit::window->mode () == L10N_PREVIEW)
-                    break;
-
-                // try to create a new link between two nodes
-                graph->newArrow (point);
-                break;
-            }
-                        
-            // node dragged
-            case NODE_DRAGGED:
-            {
-                // stop dragging
-                graph->stopDragging (point);
-                break;
-            }
-                    
-            default: break;
-        }
+	default:
+	    DebugPrintf ( 1 , "\nUnhandled press event encountered..." );
+	    break;
     }
-
-    */
 
     return TRUE;
-}
+}; // gint key_press_event ( GtkWidget *widget , GdkEventButton *event , gpointer data )
 
 /* ----------------------------------------------------------------------
  * This function should just draw the boxes of the currently loaded
@@ -2400,24 +2368,24 @@ load_dialog_file_selector( GtkWidget *w, GtkFileSelection *fs )
 void 
 save_as_dialog_file_selector( GtkWidget *w, GtkFileSelection *fs )
 {
-  DebugPrintf ( 1 ,"\n ATTENTION!  A file name has been selected (for saving)!" );
-  DebugPrintf ( 1 ,"\n The file name is : %s" , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;  
-  DebugPrintf ( 1 ,"\n ...now attempting to save dialog file..." );
-
-  enforce_authors_notes (  );
-
-  strcpy ( LastUsedFileName , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
-  save_dialog_roster_to_file ( gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) );
-
-  //--------------------
-  // Now that we have given a new name to the file, the main window should show the current file name
-  //
-  gtk_window_set_title ( GTK_WINDOW ( wnd ), LastUsedFileName );
-
-  DebugPrintf ( 1 ,"\n ...Dialog file should be saved by now." );
- 
-  gtk_widget_destroy ( filew ) ;
-
+    DebugPrintf ( 1 ,"\n ATTENTION!  A file name has been selected (for saving)!" );
+    DebugPrintf ( 1 ,"\n The file name is : %s" , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;  
+    DebugPrintf ( 1 ,"\n ...now attempting to save dialog file..." );
+    
+    enforce_authors_notes (  );
+    
+    strcpy ( LastUsedFileName , gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) ) ;
+    save_dialog_roster_to_file ( gtk_file_selection_get_filename ( GTK_FILE_SELECTION ( fs ) ) );
+    
+    //--------------------
+    // Now that we have given a new name to the file, the main window should show the current file name
+    //
+    gtk_window_set_title ( GTK_WINDOW ( wnd ), LastUsedFileName );
+    
+    DebugPrintf ( 1 ,"\n ...Dialog file should be saved by now." );
+    
+    gtk_widget_destroy ( filew ) ;
+    
 }; // void save_as_dialog_file_selector( GtkWidget *w, GtkFileSelection *fs )
 
 /* ----------------------------------------------------------------------
@@ -3757,6 +3725,137 @@ gui_create_graph_window ( GtkWidget* paned )
 
 }; // void gui_create_graph_window ( GtkWidget* paned )
 
+/* -----------------------------------------------------------------
+ *  parse command line arguments and set global switches 
+ *  exit on error, so we don't need to return success status
+ * -----------------------------------------------------------------*/
+void
+parse_command_line (int argc, char *const argv[])
+{
+    int c;
+    char copyright[] = "\nCopyright (C) 2004 Johannes Prix\n\
+Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
+You may redistribute copies of Freedroid\n\
+under the terms of the GNU General Public License.\n\
+For more information about these matters, see the file named COPYING.\n";
+
+char usage_string[] ="\
+Usage: DialogEditor [-v|--version] \n\
+                    [-d|--debug=LEVEL]\n\
+\n\
+Please report bugs either by entering them into the bug-tracking\n\
+system on our sourceforge-website via this link:\n\n\
+http://sourceforge.net/projects/freedroid/\n\n\
+or EVEN BETTER, report them by sending e-mail to:\n\n\
+freedroid-discussion@lists.sourceforge.net\n\n\
+Thanks a lot in advance, the Freedroid dev team.\n\n";
+
+    static struct option long_options[] = {
+	{"version",     0, 0,  'v'},
+	{"help",        0, 0,  'h'},
+	{"debug",       1, 0,  'd'},
+	{ 0,            0, 0,    0}
+    };
+
+    //--------------------
+    // We set a default debug level.  It can be overridden
+    // from the command line, see below.
+    //
+    debug_level = 0; 
+
+    while ( 1 )
+    {
+	c = getopt_long ( argc , argv , "vonqst:h?d::r:wfmj:" , long_options , NULL );
+	if ( c == -1 )
+	    break;
+
+	switch ( c )
+	{
+	    case 'v':
+		printf ("\n%s %s  \n", PACKAGE, VERSION);
+		printf (copyright);
+		exit (0);
+		break;
+		
+	    case 'h':
+	    case '?':
+		printf ( usage_string );
+		exit ( 0 );
+		break;
+		
+	    case 'd':
+		if (!optarg) 
+		    debug_level = 1;
+		else
+		    debug_level = atoi (optarg);
+		break;
+		
+	    default:
+		printf ("\nOption %c not implemented yet! Ignored.", c);
+		break;
+	}			/* switch(c) */
+    }				/* while(1) */
+
+    //--------------------
+    // Print any remaining command line arguments (not options). */
+    if ( optind < argc )
+    {
+	DebugPrintf ( 1 , "non-option ARGV-elements: ");
+	while ( optind < argc )
+	    DebugPrintf ( 1 , "%s " , argv [ optind++ ] );
+	putchar ('\n');
+
+	if ( optind == argc )
+	{
+	    DebugPrintf ( -4 , "\n\nLast non-option argument found: %s.\nTreating this as file name.\n" ,
+			  argv [ optind - 1 ] );
+	    strncpy ( file_name_found , argv [ optind - 1 ] , 1000 );
+	}
+    }
+
+}; // parse_command_line ( int argc , char *const argv[] )
+
+/* ----------------------------------------------------------------------
+ * If a file name was given on the command line, then we load this file
+ * right away at program startup.
+ * ---------------------------------------------------------------------- */
+void
+load_command_line_file ( void )
+{
+    InitChatRosterForNewDialogue(  );
+    
+    DebugPrintf ( 1 ,"\n ...now attempting to load dialog file..." );
+    DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
+    
+    strcpy ( LastUsedFileName , file_name_found );
+    LoadChatRosterWithChatSequence ( file_name_found );
+    
+    //--------------------
+    // Now that we have loaded something, the main window should show the current file name
+    //
+    gtk_window_set_title ( GTK_WINDOW ( wnd ), LastUsedFileName );
+    
+    //--------------------
+    // Now we set the 'authors notes' text in the lower part of the split window...
+    //
+    gtk_text_set_point ( GTK_TEXT ( authors_notes_entry ) , 0 );
+    gtk_text_forward_delete ( GTK_TEXT ( authors_notes_entry ) , gtk_text_get_length ( GTK_TEXT ( authors_notes_entry ) ) ) ;
+    gtk_text_insert ( GTK_TEXT ( authors_notes_entry ) , authors_notes_entry->style->font,
+		      &authors_notes_entry->style->black,
+		      &authors_notes_entry->style->white,
+		      authors_notes ,
+		      -1 );
+    
+    DebugPrintf ( 1 ,"\n----------------------------------------------------------------------" );
+    DebugPrintf ( 1 ,"\n ...Dialog file should be loaded now by now." );
+    
+    //--------------------
+    // Now that we have loaded a new dialog roster, we must redraw the current
+    // dialog graph as well...
+    //
+    gui_redraw_graph_completely (  );
+
+}; // void 
 
 /* ----------------------------------------------------------------------
  * This is the main function of our dialog editor.  But this time it does
@@ -3782,7 +3881,7 @@ main( int argc, char *argv[] )
     //
     gtk_init (&argc, &argv);
 
-    debug_level = 4 ;
+    parse_command_line ( argc , argv ); 
 
     //--------------------
     // At first we need to create the main window of our dialog editor.
@@ -3841,6 +3940,13 @@ main( int argc, char *argv[] )
   gtk_widget_show_all (wnd);
 
   DebugPrintf ( WINDOW_WARNINGS_DEBUG , "\nmain:  Ok.  Starting main loop and that's it from here..." );
+
+  //--------------------
+  // Maybe a file name was given on the command line.  In this case, we
+  // start to load this file right away.
+  //
+  load_command_line_file();
+
 
   //--------------------
   // At this point all should be set up.  The editing machine is ready to be

@@ -140,7 +140,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
     mouse_control = TRUE;
     classic_user_rect = FALSE;
     
-    ParseCommandLine (argc, argv); 
+    ParseCommandLine ( argc , argv ); 
     
     InitFreedroid ();   // Initialisation of global variables and arrays
 
