@@ -357,7 +357,7 @@ Load_Enemy_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
   SDL_Surface* tmp_surf;
-  char ConstructedFileName[500];
+  char ConstructedFileName[5000];
   SDL_Rect Source;
   SDL_Rect Target;
   int i;
@@ -490,7 +490,7 @@ to the graphics loading problem it could not resolve.\n\
 Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" , fpath );
-	      // Terminate(ERR);
+	      Terminate(ERR);
 	    }
 	  
 	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );

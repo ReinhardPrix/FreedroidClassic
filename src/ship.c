@@ -979,11 +979,11 @@ GreatItemShow (void)
 
   page = 0;
 
-  show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
-
   while (!finished)
     {
       usleep ( 2 );
+
+      show_item_info ( Show_Pointer_List [ ItemIndex ] , page , TRUE );
 
       ItemType = Show_Pointer_List [ ItemIndex ] -> type ;
       // ItemType = Me [ 0 ] . clearance_list [ ClearanceIndex ] ;
@@ -1158,10 +1158,82 @@ ShowItemPicture (int PosX, int PosY, int Number )
 {
   SDL_Surface *tmp;
   SDL_Rect target;
-  // char *fpath;
-  // char fname[500];
+  char ConstructedFileName[5000];
+  char* fpath;
+  static int LastImageSeriesLoaded = ( -1 );
+  int CurrentImageSeries;
+#define NUMBER_OF_IMAGES_IN_ITEM_ROTATION 40
+  static SDL_Surface *ItemRotationSurfaces[ NUMBER_OF_IMAGES_IN_ITEM_ROTATION ] = { NULL } ;
+  SDL_Surface *Whole_Image;
+  int i;
+  int RotationIndex;
 
   DebugPrintf (2, "\nvoid ShowItemPicture(...): Function call confirmed.");
+
+  CurrentImageSeries = ItemMap[ Number ] . rotation_model_number ;
+
+  if ( CurrentImageSeries == (-1) ) return;
+
+  //--------------------
+  // Maybe we have to reload the whole image series
+  //
+  if ( LastImageSeriesLoaded != CurrentImageSeries )
+    {
+      //--------------------
+      // Maybe we have to free the series from an old item display first
+      //
+      if ( ItemRotationSurfaces[ 0 ] != NULL )
+	{
+	  for ( i = 1 ; i < NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i ++ )
+	    {
+	      SDL_FreeSurface ( ItemRotationSurfaces[ i ] ) ;
+	    }
+	}
+
+      //--------------------
+      // Now we can start to load the whole series into memory
+      //
+      for ( i=0 ; i < NUMBER_OF_IMAGES_IN_ITEM_ROTATION ; i++ )
+	{
+	  sprintf ( ConstructedFileName , "rotation_models/item_%02d_%04d.png" , CurrentImageSeries , i+1 );
+	  DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
+	  // fpath = find_file ( "rotation_models/anim0001.png" , GRAPHICS_DIR, FALSE );
+	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	  
+	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  if ( Whole_Image == NULL )
+	    {
+	      fprintf( stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+Freedroid was unable to load a rotated image of an item into memory.\n\
+\n\
+The full path name of the file, that could not be loaded was : \n\
+%s\n\
+\n\
+This error indicates some installation problem with freedroid.\n\
+Please contact the developers, as always freedroid-discussion@lists.sourceforge.net.\n\
+Thanks a lot.\n\
+\n\
+But for now Freedroid will terminate to draw attention \n\
+to the graphics loading problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , fpath );
+	      Terminate(ERR);
+	    }
+	  
+	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+	  
+	  ItemRotationSurfaces[i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	  SDL_SetColorKey( ItemRotationSurfaces[i] , 0 , 0 ); // this should clear any color key in the dest surface
+	  
+	  SDL_FreeSurface( Whole_Image );
+	  
+	}
+
+    }
 
   // strcpy( fname, Druidmap[Number].druidname );
 
@@ -1194,9 +1266,13 @@ Sorry...\n\
     }
   */
 
-  tmp = ItemImageList[ ItemMap[ Number ].picture_number ].Surface ;
+  RotationIndex = ( SDL_GetTicks() / 50 ) ;
 
+  RotationIndex = RotationIndex - ( RotationIndex / NUMBER_OF_IMAGES_IN_ITEM_ROTATION ) * NUMBER_OF_IMAGES_IN_ITEM_ROTATION ;
 
+  // tmp = ItemImageList[ ItemMap[ Number ].picture_number ].Surface ;
+
+  tmp = ItemRotationSurfaces[ RotationIndex ] ;
 
   SDL_SetClipRect( Screen , NULL );
   Set_Rect ( target, PosX, PosY, SCREEN_WIDTH, SCREEN_HEIGHT);

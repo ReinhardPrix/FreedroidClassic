@@ -357,6 +357,7 @@ typedef struct
 
   // Which picture to use for this item, when it's lying on the floor?
   int picture_number;
+  int rotation_model_number;
   int sound_number;
   int base_list_price;         // the base price of this item at the shop
 

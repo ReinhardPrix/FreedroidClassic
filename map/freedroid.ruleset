@@ -255,6 +255,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=7 // this is the pure transparent 1x1 inventory square!!!
+Rotation model number=0
 Sound number=0 
 Base list price=0
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -274,6 +275,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=27
+Rotation model number=0
 Sound number=5
 Base list price=50
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -293,6 +295,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=0
+Rotation model number=0
 Sound number=5 
 Base list price=150
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -327,6 +330,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
+Rotation model number=0
 Sound number=7
 Base list price=350
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -346,6 +350,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=3
+Rotation model number=0
 Sound number=4
 Base list price=900
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -367,6 +372,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=30
 Picture number=4
+Rotation model number=0
 Sound number=1 
 Base list price=200
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -386,6 +392,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=1
+Rotation model number=0
 Sound number=2 
 Base list price=1
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -407,6 +414,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=20
 Picture number=5
+Rotation model number=0
 Sound number=6
 Base list price=100
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -428,6 +436,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=70 plus duration modifier=20
 Picture number=8
+Rotation model number=0
 Sound number=4 
 Base list price=250
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -449,6 +458,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=50 plus duration modifier=20
 Picture number=10
+Rotation model number=0
 Sound number=4 
 Base list price=300
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -470,6 +480,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=90 plus duration modifier=30
 Picture number=11
+Rotation model number=0
 Sound number=0 
 Base list price=65
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -491,6 +502,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=4
+Rotation model number=0
 Sound number=0 
 Base list price=450
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -525,6 +537,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
+Rotation model number=0
 Sound number=7
 Base list price=600
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -559,6 +572,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
+Rotation model number=0
 Sound number=7
 Base list price=1200
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -593,6 +607,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=13
+Rotation model number=0
 Sound number=0 
 Base list price=2500
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -627,6 +642,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=14
+Rotation model number=0
 Sound number=7
 Base list price=800
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -661,6 +677,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=2
+Rotation model number=0
 Sound number=7
 Base list price=250
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -695,6 +712,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=12
+Rotation model number=0
 Sound number=7
 Base list price=5000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -714,6 +732,7 @@ Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=30 plus duration modifier=15
 Picture number=23
+Rotation model number=0
 Sound number=5
 Base list price=12500
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -733,6 +752,7 @@ Item as defensive item: base_ac_bonus=1
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=10 plus duration modifier=8
 Picture number=24
+Rotation model number=0
 Sound number=0 
 Base list price=30
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -752,6 +772,7 @@ Item as defensive item: base_ac_bonus=1
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=10 plus duration modifier=10
 Picture number=16
+Rotation model number=0
 Sound number=0 
 Base list price=25
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -771,6 +792,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=17
+Rotation model number=0
 Sound number=0 
 Base list price=0
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -805,6 +827,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
+Rotation model number=0
 Sound number=7
 Base list price=100
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -839,6 +862,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=18
+Rotation model number=0
 Sound number=7
 Base list price=40
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -875,6 +899,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=35 plus duration modifier=10
 Picture number=20
+Rotation model number=0
 Sound number=0 
 Base list price=350
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -894,6 +919,7 @@ Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=18 plus duration modifier=1
 Picture number=15
+Rotation model number=0
 Sound number=5
 Base list price=40
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -928,6 +954,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
 Picture number=20
+Rotation model number=0
 Sound number=0 
 Base list price=450
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -962,6 +989,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
+Rotation model number=0
 Sound number=0 
 Base list price=120
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -997,6 +1025,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=20 plus duration modifier=10
 Picture number=25
+Rotation model number=0
 Sound number=0 
 Base list price=120
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1016,6 +1045,7 @@ Item as defensive item: base_ac_bonus=2
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
 Picture number=39
+Rotation model number=0
 Sound number=5
 Base list price=75
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1035,6 +1065,7 @@ Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
 Picture number=40
+Rotation model number=0
 Sound number=5
 Base list price=200
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1054,6 +1085,7 @@ Item as defensive item: base_ac_bonus=10
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=10
 Picture number=26
+Rotation model number=0
 Sound number=5
 Base list price=300
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1088,6 +1120,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=30 plus duration modifier=10
 Picture number=14
+Rotation model number=0
 Sound number=0 
 Base list price=450
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1107,6 +1140,7 @@ Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=25 plus duration modifier=10
 Picture number=43
+Rotation model number=0
 Sound number=7
 Base list price=250
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1142,6 +1176,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=21
+Rotation model number=0
 Sound number=0 
 Base list price=120
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1177,6 +1212,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=20
+Rotation model number=0
 Sound number=0 
 Base list price=240
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1212,6 +1248,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=21
+Rotation model number=0
 Sound number=0 
 Base list price=310
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1246,6 +1283,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=28
+Rotation model number=0
 Sound number=0 
 Base list price=60
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1280,6 +1318,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
+Rotation model number=0
 Sound number=0 
 Base list price=50
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1314,6 +1353,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=40 plus duration modifier=40
 Picture number=31
+Rotation model number=0
 Sound number=0 
 Base list price=50
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1348,6 +1388,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=19
+Rotation model number=0
 Sound number=0 
 Base list price=80
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1367,6 +1408,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=30
+Rotation model number=0
 Sound number=5
 Base list price=50
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1386,6 +1428,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=29
+Rotation model number=0
 Sound number=5 
 Base list price=150
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1405,6 +1448,7 @@ Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=10 plus duration modifier=8
 Picture number=6
+Rotation model number=0
 Sound number=0 
 Base list price=90
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1424,6 +1468,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=32
+Rotation model number=0
 Sound number=5 
 Base list price=1000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1443,6 +1488,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=33
+Rotation model number=0
 Sound number=5 
 Base list price=1000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1462,6 +1508,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=33
+Rotation model number=0
 Sound number=5 
 Base list price=1000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1481,6 +1528,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=33
+Rotation model number=0
 Sound number=5 
 Base list price=1000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1500,6 +1548,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=34
+Rotation model number=0
 Sound number=5
 Base list price=100
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1519,6 +1568,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=35
+Rotation model number=0
 Sound number=5
 Base list price=100
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1538,6 +1588,7 @@ Item as defensive item: base_ac_bonus=4
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=18 plus duration modifier=10
 Picture number=36
+Rotation model number=0
 Sound number=0 
 Base list price=75
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1557,6 +1608,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=41
+Rotation model number=0
 Sound number=0 
 Base list price=0
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1576,6 +1628,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=42
+Rotation model number=0
 Sound number=0 
 Base list price=0
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1595,6 +1648,7 @@ Item as defensive item: base_ac_bonus=4
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=18 plus duration modifier=10
 Picture number=36
+Rotation model number=0
 Sound number=0 
 Base list price=175
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1614,6 +1668,7 @@ Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=28 plus duration modifier=15
 Picture number=38
+Rotation model number=0
 Sound number=0 
 Base list price=275
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1633,6 +1688,7 @@ Item as defensive item: base_ac_bonus=12
 Item as defensive item: ac_bonus_modifier=10
 Base item duration=38 plus duration modifier=20
 Picture number=37
+Rotation model number=0
 Sound number=0 
 Base list price=375
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1652,6 +1708,7 @@ Item as defensive item: base_ac_bonus=20
 Item as defensive item: ac_bonus_modifier=7
 Base item duration=35 plus duration modifier=20
 Picture number=44
+Rotation model number=0
 Sound number=7
 Base list price=450
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1671,6 +1728,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=45
+Rotation model number=0
 Sound number=4
 Base list price=9000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1690,6 +1748,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=46
+Rotation model number=0
 Sound number=4
 Base list price=9000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1709,6 +1768,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=47
+Rotation model number=0
 Sound number=4
 Base list price=9000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1743,6 +1803,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 Picture number=12
+Rotation model number=0
 Sound number=7
 Base list price=5000
 Item description text="This is an item.  Oh yes! This comment can go over multiple lines. Please insert something sensible here."
@@ -1762,6 +1823,7 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 Picture number=33
+Rotation model number=0
 Sound number=5 
 Base list price=1000
 Item description text="This isn't really any item of the game.  It's just a dummy/error value!"

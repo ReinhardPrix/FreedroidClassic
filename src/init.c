@@ -269,7 +269,6 @@ Get_Item_Data ( char* DataPointer )
 #define ITEM_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
 #define ITEM_SPEED_BEGIN_STRING "Flying speed of this bullet type :"
 #define ITEM_DAMAGE_BEGIN_STRING "Damage cause by a hit of this bullet type :"
-  // #define ITEM_NUMBER_OF_PHASES_BEGIN_STRING "Number of different phases that were designed for this bullet type :"
 #define ITEM_ONE_SHOT_ONLY_AT_A_TIME "Cannot fire until previous bullet has been deleted : "
 #define ITEM_BLAST_TYPE_CAUSED_BEGIN_STRING "Type of blast this bullet causes when crashing e.g. against a wall :"
 
@@ -675,6 +674,10 @@ Sorry...\n\
       // Now we read in the number of the picture to be used for this item
       ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
 			   &ItemMap[ItemIndex].picture_number , EndOfItemData );
+
+      // Now we read in the number of the rotation sequence to use for this item
+      ReadValueFromString( ItemPointer ,  "Rotation model number=" , "%d" , 
+			   &ItemMap[ItemIndex].rotation_model_number , EndOfItemData );
 
       // Now we read in the number of the sound to be used for this item
       ReadValueFromString( ItemPointer ,  "Sound number=" , "%d" , 
