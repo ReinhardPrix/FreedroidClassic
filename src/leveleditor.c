@@ -3481,15 +3481,27 @@ LevelEditor(void)
 		  // simply as bigger move command, which might indeed be much handier than 
 		  // using only keyboard cursor keys to move around on the map.
 		  //
-		  Me [ 0 ] . pos . x = 
-		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
-						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		  if ( GameConfig . zoom_is_on )
+		    Me [ 0 ] . pos . x = 
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+		  else
+		    Me [ 0 ] . pos . x = 
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ) , 
+							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), TRUE ); 
+
 		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-1 )
 		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-1 ;
 		  if ( Me [ 0 ] . pos . x <= 0 ) Me [ 0 ] . pos . x = 0;
-		  Me [ 0 ] . pos . y = 
-		    translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
-						      (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+
+		  if ( GameConfig . zoom_is_on )
+		    Me [ 0 ] . pos . y = 
+		      translate_pixel_to_zoomed_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+							       (float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
+		  else
+		    Me [ 0 ] . pos . y = 
+		      translate_pixel_to_map_location ( 0 , (float) GetMousePos_x ( ) + 16.0 - ( SCREEN_WIDTH / 2 ), 
+							(float) GetMousePos_y ( ) + 16.0 - ( SCREEN_HEIGHT / 2 ), FALSE );
 		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-1 )
 		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-1 ;
 		  if ( Me [ 0 ] . pos . y <= 0 ) Me [ 0 ] . pos . y = 0;
