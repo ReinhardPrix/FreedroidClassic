@@ -70,7 +70,7 @@ enum
 #define SOUND_DIR		DATADIR "/sound/"
 #define MAP_DIR			DATADIR "/map/"
 
-#define NE_MAP_BLOCK_FILE	GRAPHICS_DIR "ne_block.bmp"
+#define NE_MAP_BLOCK_FILE	GRAPHICS_DIR "ne_block_red.gif"
 #define NE_DROID_BLOCK_FILE	GRAPHICS_DIR "ne_droids.bmp"
 #define NE_BULLET_BLOCK_FILE 	GRAPHICS_DIR "ne_bullet.bmp"
 #define NE_BLAST_BLOCK_FILE 	GRAPHICS_DIR "ne_blast.bmp"

@@ -107,7 +107,7 @@ ne_get_blocks (char *picfile, int num_blocks, int blocks_per_line,
   SDL_Rect rect, *ret;
 
   /* Load the map-block BMP file into the appropriate surface */
-  if( !(tmp = SDL_LoadBMP(picfile) ))
+  if( !(tmp = IMG_Load(picfile) ))
     {
       fprintf(stderr, "Couldn't load %s: %s\n", picfile, SDL_GetError());
       Terminate (ERR);

@@ -435,13 +435,13 @@ void
 SetLevelColor (int ColorEntry)
 {
   char *ColoredBlockFiles[] = {
-    GRAPHICS_DIR "ne_block_red.bmp",
-    GRAPHICS_DIR "ne_block_yellow.bmp",
-    GRAPHICS_DIR "ne_block_green.bmp",
-    GRAPHICS_DIR "ne_block_gray.bmp",
-    GRAPHICS_DIR "ne_block_blue.bmp",
-    GRAPHICS_DIR "ne_block_turquoise.bmp",
-    GRAPHICS_DIR "ne_block_dark.bmp",
+    GRAPHICS_DIR "ne_block_red.gif",
+    GRAPHICS_DIR "ne_block_yellow.gif",
+    GRAPHICS_DIR "ne_block_green.gif",
+    GRAPHICS_DIR "ne_block_gray.gif",
+    GRAPHICS_DIR "ne_block_blue.gif",
+    GRAPHICS_DIR "ne_block_turquoise.gif",
+    GRAPHICS_DIR "ne_block_dark.gif",
     NULL
   };
 
