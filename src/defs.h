@@ -596,9 +596,16 @@ enum
 
 #define DROID_PHASES            8
 #define DEAD_DROID_PHASES       1
-#define TUX_SWING_PHASES 	7
-#define TUX_BREATHE_PHASES 	5
-#define TUX_GOT_HIT_PHASES      3
+
+// #define TUX_SWING_PHASES 	7
+// #define TUX_BREATHE_PHASES 	5
+// #define TUX_GOT_HIT_PHASES      3
+
+#define TUX_SWING_PHASES 	14
+#define TUX_BREATHE_PHASES 	1
+#define TUX_GOT_HIT_PHASES      0
+
+
 // #define TUX_MODELS              9
 #define TUX_MODELS              13
 #define MAX_TUX_DIRECTIONS      8
