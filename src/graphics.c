@@ -656,6 +656,67 @@ Load_Influencer_Surfaces( void )
 
 }; // void Load_Influencer_Surfaces( void )
 
+/* 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+*/
+void 
+Load_Digit_Surfaces( void )
+{
+  SDL_Surface* Whole_Image;
+  SDL_Surface* tmp_surf;
+  SDL_Rect Source;
+  SDL_Rect Target;
+  int i;
+  char *fpath;
+
+  fpath = find_file ( NE_DIGIT_BLOCK_FILE , GRAPHICS_DIR, TRUE);
+
+  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
+
+  for ( i=0 ; i < DIGITNUMBER ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      InfluDigitSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( InfluDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=i*( INITIAL_DIGIT_LENGTH + 2 );
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.w=INITIAL_DIGIT_LENGTH;
+      Source.h=INITIAL_DIGIT_HEIGHT;
+      Target.x=0;
+      Target.y=0;
+      Target.w=INITIAL_DIGIT_LENGTH;
+      Target.h=INITIAL_DIGIT_HEIGHT;
+      SDL_BlitSurface ( Whole_Image , &Source , InfluDigitSurfacePointer[i] , &Target );
+      SDL_SetAlpha( InfluDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+  SDL_FreeSurface( tmp_surf );
+
+  for ( i=0 ; i < DIGITNUMBER ; i++ )
+    {
+      tmp_surf = SDL_CreateRGBSurface( 0 , INITIAL_DIGIT_LENGTH , INITIAL_DIGIT_HEIGHT, ne_bpp, 0, 0, 0, 0);
+      SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
+      EnemyDigitSurfacePointer[i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+      SDL_SetColorKey( EnemyDigitSurfacePointer[i] , 0 , 0 ); // this should clear any color key in the dest surface
+      // Now we can copy the image Information
+      Source.x=(i+10)*( INITIAL_DIGIT_LENGTH + 2 );
+      Source.y=0*( INITIAL_DIGIT_HEIGHT + 2);
+      Source.w=INITIAL_DIGIT_LENGTH;
+      Source.h=INITIAL_DIGIT_HEIGHT;
+      Target.x=0;
+      Target.y=0;
+      Target.w=INITIAL_DIGIT_LENGTH;
+      Target.h=INITIAL_DIGIT_HEIGHT;
+      SDL_BlitSurface ( Whole_Image , &Source , EnemyDigitSurfacePointer[i] , &Target );
+      SDL_SetAlpha( EnemyDigitSurfacePointer[i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+    }
+  SDL_FreeSurface( tmp_surf );
+
+}; // void Load_Digit_Surfaces( void )
+
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
  * 				
@@ -691,7 +752,7 @@ InitPictures (void)
   /* 
      create the internal storage for all our blocks 
   */
-  tmp = SDL_CreateRGBSurface( SDL_SRCALPHA , NUM_MAP_BLOCKS*Block_Width,
+  tmp = SDL_CreateRGBSurface( 0 , NUM_MAP_BLOCKS*Block_Width,
 			      18*Block_Height, ne_bpp, 0, 0, 0, 0);
   tmp2 = SDL_CreateRGBSurface(0, SCREENLEN, SCREENHEIGHT, ne_bpp, 0, 0, 0, 0);
   if ( (tmp == NULL) || (tmp2 == NULL) )
@@ -703,7 +764,7 @@ InitPictures (void)
   /* 
    * convert this to display format for fast blitting 
    */
-  ne_blocks = SDL_DisplayFormatAlpha(tmp);  /* the surface is copied !*/
+  ne_blocks = SDL_DisplayFormat(tmp);  /* the surface is copied !*/
   if (ne_blocks == NULL) 
     {
       DebugPrintf (1, "\nSDL_DisplayFormat() has failed: %s\n", SDL_GetError());
@@ -719,12 +780,22 @@ InitPictures (void)
   SDL_FreeSurface (tmp); /* and free the old one */
 
   /* set the transparent color */
+  /*
   if (SDL_SetColorKey(ne_blocks, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
 	       SDL_GetError());
       return (FALSE);
     }
+  */
+  if (SDL_SetColorKey(ne_blocks, 0 , 0 ) == -1 )
+    {
+      fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
+	       SDL_GetError());
+      return (FALSE);
+    }
+
+
   if (SDL_SetColorKey(ne_static, SDL_SRCCOLORKEY, ne_transp_key) == -1 )
     {
       fprintf (stderr, "Transp setting by SDL_SetColorKey() failed: %s \n",
@@ -767,8 +838,9 @@ InitPictures (void)
 
   fpath = find_file (NE_DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
 
-  ne_digit_block =
-    ne_get_digit_blocks ( fpath , DIGITNUMBER, DIGITNUMBER, 0, block_line++);
+  Load_Digit_Surfaces();
+
+  //   ne_digit_block =    ne_get_digit_blocks ( fpath , DIGITNUMBER, DIGITNUMBER, 0, block_line++);
 
   fpath = find_file (NE_BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
   ne_rahmen_block = ne_get_rahmen_block (fpath);
@@ -779,7 +851,7 @@ InitPictures (void)
   fpath = find_file (NE_CONSOLEN_PIC_FILE, GRAPHICS_DIR, FALSE);
   ne_console_surface= IMG_Load (fpath); 
 
-  ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
+  // ne_blocks = SDL_DisplayFormat( ne_blocks );  /* the surface is copied !*/
   
   return (TRUE);
 }  // InitPictures

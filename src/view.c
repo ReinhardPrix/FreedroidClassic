@@ -384,7 +384,8 @@ PutInfluence ( int x, int y)
       TargetRectangle.x=x + First_Digit_Pos_X ;
       TargetRectangle.y=y + First_Digit_Pos_Y ;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[0]-'1'+1) , ne_screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
   // Now we draw the second digit of the influencers current number.
   // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
@@ -401,7 +402,8 @@ PutInfluence ( int x, int y)
       TargetRectangle.x=x + Second_Digit_Pos_X ;
       TargetRectangle.y=y + Second_Digit_Pos_Y ;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[1]-'1'+1) , ne_screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
   // Now we draw the third digit of the influencers current number.
   // SDL SOMETIMES MODIFIES THE TARGET ENTRY, THEREFORE IT HAS TO BE 
@@ -416,7 +418,8 @@ PutInfluence ( int x, int y)
       TargetRectangle.x=x + Third_Digit_Pos_X ;
       TargetRectangle.y=y + Third_Digit_Pos_Y ;
     }
-  SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
+  // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[Me.type].druidname[2]-'1'+1) , ne_screen, &TargetRectangle );
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
 
   //--------------------
   // Now that all fading effects are done, we can restore the blocks surface to OPAQUE,
@@ -554,13 +557,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+11) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
     }
   else
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1) , 
+      //       ne_screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -578,13 +581,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+11) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
     }
   else
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1) , 
+      // ne_screen, &TargetRectangle );
     }
 
   if ( x == (-1) )
@@ -600,13 +603,13 @@ Sorry...\n\
 
   if ( AllEnemys[Enum].Friendly == 0 )
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+11) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
     }
   else
     {
-      SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
-		       ne_screen, &TargetRectangle );
+      SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+      // SDL_BlitSurface( ne_blocks , ne_digit_block + (Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1) , 
+      //       ne_screen, &TargetRectangle );
     }
 
 
