@@ -1764,6 +1764,7 @@ PerformTuxAttackRaw ( int player_num )
 	  if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	  if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;
 	  AllEnemys[ i ] . energy -= Me [ player_num ] .base_damage + MyRandom( Me [ player_num ] .damage_modifier );
+	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 
 	  // AllEnemys[ i ] . is_friendly = 0 ;
 	  // AllEnemys[ i ] . combat_state = MAKE_ATTACK_RUN ;

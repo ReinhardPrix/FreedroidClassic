@@ -531,6 +531,25 @@ GetDirection (point robo, point bul)
 }; // int GetDirection (point robo, point bul)
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+enemy_spray_blood ( Enemy CurEnemy ) 
+{
+  moderately_finepoint target_pos = { 1.0 , 0 } ;
+
+  RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
+
+  target_pos . x += CurEnemy -> pos . x ;
+  target_pos . y += CurEnemy -> pos . y ;
+
+  create_new_obstacle_on_level ( curShip . AllLevels [ CurEnemy -> pos . z ] , ISO_BLOOD_1 + MyRandom ( 7 ) , target_pos . x , target_pos . y );
+
+  
+}; // void enemy_spray_blood ( Enemy CurEnemy ) 
+
+/* ----------------------------------------------------------------------
  * Bullet collision checks and effect handling for 'flash' bullets is 
  * done here...  Classic bullet collision and effect handling is done
  * somewhere else...
@@ -575,6 +594,9 @@ handle_flash_effects ( bullet* CurBullet )
 	  AllEnemys[i].energy -= CurBullet->damage;
 	  // Since the enemy just got hit, it might as well say so :)
 	  EnemyHitByBulletText( i );
+
+	  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+
 	}
     }
   
@@ -765,6 +787,8 @@ check_bullet_enemy_collsisions ( bullet* CurBullet , int num )
 		  //
 		  AllEnemys[i].energy -= CurBullet->damage;
 		  
+		  enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+
 		  //--------------------
 		  // If it was a friend, and the bullet came from Tux, the friend
 		  // might now become very angry...

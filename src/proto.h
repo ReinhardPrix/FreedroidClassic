@@ -106,6 +106,7 @@ EXTERN void MoveActiveSpells (void);
 EXTERN void DeleteSpell (int num);
 EXTERN void CheckBulletCollisions (int num);
 EXTERN void CheckBlastCollisions (int num);
+EXTERN void enemy_spray_blood ( Enemy CurEnemy ) ;
 
 // view.c 
 #undef EXTERN
@@ -334,6 +335,15 @@ EXTERN void InitiateNewCharacter ( int player_num , int CharacterClass );
 EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( int player_num );
 EXTERN void ShowCharacterScreen ( void );
+
+// character.c
+#undef EXTERN
+#ifdef _leveleditor_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN void create_new_obstacle_on_level ( Level EditLevel , int our_obstacle_type , float pos_x , float pos_y );
 
 // skills.c
 #undef EXTERN

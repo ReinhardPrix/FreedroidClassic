@@ -1949,6 +1949,47 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_walls_0015.png" ;
 
+  obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_1 ] . filename = "iso_blood_0001.png" ;
+  obstacle_map [ ISO_BLOOD_1 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_2 ] . filename = "iso_blood_0002.png" ;
+  obstacle_map [ ISO_BLOOD_2 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_3 ] . filename = "iso_blood_0003.png" ;
+  obstacle_map [ ISO_BLOOD_3 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_4 ] . filename = "iso_blood_0004.png" ;
+  obstacle_map [ ISO_BLOOD_4 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_5 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_5 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_5 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_5 ] . filename = "iso_blood_0005.png" ;
+  obstacle_map [ ISO_BLOOD_5 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_6 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_6 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_6 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_6 ] . filename = "iso_blood_0006.png" ;
+  obstacle_map [ ISO_BLOOD_6 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_7 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_7 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_7 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_7 ] . filename = "iso_blood_0007.png" ;
+  obstacle_map [ ISO_BLOOD_7 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_BLOOD_8 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_BLOOD_8 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_8 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_BLOOD_8 ] . filename = "iso_blood_0008.png" ;
+  obstacle_map [ ISO_BLOOD_8 ] . needs_pre_put = TRUE ;
+
 }; // void init_obstacle_data( void )
 
 /* ---------------------------------------------------------------------- 
