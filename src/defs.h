@@ -163,6 +163,7 @@ enum
 #define NE_DIGIT_BLOCK_FILE     "digits.gif"
 #define NE_ITEMS_BLOCK_FILE     "items.png"
 #define NE_SKILL_ICON_FILE      "skills.png"
+#define SHOP_BACKGROUND_IMAGE   "shoppe.jpg"
 
 #define NE_CONSOLE_PIC_FILE    "console_fg.png" 
 #define NE_BANNER_BLOCK_FILE    "banner.png"

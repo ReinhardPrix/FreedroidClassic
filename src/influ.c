@@ -796,7 +796,7 @@ FireBullet (void)
       //
       angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
       Weapon_Target_Vector.x = 0;
-      Weapon_Target_Vector.y = - 0.7;
+      Weapon_Target_Vector.y = - 1.0;
       RotateVectorByAngle ( & Weapon_Target_Vector , angle );
       Weapon_Target_Vector.x += Me.pos.x;
       Weapon_Target_Vector.y += Me.pos.y;
