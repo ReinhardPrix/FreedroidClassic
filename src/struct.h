@@ -62,11 +62,13 @@ PCX_Header;
 
 typedef struct
 {
-  long PlayerScore;
-  void *NextPlayer;
-  char *PlayerName;
+  char name[MAX_NAME_LEN+5];
+  long score;                  /* use -1 for an empty entry */
+  char date[DATE_LEN+5];
+  void *next;    /* a list is easier to handle than an array !*/
+  void *prev;
 }
-HallElement;
+hall_entry, *Hall_entry;
 
 typedef struct
 {

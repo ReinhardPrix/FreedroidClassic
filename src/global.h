@@ -91,13 +91,9 @@ EXTERN int Alert;
 EXTERN int ThisShip;
 EXTERN float RealScore;
 EXTERN long ShowScore;
-EXTERN float HighestScoreOfDay;
-EXTERN float LowestScoreOfDay;
-EXTERN float GreatScore;
-EXTERN char *GreatScoreName;
-EXTERN char *LowestName;
-EXTERN char *HighestName;
-EXTERN HallElement *Hallptr;
+
+EXTERN Hall_entry highscores;
+
 EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
 
 EXTERN int NumEnemys;

@@ -42,6 +42,12 @@
 #define USE_SDL_FRAMERATE
 #define NEW_ENGINE
 
+/* ************************************************************
+ * Highscore related defines 
+ *************************************************************/
+#define MAX_NAME_LEN 	20     /* max len of highscore name entry */
+#define MAX_HIGHSCORES  10     /* only keep Top10 */
+#define DATE_LEN	20     /* reserved for the date-string */
 
 // The flags for DisplayRahmen are:
 enum

@@ -233,7 +233,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
       tmp++;
 
-      ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
+      if (clip)
+	ImprovedCheckUmbruch(tmp, clip);   /* dont write over right border */
 
     } // while !FensterVoll()
 
@@ -243,10 +244,10 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
    * ScrollText() wants to know if we still wrote something inside the
    * clip-rectangle, of if the Text has been scrolled out
    */
-  if ( (MyCursorY < clip->y) || (starty > clip->y + clip->h) )
-    return FALSE;  /* no text was written inside clip */
-  else
-    return TRUE; 
+   if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
+     return FALSE;  /* no text was written inside clip */
+   else
+     return TRUE; 
 
 } // DisplayText(...)
 
@@ -332,7 +333,7 @@ ImprovedCheckUmbruch (char* Resttext, const SDL_Rect *clip)
  *
  *  NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
  * 
- * @Ret: char *: String wird HIER reserviert !!! 
+ * @Ret: char *: String is allocated _here_!!!
  *       (dont forget to free it !)
  * 
  *-----------------------------------------------------------------*/

@@ -327,17 +327,15 @@ InitNewGame (void)
 
 } /* InitNewGame */
 
-/*
------------------------------------------------------------------
-@Desc: InitFreedroid(): 
-This function initializes the whole Freedroid game.
-
-THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
-ONLY INITIALIZES A NEW MISSION FOR THE GAME.
- 
-@Ret: none
- 
-*-----------------------------------------------------------------*/
+/*-----------------------------------------------------------------
+ * @Desc: This function initializes the whole Freedroid game.
+ * 
+ * THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
+ * ONLY INITIALIZES A NEW MISSION FOR THE GAME.
+ *  
+ * 
+ *  
+ *-----------------------------------------------------------------*/
 void
 InitFreedroid (void)
 {
@@ -361,21 +359,12 @@ InitFreedroid (void)
   srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
 
   /* Initialisierung der Highscorewerte */
-  LowestName = MyMalloc (200);
-  HighestName = MyMalloc (200);
-  GreatScoreName = MyMalloc (200);
-  strcpy (LowestName, "Brian Mill Waits");
-  strcpy (HighestName, "Linus Gunar");
-  strcpy (GreatScoreName, "Mister X");
-  Hallptr = MyMalloc (sizeof (HallElement) + 1);
-  Hallptr->PlayerScore = 0;
-  Hallptr->PlayerName = MyMalloc (10);
-  strcpy (Hallptr->PlayerName, " dummy ");
-  Hallptr->NextPlayer = NULL;
-
-  LowestScoreOfDay = 1;
-  HighestScoreOfDay = 1000;
-  GreatScore = 101;
+  /* 
+   * this really should be read from disk here, 
+   * but for the moment we just start from zero 
+   * each time
+   */
+  highscores = NULL;
 
   Draw_Framerate=FALSE;
   HideInvisibleMap = FALSE;	/* Hide invisible map-parts. Para-extension!! */
@@ -571,52 +560,64 @@ highscore list will be updated.
 void
 Debriefing (void)
 {
+  char *tmp_name;
+  Hall_entry new, tmp;
   int DebriefColor;
+  int count;
+  
+
+  return;  // until this works properly
+
 
   DebriefColor = FONT_WHITE;
-
   Me.status = DEBRIEFING;
-
   SetUserfenster ( DebriefColor );	// KON_BG_COLOR
 
-  if (RealScore > GreatScore)
-    {
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			"    Great Score !");
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX,
-			FontHeight(Menu_BFont)+USERFENSTERPOSY,
-			"    Enter your name: ");
-      PrepareScaledSurface(TRUE);
 
-      GreatScoreName = GetString (10, 2);
-      GreatScore = RealScore;
-    }
-  else if (RealScore < LowestScoreOfDay)
-    {
-      // strcpy (Scoretext, "\n   Lowest Score of Day! \n Enter your name:");
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			    "\n   Lowest Score of Day!");
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
-			    "    Enter your name: ");
-      PrepareScaledSurface(TRUE);
-      LowestName = GetString (10, 2);
-      LowestScoreOfDay = RealScore;
-    }
-  else if (RealScore > HighestScoreOfDay)
-    {
-      // strcpy (Scoretext, "\n   Highest Score of Day! \n Enter your name:");
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, USERFENSTERPOSY, 
-			"\n   Highest Score of Day!" );
-      PrintStringFont ( ne_screen , Menu_BFont, USERFENSTERPOSX, FontHeight(Menu_BFont)+USERFENSTERPOSY, 
-			    "    Enter your name: ");
-      PrepareScaledSurface(TRUE);
-      HighestName = GetString (10, 2);
-      HighestScoreOfDay = RealScore;
-    }
-  // free (Scoretext);
+  count = 1;
+  if ( (tmp = highscores) != NULL)
+    while (tmp->next) { count++; tmp = tmp->next;}  /* tmp now points to lowest! */
+  else
+    count = 0;  /* first entry */
+ 
+  if ( (count == MAX_HIGHSCORES) && (RealScore <= tmp->score) )
+    return; /* looser! ;) */
+      
+  /* else: prepare a new entry */
+  new = MyMalloc (sizeof(hall_entry));
+  new->score = RealScore;
+  new->next = new->prev = NULL;
+  DisplayText ("Great Score !", User_Rect.x, User_Rect.y, &User_Rect);
+  DisplayText ("\nEnter your name: ", User_Rect.x, User_Rect.y, &User_Rect);
+  PrepareScaledSurface(TRUE);
+  tmp_name = GetString (MAX_NAME_LEN, 2);
+  strcpy (new->name, tmp_name);
+  free (tmp_name);
 
-  printf ("\nSurvived Debriefing! \n");
+  if (!highscores)  /* hey, you're the first one ! */
+    highscores = new;
+  else   /* link in the new entry */
+    {
+      count ++;
+      tmp = highscores;
+      while ( tmp->score >= RealScore )
+	tmp = tmp->next;
+      ((Hall_entry)(tmp->prev))->next = new;
+      new->prev = tmp->prev;
+      new->next = tmp;
+    }
 
+  /* now check the length of our new highscore list.
+   * if longer than MAX_HIGHSCORES */
+  tmp = highscores;
+  while (tmp->next) tmp = tmp->next; /* find last entry */
+
+  if ( count > MAX_HIGHSCORES ) /* the last one drops out */
+    {
+      ((Hall_entry)(tmp->prev))->next = NULL;
+      free (tmp);
+    }
+  
   return;
 
 } /* Debriefing() */

@@ -177,9 +177,12 @@ Assemble_Combat_Picture (int mask)
 	{
 	  if ((MapBrick = CurLevel->map[line][col]) != INVISIBLE_BRICK)
 	    {
-	      TargetRectangle.x=USER_FENSTER_CENTER_X + ( -Me.pos.x+col-0.5 )   *Block_Width;
-	      TargetRectangle.y=USER_FENSTER_CENTER_Y + ( -Me.pos.y+line-0.5 ) *Block_Height;
-	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick, ne_screen, &TargetRectangle);
+	      TargetRectangle.x = USER_FENSTER_CENTER_X 
+		+ ( -Me.pos.x+col-0.5 )*Block_Width;
+	      TargetRectangle.y = USER_FENSTER_CENTER_Y
+		+ ( -Me.pos.y+line-0.5 )*Block_Height;
+	      SDL_BlitSurface(ne_blocks, ne_map_block+MapBrick,
+			      ne_screen, &TargetRectangle);
 	    }			// if !INVISIBLE_BRICK 
 	}			// for(col) 
     }				// for(line) 

@@ -169,12 +169,15 @@ Takeover (int enemynum)
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
 
+
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu.
    */
   Activate_Conservative_Frame_Computation ();
 
   while (SpacePressed ()) ;  /* make sure space is release before proceed */
+
+  return TRUE;   // until this works properly
 
   Switch_Background_Music_To (TAKEOVER_BACKGROUND_MUSIC_SOUND);
 
@@ -189,8 +192,6 @@ Takeover (int enemynum)
 
   SetPalCol (INFLUENCEFARBWERT, Mobilecolor.rot, Mobilecolor.gruen,
 	     Mobilecolor.blau);
-
-  while (SpacePressed ()) ; 	 /* Warte, bis User Space auslaesst */
 
   while (!FinishTakeover)
     {
