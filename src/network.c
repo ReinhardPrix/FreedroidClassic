@@ -42,7 +42,7 @@
 
 #include "SDL_net.h"
 
-#define FREEDROID_NET_PORT (5673)
+#define FREEDROID_NET_PORT (5671)
 
 #define PERIODIC_MESSAGE_DEBUG 2 
 #define SERVER_SEND_DEBUG 2 
@@ -69,7 +69,7 @@ typedef struct
   finepoint pos;
   int type;
   int is_identified;  // is the item identified already?
-  int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
+  // int currently_held_in_hand; // is the item currently held 'in hand' with the mouse cursor?
 
   int prefix_code;
   int suffix_code;
@@ -130,6 +130,21 @@ typedef struct
 item_drop_engram, *Item_Drop_Engram;
 
 item_drop_engram ItemDropEngram;
+
+//--------------------
+// Now we define a short message, that is designed to
+// be sent from the server to the client, to inform the server
+// about occuring item moves.
+//
+typedef struct
+{
+  int source_item_slot_code; // which slot to put the item to 
+  int dest_item_slot_code; // which slot to place the item 
+  grob_point dest_inv_pos; // where in inventory shall this item now appear
+}
+item_move_engram, *Item_Move_Engram;
+
+item_move_engram ItemMoveEngram;
 
 //--------------------
 // Now we define a short message, that is designed to
@@ -235,6 +250,7 @@ enum
     SERVER_ACCEPT_THIS_KEYBOARD_EVENT ,
     SERVER_ACCEPT_THIS_MOUSE_BUTTON_EVENT ,
     SERVER_ACCEPT_THIS_ITEM_DROP ,
+    SERVER_ACCEPT_THIS_ITEM_MOVE ,
 
     NUMBER_OF_KNOWN_COMMANDS
 
@@ -691,7 +707,7 @@ FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
   EnemyEngram [ WriteIndex ] . energy     = AllEnemys [ EnemyIndex ] . energy ;
   EnemyEngram [ WriteIndex ] . feindphase = AllEnemys [ EnemyIndex ] . feindphase ;
   EnemyEngram [ WriteIndex ] . friendly   = AllEnemys [ EnemyIndex ] . Friendly ;
-  
+
 }; // void FillDataIntoEnemyEngram ( int WriteIndex , int EnemyIndex )
 
 /* ----------------------------------------------------------------------
@@ -741,8 +757,12 @@ FillDataIntoItemEngram ( int WriteIndex , int ItemIndex , int MapLevel )
   ItemEngram [ WriteIndex ] . type       = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . type ;
   ItemEngram [ WriteIndex ] . pos . x    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . x ;
   ItemEngram [ WriteIndex ] . pos . y    = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . pos . y ;
-  ItemEngram [ WriteIndex ] . currently_held_in_hand = 
-    curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . currently_held_in_hand ;
+
+  DebugPrintf ( 0 , "\nFilling in type %d from item nr. %d." , ItemEngram [ WriteIndex ] . type , ItemIndex );
+  
+
+  // DON't SEND THIS INFORMATION OVER THE NET!!
+  // ItemEngram [ WriteIndex ] . currently_held_in_hand = curShip . AllLevels [ MapLevel ]->ItemList [ ItemIndex ] . currently_held_in_hand ;
 
 
   // More should follow later...
@@ -849,7 +869,44 @@ EnforcePlayersItemDrop ( int PlayerNum  )
 
   DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : end of function reached. " );
   
-}; // void EnforceServersPlayerEngram ( void ) 
+}; // void EnforcePlayersItemDrop ( int PlayerNum  ) 
+
+/* ----------------------------------------------------------------------
+ * This function enforces the item move request from a player.
+ * It assumes, that the ItemMoveEngram has been loaded with the nescessary
+ * item move information already.
+ * ---------------------------------------------------------------------- */
+void
+EnforcePlayersItemMove ( int PlayerNum  ) 
+{
+  Item SourceItemPointer;
+  Item DestItemPointer;
+
+  DebugPrintf ( 0 , "\nvoid EnforcePlayersItemMove ( int PlayerNum ) : real function call confirmed. " );
+
+  //--------------------
+  // Now we find out the item pointer on the server, that the item code
+  // in the engram is indicating.
+  //
+  SourceItemPointer = FindPointerToPositionCode ( ItemMoveEngram . source_item_slot_code , PlayerNum ) ;
+  DestItemPointer = FindPointerToPositionCode ( ItemMoveEngram . dest_item_slot_code , PlayerNum ) ;
+
+  DebugPrintf ( 0 , "\nItem type of item to move at the server : %d . " , SourceItemPointer -> type ) ;
+
+  CopyItem ( SourceItemPointer , DestItemPointer , FALSE ) ;
+  DeleteItem ( SourceItemPointer ) ;
+
+  if ( ItemMoveEngram . dest_inv_pos . x != ( -1 ) )
+    DestItemPointer -> inventory_position . x = ItemMoveEngram . dest_inv_pos . x ;
+
+  if ( ItemMoveEngram . dest_inv_pos . y != ( -1 ) )
+    DestItemPointer -> inventory_position . y = ItemMoveEngram . dest_inv_pos . y ;
+
+  // DropItemToTheFloor ( SourceItemPointer , ItemDropEngram . pos . x , ItemDropEngram . pos . y ) ;
+
+  DebugPrintf ( 0 , "\nvoid EnforcePlayersItemDrop ( int PlayerNum ) : end of function reached. " );
+  
+}; // void EnforcePlayersItemDrop ( int PlayerNum  ) 
 
 /* ----------------------------------------------------------------------
  * This function prepares a player engram for player number PlayerNum.
@@ -1057,7 +1114,7 @@ EnforceServersItemEngram ( int NumberOfTargets )
   int WriteIndex;
 
   DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersItemEngram ( void ) : real function call confirmed. " );
-  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersItemEngram ( void ) : %d blasts to update. " , NumberOfTargets );
+  DebugPrintf ( ENFORCE_DEBUG , "\nvoid EnforceServersItemEngram ( void ) : %d targets to update. " , NumberOfTargets );
 
   memcpy ( ItemEngram , CommandFromServer [ 0 ] . command_data_buffer , sizeof ( ItemEngram ) );
 
@@ -1070,9 +1127,11 @@ EnforceServersItemEngram ( int NumberOfTargets )
 	  
       WriteIndex = ItemEngram [ i ] . ItemIndex ;
 	
-      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . type       = ItemEngram [ i ] . type ;
-      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . x    = ItemEngram [ i ] . pos . x ;
-      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . y    = ItemEngram [ i ] . pos . y ;
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . type    = ItemEngram [ i ] . type ;
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . x = ItemEngram [ i ] . pos . x ;
+      curShip . AllLevels [ Me [ 0 ] . pos . z ] -> ItemList [ WriteIndex ] . pos . y = ItemEngram [ i ] . pos . y ;
+
+      DebugPrintf ( 0 , "\nUpdating Item Nr. %d to new type %d." , WriteIndex , ItemEngram [ i ] . type ) ;
       
     }
 
@@ -1126,26 +1185,6 @@ CopyNetworkAllEnemysToAllEnemys ( void )
       memcpy ( & AllEnemys[ EnemyNum ] , & NetworkAllEnemys [ EnemyNum ] , sizeof ( NetworkAllEnemys [ EnemyNum ] ) );
     }
 }; // void CopyNetworkAllEnemysToAllEnemys ( void )
-
-/* ----------------------------------------------------------------------
- * This function assembles the information the server wants to send to
- * the client
- * ---------------------------------------------------------------------- */
-void
-AssembleServerInformationForClient ( void )
-{
-  
-};
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-CheckForClientsConnectingToMe ( void )
-{
-  
-}; // void CheckForClientsConnectingToMe ( void )
 
 /* ----------------------------------------------------------------------
  * This function sends a text message to a client in command form.
@@ -1667,7 +1706,7 @@ SendItemUpdateToClient ( int PlayerNum )
 \n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-The SDL NET COULD NOT SEND A FULL ITEM ENGRAM TO THE CLIENT SUCCESSFULLY\n\
+The SDL NET COULD NOT SEND AN ITEM UPDATE TO THE CLIENT SUCCESSFULLY\n\
 in the function void SendTextMessageToClient ( int PlayerNum , char* message ).\n\
 \n\
 The cause of this problem as reportet by the SDL_net was: \n\
@@ -2008,7 +2047,7 @@ ExecuteServerCommand ( void )
   int TransmittedBlasts;
   int TransmittedItems;
 
-  DebugPrintf ( 0 , "\nExecuteServerCommand ( void ): real function call confirmed." ) ;
+  DebugPrintf ( 2 , "\nExecuteServerCommand ( void ): real function call confirmed." ) ;
 
   switch ( CommandFromServer [ 0 ] . command_code )
     {
@@ -2114,7 +2153,7 @@ Read_Command_Buffer_From_Server ( void )
       // --------------------
       // Here we clearly expect a completely new command sequence to begin.
       //
-      DebugPrintf ( 0 , "\nvoid Read_Command_Buffer_From_Server ( void ): New Command expected." );
+      DebugPrintf ( 2 , "\nvoid Read_Command_Buffer_From_Server ( void ): New Command expected." );
 
       //--------------------
       // At first we read in the command code.
@@ -2181,7 +2220,7 @@ Read_Command_Buffer_From_Server ( void )
     }
   else
     {
-      DebugPrintf ( 0 , "\nReading command:  (Finally) Data did come completely over... " );
+      DebugPrintf ( 2 , "\nReading command:  (Finally) Data did come completely over... " );
 
       //--------------------
       // Now at this point we know, that we have received a complete and full
@@ -2647,6 +2686,12 @@ ExecutePlayerCommand ( int PlayerNum )
       EnforcePlayersItemDrop ( PlayerNum ) ;
       break;
 
+    case SERVER_ACCEPT_THIS_ITEM_MOVE:
+      DebugPrintf ( 0 , "\nSERVER_ACCEPT_THIS_ITEM_MOVE command received from player %d." , PlayerNum ) ;
+      memcpy ( & ( ItemMoveEngram) , CommandFromPlayer [ PlayerNum ] . command_data_buffer , sizeof ( ItemMoveEngram ) );
+      EnforcePlayersItemMove ( PlayerNum ) ;
+      break;
+
     case PLAYER_TELL_ME_YOUR_NAME:
       DebugPrintf ( 0 , "\nPLAYER_TELL_ME_YOUR_NAME command received...Terminting..." );
       Terminate ( ERR );
@@ -2781,7 +2826,7 @@ ListenToAllRemoteClients ( void )
     }
   else
     {
-      DebugPrintf ( 0 , "\nvoid ListenToAllRemoteClients ( void ) : Activity in the set detected." );
+      DebugPrintf ( 2 , "\nvoid ListenToAllRemoteClients ( void ) : Activity in the set detected." );
     }
 
   //--------------------
@@ -2818,7 +2863,7 @@ ListenToAllRemoteClients ( void )
 
     }
 
-  DebugPrintf( 0 , "\nvoid ListenToAllRemoteClients ( void ) : end of function reached..." );
+  DebugPrintf( 2 , "\nvoid ListenToAllRemoteClients ( void ) : end of function reached..." );
 
 }; // void ListenToAllRemoteClients ( void )
 
@@ -2875,7 +2920,7 @@ ListenForServerMessages ( void )
     }
   else
     {
-      DebugPrintf ( 0 , "\nvoid ListenForServerMessages ( void ) : Something was sent from the server!!!" );
+      DebugPrintf ( 2 , "\nvoid ListenForServerMessages ( void ) : Something was sent from the server!!!" );
     }
 
   //--------------------
@@ -3208,6 +3253,71 @@ Sorry...\n\
     }
 
 }; // void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) 
+
+/* ----------------------------------------------------------------------
+ * This function sends an internal item move on the client to the server.
+ * ---------------------------------------------------------------------- */
+void
+SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int inv_x , int inv_y ) 
+{
+  int CommunicationResult;
+  int len;
+  network_command LocalCommandBuffer;
+
+  // print out the message
+  DebugPrintf ( 0 , "\nSending item move to server in command form. " ) ;
+  len = sizeof ( ItemMoveEngram ) ; // the amount of bytes in the data buffer
+
+  //--------------------
+  // We check against sending too long messages to the server.
+  //
+  if ( len >= COMMAND_BUFFER_MAXLEN )
+    {
+      DebugPrintf ( 0 , "\nAttempted to send too long item move engram to server... Terminating..." );
+      Terminate ( ERR ) ;
+    }
+
+  //--------------------
+  // Now we prepare our command buffer.
+  //
+  ItemMoveEngram . source_item_slot_code = SourcePositionCode ;
+  ItemMoveEngram . dest_item_slot_code = DestPositionCode ;
+
+  if ( inv_x != ( -1 ) ) ItemMoveEngram . dest_inv_pos . x = inv_x ;
+  if ( inv_y != ( -1 ) ) ItemMoveEngram . dest_inv_pos . y = inv_y ;
+
+  LocalCommandBuffer . command_code = SERVER_ACCEPT_THIS_ITEM_MOVE ;
+  LocalCommandBuffer . data_chunk_length = len ;
+  memcpy ( LocalCommandBuffer . command_data_buffer , & ( ItemMoveEngram ) , sizeof ( ItemMoveEngram ) );
+
+  CommunicationResult = SDLNet_TCP_Send ( sock , 
+					  & ( LocalCommandBuffer ) , 
+					  2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length ); 
+
+  //--------------------
+  // Now we print out the success or return value of the sending operation
+  //
+  DebugPrintf ( 0 , "\nSending item move engram to server returned : %d . " , CommunicationResult );
+  if ( CommunicationResult < 2 * sizeof ( int ) + LocalCommandBuffer . data_chunk_length )
+    {
+      fprintf(stderr, "\n\
+\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+The SDL NET COULD NOT SEND AN ITEM MOVE ENGRAM TO THE SERVER SUCCESSFULLY\n\
+in the function void SendTextMessageToServer ( char* message ).\n\
+\n\
+The cause of this problem as reportet by the SDL_net was: \n\
+%s\n\
+\n\
+Freedroid will terminate now to draw attention \n\
+to the networking problem it could not resolve.\n\
+Sorry...\n\
+----------------------------------------------------------------------\n\
+\n" , SDLNet_GetError ( ) ) ;
+      Terminate(ERR);
+    }
+}; // void SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode ) 
 
 /* ----------------------------------------------------------------------
  * This function assembles copys of the item information on all levels

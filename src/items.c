@@ -59,6 +59,142 @@ enum
  */
 
 /* ----------------------------------------------------------------------
+ * For communication with the server, we can not use pointers to items.
+ * That's a pity, cause it would be most convenient.  Instead we must 
+ * think of something new and devise some unique item position codes.
+ *
+ * This item position code is a number that uniquely describes a position
+ * in all the existing item lists.  It works as follows:
+ *
+ * 0: WEAPON_SLOT
+ * 1: SHIELD_SLOT
+ * 2: SPECIAL_SLOT
+ * 3: AUX1_SLOT
+ * 4: AUX2_SLOT
+ * 5: DRIVE_SLOT
+ * 6-5+MAX_ITEMS_IN_INVENTORY: inventory of player
+ * ?? perhaps afterwards: items on the floor of the current level?  maybe not.
+ *
+ * ---------------------------------------------------------------------- */
+int
+GetPositionCode ( Item ItemPointer ) 
+{
+  int InvIndex;
+  int levelnum;
+
+  if ( & ( Me [ 0 ] . weapon_item ) == ItemPointer )
+   {
+      return WEAPON_SLOT ;
+   }
+ else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
+   {
+      return SHIELD_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
+   {
+      return SPECIAL_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . aux1_item ) == ItemPointer )
+   {
+      return AUX1_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . aux2_item ) == ItemPointer )
+   {
+      return AUX2_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . drive_item ) == ItemPointer )
+   {
+      return DRIVE_SLOT;
+   }
+ else
+   {
+     for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_IN_INVENTORY ; InvIndex ++ )
+       {
+	 if ( & ( Me [ 0 ] . Inventory [ InvIndex ] ) == ItemPointer )
+	   {
+	     DebugPrintf ( 0 , "\nPosition code taken from Inv Item Nr. %d. " , InvIndex );
+	     return ( InvIndex + FIRST_INV_SLOT ) ;
+	   }
+       }
+     for ( levelnum = 0 ; levelnum < curShip.num_levels ; levelnum ++ )
+       {
+	 for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_PER_LEVEL ; InvIndex ++ )
+	   {
+	     if ( & ( curShip . AllLevels [ levelnum ] -> ItemList [ InvIndex ] ) ==  ItemPointer )
+	       {
+		 DebugPrintf ( 0 , "\nPosition code taken from Level Item Nr. %d. " , InvIndex );
+		 return ( InvIndex + FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY ) ;
+	       }
+	   }
+       }
+   }
+
+  DebugPrintf ( 0 , "\nERROR! Unidentifiable pointer given to int GetPositionCode ( Item ). Terminating... " ) ;
+  Terminate ( ERR ) ;
+
+ return ( 0 ) ;
+
+}; // int GetPositionCode ( Item ItemPointer ) 
+
+/* ----------------------------------------------------------------------
+ * Same as GetPositionCode makes a position code out of a pointer, we now
+ * want to it the other way around and find a pointer to a given position
+ * code and player number.
+ * ---------------------------------------------------------------------- */
+Item
+FindPointerToPositionCode ( int SlotCode , int PlayerNum ) 
+{
+
+  DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
+  switch ( SlotCode )
+    {
+    case WEAPON_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from weapon slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . weapon_item ) ) ;
+      break;
+    case SPECIAL_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . special_item ) ) ;
+      break;
+    case SHIELD_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
+		    Me [ PlayerNum ] . weapon_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
+      break;
+    case AUX1_SLOT:
+      return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
+      break;
+    case AUX2_SLOT:
+      return ( & ( Me [ PlayerNum ] . aux2_item ) ) ;
+      break;
+    case DRIVE_SLOT:
+      return ( & ( Me [ PlayerNum ] . drive_item ) ) ;
+      break;
+    default:
+      if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY )
+	{
+	  DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's directly from inventory. " , 
+			Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] . type ) ;
+	  return ( & ( Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] ) ) ;
+	}
+      else if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY + MAX_ITEMS_PER_LEVEL )
+	{
+	  DebugPrintf ( 0 , "\nPosition code to find indicated level item Nr. %d. " , SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY );
+	  return ( & ( curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> ItemList [ SlotCode - FIRST_INV_SLOT - MAX_ITEMS_IN_INVENTORY ] ) ) ;
+	}
+      else 
+	{
+	  DebugPrintf ( 0 , "\nERROR! Unidentifiable item slot code given to Item FindPointerToPositionCode ( int , int ). Terminating... " ) ;
+	  Terminate ( ERR ) ;
+	}
+   }
+
+  return NULL ;
+}; // Item FindPointerToPositionCode ( PositionCode , PlayerNum ) 
+
+/* ----------------------------------------------------------------------
  * This function calculates the price of a given item, taking into account
  * (*) the items base list price 
  * (*) the items given prefix modifier
@@ -534,10 +670,11 @@ void
 MakeHeldFloorItemOutOf( item* SourceItem )
 {
   int i;
+  int SourceCode, DestCode;
 
   for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
     {
-      if ( CurLevel->ItemList [ i ].type == ( -1 ) ) break;
+      if ( CurLevel->ItemList [ i ] . type == ( -1 ) ) break;
     }
   if ( i >= MAX_ITEMS_PER_LEVEL )
     {
@@ -556,6 +693,19 @@ MakeHeldFloorItemOutOf( item* SourceItem )
   CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
   
   Item_Held_In_Hand = ItemMap [ CurLevel->ItemList[ i ].type ].picture_number ;
+
+  DeleteItem ( SourceItem ) ;
+
+  //--------------------
+  // And of course we shouldn't forget to tell the server about this 
+  // movement as well....
+  //
+  if ( ClientMode && ! ServerMode ) 
+    {
+      SourceCode = GetPositionCode ( SourceItem ) ;
+      DestCode = GetPositionCode ( & ( CurLevel -> ItemList [ i ] ) ) ;
+      SendPlayerItemMoveToServer ( SourceCode , DestCode , -1 , -1 ) ;
+    }
   
   // The original item will be overwritten anyway when the new item
   // replaces the old one afterwards.
@@ -597,10 +747,16 @@ item* GetHeldItemPointer( void )
   int InvIndex;
   int i;
 
+  //--------------------
   // We must not access the levels item array, if the level was not yet
   // initialized!!! Or a SEGFAULT will occur!!!  Therefore we check for
   // ininitialized level first.!
-  if ( CurLevel == NULL ) return ( NULL );
+  //
+  if ( CurLevel == NULL ) 
+    {
+      DebugPrintf ( 0 , "\nERROR IN GetHeldItemPointer : CurLevel not yet initialized... " ) ;
+      return ( NULL );
+    }
 
   InvIndex = GetHeldItemInventoryIndex(  );
 
@@ -659,11 +815,9 @@ item* GetHeldItemPointer( void )
 	  return ( & (CurLevel->ItemList[ i ] ) );
 	}
 
-
       // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
       return ( NULL );
     }
-
   
 }; // item* GetHeldItemPointer( void )
 
@@ -671,7 +825,7 @@ item* GetHeldItemPointer( void )
  * This function DELETES an item from the source location.
  * ---------------------------------------------------------------------- */
 void
-DeleteItem( item* Item )
+DeleteItem ( item* Item )
 {
 
   Item->type = -1 ;
@@ -693,6 +847,21 @@ CopyItem( item* SourceItem , item* DestItem , int MakeSound )
   if ( MakeSound ) PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
 
 }; // void MoveItem( item* SourceItem , item* DestItem )
+
+/* ----------------------------------------------------------------------
+ * This function COPIES an item from the source location to the destination
+ * location.  The source location is then marked as unused inventory 
+ * entry.
+ * ---------------------------------------------------------------------- */
+void
+CopyItemWithoutHeldProperty ( item* SourceItem , item* DestItem , int MakeSound ) 
+{
+
+  int temp = DestItem -> currently_held_in_hand ;
+  CopyItem ( SourceItem , DestItem , MakeSound );
+  DestItem -> currently_held_in_hand = temp;
+
+}; // void CopyItemWithoutHeldProperty ( item* SourceItem , item* DestItem , int MakeSound ) 
 
 /* ----------------------------------------------------------------------
  * This function MOVES an item from the source location to the destination
@@ -789,6 +958,7 @@ ApplyItem( item* CurItem )
   // In some cases the item concerned is a one-shot-device like a health potion, which should
   // evaporize after the first application.  Therefore we delete the item from the inventory list.
   //
+
   DeleteItem ( CurItem );
 
 }; // void ApplyItemFromInventory( int ItemNum )
@@ -805,7 +975,7 @@ Inv_Pos_Is_Free( int x , int y )
   int item_height;
   
 
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
     {
       if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
       if ( Me[0].Inventory[ i ].currently_held_in_hand ) continue;
@@ -839,7 +1009,7 @@ GetInventoryItemAt ( int x , int y )
   int item_width;
   int item_height;
   
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY; i++ )
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i++ )
     {
       if ( Me[0].Inventory[ i ].type == ( -1 ) ) continue;
 
@@ -894,7 +1064,9 @@ CursorIsInWeaponRect( int x , int y )
 	  return( TRUE );
 	}
     }
+
   return( FALSE );
+
 }; // int CursorIsInWeaponRect( int x , int y )
 
 /* ----------------------------------------------------------------------
@@ -1161,124 +1333,6 @@ ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
 }; // int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y )
 
-/* ----------------------------------------------------------------------
- * For communication with the server, we can not use pointers to items.
- * That's a pity, cause it would be most convenient.  Instead we must 
- * think of something new and devise some unique item position codes.
- *
- * This item position code is a number that uniquely describes a position
- * in all the existing item lists.  It works as follows:
- *
- * 0: WEAPON_SLOT
- * 1: SHIELD_SLOT
- * 2: SPECIAL_SLOT
- * 3: AUX1_SLOT
- * 4: AUX2_SLOT
- * 5: DRIVE_SLOT
- * 6-5+MAX_ITEMS_IN_INVENTORY: inventory of player
- * ?? perhaps afterwards: items on the floor of the current level?  maybe not.
- *
- * ---------------------------------------------------------------------- */
-int
-GetPositionCode ( Item ItemPointer ) 
-{
-  int InvIndex;
-
-  if ( & ( Me [ 0 ] . weapon_item ) == ItemPointer )
-   {
-      return WEAPON_SLOT ;
-   }
- else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
-   {
-      return SHIELD_SLOT;
-   }
- else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
-   {
-      return SPECIAL_SLOT;
-   }
- else if ( & ( Me [ 0 ] . aux1_item ) == ItemPointer )
-   {
-      return AUX1_SLOT;
-   }
- else if ( & ( Me [ 0 ] . aux2_item ) == ItemPointer )
-   {
-      return AUX2_SLOT;
-   }
- else if ( & ( Me [ 0 ] . drive_item ) == ItemPointer )
-   {
-      return DRIVE_SLOT;
-   }
- else
-   {
-     for ( InvIndex = 0 ; InvIndex < MAX_ITEMS_IN_INVENTORY ; InvIndex ++ )
-       {
-	 if ( & ( Me [ 0 ] . Inventory [ InvIndex ] ) == ItemPointer )
-	   {
-	     return ( InvIndex + FIRST_INV_SLOT ) ;
-	   }
-       }
-   }
-
-  DebugPrintf ( 0 , "\nERROR! Unidentifiable pointer given to int GetPositionCode ( Item ). Terminating... " ) ;
-  Terminate ( ERR ) ;
-
- return ( 0 ) ;
-
-}; // int GetPositionCode ( Item ItemPointer ) 
-
-/* ----------------------------------------------------------------------
- * Same as GetPositionCode makes a position code out of a pointer, we now
- * want to it the other way around and find a pointer to a given position
- * code and player number.
- * ---------------------------------------------------------------------- */
-Item
-FindPointerToPositionCode ( int SlotCode , int PlayerNum ) 
-{
-
-  DebugPrintf ( 0 , "\nSlotCode received : %d . Player Number : %d. " , SlotCode , PlayerNum ) ;
-  switch ( SlotCode )
-    {
-    case WEAPON_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from weapon slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . weapon_item ) ) ;
-      break;
-    case SPECIAL_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . special_item ) ) ;
-      break;
-    case SHIELD_SLOT:
-      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
-      return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
-      break;
-    case AUX1_SLOT:
-      return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
-      break;
-    case AUX2_SLOT:
-      return ( & ( Me [ PlayerNum ] . aux2_item ) ) ;
-      break;
-    case DRIVE_SLOT:
-      return ( & ( Me [ PlayerNum ] . drive_item ) ) ;
-      break;
-    default:
-      if ( SlotCode < FIRST_INV_SLOT + MAX_ITEMS_IN_INVENTORY )
-	{
-	  DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's directly from inventory. " , 
-			Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] . type ) ;
-	  return ( & ( Me [ PlayerNum ] . Inventory [ SlotCode - FIRST_INV_SLOT ] ) ) ;
-	}
-      else
-	{
-	  DebugPrintf ( 0 , "\nERROR! Unidentifiable item slot code given to Item FindPointerToPositionCode ( int , int ). Terminating... " ) ;
-	  Terminate ( ERR ) ;
-	}
-   }
-
-  return NULL ;
-}; // Item FindPointerToPositionCode ( PositionCode , PlayerNum ) 
-
 /* ---------------------------------------------------------------------- 
  * This function should drop a given item to the floor. 
  *
@@ -1472,7 +1526,7 @@ GetFreeInventoryIndex( void )
   // --------------------
   // We find out the first free inventory index:
   //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
+  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos ++ )
     {
       if ( Me[0].Inventory[ InvPos ].type == (-1) ) 
 	{
@@ -1521,14 +1575,15 @@ DropHeldItemToInventory( void )
   item* DropItemPointer;
   int FreeInvIndex;
   int i;
-  item Temp;
+  int SourcePositionCode, DestPositionCode ;
+  // item Temp;
 
   FreeInvIndex = GetFreeInventoryIndex( );
 
   // --------------------
   // First we find out which item we want to drop into the inventory
   //
-  DropItemPointer = GetHeldItemPointer(  );
+  DropItemPointer = GetHeldItemPointer (  );
   if ( DropItemPointer == NULL )
     {
       DebugPrintf( 0 , "\nvoid DropHeldItemToInventory ( void ) : No item in inventory seems to be currently held in hand...");
@@ -1561,6 +1616,18 @@ DropHeldItemToInventory( void )
       //
       DropItemPointer->currently_held_in_hand = FALSE ;
       Item_Held_In_Hand = ( -1 );
+
+      //--------------------
+      // Now we inform the server of our performed move....
+      //
+      if ( ClientMode && ! ServerMode ) 
+	{
+	  SourcePositionCode = GetPositionCode ( DropItemPointer );
+	  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
+	  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+				       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+				       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+	}
       return;
     }
   else
@@ -1570,9 +1637,16 @@ DropHeldItemToInventory( void )
       // it can be placed there if we swap our dropitem with some other item.
       // Let's test this opportunity here.
       //
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY -1 ; i ++ )
 	{
-	  CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Temp ) , FALSE );
+	  //--------------------
+	  // So we make a copy of each of the items we remove in order to 
+	  // try to create new space for the drop item.  After that, we can
+	  // remove it.
+	  //
+	  // CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Temp ) , FALSE );
+	  //
+	  CopyItem ( & ( Me[0].Inventory[ i ] ) , & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ]  ) , FALSE );
 	  
 	  //--------------------
 	  // FIRST: Security check against segfaults:  It might happen that we 
@@ -1581,8 +1655,6 @@ DropHeldItemToInventory( void )
 	  // type and a SEGFAULT would result...
 	  //
 	  if ( & ( Me[0].Inventory[ i ] ) == DropItemPointer ) continue;
-
-
 
 	  Me[0].Inventory[ i ].type = ( -1 ) ;
 
@@ -1594,20 +1666,63 @@ DropHeldItemToInventory( void )
 	      // suddenly possible, then we make a held item on the floor out
 	      // of it.  The other removed item can stay removed, since it will
 	      // be overwritten anyway and a copy is now on the floor.
-	      Item_Held_In_Hand = ItemMap[ Temp.type ].picture_number;
-	      MakeHeldFloorItemOutOf( &( Temp ) );
+	      //
+	      Item_Held_In_Hand = ItemMap [ Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] . type ] . picture_number ;
+	      // THIS FAR EVERYTHING WORKS FINE!!!
+
+	      //--------------------
+	      // Now we inform the server of our performed move....
+	      //
+	      // WARNING!!  In this case here, the temporarily disabled item does not get
+	      // restored!!  Therefore we have to inform the server, that now there is an 
+	      // additional item move, namely the disabling of the one item.  This must
+	      // be done FIRST!
+	      //
+	      if ( ClientMode && ! ServerMode ) 
+		{
+
+		  SourcePositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ i ] ) ) ;
+		  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) ) ;
+		  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+		}
+
+
+	      MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] ) ) ;
+	      Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY - 1 ] . currently_held_in_hand = TRUE ;
 
 	      //--------------------
 	      // Otherwise we just need to add the new item for the inventory
 	      // grid as usual
-	      CopyItem( DropItemPointer , &( Me[0].Inventory[ FreeInvIndex ] ) , TRUE );
-	      DeleteItem( DropItemPointer );
-	      Me[0].Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
-	      Me[0].Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
-	      Me[0].Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
+	      //
+	      CopyItem ( DropItemPointer , & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) , TRUE );
+	      DeleteItem ( DropItemPointer );
+	      Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
+	      Me [ 0 ] . Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
+	      Me [ 0 ] . Inventory[ FreeInvIndex ].currently_held_in_hand = FALSE;
 
 	      // And of course the item is no longer held in hand as well
 	      DropItemPointer->currently_held_in_hand = FALSE ;
+
+	      //--------------------
+	      // Now we inform the server of our performed move....
+	      //
+	      // WARNING!!  In this case here, the temporarily disabled item does not get
+	      // restored!!  Therefore we have to inform the server, that now there is an 
+	      // additional item move, namely the disabling of the one item.  This must
+	      // be done FIRST!
+	      //
+	      if ( ClientMode && ! ServerMode ) 
+		{
+
+		  SourcePositionCode = GetPositionCode ( DropItemPointer );
+		  DestPositionCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ FreeInvIndex ] ) ) ;
+		  SendPlayerItemMoveToServer ( SourcePositionCode , DestPositionCode , 
+					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . x ,
+					       Me [ 0 ] . Inventory [ FreeInvIndex ] . inventory_position . y ) ;
+		}
+
 	      return;
 	    }
 
@@ -1617,7 +1732,8 @@ DropHeldItemToInventory( void )
 	  // item would fit into the inventory, then of course we should re-add the
 	  // removed item to the inventory, so that no other items get lost.
 	  //
-	  CopyItem ( & ( Temp ) , & ( Me[0].Inventory[ i ] ) , FALSE );
+	  CopyItem ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
+	  // CopyItemWithoutHeldProperty ( & ( Me [ 0 ] . Inventory [ MAX_ITEMS_IN_INVENTORY -1 ] ) , & ( Me[0].Inventory[ i ] ) , FALSE );
 
 	} // for: try all items if removal is the solution
     } // if not immediately place findable
@@ -1627,7 +1743,7 @@ DropHeldItemToInventory( void )
   // solution.  So the item cannot be put into inventory, even at best attampts
   // to do so.  What a pitty.
   
-  Item_Held_In_Hand = ItemMap[ GetHeldItemCode( ) ].picture_number;
+  Item_Held_In_Hand = ItemMap [ GetHeldItemCode ( ) ] . picture_number ;
 
 }; // void DropHeldItemToInventory( void )
 
@@ -2226,7 +2342,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 
 
       // find a free position in the inventory list
-      for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos++ )
+      for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
 	{
 	  if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
 	}
@@ -2268,7 +2384,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
       
     Inv_Loc_Found:
       
-      if ( ( InvPos == MAX_ITEMS_IN_INVENTORY ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
+      if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
 	{
 	  Me[0].TextVisibleTime = 0;
 	  Me[0].TextToBeDisplayed = "I can't carry any more.";

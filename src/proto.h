@@ -565,6 +565,7 @@ EXTERN void SendTextMessageToServer ( char* message );
 EXTERN void SendPlayerKeyboardEventToServer ( SDL_Event event ) ;
 EXTERN void SendPlayerMouseButtonEventToServer ( SDL_Event event ) ;
 EXTERN void SendPlayerItemDropToServer ( int PositionCode , float x , float y ) ;
+EXTERN void SendPlayerItemMoveToServer ( int SourcePositionCode , int DestPositionCode , int inv_x , int inv_y ) ;
 EXTERN void PrintServerStatusInformation ( void ) ;
 EXTERN void SendPeriodicServerMessagesToAllClients ( void );
 
