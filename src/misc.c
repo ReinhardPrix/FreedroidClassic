@@ -1116,166 +1116,164 @@ move_all_items_to_level ( int target_level )
 void
 Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int with_sound_and_fading )
 {
-  int curLevel = LNum;
-  int array_num = 0;
-  Level tmp;
-  int i;
-  static char entering_message[1000];
-
-  if ( with_sound_and_fading ) 
-  {
-      fade_out_using_gamma_ramp ();
-  }
-
-  if ( curLevel != Me [ PlayerNum ] . pos . z )
+    int curLevel = LNum;
+    int array_num = 0;
+    Level tmp;
+    int i;
+    static char entering_message[1000];
+    
+    if ( with_sound_and_fading ) 
+    {
+	fade_out_using_gamma_ramp ();
+    }
+    
+    if ( curLevel != Me [ PlayerNum ] . pos . z )
     {	
-      //--------------------
-      // In case a real level change has happend,
-      // we need to do a lot of work.  Therefore we start by activating
-      // the conservative frame time computation to avoid a 'jump'.
-      //
-      Activate_Conservative_Frame_Computation();
+	//--------------------
+	// In case a real level change has happend,
+	// we need to do a lot of work.  Therefore we start by activating
+	// the conservative frame time computation to avoid a 'jump'.
+	//
+	Activate_Conservative_Frame_Computation();
 
-      //--------------------
-      // I think this is for the unlikely case of misordered levels in 
-      // the ship file used for this game?!
-      //
-      while ((tmp = curShip.AllLevels[array_num]) != NULL)
+	//--------------------
+	// I think this is for the unlikely case of misordered levels in 
+	// the ship file used for this game?!
+	//
+	while ((tmp = curShip.AllLevels[array_num]) != NULL)
 	{
-	  if (tmp->levelnum == curLevel)
-	    break;
-	  else
-	    array_num++;
+	    if (tmp->levelnum == curLevel)
+		break;
+	    else
+		array_num++;
 	}
-
-      //--------------------
-      // We set a new CurLevel.  This is old and depreciated code,
-      // that should sooner or later be completely deactivated.
-      //
-      CurLevel = curShip . AllLevels [ array_num ] ;
-
-      ClearDetectedItemList ( PlayerNum );
-
-      Me [ PlayerNum ] . pos . x = X;
-      Me [ PlayerNum ] . pos . y = Y;
-      Me [ PlayerNum ] . pos . z = array_num; 
-
-      silently_unhold_all_items ();
-      move_all_items_to_level ( Me [ 0 ] . pos . z );
-      silently_unhold_all_items ();
-
-      //--------------------
-      // We add some sanity check against teleporting to non-allowed
-      // locations (like outside of map that is)
-      //
-      if ( ( LNum < 0 ) || ( Me [ PlayerNum ] . pos . x < 0 ) || ( Me [ PlayerNum ] . pos . y < 0 ) ||
-	   ( LNum >= curShip.num_levels ) || 
-	   ( Me [ PlayerNum ] . pos . x >= curShip.AllLevels[ array_num ] -> xlen ) ||
-	   ( Me [ PlayerNum ] . pos . y >= curShip.AllLevels[ array_num ] -> ylen ) )
+	
+	//--------------------
+	// We set a new CurLevel.  This is old and depreciated code,
+	// that should sooner or later be completely deactivated.
+	//
+	CurLevel = curShip . AllLevels [ array_num ] ;
+	
+	ClearDetectedItemList ( PlayerNum );
+	
+	Me [ PlayerNum ] . pos . x = X;
+	Me [ PlayerNum ] . pos . y = Y;
+	Me [ PlayerNum ] . pos . z = array_num; 
+	
+	silently_unhold_all_items ();
+	move_all_items_to_level ( Me [ 0 ] . pos . z );
+	silently_unhold_all_items ();
+	
+	//--------------------
+	// We add some sanity check against teleporting to non-allowed
+	// locations (like outside of map that is)
+	//
+	if ( ( LNum < 0 ) || ( Me [ PlayerNum ] . pos . x < 0 ) || ( Me [ PlayerNum ] . pos . y < 0 ) ||
+	     ( LNum >= curShip.num_levels ) || 
+	     ( Me [ PlayerNum ] . pos . x >= curShip.AllLevels[ array_num ] -> xlen ) ||
+	     ( Me [ PlayerNum ] . pos . y >= curShip.AllLevels[ array_num ] -> ylen ) )
 	{
-	  fprintf( stderr, "\n\ntarget location was: lev=%d x=%f y=%f.\n" , LNum , X , Y );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    fprintf( stderr, "\n\ntarget location was: lev=%d x=%f y=%f.\n" , LNum , X , Y );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 A Teleport was requested, but the location to teleport to lies outside\n\
 the bounds of this 'ship' which means the current collection of levels.\n\
 This indicates an error in the map system of Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_FATAL );
 	}
-
-      //--------------------
-      // Turn off all blasts and bullets from the old level
-      //
-      for (i = 0; i < MAXBLASTS; i++)
+	
+	//--------------------
+	// Turn off all blasts and bullets from the old level
+	//
+	for (i = 0; i < MAXBLASTS; i++)
 	{
-	  AllBlasts[i].type = OUT;
+	    AllBlasts[i].type = OUT;
 	}
-      for (i = 0; i < MAXBULLETS; i++)
+	for (i = 0; i < MAXBULLETS; i++)
 	{
-	  //--------------------
-	  // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
-	  // in this case, we need no bullet-explosions
-	  //
-	  DeleteBullet ( i , FALSE ); 
+	    //--------------------
+	    // Don't ever delete bullets any other way!!! SEGFAULTS might result!!!
+	    // in this case, we need no bullet-explosions
+	    //
+	    DeleteBullet ( i , FALSE ); 
+	}
+	
+	//--------------------
+	// Since we've moved to a new level, we might also say so, a message like
+	// "Entering ThisAndThat..." should appear in bold font on the screen.
+	// although only if a level name is set
+	//
+	if ( strcmp ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname, "" ) ) 
+	{
+	    strcpy ( entering_message , "Entering " );
+	    strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
+	    SetNewBigScreenMessage ( entering_message );
 	}
 
-      //--------------------
-      // Since we've moved to a new level, we might also say so, a message like
-      // "Entering ThisAndThat..." should appear in bold font on the screen.
-      // although only if a level name is set
+	//--------------------
+	// After the level has been changed, the automap texture needs to be cleared.
+	// However, if the Tux has been to (parts of this) level before, we should also
+	// restore the parts of the automap, that are already known to the Tux.
+	//
+	clear_automap_texture_completely (  );
+	insert_old_map_info_into_texture (  );
 
-      if (strcmp(curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname, "") ) {
-        strcpy ( entering_message , "Entering " );
-        strcat ( entering_message , curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname );
-        SetNewBigScreenMessage ( entering_message );
-      }
     }
-  else
+    else
     {
-      //--------------------
-      // If no real level change has occured, everything
-      // is simple and we just need to set the new coordinates, haha
-      //
-      Me [ PlayerNum ] . pos . x = X ;
-      Me [ PlayerNum ] . pos . y = Y ;
+	//--------------------
+	// If no real level change has occured, everything
+	// is simple and we just need to set the new coordinates, haha
+	//
+	Me [ PlayerNum ] . pos . x = X ;
+	Me [ PlayerNum ] . pos . y = Y ;
     }
-
-  //--------------------
-  // After the teleport, the mouse move target might be
-  // completely out of date.  Therefore we simply delete it.  In cases
-  // where the jump came from crossing a jump threshold (levels glued
-  // together) we can still restore the move target in that (the calling!)
-  // function.
-  //
-  Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
-  Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
-  Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
-  
-  if ( with_sound_and_fading ) 
-  {
-      teleport_arrival_sound ();
-  }
-
-  //--------------------
-  // Perhaps the player is visiting this level for the first time.  Then, the
-  // tux should make it's initial statement about the location, if there is one.
-  //
-  if ( ! Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] )
+    
+    //--------------------
+    // After the teleport, the mouse move target might be
+    // completely out of date.  Therefore we simply delete it.  In cases
+    // where the jump came from crossing a jump threshold (levels glued
+    // together) we can still restore the move target in that (the calling!)
+    // function.
+    //
+    Me [ PlayerNum ] . mouse_move_target . x = ( -1 ) ;
+    Me [ PlayerNum ] . mouse_move_target . y = ( -1 ) ;
+    Me [ PlayerNum ] . mouse_move_target . z = ( -1 ) ;
+    
+    if ( with_sound_and_fading ) 
     {
-      PlayLevelCommentSound ( CurLevel->levelnum );
-      Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
-      // if ( array_num != 0 ) ShuffleEnemys ( array_num );
-      // if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
-      ShuffleEnemys ( array_num );
+	teleport_arrival_sound ();
     }
-
-  /*
-  //--------------------
-  // Maybe the Tux hasn't *ever* been to this level before.  Then it's time
-  // to enable the respawning time countdown for this level.
-  //
-  if ( Me [ PlayerNum ] . time_since_last_visit_or_respawn [ CurLevel -> levelnum ] < 0 )
-    Me [ PlayerNum ] . time_since_last_visit_or_respawn [ CurLevel -> levelnum ] = 0 ;
-  */
-
-  if ( Shuffling ) ShuffleEnemys ( array_num );
-
-  // UnfadeLevel ();
-
-  SwitchBackgroundMusicTo( CurLevel->Background_Song_Name );
-
-  //--------------------
-  // Since we've mightily changed position now, we should clear the
-  // position history, so that noone get's confused...
-  //
-  InitInfluPositionHistory ( PlayerNum );
-
-  
-  if ( with_sound_and_fading ) 
-  {
-      AssembleCombatPicture ( SHOW_ITEMS ); 
-      our_SDL_flip_wrapper ( Screen );
-      fade_in_using_gamma_ramp ();
-  }
-
+    
+    //--------------------
+    // Perhaps the player is visiting this level for the first time.  Then, the
+    // tux should make it's initial statement about the location, if there is one.
+    //
+    if ( ! Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] )
+    {
+	PlayLevelCommentSound ( CurLevel->levelnum );
+	Me [ PlayerNum ] . HaveBeenToLevel [ CurLevel->levelnum ] = TRUE;
+	// if ( array_num != 0 ) ShuffleEnemys ( array_num );
+	// if ( ( LNum != 0 ) && ( Shuffling ) ) ShuffleEnemys ( array_num );
+	ShuffleEnemys ( array_num );
+    }
+    
+    if ( Shuffling ) ShuffleEnemys ( array_num );
+    
+    SwitchBackgroundMusicTo( CurLevel->Background_Song_Name );
+    
+    //--------------------
+    // Since we've mightily changed position now, we should clear the
+    // position history, so that noone get's confused...
+    //
+    InitInfluPositionHistory ( PlayerNum );
+    
+    
+    if ( with_sound_and_fading ) 
+    {
+	AssembleCombatPicture ( SHOW_ITEMS ); 
+	our_SDL_flip_wrapper ( Screen );
+	fade_in_using_gamma_ramp ();
+    }
 
 }; // void Teleport( ... ) 
 

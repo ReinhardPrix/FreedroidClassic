@@ -1826,6 +1826,9 @@ ResetGameConfigToDefaultValues ( void )
     
     GameConfig . enable_cheatkeys = FALSE ;
     GameConfig . transparency = FALSE ;
+
+    GameConfig . automap_manual_shift_x = 0 ;
+    GameConfig . automap_manual_shift_y = 0 ;
     
 }; // void Reset_GameConfig_To_Default_Values ( void )
 

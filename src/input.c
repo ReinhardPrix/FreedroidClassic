@@ -901,38 +901,51 @@ ReactToSpecialKeys(void)
   // Now we handle keyboard movement...
   //
   if ( LeftPressed() )
-    {
+  {
+      GameConfig . automap_manual_shift_x -= 10 ;
+
+	/*
       Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x - 4.5 ;
       if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
 	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
       Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
+	*/
     }
   if ( RightPressed() )
     {
+	GameConfig . automap_manual_shift_x += 10 ;
+	/*
       Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x + 4.5 ;
       if ( Me [ 0 ] . mouse_move_target . y == (-1) ) 
 	Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
       Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
+	*/
     }
   if ( UpPressed() )
     {
+	GameConfig . automap_manual_shift_y -= 10 ;
+/*
       Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y - 3.5 ; 
       if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
 	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
       Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
+*/
     }
   if ( DownPressed() )
     {
+	GameConfig . automap_manual_shift_y += 10 ;
+/*
       Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y + 3.5 ; 
       Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
       if ( Me [ 0 ] . mouse_move_target . x == (-1) ) 
 	Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
       Me [ 0 ] . mouse_move_target_is_enemy = (-1) ;
+*/
     }
-
+ 
 }; // void ReactToSpecialKeys(void)
 
 /* ----------------------------------------------------------------------

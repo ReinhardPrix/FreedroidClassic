@@ -171,7 +171,7 @@ EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_im
 EXTERN void blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) ;
 EXTERN void blit_special_background ( int background_code );
 EXTERN void flush_background_image_cache ( void );
-EXTERN void open_gl_check_error_status ( void );
+EXTERN void open_gl_check_error_status ( char* name_of_calling_function );
 
 // blocks.c 
 #undef EXTERN
@@ -235,6 +235,7 @@ EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN int do_graphical_number_selection_in_range ( int lower_range , int upper_range );
 EXTERN Uint8 GetAlphaComponent ( SDL_Surface* surface , int x , int y );
 EXTERN void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView );
+EXTERN void clear_automap_texture_completely ( void ) ;
 
 // saveloadgame.c 
 #undef EXTERN

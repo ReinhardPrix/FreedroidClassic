@@ -128,11 +128,17 @@ enum
   };
 
 /* ----------------------------------------------------------------------
+ *
  * This function should display the automap data, that was collected so
  * far, by the tux.
+ * 
+ * In this case the function only uses pixel operations with the screen.
+ * This is the method of choice when using SDL for graphics output.
+ * For the OpenGL case, there is a completely different function...
+ *
  * ---------------------------------------------------------------------- */
 void
-ShowAutomapData( void )
+show_automap_data_sdl ( void )
 {
   int x , y ;
 #define AUTOMAP_SQUARE_SIZE 3
@@ -292,7 +298,243 @@ ShowAutomapData( void )
 	}
     }
 
-}; // void ShowAutomapData( void )
+}; // void show_automap_data_sdl ( void )
+
+/* ----------------------------------------------------------------------
+ * This function updated the automap texture, such that all info from the
+ * current square is on the automap.
+ * ---------------------------------------------------------------------- */
+void
+automap_update_texture_for_square ( int x , int y ) 
+{
+    int i;
+    Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    obstacle* our_obstacle ;
+
+    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+    {
+	if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+	
+	our_obstacle = & ( automap_level -> obstacle_list [ automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ] ) ;
+	if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_RECTANGLE )
+	{
+	    //--------------------
+	    // Now it's time to edit the automap texture.
+	    //
+	    // DebugPrintf ( -4 , "\nType is: %d." , our_obstacle -> type );
+	    // DebugPrintf ( -4 , "\nwidth/height:   %d / %d." , 
+	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w ,
+	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h );
+	    // memset ( obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> pixels ,
+	    // 0 , obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w *
+	    // obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h );
+	    // 
+	    // glEnable ( GL_TEXTURE_2D );
+	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
+	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
+			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ,
+			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ) ,
+			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> w ,
+			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> h ,
+			      // GL_RGBA, 
+			      GL_BGRA, 
+			      GL_UNSIGNED_BYTE, 
+			      obstacle_map [ our_obstacle -> type ] . image . zoomed_out_surface -> pixels );
+    
+	    open_gl_check_error_status ( __FUNCTION__ );
+	}
+    }
+
+}; // void automap_update_texture_for_square ( int x , int y ) 
+
+/* ----------------------------------------------------------------------
+ * This function does the effect of a 'magic mapping scroll' in Nethack,
+ * i.e. all the map becomes visible on the automap.
+ * ---------------------------------------------------------------------- */
+void
+full_update_of_automap_texture ( void )
+{
+    int x , y ;
+#define AUTOMAP_SQUARE_SIZE 3
+#define AUTOMAP_COLOR 0x0FFFF
+    Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    //--------------------
+    // At first, we only blit the known data about the pure wall-type
+    // obstacles on this level.
+    //
+    // Currently we handle this via putpixel, but later there should be some
+    // small images instead of the pixels and some larger surface made out of
+    // the smaller pixels..., and then there should be OpenGL-textures to 
+    // show the larger surface, updated again and again.  Well, this will
+    // have to wait for the 0.9.10 release to be implemented.
+    //
+    for ( y = 0 ; y < automap_level->ylen ; y ++ )
+    {
+	for ( x = 0 ; x < automap_level->xlen ; x ++ )
+	{
+	    automap_update_texture_for_square ( x , y ) ;
+	}
+    }
+    
+}; // void full_update_of_automap_texture ( void )
+
+/* ----------------------------------------------------------------------
+ * When an old level is re-visited, the automap texture must be cleared
+ * because it has still all the info from another level.  But after that
+ * the map is fresh.  Still there should be some info, since the Tux has
+ * been here before.  So we restore the info, using the data from the
+ * classical SDL automap concerning which squares have been seen before.
+ * ---------------------------------------------------------------------- */
+void
+insert_old_map_info_into_texture ( void )
+{
+    int x , y ;
+#define AUTOMAP_SQUARE_SIZE 3
+#define AUTOMAP_COLOR 0x0FFFF
+    Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    //--------------------
+    // At first, we only blit the known data about the pure wall-type
+    // obstacles on this level.
+    //
+    // Currently we handle this via putpixel, but later there should be some
+    // small images instead of the pixels and some larger surface made out of
+    // the smaller pixels..., and then there should be OpenGL-textures to 
+    // show the larger surface, updated again and again.  Well, this will
+    // have to wait for the 0.9.10 release to be implemented.
+    //
+    for ( y = 0 ; y < automap_level->ylen ; y ++ )
+    {
+	for ( x = 0 ; x < automap_level->xlen ; x ++ )
+	{
+	    if ( Me [ 0 ] . Automap [ Me [ 0 ] . pos . z ] [ y ] [ x ] & SQUARE_SEEN_AT_ALL_BIT ) 
+		automap_update_texture_for_square ( x , y ) ;
+	}
+    }
+
+}; // void insert_old_map_info_into_texture ( void )
+
+/* ----------------------------------------------------------------------
+ * This function does the effect of a 'magic mapping scroll' in Nethack,
+ * i.e. all the map becomes visible on the automap.
+ * ---------------------------------------------------------------------- */
+void
+local_update_of_automap_texture ( void )
+{
+    int x , y , start_x , start_y , end_x , end_y ;
+#define AUTOMAP_SQUARE_SIZE 3
+#define AUTOMAP_COLOR 0x0FFFF
+    Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+
+    start_x = Me [ 0 ] . pos . x - 7 ; 
+    end_x = Me [ 0 ] . pos . x + 7 ; 
+    start_y = Me [ 0 ] . pos . y - 7 ; 
+    end_y = Me [ 0 ] . pos . y + 7 ; 
+    
+    if ( start_x < 0 ) start_x = 0 ; 
+    if ( end_x >= automap_level->xlen ) end_x = automap_level->xlen-1 ;
+    if ( start_y < 0 ) start_y = 0 ; 
+    if ( end_y >= automap_level->ylen ) end_y = automap_level->ylen-1 ;
+    
+    //--------------------
+    // Now we do the actual checking for visible wall components.
+    //
+    for ( y = start_y ; y < end_y ; y ++ )
+    {
+	for ( x = start_x ; x < end_x ; x ++ )
+	{
+	    automap_update_texture_for_square ( x , y ) ;
+	}
+    }
+    
+}; // void local_update_of_automap_texture ( void )
+
+
+/* ----------------------------------------------------------------------
+ *
+ * This function should display the automap data, that was collected so
+ * far, by the tux.
+ * 
+ * In this case the function only uses pixel operations with the screen.
+ * This is the method of choice when using SDL for graphics output.
+ * For the OpenGL case, there is a completely different function...
+ *
+ * ---------------------------------------------------------------------- */
+void
+show_automap_data_ogl ( void )
+{
+    iso_image local_iso_image;
+    static iso_image tux_on_the_map_iso_image = UNLOADED_ISO_IMAGE ;
+    char *fpath;
+
+    //--------------------
+    // Of course we only display the automap on demand of the user...
+    //
+    if ( GameConfig . Automap_Visible == FALSE ) return;
+    
+    //--------------------
+    // Also if there is no map-maker present in inventory, then we need not
+    // do a thing here...
+    //
+    // if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+    
+    //--------------------
+    // Updating the automap is a bit costly.  It should only be done now
+    // and then, i.e. say once a second or the like... and of course only
+    // the immediate surroundings of the Tux and not the full map should
+    // be updated, unless some 'magic mapping scroll' has been used...
+    //
+    // full_update_of_automap_texture ();
+    //
+    local_update_of_automap_texture ();
+
+    //--------------------
+    // Now we blit the current automap texture to the screen.  We use standard
+    // texture blitting code for this, so we need to embed the automap texture
+    // in a surrounting 'iso_image', but that shouldn't be costly or anything...
+    //
+    local_iso_image . texture = automap_texture ;
+    local_iso_image . texture_width = AUTOMAP_TEXTURE_WIDTH ;
+    local_iso_image . texture_height = AUTOMAP_TEXTURE_HEIGHT ;
+    local_iso_image . original_image_width = AUTOMAP_TEXTURE_WIDTH ;
+    local_iso_image . original_image_height = AUTOMAP_TEXTURE_HEIGHT ;
+    blit_open_gl_texture_to_screen_position ( local_iso_image , 
+					      - ( AUTOMAP_TEXTURE_WIDTH / 2 ) + SCREEN_WIDTH / 2 -
+					      GameConfig . automap_manual_shift_x -
+					      ( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) , 
+					      - ( AUTOMAP_TEXTURE_HEIGHT / 2 ) + SCREEN_HEIGHT / 2 -
+					      GameConfig . automap_manual_shift_y -
+					      ( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ,
+					      TRUE ) ;
+
+    //--------------------
+    // Now that the map has been blitted, it's time to add some icon for the
+    // current location of the Tux on that map too...
+    // 
+    //--------------------
+    // First we make sure that the icon is available...
+    //
+    if ( ! tux_on_the_map_iso_image . texture_has_been_created )
+    {
+	DebugPrintf ( -4 , "\nLoading icon for Tux on the automap." );
+	fpath = find_file ( "tux_icon_on_automap.png" , GRAPHICS_DIR , FALSE );
+	get_iso_image_from_file_and_path ( fpath , & tux_on_the_map_iso_image , TRUE ) ;
+	make_texture_out_of_surface ( & ( tux_on_the_map_iso_image ) ) ;
+    }
+    //--------------------
+    // Now we can blit the icon on the automap too
+    //
+    blit_open_gl_texture_to_screen_position ( tux_on_the_map_iso_image , 
+					      SCREEN_WIDTH / 2 -
+					      GameConfig . automap_manual_shift_x ,
+					      // + ( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * ( iso_floor_tile_width / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) , 
+					      - SCREEN_HEIGHT / 2 -
+					      GameConfig . automap_manual_shift_y ,
+					      // + ( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * ( iso_floor_tile_height / ( 2.0 * FIXED_ZOOM_OUT_FACT ) ) ,
+					      TRUE ) ;
+
+}; // void show_automap_data_ogl ( void )
 
 /* ----------------------------------------------------------------------
  * This function should display the currently assigned/unassigned mission
@@ -1938,8 +2180,11 @@ AssembleCombatPicture (int mask)
     }
     
     show_obstacle_labels ( mask );
-    
-    ShowAutomapData();
+
+    if ( ! use_open_gl )
+	show_automap_data_sdl ( ) ;
+    else
+	show_automap_data_ogl ( ) ;
     
     ShowCombatScreenTexts ( mask );
     

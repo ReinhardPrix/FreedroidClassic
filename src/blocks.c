@@ -54,7 +54,7 @@ make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
 {
   if ( our_iso_image -> zoomed_out_surface == NULL )
     {
-      our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / FIXED_ZOOM_OUT_FACT ) ,
+	our_iso_image -> zoomed_out_surface = zoomSurface ( our_iso_image -> surface , ( 1.0 / FIXED_ZOOM_OUT_FACT ) ,
 							  ( 1.0 / FIXED_ZOOM_OUT_FACT ) , FALSE );
     }
 }; // void make_sure_zoomed_surface_is_there ( iso_image* our_iso_image )
@@ -1032,7 +1032,6 @@ Freedroid received a rotation model number that does not exist!",
   // of course we'll use it and not bother with anything else...
   //
   if ( ( ModelNr == 1 ) || ( ModelNr == 3 ) || ( ModelNr == 4 ) || ( ModelNr == 6 ) || ( ModelNr == 14 ) || ( ModelNr == 24 ) || ( ModelNr == 25 ) || ( ModelNr == 26 ) || ( ModelNr == 27 ) || ( ModelNr == 31 ) )
-  // if ( ( ModelNr == 6 ) )
   {
       grab_enemy_images_from_archive ( ModelNr );
       return ;
@@ -3537,60 +3536,64 @@ init_obstacle_data( void )
 void
 load_all_obstacles ( void )
 {
-  int i;
-  char *fpath;
-  char ConstructedFileName[2000];
-
-  init_obstacle_data();
-
-  for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
+    int i;
+    char *fpath;
+    char ConstructedFileName[2000];
+    
+    init_obstacle_data();
+    
+    for ( i = 0 ; i < NUMBER_OF_OBSTACLE_TYPES ; i ++ )
     {
-      //--------------------
-      // At first we construct the file name of the single tile file we are about to load...
-      //
-      strcpy ( ConstructedFileName , "obstacles/" );
-      strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
-      fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
-
-      if ( use_open_gl )
+	//--------------------
+	// At first we construct the file name of the single tile file we are about to load...
+	//
+	strcpy ( ConstructedFileName , "obstacles/" );
+	strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
+	fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+	
+	if ( use_open_gl )
 	{
-	  get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) , TRUE ); 
-	  make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
+	    get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) , TRUE ); 
+	    // obstacle_map [ i ] . automap_version = asdf
+	    make_sure_zoomed_surface_is_there ( & ( obstacle_map [ i ] . image ) ); 
+
+	    make_texture_out_of_surface ( & ( obstacle_map [ i ] . image ) ) ;
 	}
-      else
-	  get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
+	else
+	    get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
 
     }
 
 }; // void load_all_obstacles ( void )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function loads the graphics for one floor tile type (given as a
+ * parameter) into memory and also makes textures and the like in case
+ * of OpenGL as selected graphics output method.
  * ---------------------------------------------------------------------- */
 void
 load_one_isometric_floor_tile ( int tile_type ) 
 {
-  char *fpath;
-  char ConstructedFileName[2000];
-
-  //--------------------
-  // At first we construct the file name of the single tile file we are about to load...
-  //
-  strcpy ( ConstructedFileName , "floor_tiles/" );
-  strcat ( ConstructedFileName , floor_tile_filenames [ tile_type ] );
-  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
-
-  if ( use_open_gl )
+    char *fpath;
+    char ConstructedFileName[2000];
+    
+    //--------------------
+    // At first we construct the file name of the single tile file we are about to load...
+    //
+    strcpy ( ConstructedFileName , "floor_tiles/" );
+    strcat ( ConstructedFileName , floor_tile_filenames [ tile_type ] );
+    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+    
+    if ( use_open_gl )
     {
-      get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) , TRUE ) ;
-      make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
+	get_iso_image_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) , TRUE ) ;
+	make_texture_out_of_surface ( & ( floor_iso_images [ tile_type ] ) ) ;
     }
-  else
+    else
     {
-      get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
+	get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( floor_iso_images [ tile_type ] ) ) ;
     }
-
+    
 }; // void load_one_isometric_floor_tile ( int tile_type ) 
 
 /* ----------------------------------------------------------------------

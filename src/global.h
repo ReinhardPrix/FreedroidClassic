@@ -202,6 +202,11 @@ EXTERN int global_check_for_light_only_collisions_flag;
 EXTERN iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
 EXTERN SDL_Rect InventoryRect;
 EXTERN char previous_part_strings [ ALL_PART_GROUPS ] [ 200 ] ;
+#ifdef HAVE_LIBGL
+EXTERN GLuint *automap_texture;  // this is to store an open_gl texture...
+#define AUTOMAP_TEXTURE_WIDTH 2048
+#define AUTOMAP_TEXTURE_HEIGHT 1024
+#endif
 
 #undef EXTERN
 #ifdef _sound_c

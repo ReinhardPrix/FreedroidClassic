@@ -697,113 +697,116 @@ This bug can be resolved by simply raising a contant by one, but it needs to be 
 void
 CollectAutomapData ( void )
 {
-  int x , y ;
-  int start_x, start_y, end_x, end_y;
-  gps ObjPos;
-  static int TimePassed;
-  Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i;
-  Obstacle our_obstacle;
-  int level = Me [ 0 ] . pos . z ;
-
-  ObjPos . z = Me [ 0 ] . pos . z ;
-
-  //--------------------
-  // Checking the whole map for passablility will surely take a lot
-  // of computation.  Therefore we only do this once every second of
-  // real time.
-  //
-  if ( TimePassed == (int) Me[0].MissionTimeElapsed ) return;
-  TimePassed = (int) Me[0].MissionTimeElapsed;
-
-  // DebugPrintf ( -3 , "\nCollecting Automap data... " );
-
-  //--------------------
-  // Also if there is no map-maker present in inventory, then we need not
-  // do a thing here...
-  //
-  if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
-
-  //--------------------
-  // Earlier we had
-  //
-  // start_x = 0 ; start_y = 0 ; end_x = automap_level->xlen ; end_y = automap_level->ylen ;
-  //
-  // when maximal automap was generated.  Now we only add to the automap what really is on screen...
-  //
-  start_x = Me [ 0 ] . pos . x - 7 ; 
-  end_x = Me [ 0 ] . pos . x + 7 ; 
-  start_y = Me [ 0 ] . pos . y - 7 ; 
-  end_y = Me [ 0 ] . pos . y + 7 ; 
-
-  if ( start_x < 0 ) start_x = 0 ; 
-  if ( end_x >= automap_level->xlen ) end_x = automap_level->xlen-1 ;
-  if ( start_y < 0 ) start_y = 0 ; 
-  if ( end_y >= automap_level->ylen ) end_y = automap_level->ylen-1 ;
-
-  //--------------------
-  // Now we do the actual checking for visible wall components.
-  //
-  for ( y = start_y ; y < end_y ; y ++ )
+    int x , y ;
+    int start_x, start_y, end_x, end_y;
+    gps ObjPos;
+    static int TimePassed;
+    Level automap_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+    int i;
+    Obstacle our_obstacle;
+    int level = Me [ 0 ] . pos . z ;
+    
+    ObjPos . z = Me [ 0 ] . pos . z ;
+    
+    //--------------------
+    // Checking the whole map for passablility will surely take a lot
+    // of computation.  Therefore we only do this once every second of
+    // real time.
+    //
+    if ( TimePassed == (int) Me[0].MissionTimeElapsed ) return;
+    TimePassed = (int) Me[0].MissionTimeElapsed;
+    
+    // DebugPrintf ( -3 , "\nCollecting Automap data... " );
+    
+    //--------------------
+    // Also if there is no map-maker present in inventory, then we need not
+    // do a thing here...
+    //
+    // if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+    
+    //--------------------
+    // Earlier we had
+    //
+    // start_x = 0 ; start_y = 0 ; end_x = automap_level->xlen ; end_y = automap_level->ylen ;
+    //
+    // when maximal automap was generated.  Now we only add to the automap what really is on screen...
+    //
+    start_x = Me [ 0 ] . pos . x - 7 ; 
+    end_x = Me [ 0 ] . pos . x + 7 ; 
+    start_y = Me [ 0 ] . pos . y - 7 ; 
+    end_y = Me [ 0 ] . pos . y + 7 ; 
+    
+    if ( start_x < 0 ) start_x = 0 ; 
+    if ( end_x >= automap_level->xlen ) end_x = automap_level->xlen-1 ;
+    if ( start_y < 0 ) start_y = 0 ; 
+    if ( end_y >= automap_level->ylen ) end_y = automap_level->ylen-1 ;
+    
+    //--------------------
+    // Now we do the actual checking for visible wall components.
+    //
+    for ( y = start_y ; y < end_y ; y ++ )
     {
-      for ( x = start_x ; x < end_x ; x ++ )
+	for ( x = start_x ; x < end_x ; x ++ )
 	{
-
-	  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+	    
+	    for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
 	    {
-	      if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
-
-	      our_obstacle = & ( automap_level -> obstacle_list [ automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ] ) ;
-	      if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_RECTANGLE )
+		if ( automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) ) continue;
+		
+		our_obstacle = & ( automap_level -> obstacle_list [ automap_level -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ] ) ;
+		if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_RECTANGLE )
 		{
-		  Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | RIGHT_WALL_BIT ;
-		  Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | LEFT_WALL_BIT ;
+		    Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | RIGHT_WALL_BIT ;
+		    Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | LEFT_WALL_BIT ;
 		}
 	    }
-	  /*
-	  if ( IsWallBlock( automap_level->map[y][x]  . floor_value ) ) 
-	    {
+
+	    Me [ 0 ] . Automap [ level ] [ y ] [ x ] = Me [ 0 ] . Automap [ level ] [ y ] [ x ] | SQUARE_SEEN_AT_ALL_BIT ;
+
+	    /*
+	      if ( IsWallBlock( automap_level->map[y][x]  . floor_value ) ) 
+	      {
 	      //--------------------
 	      // First we check, if there are some right sides of walls visible
 	      //
 	      ObjPos.x = x + 0.75;
 	      ObjPos.y = y + 0;
 	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
+	      {
 		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | RIGHT_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some left sides of walls visible
-	      //
-	      ObjPos.x = x - 0.75;
-	      ObjPos.y = y + 0;
-	      if ( IsVisible ( &ObjPos , 0 ) )
-		{
+		  }
+		  //--------------------
+		  // Now we check, if there are some left sides of walls visible
+		  //
+		  ObjPos.x = x - 0.75;
+		  ObjPos.y = y + 0;
+		  if ( IsVisible ( &ObjPos , 0 ) )
+		  {
 		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | LEFT_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some southern sides of walls visible
-	      //
-	      ObjPos.x = x + 0;
-	      ObjPos.y = y + 0.75;
-	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
+		  }
+		  //--------------------
+		  // Now we check, if there are some southern sides of walls visible
+		  //
+		  ObjPos.x = x + 0;
+		  ObjPos.y = y + 0.75;
+		  if ( IsVisible ( &ObjPos , 0 ) ) 
+		  {
 		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | DOWN_WALL_BIT ;
-		}
-	      //--------------------
-	      // Now we check, if there are some northern sides of walls visible
-	      //
-	      ObjPos.x = x + 0.0 ;
-	      ObjPos.y = y - 0.75 ;
-	      if ( IsVisible ( &ObjPos , 0 ) ) 
-		{
+		  }
+		  //--------------------
+		  // Now we check, if there are some northern sides of walls visible
+		  //
+		  ObjPos.x = x + 0.0 ;
+		  ObjPos.y = y - 0.75 ;
+		  if ( IsVisible ( &ObjPos , 0 ) ) 
+		  {
 		  Me [ 0 ] . Automap[level][y][x] = Me [ 0 ] . Automap[level][y][x] | UP_WALL_BIT ;
-		}
-	    }
-	  */
+		  }
+		  }
+	    */
 	}
     }
-
+    
 }; // void CollectAutomapData ( void )
 
 /* ----------------------------------------------------------------------

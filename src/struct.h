@@ -114,6 +114,8 @@ typedef struct
     float delay_for_big_screen_messages ;
     int enable_cheatkeys;
     int transparency ;
+    int automap_manual_shift_x ;
+    int automap_manual_shift_y ;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -285,6 +287,7 @@ iso_image, *Iso_image;
 typedef struct
 {
     iso_image image;
+    SDL_Surface automap_version;
     //--------------------
     // Some obstacles will block the Tux from walking through them.
     // Currently only rectangles are supported block areas.  The width

@@ -1463,7 +1463,7 @@ set_video_mode_for_open_gl ( void )
       Terminate(ERR);
     }
   
-  //  open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( __FUNCTION__ );
   
   //--------------------
   // We need OpenGL double buffering, so we request it.  If we
@@ -1478,7 +1478,7 @@ Unable to set SDL_GL_DOUBLEBUFFER attribute!",
 				 PLEASE_INFORM, IS_FATAL );
     }
   
-  //  open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( __FUNCTION__ );
 
   //--------------------
   // Now we start setting up the proper OpenGL flags to pass to the
@@ -1553,7 +1553,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
     }
   else
     {
-      //      open_gl_check_error_status ( );
+      //      open_gl_check_error_status ( __FUNCTION__ );
       SDL_GL_GetAttribute( SDL_GL_BUFFER_SIZE , & buffer_size);
       SDL_GL_GetAttribute( SDL_GL_RED_SIZE , & red_size);
       SDL_GL_GetAttribute( SDL_GL_GREEN_SIZE , & green_size);
@@ -1564,7 +1564,7 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 	       buffer_size , red_size, green_size, blue_size, alpha_size, depth_size );
     }
   
-  //  open_gl_check_error_status ( );
+  //  open_gl_check_error_status ( __FUNCTION__ );
   
   //--------------------
   // Since we want to use openGl, it might be good to check the OpenGL vendor string
@@ -1572,18 +1572,18 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
   //
   fprintf( stderr , "\n-OpenGL-------------------------------------------------------" );
   fprintf( stderr , "\nVendor     : %s", glGetString( GL_VENDOR ) );
-  open_gl_check_error_status ( );
+  open_gl_check_error_status ( __FUNCTION__ );
   fprintf( stderr , "\nRenderer   : %s", glGetString( GL_RENDERER ) );
-  open_gl_check_error_status ( );
+  open_gl_check_error_status ( __FUNCTION__ );
   fprintf( stderr , "\nVersion    : %s", glGetString( GL_VERSION ) );
-  open_gl_check_error_status ( );
+  open_gl_check_error_status ( __FUNCTION__ );
   // fprintf( stderr , "\nExtentions : %s", glGetString( GL_EXTENSIONS ) );
-  open_gl_check_error_status ( );
+  open_gl_check_error_status ( __FUNCTION__ );
   fprintf( stderr , "\n\n" );
   
   initialzize_our_default_open_gl_parameters ( );
   
-  open_gl_check_error_status ( );
+  open_gl_check_error_status ( __FUNCTION__ );
   
   //--------------------
   // Maybe resize the window to standard size?
@@ -1606,6 +1606,149 @@ SDL reported, that the video mode mentioned above is not supported UNDER ANY BIT
 #endif // HAVE_LIBGL
 
 }; // void set_video_mode_for_open_gl ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ * When OpenGL is used for graphics output, we use one single texture for 
+ * the automap.  This texture will be updated and modified again and
+ * again.  But this function just makes sure, that the texture has been
+ * created at all, and it also checks against double-creation and such...
+ *
+ * ---------------------------------------------------------------------- */
+void
+set_up_texture_for_automap ( void )
+{
+#ifdef HAVE_LIBGL
+
+    static int texture_is_set_up_already = FALSE ;
+    SDL_Surface* pure_surface ;
+
+    //--------------------
+    // In the non-open-gl case, this function shouldn't be called ever....
+    //
+    if ( ! use_open_gl ) return;
+
+    //--------------------
+    // Some protection against creating this texture twice...
+    //
+    if ( texture_is_set_up_already ) return ;
+    texture_is_set_up_already = TRUE ;
+
+    //--------------------
+    // We create an SDL surface, so that we can make the texture for the
+    // automap from it...
+    //
+    pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+
+    //--------------------
+    // Having prepared the raw image it's now time to create the real
+    // textures.
+    //
+    glPixelStorei( GL_UNPACK_ALIGNMENT,1 );
+
+    //--------------------
+    // We must not call glGenTextures more than once in all of Freedroid,
+    // according to the nehe docu and also confirmed instances of textures
+    // getting overwritten.  So all the gentexture stuff is now in the
+    // initialzize_our_default_open_gl_parameters function and we'll use stuff from there.
+    //
+    // glGenTextures( 1, & our_image -> texture );
+    //
+    automap_texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
+    next_texture_index_to_use ++ ;
+
+    if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
+    {
+	GiveStandardErrorMessage ( __FUNCTION__  , 
+				   "Ran out of initialized texture positions to use for new textures.",
+				   PLEASE_INFORM, IS_FATAL );
+    }
+    else
+    {
+	DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+    }
+    
+    //--------------------
+    // Typical Texture Generation Using Data From The Bitmap 
+    //
+    glBindTexture( GL_TEXTURE_2D, * ( automap_texture ) );
+  
+    //--------------------
+    // Setting texture parameters like in NeHe tutorial...
+    //
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+
+    //--------------------
+    // We will use the 'GL_REPLACE' texturing environment or get 
+    // unusable (and slow) results.
+    //
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+    glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+
+    // Generate The Texture 
+    glTexImage2D( GL_TEXTURE_2D, 0, 4, pure_surface -> w,
+		  pure_surface -> h, 0, GL_BGRA,
+		  GL_UNSIGNED_BYTE, pure_surface -> pixels );
+
+    SDL_FreeSurface ( pure_surface );
+
+    DebugPrintf ( -4 , "\nset_up_texture_for_automap ( ): Texture for AUTOMAP has been set up..." );
+
+#endif
+
+}; // void set_up_texture_for_automap ( void )
+
+/* ----------------------------------------------------------------------
+ *
+ * When OpenGL is used for graphics output, we use one single texture for 
+ * the automap.  This texture will be updated and modified again and
+ * again.  But this function just makes sure, that the texture has been
+ * created at all, and it also checks against double-creation and such...
+ *
+ * ---------------------------------------------------------------------- */
+void
+clear_automap_texture_completely ( void )
+{
+#ifdef HAVE_LIBGL
+
+    static int empty_texture_is_available = FALSE ;
+    static SDL_Surface* pure_surface ;
+    
+    //--------------------
+    // In the non-open-gl case, this function shouldn't be called ever....
+    //
+    if ( ! use_open_gl ) return;
+
+    //--------------------
+    // Some protection against creating this texture twice...
+    //
+    if ( ! empty_texture_is_available ) 
+    {
+	empty_texture_is_available = TRUE ;
+	pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+    }
+
+    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
+    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
+		      0 , 
+		      0 , 
+		      AUTOMAP_TEXTURE_WIDTH ,
+		      AUTOMAP_TEXTURE_HEIGHT , 
+		      // GL_RGBA, 
+		      GL_BGRA, 
+		      GL_UNSIGNED_BYTE, 
+		      pure_surface -> pixels );
+    
+    open_gl_check_error_status ( __FUNCTION__ );
+
+    DebugPrintf ( -4 , "\nclear_automap_texture_completely( ): Texture for AUTOMAP has been cleared..." );
+
+#endif
+
+}; // void clear_automap_texture_completely ( void )
 
 /* -----------------------------------------------------------------
  * This funciton initialises the video display and opens up a 
@@ -1718,6 +1861,9 @@ InitVideo (void)
   our_SDL_flip_wrapper ( Screen ) ;
 
   ShowStartupPercentage ( 1 ) ; 
+
+  if ( use_open_gl )
+      set_up_texture_for_automap ( );
 
   SDL_SetGamma( 1 , 1 , 1 );
   GameConfig.Current_Gamma_Correction=1;

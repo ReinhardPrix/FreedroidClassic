@@ -698,51 +698,58 @@ hmmm... this does not seem like a pre-padded OpenGL-prepared surface.  Breaking 
  * if the errors are really severe.
  * ---------------------------------------------------------------------- */
 void
-open_gl_check_error_status ( void )
+open_gl_check_error_status ( char* name_of_calling_function  )
 {
 
-  return;
+    // return;
 #ifdef HAVE_LIBGL
-  
-  switch ( glGetError( ) )
+    
+    switch ( glGetError( ) )
     {
-    case GL_NO_ERROR:
-      //--------------------
-      // All is well.  No messages need to be generated...
-      break;
-    case GL_INVALID_ENUM:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
-				 
-      break;
-    case GL_INVALID_VALUE:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
-
-      break;
-    case GL_INVALID_OPERATION:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
-      break;
-    case GL_STACK_OVERFLOW:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_STACK_OVERFLOW received!", PLEASE_INFORM, IS_FATAL );
-      break;
-    case GL_STACK_UNDERFLOW:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_STACK_UNDERFLOW received!", PLEASE_INFORM, IS_FATAL );
-      break;
-    case GL_OUT_OF_MEMORY:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
-      break;
-    default:
-      GiveStandardErrorMessage ( __FUNCTION__  , 
-"Unhandled error code received!", PLEASE_INFORM, IS_FATAL );
-      break;
+	case GL_NO_ERROR:
+	    //--------------------
+	    // All is well.  No messages need to be generated...
+	    break;
+	case GL_INVALID_ENUM:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_INVALID_ENUM received!", PLEASE_INFORM, IS_FATAL );
+	    
+	    break;
+	case GL_INVALID_VALUE:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_INVALID_VALUE received!", PLEASE_INFORM, IS_FATAL );
+	    
+	    break;
+	case GL_INVALID_OPERATION:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_INVALID_OPERATION received!", PLEASE_INFORM, IS_FATAL );
+	    break;
+	case GL_STACK_OVERFLOW:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_STACK_OVERFLOW received!", PLEASE_INFORM, IS_FATAL );
+	    break;
+	case GL_STACK_UNDERFLOW:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_STACK_UNDERFLOW received!", PLEASE_INFORM, IS_FATAL );
+	    break;
+	case GL_OUT_OF_MEMORY:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Error code GL_OUT_OF_MEMORY received!", PLEASE_INFORM, IS_FATAL );
+	    break;
+	default:
+	    fprintf ( stderr , "\ncalling function was: %s." , name_of_calling_function );
+	    GiveStandardErrorMessage ( __FUNCTION__  , 
+				       "Unhandled error code received!", PLEASE_INFORM, IS_FATAL );
+	    break;
     }
 #endif
-};
+}; // void open_gl_check_error_status ( char* name_of_calling_function  )
 
 void clear_screen() {
 #ifdef HAVE_LIBGL
@@ -1097,74 +1104,74 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
 
 #ifdef HAVE_LIBGL
 
-  SDL_Rect target_rectangle;
-  float texture_start_y;
-  float texture_end_y;
-  int image_start_x;
-  int image_end_x;
-  int image_start_y;
-  int image_end_y;
-
-  if ( set_gl_parameters )
+    SDL_Rect target_rectangle;
+    float texture_start_y;
+    float texture_end_y;
+    int image_start_x;
+    int image_end_x;
+    int image_start_y;
+    int image_end_y;
+    
+    if ( set_gl_parameters )
     {
-      //--------------------
-      // At first we need to enable texture mapping for all of the following.
-      // Without that, we'd just get (faster, but plain white) rectangles.
-      //
-      glEnable( GL_TEXTURE_2D );
-      
-      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
-      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
-      // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-      glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+	//--------------------
+	// At first we need to enable texture mapping for all of the following.
+	// Without that, we'd just get (faster, but plain white) rectangles.
+	//
+	glEnable( GL_TEXTURE_2D );
+	
+	// glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
+	// glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+	// glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+	glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
 
-      glEnable ( GL_BLEND );
-      glDisable ( GL_ALPHA_TEST );
+	glEnable ( GL_BLEND );
+	glDisable ( GL_ALPHA_TEST );
     }
+    
+    //--------------------
+    // Now of course we need to find out the proper target position.
+    //
+    target_rectangle . x = x ;
+    target_rectangle . y = y ;
+    
+    //--------------------
+    // Now we can begin to draw the actual textured rectangle.
+    //
+    image_start_x = target_rectangle . x ;
+    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
+    image_start_y = target_rectangle . y ;
+    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
+    
+    if ( image_start_x > 640 ) return ;
+    if ( image_end_x < 0 ) return ;
+    if ( image_start_y > 480 ) return;
+    if ( image_end_y < 0 ) return;
 
-  //--------------------
-  // Now of course we need to find out the proper target position.
-  //
-  target_rectangle . x = x ;
-  target_rectangle . y = y ;
+    // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+    
+    texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
+    texture_end_y = 0.0 ;
 
-  //--------------------
-  // Now we can begin to draw the actual textured rectangle.
-  //
-  image_start_x = target_rectangle . x ;
-  image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
-  image_start_y = target_rectangle . y ;
-  image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
-  
-  if ( image_start_x > 640 ) return ;
-  if ( image_end_x < 0 ) return ;
-  if ( image_start_y > 480 ) return;
-  if ( image_end_y < 0 ) return;
+    // glColor3f( 1 , 1 , 1 );
 
-  // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
-  
-  texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
-  texture_end_y = 0.0 ;
-
-  // glColor3f( 1 , 1 , 1 );
-
-  glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
-  glBegin(GL_QUADS);
-  glTexCoord2i( 0.0f, texture_start_y ); 
-  glVertex2i( image_start_x , image_start_y );
-  glTexCoord2i( 0.0f, texture_end_y ); 
-  glVertex2i( image_start_x , image_end_y );
-  glTexCoord2i( 1.0f, texture_end_y ); 
-  glVertex2i( image_end_x , image_end_y );
-  glTexCoord2f( 1.0f, texture_start_y ); 
-  glVertex2i( image_end_x , image_start_y );
-  glEnd( );
-
-  if ( set_gl_parameters )
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBegin(GL_QUADS);
+    glTexCoord2i( 0.0f, texture_start_y ); 
+    glVertex2i( image_start_x , image_start_y );
+    glTexCoord2i( 0.0f, texture_end_y ); 
+    glVertex2i( image_start_x , image_end_y );
+    glTexCoord2i( 1.0f, texture_end_y ); 
+    glVertex2i( image_end_x , image_end_y );
+    glTexCoord2f( 1.0f, texture_start_y ); 
+    glVertex2i( image_end_x , image_start_y );
+    glEnd( );
+    
+    if ( set_gl_parameters )
     {
-      glDisable( GL_TEXTURE_2D );
+	glDisable( GL_TEXTURE_2D );
     }
-
+    
 #endif
 
 }; // void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
