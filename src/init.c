@@ -40,12 +40,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <time.h>
+#include <sys/time.h>
 #include <signal.h>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/stat.h>
-#include <sys/time.h>
 #include <getopt.h>
 
 #include "defs.h"
@@ -99,12 +98,12 @@ Now if you touch some other druid, this will initiate the takeover \
 process in which you have to win a small game of logical curcuits \
 within the given time.\n\
 If you succeed, you thereafter can control this new droid and for game \
-purposes, it is as if you were him.\n
+purposes, it is as if you were him.\n\
 If you loose, you either are destroyed if you didn't control an enemy \
 druid at that time, or the host you controlled is destroyed together with \
 the unit you wished to control.\n\
 \n\
-Watch out for energy refreshing fields and elevators.\n
+Watch out for energy refreshing fields and elevators.\n\
 \n\
 Elevators are also entered via transfer mode if you stand still on the elevaor.\n\
 \n\
@@ -132,18 +131,18 @@ timeout (int sig)
   Terminate (0);
 }				/* timeout */
 
-char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix
-FreeDroid comes with NO WARRANTY to the extent permitted by law.
-You may redistribute copies of FreeDroid
-under the terms of the GNU General Public License.
+char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
+FreeDroid comes with NO WARRANTY to the extent permitted by law.\n\
+You may redistribute copies of FreeDroid\n\
+under the terms of the GNU General Public License.\n\
 For more information about these matters, see the file named COPYING.\n";
 
 
 char usage_string[] =
-  "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] 
-			[-t|--timeout=SECONDS]
-			[-f|--fullscreen] [-w|--window]
-	      		[-d|--debug=LEVEL]\n
+  "Usage: freedroid [-v|--version] [-q|--nosound] [-s|--sound] \n\
+			[-t|--timeout=SECONDS] \n\
+			[-f|--fullscreen] [-w|--window]\n\
+	      		[-d|--debug=LEVEL]\n\n\
 Report bugs to freedroid@??? (sorry, havent got one yet ;)\n";
 
 /* -----------------------------------------------------------------
@@ -215,10 +214,10 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 
 	case 'f':
-	  use_fullscreen = TRUE;
+	  fullscreen_on = TRUE;
 	  break;
 	case 'w':
-	  use_fullscreen = FALSE;
+	  fullscreen_on = FALSE;
 	  break;
 
 	default:
@@ -285,7 +284,7 @@ InitNewGame (void)
   DebugPrintf
     ("\nvoid InitNewGame(void): All levels have been set to 'active'...");
 
-  i = MyRandom (3);
+  i = MyRandom (3);  /* chose one out of 4 possible start positions */
   switch (i)
     {
     case 0:
