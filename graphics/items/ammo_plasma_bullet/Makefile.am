@@ -1,5 +1,5 @@
 our_gameitemdir = $(pkgdatadir)/graphics/items/ammo_plasma_bullet
 
-our_gameitem_DATA = portrait*
+our_gameitem_DATA = portrait* ingame*
 
 EXTRA_DIST = $(our_gameitem_DATA)
