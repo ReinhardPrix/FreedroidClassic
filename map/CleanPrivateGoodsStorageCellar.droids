@@ -95,6 +95,12 @@ Question="mission" Answer="If you ever forget what missions were assigned to you
 
 Question="hello" Answer="Ah, how good it is to see you in this finally awoken state.  You must know, that we have gone to great lengthes and danger in contructing you.  You are the reincarnation of a forbidden device, that might save us from utter destruction and the world from total enslavement.  Just tell me if you feel ready for the MISSION yet or if you need more INFO, just say so."
 
+Question="teleport" Answer="The teleportation device should be ready for a test run soon.  But for now you'll just have to use the door."
+
+Question="door" Answer="You'll have to go through the door to solve the mission."
+
+Question="open" Answer="I'll open the door for, if you need to get out, e.g. for a mission or something."
+
 Question="info" Answer="Our situation is as follows:  The government has been taken over by a most powerful corporation which also controls most of the droids in the world and which would like to see all of us killed.  Not wanting to die now, we've constructed YOU.  You are a reconstruction of the influence device that has been successfully employed to clean out a robot freighter long time ago.  But due to MS legal action, the project had to be canceled after that and the archive was moved to the 'forbidden' state."
 
 Question="forbidden" Answer="A really silly concept that some religious pressure groups introduced to ban further research in artificial intelligence after the recent advances."
