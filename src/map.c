@@ -88,7 +88,8 @@ int ScanMapToStruct()
   
   if( CurLevel == NULL ) return ERR;
   
-  CurTi = &EditTextInfo;		/* Damit die Koordinaten stimmen */
+  /* rp: temp disabled, because maped.c is missing and I want to compile!!*/
+  //  CurTi = &EditTextInfo;		/* Damit die Koordinaten stimmen */
 	
   // MouHideMouse();
   
