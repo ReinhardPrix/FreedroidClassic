@@ -796,7 +796,8 @@ MoveThisEnemy( int EnemyNum )
       //
       // first we search for a free position in the item list
       //
-      
+      DropRandomItem( ThisRobot->pos.x , ThisRobot->pos.y );
+      /*
       if ( MyRandom( 10 ) <= 1 )
 	{
 	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
@@ -817,7 +818,7 @@ MoveThisEnemy( int EnemyNum )
 	      Terminate( ERR );
 	    }
 	}
-
+      */
 
       if (LevelEmpty ())
 	CurLevel->empty = WAIT_LEVELEMPTY;

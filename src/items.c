@@ -40,6 +40,97 @@
 
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+DropItemAt( int ItemType , int x , int y )
+{
+  int i;
+
+#define ITEM_MONEY 6
+#define ITEM_HEALTH_POTION 1
+
+
+  //--------------------
+  // At first we must find a free item index on this level,
+  // so that we can enter the new item there.
+  //
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( CurLevel->ItemList[ i ].type == (-1) ) 
+	{
+	  break;
+	}
+    }
+  if ( i >= MAX_ITEMS_PER_LEVEL )
+    {
+      DebugPrintf( 0 , "\n\nNO MORE ITEMS DROPABLE INTO THIS LEVEL!!\n\nTerminating!" );
+      Terminate( ERR );
+    }
+
+  //--------------------
+  // Now we can construct the new item
+  //
+  CurLevel->ItemList[ i ].type = ItemType;
+  CurLevel->ItemList[ i ].pos.x = x;
+  CurLevel->ItemList[ i ].pos.y = y;
+  CurLevel->ItemList[ i ].damage = ItemMap[ ItemType ].base_item_gun_damage +
+    MyRandom( ItemMap[ ItemType ].item_gun_damage_modifier );
+  CurLevel->ItemList[ i ].ac_bonus = ItemMap[ ItemType ].base_ac_bonus +
+    MyRandom( ItemMap[ ItemType ].ac_bonus_modifier );
+
+  if ( ItemMap[ ItemType ].base_item_duration != (-1) )
+    {
+      CurLevel->ItemList[ i ].max_duration = ItemMap[ ItemType ].base_item_duration +
+	MyRandom( ItemMap[ ItemType ].item_duration_modifier );
+      CurLevel->ItemList[ i ].current_duration = MyRandom( CurLevel->ItemList[ i ].max_duration ) ;
+    }
+  else
+    {
+      CurLevel->ItemList[ i ].max_duration = ( -1 );
+    }
+
+  PlayItemSound( ItemMap[ ItemType ].sound_number );
+
+}; // void DropItemAt( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function drops a random item to the floor of the current level
+ * at position ( x , y ).
+ *
+ * The strategy in droping the item is that one can easily set up and
+ * modify the tabe of items to be dropped.
+ *
+ * ---------------------------------------------------------------------- */
+void
+DropRandomItem( int x , int y )
+{
+  int Rand;
+
+
+  Rand = MyRandom( 1000 );
+
+  if ( Rand < 500 )
+    {
+      return;
+    }
+  if ( Rand < 800 )
+    {
+      DropItemAt( ITEM_MONEY , x , y );
+      return;
+    }
+  if ( Rand < 950 )
+    {
+      DropItemAt( ITEM_HEALTH_POTION , x , y );
+      return;
+    }
+  DropItemAt( MyRandom( Number_Of_Item_Types -2 ) + 1 , x , y );
+
+
+}; // void DropRandomItem( int x , int y )
+
+/* ----------------------------------------------------------------------
  * When the influencer gets hit, all of his equipment suffers some damage.
  * This is exactly what this function does:  apply the damage.
  * ---------------------------------------------------------------------- */
@@ -153,7 +244,7 @@ MakeHeldFloorItemOutOf( item* SourceItem )
   // --------------------
   // Now we enter the item into the item list of this level
   //
-  CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) );
+  CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) , FALSE );
 
   CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   CurLevel->ItemList[ i ].pos.y = Me.pos.y;
@@ -289,10 +380,12 @@ DeleteItem( item* Item )
  * entry.
  * ---------------------------------------------------------------------- */
 void
-CopyItem( item* SourceItem , item* DestItem )
+CopyItem( item* SourceItem , item* DestItem , int MakeSound )
 {
 
   memcpy ( DestItem, SourceItem, sizeof ( item ));
+
+  if ( MakeSound ) PlayItemSound( ItemMap[ SourceItem->type ].sound_number );
 
 }; // void MoveItem( item* SourceItem , item* DestItem )
 
@@ -747,7 +840,7 @@ DropHeldItemToTheFloor ( void )
   // --------------------
   // Now we enter the item into the item list of this level
   //
-  CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) );
+  CopyItem( DropItemPointer , &(CurLevel->ItemList[ i ]) , TRUE );
   // CurLevel->ItemList[ i ].pos.x = Me.pos.x;
   // CurLevel->ItemList[ i ].pos.y = Me.pos.y;
   CurLevel->ItemList[ i ].pos.x = Me.pos.x + (GetMousePos_x() + 16 - UserCenter_x) / (float) Block_Width;
@@ -845,7 +938,7 @@ DropHeldItemToSlot ( item* SlotItem )
   // Now the item is installed into the weapon slot of the influencer
   
   // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
-  CopyItem( DropItemPointer , SlotItem );
+  CopyItem( DropItemPointer , SlotItem , TRUE );
   SlotItem->currently_held_in_hand = FALSE;
 
   // Now the item is removed from the source location and no longer held in hand as well, 
@@ -946,7 +1039,7 @@ DropHeldItemToInventory( void )
   if ( ItemCanBeDroppedInInv ( DropItemPointer->type , GetInventorySquare_x ( CurPos.x ) , 
 			       GetInventorySquare_y ( CurPos.y ) ) )
     {
-      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) );
+      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) , TRUE );
       DeleteItem( DropItemPointer );
       Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
       Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
@@ -970,7 +1063,7 @@ DropHeldItemToInventory( void )
       //
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
-	  CopyItem ( & ( Me.Inventory[ i ] ) , & ( Temp ) );
+	  CopyItem ( & ( Me.Inventory[ i ] ) , & ( Temp ) , FALSE );
 	  
 	  //--------------------
 	  // FIRST: Security check against segfaults:  It might happen that we 
@@ -998,7 +1091,7 @@ DropHeldItemToInventory( void )
 	      //--------------------
 	      // Otherwise we just need to add the new item for the inventory
 	      // grid as usual
-	      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) );
+	      CopyItem( DropItemPointer , &( Me.Inventory[ FreeInvIndex ] ) , TRUE );
 	      DeleteItem( DropItemPointer );
 	      Me.Inventory[ FreeInvIndex ].inventory_position.x = GetInventorySquare_x ( CurPos.x ) ;
 	      Me.Inventory[ FreeInvIndex ].inventory_position.y = GetInventorySquare_y ( CurPos.y ) ;
@@ -1015,7 +1108,7 @@ DropHeldItemToInventory( void )
 	  // item would fit into the inventory, then of course we should re-add the
 	  // removed item to the inventory, so that no other items get lost.
 	  //
-	  CopyItem ( & ( Temp ) , & ( Me.Inventory[ i ] ) );
+	  CopyItem ( & ( Temp ) , & ( Me.Inventory[ i ] ) , FALSE );
 
 	} // for: try all items if removal is the solution
     } // if not immediately place findable
@@ -1546,6 +1639,10 @@ ManageInventoryScreen ( void )
   RightPressedPreviousFrame = MouseRightPressed ( ) ;
 }; // void ManageInventoryScreen ( void );
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void 
 AddFloorItemDirectlyToInventory( item* ItemPointer )
 {
@@ -1620,15 +1717,16 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	  strcpy ( Me.TextToBeDisplayed , TempText );
 	  
 	  // We add the new item to the inventory
-	  CopyItem( ItemPointer , & ( Me.Inventory[ InvPos ] ) );
+	  CopyItem( ItemPointer , & ( Me.Inventory[ InvPos ] ) , FALSE );
 	  Me.Inventory[ InvPos ].inventory_position.x = Inv_Loc.x;
 	  Me.Inventory[ InvPos ].inventory_position.y = Inv_Loc.y;
 
+	  // We make the sound of an item being taken
+	  PlayItemSound( ItemMap[ ItemPointer->type ].sound_number );
+	  //ItemTakenSound();
+
 	  // ItemPointer->type = (-1);
 	  DeleteItem( ItemPointer );
-	  
-	  // We make the sound of an item being taken
-	  ItemTakenSound();
 	}
     }
   

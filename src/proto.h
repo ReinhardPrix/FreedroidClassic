@@ -245,6 +245,8 @@ EXTERN void DropSpecificItemAtPosition( int x , int y , int NewItemCode );
 EXTERN void ApplyItem( item* CurItem );
 EXTERN int Inv_Pos_Is_Free( int x , int y );
 EXTERN int GetInventoryItemAt ( int x , int y );
+EXTERN item* GetHeldItemPointer( void );
+EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int CursorIsInInventoryGrid( int x , int y );
 EXTERN int CursorIsInUserRect( int x , int y );
 EXTERN int CursorIsInWeaponRect( int x , int y );
@@ -263,8 +265,9 @@ EXTERN void DropHeldItemToInventory( void );
 EXTERN void DropHeldItemToTheFloor ( void );
 EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
-EXTERN void CopyItem( item* SourceItem , item* DestItem );
+EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
+EXTERN void DropRandomItem( int x , int y );
 
 // character.c
 #undef EXTERN
