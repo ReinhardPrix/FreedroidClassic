@@ -1955,10 +1955,21 @@ ThouArtDefeated (void)
   GameConfig.Mission_Log_Visible=FALSE;
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
-
   now=SDL_GetTicks();
 
-  while ( SDL_GetTicks()-now < 1000 * WAIT_AFTER_KILLED )
+  //--------------------
+  // Now that the influencer is dead, all this precious items
+  // spring off of him...
+  //
+  DropItemAt ( Druidmap [ Me.type ].weapon_item.type , Me.pos.x - 0.5 , Me.pos.y - 0.5 );
+  DropItemAt ( Druidmap [ Me.type ].drive_item.type  , Me.pos.x + 0.5 , Me.pos.y - 0.5 );
+  DropItemAt ( Druidmap [ Me.type ].shield_item.type , Me.pos.x + 0.5 , Me.pos.y + 0.5 );
+  DropItemAt ( Druidmap [ Me.type ].armour_item.type , Me.pos.x - 0.5 , Me.pos.y + 0.5 );
+  DropItemAt ( Druidmap [ Me.type ].special_item.type , Me.pos.x - 0.5 , Me.pos.y );
+  DropItemAt ( Druidmap [ Me.type ].aux1_item.type , Me.pos.x + 0.5 , Me.pos.y );
+  DropItemAt ( Druidmap [ Me.type ].aux2_item.type , Me.pos.x , Me.pos.y - 0.5 );
+
+  while ( SDL_GetTicks()-now < 3000 * WAIT_AFTER_KILLED )
     {
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       DisplayBanner (NULL, NULL,  0 );
@@ -1970,7 +1981,8 @@ ThouArtDefeated (void)
 	CheckBulletCollisions (j);
     }
 
-  update_highscores ();
+  // update_highscores ();
+  EscapeMenu();
 
   GameOver = TRUE;
 

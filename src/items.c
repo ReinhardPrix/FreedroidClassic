@@ -99,6 +99,12 @@ DropItemAt( int ItemType , float x , float y )
   int i;
 
   //--------------------
+  // If given a non-existent item type, we don't do anything
+  // of course (and also don't produce a SEGFAULT or something...)
+  //
+  if ( ItemType == ( -1 ) ) return;
+
+  //--------------------
   // At first we must find a free item index on this level,
   // so that we can enter the new item there.
   //

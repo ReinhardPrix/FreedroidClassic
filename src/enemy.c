@@ -449,7 +449,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   CheckPosition.x = x1;
   CheckPosition.y = y1;
 
-  for ( i = 0 ; i < Steps ; i++ )
+  for ( i = 0 ; i < Steps + 1 ; i++ )
     {
       // for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
       for ( j = 0 ; j < Number_Of_Droids_On_Ship ; j ++ )
