@@ -943,6 +943,7 @@ enum
 	  break;
 	case SET_THEME:
 	  while (EnterPressed() || SpacePressed() );
+	  /*
 	  if ( !strcmp ( GameConfig.Theme_SubPath , "classic_theme/" ) )
 	    {
 	      // GameConfig.Theme_SubPath="lanzz_theme/";
@@ -954,7 +955,7 @@ enum
 	      strcpy ( GameConfig.Theme_SubPath , "classic_theme/" );
 	    }
 	  ReInitPictures();
-	  
+
 	  //--------------------
 	  // Now we have loaded a new theme with new images!!  It might however be the
 	  // case, that also the number of phases per bullet, which is specific to each
@@ -968,6 +969,8 @@ enum
 	    {
 	      AllBullets[i].Surfaces_were_generated = FALSE ;
 	    }
+
+	  */
 	  break;
 	case LEVEL_EDITOR_POSITION:
 	  while (EnterPressed() || SpacePressed() );

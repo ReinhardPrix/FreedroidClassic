@@ -569,14 +569,21 @@ UpdateAllCharacterStats ( int PlayerNum )
   if ( Me [ PlayerNum ] .Experience > Me [ PlayerNum ] .ExpRequired ) 
     {
       Me [ PlayerNum ] .exp_level ++ ;
-      Me [ PlayerNum ] .points_to_distribute += 5;
+      Me [ PlayerNum ] .points_to_distribute += 10;
+
+      //--------------------
+      // Like in the Gothic 1 game, maximum life force will now automatically
+      // be increased upon reaching a new character level.
+      //
+      Me [ PlayerNum ] .base_vitality += 10;
 
       //--------------------
       // When a droid reaches a new experience level, all health and 
-      // force are restored to full this one time
+      // force are restored to full this one time no longer.  Gothic
+      // rulez more than Diablo rulez.
       //
-      Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
-      Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
+      // Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy ;
+      // Me [ PlayerNum ] .mana   = Me [ PlayerNum ] .maxmana   ;
 
       //--------------------
       // Also when a new level is reached, we will display a big message

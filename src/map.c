@@ -2049,11 +2049,11 @@ GetCrew (char *filename)
   while ( ( DroidSectionPointer = strstr ( DroidSectionPointer, DROIDS_LEVEL_DESCRIPTION_START_STRING )) != NULL )
     {
       DroidSectionPointer+=strlen( DROIDS_LEVEL_DESCRIPTION_START_STRING );
-      DebugPrintf (2, "\nFound another levels droids description starting point entry!");
+      DebugPrintf ( 0 , "\nFound another levels droids description starting point entry!");
       EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
       if ( EndOfThisDroidSectionPointer == NULL )
 	{
-	  printf("\nGetCrew:  Unterminated droid section encountered!!\n\nTerminating....");
+	  DebugPrintf( 0 , "\nGetCrew:  Unterminated droid section encountered!!\n\nTerminating....");
 	  Terminate(ERR);
 	}
       // EndOfThisDroidSectionPointer[0]=0;

@@ -533,9 +533,9 @@ ChatWithFriendlyDroid( int Enum )
 		  GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
 				       "SOR_You_Dont_Money_0.wav" );
 		}
-	      else if ( Me [ 0 ] . points_to_distribute >= 5 )
+	      else if ( Me [ 0 ] . points_to_distribute >= 10 )
 		{
-		  Me [ 0 ] . points_to_distribute -= 5;
+		  Me [ 0 ] . points_to_distribute -= 10;
 		  Me [ 0 ] . spellcasting_skill ++;
 		  Me [ 0 ] . Gold -= 100;
 		  GiveSubtitleNSample( "The ability to cast spells is very complicated, and best transfered directly to you." , 
