@@ -272,6 +272,15 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 	       char *text)
 {
   int i = 0;
+
+  // I added little hack to kern MenuFont..
+  // This basicly just prints them more tight on the screen.
+  // basse, 15.2.03
+  //
+  int kerning = 0;
+  if (Font==Menu_BFont) kerning = -4;
+
+
   while (text[i] != '\0')
     {
       //--------------------
@@ -284,7 +293,7 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
       if ( text[i] == 2 ) Font = Blue_BFont;
       if ( text[i] == 3 ) Font = FPS_Display_BFont;
 
-      x += PutCharFont (Surface, Font, x, y, text[i]);
+      x += PutCharFont (Surface, Font, x, y, text[i]) +kerning;
       i++;
     }
 }
