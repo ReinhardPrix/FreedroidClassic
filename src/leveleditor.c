@@ -2723,20 +2723,20 @@ show_level_editor_tooltips ( void )
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "This button will save your current ship to the file 'Testship.shp' in your current working directory.  If you are sure that you want this, you can copy it over the regular file 'Asteroid.maps' in maps subdirectory to make your map the default FreedroidRPG map." );
     }
-  else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
-    {
-      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	show_button_tooltip ( "\nUse this button to zoom INTO the level.\n\nYou can also use the hotkey 'I' for this." );
-    }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	show_button_tooltip ( "\nUse this button to zoom OUT of the level.\n\nYou can also use the hotkey 'O' for this." );
+	show_button_tooltip ( "\nUse this button to zoom INTO or OUT of the level.\n\nYou can also use the hotkey 'O' for this." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
       if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	show_button_tooltip ( "Use this button to fill a certain area of the map with the currently selected map tile.  Filling will proceed from the cursor in all direction until a change of map tile is encountered." );
+    }
+  else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+    {
+      if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	show_button_tooltip ( "Use this button to attach a label to the currently marked obstacle.  These obstacle labels can be used to define obstacles to be modified by events.\n Note that you can also use the hotkey 'h' for this." );
     }
   else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
     {
@@ -3148,9 +3148,14 @@ LevelEditor(void)
 	  ShowGenericButtonFromList ( EXPORT_THIS_LEVEL_BUTTON );
 
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_SAVE_SHIP_BUTTON );
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_IN_BUTTON );
-	  ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
+
+	  if ( GameConfig . zoom_is_on )
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_IN_BUTTON );
+	  else
+	    ShowGenericButtonFromList ( LEVEL_EDITOR_ZOOM_OUT_BUTTON );
+
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON );
+	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_NEW_ITEM_BUTTON );
 	  ShowGenericButtonFromList ( LEVEL_EDITOR_MODE_BUTTON );
@@ -3242,11 +3247,6 @@ LevelEditor(void)
 	    {
 	      GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
 	      while ( OPressed() );
-	      // ZoomOut();
-	    }
-	  if ( IPressed () ) 
-	    {
-	      // ZoomIn();
 	    }
 
 	  if ( XPressed () )
@@ -3407,19 +3407,22 @@ LevelEditor(void)
 		  GiveMouseAlertWindow ( "\nM E S S A G E\n\nYour ship was saved to file 'Testship.shp'.\nIf you are sure, that you wish to use this file in the game, copy it over the 'maps/Asteroid.maps' file so that FreedroidRPG will really use it.\n\nIf you have set up something cool and you wish to contribute it to FreedroidRPG, please contact the FreedroidRPG dev team." ) ;
 
 		}
-	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
-		{
-		  GameConfig . zoom_is_on = FALSE ;
-		  // ZoomIn();
-		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
-		  GameConfig . zoom_is_on = TRUE ;
-		  // ZoomOut();
+		  GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
+		  while ( SpacePressed() );
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_RECURSIVE_FILL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
 		  RecFillMap ( EditLevel , BlockY , BlockX , Highlight );
+		}
+	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
+		{
+		  if ( level_editor_marked_obstacle != NULL )
+		    {
+		      give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle );
+		      while ( SpacePressed() );
+		    }
 		}
 	      else if ( CursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x() + 16 , GetMousePos_y() + 16 ) )
 		{
