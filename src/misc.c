@@ -1374,8 +1374,15 @@ Terminate (int ExitCode)
 {
   DebugPrintf ("\nvoid Terminate(int ExitStatus) wurde aufgerufen....\n");
   printf("\n\n\nTermination of Freedroid initiated... \nUnallocation all resouces...\n\n");
-  
 
+  // free the allocated surfaces...
+  SDL_FreeSurface( ne_blocks );
+  SDL_FreeSurface( ne_static );
+
+  // free the mixer channels...
+  Mix_CloseAudio();
+
+  printf("\n\n\nAnd now the final step...\n\n");
   SDL_Quit();
   exit (ExitCode);
   return;

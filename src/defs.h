@@ -284,8 +284,8 @@ enum _directions
 #define ALLBULLETTYPES		4	/* number of bullet-types */
 #define ALLBLASTTYPES		2	/* number of different exposions */
 
-#define MAXBULLETS		10	/* maximum possible Bullets in the air */
-#define MAXBLASTS		5	/* max. possible Blasts visible */
+#define MAXBULLETS		100	/* maximum possible Bullets in the air */
+#define MAXBLASTS		100	/* max. possible Blasts visible */
 #define AGGRESSIONMAX  		100
 
 /* Map-related defines:

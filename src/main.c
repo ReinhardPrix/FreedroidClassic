@@ -325,6 +325,14 @@ main (int argc, char *const argv[])
 	      while (IPressed());
 	    }
 
+	  if ( UPressed () )
+	    {
+	      InitNewGame();
+	      while (UPressed());
+	    }
+
+
+
 	  if (ShipEmptyCounter == 1)
 	    GameOver = TRUE;
 
@@ -514,6 +522,7 @@ ThouArtDefeated (void)
 
   DebugPrintf
     ("\nvoid ThouArtDefeated(void): Usual end of function reached.");
+  printf("\n\n DefeatedDone \n\n");
 }				// void ThouArtDefeated(void)
 
 /*@Function============================================================
