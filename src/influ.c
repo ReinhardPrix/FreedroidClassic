@@ -404,8 +404,9 @@ smashable_barrel_below_mouse_cursor ( int player_num )
 }; // int smashable_barrel_below_mouse_cursor ( int player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- * 
+ * When the player has requested an attack motion, we start the 
+ * corresponding code, that should try to attack, if that's currently
+ * possible.
  * ---------------------------------------------------------------------- */
 void
 tux_wants_to_attack_now ( int player_num ) 
@@ -3262,14 +3263,36 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 					  AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
 					  AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
 		   > BEST_MELEE_DISTANCE+0.1 ) )
+	    {
+		//--------------------
+		// In the case where we can't reach the clicked hostile enemy with
+		// our melee weapon/empty hands right now, we need to set up a course
+		// to the enemy and then start the attack upon arrival, i.e. use a
+		// standard combo-action for this again...
+		//
+
 		return;
+	    }
 	}
 	else if ( calc_euklid_distance ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , 
 					 AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . x ,
 					 AllEnemys [ index_of_droid_below_mouse_cursor ] . pos . y ) 
 		  > BEST_MELEE_DISTANCE+0.1 )
+	{
+	    //--------------------
+	    // In the case where we can't reach the clicked hostile enemy with
+	    // our melee weapon/empty hands right now, we need to set up a course
+	    // to the enemy and then start the attack upon arrival, i.e. use a
+	    // standard combo-action for this again...
+	    //
+	    
 	    return;
-	
+	}
+
+	//--------------------
+	// But if we're close enough or there is a ranged weapon in Tux hands,
+	// then we can finally start the attack motion right away...
+	//
 	tux_wants_to_attack_now ( player_num ) ;
     }
 }; // void check_for_droids_to_attack ( int player_num ) 
