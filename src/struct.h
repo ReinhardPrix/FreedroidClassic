@@ -249,9 +249,11 @@ level, *Level;
 
 typedef struct
 {
-  int LevelsOnShip;
-  Level AllLevels[MAX_LEVELS_ON_SHIP];
-  elevator AllElevators[ALLELEVATORS];
+  int num_levels;
+  int num_lifts;
+  int num_lift_rows;
+  Level AllLevels[MAX_LEVELS];
+  elevator AllElevators[MAX_LIFTS];
 }
 ship, *Ship;
 
