@@ -1,0 +1,14 @@
+2002-04-19  rprix  <rprix@microwave>
+
+	* /home/prix/CVS/ParaPlus/TASK_CHART, /home/prix/CVS/ParaPlus/TODO:
+	small amendments, as usual
+
+	* /home/prix/CVS/ParaPlus/README: slight changes of form...
+
+	* /home/prix/CVS/ParaPlus/map.c: ambiguous ret =-1 changed to ret = -1
+
+2002-04-18  Reinhard Prix  <r.prix@maths.soton.ac.uk>
+
+	* README: removed non--conformant copyright notice
+	taken out Rene as a 'developer', for the moment he isnt'...
+
