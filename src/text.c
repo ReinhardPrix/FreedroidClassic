@@ -1838,7 +1838,7 @@ DisplayChar (unsigned char c)
 There was an illegal character passed to DisplayChar for printing.\n\
 This indicates some error within Freedroid or within one of the dialog\n\
 files of Freedroid.",
-				 PLEASE_INFORM, IS_WARNING_ONLY );
+				 PLEASE_INFORM, IS_FATAL );
       return;
     }
 

@@ -426,6 +426,18 @@ make_texture_out_of_surface ( iso_image* our_image )
   SDL_Surface* right_sized_image ;
 
   //--------------------
+  // If the texture has been created before and this function is called
+  // for the second time, this is a major error, that is considered a
+  // cause for immediate program termination.
+  //
+  if ( our_image -> texture_has_been_created )
+    {
+      GiveStandardErrorMessage ( "make_texture_out_of_surface(...)" , "\
+Texture has been created already according to flag... hmmm... something is not right here...",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
   // This fill up the image with transparent material, so that 
   // it will have powers of 2 as the dimensions, which is a requirement
   // for textures on most OpenGL capable cards.
@@ -450,6 +462,7 @@ make_texture_out_of_surface ( iso_image* our_image )
   // glGenTextures( 1, & our_image -> texture );
   //
   our_image -> texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
+  our_image -> texture_has_been_created = TRUE ;
   next_texture_index_to_use ++ ;
   if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
     {

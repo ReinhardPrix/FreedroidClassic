@@ -59,19 +59,23 @@ InitFont (BFont_Info * Font)
 	  // Now we make a copy for later reference when we do OpenGL based
 	  // output of this character.
 	  //
-	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , vid_bpp, 0, 0, 0, 0 );
+	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , 32, 
+					    0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+
 	  SDL_SetAlpha( Font->Surface , 0 , 255 );
 	  SDL_SetColorKey( Font->Surface , 0 , 0 );
-	  Font -> char_surface [ i ] = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
-	  our_SDL_blit_surface_wrapper ( Font->Surface, & ( Font -> Chars [ i ] ) , Font -> char_surface [ i ] , NULL );
-	  SDL_SetAlpha( Font -> char_surface [ i ] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-	  SDL_SetColorKey ( Font -> char_surface [ i ] , 0 , 0 );
+	  Font -> char_iso_image [ i ] . surface = SDL_DisplayFormatAlpha ( tmp_char1 ) ;
+	  Font -> char_iso_image [ i ] . texture_has_been_created = FALSE ;
+	  our_SDL_blit_surface_wrapper ( Font->Surface, & ( Font -> Chars [ i ] ) , 
+					 Font -> char_iso_image [ i ] . surface , NULL );
+	  SDL_SetAlpha( Font -> char_iso_image [ i ] . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_SetColorKey ( Font -> char_iso_image [ i ] . surface , 0 , 0 );
 
-	  flip_image_horizontally ( Font -> char_surface [ i ] ) ;
+	  flip_image_horizontally ( Font -> char_iso_image [ i ] . surface ) ;
 
 	  //--------------------
 	  // Now we can go on to the next char
-	  
+	  //
 	  i++;
 	}
       else
@@ -318,13 +322,30 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
       // only a part of the source image isn't effectively implemented in our SDL-OpenGL-wrapper
       // function.
       //
-      /*
       if ( use_open_gl )
-	our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
+	{
+	  //--------------------
+	  // Blitting the characters of the font with plain pixel operations in OpenGL is
+	  // known to fail on some systems.  So why not just use the faster textured quads
+	  // anyway?  Yes, why not.  But to safe some texture memory, we won't create *every*
+	  // texture for every font loaded at starting time but we'll create the surfaces
+	  // on the fly and ONLY FOR THOSE CHARACTERS NEEDED.  That should save us some time...
+	  //
+	  // our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, &dest);
+	  //
+	  if ( ! Font -> char_iso_image [ c ] . texture_has_been_created )
+	    {
+	      make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
+	    }
+
+	  blit_open_gl_texture_to_screen_position ( Font -> char_iso_image [ c ] , dest . x , dest . y , TRUE ) ;
+
+	  // our_SDL_blit_surface_wrapper ( Font -> char_iso_image [ c ] . surface , NULL , Surface, &dest);
+	}
       else
-	our_SDL_blit_surface_wrapper ( Font -> Surface, &Font->Chars[c], Surface, &dest);
-      */
-      our_SDL_blit_surface_wrapper ( Font -> char_surface [ c ] , NULL , Surface, & dest );
+	{
+	  our_SDL_blit_surface_wrapper ( Font -> Surface, & Font -> Chars [ c ] , Surface, &dest);
+	}
     }
 
   return CharWidth ( Font , c ) ;

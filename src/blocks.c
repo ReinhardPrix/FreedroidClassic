@@ -644,6 +644,8 @@ This error indicates some installation problem with freedroid.",
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
   our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
   our_iso_image -> zoomed_out_surface = NULL ;
+  our_iso_image -> texture_has_been_created = FALSE ;
+
   SDL_SetColorKey( our_iso_image -> surface , 0 , 0 ); // this should clear any color key in the dest surface
   //--------------------
   // Some test here...
