@@ -1024,6 +1024,16 @@ FireBullet (void)
   // If the victim doesn't have a weapon at all, just return
   if ( Druidmap [ Me.type ].weapon_item.type == (-1) ) return;
 
+  // If the influencer is holding something from the invenotry
+  // menu via the mouse, also just return
+  // if ( Item_Held_In_Hand != (-1) ) return;
+
+  // If the influencer has pressed fire with the mouse cursor
+  // and is in the inventory screen and inventory screen is 
+  // active, then also just return
+  if ( GameConfig.Inventory_Visible && ! CursorIsInUserRect( GetMousePos_x() , GetMousePos_y() ) ) return;
+
+
   /* Wenn noch kein Schuss loesbar ist sofort zurueck */
   if (Me.firewait > 0)
     return;
@@ -1095,9 +1105,7 @@ FireBullet (void)
   CurBullet->pos.x += 0.5 * (CurBullet->speed.x/BulletSpeed);
   CurBullet->pos.y += 0.5 * (CurBullet->speed.y/BulletSpeed);
 
-
   return;
-
 }; // FireBullet 
 
 /*@Function============================================================
