@@ -270,7 +270,8 @@ FCU AllFCUs[] = {
 };
 
 
-#define ROBOT_SPEED_CALIBRATOR ((40) /64.0)
+#define ROBOT_SPEED_CALIBRATOR (1)
+// ((40) /64.0)
 #define ROBOT_ACCEL_CALIBRATOR (10.0/64.0)
 #define LOSE_HEALTH_CALIBRATOR 0.2
 druidspec Druidmap[ALLDRUIDTYPES] = {

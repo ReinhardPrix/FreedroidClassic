@@ -12,11 +12,23 @@ as you stick to the following rules:
 Lets see if it makes sense.
 *** Start of Robot Data Section: *** 
 ** Start of new Robot: ** 
-Droidname: 001
+Droidname: 002
+Maximum speed of this droid: 5.1
+Class of this droid: 0
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 100.1
 ** Start of new Robot: ** 
-Droidname: 123
+Droidname: 124
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
 ** Start of new Robot: ** 
-Droidname: 139
+Droidname: 130
+Maximum speed of this droid: 2.1
+Class of this droid: 1
+Maximum acceleration of this droid: 1.1
+Maximum energy of this droid: 20.1
 
 *** End of game.dat File ***
 

@@ -112,12 +112,12 @@ typedef struct
   double accel;			/* its acceleration */
   double maxenergy;		/* the maximum energy the batteries can carry */
   double lose_health;		/* the energy/time the duid loses under influence-control */
-  byte gun;			/* Which gun does this druid use */
-  byte vneutral;		/* Is there a velocityneutralisator for Bullets ? */
-  byte aggression;		/* The aggressiveness of this druidtype */
-  byte firewait;		/* Wait approx. after shoot, in 1/4 sec. */
-  byte flashimmune;		/* is the droid immune to FLASH-bullets */
-  int score;			/* Punkte f"ur die Vernichtung dieses Modells */
+  int gun;			/* Which gun does this druid use */
+  int vneutral;		/* Is there a velocityneutralisator for Bullets ? */
+  int aggression;		/* The aggressiveness of this druidtype */
+  int firewait;		/* Wait approx. after shoot, in 1/4 sec. */
+  int flashimmune;		/* is the droid immune to FLASH-bullets */
+  int score;			/* score for the elimination of one droid of this type */
   char *notes;			/* notes on the druid of this type */
   // char *image;
 }

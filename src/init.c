@@ -64,6 +64,11 @@ Get_Robot_Data ( void* DataPointer )
 #define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
 #define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
 #define DROIDNAME_BEGIN_STRING "Droidname: "
+#define MAXSPEED_BEGIN_STRING "Maximum speed of this droid: "
+#define CLASS_BEGIN_STRING "Class of this droid: "
+#define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
+#define MAXENERGY_BEGIN_STRING "Maximum energy of this droid: "
+
 
   if ( (RobotPointer = strstr ( DataPointer , ROBOT_SECTION_BEGIN_STRING ) ) == NULL)
     {
@@ -80,6 +85,9 @@ Get_Robot_Data ( void* DataPointer )
     {
       printf("\n\nFound another Robot specification entry!  Lets add that to the others!");
       RobotPointer ++; // to avoid doubly taking this entry
+
+      // Now we read in the Name of this droid.  We consider as a name the rest of the
+      // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
       if ( (ValuePointer = strstr ( RobotPointer, DROIDNAME_BEGIN_STRING )) == NULL )
 	{
 	  printf("\nERROR! NO DROIDNAME FOUND! TERMINATING!");
@@ -95,6 +103,61 @@ Get_Robot_Data ( void* DataPointer )
 	  printf("\nDroidname found!  It reads: %s" , Druidmap[RobotIndex].druidname );
 	}
 
+      // Now we read in the maximal speed this droid can go. 
+      if ( (ValuePointer = strstr ( RobotPointer, MAXSPEED_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO MAXSPEED ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( MAXSPEED_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxspeed );
+	  printf("\nDroid maximum speed found!  It reads: %f" , Druidmap[RobotIndex].maxspeed );
+	}
+
+      // Now we read in the class of this droid.
+      if ( (ValuePointer = strstr ( RobotPointer, CLASS_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO CLASS ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( CLASS_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%d" , &Druidmap[RobotIndex].class );
+	  printf("\nDroid class entry found!  It reads: %d" , Druidmap[RobotIndex].class );
+	}
+
+      // Now we read in the maximal acceleration this droid can go. 
+      if ( (ValuePointer = strstr ( RobotPointer, ACCELERATION_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO ACCELERATION ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( ACCELERATION_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].accel );
+	  printf("\nDroid maximum acceleration found!  It reads: %f" , Druidmap[RobotIndex].accel );
+	}
+
+      // Now we read in the maximal energy this droid can store. 
+      if ( (ValuePointer = strstr ( RobotPointer, MAXENERGY_BEGIN_STRING )) == NULL )
+	{
+	  printf("\nERROR! NO MAXENERGY ENTRY FOUND! TERMINATING!");
+	  Terminate(ERR);
+	}
+      else
+	{
+	  ValuePointer += strlen ( MAXENERGY_BEGIN_STRING );
+	  sscanf ( ValuePointer , "%lf" , &Druidmap[RobotIndex].maxenergy );
+	  printf("\nDroid maximum energy found!  It reads: %f" , Druidmap[RobotIndex].maxenergy );
+	}
+
+
+      // Now we're potentially ready to process the next droid.  Therefore we proceed to
+      // the next number in the Droidmap array.
       RobotIndex++;
     }
   
