@@ -72,6 +72,7 @@
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define ENERGY_GAIN_PER_VIT_POINT 4
+#define MANA_GAIN_PER_MAGIC_POINT 4
 #define DAMAGE_GAIN_PER_STR_POINT 2
 #define AC_GAIN_PER_DEX_POINT 1
 #define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 3
@@ -276,6 +277,7 @@ UpdateAllCharacterStats ( void )
   // First we compute the maximum energy of the influencer
   //
   Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
+  Druidmap[ DRUID001 ].maxmana = 100 + (Me.Magic - 15) * MANA_GAIN_PER_MAGIC_POINT;
   
   //--------------------
   // Now we compute the damage the influecer can do
@@ -367,20 +369,7 @@ ShowCharacterScreen ( void )
       // We define the right side of the user screen as the rectangle
       // for our inventory screen.
       //
-      /*
-      CharacterRect.x = SCREENLEN/2;
-      CharacterRect.y = User_Rect.y;
-      CharacterRect.w = SCREENLEN/2;
-      CharacterRect.h = User_Rect.h;
-      */
-      /*
       CharacterRect.x = CHARACTERRECT_X;
-      CharacterRect.y = CHARACTERRECT_Y; 
-      CharacterRect.w = CHARACTERRECT_W;
-      CharacterRect.h = CHARACTERRECT_H;
-      */
-      CharacterRect.x = CHARACTERRECT_X;
-      // CharacterRect.y = SCREENHEIGHT - CharacterScreenImage->h; 
       CharacterRect.y = 0; 
       CharacterRect.w = CHARACTERRECT_W;
       CharacterRect.h = CHARACTERRECT_H;
@@ -443,6 +432,12 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", (int) Me.energy );
   DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
 
+  sprintf( CharText , "%d", (int) Druidmap[ DRUID001 ].maxmana );
+  DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
+
+  sprintf( CharText , "%d", (int) Me.mana );
+  DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
+
   sprintf( CharText , "%d", (int) Me.Damage );
   DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect );
 
@@ -487,6 +482,7 @@ ShowCharacterScreen ( void )
 	{
 	  Me.Magic++;
 	  Me.PointsToDistribute--;
+	  Me.mana += MANA_GAIN_PER_MAGIC_POINT;
 	}
       if ( CursorIsOnVitButton( CurPos.x , CurPos.y ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{

@@ -264,37 +264,51 @@ GiveDroidDescription ( char* DroidDescText , enemy* CurEnemy )
  *
  * ---------------------------------------------------------------------- */
 void 
-ShowCurrentHealthLevel( void )
+ShowCurrentHealthAndForceLevel( void )
 {
   SDL_Rect Health_Rect;
   SDL_Rect Unhealth_Rect;
-  SDL_Rect Whole_Health_Rect;
+  SDL_Rect Force_Rect;
+  SDL_Rect Unforce_Rect;
   
-  if ( GameConfig.Inventory_Visible ) return;
+  if ( GameConfig.Inventory_Visible ) 
+    {
+      Health_Rect.x = RIGHT_WHOLE_HEALTH_RECT_X;
+      Force_Rect.x = RIGHT_WHOLE_FORCE_RECT_X;
+      if ( GameConfig.CharacterScreen_Visible ) return;
+    }
+  else
+    {
+      Health_Rect.x = LEFT_WHOLE_HEALTH_RECT_X;
+      Force_Rect.x = LEFT_WHOLE_FORCE_RECT_X;
+    }
 
-  Health_Rect.x = WHOLE_HEALTH_RECT_X;
   Health_Rect.y = WHOLE_HEALTH_RECT_Y;
   Health_Rect.w = WHOLE_HEALTH_RECT_W;
   Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
   if ( Me.energy < 0 ) Health_Rect.h = 0;
+  Force_Rect.y = WHOLE_FORCE_RECT_Y;
+  Force_Rect.w = WHOLE_FORCE_RECT_W;
+  Force_Rect.h = ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ;
+  if ( Me.mana < 0 ) Force_Rect.h = 0;
 
-  Unhealth_Rect.x = WHOLE_HEALTH_RECT_X;
+  Unhealth_Rect.x = Health_Rect.x;
   Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
   Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
-
-  Whole_Health_Rect.x = WHOLE_HEALTH_RECT_X;
-  Whole_Health_Rect.y = WHOLE_HEALTH_RECT_Y;
-  Whole_Health_Rect.w = WHOLE_HEALTH_RECT_W;
-  Whole_Health_Rect.h = WHOLE_HEALTH_RECT_H;
+  Unforce_Rect.x = Force_Rect.x;
+  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unforce_Rect.w = WHOLE_FORCE_RECT_W;
+  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );
   SDL_FillRect( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
   SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF0000 );
-  // SDL_UpdateRect( Screen , Whole_Health_Rect.x , Whole_Health_Rect.y , Whole_Health_Rect.w , Whole_Health_Rect.h );
-  //  SDL_Flip( Screen );
-}; // void ShowCurrentHealthLevel( void )
+  SDL_FillRect( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
+  SDL_FillRect( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
+}; // void ShowCurrentHealthAndForceLevel( void )
 
 /* ----------------------------------------------------------------------
  *
@@ -522,7 +536,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
   // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
 
-  ShowCurrentHealthLevel( );
+  ShowCurrentHealthAndForceLevel( );
 
   ShowCurrentTextWindow( );
 
