@@ -1,3 +1,163 @@
+#ifndef _global_h
+#define _global_h
+
+#include "colodefs.h"
+
+#undef EXTERN
+#ifdef _paraplus_c
+#define EXTERN
+#else
+#define EXTERN extern
+
+EXTERN char *Alertcolor[ALLALERTCOLORS];
+EXTERN char *Shipnames[ALLSHIPS];
+EXTERN char *Decknames[];
+EXTERN char *Classname[ALLCLASSNAMES];
+EXTERN char* Classes[];
+EXTERN char* Height[];
+EXTERN char* Weight[];
+EXTERN char* Entry[];
+EXTERN char* Weaponnames[];
+EXTERN char* Sensornames[];
+EXTERN int Sensor1[];
+EXTERN int Sensor2[];
+EXTERN int Sensor3[];
+EXTERN int Armament[];
+EXTERN int Drive[];
+EXTERN int Brain[];
+EXTERN char* Brainnames[];
+EXTERN char* Drivenames[];
+EXTERN int ThisMessageTime;
+
+EXTERN shieldspec AllShields[];
+EXTERN FCU AllFCUs[];
+EXTERN influence_t Me;								/* the influence data */
+EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
+EXTERN bulletspec Bulletmap[ALLBULLETTYPES];        /* map of gun specs */
+EXTERN blastspec Blastmap[ALLBLASTTYPES];
+#endif
+
+EXTERN int InitBars;
+EXTERN int BeamLine;
+EXTERN int PreTakeEnergy;
+EXTERN int Conceptview;
+EXTERN int QuitProgram;
+EXTERN int GameOver;
+EXTERN int LastBlastHit;
+EXTERN int DMAUseON;
+EXTERN int InterruptInfolineUpdate;
+EXTERN int InvincibleMode;
+EXTERN int HideInvisibleMap;
+EXTERN int PlusExtentionsOn;
+EXTERN int Alert;
+EXTERN int ThisShip;
+EXTERN long RealScore;
+EXTERN long ShowScore;
+EXTERN long HighestScoreOfDay;
+EXTERN long LowestScoreOfDay;
+EXTERN long GreatScore;
+EXTERN char* GreatScoreName;
+EXTERN char* LowestName;
+EXTERN char* HighestName;
+EXTERN HallElement* Hallptr;
+EXTERN char* IntroMSG1;
+EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
+
+EXTERN int NumEnemys;
+EXTERN int GameAdapterPresent;
+EXTERN int ModPlayerOn;
+
+EXTERN Level CurLevel;				/* the current level data */
+EXTERN ship curShip;				/* the current ship-data */
+
+EXTERN color Transfercolor;
+EXTERN color Mobilecolor;
+
+EXTERN unsigned char *RealScreen;
+EXTERN unsigned char *InternalScreen;
+
+EXTERN bullet AllBullets[MAXBULLETS+10];
+EXTERN blast AllBlasts[MAXBLASTS+10];
+EXTERN int KeyCode;
+
+EXTERN unsigned int MapBlockIndex;
+
+EXTERN unsigned char *InternWindow;
+
+EXTERN char LeftInfo[50];
+EXTERN char RightInfo[50];
+
+EXTERN int taste;
+
+// PORT EXTERN int UpPressed;
+// PORT EXTERN int DownPressed;
+// PORT EXTERN int LeftPressed;
+// PORT EXTERN int RightPressed;
+// PORT EXTERN int SpacePressed;
+// PORT EXTERN int SpaceReleased;
+// PORT EXTERN int QPressed;
+
+#undef EXTERN
+#ifdef _misc_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN int MaxMessageTime;
+EXTERN int MinMessageTime;
+
+#undef EXTERN
+#ifdef _view_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN int View[INTERNHOEHE+1][INTERNBREITE];
+
+
+#undef EXTERN
+#ifdef _sound_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+
+#undef EXTERN
+#ifdef _graphics_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN unsigned char* LevelColorArray;
+EXTERN int* CRTC;
+EXTERN unsigned char* Data70Pointer;
+
+#undef EXTERN
+#ifdef _blocks_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN unsigned char *RahmenPicture;
+EXTERN unsigned char *Enemypointer;
+EXTERN unsigned char *Influencepointer;
+EXTERN unsigned char *MapBlocks;
+EXTERN unsigned char *Digitpointer;
+EXTERN unsigned char *ElevatorBlocks;
+EXTERN unsigned char *MenuItemPointer;
+EXTERN unsigned char *Robotptr;
+EXTERN unsigned char *ShieldBlocks;
+
+#undef EXTERN
+#ifdef _paratext_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+#endif
+
 /*=@Header==============================================================
  * $Source$
  *
@@ -9,7 +169,16 @@
  * $Author$
  *
  * $Log$
- * Revision 1.6  1994/06/19 16:20:13  prix
+ * Revision 1.10  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
+ * Revision 1.9  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.9  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.6  1994/06/19  16:20:13  prix
  * Fri May 28 16:56:52 1993: killed further vars
  * Fri May 28 17:12:45 1993: moved Macros to defs.h
  * Fri May 28 17:38:17 1993: added Gunmap[]
@@ -72,170 +241,4 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-#ifndef _global_h
-#define _global_h
 
-/* *********************************************************************** */
-/* **************************  V A R I A B L E N  ************************ */
-/* *********************************************************************** */
-
-#include "colodefs.h"
-
-#undef EXTERN
-#ifdef _paraplus_c
-#define EXTERN
-#else
-#define EXTERN extern
-
-EXTERN char *Alertcolor[ALLALERTCOLORS];
-EXTERN char *Shipnames[ALLSHIPS];
-EXTERN char *Decknames[];
-EXTERN char *Classname[ALLCLASSNAMES];
-EXTERN char* Classes[];
-EXTERN char* Height[];
-EXTERN char* Weight[];
-EXTERN char* Entry[];
-EXTERN char* Weaponnames[];
-EXTERN char* Sensornames[];
-EXTERN int Sensor1[];
-EXTERN int Sensor2[];
-EXTERN int Sensor3[];
-EXTERN int Armament[];
-EXTERN int Drive[];
-EXTERN int Brain[];
-EXTERN char* Brainnames[];
-EXTERN char* Drivenames[];
-
-EXTERN shieldspec AllShields[];
-EXTERN FCU AllFCUs[];
-EXTERN influence_t Me;								/* the influence data */
-EXTERN druidspec Druidmap[ALLDRUIDTYPES];	/* map of druid specifications */
-EXTERN bulletspec Bulletmap[ALLBULLETTYPES];        /* map of gun specs */
-EXTERN blastspec Blastmap[ALLBLASTTYPES];
-#endif
-
-EXTERN int InitBars;
-EXTERN int BeamLine;
-EXTERN int PreTakeEnergy;
-EXTERN int Conceptview;
-EXTERN int QuitProgram;
-EXTERN int GameOver;
-EXTERN int LastBlastHit;
-EXTERN int DMAUseON;
-EXTERN int InterruptInfolineUpdate;
-EXTERN int InvincibleMode;
-EXTERN int HideInvisibleMap;
-EXTERN int PlusExtentionsOn;
-EXTERN int Alert;
-EXTERN int ThisShip;
-EXTERN long RealScore;
-EXTERN long ShowScore;
-EXTERN long HighestScoreOfDay;
-EXTERN long LowestScoreOfDay;
-EXTERN long GreatScore;
-EXTERN char* GreatScoreName;
-EXTERN char* LowestName;
-EXTERN char* HighestName;
-EXTERN HallElement* Hallptr;
-EXTERN char* IntroMSG1;
-EXTERN enemy Feindesliste[MAX_ENEMYS_ON_SHIP];
-
-EXTERN int NumEnemys;
-EXTERN int GameAdapterPresent;
-EXTERN int ModPlayerOn;
-
-EXTERN Level CurLevel;				/* the current level data */
-EXTERN ship curShip;				/* the current ship-data */
-
-EXTERN color Transfercolor;
-EXTERN color Mobilecolor;
-
-EXTERN unsigned char *RealScreen;
-EXTERN unsigned char *InternalScreen;
-
-EXTERN bullet AllBullets[MAXBULLETS+10];
-EXTERN blast AllBlasts[MAXBLASTS+10];
-EXTERN int KeyCode;
-
-EXTERN unsigned int MapBlockIndex;
-
-EXTERN unsigned char *InternWindow;
-
-EXTERN char LeftInfo[50];
-EXTERN char RightInfo[50];
-
-EXTERN int taste;
-
-EXTERN int UpPressed;
-EXTERN int DownPressed;
-EXTERN int LeftPressed;
-EXTERN int RightPressed;
-EXTERN int SpacePressed;
-EXTERN int SpaceReleased;
-EXTERN int QPressed;
-
-#undef EXTERN
-#ifdef _misc_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN void interrupt (*OldInt09h)(void);
-EXTERN void interrupt (*OldInt1Ch)(void);
-EXTERN void interrupt (*OldInt23h)(void);
-EXTERN int MaxMessageTime;
-EXTERN int MinMessageTime;
-
-#undef EXTERN
-#ifdef _view_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN int View[INTERNHOEHE+1][INTERNBREITE];
-
-
-#undef EXTERN
-#ifdef _sound_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-/* Ist fuer den Soundblaster */
-EXTERN sb_register[256];
-
-
-#undef EXTERN
-#ifdef _graphics_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN unsigned char* LevelColorArray;
-EXTERN int* CRTC;
-EXTERN unsigned char* Data70Pointer;
-
-#undef EXTERN
-#ifdef _blocks_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-EXTERN unsigned char *RahmenPicture;
-EXTERN unsigned char *Enemypointer;
-EXTERN unsigned char *Influencepointer;
-EXTERN unsigned char *MapBlocks;
-EXTERN unsigned char *Digitpointer;
-EXTERN unsigned char *ElevatorBlocks;
-EXTERN unsigned char *MenuItemPointer;
-EXTERN unsigned char *Robotptr;
-EXTERN unsigned char *ShieldBlocks;
-
-#undef EXTERN
-#ifdef _paratext_c
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-
-#endif

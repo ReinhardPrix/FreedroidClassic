@@ -1,4 +1,4 @@
- /*=@Header==============================================================
+/*=@Header==============================================================
  * $Source$
  *
  * @Desc: all the define-constants and macroes
@@ -9,7 +9,16 @@
  * $Author$
  *
  * $Log$
- * Revision 1.4  1994/06/19 16:17:44  prix
+ * Revision 1.9  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
+ * Revision 1.8  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.7  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.4  1994/06/19  16:17:44  prix
  * Sat May 21 07:52:34 1994: neues Rahmenbild
  * Sat May 21 11:40:01 1994: Wait_after_killed von 20 auf 35
  * Sat May 21 11:55:23 1994: wait_after_killed von 35 auf 25
@@ -39,7 +48,10 @@
 //
 
 #define MEMDEBUG
+#define SOUND
 
+// For development purposes, the sound will not be activated unless the following definition is made
+#undef PARADROID_SOUND_SUPPORT_ON
 
 // **********************************************************************
 
@@ -51,29 +63,36 @@
 #define ERR 	-1
 #define OK		0
 
-
+#define ERRORSOUND 0
+#define BLASTSOUND 1
+#define FIRESOUND 2
+#define COLLISIONSOUND 3
 
 /* Konstanten fuer die Dateinamen */
-#define SHIPNAME	".\\daten\\ship1"
-#define PALBILD	".\\daten\\palbild.lbm"
-#define COLORFILE ".\\daten\\levels.col"
-#define BLOCKBILD1 ".\\daten\\block.lbm"
+#define SHIPNAME "./map/ship1"
+#define PALBILD	"./graphics/palbild.lbm"
+#define COLORFILE "./map/levels.col"
+#define BLOCKBILD1 "./graphics/block.lbm"
 #define BLOCKBILD2 ""
-#define TITELBILD1 ".\\daten\\title.lbm"
-#define RAHMENBILD1 ".\\daten\\rahmen.lbm"
-#define PARAPLUSRAHMENBILD ".\\daten\\plusrah1.lbm"
-#define BLASTBILD ".\\daten\\blast.lbm"
-#define BULLETBILD ".\\daten\\bullet.lbm"
-#define INFLUENCEBILD ".\\daten\\influ.lbm"
-#define DATA70ZEICHENSATZ ".\\daten\\para8x8.fnt"
-#define DIGITBILD ".\\daten\\digits.lbm"
-#define ENEMYBILD ".\\daten\\enemy.lbm"
-#define SEITENANSICHTBILD ".\\daten\\ship.lbm"
-#define EL_BLOCKS_FILE 		".\\daten\\ship2.lbm"
-#define FONTBILD ".\\daten\\parafont.lbm"
-#define CONSOLENBILD ".\\daten\\console.lbm"
-#define ROBOTPICTUREBILD ".\\daten\\robots.lbm"
-#define SHIELDPICTUREBILD ".\\daten\\shield.lbm"
+#define TITELBILD1 "./graphics/title.lbm"
+#define RAHMENBILD1 "./graphics/rahmen.lbm"
+#define PARAPLUSRAHMENBILD "./graphics/plusrah1.lbm"
+#define BLASTBILD "./graphics/blast.lbm"
+#define BULLETBILD "./graphics/bullet.lbm"
+#define INFLUENCEBILD "./graphics/influ.lbm"
+#define DATA70ZEICHENSATZ "./graphics/para8x8.fnt"
+#define DIGITBILD "./graphics/digits.lbm"
+#define ENEMYBILD "./graphics/enemy.lbm"
+#define SEITENANSICHTBILD "./graphics/ship.lbm"
+#define EL_BLOCKS_FILE 		"./graphics/ship2.lbm"
+#define FONTBILD "./graphics/parafont.lbm"
+#define CONSOLENBILD "./graphics/console.lbm"
+#define ROBOTPICTUREBILD "./graphics/robots.lbm"
+#define SHIELDPICTUREBILD "./graphics/shield.lbm"
+
+#define TAKEOVERBACKGROUNDBILD "./graphics/overtake.lbm"
+#define PLAYGROUND_FILE	"./graphics/to_ground.lbm"	/* graphics - files */
+#define ELEMENTS_FILE	"./graphics/to_elem.lbm"
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */
@@ -112,8 +131,27 @@
 
 #define VIEWBREITE 9
 #define VIEWHOEHE 4
-#define INTERNBREITE 11			/* 11 */
-#define INTERNHOEHE 5
+
+#define INTERNBREITE 13
+#define INTERNHOEHE 7
+
+/* Diese Konstanten geben die Groeáe des unsichtbaren Bereiches links,rechts
+	und oberhalb des Userfensters an. */
+// #define USERFENSTERLINKS ((INTERNBREITE-VIEWBREITE)*BLOCKBREITE/2) // (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
+// #define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
+//#define USERFENSTERUNTEN USERFENSTEROBEN+USERFENSTERHOEHE
+//#define USERFENSTERRECHTS (BLOCKBREITE/2+10) /* 32 */  /* 32+16 */
+//#define USERFENSTERBREITE ((INTERNBREITE-1)*BLOCKBREITE-20)  /* (288-32) */
+//#define USERFENSTERHOEHE ((INTERNHOEHE-1)*BLOCKHOEHE)     /* 112 */
+
+#define USERFENSTERHOEHE 		VIEWHOEHE*BLOCKHOEHE
+#define USERFENSTERBREITE 		VIEWBREITE*BLOCKBREITE
+
+#define USERFENSTERPOSX ( (SCREENBREITE-USERFENSTERBREITE) / 2)
+#define USERFENSTERPOSY ( (SCREENHOEHE-USERFENSTERHOEHE) )
+
+//#define USERFENSTEROBEN 		BLOCKHOEHE+BLOCKHOEHE/2
+//#define USERFENSTERLINKS 		1*BLOCKBREITE
 
 #define BULLETSPEEDINFLUENCE 2
 
@@ -126,7 +164,7 @@
 #define ENEMYPHASES 8
 
 #define WAIT_LEVELEMPTY		18		/* warte bevor Graufaerben */
-#define WAIT_AFTER_KILLED	25		/* warte, bevor Spiel aus */
+#define WAIT_AFTER_KILLED	45		/* warte, bevor Spiel aus */
 #define WAIT_SHIPEMPTY	20
 #define WAIT_TRANSFERMODE	5		/* warte, bevor in Transfermode schalten */
 
@@ -154,18 +192,6 @@ enum _directions {
 	CENTER,
 	LIGHT	/* special: checking passability for light, not for a checkpos */
 };
-
-/* Diese Konstanten geben die Groesse des unsichtbaren Bereiches links,rechts
-	und oberhalb des Userfensters an. */
-#define USERFENSTERLINKS (BLOCKBREITE/2+10)  /* 32 */  /* 32+16 */
-#define USERFENSTERRECHTS (BLOCKBREITE/2+10) /* 32 */  /* 32+16 */
-#define USERFENSTEROBEN BLOCKHOEHE/2  /* 25 */
-
-#define USERFENSTERBREITE ((INTERNBREITE-1)*BLOCKBREITE-20)  /* (288-32) */
-#define USERFENSTERHOEHE ((INTERNHOEHE-1)*BLOCKHOEHE)     /* 112 */
-#define USERFENSTERPOSX ( (SCREENBREITE-USERFENSTERBREITE) / 2)
-#define USERFENSTERPOSY ( (SCREENHOEHE-USERFENSTERHOEHE) )
-#define USERFENSTERUNTEN USERFENSTEROBEN+USERFENSTERHOEHE
 
 /* Koordinaten der Bloecke die isoliert werden sollen */
 #define INFLUENCEBLOCKPOSITIONX 0
@@ -228,7 +254,7 @@ enum _directions {
 #define SpeedX (Me.speed.x)
 #define SpeedY (Me.speed.y)
 
-#define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
+// #define SwapScreen() MyMemcpy(RealScreen, InternalScreen, SCREENLEN*SCREENHEIGHT)
 
 #define BREMSDREHUNG 3 		/* warte 3*, bevor Influencer weitergedreht wird */
 

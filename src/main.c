@@ -1,13 +1,14 @@
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _paraplus_c
 
-extern void interrupt Interrupt1C(void);
+/* *********************************************************************** */
+/* ************  P R AE P R O Z E S S O R D I R E K T I V E N  ************ */
+/* *********************************************************************** */
 
-/* *********************************************************************** */
-/* ************  P R é P R O Z E S S O R D I R E K T I V E N  ************ */
-/* *********************************************************************** */
+// Die folgenden Schalter schalten Debugmeldungen in gewissen speziellen Funktionen aus oder ein
+#undef DEBUG_MYRANDOM
 
 /* Schalter fuer die bedingte Kompilierung */
 #undef DREHSCHUESSE
@@ -16,29 +17,35 @@ extern void interrupt Interrupt1C(void);
 #undef INFLUENCEWALLDEBUG
 #undef DEBUGREPORT
 #undef BULLETSPEEDUPONRICHTUNG
-#undef NOKEYBEEPS
-#undef SAYINFLUENCEPOS
-#undef KEYDEBUG
+
 #undef SAYJOYPOS
 #undef SPEICHERSPAREN
-//#define TITLEAUS
+
+#define TITLE_EIN
+
 #undef MODSCHASEIN
 #undef NOJUNKWHILEINIT
 
 
-#include <stdio.h>
-#include <conio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <alloc.h>
-#include <dos.h>
+#include <stdio.h>
+#include <string.h>
 #include <time.h>
+#include <signal.h>
+#include <unistd.h>
+#include <signal.h>
+#include <time.h>
+#include <vga.h>
+#include <vgagl.h>
+#include <vgakeyboard.h>
+#include <sys/stat.h>
+#include <sys/asoundlib.h>
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "fm_hrd.h"
+// That goes out for the PORT !!!! #include "fm_hrd.h"
 #include "paratext.h"
 #include "paravars.h"
 #include "ship.h"
@@ -57,10 +64,233 @@ extern void interrupt Interrupt1C(void);
 #define SCROLLSTARTY		SCREENHOEHE
 #define CHARSPERLINE		(int)(USERFENSTERBREITE/FONTBREITE)
 
+int AutoTerminationTime=60;
 int SetDebugPos=FALSE;
+int vgamode;
+int ThisMessageTime;
 
+int card = 0;
+int device = 0;
+void* handle;
+
+int TestSound(void);
+void CalibratedDelay(long);
 void Debriefing(void);
 void ShowHighscoreList(void);
+
+//
+//
+//
+
+// int TestSound(void){
+//  int err;
+//  printf("\nEverything ready to test the alsa sound output... commencing...");
+//
+//  printf("\nOpening PCM interface...");
+//  if ( (err = snd_pcm_open( &handle, card, device,
+//			    SND_PCM_OPEN_PLAYBACK )) < 0 ) {
+//    fprintf( stderr,
+//	     "\nint TestSound(void): open failed: %s\n", snd_strerror( err ) );
+//    return -1;
+//  } else {
+//    printf("\nint TestSound(void): opening PCM interface seems to have worked. Good.");
+//  }
+//
+//  
+//
+//
+//} // void TestSound(void);
+//
+
+
+void CalibratedDelay(long delay){
+  usleep(delay);
+} // void CalibatedDelay(long delay)
+
+// This Function is for the SVGALIB for the PORT!!!!
+//
+
+int LeftPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORLEFT)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int LeftPressed(void)
+
+int RightPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORRIGHT)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int RightPressed(void)
+
+int UpPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORUP)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int UpPressed(void)
+
+int DownPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_CURSORDOWN)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int DownPressed(void)
+
+int SpacePressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_SPACE)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int SpacePressed(void)
+
+int QPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_Q)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int QPressed(void)
+
+int WPressed(void){
+  keyboard_update();
+  if(keyboard_keypressed(SCANCODE_W)) {
+    return(TRUE);
+  } else {
+    return(FALSE);
+  }
+} // int WPressed(void)
+
+// This Function is for the SVGALIB for the PORT!!!!
+//
+// With Luck, this will restore the vga text mode after some time!
+//
+
+static void timeout(int sig)
+{
+  keyboard_close();
+  vga_setmode(TEXT);
+  printf("Automatic termination after %d seconds.\n\n", AutoTerminationTime);
+  exit(1);
+}
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+void reverse(char s[])
+{
+  int c,i,j;
+  for(i=0,j=strlen(s)-1;i<j;i++,j--){
+    c=s[i];
+    s[i]=s[j];
+    s[j]=c;
+  }
+} // void reverse(char s[]) siehe Kernighan&Ritchie!
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+char* itoa(int n,char s[], int Dummy) {
+  int i, sign;
+
+  if ((sign=n)<0)
+    n=-n;
+  i=0;
+  do {
+    s[i++]=n%10+'0';
+  } while ((n /= 10) > 0);
+  if (sign < 0)
+    s[i++]='-';
+  s[i]='\0';
+  reverse(s);
+  return s;
+} // void itoa(int n, char s[]) siehe Kernighan&Ritchie!
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+char *ltoa(long n,char s[],int Dummy) {
+  int i, sign;
+
+  if ((sign=n)<0)
+    n=-n;
+  i=0;
+  do {
+    s[i++]=n%10+'0';
+  } while ((n /= 10) > 0);
+  if (sign < 0)
+    s[i++]='-';
+  s[i]='\0';
+  reverse(s);
+  return s;
+} // void ltoa(long n, char s[]) angelehnt an itoa!
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+void delay(int Dauer){
+
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+void gotoxy(int x, int y){
+
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+int kbhit(void){
+
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+int coreleft(void){
+  return 12345;
+};
+
+// This Function is for the PORT!!!!
+// Replacing all MyRandom-calls with MyMyRandom-calls
+
+int MyRandom(int Obergrenze)
+{
+  float Zwisch;
+  double ReinerZufall;
+  int Endwert;
+
+
+  //  printf("\nint MyRandom(int Obergrenze): Obergrenze ist jetzt: %d.",Obergrenze);
+  ReinerZufall=(double)rand();
+  //  printf("\nint MyRandom(int Obergrenze): Reiner Zufall ist jetzt: %f.",ReinerZufall);
+  Zwisch=((float)ReinerZufall) / ((float)RAND_MAX);
+  //  printf("\nint MyRandom(int Obergrenze): Zwisch ist jetzt: %f.",Zwisch);
+  Zwisch=Zwisch*((float)Obergrenze);
+  Endwert=(unsigned int)Zwisch;
+#ifdef DEBUG_MYRANDOM
+  printf("\nint MyRandom(int Obergrenze): Endwert ist jetzt: %d.",Endwert);
+#endif
+  return Endwert;
+};
+
+
+
+
 
 /*@Function============================================================
 @Desc: main(): the heart of the Game 
@@ -68,189 +298,209 @@ void ShowHighscoreList(void);
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
-void main(void)
+int main(void)
 {
-	int i;
+  int i;
 
-	GameOver = FALSE;
-	QuitProgram = FALSE;
-	Conceptview = FALSE;
+  // Use ALSA?  No, thanks.
+  // TestSound();
+  // exit(0);
 
-	InterruptInfolineUpdate=TRUE;
-	DMAUseON = 0;
+  GameOver = FALSE;
+  QuitProgram = FALSE;
+  Conceptview = FALSE;
+  
+  InterruptInfolineUpdate=TRUE;
+  DMAUseON = 0;
 
-	/* Initialisieren der globalen Variablen und Arrays */
-	SaveVideoMode();
-	InitParaplus();
+  /* Initialisieren der globalen Variablen und Arrays */
+  SaveVideoMode();
+  InitParaplus();
 
 #if REDRAW001OFF == 0
-	RedrawInfluenceNumber();
+  RedrawInfluenceNumber();
 #endif
 
-	while( !QuitProgram ) {
-		
-		/* InitNewGame */
-		InitNewGame();
-	
-		GameOver = FALSE;
-		
-		while (!GameOver && !QuitProgram) {
+  printf("void main(void): Vor Beginn der !QuitProgram - Schreife....\n");
 
-			PlusRahmen(RealScreen);
+  while( !QuitProgram ) {
 		
-			/* Umschaltung Joystick/Keyboard */
-			while( kbhit() ) {
-				if( (taste = getch()) == 'k' ) {
-					GameAdapterPresent = !GameAdapterPresent;
-					RightPressed = LeftPressed = UpPressed = DownPressed = SpacePressed = FALSE;
-				}
-				if(taste == 'q') QuitProgram = TRUE;
-				if(taste == 'm') ModPlayerOn = !ModPlayerOn;
-				if(taste == 'd') Me.energy=0; 
-				if(taste == 'l') ShowHighscoreList();
-				if(taste == 'i') ShowDebugInfos();
-				if(taste == 'v') HideInvisibleMap = !HideInvisibleMap; 
-				if(taste == 'c') Cheatmenu();
-				if(taste == 'p') {
-					while (!SpacePressed) {
-						JoystickControl();
-						Me.status=PAUSE;
-						while (!TimerFlag) JoystickControl();
-						TimerFlag=FALSE;
-						AnimateInfluence();
-						AnimateRefresh();
-						AnimateEnemys();
-						GetInternFenster();
-						PutInternFenster();
-						if (kbhit()) taste=getch();
-						if (taste == 'c') {
-							JoystickControl();
-							Me.status=CHEESE;
-							while (!SpacePressed) {
-								JoystickControl();
-								if (kbhit()) taste=getch();
-								if (taste == ' ') SpacePressed = TRUE;
-							}
-							while (SpacePressed) {
-								JoystickControl();
-								if (kbhit()) taste=getch();
-								if (taste == ' ') SpacePressed = FALSE;
-							}
-							taste = 1;
-						}
-						if (taste == ' ') SpacePressed = TRUE;
-					}
-					while (SpacePressed) JoystickControl();
-					KillTastaturPuffer();
-				}
-			} /* if kbhit() */
+    /* InitNewGame */
+    InitNewGame();
 	
-			if( !TimerFlag ) continue;		/* the clock - timing */
-			else TimerFlag = FALSE;
-	
-			if( ShipEmptyCounter == 1) GameOver = TRUE;
+    GameOver = FALSE;
+		
+    printf("void main(void): Vor Beginn der !GameOver && !QuitProgram - Schleife....\n");
 
-			LastBlastHit++;
+    while (!GameOver && !QuitProgram) {
 
-			/*
-			 * Hier wird die Statuszeile ausgegeben
-			 *
-			 */
-#define STATUS_OFF
-#ifndef STATUS_OFF
-			gotoxy(1,1);
-			printf("Paradroid ");
-			if (PlusExtentionsOn) printf("+"); else printf("C-64");
-			printf(" Control:");
-			if (GameAdapterPresent) printf("Joy"); else printf("Keys");
-			printf(" Energy: %d\n",Me.energy);
-#endif
-#ifdef KEYDEBUG
-			printf("Right:%d,Left:%d,Up:%d,Down:%d,Space:%d.\n",RightPressed,LeftPressed,UpPressed,DownPressed,SpacePressed);
-			printf(" KeyCode: %x  \n",KeyCode);
-#endif
-			 
-			/* Die Tueren im Level auf und zu bewegen */
-	    	MoveLevelDoors();
+      // Here are some things, that were previously done by some periodic interrupt function
+
+      ThisMessageTime++;
+		
+      if (Me.firewait > 0) Me.firewait--;
+      	
+      if ( ShipEmptyCounter > 1 ) ShipEmptyCounter --;
+      if ( WaitElevatorCounter > 0) WaitElevatorCounter --;
+      	
+      if ( CurLevel->empty > 2) CurLevel->empty--;
+      
+      if(RealScore > ShowScore) ShowScore++;
+      if(RealScore < ShowScore) ShowScore--;
+      
+      
+      if (InterruptInfolineUpdate) {
+      	UpdateInfoline();
+      	SetInfoline();
+      }
+      
+      // This is the end of the things, that were previously done by periodic interrupt
+
 	
-	    	/* Refreshes Animieren */
-	    	AnimateRefresh();
+      printf("void main(void): Innerhalb der !GameOver && !QuitProgram - Schleife....\n");
+
+      keyboard_update();
+
+      DisplayRahmen(RealScreen);
+
+      CalibratedDelay(20000);  //  This should cause a little delay to make the game more playable
+
+      if(keyboard_keypressed(SCANCODE_Q)) {
+	printf("\n*****************************************************");
+	printf("\nvoid main(void): Termination cause of Q-Pressing!!!!!");
+	printf("\n*****************************************************\n\n");
+	Terminate(0);
+      }
+      if(keyboard_keypressed(SCANCODE_D)) Me.energy=0; 
+      if(keyboard_keypressed(SCANCODE_L)) ShowHighscoreList();
+      if(keyboard_keypressed(SCANCODE_I)) ShowDebugInfos();
+      if(keyboard_keypressed(SCANCODE_V)) HideInvisibleMap = !HideInvisibleMap; 
+      if(keyboard_keypressed(SCANCODE_C)) Cheatmenu();
+      if(keyboard_keypressed(SCANCODE_P)) {
+	while (!SpacePressed()) {
+	  JoystickControl();
+	  Me.status=PAUSE;
+	  while (!TimerFlag) JoystickControl();
+	  TimerFlag=FALSE;
+	  AnimateInfluence();
+	  AnimateRefresh();
+	  AnimateEnemys();
+	  GetInternFenster();
+	  PutInternFenster();
+	  //PORT	    if (kbhit()) taste=getch();
+	  if (taste == 'c') {
+	    JoystickControl();
+	    Me.status=CHEESE;
+	    while (!SpacePressed()) {
+	      JoystickControl();
+	      //PORT		if (kbhit()) taste=getch();
+	      //PORTif (taste == ' ') SpacePressed = TRUE;
+	    }
+	    while (SpacePressed()) {
+	      JoystickControl();
+	      //PORT		if (kbhit()) taste=getch();
+	      //PORTif (taste == ' ') SpacePressed = FALSE;
+	    }
+	    taste = 1;
+	  }
+	  //PORTif (taste == ' ') SpacePressed = TRUE;
+	}
+	while (SpacePressed()) JoystickControl();
+	KillTastaturPuffer();
+      } // if SCANCODE_P...
+      // } /* if while () */
+      
+      //PORT	if( !TimerFlag ) continue;		/* the clock - timing */
+      //PORT	else TimerFlag = FALSE;
+      
+      if( ShipEmptyCounter == 1) GameOver = TRUE;
+
+      LastBlastHit++;
+
+      /*
+       * Hier wird die Statuszeile ausgegeben
+       *
+       */
+      
+      /* Die Tueren im Level auf und zu bewegen */
+      MoveLevelDoors();
+      
+      /* Refreshes Animieren */
+      AnimateRefresh();
 	
-			for (i=0;i<NumEnemys;i++) {
-				if (Feindesliste[i].warten > 0) Feindesliste[i].warten--;
-				if (Feindesliste[i].firewait > 0) Feindesliste[i].firewait--;
-			}
+      for (i=0;i<NumEnemys;i++) {
+	if (Feindesliste[i].warten > 0) Feindesliste[i].warten--;
+	if (Feindesliste[i].firewait > 0) Feindesliste[i].firewait--;
+      }
 	
 	    		
-			/* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
-			MoveBullets();
+      /* Bullets entsprechend ihrer Geschwindigkeit weiterbewegen */
+      MoveBullets();
 	
-			/* Blasts in der Explosionsphase weiterbewegen */
-			ExplodeBlasts();
+      /* Blasts in der Explosionsphase weiterbewegen */
+      ExplodeBlasts();
 	
 	
-			/* Einen Ausschnitt aus der Gesamtlevelkarte machen */
-			GetView();
+      /* Einen Ausschnitt aus der Gesamtlevelkarte machen */
+      GetView();
 	
-			/* Eventuell die momentane Position und Keycode anzeigen */
-			ShowPosition();
-			
-	
-			GetInternFenster();
-			PutInternFenster();
-			for (i=0;i<MAXBULLETS;i++) CheckBulletCollisions(i);
-			PutMessages();
-	
-			/* Wenn vorhanden: Joystick einlesen */
-			JoystickControl();
+      GetInternFenster();
+      PutInternFenster();
 
-#ifdef NOKEYBEEPS
-			KillTastaturPuffer();		// BEEPs vorbeugen
+#ifdef PARADROID_SOUND_SUPPORT_ON
+      YIFF_Server_Check_Events();
 #endif
-	
-			/* Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern */
-			MoveInfluence();
+
+      UpdateInfoline();
+      for (i=0;i<MAXBULLETS;i++) CheckBulletCollisions(i);
+      PutMessages();
+      
+      printf("\nvoid main(void): PutMessages() ist zumindest ohne Probleme wieder zurueckgekehrt.");
+  
+      /* Wenn vorhanden: Joystick einlesen */
+      JoystickControl();
+
+      /* Gemaess den gedrueckten Tasten die Geschwindigkeit veraendern */
+      MoveInfluence();
 	
 
-			MoveEnemys();			/* Auch die Feinde bewegen */
+      MoveEnemys();			/* Auch die Feinde bewegen */
 
 	
-			/* Bei animierten Influencer die Phasen weiterzaehlen */
-			AnimateInfluence();
+      /* Bei animierten Influencer die Phasen weiterzaehlen */
+      AnimateInfluence();
 	
-			/* Bei den Feinden auch Phasen weiterzaehlen */
+      /* Bei den Feinden auch Phasen weiterzaehlen */
 
-			AnimateEnemys();
+      AnimateEnemys();
 
-			/* Raeder bremsen die Fahrt des Influencers erheblich */
-	      Reibung();
+      /* Raeder bremsen die Fahrt des Influencers erheblich */
+      printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
+      printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
+      Reibung();
 	
-			/* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
-			Me.pos.x+=SpeedX;
-			Me.pos.y+=SpeedY;
-			AdjustSpeed();
+      /* Influencedruid nach der momentanen Geschwindigkeit weiterbewegen */
+      printf("\nvoid main(void): SpeedX ist jetzt: %d.",SpeedX);
+      printf("\nvoid main(void): SpeedY ist jetzt: %d.",SpeedY);
+      Me.pos.x+=SpeedX;
+      Me.pos.y+=SpeedY;
+      AdjustSpeed();
 	
-			/* Testen ob der Weg nicht durch Mauern verstellt ist */
-			BounceInfluencer();
-			InfluenceEnemyCollision();
+      /* Testen ob der Weg nicht durch Mauern verstellt ist */
+      BounceInfluencer();
+      InfluenceEnemyCollision();
 	
-			RotateBulletColor();
-
-			if( CurLevel->empty == 2) {
-				LevelGrauFaerben();
-				CurLevel->empty = TRUE;
-			} /* if */
-	
-			
-			/* Die Ausgaben im Rahmen aktualisieren */
-//			SetInfoline();
-//			UpdateInfoline();
-		
-	   } /* while !GameOver */
-	} /* while !QuitProgram */
-
-	Terminate(0);
-}
+      RotateBulletColor();
+      
+      if( CurLevel->empty == 2) {
+	LevelGrauFaerben();
+	CurLevel->empty = TRUE;
+      } /* if */
+      
+    } /* while !GameOver */
+  } /* while !QuitProgram */
+  Terminate(0);
+} // void main(void)
 
 /*@Function============================================================
 @Desc: InitNewGame(): 	Startwerte fuer neues Spiel einstellen 
@@ -260,20 +510,23 @@ void main(void)
 * $Function----------------------------------------------------------*/
 void InitNewGame(void)
 {
-	int i;	
+  int i;	
 
-	InterruptInfolineUpdate = TRUE;
-	LastBlastHit = 0;
-	BeamLine = BLOCKBREITE;
-	/*
-	 * Die Punkte wieder auf 0 setzen
-	 */
-	RealScore=0;
-	ShowScore=0;
+  InterruptInfolineUpdate = TRUE;
+  LastBlastHit = 0;
+  BeamLine = BLOCKBREITE;
+  PlusExtentionsOn = FALSE;
+  ThisMessageTime=0;
+  
+  /*
+   * Die Punkte wieder auf 0 setzen
+   */
+  RealScore=0;
+  ShowScore=0;
 
-	/* L"oschen der Messagequeue */
-	KillQueue();
-	InsertMessage(" Hello. Good Game And Good Luck To The.");
+  /* L"oschen der Messagequeue */
+  KillQueue();
+  InsertMessage(" Hello. Good Game And Good Luck To The.");
 	
 	/* Alle Bullets und Blasts loeschen */
 	for (i=0; i<MAXBULLETS; i++) {
@@ -291,7 +544,7 @@ void InitNewGame(void)
 		curShip.AllLevels[i]->empty =FALSE;
 
 
-	i=random(4);
+	i=MyRandom(4);
 	switch(i) {
 		case 0: {
 			Me.pos.x = 120;
@@ -337,7 +590,7 @@ void InitNewGame(void)
 	
 
 	/* Introduction und Title */
-#ifndef TITLEAUS
+#ifdef TITLE_EIN
 	Title();
 #endif
 	
@@ -348,10 +601,11 @@ void InitNewGame(void)
 	RightInfo[0] = '\0';
 	
 	/* Den Rahmen fuer das Spiel anzeigen */
-	ClearGraphMem(RealScreen);
+	ClearVGAScreen();
 	DisplayRahmen(RealScreen);
+	// DisplayRahmen(NULL);
 
-   SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
+	SetTextBorder(0,0, SCREENBREITE, SCREENHOEHE, 40 );
 
 	SetTextColor(FONT_WHITE,FONT_RED);
 //	InitPalette();
@@ -370,145 +624,217 @@ void InitNewGame(void)
 * $Function----------------------------------------------------------*/
 void InitParaplus(void)
 {
-	int i;
-	init_sb();
+  int i;
 
-	/* Zuerst den Videomodus setzen */
-	SetVideoMode(0x13);
+  printf("void InitParaplus(void) wurde echt aufgerufen....\n");
 
-	/* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */
-#ifdef NOJUNKWHILEINIT
-	Monitorsignalunterbrechung(1);
+  printf("    Die SVGALIB wird nun initialisiert.... nach einem Tastendruck gehts los! \n");
+  getchar();
+  vga_init();
+  vgamode=vga_getdefaultmode();
+  if ((vgamode == -1) || (vga_getmodeinfo(vgamode)->bytesperpixel != 1))
+    vgamode = G320x200x256;
+  
+  if (!vga_hasmode(vgamode)) {
+    printf("Mode not available.\n");
+    exit(1);
+  }
+
+  vga_setmode(vgamode);
+  gl_setcontextvga(vgamode);
+  gl_enableclipping();
+
+  signal(SIGALRM,timeout);
+
+  printf("    Die Tastatur wird nun fuer die svgalib initialisiert.... nach einem Tastendruck gehts los!\n");
+  getchar();
+  if (keyboard_init()) {
+    printf("FEHLER! FEHLER! Keyboard konnte nicht initialisiert werden!!!!!");
+    exit(1);
+  }
+
+  /* Translate to 4 keypad cursor keys, and unify enter key. */
+  keyboard_translatekeys(TRANSLATE_CURSORKEYS | TRANSLATE_KEYPADENTER |
+			 TRANSLATE_DIAGONAL);
+  /* (TRANSLATE_DIAGONAL seems to give problems.) Michael: No doesn't...
+     but might not do what you expect.. */
+
+  printf("\nvoid InitParaplus(void): An alarm signal will be issued in %d seconds, terminating the program for safety.", 
+	 AutoTerminationTime);
+  alarm(AutoTerminationTime);	/* Terminate after some seconds for safety. */
+
+  // ******** ACHTUNG!  Hier folgt nun die Original-Initialisierungsroutine ***********
+
+#ifdef PARADROID_SOUND_SUPPORT_ON
+  Init_YIFF_Sound_Server();
 #endif
 
-	/* Initialisierung der Highscorewerte */
-	LowestName=MyMalloc(200);
-	HighestName=MyMalloc(200);
-	GreatScoreName=MyMalloc(200);
-	strcpy(LowestName," I'm the lowest.");
-	strcpy(HighestName,"I'm the highest.");
-	strcpy(GreatScoreName,"I'm great.");
-	Hallptr=MyMalloc(sizeof(HallElement)+1);
-	Hallptr->PlayerScore=0;
-	Hallptr->PlayerName=MyMalloc(10);
-	strcpy(Hallptr->PlayerName," dummy ");
-	Hallptr->NextPlayer=NULL;
+  /* Zuerst den Videomodus setzen */
+  //  SetVideoMode(0x13);
 
-	LowestScoreOfDay=100;
-	HighestScoreOfDay=1000;
-	GreatScore=101;
+  /* Unterbrechung des Monitorsignal solange Initialisierung l"auft. */
+  // #ifdef NOJUNKWHILEINIT
+  //  Monitorsignalunterbrechung(1);
+  // #endif
 
-	HideInvisibleMap=TRUE;         /* Hide invisible map-parts */
+  /* Initialisierung der Highscorewerte */
+  LowestName=MyMalloc(200);
+  HighestName=MyMalloc(200);
+  GreatScoreName=MyMalloc(200);
+  strcpy(LowestName," I'm the lowest.");
+  strcpy(HighestName,"I'm the highest.");
+  strcpy(GreatScoreName,"I'm great.");
+  Hallptr=MyMalloc(sizeof(HallElement)+1);
+  Hallptr->PlayerScore=0;
+  Hallptr->PlayerName=MyMalloc(10);
+  strcpy(Hallptr->PlayerName," dummy ");
+  Hallptr->NextPlayer=NULL;
+  
+  LowestScoreOfDay=100;
+  HighestScoreOfDay=1000;
+  GreatScore=101;
+  
+  HideInvisibleMap=TRUE;         /* Hide invisible map-parts */
 	
-	/* Initialisieren der CRTC Portadresse */
-	CRTC=(int*)MK_FP(0,0x0463);
+  printf("\nvoid InitParaplus(void): Highscorevariablen wurden erfolgreich initialisiert...");
+
+  /* Initialisieren der CRTC Portadresse */
+  //PORT CRTC=(int*)MK_FP(0,0x0463);
 
 
-	if (InitLevelColorTable() == FALSE) {
-		printf(" Kann Farben nicht initialisieren !");
-		getch();
-		Terminate(0);
-	}
+  if (InitLevelColorTable() == FALSE) {
+    printf(" Kann Farben nicht initialisieren !");
+    getchar();
+    Terminate(0);
+  }
  
-	if (InitParaplusFont() == ERR) {
-		printf(" Kann Schrift nicht initialisieren !");
-		getch();
-		Terminate(ERR);
-	}
+  if (InitParaplusFont() == ERR) {
+    printf(" Kann Schrift nicht initialisieren !");
+    getchar();
+    Terminate(ERR);
+  }
 
-	MinMessageTime=55;
-	MaxMessageTime=850;
+  printf("\nvoid InitParaplus(void): Farben- und Fontinitialisierung zumindest fehlerfrei ueberwunden....");
+
+  MinMessageTime=55;
+  MaxMessageTime=850;
 /* Farbwerte fuer die Funktion SetColors */
-	Transfercolor.gruen=13;
-	Transfercolor.blau=13;
-	Transfercolor.rot=63;
-	Mobilecolor.gruen=63;
-	Mobilecolor.blau=63;
-	Mobilecolor.rot=63;
+  Transfercolor.gruen=13;
+  Transfercolor.blau=13;
+  Transfercolor.rot=63;
+  Mobilecolor.gruen=63;
+  Mobilecolor.blau=63;
+  Mobilecolor.rot=63;
 
+  Druidmap[DRUID001].notes="robot activity\ninfluence device. This\nhelmet is self-powered\nand will control any\nrobot for a short time.\nLasers are turret‹mounted.\n";
+  Druidmap[DRUID123].notes="simpe rubbish\ndiposal robot. Common\ndevice in most space\ncraft to maintain a clean\nship.\n";
+  Druidmap[DRUID139].notes="created by Dr.\nMasternak to clean up\nlarge heaps of rubbish.\nIts large scoop is used to\ncollect rubbish. It is\nthen crushed internally.\n";
+  Druidmap[DRUID247].notes="light duty servant\nrobot. One of the first\nto use the anti-grav\nsystem.\n";
+  Druidmap[DRUID249].notes="cheaper version of\nthe anti-grav servant\nrobot.\n";
+  Druidmap[DRUID296].notes="this robot is used\nmainly for serving drinks.\nA tray is mounted on the\nhead. Built by Orchard\nand Marsden Enterprises.\n";
+  Druidmap[DRUID302].notes="common device\nfor moving small\npackages. Clamp is\nmounted on the lower\nbody.\n";
+  Druidmap[DRUID329].notes="early type\nmessenger robot. Large\nwheels impede motion on\nsmall craft.an";
+  Druidmap[DRUID420].notes="slow maintenance\nrobot. Confined to drive\nmaintenance during flight.\n";
+  Druidmap[DRUID476].notes="ship maintenance\nrobot. Fitted with\nmultiple arms to carry\nout repairs to the ship\nefficiently. All craft\nbuilt after the Jupiter‹incident are supplied\nwith a team of these.\n";
+  Druidmap[DRUID493].notes="slave maintenance\ndroid. Standard version\nwill carry its own\ntoolbox.\n";
+  Druidmap[DRUID516].notes="early crew droid.\nAble to carry out simple\nflight checks only. No\nlonger supplied.\n";
+  Druidmap[DRUID571].notes="standard crew\ndroid. Supplied with the\nship.\n";
+  Druidmap[DRUID598].notes="a highly\nsophisticated device.\nAble to control the\nRobo-Freighter on its\nown.\n";
+  Druidmap[DRUID614].notes="low security\nsentinel droid. Used to\nprotect areas of the ship\nfrom intruders. A slow\nbut sure device.\n";
+  Druidmap[DRUID615].notes="sophisticated\nsentinel droid. Only 2000\nbuilt by the Nicholson\nCompany. these are now\nvery rare.";
+  Druidmap[DRUID629].notes="low sentinel\ndroid. Lasers are built\ninto the turret. These\nare mounted on a small\ntank body. May be fitted\nwith an auto-cannon on‹the Gillen version.\n";
+  Druidmap[DRUID711].notes="heavy duty battle\ndroid. Disruptor is built\ninto the head. One of the\nfirst in service with the\nMilitary.\n";
+  Druidmap[DRUID742].notes="this version is\nthe one mainly used by\nthe Military.\n";
+  Druidmap[DRUID751].notes="very heavy duty\nbattle droid. Only a few\nhave so far entered\nservice. These are the\nmost powerful battle\nunits ever built.\n";
+  Druidmap[DRUID821].notes="a very reliable\nanti-grav unit is fitted\ninto this droid. It will\npatrol the ship and\neliminate intruders as\nsoon as detected by‹powerful sensors.\n";
+  Druidmap[DRUID834].notes="early type\nanti-grav security droid.\nFitted with an\nover-driven anti-grav unit.\nThis droid is very fast\nbut is not reliable.\n";
+  Druidmap[DRUID883].notes="this droid was\ndesigned from archive\ndata. For some unknown\nreason it instils great\nfear in Human\nadversaries.\n";
+  Druidmap[DRUID999].notes="experimental\ncommand cyborg. Fitted\nwith a new tipe of\nbrain. Mounted on a\nsecurity droid anti-grav\nunit for convenience.‹warning: the influence\ndevice may not control a\nprimode brain for long.\n";  	
+  IntroMSG1="Dies symbolisiert den Text, der zu Beginn des Spiels ausgegeben werden soll. Nach einer gewissen Zeit soll der Text nach unten weiterscrolloen und zwar in einer moeglichst fliessenden Form.";
 	
-	Druidmap[DRUID001].notes="robot activity\ninfluence device. This\nhelmet is self-powered\nand will control any\nrobot for a short time.\nLasers are turret‹mounted.\n";
- 	Druidmap[DRUID123].notes="simpe rubbish\ndiposal robot. Common\ndevice in most space\ncraft to maintain a clean\nship.\n";
- 	Druidmap[DRUID139].notes="created by Dr.\nMasternak to clean up\nlarge heaps of rubbish.\nIts large scoop is used to\ncollect rubbish. It is\nthen crushed internally.\n";
- 	Druidmap[DRUID247].notes="light duty servant\nrobot. One of the first\nto use the anti-grav\nsystem.\n";
- 	Druidmap[DRUID249].notes="cheaper version of\nthe anti-grav servant\nrobot.\n";
- 	Druidmap[DRUID296].notes="this robot is used\nmainly for serving drinks.\nA tray is mounted on the\nhead. Built by Orchard\nand Marsden Enterprises.\n";
- 	Druidmap[DRUID302].notes="common device\nfor moving small\npackages. Clamp is\nmounted on the lower\nbody.\n";
- 	Druidmap[DRUID329].notes="early type\nmessenger robot. Large\nwheels impede motion on\nsmall craft.an";
- 	Druidmap[DRUID420].notes="slow maintenance\nrobot. Confined to drive\nmaintenance during flight.\n";
- 	Druidmap[DRUID476].notes="ship maintenance\nrobot. Fitted with\nmultiple arms to carry\nout repairs to the ship\nefficiently. All craft\nbuilt after the Jupiter‹incident are supplied\nwith a team of these.\n";
- 	Druidmap[DRUID493].notes="slave maintenance\ndroid. Standard version\nwill carry its own\ntoolbox.\n";
- 	Druidmap[DRUID516].notes="early crew droid.\nAble to carry out simple\nflight checks only. No\nlonger supplied.\n";
- 	Druidmap[DRUID571].notes="standard crew\ndroid. Supplied with the\nship.\n";
- 	Druidmap[DRUID598].notes="a highly\nsophisticated device.\nAble to control the\nRobo-Freighter on its\nown.\n";
- 	Druidmap[DRUID614].notes="low security\nsentinel droid. Used to\nprotect areas of the ship\nfrom intruders. A slow\nbut sure device.\n";
- 	Druidmap[DRUID615].notes="sophisticated\nsentinel droid. Only 2000\nbuilt by the Nicholson\nCompany. these are now\nvery rare.";
- 	Druidmap[DRUID629].notes="low sentinel\ndroid. Lasers are built\ninto the turret. These\nare mounted on a small\ntank body. May be fitted\nwith an auto-cannon on‹the Gillen version.\n";
- 	Druidmap[DRUID711].notes="heavy duty battle\ndroid. Disruptor is built\ninto the head. One of the\nfirst in service with the\nMilitary.\n";
- 	Druidmap[DRUID742].notes="this version is\nthe one mainly used by\nthe Military.\n";
- 	Druidmap[DRUID751].notes="very heavy duty\nbattle droid. Only a few\nhave so far entered\nservice. These are the\nmost powerful battle\nunits ever built.\n";
- 	Druidmap[DRUID821].notes="a very reliable\nanti-grav unit is fitted\ninto this droid. It will\npatrol the ship and\neliminate intruders as\nsoon as detected by‹powerful sensors.\n";
- 	Druidmap[DRUID834].notes="early type\nanti-grav security droid.\nFitted with an\nover-driven anti-grav unit.\nThis droid is very fast\nbut is not reliable.\n";
- 	Druidmap[DRUID883].notes="this droid was\ndesigned from archive\ndata. For some unknown\nreason it instils great\nfear in Human\nadversaries.\n";
- 	Druidmap[DRUID999].notes="experimental\ncommand cyborg. Fitted\nwith a new tipe of\nbrain. Mounted on a\nsecurity droid anti-grav\nunit for convenience.‹warning: the influence\ndevice may not control a\nprimode brain for long.\n"; 
- 	
+  GameAdapterPresent=FALSE;		/* start with this */
+  taste=255;
 
-	IntroMSG1="Dies symbolisiert den Text, der zu Beginn des Spiels ausgegeben werden soll. Nach einer gewissen Zeit soll der Text nach unten weiterscrolloen und zwar in einer moeglichst fliessenden Form.";
-	
-	GameAdapterPresent=FALSE;		/* start with this */
-	taste=255;
+  /* Sounds on/off */
+  ModPlayerOn = FALSE;
 
-	/* Sounds on/off */
-	ModPlayerOn = FALSE;
-	
-	
-	/* ScreenPointer setzen */
-	RealScreen = MK_FP(SCREENADDRESS, 0);
-	InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE);
+  printf("\nvoid InitParaplus(void): Textmeldungsvariablen wurden erfolgreich initialisiert....");
 
-	/* Zufallsgenerator initialisieren */
-	randomize();
+  /* ScreenPointer setzen */
+  // PORT RealScreen = MK_FP(SCREENADDRESS, 0);
+  RealScreen = malloc(64010);
+  InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE);
+
+  printf("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
+
+  /* Zufallsgenerator initialisieren */
+  //PORT MyRandomize();
 		
-	if( LoadShip(SHIPNAME) == ERR) {
-		printf("Error in LoadShip");
-		Terminate(-1);
-	}
+  if( LoadShip(SHIPNAME) == ERR) {
+    printf("Error in LoadShip");
+    Terminate(-1);
+  }
+
+  printf("\nvoid InitParaplus(void): LoadShip(...) ist erfolgreich zurueckgekehrt....");
 	
-	/* Now fill the pictures correctly to the structs */
-	if (!InitPictures()) {	/* Fehler aufgetreten */
-		return;
-	}
+  /* Now fill the pictures correctly to the structs */
+  if (!InitPictures()) {	/* Fehler aufgetreten */
+    return;
+  }
 
-	/* Init the Takeover- Game */
-	InitTakeover();
+  printf("\nvoid InitParaplus(void): InitPictures(void) ist erfolgreich zurueckgekehrt....");
+	
+  /* Init the Takeover- Game */
+  InitTakeover();
 
+  printf("\nvoid InitParaplus(void): InitTakeover(void) ist erfolgreich zurueckgekehrt....");
+	
+  /* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
+  GetDigits(); 
 
-	/* Die Zahlen, mit denen die Robotkennungen erzeugt werden einlesen */
-	GetDigits(); 
+  printf("\nvoid InitParaplus(void): GetDigits(void) ist erfolgreich zurueckgekehrt....");
+	
+  /* InternWindow */
+  /* wenn moeglich: Speicher sparen und mit InternalScreen ueberlappen: */
+  if( INTERNHOEHE*INTERNBREITE*BLOCKMEM <= SCREENHOEHE*SCREENBREITE ) {
+    InternWindow = InternalScreen;
+  } else {
+    if( (InternWindow =
+	 (unsigned char*)
+	 MyMalloc(INTERNBREITE*INTERNHOEHE*BLOCKMEM+100)) == NULL) {
+      printf("\nFatal: Out of Memory for InternWindow.");
+      getchar();
+      Terminate(-1);
+    }
+  }
 
+  printf("\nvoid InitParaplus(void): InternWindow wurde erfolgreich initialisiert....");
 
-	/* InternWindow uses InternalScreen : spares memory */
-	InternWindow = InternalScreen;		/* use this, its big eneough */
+  /* eigenen Zeichensatz installieren */
+  LadeZeichensatz(DATA70ZEICHENSATZ);
 
-	/* eigenen Zeichensatz installieren */
-	LadeZeichensatz(DATA70ZEICHENSATZ);
+  printf("\nvoid InitParaplus(void): Zeichensatz wurde erfolgreich geladen....");
 
-	// Initialisieren der Schildbilder
-	GetShieldBlocks();
+  // Initialisieren der Schildbilder
+  GetShieldBlocks();
 
-	/* verbiegen der Interrupts */
+  printf("\nvoid InitParaplus(void): GetShieldBlocks(void) ist fehlerfrei zurueckgekehrt....");
+
+  /* verbiegen der Interrupts */
 #if USEINTSOFF == 0
-	TurnIntVects();
+  TurnIntVects();
 #endif
 
-	/* richtige Paletten-Werte einstellen */
-	InitPalette();
+  /* richtige Paletten-Werte einstellen */
+  InitPalette();
 
-	/* Tastaturwiederholrate auf den geringsten Wert setzen */
-	SetTypematicRate(TYPEMATIC_SLOW);
+  /* Tastaturwiederholrate auf den geringsten Wert setzen */
+  SetTypematicRate(TYPEMATIC_SLOW);
 
-	/* Initialisierung beendet. Monitor wird aktiviert. */
-}
+  /* Initialisierung beendet. Monitor wird aktiviert. */
+  printf("\nvoid InitParaplus(void): Funktionsende fehlerfrei erreicht....");
+
+} // void InitParaplus(void)
 
 /*@Function============================================================
 @Desc: 	int InitPictures(void):
@@ -587,38 +913,40 @@ int InitPictures(void) {
 * $Function----------------------------------------------------------*/
 void Title(void)
 {
-	char LTaste;
-	int i,j;
-	int LX,LY;
-	int ScrollEndLine = USERFENSTERPOSY;		/* Endpunkt des Scrollens */
-	int OldUpdateStatus = InterruptInfolineUpdate;
+  char LTaste;
+  int i,j;
+  int LX,LY;
+  int ScrollEndLine = USERFENSTERPOSY;		/* Endpunkt des Scrollens */
+  int OldUpdateStatus = InterruptInfolineUpdate;
 
-	InterruptInfolineUpdate=FALSE;
+  InterruptInfolineUpdate=FALSE;
 #ifdef NOJUNKWHILEINIT
-	Monitorsignalunterbrechung(0);
+  Monitorsignalunterbrechung(0);
 #endif
 
-	LadeLBMBild(TITELBILD1,RealScreen,FALSE);	/* Titelbild laden */
-	while (!SpacePressed) JoystickControl();
+  LadeLBMBild(TITELBILD1,RealScreen,FALSE);	/* Titelbild laden */
+  while (!SpacePressed()) JoystickControl();
 	
-   FadeColors1();					/* Titelbild langsam ausblenden */
-   for(i=0;i<9;i++) {
-   	TimerFlag=FALSE;
-	   while (!TimerFlag);
-	}
+  FadeColors1();					/* Titelbild langsam ausblenden */
 
-	ClearGraphMem(RealScreen);
-  	InitPalette();			/* This function writes into InternalScreen ! */
-	ClearGraphMem(InternalScreen);
-	DisplayRahmen(InternalScreen);
-	SetTypematicRate(TYPEMATIC_FAST);
-	
-	SetTextBorder(USERFENSTERPOSX, USERFENSTERPOSY,
-					USERFENSTERPOSX+USERFENSTERBREITE,
-					USERFENSTERPOSY+USERFENSTERHOEHE,
-					CHARSPERLINE );
+  // CRAP WE CAN NO LONGER USE FROM BEFORE THE PORT!!!!
+  // for(i=0;i<9;i++) {
+  //    TimerFlag=FALSE;
+  //    while (!TimerFlag);
+  //  }
 
- 	SetTextColor(FONT_BLACK, FONT_RED);
+  ClearGraphMem(RealScreen);
+  InitPalette();			/* This function writes into InternalScreen ! */
+  ClearGraphMem(InternalScreen);
+  DisplayRahmen(InternalScreen);
+  SetTypematicRate(TYPEMATIC_FAST);
+  
+  SetTextBorder(USERFENSTERPOSX, USERFENSTERPOSY,
+		USERFENSTERPOSX+USERFENSTERBREITE,
+		USERFENSTERPOSY+USERFENSTERHOEHE,
+		CHARSPERLINE );
+
+  SetTextColor(FONT_BLACK, FONT_RED);
 	
 // *		Auskommentiert zu Testzwecken
 // *
@@ -640,10 +968,10 @@ void Title(void)
 * $Function----------------------------------------------------------*/
 
 int NoDirectionPressed(){
-	if (DownPressed) return (0);
-   if (UpPressed) return (0);
-   if (LeftPressed) return (0);
-   if (RightPressed) return (0);
+	if (DownPressed()) return (0);
+   if (UpPressed()) return (0);
+   if (LeftPressed()) return (0);
+   if (RightPressed()) return (0);
 	return (1);
 }
 
@@ -654,34 +982,37 @@ int NoDirectionPressed(){
 @Int:
 * $Function----------------------------------------------------------*/
 void ThouArtDefeated(void){
-	int i,j;
+  int i,j;
 
-	Me.status=TERMINATED;
-	ExplodeInfluencer();
-		
-	for (i=0;i<WAIT_AFTER_KILLED; i++) {
-//		UpdateInfoline();
-//		SetInfoline();
-		DisplayRahmen(RealScreen);
-		GetInternFenster();
-		PutInternFenster();
-		ExplodeBlasts();
-		MoveBullets();
-		MoveEnemys();
-		for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
-		RotateBulletColor();
-		delay(100);
-	}
+  printf("\nvoid ThouArtDefeated(void): Real function call confirmed.");
+  Me.status=TERMINATED;
+  ExplodeInfluencer();
+  
+  for (i=0;i<WAIT_AFTER_KILLED; i++) {
+    //		UpdateInfoline();
+    //		SetInfoline();
+    DisplayRahmen(RealScreen);
+    GetInternFenster();
+    PutInternFenster();
+    ExplodeBlasts();
+    MoveBullets();
+    MoveEnemys();
+    for(j=0;j<MAXBULLETS;j++) CheckBulletCollisions(j);
+    RotateBulletColor();
+    CalibratedDelay(30000);
+  }
 
-	/* Ein Flimmer zieht "uber den Schirm */
-	Flimmern();
-	Debriefing();
+  /* Ein Flimmer zieht "uber den Schirm */
+  Flimmern();
+  Debriefing();
 
-	/* Soundblaster soll keine Toene mehr spucken */
-	sbfm_silence();
+  /* Soundblaster soll keine Toene mehr spucken */
+  //PORT sbfm_silence();
 
-	GameOver = TRUE;
-}
+  GameOver = TRUE;
+  
+  printf("\nvoid ThouArtDefeated(void): Usual end of function reached.");
+} // void ThouArtDefeated(void)
 
 /*@Function============================================================
 @Desc: 
@@ -696,93 +1027,97 @@ void ThouArtVictorious(void){
 	KillTastaturPuffer();
 	ClearUserFenster();
 	printf(" BRAVO ! Sie haben es geschafft ! ");
-	getch();
+	getchar();
 }
 
 /* **********************************************************************
 	Diese Funktion updated die Highscoreliste
 	**********************************************************************/
 void Debriefing(void){
-	char* Scoretext;
-	HallElement* Oldptr;
-	HallElement* Newptr;
-	HallElement* SaveHallptr=Hallptr;
-	char* PName;
-	int DebriefColor;
+  char* Scoretext;
+  HallElement* Oldptr;
+  HallElement* Newptr;
+  HallElement* SaveHallptr=Hallptr;
+  char* PName;
+  int DebriefColor;
 
-	DebriefColor=FONT_WHITE;
+  printf("\nvoid Debriefing(void): Real function call confirmed.");
 
-	Me.status=DEBRIEFING;
-	if (!PlusExtentionsOn) {
-		Scoretext=MyMalloc(1000);
-		if (RealScore>GreatScore) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n    Great Score !\n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(GreatScoreName);
-			GreatScoreName=GetString(18);
-			GreatScore=RealScore;
-		} else
-		if (RealScore<LowestScoreOfDay) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n   Lowest Score of Day! \n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(LowestName);
-			LowestName=GetString(18);
-			LowestScoreOfDay=RealScore;
-		} else 
-		if (RealScore>HighestScoreOfDay) {
-			SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
-			SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
-			strcpy(Scoretext,"\n   Highest Score of Day! \n Enter your name:");
-			DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-			free(HighestName);
-			HighestName=GetString(18);
-			HighestScoreOfDay=RealScore;
-		}
-		free(Scoretext);
-		
-	} else {
-		SaveHallptr=Hallptr;
-		
-		/* Wir brauchen keine Versager ! */
-		if (RealScore == 0) return;
-		/* Setzten der Umgebung */
-		SetUserfenster(KON_BG_COLOR, RealScreen);
-		SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
-		DisplayText(" You have gained entry to the hall\n of fame!\n\
-Enter your name:\n  ",USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+  DebriefColor=FONT_WHITE;
 
-		/* Den neuen Eintrag in die Liste integrieren */
-		if (Hallptr->PlayerScore < RealScore) {
-			Oldptr=Hallptr;
-			Hallptr=MyMalloc(sizeof(HallElement)+1);
-			Hallptr->PlayerScore=RealScore;
-			Hallptr->PlayerName=GetString(18);
-			Hallptr->NextPlayer=Oldptr;
-			SaveHallptr=Hallptr;
-		} else {
-			Oldptr=Hallptr;
-			while (Hallptr->PlayerScore > RealScore) {
-				Hallptr=Hallptr->NextPlayer;
-				if (Hallptr->PlayerScore > RealScore) Oldptr=Oldptr->NextPlayer;
-			}
-			Newptr=MyMalloc(sizeof(HallElement)+1);
-			Newptr->PlayerScore=RealScore;
-			Newptr->PlayerName=GetString(18);
-			Newptr->NextPlayer=Hallptr;
-			Oldptr->NextPlayer=Newptr;
-		}
-
-		/* Message an exit */
-		DisplayText("You are now added to the hall\n of fame!\n",
-						USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
-		Hallptr=SaveHallptr;
-		getch();
+  Me.status=DEBRIEFING;
+  if (!PlusExtentionsOn) {
+    Scoretext=MyMalloc(1000);
+    if (RealScore>GreatScore) {
+      SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+      SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+      strcpy(Scoretext,"\n    Great Score !\n Enter your name:");
+      DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+      free(GreatScoreName);
+      GreatScoreName=GetString(18);
+      GreatScore=RealScore;
+    } else
+      if (RealScore<LowestScoreOfDay) {
+	SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+	SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+	strcpy(Scoretext,"\n   Lowest Score of Day! \n Enter your name:");
+	DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+	free(LowestName);
+	LowestName=GetString(18);
+	LowestScoreOfDay=RealScore;
+      } else 
+	if (RealScore>HighestScoreOfDay) {
+	  SetUserfenster(DebriefColor,RealScreen); // KON_BG_COLOR
+	  SetTextColor(DebriefColor, KON_TEXT_COLOR); // KON_BG_COLOR
+	  strcpy(Scoretext,"\n   Highest Score of Day! \n Enter your name:");
+	  DisplayText(Scoretext,USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+	  free(HighestName);
+	  HighestName=GetString(18);
+	  HighestScoreOfDay=RealScore;
 	}
-}
+    free(Scoretext);
+    
+  } else {
+    SaveHallptr=Hallptr;
+    
+    /* Wir brauchen keine Versager ! */
+    if (RealScore == 0) return;
+    /* Setzten der Umgebung */
+    SetUserfenster(KON_BG_COLOR, RealScreen);
+    SetTextColor(KON_BG_COLOR, KON_TEXT_COLOR);
+    DisplayText(" You have gained entry to the hall\n of fame!\nEnter your name:\n  ",
+		USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    
+    /* Den neuen Eintrag in die Liste integrieren */
+    if (Hallptr->PlayerScore < RealScore) {
+      Oldptr=Hallptr;
+      Hallptr=MyMalloc(sizeof(HallElement)+1);
+      Hallptr->PlayerScore=RealScore;
+      Hallptr->PlayerName=GetString(18);
+      Hallptr->NextPlayer=Oldptr;
+      SaveHallptr=Hallptr;
+    } else {
+      Oldptr=Hallptr;
+      while (Hallptr->PlayerScore > RealScore) {
+	Hallptr=Hallptr->NextPlayer;
+	if (Hallptr->PlayerScore > RealScore) Oldptr=Oldptr->NextPlayer;
+      }
+      Newptr=MyMalloc(sizeof(HallElement)+1);
+      Newptr->PlayerScore=RealScore;
+      Newptr->PlayerName=GetString(18);
+      Newptr->NextPlayer=Hallptr;
+      Oldptr->NextPlayer=Newptr;
+    }
+    
+    /* Message an exit */
+    DisplayText("You are now added to the hall\n of fame!\n",
+		USERFENSTERPOSX,USERFENSTERPOSY,RealScreen,FALSE);
+    Hallptr=SaveHallptr;
+    getchar();
+  }
+
+  printf("\nvoid Debriefing(void): Usual end of function reached.");
+}  // void Debriefing(void)
 
 /* **********************************************************************
 	Diese Funktion gibt die momentane Highscoreliste aus
@@ -803,7 +1138,7 @@ void ShowHighscoreList(void){
 		printf("%s\n",GreatScoreName);
 		printf(" Lowest Score: %d :",LowestScoreOfDay);
 		printf("%s\n",LowestName);
-		getch();
+		getchar();
 	} else {
 		printf(" This is today's Hall of Fame:\n\n");
 		printf("\tRank\tName\tScore\n");
@@ -814,7 +1149,7 @@ void ShowHighscoreList(void){
 			Hallptr=Hallptr->NextPlayer;
 			Rankcounter++;
 		}
-		getch();
+		getchar();
 	}
 	Hallptr=SaveHallptr;
 }
@@ -833,7 +1168,16 @@ void ShowHighscoreList(void){
  * $Author$
  *
  * $Log$
- * Revision 1.14  1994/06/19 16:36:43  prix
+ * Revision 1.18  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
+ * Revision 1.17  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.17  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.14  1994/06/19  16:36:43  prix
  * Sat May 21 14:26:01 1994: PutMessages hinzugef"ugt
  * Sat May 21 17:04:53 1994: GetName durch GetString() ersetzt.
  * Sun May 22 09:56:51 1994: calibrating Message-Timing
@@ -898,7 +1242,7 @@ void ShowHighscoreList(void){
  * Fri Aug 13 14:20:03 1993: Toene aus beim Programmende
  * Sat Aug 21 14:58:13 1993: Call to new LoadShip
  * Tue Aug 24 09:52:22 1993:  call Animate Refresh
- * Tue Aug 24 10:25:48 1993: randomize()
+ * Tue Aug 24 10:25:48 1993: MyRandomize()
  *
  * Revision 1.10  1993/08/04  15:13:22  prix
  * Fri Jul 30 18:26:16 1993: working on new MoveLevelDoors()

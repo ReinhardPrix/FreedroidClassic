@@ -10,7 +10,16 @@
  * $Author$
  *
  * $Log$
- * Revision 1.2  1994/06/19 16:15:51  prix
+ * Revision 1.6  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
+ * Revision 1.5  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.6  1997/05/31 13:30:31  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.2  1994/06/19  16:15:51  prix
  * *** empty log message ***
  *
  * Revision 1.1  1993/08/08  21:20:50  prix
@@ -18,14 +27,13 @@
  *
  *
  *-@Header------------------------------------------------------------*/
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #define _bullet_c
 
 #include <stdio.h>
 #include <math.h>
-#include <conio.h>
 
 #include "defs.h"
 #include "struct.h"
@@ -117,6 +125,9 @@ void StartBlast(int x, int y, int type)
 	NewBlast->type=type;
    NewBlast->phase=0;
 
+
+   if (type == DRUIDBLAST) Play_YIFF_Server_Sound(BLASTSOUND);
+
 } /* StartBlast */
 
 /*@Function============================================================
@@ -164,40 +175,9 @@ int GetDirection(point robo,point bul){
 	if ((robo.x>bul.x) && (robo.y>bul.y)) return 3;
 	if ((robo.x==bul.x) && (robo.y==bul.y)) {
 		printf(" Center hit directy!");
-		getch();
+		getchar();
 	}
 	return 0;
-}
-
-/*@Function============================================================
-@Desc: Erledigt alles, was bei getroffenem Influ passieren soll.
-		Parameter ist das treffende Bullet.
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void IAmHit(int BulNum){
-	point bulpos;
-	point mypos;
-
-	mypos.x=Me.pos.x;
-	mypos.y=Me.pos.y;
-	bulpos.x=AllBullets[BulNum].PX;
-	bulpos.y=AllBullets[BulNum].PY;
-
-//	Ausgabe der Koordinaten und des getroffenen Schildes
-//	gotoxy(1,1);
-//	printf("Shield hit: %d.\n",GetDirection(mypos,bulpos)+1);
-//	printf("Bullet: %d %d  Me: %d %d.\n",bulpos.x,bulpos.y,mypos.x,mypos.y);
-//	getch();
-
-	Me.Shield[GetDirection(mypos,bulpos)] -= Bulletmap[AllBullets[BulNum].type].damage/2;
-	if (Me.Shield[GetDirection(mypos,bulpos)]<0) {
-		if (!InvincibleMode) Me.energy+=Me.Shield[GetDirection(mypos,bulpos)]*2;
-		Me.Shield[GetDirection(mypos,bulpos)]=0;
-		if (PlusExtentionsOn) InsertMessage("Bullet hit me! OUCH!");
-	} else {
-		InsertMessage("Bullet hit Shield.");
-	}	
 }
 
 /*@Function============================================================
@@ -228,10 +208,10 @@ void CheckBulletCollisions(int num)
 	xdist = Me.pos.x - CurBullet->PX;
 	ydist = Me.pos.y - CurBullet->PY;
 	if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
-		IAmHit(num);
 		CurBullet->type = OUT;
 		CurBullet->mine = FALSE;
 		GotHitSound();
+		Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
 		return;		/* Bullet ist hin */
 	}
 	
@@ -246,8 +226,6 @@ void CheckBulletCollisions(int num)
 		if( (xdist*xdist+ydist*ydist) < DRUIDHITDIST2 ) {
 			Feindesliste[i].energy -= Bulletmap[CurBullet->type].damage;
 			if (!CurBullet->mine) {
-//				gotoxy(1,1);
-//				printf(" Robot von fremdem Bullet getroffen %d.\n",FBTZaehler);
 				FBTZaehler++;
 			}
 			CurBullet->type = OUT;

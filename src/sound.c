@@ -10,7 +10,16 @@
  * $Author$
  *
  * $Log$
- * Revision 1.2  1994/06/19 16:41:10  prix
+ * Revision 1.6  1997/06/05 09:24:15  jprix
+ * Habe YIFF Soundserver eingebaut, doch derweil bleibt er noch durch einen bedingten Compilierungsschalter deaktiviert, weil er bei euch nicht laufen wird.  He. Ich war grad in irgendeiner Form von vi gefangen! Hilfe! Bis der Soundserver aber wirklich geht, wird es noch ein Bischen dauern.  Er ist aber Klasse und das wird sicher toll.  Bis bald, Johannes.
+ *
+ * Revision 1.5  2002/04/08 19:19:09  rp
+ * Johannes latest (and last) non-cvs version to be checked in. Added graphics,sound,map-subdirs. Sound support using ALSA started.
+ *
+ * Revision 1.5  1997/05/31 13:30:32  rprix
+ * Further update by johannes. (sent to me in tar.gz)
+ *
+ * Revision 1.2  1994/06/19  16:41:10  prix
  * Sat Jun 04 08:42:14 1994: ??
  *
  * Revision 1.1  1993/05/23  21:05:16  prix
@@ -19,8 +28,8 @@
  *
  *-@Header------------------------------------------------------------*/
 
-static const char RCSid[]=\
-"$Id$";
+// static const char RCSid[]=\
+// "$Id$";
 
 #ifndef _sound_c
 #define _sound_c
@@ -28,14 +37,85 @@ static const char RCSid[]=\
 
 #include <stdio.h>
 #include <string.h>
-#include <dos.h>
-#include <conio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/soundcard.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <stdlib.h>
+
+// Leave the following lines in.  They are for the yiff sound server!!
+#include <Y2/Y.h>         //  Basic Y types and constants. 
+#include <Y2/Ylib.h>      //  YLib functions and structs. 
+/* Change this to the address and port of the Y server you want
+ * to connect to. Note that 127.0.0.1 is a symbolic address
+ * meaning `localhost'.
+ */
+#define CON_ARG             "127.0.0.1:9433"
+// Thanks a lot for leaving the above lines in.  They are for the yiff sound server!!
+
+
 
 #include "defs.h"
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "fm_hrd.h"
+
+
+// unsigned char* data;
+
+int handle = -1;
+int setting = 0x000C000D; // 12 fragments size 8kb
+int channels = 0;         // 0=mono 1=stereo
+int format = AFMT_U8;
+int rate = 8000;
+
+// char BlastSoundSampleFilename[]="BlastSound1.wav";
+// char CollisionSoundSampleFilename[]="CollisionSound1.wav";
+// char FireSoundSampleFilename[]="FireSound2.wav";
+// char BlastSoundSampleFilename[]="sound/BlastSound1.wav";
+// char CollisionSoundSampleFilename[]="sound/CollisionSound1.wav";
+// char FireSoundSampleFilename[]="sound/FireSound2.wav";
+char BlastSoundSampleFilename[]="/home/johannes/ParaPlus/sound/BlastSound1.wav";
+char CollisionSoundSampleFilename[]="/home/johannes/ParaPlus/sound/CollisionSound1.wav";
+char FireSoundSampleFilename[]="/home/johannes/ParaPlus/sound/FireSound2.wav";
+// char BlastSoundSampleFilename[]="./sound/BlastSound1.wav";
+// char CollisionSoundSampleFilename[]="./sound/CollisionSound1.wav";
+// char FireSoundSampleFilename[]="./sound/FireSound2.wav";
+
+long BlastSoundSampleLength=0;
+long CollisionSoundSampleLength=0;
+long FireSoundSampleLength=0;
+
+unsigned char *BlastSoundSamplePointer;
+unsigned char *CollisionSoundSamplePointer;
+unsigned char *FireSoundSamplePointer;
+
+
+// The following Lines define several channels for sound output to the yiff sound server!!!
+// Cannel 1
+YConnection *con;
+YEventSoundObjectAttributes sndobj_attrib;
+YID play_id;
+YEvent event;
+// Cannel 2
+YConnection *con2;
+YEventSoundObjectAttributes sndobj_attrib2;
+YID play_id2;
+YEvent event2;
+// Now some YIDs one for each Sound Played
+YID BlastSoundSampleYID;
+YID FireSoundSampleYID;
+YID CollisionSoundSampleYID;
+// The above Lines define several channels for sound output to the yiff sound server!!!
+
+void ExitProc() {
+  if (handle != -1) {
+    close( handle );
+  }
+}
 
 unsigned char Kanal;
 
@@ -43,147 +123,252 @@ unsigned char Kanal;
 #define MY_FIRE	"myfire.mod"
 
 enum _devices {
-	PC_SPEAKER = 0,
-	SOUNDBLASTER = 7
+  PC_SPEAKER = 0,
+  SOUNDBLASTER = 7
 };
 
 typedef struct{
- 	int car_att;
-	int car_dec;
-	int car_sus;
-	int car_rel;
-	int car_wel;
-	int car_tre;
-	int car_vib;
-	int car_ton;
-	int car_hue;
-	int car_zei;
-	int car_dae;
-	int car_amp;
-
-  	int mod_att;
-	int mod_dec;
-	int mod_sus;
-	int mod_rel;
-	int mod_wel;
-	int mod_tre;
-	int mod_vib;
-	int mod_ton;
-	int mod_hue;
-	int mod_zei;
-	int mod_dae;
-	int mod_amp;
-
-   int freq;
-	int okt;
-   int verb;
-   int rueck;
+  int car_att;
+  int car_dec;
+  int car_sus;
+  int car_rel;
+  int car_wel;
+  int car_tre;
+  int car_vib;
+  int car_ton;
+  int car_hue;
+  int car_zei;
+  int car_dae;
+  int car_amp;
+  
+  int mod_att;
+  int mod_dec;
+  int mod_sus;
+  int mod_rel;
+  int mod_wel;
+  int mod_tre;
+  int mod_vib;
+  int mod_ton;
+  int mod_hue;
+  int mod_zei;
+  int mod_dae;
+  int mod_amp;
+  
+  int freq;
+  int okt;
+  int verb;
+  int rueck;
 }tune;	
 
-tune BounceTune={12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                 12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 700,0,FALSE,6};
-
-tune FireBulletTune2={15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
-                     13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
-                     700,0,FALSE,4};
-tune FireBulletTune={15,4,15,0,0,FALSE,FALSE,FALSE,TRUE,11,0,3,
-                     15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
-                     700,0,FALSE,2};
-
-tune GotHitTune={9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
-                 15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
-                 700,0,FALSE,7};
-
 tune GotIntoBlastTune={12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                 12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 100,0,TRUE,6};
-                 
+		       12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
+		       100,0,TRUE,6};
+
 tune MoveElevatorTune={15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
                        8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
                        500,1,0,4};
 
 tune OvertakeTune={5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-						13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-						300,1,0,0};
-                       
+		   13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
+		   300,1,0,0};
+
 tune CryTune1={3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-					5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-					400,0,TRUE,5};
+	       5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
+	       400,0,TRUE,5};
 
 /* Neu ! */
 tune CryTune2={7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-					3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-					300,3,FALSE,5};
+	       3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
+	       300,3,FALSE,5};
 
 /* Neu ! */
 tune StartOrLiftverlTune={13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-								  2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-								  400,2,FALSE,4};
+			  2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
+			  400,2,FALSE,4};
 
 /* Neu ! Nr. 8 */								  
 tune TankenTune={7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-					  13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-					  400,2,TRUE,2};
+		 13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
+		 400,2,TRUE,2};
 
 /* Neu ! */
-tune BlastTune={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-					 8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-					 200,3,TRUE,7};
-					 
+// tune BlastTune={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
+//		8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+//		200,3,TRUE,7};
+// 
 tune HitHimTune1={6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-						8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-						200,3,TRUE,7};
-					
+		  8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		  200,3,TRUE,7};
+
 tune AllSounds[]={ { 12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
-                  	12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                  	700,0,FALSE,6},
-						 {	15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
-                     13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
-                     700,0,FALSE,4},
+		     12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
+		     700,0,FALSE,6},
+		   {	15,6,15,1,0,FALSE,FALSE,FALSE,FALSE,11,0,0,
+			13,8,8,8,0,FALSE,FALSE,FALSE,FALSE, 1,0,0,
+			700,0,FALSE,4},
                    {	15,4,15,0,0,FALSE,FALSE,FALSE,TRUE,11,0,3,
-                     15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
-                     700,0,FALSE,2},
-                 	 { 9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
-	                  15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
-                 		700,0,FALSE,7},
-                 	 {	12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
+			15,7,12,0,2,FALSE,FALSE,FALSE,TRUE, 1,0,3,
+			700,0,FALSE,2},
+		   { 9,2,4,15,0,FALSE,FALSE,FALSE,FALSE,1,0,0,
+		     15,6,15,0,0,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		     700,0,FALSE,7},
+		   {	12,6,15, 1,0,FALSE,FALSE,FALSE,TRUE,11,0,0,
          	       	12,2,15,15,0,FALSE,FALSE,FALSE,TRUE, 1,0,0,
-                 		100,0,TRUE,6},
+			100,0,TRUE,6},
                    {	15,3,8,3,0,TRUE,TRUE,TRUE,TRUE,11,0,0,
-                     8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
-                     500,1,0,4},
+			8,8,8,8,0,TRUE,TRUE,TRUE,TRUE,1,0,0,
+			500,1,0,4},
                    { 5,4,12,4,3,FALSE,FALSE,FALSE,FALSE,9,0,0,
-							13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
-							300,1,0,0},
-               	 {	3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
-							5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
-							400,0,TRUE,5},
-						 { 7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
-							3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
-							300,3,FALSE,5},
-						 { 13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
-						   2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
-							400,2,FALSE,4},
-						 { 7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
-						   13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
-					  		400,2,TRUE,2},
-					  	 { 6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
-							8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
-							200,3,TRUE,7}
-					  };
-                       
+		     13,3,8,2,2,TRUE,TRUE,TRUE,FALSE,1,10,0,
+		     300,1,0,0},
+		   {	3,4,6,3,3,TRUE,TRUE,FALSE,FALSE,3,0,0,
+			5,5,7,9,3,TRUE,TRUE,FALSE,TRUE,11,0,0,
+			400,0,TRUE,5},
+		   { 7,8,4,5,2,TRUE,TRUE,FALSE,FALSE,4,5,0,
+		     3,6,7,3,0,TRUE,TRUE,FALSE,FALSE,7,0,0,
+		     300,3,FALSE,5},
+		   { 13,4,8,5,2,TRUE,TRUE,FALSE,FALSE,9,0,0,
+		     2,5,7,3,1,TRUE,TRUE,FALSE,FALSE,4,0,0,
+		     400,2,FALSE,4},
+		   { 7,4,8,5,1,TRUE,TRUE,FALSE,FALSE,2,0,0,
+		     13,5,7,3,0,TRUE,TRUE,FALSE,FALSE,5,0,0,
+		     400,2,TRUE,2},
+		   { 6,6,7,5,0,FALSE,FALSE,FALSE,FALSE,5,0,0,
+		     8,8,3,2,1,FALSE,FALSE,FALSE,FALSE,2,0,0,
+		     200,3,TRUE,7}
+};
+
+
+
+int i;
+unsigned char* ptr;
+unsigned char v = 128;
+int SampleLaenge;
+
+
 int Device = SOUNDBLASTER;		/* The mod-device */
 
-extern void pascal modvolume(int v1, int v2, int v3, int v4);
-extern void pascal moddevice(int *device);
-extern void pascal modsetup(int *status,
-	int device, int mixspeed, int pro, int loop, char *string);
+// extern void pascal modvolume(int v1, int v2, int v3, int v4);
+// extern void pascal moddevice(int *device);
+// extern void pascal modsetup(int *status,
+//	int device, int mixspeed, int pro, int loop, char *string);
 
-extern void pascal modstop(void);
-extern void pascal modinit(void);
+// extern void pascal modstop(void);
+// extern void pascal modinit(void);
 
 void MakeSound(tune* ThisTune);
+long FragmentRoundUp(long FormerLength);
+
+
+
+long FragmentRoundUp(long FormerLength){
+  long NewLength;
+
+  NewLength=FormerLength/(8*1024);
+  NewLength=(NewLength+1)*(8*1024);
+  return NewLength;
+} // long FragmentRoundUp
+
+
+
+void YIFF_Server_Check_Events(void){
+
+  // FIRST CHECK EVENTS FOR THE FIRST CHANNEL
+
+  // Get the next event (if any) in the first Channel 
+
+  if(YGetNextEvent( con, &event, False ) > 0)
+    {
+                                /* Sound object stopped playing? */
+      if( (event.type == YSoundObjectKill) && (event.kill.yid == play_id) )
+	{
+	  /* Our play has stopped. */
+	  printf("Done playing.\n");
+	}
+      // Server disconnected us? 
+      else if(event.type == YDisconnect)
+	{
+	  // Got disconnected.
+	  printf(
+		 "Y server disconnected us, reason %i.\n",
+		 event.disconnect.reason
+		 );
+	  Terminate(ERR);
+	}
+      // Server shutdown? 
+      else if(event.type == YShutdown)
+	{
+	  /* Server shutdown. */
+	  printf( "Y server shutdown, reason %i.\n", event.shutdown.reason );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  /* Some other Y event, ignore. */
+	}
+    }
+  
+
+  // NOW CHECK FOR EVENTS OF THE SECOND CHANNEL
+  
+  // Get the next event (if any) in the second channel 
+
+  if(YGetNextEvent( con2, &event2, False ) > 0)
+    {
+      // Sound object stopped playing? 
+      if((event2.type == YSoundObjectKill) &&
+	 (event2.kill.yid == play_id2)
+	 )
+	{
+	  /* Our play has stopped. */
+	  printf("Done playing in the second channel.\n");
+	}
+      // Server disconnected us? 
+      else if(event2.type == YDisconnect)
+	{
+	  // Got disconnected. 
+	  printf( "Y server disconnected us, channel 2, reason %i.\n", event2.disconnect.reason );
+	  Terminate(ERR);
+	}
+      // Server shutdown? 
+      else if(event2.type == YShutdown)
+	{
+	  // Server shutdown. 
+	  printf("Y server shutdown, reason %i.\n", event2.shutdown.reason );
+	  Terminate(ERR);
+	}
+      else
+	{
+	  // Some other Y event, ignore. 
+	}
+    }
+    
+} // void YIFF_Server_Check_Events(void)
+
+void YIFF_Server_Close_Connections(void){
+
+  /* Disconnect from the Y server. We need to pass the
+   * original connection pointer con to close that
+   * connection to the Y server. Note that con may be
+   * NULL at this point if the Y server disconnected us
+   * already, passing NULL is okay.
+   *
+   * The second argument asks us do we want to leave the
+   * Y server up when we disconnect. If we were the
+   * program that started the Y erver and the second
+   * argument is set to False then the Y server will
+   * be automatically shut down.  To ensure that the Y
+   * server stays running, you can pass True instead.
+   */
+
+  YCloseConnection(con, False);
+  con = NULL;
+
+  YCloseConnection(con2, False);
+  con2 = NULL;
+
+} // void YIFF_Server_Close_Connections(void)
+
 
 /*@Function============================================================
 @Desc: Starts a Tune.
@@ -192,8 +377,8 @@ void MakeSound(tune* ThisTune);
 @Int:
 * $Function----------------------------------------------------------*/
 void StartSound(int Tune){
-	MakeSound(&(AllSounds[Tune]));
-}
+    
+} // void StartSound(int Tune)
 
 /*@Function============================================================
 @Desc: 
@@ -203,14 +388,6 @@ void StartSound(int Tune){
 * $Function----------------------------------------------------------*/
 void CrySound(void)
 {
-/*	static ThisSound=0;
-
-	if (Me.status == TRANSFERMODE) {
-		printf(" Neuer Wert :");
-		scanf("%d",&ThisSound);
-	}
-	MakeSound(&(AllSounds[ThisSound]));
-*/
 
 	MakeSound(&CryTune1);
 }
@@ -221,81 +398,65 @@ void CrySound(void)
    Der Parameter ist ein Pointer auf eine Struktur, die die Tondaten
    enth"alt.
    ********************************************************************** */
+
 void MakeSound(tune* ThisTune){
-	unsigned char car,mod,kan;
 
-	kan=Kanal;
-	Kanal++;
-	if (Kanal>SBCHANNELS) Kanal=0;
-	car=fm_carrier[kan];
-	mod=fm_modulator[kan];
+  printf("\nvoid MakeSound(tune* ThisTune):  Real function call confirmed.");
 
-/* Sound zuerst einmal abschalten */
-	sbfm_ton(kan,FALSE);
+  // printf("\n Attention!  Playback is about to start!");
 
-/* Tremolo ausschalten */
-	sbfm_tremolo(car,ThisTune->car_tre);
-	sbfm_tremolo(mod,ThisTune->mod_tre);
+  // write(handle, data, 22050*4L);
 
-/* Vibrato ausschalten */
-	sbfm_vibrato(car,ThisTune->car_vib);
-	sbfm_vibrato(mod,ThisTune->mod_vib);
+  //write(handle, data+0x2C, FragmentRoundUp(SampleLaenge));
 
-/* Huellkurvenart festleben */
-	sbfm_tonart(car,ThisTune->car_ton);
-	sbfm_tonart(mod,ThisTune->mod_ton);
+  // write(handle, data, FragmentRoundUp(SampleLaenge));
 
-/* Huellkurvendaempfung festlegen */
-	sbfm_huelldaempf(car,ThisTune->car_hue);
-	sbfm_huelldaempf(mod,ThisTune->mod_hue);
+  // printf("\n Attention!  Data have been written!");
 
-/*	Multiplikationsfaktor festlegen */
-	sbfm_zeitfakt(car,ThisTune->car_zei);
-	sbfm_zeitfakt(mod,ThisTune->mod_zei);
-	
-/* Daempfung einstellen */
-	sbfm_daempfung(car,ThisTune->car_dae);
-	sbfm_daempfung(mod,ThisTune->mod_dae);
+} // void MakeSound(tune* ThisTune)
 
-/* Amplitudendaempfung einstellen */
-	sbfm_ampldaempf(car,ThisTune->car_amp);
-	sbfm_ampldaempf(mod,ThisTune->mod_amp);
+void Play_YIFF_Server_Sound(int Tune){
+  static int previous_channel;
+#define NUMBER_OF_CHANNELS 2
 
-/* Attackwerte festlegen */
-	sbfm_attack(car,ThisTune->car_att);
-	sbfm_attack(mod,ThisTune->mod_att);
 
-/* decaywerte festlegen */
-	sbfm_decay(car,ThisTune->car_dec);
-	sbfm_decay(mod,ThisTune->mod_dec);
-	
-/* Sustainwerte festlegen */
-	sbfm_sustain(car,ThisTune->car_sus);
-	sbfm_sustain(mod,ThisTune->mod_sus);
+// For development purposes, the sound will not be activated unless the following definition is made
+#ifndef PARADROID_SOUND_SUPPORT_ON
+  return;
+#endif
 
-/* Releasewerte festlegen */
-	sbfm_release(car,ThisTune->car_rel);
-	sbfm_release(mod,ThisTune->mod_rel);
 
-/* Wellenform festlegen */
-	sbfm_welle(car,ThisTune->car_wel);
-	sbfm_welle(mod,ThisTune->mod_wel);
-	
-/* Frequenz fuer diesen Kanal festlegen */
-	sbfm_frequ(kan,ThisTune->freq);
+  printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Real function call confirmed.");
 
-/* Oktave festlegen */
-	sbfm_oktave(kan,ThisTune->okt);
+  printf("\nvoid Play_YIFF_Server_Sound(int Tune):  Playback is about to start!");
 
-/* Zellenverknuepfung festlegen */
-	sbfm_verbind(kan,ThisTune->verb);
-	
-/* Rueckkopplungsgrad festlegen */
-	sbfm_rueckkoppl(kan,ThisTune->rueck);
-	
-/* Ton aktivieren */
-	sbfm_ton(kan,TRUE);
-}
+  //  if (Tune == FIRESOUND) {
+  //    if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) )
+  //      {
+	// Can't get sound object attributes.
+  //	fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
+  //		 FireSoundSampleFilename );
+  //	Terminate(ERR);
+  //      }
+  //    else
+  //      {
+  play_id = YStartPlaySoundObjectSimple( con, FireSoundSampleFilename );
+	//      }
+	//  }
+
+
+
+  if (Tune == COLLISIONSOUND) {
+    play_id = YStartPlaySoundObjectSimple( con, CollisionSoundSampleFilename );
+    // write(handle, CollisionSoundSamplePointer, FragmentRoundUp(CollisionSoundSampleLength));
+  }
+
+  if (Tune == BLASTSOUND) {
+    play_id = YStartPlaySoundObjectSimple( con, BlastSoundSampleFilename );
+  }
+
+} // void Play_OSS(int Tune)
+
 
 /*@Function============================================================
 @Desc: Funktion zur Ausgabe eines Wertes an einen Registerport.
@@ -305,11 +466,11 @@ void MakeSound(tune* ThisTune){
 * $Function----------------------------------------------------------*/
 
 void out_sb(unsigned char sb_reg, unsigned char sb_data){
-  outportb(0x388,sb_reg); 			
-  sb_register[sb_reg]=sb_data;	
-  delay(1);								
-  outportb(0x389,sb_data);			
-  delay(1);								
+  //  outportb(0x388,sb_reg); 			
+  //  sb_register[sb_reg]=sb_data;	
+  //  delay(1);								
+  //  outportb(0x389,sb_data);			
+  //  delay(1);								
 };
 
 
@@ -322,31 +483,143 @@ void out_sb(unsigned char sb_reg, unsigned char sb_data){
 
 unsigned char in_sb(unsigned char sb_reg)
 {
-  return(sb_register[sb_reg]);	/* RÅckgabe des gepufferten Wertes */
+  // return(sb_register[sb_reg]);	/* RÅckgabe des gepufferten Wertes */
 };
 
 
 
 
 /*@Function============================================================
-@Desc: Funktion zur Initialisierung des SB. sollte anfangs augerufen werden.
-		 Diese Funktion ist im SB-Profibuch auf S.66 zu finden.
+@Desc: 
+
+Connect to the Y server. (That is the yiff.) 
+We pass NULL as the start argument, this means the Y server will not be started if it was detected to be not running. 
+The connection argument is CON_ARG which is defined above as a constant. 
+The connection argument is a string of the format ":".
+
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
 
-void init_sb(void){
-	if (sbfm_init() == 2) {
-		printf(" Keine Soundblasterkarte installiert !");
-		getch();
-	}
-	if (sbfm_init() == 1) {
-		/*
-		printf(" BLASTER ist nicht gesetzt ! ");
-		getch();
-		*/
-	}
-};
+int Init_YIFF_Sound_Server(void){
+  con = YOpenConnection(
+			NULL,
+			CON_ARG
+			);
+
+  // Attention!! First channel is to be opend now!
+  if(con == NULL) {
+    // Failed to connect to the Y server. 
+    fprintf(
+	      stderr,
+	      "%s: Cannot connect to YIFF server.\n",
+	      CON_ARG
+	      );
+      Terminate(ERR);
+    }
+
+  // Attention!! Second channel is to be opend now!
+  con2 = YOpenConnection(
+			 NULL,
+			 CON_ARG
+			 );
+  if(con2 == NULL) {
+    // Failed to connect to the Y server. 
+    fprintf( stderr, "%s: Cannot connect the SECOND TIME to YIFF server.\n", CON_ARG );
+      Terminate(ERR);
+    }
+
+  // The connection to the sound server should now be established...
+  // Printing debug message and going on...
+
+  printf("\nint Init_YIFF_Sound_Server(void): The connection to the sound server was established successfully...");
+
+  // Load the Firesound
+
+  if( YGetSoundObjectAttributes( con, FireSoundSampleFilename, &sndobj_attrib ) ) {
+    // Can't get sound object attributes.
+    fprintf( stderr, "\nvoid Play_YIFF_Server_Sound(int Tune): %s: Error: Missing or corrupt.\n", 
+	     FireSoundSampleFilename );
+    Terminate(ERR);
+  }
+
+  //  
+  //  if ((SoundDateihandle=fopen(FireSoundSampleFilename,"rb")) == NULL) {
+  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",FireSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //	
+  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+  //
+  //  if( (FireSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+  //    FireSoundSampleLength=stbuf.st_size;
+  //    printf("\nint Init_OSS(void): Out of Memory?");
+  //    printf("\nFree: %lu", coreleft() );
+  //    getchar();
+  //    Terminate(-1);
+  //  }
+  //
+  //  fread(FireSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  //  SampleLaenge=stbuf.st_size;
+  //
+  //  if (fclose(SoundDateihandle) == EOF) {
+  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlie·en !",FireSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //
+  //  // Load the Collisionsound
+  //
+  //  if ((SoundDateihandle=fopen(CollisionSoundSampleFilename,"rb")) == NULL) {
+  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",CollisionSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //	
+  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+  //
+  //  if( (CollisionSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+  //    CollisionSoundSampleLength=stbuf.st_size;
+  //    printf("\nint Init_OSS(void): Out of Memory?");
+  //    printf("\nFree: %lu", coreleft() );
+  //    getchar();
+  //    Terminate(-1);
+  //  }
+  //	
+  //  fread(CollisionSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  //  SampleLaenge=stbuf.st_size;
+  //
+  //  if (fclose(SoundDateihandle) == EOF) {
+  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlie·en !",CollisionSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //
+  //  // Load the Blastsound
+  //
+  //  if ((SoundDateihandle=fopen(BlastSoundSampleFilename,"rb")) == NULL) {
+  //    printf("\nint Init_OSS(void): Konnte die Datei %s nicht oeffnen !",BlastSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //	
+  //  if( fstat(fileno(SoundDateihandle), &stbuf) == EOF) Terminate(-1);
+  //
+  //  if( (BlastSoundSamplePointer = (char*) MyMalloc((size_t)FragmentRoundUp(stbuf.st_size) + 10)) == NULL) {
+  //    BlastSoundSampleLength=stbuf.st_size;
+  //    printf("\nint Init_OSS(void): Out of Memory?");
+  //    printf("\nFree: %lu", coreleft() );
+  //    getchar();
+  //    Terminate(-1);
+  //  }
+  //	
+  //  fread(BlastSoundSamplePointer, 1, (size_t)stbuf.st_size, SoundDateihandle);	
+  //  SampleLaenge=stbuf.st_size;
+  //
+  //  if (fclose(SoundDateihandle) == EOF) {
+  //    printf("\nint Init_OSS: Konnte die Datei %s nicht schlie·en !",BlastSoundSampleFilename);
+  //    getchar(); Terminate(-1);
+  //  }
+  //
+  //
+
+} // void Init_YIFF_Sound_Server(void)
 
 
 /*@Function============================================================
@@ -357,11 +630,7 @@ void init_sb(void){
 * $Function----------------------------------------------------------*/
 void GotHitSound(void){
 
-	/* Sound "uber FM-Generatoren */
-	MakeSound(&GotHitTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+}  // void GotHitSound(void)
 
 
 /*@Function============================================================
@@ -446,19 +715,10 @@ void LeaveElevatorSound(void){
 @Int:
 * $Function----------------------------------------------------------*/
 void FireBulletSound(void){
-	char tmp[200];		/* tmp - string */
 
-	/* Sound "uber FM-Generatoren */
-	if( !ModPlayerOn ) MakeSound(&FireBulletTune);
-	/* oder "uber MOD-Abspielroutine */
-	else {
-		StopModPlayer();
-		strcpy(tmp, MODDIR);
-		strcat(tmp, MY_FIRE);
-		PlayMod(tmp);
-	}
-	return;
-}
+	Play_YIFF_Server_Sound(FIRESOUND);
+
+} // void FireBulletSound(void)
 
 
 /*@Function============================================================
@@ -469,11 +729,9 @@ void FireBulletSound(void){
 * $Function----------------------------------------------------------*/
 void BounceSound(void){
 
-	/* Sound "uber FM-Generatoren */
-	MakeSound(&BounceTune);
-	/* oder "uber MOD-Abspielroutine */
-	return;
-}
+  Play_YIFF_Server_Sound(COLLISIONSOUND);
+  
+} // void BounceSound(void)
 
 /*@Function============================================================
 @Desc: InitModPlayer():		initialisiert die mod-play Funktionen
@@ -483,15 +741,15 @@ void BounceSound(void){
 * $Function----------------------------------------------------------*/
 int InitModPlayer(void)
 {
-	static AllreadyInitialized=0;
-	
-	if (!AllreadyInitialized) modinit(); else {
-		printf(" MODPLAYER ALLREADY INITIALIZED.\n");
-		getch();
-		return OK;
-	}
-	AllreadyInitialized=1;
-	return OK;
+  //	static AllreadyInitialized=0;
+  //	
+  //	if (!AllreadyInitialized) modinit(); else {
+  //		printf(" MODPLAYER ALLREADY INITIALIZED.\n");
+  //		getchar();
+  //		return OK;
+  //	}
+  //	AllreadyInitialized=1;
+  //	return OK;
 }
 
 /*@Function============================================================
@@ -502,30 +760,30 @@ int InitModPlayer(void)
 * $Function----------------------------------------------------------*/
 void PlayMod(char *modfile)
 {
-	int mix, stat, pro, loop;
-	char ch;
-	char pasc_md[200];		/* Pascal has other strings than C !! */
-
-	if( !ModPlayerOn ) return;
-	
-	mix = 10000;
-	pro = 0;
-	loop = 0;
-	
-	modvolume(255, 255, 255, 255);
-
-	pasc_md[0] = strlen(modfile);
-	strcpy(&(pasc_md[1]), modfile);
-	
-	modsetup(&stat, Device, mix, pro, loop, pasc_md);
-	if( stat != 0) printf("Mod: %s	stat: %d", pasc_md, stat);
-	
-	if( stat != 0 ) {
-		printf("\nModfile-error !!");
-		return;
-	}
-	
-	return;
+  //	int mix, stat, pro, loop;
+  //	char ch;
+  //	char pasc_md[200];		/* Pascal has other strings than C !! */
+  //
+  //	if( !ModPlayerOn ) return;
+  //	
+  //	mix = 10000;
+  //	pro = 0;
+  //	loop = 0;
+  //	
+  //	modvolume(255, 255, 255, 255);
+  //
+  //	pasc_md[0] = strlen(modfile);
+  //	strcpy(&(pasc_md[1]), modfile);
+  //	
+  //	modsetup(&stat, Device, mix, pro, loop, pasc_md);
+  //	if( stat != 0) printf("Mod: %s	stat: %d", pasc_md, stat);
+  //	
+  //	if( stat != 0 ) {
+  //		printf("\nModfile-error !!");
+  //		return;
+  //	}
+  //	
+  //	return;
 }
 
 /*@Function============================================================
@@ -536,7 +794,7 @@ void PlayMod(char *modfile)
 * $Function----------------------------------------------------------*/
 void StopModPlayer(void)
 {
-	if( ModPlayerOn ) modstop();
+  //	if( ModPlayerOn ) modstop();
 
 } /* StopModPlayer */
 
