@@ -779,9 +779,9 @@ ShowCharacterScreen ( void )
   DisplayText( AllSkillTexts [ Me [ 0 ] . hacking_skill ] , 
 	       HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect );
   if ( Me [ 0 ] . repair_skill ) 
-    DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
-  else
     DisplayText( "Yes" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
+  else
+    DisplayText( "No" , CharacterRect.x + 80 , CharacterRect.y + 444 , &CharacterRect );
 
   /*
 
