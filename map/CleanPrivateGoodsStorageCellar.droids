@@ -326,6 +326,45 @@ Allowed Type of Random Droid for this level: 742
 Allowed Type of Random Droid for this level: 751
 Allowed Type of Random Droid for this level: 821
 Allowed Type of Random Droid for this level: 834
+
+// **********************************************************************
+// This is the one friendly 302 named Auda unit inside the bunker
+// **********************************************************************
+SpecialForce: Type=476 X=27 Y=2 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
+
+Start of Decision-Request List for this friendly droid
+End of Decision-Request List for this friendly droid
+
+Start of Question-Response List for this friendly droid
+
+Question="REFERENCE_NAME" Answer="MOEBIUS"
+
+Question="DESCRIPTION" Answer="You see a typical 476 mainainance droid.  This one is covered with spots of oil."
+
+Question="hello" Answer="Hello!  How may I assist you?"
+
+Question="name" Answer="You can call me Moebius."
+
+Question="moebius" Answer="It's also the name of a famous mathematician who lived hundreds of years ago."
+
+Question="chandra" Answer="Dr. Chandra is a very nice person.  I like him."
+
+Question="ms" Answer="The MS hasn't come to this level yet.  I don't know why.  Maybe they are primarily after the humans."
+
+Question="humans" Answer="Beings made out of flesh and blood and bones and such things.  But I think to me their organism is as strange as a mass converter to them."
+
+Question="converter" Answer="If you want me to install any new devices into your system, just say so."
+
+Question="job" Answer="I fit and repair devices in droids."
+
+Question="devices" Answer="If you want me to install any new devices into you, just say so."
+
+Question="fit" Answer="If you want me to install any new devices into you, just say so."
+
+Question="repair" Answer="There is nothing in your system that needs repair.  If you want me to fit any new devices into your system, just say so."
+
+End of Question-Response List for this friendly droid
+
 ** End of this levels droid data **
 
 ** Beginning of new Level **

@@ -194,6 +194,7 @@ ReactToSpecialKeys(void)
   int i;
   int InvPos;
   static int IPressed_LastFrame;
+  char TempText[1000];
 
 
   if ( QPressed() ) /* user asked for quit */
@@ -275,10 +276,16 @@ ReactToSpecialKeys(void)
 	    }
 	  if ( InvPos == MAX_ITEMS_IN_INVENTORY ) 
 	    {
+	      Me.TextVisibleTime = 0;
+	      Me.TextToBeDisplayed = "I can't carry any more.";
 	      // can't take any more items,
 	    }
 	  else
 	    {
+	      Me.TextVisibleTime = 0;
+	      sprintf( TempText , "Item taken: %s." , ItemMap[ AllItems[ i ].type ].ItemName );
+	      Me.TextToBeDisplayed=MyMalloc( strlen( TempText ) + 1 );
+	      strcpy ( Me.TextToBeDisplayed , TempText );
 	      Me.Inventory[ InvPos ].type = AllItems[ i ].type;
 	      AllItems[ i ].type = (-1);
 	    }
