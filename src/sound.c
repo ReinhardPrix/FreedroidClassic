@@ -63,7 +63,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
   "/../sound/Blast_Sound_0.wav",
   "/../sound/Collision_Sound_0.wav",
   "/../sound/GotIntoBlastSound.wav",
-  "/../sound/MoveElevatorSound1.wav",
+  "/../sound/MoveElevator_Sound_0.wav",
   "/../sound/Refresh_Sound_0.wav",
   "/../sound/LeaveElevator_Sound_0.wav",
   "/../sound/EnterElevator_Sound_0.wav",
