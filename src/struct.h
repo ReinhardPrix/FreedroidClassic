@@ -540,134 +540,136 @@ druidspec, *Druidspec;
 
 typedef struct
 {
-  Sint8 type;			  // what kind of druid is this ? 
-  Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
-  Sint8 status;			  // attacking, defense, dead, ... 
-  finepoint speed;		  // the current speed of the druid 
-  gps pos;		          // current position in the whole ship 
-  gps teleport_anchor;            // where from have you last teleported home
-  gps mouse_move_target;          // where the tux is going automatically by virtue of mouse move 
-  int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
-  int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
-  int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
+    Sint8 type;			  // what kind of druid is this ? 
+    Sint8 character_class;          // is this unit a FIGHTER=WAR_BOT, or MAGE=MIND_BOT or ROGUE=SNIPER_BOT character
+    Sint8 status;			  // attacking, defense, dead, ... 
+    finepoint speed;		  // the current speed of the druid 
+    gps pos;		          // current position in the whole ship 
+    gps teleport_anchor;            // where from have you last teleported home
+    gps mouse_move_target;          // where the tux is going automatically by virtue of mouse move 
+    int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
+    int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
+    int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
+    
+    int dummy;
 
-  double health;		  // the max. possible energy in the moment 
-  float maxenergy; // current top limit for the influencers energy
-  double energy;		  // current energy level 
-  float maxmana;   // current top limit for the influencers magic power
-  double mana;                    // current mana level 
-  float max_running_power;
-  float running_power;
-  int running_must_rest;
-
-  Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
-  Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
-
-  double firewait;		// time remaining, until the weapon is ready to fire again...
-  double phase;			// the current phase of animation 
-  float angle ;
-  float walk_cycle_phase;       // 
-  float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
-  float MissionTimeElapsed;
-  float got_hit_time;           // how long stunned now since the last time tux got hit 
-
-  char freedroid_version_string[1000]; // a string to identify games from older freedroid versions
-
-  int Strength;  // character Strength value = 'power supply max. capacity'
-  int Magic;     // character Magic value = 
-  int Dexterity; // character Dexterity value = 'power redistribution speed'
-  int base_vitality;  // character Vitality value = 'cloaking field maximum strength'
-  int base_strength;  // character Strength value = 'power supply max. capacity'
-  int base_magic;     // character Magic value = 
-  int base_dexterity; // character Dexterity value = 'power redistribution speed'
-  int Vitality;  // character Vitality value = 'cloaking field maximum strength'
-  int points_to_distribute; // these are the points that are available to distribute upon the character stats
-  float base_damage; // the current damage the influencer does
-  float damage_modifier; // the modifier to the damage the influencer currently does
-  float AC; // the current Armour Class of the influencer
-  float to_hit;            // percentage chance, that Tux will hit a random lv 1 bot
-  int lv_1_bot_will_hit_percentage; // percentage chance that a random lv 1 bot will hit
-  int resist_force;        // percentage to reduce from force damage
-  int resist_fire;         // percentage to reduce from fire damage
-  int resist_electricity;  // percentage to reduce from electricity damage
-  
-  int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
-  int double_ranged_damage;   // does this Tux do double ranged weapon damage?
-
-  long Experience; // character Experience = 'spare droid elements found'
-  int exp_level;       // which 'experience level' is the influencer currenly at?
-  long ExpRequired;    // how much experience required for the next level?
-  long ExpRequired_previously;    // how was required for the previous level?
-
-  long Gold;
-  char character_name[ MAX_CHARACTER_NAME_LENGTH ];
-  mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
-  int marker;                   // In case you've taken over a marked droid, this will contain the marker
-  float LastCrysoundTime;
-  float LastTransferSoundTime;
-  float TextVisibleTime;
-  char* TextToBeDisplayed;
-  float Current_Victim_Resistance_Factor;
-  int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
-  
-  //--------------------
-  // Here we note all the 'skill levels' of the Tux and also which skill is
-  // currently readied and that...
-  //
-  int readied_skill; 
-  int SkillLevel[ NUMBER_OF_SKILLS ];
-  int base_skill_level [ NUMBER_OF_SKILLS ];
-  int melee_weapon_skill;
-  int ranged_weapon_skill;
-  int spellcasting_skill;
-  int hacking_skill;
-
-  //--------------------
-  // The inventory slots.  Some items are residing in general inventory,
-  // other items might be equiped in some of the corresponding slots of
-  // the inventory screen.
-  //
-  item Inventory[ MAX_ITEMS_IN_INVENTORY ];
-  item weapon_item;
-  item drive_item;
-  item armour_item;
-  item shield_item;
-  item special_item;
-  item aux1_item;
-  item aux2_item;
-
-  //--------------------
-  // A record of when and if the tux has been on some maps...
-  //
-  unsigned char HaveBeenToLevel [ MAX_LEVELS ]; // record of the levels the player has visited yet.
-  float time_since_last_visit_or_respawn [ MAX_LEVELS ]; // record of the levels the player has visited yet.
-
-  //--------------------
-  // Some story-based variables:  which persons has the Tux talked to and
-  // what are the dialog options currently open, which 'cookies' have been
-  // set by the dialogs for coordination among each other, and also status
-  // of the Tux like town guard member or not and the like...
-  //
-  unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
-  int clearance_list[ MAX_CLEARANCES ];
-  char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
-  char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
-  int is_town_guard_member;
-
-  //--------------------
-  // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED
-  // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
-  //
-  moderately_finepoint next_intermediate_point [ MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ] ;  // waypoints for the tux, when target not directly reachable
-  Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?
-  Uint8 Automap [ MAX_LEVELS ] [ 100 ][ 100 ]; // this is the data for the automatic map
-  moderately_finepoint DetectedItemList[ MAX_ITEMS_PER_LEVEL ];
-  int current_zero_ring_index;
-  gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
-
-  int BigScreenMessageIndex;
-  char BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
-  float BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES ];
+    double health;		  // the max. possible energy in the moment 
+    float maxenergy; // current top limit for the influencers energy
+    double energy;		  // current energy level 
+    float maxmana;   // current top limit for the influencers magic power
+    double mana;                    // current mana level 
+    float max_running_power;
+    float running_power;
+    int running_must_rest;
+    
+    Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
+    Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
+    
+    double firewait;		// time remaining, until the weapon is ready to fire again...
+    double phase;			// the current phase of animation 
+    float angle ;
+    float walk_cycle_phase;       // 
+    float weapon_swing_time;	// How long is the current weapon swing in progress (in seconds of course) 
+    float MissionTimeElapsed;
+    float got_hit_time;           // how long stunned now since the last time tux got hit 
+    
+    char freedroid_version_string[1000]; // a string to identify games from older freedroid versions
+    
+    int Strength;  // character Strength value = 'power supply max. capacity'
+    int Magic;     // character Magic value = 
+    int Dexterity; // character Dexterity value = 'power redistribution speed'
+    int base_vitality;  // character Vitality value = 'cloaking field maximum strength'
+    int base_strength;  // character Strength value = 'power supply max. capacity'
+    int base_magic;     // character Magic value = 
+    int base_dexterity; // character Dexterity value = 'power redistribution speed'
+    int Vitality;  // character Vitality value = 'cloaking field maximum strength'
+    int points_to_distribute; // these are the points that are available to distribute upon the character stats
+    float base_damage; // the current damage the influencer does
+    float damage_modifier; // the modifier to the damage the influencer currently does
+    float AC; // the current Armour Class of the influencer
+    float to_hit;            // percentage chance, that Tux will hit a random lv 1 bot
+    int lv_1_bot_will_hit_percentage; // percentage chance that a random lv 1 bot will hit
+    int resist_force;        // percentage to reduce from force damage
+    int resist_fire;         // percentage to reduce from fire damage
+    int resist_electricity;  // percentage to reduce from electricity damage
+    
+    int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
+    int double_ranged_damage;   // does this Tux do double ranged weapon damage?
+    
+    long Experience; // character Experience = 'spare droid elements found'
+    int exp_level;       // which 'experience level' is the influencer currenly at?
+    long ExpRequired;    // how much experience required for the next level?
+    long ExpRequired_previously;    // how was required for the previous level?
+    
+    long Gold;
+    char character_name[ MAX_CHARACTER_NAME_LENGTH ];
+    mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
+    int marker;                   // In case you've taken over a marked droid, this will contain the marker
+    float LastCrysoundTime;
+    float LastTransferSoundTime;
+    float TextVisibleTime;
+    char* TextToBeDisplayed;
+    float Current_Victim_Resistance_Factor;
+    int FramesOnThisLevel;        // how many frames has the influ spent on this level already?
+    
+    //--------------------
+    // Here we note all the 'skill levels' of the Tux and also which skill is
+    // currently readied and that...
+    //
+    int readied_skill; 
+    int SkillLevel[ NUMBER_OF_SKILLS ];
+    int base_skill_level [ NUMBER_OF_SKILLS ];
+    int melee_weapon_skill;
+    int ranged_weapon_skill;
+    int spellcasting_skill;
+    int hacking_skill;
+    
+    //--------------------
+    // The inventory slots.  Some items are residing in general inventory,
+    // other items might be equiped in some of the corresponding slots of
+    // the inventory screen.
+    //
+    item Inventory[ MAX_ITEMS_IN_INVENTORY ];
+    item weapon_item;
+    item drive_item;
+    item armour_item;
+    item shield_item;
+    item special_item;
+    item aux1_item;
+    item aux2_item;
+    
+    //--------------------
+    // A record of when and if the tux has been on some maps...
+    //
+    unsigned char HaveBeenToLevel [ MAX_LEVELS ]; // record of the levels the player has visited yet.
+    float time_since_last_visit_or_respawn [ MAX_LEVELS ]; // record of the levels the player has visited yet.
+    
+    //--------------------
+    // Some story-based variables:  which persons has the Tux talked to and
+    // what are the dialog options currently open, which 'cookies' have been
+    // set by the dialogs for coordination among each other, and also status
+    // of the Tux like town guard member or not and the like...
+    //
+    unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
+    int clearance_list[ MAX_CLEARANCES ];
+    char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
+    char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
+    int is_town_guard_member;
+    
+    //--------------------
+    // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED
+    // TO BE COMMUNICATED FROM THE CLIENT TO THE SERVER OR VICE VERSA
+    //
+    moderately_finepoint next_intermediate_point [ MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ] ;  // waypoints for the tux, when target not directly reachable
+    Uint16 KillRecord[ 200 ];      // how many ( of the first 1000 monster types) have been killed yet?
+    Uint8 Automap [ MAX_LEVELS ] [ 100 ][ 100 ]; // this is the data for the automatic map
+    moderately_finepoint DetectedItemList[ MAX_ITEMS_PER_LEVEL ];
+    int current_zero_ring_index;
+    gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
+    
+    int BigScreenMessageIndex;
+    char BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
+    float BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES ];
 }
 tux_t, *Tux_t;
 
@@ -807,6 +809,7 @@ typedef struct
     float TextVisibleTime;
     char* TextToBeDisplayed;
     moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+    int stick_to_waypoint_system_by_default;
 }
 enemy, *Enemy;
 

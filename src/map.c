@@ -103,42 +103,46 @@ remove_blood_obstacles_for_respawning ( int level_num )
 void
 respawn_level ( int level_num )
 {
-  int i;
+    int i;
 
-  //--------------------
-  // First we remove all the blood obstacles...
-  //
-  remove_blood_obstacles_for_respawning ( level_num );
-
-  //--------------------
-  // Now we can start to fill the enemies on this level with new life...
-  //
-  for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
+    //--------------------
+    // First we remove all the blood obstacles...
+    //
+    remove_blood_obstacles_for_respawning ( level_num );
+    
+    //--------------------
+    // Now we can start to fill the enemies on this level with new life...
+    //
+    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {
-      if ( AllEnemys [ i ] . pos . z != level_num ) continue;
-      if ( AllEnemys [ i ] . type == (-1) ) continue;
-
-      //--------------------
-      // So now we've found some bot to respawn.  Let's do it:
-      // new energy
-      // new 'phase' for not dead
-      // new status
-      // new tasks and commands..
-      //
-      AllEnemys [ i ] . energy = Druidmap [ AllEnemys [ i ] . type ] . maxenergy ;
-      AllEnemys [ i ] . Status = MOBILE ;
-      AllEnemys [ i ] . phase = 0 ;
-      AllEnemys [ i ] . animation_phase = 0 ;
-      AllEnemys [ i ] . animation_type = WALK_ANIMATION ; 
-
-      if ( ! AllEnemys [ i ] . is_friendly )
+	if ( AllEnemys [ i ] . pos . z != level_num ) continue;
+	if ( AllEnemys [ i ] . type == (-1) ) continue;
+	
+	//--------------------
+	// So now we've found some bot to respawn.  Let's do it:
+	// new energy
+	// new 'phase' for not dead
+	// new status
+	// new tasks and commands..
+	//
+	AllEnemys [ i ] . energy = Druidmap [ AllEnemys [ i ] . type ] . maxenergy ;
+	AllEnemys [ i ] . Status = MOBILE ;
+	AllEnemys [ i ] . phase = 0 ;
+	AllEnemys [ i ] . animation_phase = 0 ;
+	AllEnemys [ i ] . animation_type = WALK_ANIMATION ; 
+	
+	if ( ! AllEnemys [ i ] . is_friendly )
 	{
-	  AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
-	  AllEnemys [ i ] . has_greeted_influencer = FALSE ;
-	  AllEnemys [ i ] . state_timeout = 0 ;
+	    if ( AllEnemys [ i ] . stick_to_waypoint_system_by_default )
+		AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    else
+		AllEnemys [ i ] . combat_state = WAYPOINTLESS_WANDERING ;
+
+	    AllEnemys [ i ] . has_greeted_influencer = FALSE ;
+	    AllEnemys [ i ] . state_timeout = 0 ;
 	}
     }
-
+    
 }; // void respawn_level ( int level_num )
 
 /* -----------------------------------------------------------------
@@ -2518,13 +2522,19 @@ ReviveAllDroidsOnShip ( void )
     {
       type = AllEnemys [ i ] . type;
       if ( type == (-1) ) continue;  // Do nothing to unused entries
-      AllEnemys [ i ] . energy = Druidmap[type].maxenergy;
-      AllEnemys [ i ] . Status = MOBILE; // !OUT;
+      AllEnemys [ i ] . energy = Druidmap [ type ] . maxenergy;
+      AllEnemys [ i ] . Status = MOBILE ; // !OUT;
       AllEnemys [ i ] . has_greeted_influencer = FALSE ;
-      AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+
+      if ( AllEnemys [ i ] . stick_to_waypoint_system_by_default )
+	  AllEnemys [ i ] . combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+      else
+	  AllEnemys [ i ] . combat_state = WAYPOINTLESS_WANDERING ;
+
       AllEnemys [ i ] . state_timeout = 0 ;
       AllEnemys [ i ] . animation_phase = 0 ;
     }
+
 }; // void ReviveAllDroidsOnShip ( void )
 
 /* -----------------------------------------------------------------
@@ -2535,72 +2545,71 @@ ReviveAllDroidsOnShip ( void )
 int
 GetCrew (char *filename)
 {
-  char *fpath;
-  char *MainDroidsFilePointer;
-  char *DroidSectionPointer;
-  char *EndOfThisDroidSectionPointer;
-
+    char *fpath;
+    char *MainDroidsFilePointer;
+    char *DroidSectionPointer;
+    char *EndOfThisDroidSectionPointer;
+    
 #define START_OF_DROID_DATA_STRING "*** Beginning of Droid Data ***"
 #define END_OF_DROID_DATA_STRING "*** End of Droid Data ***"
 #define DROIDS_LEVEL_DESCRIPTION_START_STRING "** Beginning of new Level **"
 #define DROIDS_LEVEL_DESCRIPTION_END_STRING "** End of this levels droid data **"
 
-
-  //--------------------
-  // There can be two cases:  Either the droids records must be read and initialized
-  // from scratch or they need not be modified in any way
-  //
-  // Which is the case?  ---  This can be controlled from the mission file by 
-  // specifying either 
-
-  if ( strcmp ( filename , "none" ) == 0 ) 
+    //--------------------
+    // There can be two cases:  Either the droids records must be read and initialized
+    // from scratch or they need not be modified in any way
+    //
+    // Which is the case?  ---  This can be controlled from the mission file by 
+    // specifying either 
+    
+    if ( strcmp ( filename , "none" ) == 0 ) 
     {
-      DebugPrintf( 0 , "\nint GetCrew( char* filename ): none received as parameter --> not reseting crew file." );
-      return (OK);
+	DebugPrintf( 0 , "\nint GetCrew( char* filename ): none received as parameter --> not reseting crew file." );
+	return (OK);
     }
-
-  ClearEnemys ();
-
-  //--------------------
-  //Now its time to start decoding the droids file.
-  //For that, we must get it into memory first.
-  //The procedure is the same as with LoadShip
-  //
-  fpath = find_file (filename, MAP_DIR, FALSE);
-
-  MainDroidsFilePointer = ReadAndMallocAndTerminateFile( fpath , END_OF_DROID_DATA_STRING ) ;
-
-  //--------------------
-  // The Droid crew file for this map is now completely read into memory
-  // It's now time to decode the file and to fill the array of enemys with
-  // new droids of the given types.
-  //
-  DroidSectionPointer=MainDroidsFilePointer;
-  while ( ( DroidSectionPointer = strstr ( DroidSectionPointer, DROIDS_LEVEL_DESCRIPTION_START_STRING )) != NULL )
+    
+    ClearEnemys ();
+    
+    //--------------------
+    //Now its time to start decoding the droids file.
+    //For that, we must get it into memory first.
+    //The procedure is the same as with LoadShip
+    //
+    fpath = find_file (filename, MAP_DIR, FALSE);
+    
+    MainDroidsFilePointer = ReadAndMallocAndTerminateFile( fpath , END_OF_DROID_DATA_STRING ) ;
+    
+    //--------------------
+    // The Droid crew file for this map is now completely read into memory
+    // It's now time to decode the file and to fill the array of enemys with
+    // new droids of the given types.
+    //
+    DroidSectionPointer=MainDroidsFilePointer;
+    while ( ( DroidSectionPointer = strstr ( DroidSectionPointer, DROIDS_LEVEL_DESCRIPTION_START_STRING )) != NULL )
     {
-      DroidSectionPointer+=strlen( DROIDS_LEVEL_DESCRIPTION_START_STRING );
-      DebugPrintf ( 1 , "\nFound another levels droids description starting point entry!");
-      EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
-      if ( EndOfThisDroidSectionPointer == NULL )
+	DroidSectionPointer+=strlen( DROIDS_LEVEL_DESCRIPTION_START_STRING );
+	DebugPrintf ( 1 , "\nFound another levels droids description starting point entry!");
+	EndOfThisDroidSectionPointer = strstr ( DroidSectionPointer , DROIDS_LEVEL_DESCRIPTION_END_STRING ) ;
+	if ( EndOfThisDroidSectionPointer == NULL )
 	{
-	  GiveStandardErrorMessage ( __FUNCTION__  , "Unterminated droid section encountered!" ,
-				     PLEASE_INFORM, IS_FATAL );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "Unterminated droid section encountered!" ,
+				       PLEASE_INFORM, IS_FATAL );
 	}
-      // EndOfThisDroidSectionPointer[0]=0;
-      GetThisLevelsDroids( DroidSectionPointer );
-      DroidSectionPointer = EndOfThisDroidSectionPointer+2; // Move past the inserted String terminator
+	// EndOfThisDroidSectionPointer[0]=0;
+	GetThisLevelsDroids( DroidSectionPointer );
+	DroidSectionPointer = EndOfThisDroidSectionPointer+2; // Move past the inserted String terminator
     }
+    
+    //--------------------
+    // Now that the correct crew types have been filled into the 
+    // right structure, it's time to set the energy of the corresponding
+    // droids to "full" which means to the maximum of each type.
+    //
+    CountNumberOfDroidsOnShip ();
+    ReviveAllDroidsOnShip ();
+    
+    return ( OK );
 
-
-  //--------------------
-  // Now that the correct crew types have been filled into the 
-  // right structure, it's time to set the energy of the corresponding
-  // droids to "full" which means to the maximum of each type.
-  //
-  CountNumberOfDroidsOnShip ();
-  ReviveAllDroidsOnShip ();
-
-  return (OK);
 }; // int GetCrew ( ... ) 
 
 /* ----------------------------------------------------------------------
@@ -2747,10 +2756,21 @@ the item specification section.",
       ReadValueFromString ( SearchPointer , "on_death_drop_item_code=" , "%d", 
 			    &AllEnemys[ FreeAllEnemysPosition ].on_death_drop_item_code , EndOfThisLevelData );
 
-      AllEnemys[ FreeAllEnemysPosition ].type = ListIndex;
-      AllEnemys[ FreeAllEnemysPosition ].pos.z = OurLevelNumber;
-      AllEnemys[ FreeAllEnemysPosition ].Status = MOBILE ; // !OUT;
-      AllEnemys[ FreeAllEnemysPosition ].SpecialForce = 1;
+      AllEnemys [ FreeAllEnemysPosition ] . type = ListIndex;
+      AllEnemys [ FreeAllEnemysPosition ] . pos.z = OurLevelNumber;
+      AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
+      AllEnemys [ FreeAllEnemysPosition ] . SpecialForce = 1;
+
+      //--------------------
+      // By default, friendly bots will stick to the waypoint system while
+      // hostile bots will not.  Well, this is for now.  We might find something
+      // more intelligent later, like e.g. selecting the property from the
+      // ReturnOfTux.droids file.
+      //
+      if ( AllEnemys [ FreeAllEnemysPosition ] . is_friendly ) 
+	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = TRUE ;
+      else
+	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = FALSE ;
 
     } // while Special force droid found...
 
@@ -2866,6 +2886,11 @@ game data file with all droid type specifications.",
       AllEnemys [ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
       AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
       AllEnemys [ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
+      if ( AllEnemys [ FreeAllEnemysPosition ] . is_friendly ) 
+	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = TRUE ;
+      else
+	  AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = FALSE ;
+
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
 
       strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );

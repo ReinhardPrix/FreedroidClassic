@@ -708,85 +708,86 @@ CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , fl
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Once the next waypoint or the next private pathway point has been 
+ * selected, this generic low_level movement function can be called to
+ * approach either the waypoint or seletect private pathway point.
  * ---------------------------------------------------------------------- */
 void
-RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
+RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 {
-  finepoint Restweg;
-  float maxspeed;
-
-  //--------------------
-  // According to properties of the robot like being frozen or not,
-  // we define the maximum speed of this machine for later use...
-  // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
-  //
-  // if ( ThisRobot -> paralysation_duration_left != 0 ) return;
-
-  if ( ThisRobot -> frozen == 0 )
-    maxspeed = Druidmap [ ThisRobot -> type ] . maxspeed;
-  else 
-    maxspeed = 0.2 * Druidmap [ ThisRobot->type ] . maxspeed;
- 
-  //--------------------
-  // While getting hit, the bot or person shouldn't be running, but
-  // when standing, it should move over to the 'walk' animation type...
-  //
-  if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) return;
-  if ( ThisRobot -> animation_type == STAND_ANIMATION ) 
+    finepoint remaining_way;
+    float maxspeed;
+    
+    //--------------------
+    // According to properties of the robot like being frozen or not,
+    // we define the maximum speed of this machine for later use...
+    // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
+    //
+    // if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+    
+    if ( ThisRobot -> frozen == 0 )
+	maxspeed = Druidmap [ ThisRobot -> type ] . maxspeed;
+    else 
+	maxspeed = 0.2 * Druidmap [ ThisRobot->type ] . maxspeed;
+    
+    //--------------------
+    // While getting hit, the bot or person shouldn't be running, but
+    // when standing, it should move over to the 'walk' animation type...
+    //
+    if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) return;
+    if ( ThisRobot -> animation_type == STAND_ANIMATION ) 
     {
-      ThisRobot -> animation_type = WALK_ANIMATION ;
-      ThisRobot -> animation_phase = 0.0 ;
+	ThisRobot -> animation_type = WALK_ANIMATION ;
+	ThisRobot -> animation_phase = 0.0 ;
     }
-
-  //--------------------
-  // Now that we have found out where to go, we can start to determine the remaining 
-  // way until the target point is reached.
-  //
-  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
-  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
-
-  //--------------------
-  // As long a the distance from the current position of the enemy
-  // to its next wp is large, movement is rather simple:
-  //
-  if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
+    
+    //--------------------
+    // Now that we have found out where to go, we can start to determine the remaining 
+    // way until the target point is reached.
+    //
+    remaining_way.x = next_target_spot.x - ThisRobot->pos.x;
+    remaining_way.y = next_target_spot.y - ThisRobot->pos.y;
+    
+    //--------------------
+    // As long a the distance from the current position of the enemy
+    // to its next wp is large, movement is rather simple:
+    //
+    if ( fabsf ( remaining_way . x )  > Frame_Time() * maxspeed )
     {
-      ThisRobot->speed.x =
-	(Restweg.x / fabsf (Restweg.x)) * maxspeed;
-      ThisRobot->pos.x += ThisRobot->speed.x * Frame_Time ();
+	ThisRobot -> speed . x =
+	    ( remaining_way . x / fabsf ( remaining_way . x ) ) * maxspeed;
+	ThisRobot -> pos . x += ThisRobot -> speed . x * Frame_Time ();
     } 	 
-  else
+    else
     {
-      // --------------------
-      // Once this enemy is close to his final destination waypoint, we have
-      // to do some fine tuning, and then of course set the next waypoint.
-      ThisRobot->pos.x = nextwp_pos.x;
-      ThisRobot->speed.x = 0;
+	// --------------------
+	// Once this enemy is close to his final destination waypoint, we have
+	// to do some fine tuning, and then of course set the next waypoint.
+	ThisRobot -> pos . x = next_target_spot . x;
+	ThisRobot -> speed . x = 0;
     }
-
-  if ( fabsf (Restweg.y)  > Frame_Time() * maxspeed )
+    
+    if ( fabsf ( remaining_way . y )  > Frame_Time() * maxspeed )
     {
-      ThisRobot->speed.y =
-	(Restweg.y / fabsf (Restweg.y)) * maxspeed;
-      ThisRobot->pos.y += ThisRobot->speed.y * Frame_Time ();
+	ThisRobot -> speed . y =
+	    ( remaining_way . y / fabsf ( remaining_way . y ) ) * maxspeed;
+	ThisRobot -> pos . y += ThisRobot -> speed . y * Frame_Time ();
     }
-  else
+    else
     {
-      ThisRobot->pos.y = nextwp_pos.y;
-      ThisRobot->speed.y = 0;
+	ThisRobot -> pos . y = next_target_spot . y ;
+	ThisRobot -> speed . y = 0;
     }
-
-  //--------------------
-  // Since this robot is moving, we set the animation type to 
-  // walking...
-  //
-  // ThisRobot -> animation_type = WALK_ANIMATION ; 
-  if ( ThisRobot -> animation_phase == 0 )
-    ThisRobot -> animation_phase = 0.1 ;
-
-}; // void RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
+    
+    //--------------------
+    // Since this robot is moving, we set the animation type to 
+    // walking...
+    //
+    // ThisRobot -> animation_type = WALK_ANIMATION ; 
+    if ( ThisRobot -> animation_phase == 0 )
+	ThisRobot -> animation_phase = 0.1 ;
+    
+}; // void RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 
 /* ----------------------------------------------------------------------
  * This function moves one robot thowards his next waypoint.  If already
@@ -795,177 +796,181 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint nextwp_pos )
 void 
 MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 {
-  Waypoint WpList;		/* Pointer to waypoint-list */
-  finepoint nextwp_pos;
-  Enemy ThisRobot=&AllEnemys[ EnemyNum ];
-  int HistoryIndex;
-  Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
+    Waypoint WpList;		/* Pointer to waypoint-list */
+    finepoint nextwp_pos;
+    Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+    int HistoryIndex;
+    Level WaypointLevel = curShip.AllLevels[ AllEnemys[ EnemyNum ].pos.z ];
+    
+    // DebugPrintf( 2 , "\n%s(): real function call confirmed. " , __FUNCTION__ );
+    
+    // We do some definitions to save us some more typing later...
+    WpList = WaypointLevel->AllWaypoints;
+    
+    //--------------------
+    // According to properties of the robot like being frozen or not,
+    // we define the maximum speed of this machine for later use...
+    // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
+    //
+    if ( ThisRobot -> paralysation_duration_left != 0 ) return;
 
-  DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum ) : real function call confirmed. ");
-
-  // We do some definitions to save us some more typing later...
-  WpList = WaypointLevel->AllWaypoints;
-
-  //--------------------
-  // According to properties of the robot like being frozen or not,
-  // we define the maximum speed of this machine for later use...
-  // A frozen robot is slow while a paralyzed robot can do absolutely nothing.
-  //
-  if ( ThisRobot -> paralysation_duration_left != 0 ) return;
-
-  //--------------------
-  // We determine our movement target, either the preset course or the 
-  // current classical waypoint that has been set.
-  //
-  if ( ThisRobot -> persuing_given_course )
+    //--------------------
+    // We determine our movement target, either the preset course or the 
+    // current classical waypoint that has been set.
+    //
+    if ( ThisRobot -> persuing_given_course )
     {
-      nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
-      nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
+	nextwp_pos.x = ThisRobot->PrivatePathway[0].x;
+	nextwp_pos.y = ThisRobot->PrivatePathway[0].y;
     }
-  else
+    else
     {
-      nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x + 0.5 ;
-      nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y + 0.5 ;
+	nextwp_pos.x = WpList[ ThisRobot->nextwaypoint ] . x + 0.5 ;
+	nextwp_pos.y = WpList[ ThisRobot->nextwaypoint ] . y + 0.5 ;
     }
-
-  //--------------------
-  // Maybe this robot is following behind influ.  Then of course we need to set
-  // even different special target positions...
-  //
-  if ( ThisRobot->FollowingInflusTail == TRUE )
+    
+    //--------------------
+    // Maybe this robot is following behind influ.  Then of course we need to set
+    // even different special target positions...
+    //
+    if ( ThisRobot->FollowingInflusTail == TRUE )
     {
-      if ( ( fabsf( ThisRobot->pos.x - Me[0].pos.x ) > 1 ) || 
-           ( fabsf( ThisRobot->pos.y - Me[0].pos.y ) > 1 ) )
+	if ( ( fabsf( ThisRobot->pos.x - Me[0].pos.x ) > 1 ) || 
+	     ( fabsf( ThisRobot->pos.y - Me[0].pos.y ) > 1 ) )
 	{
-
-	  HistoryIndex = ThisRobot->StayHowManyFramesBehind;
-
-	  nextwp_pos.y = GetInfluPositionHistoryY( HistoryIndex );
-	  nextwp_pos.x = GetInfluPositionHistoryX( HistoryIndex );
-	  // jump to the next level, if the influencer did
-	  // that might cause some inconsistencies, but who cares right now?
-	  if ( ThisRobot->pos.z != GetInfluPositionHistoryZ( HistoryIndex ) )
+	    
+	    HistoryIndex = ThisRobot->StayHowManyFramesBehind;
+	    
+	    nextwp_pos.y = GetInfluPositionHistoryY( HistoryIndex );
+	    nextwp_pos.x = GetInfluPositionHistoryX( HistoryIndex );
+	    // jump to the next level, if the influencer did
+	    // that might cause some inconsistencies, but who cares right now?
+	    if ( ThisRobot->pos.z != GetInfluPositionHistoryZ( HistoryIndex ) )
 	    {
-	      ThisRobot->pos.x = GetInfluPositionHistoryX( HistoryIndex );
-	      ThisRobot->pos.y = GetInfluPositionHistoryY( HistoryIndex );
-	      ThisRobot->pos.z = GetInfluPositionHistoryZ( HistoryIndex );
+		ThisRobot->pos.x = GetInfluPositionHistoryX( HistoryIndex );
+		ThisRobot->pos.y = GetInfluPositionHistoryY( HistoryIndex );
+		ThisRobot->pos.z = GetInfluPositionHistoryZ( HistoryIndex );
 	    }
 	}
-      else
+	else
 	{
-	  nextwp_pos.y = ThisRobot->pos.y;
-	  nextwp_pos.x = ThisRobot->pos.x;
+	    nextwp_pos.y = ThisRobot->pos.y;
+	    nextwp_pos.x = ThisRobot->pos.x;
 	}
     }
-
-  RawEnemyApproachPosition ( ThisRobot , nextwp_pos );
+    
+    RawEnemyApproachPosition ( ThisRobot , nextwp_pos );
 
 }; // void MoveThisRobotThowardsHisCurrentTarget ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * When droids are walking along random WAYPOINTS (i.e. never leave the
+ * system of wayponts an the connections between them, it may occasionally
+ * become nescessary to select a new randomly chosen waypoint that is 
+ * reachable directly from the current waypoint.
+ * Doing this selection is what this function does.
  * ---------------------------------------------------------------------- */
 void
 RawSetNewRandomWaypoint ( Enemy ThisRobot )
 {
-  int i;
-  Waypoint WpList;	
-  int nextwp;
-  finepoint nextwp_pos;
-  waypoint *this_wp;
-  int num_conn;
-  int trywp = 0 ;
-  int FreeWays[ MAX_WP_CONNECTIONS ];
-  int SolutionFound;
-  int TestConnection;
-  Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
-
-  DebugPrintf( 2 , "\nvoid RawSetNewRandomWaypoint ( Enemy ThisRobot ): real function call confirmed. ");
-
-  //--------------------
-  // We do some definitions to save us some more typing later...
-  //
-  WpList = WaypointLevel->AllWaypoints;
-  nextwp = ThisRobot->nextwaypoint;
-  nextwp_pos.x = WpList[nextwp].x + 0.5 ;
-  nextwp_pos.y = WpList[nextwp].y + 0.5 ;
-
-  ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
-  
-  // search for possible connections from here...
-  DebugPrintf (2, "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): searching for possible connections...");
-  
-  // search for the first connection, that doesn't exist any more, so
-  // that we know, which connections surely do exist
-  this_wp = &WpList[nextwp];
-  num_conn = this_wp->num_connections;
-  
-  // Of course, only if such connections exist at all, we do the
-  // following change of target waypoint procedure
-  if (  num_conn == 0 ) // no connections found!
+    int i;
+    Waypoint WpList;	
+    int nextwp;
+    finepoint nextwp_pos;
+    waypoint *this_wp;
+    int num_conn;
+    int trywp = 0 ;
+    int FreeWays[ MAX_WP_CONNECTIONS ];
+    int SolutionFound;
+    int TestConnection;
+    Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
+    
+    DebugPrintf( 2 , "\nvoid RawSetNewRandomWaypoint ( Enemy ThisRobot ): real function call confirmed. ");
+    
+    //--------------------
+    // We do some definitions to save us some more typing later...
+    //
+    WpList = WaypointLevel->AllWaypoints;
+    nextwp = ThisRobot->nextwaypoint;
+    nextwp_pos.x = WpList[nextwp].x + 0.5 ;
+    nextwp_pos.y = WpList[nextwp].y + 0.5 ;
+    
+    ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
+    
+    // search for possible connections from here...
+    DebugPrintf (2, "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): searching for possible connections...");
+    
+    // search for the first connection, that doesn't exist any more, so
+    // that we know, which connections surely do exist
+    this_wp = &WpList[nextwp];
+    num_conn = this_wp->num_connections;
+    
+    // Of course, only if such connections exist at all, we do the
+    // following change of target waypoint procedure
+    if (  num_conn == 0 ) // no connections found!
     {
-      fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr , "\nThe offending waypoint nr. is: %d.", nextwp );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a droid on a waypoint, that apparently has no connections to other waypoints...\n\
 This is an error in the waypoint structure of this level.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
-      Terminate(ERR);
+				   NO_NEED_TO_INFORM, IS_FATAL );
+	Terminate(ERR);
     }
-
-  //--------------------
-  // At this point, we should check, if there is another waypoint 
-  // and also if the way there is free of other droids
-  //
-  for ( i = 0; i < num_conn ; i++ )
+    
+    //--------------------
+    // At this point, we should check, if there is another waypoint 
+    // and also if the way there is free of other droids
+    //
+    for ( i = 0; i < num_conn ; i++ )
     {
-      FreeWays[i] = CheckIfWayIsFreeOfDroidsWithTuxchecking ( WpList [ ThisRobot -> lastwaypoint ] . x + 0.5 , 
-							      WpList [ ThisRobot -> lastwaypoint ] . y + 0.5 , 
-							      WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . x + 0.5 , 
-							      WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . y + 0.5 , ThisRobot->pos.z , ThisRobot );
+	FreeWays [ i ] = CheckIfWayIsFreeOfDroidsWithTuxchecking ( 
+	    WpList [ ThisRobot -> lastwaypoint ] . x + 0.5 , 
+	    WpList [ ThisRobot -> lastwaypoint ] . y + 0.5 , 
+	    WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . x + 0.5 , 
+	    WpList [ WpList [ ThisRobot -> lastwaypoint ] . connections [ i ] ] . y + 0.5 , 
+	    ThisRobot->pos.z , ThisRobot );
     }
-  
-  //--------------------
-  // Now see whether any way point at all is free in that sense
-  // otherwise we set this robot to waiting and return;
-  //
-  for ( i = 0 ; i < num_conn ; i++ )
+    
+    //--------------------
+    // Now see whether any way point at all is free in that sense
+    // otherwise we set this robot to waiting and return;
+    //
+    for ( i = 0 ; i < num_conn ; i++ )
     {
-      if ( FreeWays[i] ) break;
+	if ( FreeWays[i] ) break;
     }
-  if ( i == num_conn )
+    if ( i == num_conn )
     {
-      DebugPrintf( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ): Sorry, there seems no free way out.  I'll wait then... , num_conn was : %d ." , num_conn);
-      ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
-      if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
-	   ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
-	ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
-      return;
+	DebugPrintf( 2 , "\n%s(): Sorry, there seems no free way out.  I'll wait then... , num_conn was : %d ." , __FUNCTION__ , num_conn );
+	ThisRobot->warten = 1.5 ; // this makes this droid 'passable' for other droids for now...
+	if ( ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS ) ||
+	     ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT ) )
+	    ThisRobot -> combat_state = WAIT_AND_TURN_AROUND_AIMLESSLY ;
+	return;
     }
-  
-  //--------------------
-  // Now that we know, there is some way out of this, we can test around
-  // and around randomly until we finally find some solution.
-  //
-  // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
-  // 
-  SolutionFound=FALSE;
-  while ( !SolutionFound )
+    
+    //--------------------
+    // Now that we know, there is some way out of this, we can test around
+    // and around randomly until we finally find some solution.
+    //
+    // ThisRobot->nextwaypoint = WpList [ nextwp ] . connections [ i ] ;
+    // 
+    SolutionFound = FALSE;
+    while ( !SolutionFound )
     {
-      TestConnection = MyRandom (WpList[nextwp].num_connections - 1);
-      
-      if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
-      if ( !FreeWays[TestConnection] ) continue;
-      
-      trywp = WpList[nextwp].connections[ TestConnection ];
-      SolutionFound = TRUE;
+	TestConnection = MyRandom ( WpList [ nextwp ] . num_connections - 1 );
+	
+	if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
+	if ( !FreeWays[TestConnection] ) continue;
+	
+	trywp = WpList[nextwp].connections[ TestConnection ];
+	SolutionFound = TRUE;
     }
-  
-
-  // set new waypoint...
-  ThisRobot->nextwaypoint = trywp;
-  
-  DebugPrintf ( 2 , "\nRawSetNewRandomWaypoint ( Enemy ThisRobot ):  A new waypoint has been set." );
+    
+    // set new waypoint...
+    ThisRobot->nextwaypoint = trywp;
+    
+    DebugPrintf ( 2 , "\n%s():  A new waypoint has been set." , __FUNCTION__ );
   
 }; // void RawSetNewRandomWaypoint ( Enemy ThisRobot )
 
@@ -992,42 +997,90 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 }; // void SelectNextWaypointAdvanced ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
+ * If the droid in question is currently not following the waypoint system
+ * but rather moving around on it's own and without any real destination,
+ * this function sets up randomly chosen targets for the droid.
+ * ---------------------------------------------------------------------- */
+void 
+select_new_waypointless_random_walk_target ( int EnemyNum )
+{
+    enemy* ThisRobot = & ( AllEnemys [ EnemyNum ] ) ;
+    int i ;
+    moderately_finepoint target_candidate;
+    int success = FALSE ;
+
+    // Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
+#define MAX_RANDOM_WALK_ATTEMPTS_BEFORE_GIVING_UP 4
+
+    // DebugPrintf( -4 , "\n%s(): real function call confirmed. " , __FUNCTION__ );
+    
+    for ( i = 0 ; i < MAX_RANDOM_WALK_ATTEMPTS_BEFORE_GIVING_UP ; i ++ )
+    {
+	target_candidate . x = ThisRobot -> pos . x + MyRandom ( 5 ) - 2 ; 
+	target_candidate . y = ThisRobot -> pos . y + MyRandom ( 5 ) - 2 ; 
+
+	if ( tux_can_walk_this_line ( 0 , ThisRobot -> pos . x , ThisRobot -> pos . y , 
+				      target_candidate . x , target_candidate . y ) )
+	{
+	    ThisRobot -> persuing_given_course = TRUE ;
+	    ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
+	    ThisRobot -> PrivatePathway [ 0 ] . y = target_candidate . y ;
+	    success = TRUE ;
+	    break;
+	}
+    }
+
+    if ( ! success )
+    {
+	DebugPrintf ( -4 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
+	ThisRobot -> warten = 1.6 ;
+	
+    }
+    else
+    {
+	// DebugPrintf ( -4 , "\n%s():  A new waypoint has been set." , __FUNCTION__ );
+    }
+    
+}; // void select_new_waypointless_random_walk_target ( int EnemyNum )
+
+/* ----------------------------------------------------------------------
  * This function moves one robot in an advanced way, that hasn't been
  * present within the classical paradroid game.
  * ---------------------------------------------------------------------- */
 float 
-RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
+remaining_distance_to_current_walk_target ( Enemy ThisRobot )
 {
-  Waypoint WpList;		/* Pointer to waypoint-liste */
-  int nextwp;
-  finepoint nextwp_pos;
-  Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
-  finepoint Restweg;
+    Waypoint WpList;
+    int nextwp;
+    finepoint nextwp_pos;
+    Level WaypointLevel = curShip.AllLevels[ ThisRobot -> pos.z ];
+    finepoint remaining_way;
 
-  DebugPrintf( 2 , "\nvoid SelectNextWaypointAdvanced ( int EnemyNum ) : real function call confirmed. ");
+    //--------------------
+    // Maybe currently we do not stick to the whole waypoint system but rather 
+    // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
+    // we select waypoints as we're used to...
+    //
+    if ( ThisRobot -> persuing_given_course )
+    {
+	remaining_way.x = ThisRobot -> PrivatePathway [ 0 ] . x - ThisRobot -> pos . x ;
+	remaining_way.y = ThisRobot -> PrivatePathway [ 0 ] . y - ThisRobot -> pos . y ;
+    }
+    else
+    {
+	WpList = WaypointLevel -> AllWaypoints;
+	nextwp = ThisRobot -> nextwaypoint;
+	nextwp_pos.x = WpList[nextwp].x + 0.5 ;
+	nextwp_pos.y = WpList[nextwp].y + 0.5 ;
 
-  //--------------------
-  // Maybe currently we do not stick to the whole waypoint system but rather 
-  // choose our course independently.  Then it's PersueGivenCourse.  Otherwise
-  // we select waypoints as we're used to...
-  //
-  // if ( ThisRobot->persuing_given_course == TRUE ) return;
+	// determine the remaining way until the target point is reached
+	remaining_way.x = nextwp_pos.x - ThisRobot->pos.x;
+	remaining_way.y = nextwp_pos.y - ThisRobot->pos.y;
+    }
 
-  //--------------------
-  // We do some definitions to save us some more typing later...
-  //
-  WpList = WaypointLevel->AllWaypoints;
-  nextwp = ThisRobot->nextwaypoint;
-  nextwp_pos.x = WpList[nextwp].x + 0.5 ;
-  nextwp_pos.y = WpList[nextwp].y + 0.5 ;
+  return ( sqrt ( remaining_way.x * remaining_way.x + remaining_way.y * remaining_way.y ) ) ;
 
-  // determine the remaining way until the target point is reached
-  Restweg.x = nextwp_pos.x - ThisRobot->pos.x;
-  Restweg.y = nextwp_pos.y - ThisRobot->pos.y;
-
-  return ( sqrt ( Restweg.x * Restweg.x + Restweg.y * Restweg.y ) ) ;
-
-}; // float RemainingDistanceToNextWaypoint ( Enemy ThisRobot )
+}; // float remaining_distance_to_current_walk_target ( Enemy ThisRobot )
 
 /* ----------------------------------------------------------------------
  * This function tells if a given level is active in the sence that there
@@ -2360,389 +2413,482 @@ robot_group_turn_hostile ( int enemy_num )
 void
 ProcessAttackStateMachine ( int enemynum )
 {
-  moderately_finepoint vect_to_target;
-  float dist2;
-  Enemy ThisRobot = & AllEnemys[ enemynum ] ;
-  int TargetPlayer;
-
-  //--------------------
-  // At first, we check for a lot of cases in which we do not
-  // need to move anything for this reason or for that
-  //
-  // ignore robots on other levels 
-  // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
-  if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
-
-  // ignore dead robots as well...
-  // if ( ThisRobot -> Status == OUT ) return;
-
-  // ignore paralyzed robots as well...
-  if ( ThisRobot -> paralysation_duration_left != 0 ) return;
-  // ignore robots, that don't have any weapon
-  if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
-
-  //--------------------
-  // More for debugging purposes, we print out the current state of the
-  // robot as his in-game text.
-  //
-  switch ( ThisRobot -> combat_state )
+    moderately_finepoint vect_to_target;
+    float dist2;
+    Enemy ThisRobot = & AllEnemys[ enemynum ] ;
+    int TargetPlayer;
+    
+    //--------------------
+    // At first, we check for a lot of cases in which we do not
+    // need to move anything for this reason or for that
+    //
+    // ignore robots on other levels 
+    // if ( ThisRobot->pos.z != CurLevel->levelnum) return;
+    if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
+    
+    // ignore dead robots as well...
+    // if ( ThisRobot -> Status == OUT ) return;
+    
+    // ignore paralyzed robots as well...
+    if ( ThisRobot -> paralysation_duration_left != 0 ) return;
+    // ignore robots, that don't have any weapon
+    if ( Druidmap [ ThisRobot -> type ] . weapon_item . type == ( -1 ) ) return;
+    
+    //--------------------
+    // More for debugging purposes, we print out the current state of the
+    // robot as his in-game text.
+    //
+    switch ( ThisRobot -> combat_state )
     {
-    case MOVE_ALONG_RANDOM_WAYPOINTS:
-      ThisRobot->TextToBeDisplayed = "state:  Unaware of Tux." ;
-      break;
-    case TURN_THOWARDS_NEXT_WAYPOINT:
-      ThisRobot->TextToBeDisplayed = "state:  Turn thowards next WP." ;
-      break;
-    case RUSH_TUX_ON_SIGHT_AND_OPEN_TALK:
-      ThisRobot->TextToBeDisplayed = "state:  Rush Tux on Sight and open Talk." ;
-      break;
-    case STOP_AND_EYE_TUX:
-      ThisRobot->TextToBeDisplayed = "state:  Stop and Eye Tux." ;
-      break;
-    case MAKE_ATTACK_RUN:
-      ThisRobot->TextToBeDisplayed = "state:  Make Attack Run." ;
-      break;
-    case FIGHT_ON_TUX_SIDE:
-      ThisRobot->TextToBeDisplayed = "state:  Fight On Tux Side." ;
-      break;
-    case RELENTLESS_FIRE_TO_GIVEN_POSITION:
-      ThisRobot->TextToBeDisplayed = "state:  RELENTLESS FIRE!" ;
-      break;
-    case WAIT_AND_TURN_AROUND_AIMLESSLY:
-      ThisRobot->TextToBeDisplayed = "state:  Waiting, Turning aimlessly..." ;
-      break;
-    default:
-      ThisRobot->TextToBeDisplayed = "state:  UNHANDLED!!" ;
-      break;
+	case MOVE_ALONG_RANDOM_WAYPOINTS:
+	    ThisRobot->TextToBeDisplayed = "state:  Wandering along waypoints." ;
+	    break;
+	case TURN_THOWARDS_NEXT_WAYPOINT:
+	    ThisRobot->TextToBeDisplayed = "state:  Turn thowards next WP." ;
+	    break;
+	case RUSH_TUX_ON_SIGHT_AND_OPEN_TALK:
+	    ThisRobot->TextToBeDisplayed = "state:  Rush Tux on Sight and open Talk." ;
+	    break;
+	case STOP_AND_EYE_TUX:
+	    ThisRobot->TextToBeDisplayed = "state:  Stop and Eye Tux." ;
+	    break;
+	case MAKE_ATTACK_RUN:
+	    ThisRobot->TextToBeDisplayed = "state:  Make Attack Run." ;
+	    break;
+	case FIGHT_ON_TUX_SIDE:
+	    ThisRobot->TextToBeDisplayed = "state:  Fight On Tux Side." ;
+	    break;
+	case RELENTLESS_FIRE_TO_GIVEN_POSITION:
+	    ThisRobot->TextToBeDisplayed = "state:  RELENTLESS FIRE!" ;
+	    break;
+	case WAIT_AND_TURN_AROUND_AIMLESSLY:
+	    ThisRobot->TextToBeDisplayed = "state:  Waiting, Turning aimlessly..." ;
+	    break;
+	case WAYPOINTLESS_WANDERING:
+	    ThisRobot->TextToBeDisplayed = "state:  Waypointless wandering." ;
+	    break;
+	case TURN_THOWARDS_WAYPOINTLESS_SPOT:
+	    ThisRobot->TextToBeDisplayed = "state:  Waypointless turning." ;
+	    break;
+	default:
+	    ThisRobot->TextToBeDisplayed = "state:  UNHANDLED!!" ;
+	    break;
     }      
-  ThisRobot->TextVisibleTime = 0 ; 
-
-  //--------------------
-  // If some special command was given, like 
-  // ATTACK_FIXED_MAP_POSITION=1, then we IGNORE EVERYTHING AND JUST FIRE OUR BULLETS,
-  // NO MATTER WHOS IN THE LINE OF FIRE, HOW FAR WE ARE AWAY OR ANYTHING, JUST BLUNTLY
-  // DO THAT.
-  //
-  if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
-
-  if ( ThisRobot->AdvancedCommand == 2 ) 
+    ThisRobot->TextVisibleTime = 0 ; 
+    
+    //--------------------
+    // If some special command was given, like 
+    // ATTACK_FIXED_MAP_POSITION=1, then we IGNORE EVERYTHING AND JUST FIRE OUR BULLETS,
+    // NO MATTER WHOS IN THE LINE OF FIRE, HOW FAR WE ARE AWAY OR ANYTHING, JUST BLUNTLY
+    // DO THAT.
+    //
+    if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
+    
+    if ( ThisRobot->AdvancedCommand == 2 ) 
     {
-      TeleportToClosestWaypoint ( ThisRobot );
-      ThisRobot->AdvancedCommand = 0;
-
+	TeleportToClosestWaypoint ( ThisRobot );
+	ThisRobot->AdvancedCommand = 0;
+	
     }
-
-  if ( ThisRobot -> will_rush_tux ) 
+    
+    if ( ThisRobot -> will_rush_tux ) 
     {
-      if ( sqrt ( powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) +
-		  powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) ) < 4 )
+	if ( sqrt ( powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) +
+		    powf ( Me [ 0 ] . pos . x - ThisRobot -> pos . x , 2 ) ) < 4 )
 	{
-	  ThisRobot -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
-	  ThisRobot -> will_rush_tux = FALSE ;
+	    ThisRobot -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
+	    ThisRobot -> will_rush_tux = FALSE ;
 	}
     }
-
-  //--------------------
-  // determine the distance vector to the target of this shot.  The target
-  // depends of course on wheter it's a friendly device or a hostile device.
-  //
-  occasionally_update_vector_and_shot_target ( ThisRobot , & vect_to_target ) ;
-
-  //--------------------
-  // A friendly bot *MIGHT* help the tux in combat.  But this state must
-  // not be entered too easily, as it might break some other things...
-  //
-  if ( ( ThisRobot -> is_friendly ) && 
-       ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY ) && 
-       ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
+    
+    //--------------------
+    // determine the distance vector to the target of this shot.  The target
+    // depends of course on wheter it's a friendly device or a hostile device.
+    //
+    occasionally_update_vector_and_shot_target ( ThisRobot , & vect_to_target ) ;
+    
+    //--------------------
+    // A friendly bot *MIGHT* help the tux in combat.  But this state must
+    // not be entered too easily, as it might break some other things...
+    //
+    if ( ( ThisRobot -> is_friendly ) && 
+	 ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY ) && 
+	 ( sqrt ( vect_to_target . x * vect_to_target.x + vect_to_target . y * vect_to_target . y  ) < Druidmap [ ThisRobot -> type ] . minimal_range_hostile_bots_are_ignored ) )
     {
-      if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x ,
-				ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) &&
-	   ThisRobot -> combat_state != RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
-      {
-	if ( ThisRobot -> combat_state != FIGHT_ON_TUX_SIDE )
-	  DebugPrintf ( -1000, "\nFriendly bot of type (%d) now switched to FIGHT_ON_TUX_SIDE." , ThisRobot -> type );
-	ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
-      }
-    }
-
-  dist2 = sqrt( vect_to_target . x * vect_to_target . x + vect_to_target . y * vect_to_target . y );
-
-  TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
-
-
-  if ( ThisRobot -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
-    {
-
-      if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
+	if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x ,
+				  ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) &&
+	     ThisRobot -> combat_state != RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
 	{
-	  ThisRobot -> persuing_given_course = TRUE ;
-	  ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
-	  ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
-
-	  if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
-		      ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
+	    if ( ThisRobot -> combat_state != FIGHT_ON_TUX_SIDE )
+		DebugPrintf ( -1000, "\nFriendly bot of type (%d) now switched to FIGHT_ON_TUX_SIDE." , ThisRobot -> type );
+	    ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+	}
+    }
+    
+    dist2 = sqrt( vect_to_target . x * vect_to_target . x + vect_to_target . y * vect_to_target . y );
+    
+    TargetPlayer = ClosestVisiblePlayer ( ThisRobot ) ;
+    
+    
+    if ( ThisRobot -> combat_state == RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
+    {
+	
+	if ( IsVisible ( & ( ThisRobot -> pos ) , 0 ) )
+	{
+	    ThisRobot -> persuing_given_course = TRUE ;
+	    ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
+	    ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
+	    
+	    if ( sqrt ( ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> pos . x - Me [ 0 ] . pos . x ) +
+			( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> pos . y - Me [ 0 ] . pos . y ) ) < 1 )
 	    {
-	      ChatWithFriendlyDroid ( ThisRobot );
-	      ThisRobot -> will_rush_tux = FALSE ;
-	      ThisRobot -> persuing_given_course = FALSE ; 
-	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+		ChatWithFriendlyDroid ( ThisRobot );
+		ThisRobot -> will_rush_tux = FALSE ;
+		ThisRobot -> persuing_given_course = FALSE ; 
+		ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
 	    }
 	}
-      MoveThisRobotThowardsHisCurrentTarget( enemynum );
-      DetermineAngleOfFacing ( enemynum );
-      return;
+	MoveThisRobotThowardsHisCurrentTarget( enemynum );
+	DetermineAngleOfFacing ( enemynum );
+	return;
     }
-
-  else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+    
+    else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
     {
-      MoveThisRobotThowardsHisCurrentTarget( enemynum );
-      if ( RemainingDistanceToNextWaypoint ( ThisRobot ) < 0.1 ) 
+	MoveThisRobotThowardsHisCurrentTarget( enemynum );
+	if ( remaining_distance_to_current_walk_target ( ThisRobot ) < 0.1 ) 
 	{
-	  SelectNextWaypointAdvanced( enemynum );
-	  ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-	  return;
+	    SelectNextWaypointAdvanced( enemynum );
+	    ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	    return;
 	}
-      DetermineAngleOfFacing ( enemynum );
-
-      // CheckEnemyEnemyCollision ( enemynum );
-
-      //--------------------
-      // In case that the enemy droid isn't even aware of Tux and
-      // does not even see Tux now, there's nothing more to do here...
-      // Not even the combat state will change.
-      //
-      if ( DistanceToTux( ThisRobot ) > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
-
-      //--------------------
-      // But if the Tux is now within range of vision, then it will be
-      // 'greeted' and also the state will finally move to something more
-      // interesting...
-      //
-      if ( ThisRobot -> has_greeted_influencer == FALSE )
+	DetermineAngleOfFacing ( enemynum );
+	
+	// CheckEnemyEnemyCollision ( enemynum );
+	
+	//--------------------
+	// In case that the enemy droid isn't even aware of Tux and
+	// does not even see Tux now, there's nothing more to do here...
+	// Not even the combat state will change.
+	//
+	if ( DistanceToTux( ThisRobot ) > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
+	
+	//--------------------
+	// But if the Tux is now within range of vision, then it will be
+	// 'greeted' and also the state will finally move to something more
+	// interesting...
+	//
+	if ( ThisRobot -> has_greeted_influencer == FALSE )
 	{
-	  ThisRobot->has_greeted_influencer = TRUE;
-	  if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
+	    ThisRobot->has_greeted_influencer = TRUE;
+	    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 	    {
-	      PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+		PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 	    }
 	}
-
-      //--------------------
-      // If the Tux isn't directly on it's way to the Tux, it might just
-      // switch to take a closer look at the Tux.  But this will again
-      // be different for hostile bots and for non-hostile bots...
-      //
-      if ( ! ThisRobot -> will_rush_tux )
+	
+	//--------------------
+	// If the Tux isn't directly on it's way to the Tux, it might just
+	// switch to take a closer look at the Tux.  But this will again
+	// be different for hostile bots and for non-hostile bots...
+	//
+	if ( ! ThisRobot -> will_rush_tux )
 	{
-	  if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
-	       ( ! ThisRobot -> is_friendly ) )
+	    if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
+		 ( ! ThisRobot -> is_friendly ) )
 	    {
-	      ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-	      ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
+		ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
+		ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
 	    }
 	}
-
-      return; 
+	
+	return; 
     }
-  else if ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT )
+    else if ( ThisRobot -> combat_state == WAYPOINTLESS_WANDERING )
     {
-      //--------------------
-      // We allow arbitrary turning speed in this case... so we disable
-      // the turning control in display function...
-      //
-      ThisRobot -> last_phase_change = 100 ; 
-      if ( 
-	  TurnABitThowardsPosition ( ThisRobot , 
-				     curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
-				     AllWaypoints [ ThisRobot->nextwaypoint ] . x ,
-				     curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
-				     AllWaypoints [ ThisRobot->nextwaypoint ] . y ,
-				     90 )
-	  )
+	MoveThisRobotThowardsHisCurrentTarget( enemynum );
+	if ( remaining_distance_to_current_walk_target ( ThisRobot ) < 0.1 ) 
 	{
-	  //--------------------
-	  // Maybe there should be some more waiting here, so that the bots and
-	  // characters don't appear so very busy and moving so abruptly, but that
-	  // may follow later...
-	  //
-	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    select_new_waypointless_random_walk_target ( enemynum );
+	    ThisRobot -> combat_state = TURN_THOWARDS_WAYPOINTLESS_SPOT ;
+	    return;
 	}
-      return;
-
-    }
-  else if ( ThisRobot -> combat_state == WAIT_AND_TURN_AROUND_AIMLESSLY )
-    {
-      //--------------------
-      // We allow arbitrary turning speed in this case... so we disable
-      // the turning control in display function...
-      //
-      ThisRobot -> last_phase_change = 100 ; 
-
-      TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 30 );
-
-      if ( ! ThisRobot -> warten ) 
-	ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-
-      return;
-
-    }
-  else if ( ThisRobot -> combat_state == STOP_AND_EYE_TUX )
-    {
-      //--------------------
-      // While eyeing the Tux, we stay right where we are, but
-      // maybe we should turn to face right thowards the Tux..
-      //
-      TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 120 );
-
-      //--------------------
-      // After some time, we'll no longer eye the Tux but rather do something,
-      // like attack the Tux or maybe also return to 'normal' operation and do
-      // nothing.  This timeout case is checked and handled here...  When the
-      // Tux is still visible at timeout, then it will be attacked... otherwise
-      // the robot resumes normal operation...
-      //
-      ThisRobot -> state_timeout -= Frame_Time();
-      if ( ThisRobot -> state_timeout < 0 ) 
+	DetermineAngleOfFacing ( enemynum );
+	
+	// CheckEnemyEnemyCollision ( enemynum );
+	
+	//--------------------
+	// In case that the enemy droid isn't even aware of Tux and
+	// does not even see Tux now, there's nothing more to do here...
+	// Not even the combat state will change.
+	//
+	if ( DistanceToTux( ThisRobot ) > Druidmap [ ThisRobot -> type ] . range_of_vision ) return;
+	
+	//--------------------
+	// But if the Tux is now within range of vision, then it will be
+	// 'greeted' and also the state will finally move to something more
+	// interesting...
+	//
+	if ( ThisRobot -> has_greeted_influencer == FALSE )
 	{
-	  
-	  if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) ||
-	       ( ( DistanceToTux ( ThisRobot ) > IS_FRIENDLY_EYE_DISTANCE ) &&ThisRobot->is_friendly ) )
+	    ThisRobot->has_greeted_influencer = TRUE;
+	    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 	    {
-	      // ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
-	      ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
-	      ThisRobot -> persuing_given_course = FALSE ;
+		PlayGreetingSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
 	    }
-	  else
+	}
+	
+	//--------------------
+	// If the Tux isn't directly on it's way to the Tux, it might just
+	// switch to take a closer look at the Tux.  But this will again
+	// be different for hostile bots and for non-hostile bots...
+	//
+	if ( ! ThisRobot -> will_rush_tux )
+	{
+	    if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
+		 ( ! ThisRobot -> is_friendly ) )
 	    {
-	      if ( ThisRobot -> is_friendly )
+		ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
+		ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
+	    }
+	}
+	
+	return; 
+    }
+    else if ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT )
+    {
+	//--------------------
+	// We allow arbitrary turning speed in this case... so we disable
+	// the turning control in display function...
+	//
+	ThisRobot -> last_phase_change = 100 ; 
+	if ( 
+	    TurnABitThowardsPosition ( ThisRobot , 
+				       curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
+				       AllWaypoints [ ThisRobot->nextwaypoint ] . x ,
+				       curShip . AllLevels [ Me [ 0 ] . pos . z ] -> 
+				       AllWaypoints [ ThisRobot->nextwaypoint ] . y ,
+				       90 )
+	    )
+	{
+	    //--------------------
+	    // Maybe there should be some more waiting here, so that the bots and
+	    // characters don't appear so very busy and moving so abruptly, but that
+	    // may follow later...
+	    //
+	    ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	}
+	return;
+	
+    }
+    else if ( ThisRobot -> combat_state == TURN_THOWARDS_WAYPOINTLESS_SPOT )
+    {
+	//--------------------
+	// We allow arbitrary turning speed in this case... so we disable
+	// the turning control in display function...
+	//
+	ThisRobot -> last_phase_change = 100 ; 
+	if ( 
+	    TurnABitThowardsPosition ( ThisRobot , 
+				       ThisRobot -> PrivatePathway [ 0 ] . x ,
+				       ThisRobot -> PrivatePathway [ 0 ] . y ,
+				       90 )
+	    )
+	{
+	    //--------------------
+	    // Maybe there should be some more waiting here, so that the bots and
+	    // characters don't appear so very busy and moving so abruptly, but that
+	    // may follow later...
+	    //
+	    ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+	}
+	return;
+	
+    }
+    else if ( ThisRobot -> combat_state == WAIT_AND_TURN_AROUND_AIMLESSLY )
+    {
+	//--------------------
+	// We allow arbitrary turning speed in this case... so we disable
+	// the turning control in display function...
+	//
+	ThisRobot -> last_phase_change = 100 ; 
+	
+	TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 30 );
+	
+	if ( ! ThisRobot -> warten ) 
+	    ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+	
+	return;
+	
+    }
+    else if ( ThisRobot -> combat_state == STOP_AND_EYE_TUX )
+    {
+	//--------------------
+	// While eyeing the Tux, we stay right where we are, but
+	// maybe we should turn to face right thowards the Tux..
+	//
+	TurnABitThowardsPosition ( ThisRobot , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 120 );
+	
+	//--------------------
+	// After some time, we'll no longer eye the Tux but rather do something,
+	// like attack the Tux or maybe also return to 'normal' operation and do
+	// nothing.  This timeout case is checked and handled here...  When the
+	// Tux is still visible at timeout, then it will be attacked... otherwise
+	// the robot resumes normal operation...
+	//
+	ThisRobot -> state_timeout -= Frame_Time();
+	if ( ThisRobot -> state_timeout < 0 ) 
+	{
+	    
+	    if ( ( DistanceToTux ( ThisRobot ) > Druidmap [ ThisRobot->type ] . range_of_vision ) ||
+		 ( ( DistanceToTux ( ThisRobot ) > IS_FRIENDLY_EYE_DISTANCE ) &&ThisRobot->is_friendly ) )
+	    {
+		//--------------------
+		// If the state has just timed out, we can return to 'normal' operation
+		// which of course depends on the waypoint usage or not-waypoint usage
+		// for this bot.
+		//
+		if ( ThisRobot -> stick_to_waypoint_system_by_default )
 		{
-		  //--------------------
-		  // No dramatic changes here... the bot will just not
-		  // time out eyeing Tux unless the Tux moves away from him
-		  // again...
-		  //
-		  ThisRobot -> state_timeout = 2.0 ; 
+		    ThisRobot -> combat_state = TURN_THOWARDS_NEXT_WAYPOINT ;
+		    ThisRobot -> persuing_given_course = FALSE ;
 		}
-	      else
+		else
 		{
-		  if ( ThisRobot -> attack_run_only_when_direct_line )
+		    ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+		    ThisRobot -> persuing_given_course = TRUE ;
+		}
+	    }
+	    else
+	    {
+		if ( ThisRobot -> is_friendly )
+		{
+		    //--------------------
+		    // No dramatic changes here... the bot will just not
+		    // time out eyeing Tux unless the Tux moves away from him
+		    // again...
+		    //
+		    ThisRobot -> state_timeout = 2.0 ; 
+		}
+		else
+		{
+		    if ( ThisRobot -> attack_run_only_when_direct_line )
 		    {
-		      if ( DirectLineWalkable( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x , ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) )
+			if ( DirectLineWalkable( ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . x + vect_to_target . x , ThisRobot -> pos . y + vect_to_target . y , ThisRobot -> pos . z ) )
 			{
-			  ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
-			  // not in this case.. SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+			    ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+			    // not in this case.. SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
 			}
 		    }
-		  else
+		    else
 		    {
-		      ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
-		      SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
+			ThisRobot -> combat_state = MAKE_ATTACK_RUN ;
+			SetRestOfGroupToState ( ThisRobot , MAKE_ATTACK_RUN );
 		    }
-		  ThisRobot -> persuing_given_course = FALSE ;
-
-		  //--------------------
-		  // We'll launch the attack cry of this bot...
-		  //
-		  if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
+		    ThisRobot -> persuing_given_course = FALSE ;
+		    
+		    //--------------------
+		    // We'll launch the attack cry of this bot...
+		    //
+		    if ( Druidmap[ ThisRobot->type ].greeting_sound_type != (-1) )
 		    {
-		      // PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
-		      play_enter_attack_run_state_sound ( Druidmap[ ThisRobot->type ].greeting_sound_type );
+			// PlayStartAttackSound( Druidmap[ ThisRobot->type ].greeting_sound_type );
+			play_enter_attack_run_state_sound ( Druidmap[ ThisRobot->type ].greeting_sound_type );
 		    }
-
+		    
 		}
 	    }
 	}
-
-      // if ( TargetIsEnemy ) ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
-
-      //--------------------
-      // Anyway, while in this state no more attacking is nescessary, so
-      // we can return outright...
-      //
-      return;
+	
+	// if ( TargetIsEnemy ) ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
+	
+	//--------------------
+	// Anyway, while in this state no more attacking is nescessary, so
+	// we can return outright...
+	//
+	return;
     }
-  else if ( ThisRobot -> combat_state == RELENTLESS_FIRE_TO_GIVEN_POSITION )
+    else if ( ThisRobot -> combat_state == RELENTLESS_FIRE_TO_GIVEN_POSITION )
     {
-      if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
-      vect_to_target.x = ThisRobot->Parameter1 - ThisRobot->pos.x;
-      vect_to_target.y = ThisRobot->Parameter2 - ThisRobot->pos.y;
-      RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
-      return;
+	if (ThisRobot->firewait) return;  // can't fire:  gun not yet reloaded...
+	vect_to_target.x = ThisRobot->Parameter1 - ThisRobot->pos.x;
+	vect_to_target.y = ThisRobot->Parameter2 - ThisRobot->pos.y;
+	RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
+	return;
     }
-  else if ( ThisRobot -> combat_state == MAKE_ATTACK_RUN )
+    else if ( ThisRobot -> combat_state == MAKE_ATTACK_RUN )
     {
-      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+	MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
     }
-  else if ( ThisRobot -> combat_state == FIGHT_ON_TUX_SIDE )
+    else if ( ThisRobot -> combat_state == FIGHT_ON_TUX_SIDE )
     {
-      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
-
-      if ( ! EnemyOfTuxCloseToThisRobot ( ThisRobot , & vect_to_target ) ) 
+	MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+	
+	if ( ! EnemyOfTuxCloseToThisRobot ( ThisRobot , & vect_to_target ) ) 
 	{
-	  ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
-	  return;
+	    ThisRobot -> combat_state = MOVE_ALONG_RANDOM_WAYPOINTS ;
+	    return;
 	}
     }
-  else
+    else
     {
-      DebugPrintf ( -1000 , "\nWARNING:  Unidentified combat_state encountered: code=%d!" , ThisRobot -> combat_state );
-      MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
-      return;
+	DebugPrintf ( -1000 , "\nWARNING:  Unidentified combat_state encountered: code=%d!" , ThisRobot -> combat_state );
+	MoveThisEnemy ( enemynum ); // this will now be done in the attack state machine...
+	return;
     }
-
-  //--------------------
-  // If the closes alive player is not alive at all, that's a sign
-  // that there is nothing to attack any more, but just return.
-  //
-  if ( Me [ TargetPlayer ] . status == OUT ) return;
-
-  //--------------------
-  // If the closest alive player is not visible at all, then there is
-  // nothing to do and we just return.
-  //
-  if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
-       ( ThisRobot->is_friendly == FALSE ) ) 
-    return; 
-
-  // if ( ThisRobot -> is_friendly ) return; 
-
-  //--------------------
-  // For melee weapons, we can't just stand anywhere and try to
-  // hit the influencer,  In most cases, we will have to move thowards
-  // our target.  Here, this need is hopefully satisfied....
-  //
-  // But this moving around can lead to jittering of droids moving back and 
-  // forth between two positions very rapidly.  Therefore we will not do this
-  // movement thing every frame, but rather only sometimes
-  //
-  if ( ThisRobot -> last_combat_step > 0.20 )
+    
+    //--------------------
+    // If the closes alive player is not alive at all, that's a sign
+    // that there is nothing to attack any more, but just return.
+    //
+    if ( Me [ TargetPlayer ] . status == OUT ) return;
+    
+    //--------------------
+    // If the closest alive player is not visible at all, then there is
+    // nothing to do and we just return.
+    //
+    if ( ! IsVisible ( &ThisRobot->pos , TargetPlayer ) && 
+	 ( ThisRobot->is_friendly == FALSE ) ) 
+	return; 
+    
+    // if ( ThisRobot -> is_friendly ) return; 
+    
+    //--------------------
+    // For melee weapons, we can't just stand anywhere and try to
+    // hit the influencer,  In most cases, we will have to move thowards
+    // our target.  Here, this need is hopefully satisfied....
+    //
+    // But this moving around can lead to jittering of droids moving back and 
+    // forth between two positions very rapidly.  Therefore we will not do this
+    // movement thing every frame, but rather only sometimes
+    //
+    if ( ThisRobot -> last_combat_step > 0.20 )
     {
-      ThisRobot -> last_combat_step = 0 ; 
-      if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	ThisRobot -> last_combat_step = 0 ; 
+	if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
 	{
-	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (+1) );
+	    MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (+1) );
 	} // if a melee weapon is given.
-      else if ( dist2 < 1.5 )
+	else if ( dist2 < 1.5 )
 	{
-	  MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (-1) );
+	    MoveInCloserForOrAwayFromMeleeCombat ( ThisRobot , enemynum , (-1) );
 	} // else the case, that no melee weapon 
     }
-  else
+    else
     {
-      ThisRobot -> last_combat_step += Frame_Time ();
+	ThisRobot -> last_combat_step += Frame_Time ();
     }
-
-  //--------------------
-  // Melee weapons have a certain limited range.  If such a weapon is used,
-  // don't fire if the influencer is several squares away!
-  //
-  if ( ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 ) && 
-       ( dist2 > 1.5 ) ) return;
-  
-  if ( ThisRobot->firewait ) return;
-
-  RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
+    
+    //--------------------
+    // Melee weapons have a certain limited range.  If such a weapon is used,
+    // don't fire if the influencer is several squares away!
+    //
+    if ( ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 ) && 
+	 ( dist2 > 1.5 ) ) return;
+    
+    if ( ThisRobot->firewait ) return;
+    
+    RawStartEnemysShot( ThisRobot , vect_to_target.x , vect_to_target.y );
   
 }; // void ProcessAttackStateMachine ( int enemynum )
 
