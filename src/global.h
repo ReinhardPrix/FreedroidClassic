@@ -9,8 +9,10 @@
  * $Author$
  *
  * $Log$
- * Revision 1.1  1993/05/22 20:55:20  rp
- * Initial revision
+ * Revision 1.2  1993/05/22 21:57:45  rp
+ * Sat May 22 17:15:42 1993: changed int Level[][] to level CurLevel
+ * Sat May 22 17:35:34 1993: int Level[][] wieder her, damit irgendwas laeuft inzwischen
+ * Sat May 22 17:40:54 1993: added dimensions to Level
  *
  * Revision 1.5  1993/05/28  20:53:58  prix
  * Sun May 23 17:10:35 1993: Grob-Fein-Koordinaten ausradiert !!!
