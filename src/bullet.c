@@ -506,6 +506,22 @@ DeleteSpell (int SpellNum)
 }; // void DeleteSpell( int SpellNum )
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+clear_active_spells ( void )
+{
+  int i ;
+
+  for ( i = 0; i < MAX_ACTIVE_SPELLS; i++ )
+    {
+      DeleteSpell ( i ) ;
+    }
+
+}; // void clear_active_spells ( void )
+
+/* ----------------------------------------------------------------------
  * When an enemy is his, this causes some blood to be sprayed on the floor.
  * The blood is just an obstacle (several types of blood exist) with 
  * preput flag set, so that the Tux and everyone can really step *on* the

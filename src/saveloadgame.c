@@ -717,6 +717,12 @@ This indicates a serious bug in this installation of Freedroid.",
     }
 
   //--------------------
+  // To prevent cheating, we remove all active spells, that might still be there
+  // from other games just played before.
+  //
+  clear_active_spells();
+
+  //--------------------
   // Now that we have loaded the game, we must count and initialize the number
   // of droids used in this ship.  Otherwise we might ignore some robots.
   //

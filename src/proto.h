@@ -105,6 +105,7 @@ EXTERN void animate_blasts (void);
 EXTERN void DeleteBlast (int num);
 EXTERN void MoveActiveSpells (void);
 EXTERN void DeleteSpell (int num);
+EXTERN void clear_active_spells ( void );
 EXTERN void CheckBulletCollisions (int num);
 EXTERN void CheckBlastCollisions (int num);
 EXTERN void enemy_spray_blood ( Enemy CurEnemy ) ;

@@ -1787,6 +1787,7 @@ InitFreedroid ( void )
       DeleteSpell( i );
     }
   ClearEnemys ();
+  clear_active_spells();
 
   ServerMode = FALSE;
   ClientMode = FALSE;
