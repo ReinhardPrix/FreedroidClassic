@@ -1390,6 +1390,9 @@ InitFreedroid (void)
 
   Overall_Average=0.041;
   SkipAFewFrames = 0;
+  Me.TextVisibleTime = 0;
+  GameConfig.WantedTextVisibleTime = 5;
+  Me.TextToBeDisplayed = "Hello, I'm 001.";
 
   Init_Video ();
 

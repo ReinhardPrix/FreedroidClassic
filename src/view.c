@@ -400,6 +400,17 @@ PutInfluence ( int x, int y)
   //
   SDL_SetAlpha( ne_blocks , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 
+  //--------------------
+  // Maybe the influencer has something to say :)
+  // so let him say it..
+  //
+  if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) )
+    {
+      PutStringFont ( ne_screen , FPS_Display_BFont , 
+		      User_Rect.x+(User_Rect.w/2) + Block_Width/3 , 
+		      User_Rect.y+(User_Rect.h/2) - Block_Height/2 ,  
+		      Me.TextToBeDisplayed );
+    }
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
 

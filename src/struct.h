@@ -59,6 +59,12 @@ color, *Color;
 
 typedef struct
 {
+  float WantedTextVisibleTime;
+}
+configuration_for_freedroid , *Configuration_for_freedroid;
+
+typedef struct
+{
   int x;
   int y;
 }
@@ -142,6 +148,8 @@ typedef struct
   int Marker;                   // In case you've taken over a marked droid, this will contain the marker
   float LastCrysoundTime;
   float LastTransferSoundTime;
+  float TextVisibleTime;
+  char* TextToBeDisplayed;
 }
 influence_t, *Influence_t;
 

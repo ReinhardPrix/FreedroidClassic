@@ -172,6 +172,7 @@ UpdateCountersForThisFrame (void)
   Me.LastCrysoundTime += Frame_Time ();
   Me.MissionTimeElapsed += Frame_Time();
   Me.LastTransferSoundTime += Frame_Time();
+  Me.TextVisibleTime += Frame_Time();
 
 
   if ( SkipAFewFrames ) SkipAFewFrames--;

@@ -125,6 +125,7 @@ EXTERN int show_all_droids;     /* display enemys regardless of IsVisible() */
 #else
 #define EXTERN extern
 #endif
+EXTERN configuration_for_freedroid GameConfig;
 EXTERN float CurrentCombatScaleFactor;
 EXTERN int MaxMessageTime;
 EXTERN int MinMessageTime;

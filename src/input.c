@@ -146,6 +146,12 @@ ReactToSpecialKeys(void)
     Terminate (OK);
   if ( DPressed() )
     Me.energy = 0;
+
+  if ( HPressed () )
+    {
+      Me.TextToBeDisplayed="Hello!  I hope you're all well, cause I need you.";
+      Me.TextVisibleTime=0;
+    }
   
   // To debug the Debriefing() I added a function to add or subtract
   // a thousand points of score via numerical keyboard functions.
