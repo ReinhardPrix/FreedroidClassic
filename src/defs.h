@@ -75,10 +75,16 @@ enum
     MENU_MODE_DEFAULT,
     MENU_MODE_DOUBLE,
   };
+
+enum
+  {
+    COLLISION_TYPE_NONE = -1 , 
+    COLLISION_TYPE_RECTANGLE = 2 ,
+    COLLISION_TYPE_CIRCLE = 3 
+  };
+
 #define ENEMY_ROTATION_MODELS_AVAILABLE 29
 #define ROTATION_ANGLES_PER_ROTATION_MODEL 8
-
-
 #define MAX_OBSTACLES_ON_MAP 10000
 #define MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE 4
 #define MAX_ITEMS_PER_LEVEL 300
@@ -318,6 +324,8 @@ enum
 //
 #define DRUIDRADIUSXY	        (7*2/64.0)
 #define BULLET_BULLET_COLLISION_DIST (10/64.0)
+
+
 
 //--------------------
 // Some definitions for the menus
@@ -847,6 +855,24 @@ enum
   IDENTIFY_L,   IDENTIFY_R,     IDENTIFY_U,     IDENTIFY_D, 
   LAST_BLOCK_IN_LIST_DUMMY_ENTRY
 };
+
+enum
+{
+  ISO_V_WALL = 1 ,
+  ISO_H_WALL = 2 ,
+
+  ISO_CRUDE_BLOCK = 4 ,
+
+  ISO_H_DOOR_000_OPEN = 6,
+  ISO_H_DOOR_025_OPEN = 7,
+  ISO_H_DOOR_050_OPEN = 8,
+  ISO_H_DOOR_075_OPEN = 9,
+  ISO_H_DOOR_100_OPEN = 10,
+
+};
+
+
+
 
 #define BLUE_BLOCKS_OFFSET 100
 #define GREEN_BLOCKS_OFFSET 200

@@ -1435,7 +1435,23 @@ load_all_obstacles ( void )
       
       get_iso_image_from_file_and_path ( fpath , & ( obstacle_map [ i ] . image ) ) ;
 
+      //--------------------
+      // In adition to the pure image information, we'll also need some
+      // collision information for obstacles...
+      //
+      obstacle_map [ i ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+      obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
+      obstacle_map [ i ] . block_area_parm_2 = 0.25 ;
+
     }
+
+  obstacle_map [ ISO_V_WALL ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_V_WALL ] . block_area_parm_1 = 0.25 ;
+  obstacle_map [ ISO_V_WALL ] . block_area_parm_2 = 1.2 ;
+
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_CRUDE_BLOCK ] . block_area_parm_2 = 1.2 ;
   
 }; // void LoadAllMapTilesThatAreNotYetLoaded( void )
 

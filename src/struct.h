@@ -834,7 +834,7 @@ obstacle, *Obstacle;
 typedef struct
 {
   Uint16 floor_value;
-  int obstacles_glued_to_here[ MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ];
+  int obstacles_glued_to_here [ MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ];
 }
 map_tile, *Map_tile;
 
@@ -923,7 +923,9 @@ iso_image, *Iso_image;
 typedef struct
 {
   iso_image image;
-  float block_area_size;
+  int block_area_type;
+  float block_area_parm_1;
+  float block_area_parm_2;
 }
 obstacle_spec, *Obstacle_spec;
 

@@ -600,7 +600,17 @@ generate_wallobstacles_from_level_map ( int level_num )
 	  switch ( loadlevel -> map [ y ] [ x ]  . floor_value )
 	    {
 	    case H_WALL:
-	      loadlevel -> obstacle_list [ obstacle_counter ] . type = 2 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_WALL ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
+	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
+	      obstacle_counter ++ ;
+	      break;
+	    case H_SHUT_DOOR:
+	    case H_HALF_DOOR1:
+	    case H_HALF_DOOR2:
+	    case H_HALF_DOOR3:
+	    case H_OPEN_DOOR:
+	      loadlevel -> obstacle_list [ obstacle_counter ] . type = ISO_H_DOOR_000_OPEN ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . x = x + 0.5 ;
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 1.0 ;
 	      obstacle_counter ++ ;
@@ -667,12 +677,6 @@ generate_wallobstacles_from_level_map ( int level_num )
 	      loadlevel -> obstacle_list [ obstacle_counter ] . pos . y = y + 0.5 ;
 	      obstacle_counter ++ ;
 	      break;
-	    case H_SHUT_DOOR:
-	    case H_HALF_DOOR1:
-	    case H_HALF_DOOR2:
-	    case H_HALF_DOOR3:
-	    case H_OPEN_DOOR:
-	      break;
 	    case V_SHUT_DOOR:
 	    case V_HALF_DOOR1:
 	    case V_HALF_DOOR2:
@@ -694,6 +698,74 @@ generate_wallobstacles_from_level_map ( int level_num )
     }
   
 }; // void generate_wallobstacles_from_level_map ( int level_num )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+glue_obstacles_to_floor_tiles_for_level ( int level_num )
+{
+  level* loadlevel = curShip . AllLevels [ level_num ] ;
+  int obstacle_counter = 2 ;
+  int x_tile;
+  int y_tile;
+  int glue_index;
+  int next_free_index;
+
+  //--------------------
+  // Each obstacles must to be anchored to exactly one (the closest!)
+  // map tile, so that we can find out obstacles 'close' to somewhere
+  // more easily...
+  //
+  for ( obstacle_counter = 0 ; obstacle_counter < MAX_OBSTACLES_ON_MAP ; obstacle_counter  ++ )
+    {
+      //--------------------
+      // Maybe we're done here already...?
+      //
+      if ( loadlevel -> obstacle_list [ obstacle_counter ] . type <= (-1) ) break;
+
+      //--------------------
+      // We need to glue this one and we glue it to the closest map tile center we have...
+      // For this we need first to prepare some things...
+      //
+      x_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . x );
+      y_tile = rintf ( loadlevel -> obstacle_list [ obstacle_counter ] . pos . y );
+
+      if ( x_tile < 0 ) x_tile = 0;       if ( y_tile < 0 ) y_tile = 0 ;
+      if ( x_tile >= loadlevel -> xlen ) x_tile = loadlevel -> xlen - 1;
+      if ( y_tile >= loadlevel -> ylen ) y_tile = loadlevel -> ylen - 1;
+
+      for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	{
+	  if ( loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] != (-1) )
+	    {
+	      // DebugPrintf ( 0 , "\nHey, someone's already sitting here... moving to next index...: %d." ,
+	      // glue_index + 1 );
+	    }
+	  else
+	    {
+	      if ( glue_index == MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE )
+		{
+		  GiveStandardErrorMessage ( "glue_obstacles_to_floor_tiles_for_level (...)" , "\
+FreedroidRPG was unable to glue a certain obstacle to the nearest map tile.\n\
+This bug can be resolved by simply raising a contant by one, but it needs to be done :)",
+					     PLEASE_INFORM, IS_FATAL );
+		}
+	      next_free_index = glue_index ;
+	      break;
+	    }
+	}
+
+      //--------------------
+      // Now it can be glued...
+      //
+      loadlevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] =
+	obstacle_counter ; 
+
+    }
+
+}; // glue_obstacles_to_floor_tiles_for_level ( int level_num )
 
 /* ----------------------------------------------------------------------
  * Next we extract the map labels of this level WITHOUT destroying
@@ -1403,6 +1475,13 @@ LoadShip (char *filename)
       // We generate obstacles out of the current map info...
       //
       generate_wallobstacles_from_level_map ( i );
+
+      //--------------------
+      // We attach each obstacle to a floor tile, just so that we can sort
+      // out the obstacles 'close' more easily within an array of literally
+      // thousands of obstacles...
+      //
+      glue_obstacles_to_floor_tiles_for_level ( i );
 
       ShowSaveLoadGameProgressMeter( (100*(i+1)) / level_anz , FALSE )  ;
 
@@ -2684,21 +2763,37 @@ decode_floor_tiles_of_this_level (Level Lev)
   int row, col;
   map_tile *Buffer;
   int tmp;
+  int glue_index;
 
   DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
 
   for (row = 0; row < ydim  ; row++)
     {
 
+      //--------------------
+      // Now a strange thing is going on here:  The floor tile information, stored
+      // as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
+      // COMPLETELY DIFFERENT than a text pointer.  But the information is there
+      // we need to convert it into real map information with proper struct...
+      // Finally the proper struct can then replace the old map pointer.
+      //
       Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
-
       for (col = 0; col < xdim  ; col++)
 	{
 	  sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%d " , &tmp);
-	  Buffer[col] . floor_value = tmp;
+	  Buffer [ col ] . floor_value = tmp;
+	  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+	    {
+	      Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
+	    }
 	}
 
+      //--------------------
+      // Now the old text pointer can be replaced with a pointer to the 
+      // correctly assembled struct...
+      //
       Lev -> map [ row ] = Buffer;
+
     }				/* for (row=0..) */
 
   DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
@@ -3445,6 +3540,75 @@ DruidPassable ( float x , float y , int z )
 
 }; // int DruidPassable( ... )
 
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int
+position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle )
+{
+  float upper_border;
+  float lower_border;
+  float left_border;
+  float right_border;
+
+  int obs_type = our_obstacle -> type ;
+
+  //--------------------
+  // If the obstacle doesn't even have a collision rectangle, then
+  // of course it's easy, cause then there can't be any collsision
+  //
+  if ( obstacle_map [ obs_type ] . block_area_type != COLLISION_TYPE_RECTANGLE )
+    return ( TRUE );
+
+  //--------------------
+  // first we find out where the borders of our collision rectangle
+  // lie...
+  //
+  upper_border = our_obstacle -> pos . x - obstacle_map [ obs_type ] . block_area_parm_1 / 2.0 ;
+  lower_border = our_obstacle -> pos . x + obstacle_map [ obs_type ] . block_area_parm_1 / 2.0 ;
+  left_border = our_obstacle -> pos . y - obstacle_map [ obs_type ] . block_area_parm_2 / 2.0 ;
+  right_border = our_obstacle -> pos . y + obstacle_map [ obs_type ] . block_area_parm_2 / 2.0 ;
+
+  //--------------------
+  // Now if the position lies inside the collision rectangle, then there's
+  // a collion.  Otherwise not.
+  //
+  if ( ( x > upper_border ) && ( x < lower_border ) && ( y > left_border ) && ( y < right_border ) )
+    return ( TRUE );
+
+  return ( FALSE );
+}; // int position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int 
+position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int y_tile , Level PassLevel )
+{
+  int glue_index;
+  int obstacle_index;
+
+  //--------------------
+  // We take a look whether the position given in the parameter is 
+  // blocked by an obstacle glued close to this square...
+  //
+  for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
+    {
+      if ( PassLevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] == (-1) ) break;
+      obstacle_index = PassLevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] ;
+
+      if ( position_collides_with_this_obstacle ( x , y , & ( PassLevel -> obstacle_list [ obstacle_index ] ) ) ) 
+	return ( TRUE );
+
+    }
+
+  return ( FALSE ) ;
+
+  
+}; // int position_collides_with_obstacles_on_square ( int x , int y )
+
 /* ---------------------------------------------------------------------- 
  * This function checks if a given location lies within a wall or not.
  * The location given is like the center of a droid and the 'Checkpos'
@@ -3466,6 +3630,38 @@ IsPassable ( float x , float y , int z , int Checkpos)
   unsigned char MapBrick;
   int ret = -1;
   Level PassLevel = curShip . AllLevels [ z ] ;
+  int obstacle_index;
+  int glue_index;
+  int x_tile_start, y_tile_start;
+  int x_tile_end, y_tile_end;
+  int x_tile, y_tile;
+  
+  //--------------------
+  // We take a look whether the position given in the parameter is 
+  // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
+  //
+  x_tile_start = rintf ( x ) -1 ; y_tile_start = rintf ( y ) -1 ;
+  x_tile_end = x_tile_start + 3 ; y_tile_end = y_tile_start + 3 ;
+  if ( x_tile_start < 0 ) x_tile_start = 0 ; 
+  if ( y_tile_start < 0 ) y_tile_start = 0 ; 
+  if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
+  if ( y_tile_end >= PassLevel -> ylen ) y_tile_end = PassLevel->ylen -1 ; 
+
+  for ( x_tile = x_tile_start ; x_tile < x_tile_end ; x_tile ++ )
+    {
+      // DebugPrintf ( 0 , " %d " , x_tile );
+      for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
+	{
+	  if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) return ( -1 );
+	}
+    }
+
+  return ( CENTER );
+
+  //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
+
 
   MapBrick = GetMapBrick ( PassLevel , x , y ) ;
 
