@@ -444,34 +444,33 @@ AssemblePointerListForChestShow ( item** ItemPointerListPointer , int PlayerNum 
 int
 ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 {
-
-  if ( TuxItemRow )
+    if ( TuxItemRow )
     {
-      if ( y < TuxItemRowRect . y ) return (-1) ;
-      if ( y > TuxItemRowRect . y + TuxItemRowRect.h ) return (-1) ;
-      if ( x < TuxItemRowRect . x ) return (-1) ;
-      if ( x > TuxItemRowRect . x + TuxItemRowRect.w ) return (-1) ;
-      
-      //--------------------
-      // Now at this point we know, that the click really was in the item
-      // overview row.  Therefore we just need to find out the index and
-      // can return;
-      //
-      return ( ( x - TuxItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+	if ( y < TuxItemRowRect . y ) return (-1) ;
+	if ( y > TuxItemRowRect . y + TuxItemRowRect.h ) return (-1) ;
+	if ( x < TuxItemRowRect . x ) return (-1) ;
+	if ( x > TuxItemRowRect . x + TuxItemRowRect.w ) return (-1) ;
+	
+	//--------------------
+	// Now at this point we know, that the click really was in the item
+	// overview row.  Therefore we just need to find out the index and
+	// can return;
+	//
+	return ( ( x - TuxItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) );
     }
-  else
+    else
     {
-      if ( y < ShopItemRowRect . y ) return (-1) ;
-      if ( y > ShopItemRowRect . y + ShopItemRowRect.h ) return (-1) ;
-      if ( x < ShopItemRowRect . x ) return (-1) ;
-      if ( x > ShopItemRowRect . x + ShopItemRowRect.w ) return (-1) ;
-      
-      //--------------------
-      // Now at this point we know, that the click really was in the item
-      // overview row.  Therefore we just need to find out the index and
-      // can return;
-      //
-      return ( ( x - ShopItemRowRect . x ) / INITIAL_BLOCK_WIDTH );
+	if ( y < ShopItemRowRect . y ) return (-1) ;
+	if ( y > ShopItemRowRect . y + ShopItemRowRect.h ) return (-1) ;
+	if ( x < ShopItemRowRect . x ) return (-1) ;
+	if ( x > ShopItemRowRect . x + ShopItemRowRect.w ) return (-1) ;
+	
+	//--------------------
+	// Now at this point we know, that the click really was in the item
+	// overview row.  Therefore we just need to find out the index and
+	// can return;
+	//
+	return ( ( x - ShopItemRowRect . x ) / ( INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) );
     }
 }; // int ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 
@@ -486,36 +485,36 @@ ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 void
 ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
-  SDL_Rect TargetRectangle;
-
-  TuxItemRowRect . x = 55 ;
-  TuxItemRowRect . y = 410;
-  TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT;
-  TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
-
-  ShopItemRowRect . x = 55 ;
-  ShopItemRowRect . y = 10;
-  ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT;
-  ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH ;
-
-  if ( TuxItemRow == 1 )
+    SDL_Rect TargetRectangle;
+    
+    TuxItemRowRect . x = 55 * SCREEN_WIDTH / 640;
+    TuxItemRowRect . y = 410 * SCREEN_HEIGHT / 480 ;
+    TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+    TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * SCREEN_WIDTH / 640  ;
+    
+    ShopItemRowRect . x = 55 * SCREEN_WIDTH / 640 ;
+    ShopItemRowRect . y = 10 * SCREEN_HEIGHT / 480 ;
+    ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+    ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * SCREEN_WIDTH / 640 ;
+    
+    if ( TuxItemRow == 1 )
     {
-      TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
-      TargetRectangle . y = TuxItemRowRect . y ;
+	TargetRectangle . x = TuxItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . y = TuxItemRowRect . y ;
     }
-  else if ( TuxItemRow == 0 )
+    else if ( TuxItemRow == 0 )
     {
-      TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
-      TargetRectangle . y = ShopItemRowRect . y ;
+	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . y = ShopItemRowRect . y ;
     }
-  else
+    else
     {
-      TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH ;
-      TargetRectangle . y = TuxItemRow ;
+	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	TargetRectangle . y = TuxItemRow ;
     }
-
-  our_SDL_blit_surface_wrapper( ItemMap [ ShowItem -> type ] . inv_image . scaled_surface_for_shop , NULL , Screen , &TargetRectangle );
-
+    
+    our_SDL_blit_surface_wrapper( ItemMap [ ShowItem -> type ] . inv_image . scaled_surface_for_shop , NULL , Screen , &TargetRectangle );
+    
 }; // void ShowRescaledItem ( int position , item* ShowItem )
 
 /* ----------------------------------------------------------------------
@@ -527,371 +526,371 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		     int NumberOfItemsInTuxRow , item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY] , 
 		     shop_decision* ShopOrder , int ShowChestButtons )
 {
-  int Displacement=0;
-  bool finished = FALSE;
-  static int WasPressed = FALSE ;
-  int i;
-  int ClickTarget;
-  static int RowStart=0;
-  static int TuxRowStart=0;
-  static int ItemIndex=0;
-  static int TuxItemIndex=-1;
-  int RowLength=SHOP_ROW_LENGTH;
-  int TuxRowLength=SHOP_ROW_LENGTH;
-  char GoldString[1000];
-  SDL_Rect HighlightRect;
-  int BuyButtonActive = FALSE ;
-  int SellButtonActive = FALSE ;
+    int Displacement=0;
+    bool finished = FALSE;
+    static int WasPressed = FALSE ;
+    int i;
+    int ClickTarget;
+    static int RowStart=0;
+    static int TuxRowStart=0;
+    static int ItemIndex=0;
+    static int TuxItemIndex=-1;
+    int RowLength=SHOP_ROW_LENGTH;
+    int TuxRowLength=SHOP_ROW_LENGTH;
+    char GoldString[1000];
+    SDL_Rect HighlightRect;
+    int BuyButtonActive = FALSE ;
+    int SellButtonActive = FALSE ;
+    
+    //--------------------
+    // We add some secutiry against indexing beyond the
+    // range of items given in the list.
+    //
+    if ( RowLength > NumberOfItems ) RowLength = NumberOfItems;
+    while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
+    while ( RowStart + RowLength > NumberOfItems ) RowStart -- ;
+    if ( RowStart < 0 ) RowStart = 0 ;
+    
+    if ( TuxRowLength > NumberOfItemsInTuxRow ) TuxRowLength = NumberOfItemsInTuxRow;
+    while ( TuxItemIndex >= NumberOfItemsInTuxRow ) TuxItemIndex -- ;
+    while ( TuxRowStart + TuxRowLength > NumberOfItemsInTuxRow ) TuxRowStart -- ;
+    if ( TuxRowStart < 0 ) TuxRowStart = 0 ;
+    
+    if ( NumberOfItemsInTuxRow <= 0 ) 
+	TuxItemIndex = (-1) ;
+    if ( NumberOfItems <= 0 ) 
+	ItemIndex = (-1) ;
+    
 
-  //--------------------
-  // We add some secutiry against indexing beyond the
-  // range of items given in the list.
-  //
-  if ( RowLength > NumberOfItems ) RowLength = NumberOfItems;
-  while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
-  while ( RowStart + RowLength > NumberOfItems ) RowStart -- ;
-  if ( RowStart < 0 ) RowStart = 0 ;
+    //--------------------
+    // We initialize the text rectangle
+    //
+    Cons_Text_Rect . x = 258 * SCREEN_WIDTH / 640 ;
+    Cons_Text_Rect . y = 108 * SCREEN_HEIGHT / 480 ;
+    Cons_Text_Rect . w = 346 * SCREEN_WIDTH / 640 ;
+    Cons_Text_Rect . h = 255 * SCREEN_HEIGHT / 480 ;
+    
+    Displacement = 0;
 
-  if ( TuxRowLength > NumberOfItemsInTuxRow ) TuxRowLength = NumberOfItemsInTuxRow;
-  while ( TuxItemIndex >= NumberOfItemsInTuxRow ) TuxItemIndex -- ;
-  while ( TuxRowStart + TuxRowLength > NumberOfItemsInTuxRow ) TuxRowStart -- ;
-  if ( TuxRowStart < 0 ) TuxRowStart = 0 ;
-
-  if ( NumberOfItemsInTuxRow <= 0 ) 
-    TuxItemIndex = (-1) ;
-  if ( NumberOfItems <= 0 ) 
-    ItemIndex = (-1) ;
-
-
-  //--------------------
-  // We initialize the text rectangle
-  //
-  Cons_Text_Rect . x = 258 ;
-  Cons_Text_Rect . y = 108 ;
-  Cons_Text_Rect . w = 346 ;
-  Cons_Text_Rect . h = 255 ;
-
-  Displacement = 0;
-
-  while (!finished)
+    while (!finished)
     {
-
-      //--------------------
-      // We limit the 'displacement', i.e. how far up and down one can
-      // scroll the text of the item description up and down a bit, so
-      // it cannot be scrolled away ad infinitum...
-      //
-      if ( Displacement < -500 ) Displacement = -500 ;
-      if ( Displacement > 50 ) Displacement = 50 ;
-
-      SDL_Delay (1);
-      ShopOrder -> shop_command = DO_NOTHING ;
-
-      //--------------------
-      // We show all the info and the buttons that should be in this
-      // interface...
-      //
-      if ( ItemIndex >= 0 )
-	ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
-      else if ( TuxItemIndex >= 0 )
-	ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
-      else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
-
-      for ( i = 0 ; i < RowLength ; i++ )
+	
+	//--------------------
+	// We limit the 'displacement', i.e. how far up and down one can
+	// scroll the text of the item description up and down a bit, so
+	// it cannot be scrolled away ad infinitum...
+	//
+	if ( Displacement < -500 ) Displacement = -500 ;
+	if ( Displacement > 50 ) Displacement = 50 ;
+	
+	SDL_Delay (1);
+	ShopOrder -> shop_command = DO_NOTHING ;
+	
+	//--------------------
+	// We show all the info and the buttons that should be in this
+	// interface...
+	//
+	if ( ItemIndex >= 0 )
+	    ShowItemInfo ( ShowPointerList [ ItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
+	else if ( TuxItemIndex >= 0 )
+	    ShowItemInfo ( TuxItemsList [ TuxItemIndex ] , Displacement , FALSE , ITEM_BROWSER_SHOP_BACKGROUND_CODE , FALSE );
+	else blit_special_background ( ITEM_BROWSER_SHOP_BACKGROUND_CODE );
+	
+	for ( i = 0 ; i < RowLength ; i++ )
 	{
-	  ShowRescaledItem ( i , FALSE , ShowPointerList [ i + RowStart ] );
+	    ShowRescaledItem ( i , FALSE , ShowPointerList [ i + RowStart ] );
 	}
 
-      for ( i = 0 ; i < TuxRowLength ; i++ )
+	for ( i = 0 ; i < TuxRowLength ; i++ )
 	{
-	  ShowRescaledItem ( i , TRUE , TuxItemsList [ i + TuxRowStart ] );
+	    ShowRescaledItem ( i , TRUE , TuxItemsList [ i + TuxRowStart ] );
 	}
-
-      if ( ItemIndex >= 0 ) 
+	
+	if ( ItemIndex >= 0 ) 
 	{
-	  HighlightRect . x = ShopItemRowRect . x + ( ItemIndex - RowStart ) * INITIAL_BLOCK_WIDTH ;
-	  HighlightRect . y = ShopItemRowRect . y ;
-	  HighlightRect . w = INITIAL_BLOCK_WIDTH ;
-	  HighlightRect . h = INITIAL_BLOCK_HEIGHT ;
-	  HighlightRectangle ( Screen , HighlightRect );
+	    HighlightRect . x = ( ShopItemRowRect . x + ( ItemIndex - RowStart ) * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) ;
+	    HighlightRect . y = ShopItemRowRect . y ;
+	    HighlightRect . w = INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+	    HighlightRectangle ( Screen , HighlightRect );
 	}
-      if ( TuxItemIndex >= 0 )
+	if ( TuxItemIndex >= 0 )
 	{
-	  HighlightRect . x = TuxItemRowRect . x + ( TuxItemIndex - TuxRowStart ) * INITIAL_BLOCK_WIDTH ;
-	  HighlightRect . y = TuxItemRowRect . y ;
-	  HighlightRect . w = INITIAL_BLOCK_WIDTH ;
-	  HighlightRect . h = INITIAL_BLOCK_HEIGHT ;
-	  HighlightRectangle ( Screen , HighlightRect );
+	    HighlightRect . x = ( TuxItemRowRect . x + ( TuxItemIndex - TuxRowStart ) * INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ) ;
+	    HighlightRect . y = TuxItemRowRect . y ;
+	    HighlightRect . w = INITIAL_BLOCK_WIDTH * SCREEN_WIDTH / 640 ;
+	    HighlightRect . h = INITIAL_BLOCK_HEIGHT * SCREEN_HEIGHT / 480 ;
+	    HighlightRectangle ( Screen , HighlightRect );
 	}
-
-      // ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
-      // ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
-
-      // ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
-      // ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
-
-      if ( ItemIndex >= 0 )
+	
+	// ShowGenericButtonFromList ( LEFT_SHOP_BUTTON );
+	// ShowGenericButtonFromList ( RIGHT_SHOP_BUTTON );
+	
+	// ShowGenericButtonFromList ( LEFT_TUX_SHOP_BUTTON );
+	// ShowGenericButtonFromList ( RIGHT_TUX_SHOP_BUTTON );
+	
+	if ( ItemIndex >= 0 )
 	{
-	  if ( ShowChestButtons == 2 )
-	    ShowGenericButtonFromList ( REPAIR_BUTTON );
-	  else if ( ShowChestButtons > 0 )
-	    ShowGenericButtonFromList ( TAKE_BUTTON );
-	  else ShowGenericButtonFromList ( BUY_BUTTON );
-	  BuyButtonActive = TRUE; 
-	  SellButtonActive = FALSE ;
-	}
-      else if ( TuxItemIndex >= 0 )
-	{
-	  if ( ShowChestButtons ) ShowGenericButtonFromList ( PUT_BUTTON );
-	  else ShowGenericButtonFromList ( SELL_BUTTON );
-	  SellButtonActive = TRUE; 
-	  BuyButtonActive = FALSE ;
-	  
-	  //--------------------
-	  // If some stuff in the Tux inventory is currently highlighted, we might
-	  // eventually show repair and identify buttons, but only if appropriate, which
-	  // means if reapair/identify is applicable AND also we're in a shop and NOT IN
-	  // SOME CHEST!!!!
-	  //
-	  if ( ! ShowChestButtons )
-	    {
-	      if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
-		   ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+	    if ( ShowChestButtons == 2 )
 		ShowGenericButtonFromList ( REPAIR_BUTTON );
-	      
-	      if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
-		ShowGenericButtonFromList ( IDENTIFY_BUTTON );
-	    }
-
+	    else if ( ShowChestButtons > 0 )
+		ShowGenericButtonFromList ( TAKE_BUTTON );
+	    else ShowGenericButtonFromList ( BUY_BUTTON );
+	    BuyButtonActive = TRUE; 
+	    SellButtonActive = FALSE ;
 	}
-      else
+	else if ( TuxItemIndex >= 0 )
 	{
-	  BuyButtonActive = FALSE ;
-	  SellButtonActive = FALSE ;
+	    if ( ShowChestButtons ) ShowGenericButtonFromList ( PUT_BUTTON );
+	    else ShowGenericButtonFromList ( SELL_BUTTON );
+	    SellButtonActive = TRUE; 
+	    BuyButtonActive = FALSE ;
+	    
+	    //--------------------
+	    // If some stuff in the Tux inventory is currently highlighted, we might
+	    // eventually show repair and identify buttons, but only if appropriate, which
+	    // means if reapair/identify is applicable AND also we're in a shop and NOT IN
+	    // SOME CHEST!!!!
+	    //
+	    if ( ! ShowChestButtons )
+	    {
+		if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+		     ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+		    ShowGenericButtonFromList ( REPAIR_BUTTON );
+		
+		if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+		    ShowGenericButtonFromList ( IDENTIFY_BUTTON );
+	    }
+	    
 	}
-
-      sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
-      PutStringFont ( Screen , Menu_BFont, 46, 143, GoldString );
-
-      our_SDL_flip_wrapper( Screen );
-
-      if (SpacePressed() || EscapePressed() || axis_is_active )
+	else
 	{
-	  if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      MoveMenuPositionSound();
-	      Displacement += FontHeight ( GetCurrentFont () );
-	    }
-	  else if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      MoveMenuPositionSound();
-	      Displacement -= FontHeight ( GetCurrentFont () );
-	    }
-	  else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      finished = TRUE;
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( MouseCursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( 0 < RowStart ) 
-		{
-		  RowStart --;
-		  if ( ( ItemIndex != (-1) ) && ( ItemIndex >= RowStart + RowLength ) ) 
-		    {
-		      Displacement = 0 ;
-		      ItemIndex --;
-		    }
-		}
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( MouseCursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( RowStart + RowLength < NumberOfItems ) 
-		{
-		  RowStart ++;
-		  if ( ( ItemIndex != (-1) ) && ( ItemIndex < RowStart ) ) 
-		    {
-		      Displacement = 0 ;
-		      ItemIndex++;
-		    }
-		}
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( MouseCursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( 0 < TuxRowStart ) 
-		{
-		  TuxRowStart --;
-		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex >= TuxRowStart + TuxRowLength ) ) 
-		    {
-		      Displacement = 0 ;
-		      TuxItemIndex --;
-		    }
-		}
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( MouseCursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
-		{
-		  TuxRowStart ++;
-		  if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex < TuxRowStart ) ) 
-		    {
-		      TuxItemIndex ++ ;
-		      Displacement = 0 ;
-		    }
-		}
-	      MoveMenuPositionSound();
-	      while (SpacePressed() ||EscapePressed());
-	    }
-	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ClickTarget < NumberOfItems )
-		{
-		  ItemIndex = RowStart + ClickTarget ;
-		  TuxItemIndex = (-1) ;
-		  Displacement = 0 ;
-		}
-	    }
-	  else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
-	    {
-	      if ( ClickTarget < NumberOfItemsInTuxRow )
-		{
-		  TuxItemIndex = TuxRowStart + ClickTarget ;
-		  ItemIndex = (-1) ;
-		  Displacement = 0 ;
-		}
-	    }
-	  else if ( MouseCursorIsOnButton( BUY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( BuyButtonActive )
-		{
-		  ShopOrder -> item_selected = ItemIndex ;
-		  ShopOrder -> shop_command = BUY_1_ITEM ;
-		  if ( ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory ) &&
-		       ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price > 1 ) )
-		    {
-		      //--------------------
-		      // If this is a shops buy menu, then we calculate what the Tux could afford here,
-		      // otherwise we give the range of selection according to amount in chest/player inventory.
-		      //
-		      if ( ShowChestButtons == 1 )
-			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
-		      else
-			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
-		    }
-		  else
-		      ShopOrder -> number_selected = 1;
-
-		  return ( 0 );
-		}
-	    }
-	  else if ( MouseCursorIsOnButton( SELL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
-	    {
-	      if ( SellButtonActive )
-		{
-		  ShopOrder -> item_selected = TuxItemIndex ;
-		  ShopOrder -> shop_command = SELL_1_ITEM ;
-
-		  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory ) &&
-		       ( TuxItemsList [ TuxItemIndex ] -> multiplicity > 1 ) )
-		    {
-		      ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , TuxItemsList [ TuxItemIndex ] -> multiplicity );
-		    }
-		  else
-		      ShopOrder -> number_selected = 1;
-
-		  return ( 0 );
-		}
-	    }
-	  else if ( MouseCursorIsOnButton( REPAIR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && 
-		    axis_is_active && !WasPressed && ( !ShowChestButtons ) )
-	    {
-	      //--------------------
-	      // Reference to the Tux item list must only be made, when the 'highlight'
-	      // is really in the tux item row.  Otherwise we just get a segfault...
-	      //
-	      if ( TuxItemIndex > (-1) )
-		{
-		  //--------------------
-		  // Of course the repair button should only have effect, if there is
-		  // really something to repair (and therefore the button is shown at
-		  // all further above.
-		  //
-		  if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
-		       ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
-		    {
-		      ShopOrder -> item_selected = TuxItemIndex ;
-		      ShopOrder -> shop_command = REPAIR_ITEM ;
-		      ShopOrder -> number_selected = 1;
-		      
-		      return ( 0 );
-		    }
-		}
-	    }
-	  else if ( MouseCursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
-	    {
-	      //--------------------
-	      // Reference to the Tux item list must only be made, when the 'highlight'
-	      // is really in the tux item row.  Otherwise we just get a segfault...
-	      //
-	      if ( TuxItemIndex > (-1) )
-		{
-		  if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
-		    {
-		      ShopOrder -> item_selected = TuxItemIndex ;
-		      ShopOrder -> shop_command = IDENTIFY_ITEM ;
-		      ShopOrder -> number_selected = 1;
-
-		      return ( 0 );
-		    }
-		}
-	    }
+	    BuyButtonActive = FALSE ;
+	    SellButtonActive = FALSE ;
 	}
 
-
-
-      WasPressed = axis_is_active;
-
-      if (UpPressed() || MouseWheelUpPressed())
+	sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
+	PutStringFont ( Screen , Menu_BFont, 46, 143, GoldString );
+	
+	our_SDL_flip_wrapper( Screen );
+	
+	if (SpacePressed() || EscapePressed() || axis_is_active )
 	{
-	  MoveMenuPositionSound();
-	  while (UpPressed());
-	  Displacement += FontHeight ( GetCurrentFont () );
+	    if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		MoveMenuPositionSound();
+		Displacement += FontHeight ( GetCurrentFont () );
+	    }
+	    else if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		MoveMenuPositionSound();
+		Displacement -= FontHeight ( GetCurrentFont () );
+	    }
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		finished = TRUE;
+		while (SpacePressed() ||EscapePressed());
+	    }
+	    else if ( MouseCursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( 0 < RowStart ) 
+		{
+		    RowStart --;
+		    if ( ( ItemIndex != (-1) ) && ( ItemIndex >= RowStart + RowLength ) ) 
+		    {
+			Displacement = 0 ;
+			ItemIndex --;
+		    }
+		}
+		MoveMenuPositionSound();
+		while (SpacePressed() ||EscapePressed());
+	    }
+	    else if ( MouseCursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( RowStart + RowLength < NumberOfItems ) 
+		{
+		    RowStart ++;
+		    if ( ( ItemIndex != (-1) ) && ( ItemIndex < RowStart ) ) 
+		    {
+			Displacement = 0 ;
+			ItemIndex++;
+		    }
+		}
+		MoveMenuPositionSound();
+		while (SpacePressed() ||EscapePressed());
+	    }
+	    else if ( MouseCursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( 0 < TuxRowStart ) 
+		{
+		    TuxRowStart --;
+		    if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex >= TuxRowStart + TuxRowLength ) ) 
+		    {
+			Displacement = 0 ;
+			TuxItemIndex --;
+		    }
+		}
+		MoveMenuPositionSound();
+		while (SpacePressed() ||EscapePressed());
+	    }
+	    else if ( MouseCursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
+		{
+		    TuxRowStart ++;
+		    if ( ( TuxItemIndex != (-1) ) && ( TuxItemIndex < TuxRowStart ) ) 
+		    {
+			TuxItemIndex ++ ;
+			Displacement = 0 ;
+		    }
+		}
+		MoveMenuPositionSound();
+		while (SpacePressed() ||EscapePressed());
+	    }
+	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    {
+		if ( ClickTarget < NumberOfItems )
+		{
+		    ItemIndex = RowStart + ClickTarget ;
+		    TuxItemIndex = (-1) ;
+		    Displacement = 0 ;
+		}
+	    }
+	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    {
+		if ( ClickTarget < NumberOfItemsInTuxRow )
+		{
+		    TuxItemIndex = TuxRowStart + ClickTarget ;
+		    ItemIndex = (-1) ;
+		    Displacement = 0 ;
+		}
+	    }
+	    else if ( MouseCursorIsOnButton( BUY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( BuyButtonActive )
+		{
+		    ShopOrder -> item_selected = ItemIndex ;
+		    ShopOrder -> shop_command = BUY_1_ITEM ;
+		    if ( ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory ) &&
+			 ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price > 1 ) )
+		    {
+			//--------------------
+			// If this is a shops buy menu, then we calculate what the Tux could afford here,
+			// otherwise we give the range of selection according to amount in chest/player inventory.
+			//
+			if ( ShowChestButtons == 1 )
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
+			else
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
+		    }
+		    else
+			ShopOrder -> number_selected = 1;
+		    
+		    return ( 0 );
+		}
+	    }
+	    else if ( MouseCursorIsOnButton( SELL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    {
+		if ( SellButtonActive )
+		{
+		    ShopOrder -> item_selected = TuxItemIndex ;
+		    ShopOrder -> shop_command = SELL_1_ITEM ;
+		    
+		    if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory ) &&
+			 ( TuxItemsList [ TuxItemIndex ] -> multiplicity > 1 ) )
+		    {
+			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , TuxItemsList [ TuxItemIndex ] -> multiplicity );
+		    }
+		    else
+			ShopOrder -> number_selected = 1;
+		    
+		    return ( 0 );
+		}
+	    }
+	    else if ( MouseCursorIsOnButton( REPAIR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && 
+		      axis_is_active && !WasPressed && ( !ShowChestButtons ) )
+	    {
+		//--------------------
+		// Reference to the Tux item list must only be made, when the 'highlight'
+		// is really in the tux item row.  Otherwise we just get a segfault...
+		//
+		if ( TuxItemIndex > (-1) )
+		{
+		    //--------------------
+		    // Of course the repair button should only have effect, if there is
+		    // really something to repair (and therefore the button is shown at
+		    // all further above.
+		    //
+		    if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_item_duration >= 0 ) &&
+			 ( TuxItemsList [ TuxItemIndex ] -> max_duration > TuxItemsList [ TuxItemIndex ] -> current_duration ) )
+		    {
+			ShopOrder -> item_selected = TuxItemIndex ;
+			ShopOrder -> shop_command = REPAIR_ITEM ;
+			ShopOrder -> number_selected = 1;
+			
+			return ( 0 );
+		    }
+		}
+	    }
+	    else if ( MouseCursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
+	    {
+		//--------------------
+		// Reference to the Tux item list must only be made, when the 'highlight'
+		// is really in the tux item row.  Otherwise we just get a segfault...
+		//
+		if ( TuxItemIndex > (-1) )
+		{
+		    if ( ! TuxItemsList [ TuxItemIndex ] -> is_identified )
+		    {
+			ShopOrder -> item_selected = TuxItemIndex ;
+			ShopOrder -> shop_command = IDENTIFY_ITEM ;
+			ShopOrder -> number_selected = 1;
+			
+			return ( 0 );
+		    }
+		}
+	    }
 	}
-      if (DownPressed() || MouseWheelDownPressed())
+	
+	
+	
+	WasPressed = axis_is_active;
+	
+	if (UpPressed() || MouseWheelUpPressed())
 	{
-	  MoveMenuPositionSound();
-	  while (DownPressed());
-	  Displacement -= FontHeight ( GetCurrentFont () );
+	    MoveMenuPositionSound();
+	    while (UpPressed());
+	    Displacement += FontHeight ( GetCurrentFont () );
 	}
-      if (RightPressed() )
+	if (DownPressed() || MouseWheelDownPressed())
 	{
-	  MoveMenuPositionSound();
-	  while (RightPressed());
-	  // if ( ItemType < Me[0].type) ItemType ++;
+	    MoveMenuPositionSound();
+	    while (DownPressed());
+	    Displacement -= FontHeight ( GetCurrentFont () );
 	}
-      if (LeftPressed() )
+	if (RightPressed() )
 	{
-	  MoveMenuPositionSound();
-	  while (LeftPressed());
-	  // if (ItemType > 0) ItemType --;
+	    MoveMenuPositionSound();
+	    while (RightPressed());
+	    // if ( ItemType < Me[0].type) ItemType ++;
 	}
-      
-      if ( EscapePressed() )
+	if (LeftPressed() )
 	{
-	  while ( EscapePressed() );
-	  return (-1);
+	    MoveMenuPositionSound();
+	    while (LeftPressed());
+	    // if (ItemType > 0) ItemType --;
 	}
-
+	
+	if ( EscapePressed() )
+	{
+	    while ( EscapePressed() );
+	    return (-1);
+	}
+	
     } // while !finished 
-
-  return ( -1 ) ;  // Currently equippment selection is not yet possible...
-
+    
+    return ( -1 ) ;  // Currently equippment selection is not yet possible...
+    
 }; // int GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] )
 
 

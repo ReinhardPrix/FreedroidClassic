@@ -179,6 +179,8 @@ number of inventory screen tiles with the item!  Fatal!",
     RescaleFactor = 1.0 / 2.0 ;
   else RescaleFactor = 1.0;
 
+  RescaleFactor *= ((float)SCREEN_WIDTH) / 640.0 ;
+
   tmp_surf = zoomSurface ( ItemMap [ item_type ] . inv_image . Surface , RescaleFactor , RescaleFactor , FALSE );
   ItemMap [ item_type ] . inv_image . scaled_surface_for_shop = our_SDL_display_format_wrapperAlpha ( tmp_surf ) ;
   SDL_FreeSurface ( tmp_surf );

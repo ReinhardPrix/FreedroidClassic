@@ -1978,38 +1978,35 @@ void
 GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r , unsigned char g , unsigned char b , unsigned char alpha )
 {
 #ifdef HAVE_LIBGL
-  SDL_Rect* dstrect = & Area ;
-
-  glRasterPos2i ( 0 , 0 ); 
-  glDisable ( GL_ALPHA_TEST );
-  glEnable ( GL_BLEND );
-  glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
-
-  // glColor4ub( 255 , 255 , 255 , 200 );
-  // glColor4ub( r , g , b , 150 );
-  // glColor4ub( r , g , b , 80 );
-  glColor4ub( r , g , b , alpha );
-  if ( dstrect == NULL )
+    SDL_Rect* dstrect = & Area ;
+    
+    glRasterPos2i ( 0 , 0 ); 
+    glDisable ( GL_ALPHA_TEST );
+    glEnable ( GL_BLEND );
+    glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+    
+    glColor4ub( r , g , b , alpha );
+    if ( dstrect == NULL )
     {
-      glBegin(GL_QUADS);
-      glVertex2i( 0       , 480 );
-      glVertex2i( 0       ,   0 );
-      glVertex2i( 0 + 639 ,   0 );
-      glVertex2i( 0 + 639 , 480 );
-      glEnd( );
+	glBegin(GL_QUADS);
+	glVertex2i( 0       , SCREEN_HEIGHT );
+	glVertex2i( 0       ,   0 );
+	glVertex2i( 0 + SCREEN_WIDTH ,   0 );
+	glVertex2i( 0 + SCREEN_WIDTH , SCREEN_HEIGHT );
+	glEnd( );
     }
-  else
+    else
     {
-      glBegin(GL_QUADS);
-      glVertex2i( dstrect -> x                , dstrect -> y );
-      glVertex2i( dstrect -> x                , dstrect -> y + dstrect -> h );
-      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y + dstrect -> h );
-      glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y );
-      glEnd( );
+	glBegin(GL_QUADS);
+	glVertex2i( dstrect -> x                , dstrect -> y );
+	glVertex2i( dstrect -> x                , dstrect -> y + dstrect -> h );
+	glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y + dstrect -> h );
+	glVertex2i( dstrect -> x + dstrect -> w , dstrect -> y );
+	glEnd( );
     }
 #endif
 
-  return;
+    return;
 
 }; // void GL_HighlightRectangle
 
@@ -2140,9 +2137,9 @@ blit_special_background ( int background_code )
 	    FALSE , // 3
 	    TRUE  , // 4
 	    TRUE  , // 5
-	    FALSE , // 6
-	    FALSE , // 7
-	    FALSE , // 8
+	    TRUE  , // 6
+	    TRUE  , // 7
+	    TRUE  , // 8
 	    FALSE , // 9
 	    FALSE , // 10
 	    FALSE , // 11

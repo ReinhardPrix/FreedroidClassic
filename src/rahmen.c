@@ -988,14 +988,14 @@ void
 ShowCurrentHealthAndForceLevel( void )
 {
 
-  if ( GameConfig . use_bars_instead_of_energy_o_meter )
-    blit_energy_and_mana_bars();
-  else
-    blit_energy_o_meter();
+    if ( GameConfig . use_bars_instead_of_energy_o_meter )
+	blit_energy_and_mana_bars();
+    else
+	blit_energy_o_meter();
 
-  blit_running_power_bars ( );
-
-  blit_experience_countdown_bars ( ) ;
+    blit_running_power_bars ( );
+    
+    blit_experience_countdown_bars ( ) ;
 
 }; // void ShowCurrentHealthAndForceLevel( void )
 
@@ -1006,48 +1006,50 @@ ShowCurrentHealthAndForceLevel( void )
 int
 teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 {
-  finepoint MapPositionOfMouse;
-  int i;
-  int action_number;
-
-  if ( MouseCursorIsInUserRect( GetMousePos_x()  , 
-			   GetMousePos_y()  ) && ( CurLevel != NULL ) )
+    finepoint MapPositionOfMouse;
+    int i;
+    int action_number;
+    
+    if ( MouseCursorIsInUserRect( GetMousePos_x()  , 
+				  GetMousePos_y()  ) && ( CurLevel != NULL ) )
     {
-      MapPositionOfMouse.x = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-      MapPositionOfMouse.y = translate_pixel_to_map_location ( player_num , 
-							       (float) ServerThinksInputAxisX ( player_num ) , 
-							       (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	MapPositionOfMouse . x = 
+	    translate_pixel_to_map_location ( player_num , 
+					      (float) ServerThinksInputAxisX ( player_num ) , 
+					      (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	MapPositionOfMouse . y = 
+	    translate_pixel_to_map_location ( player_num , 
+					      (float) ServerThinksInputAxisX ( player_num ) , 
+					      (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
 
-      for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+	for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
 	{
-	  if ( ( ( (int) MapPositionOfMouse . x ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . x ) )
-	    continue;
-	  if ( ( ( (int) MapPositionOfMouse . y ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . y ) )
-	    continue;
-	  if ( Me [ player_num ] . pos . z != AllEventTriggers [ i ] . Influ_Must_Be_At_Level )
-	    continue;
-	  
-	  // DebugPrintf ( -1000 , "\nSome trigger seems to be here..." );
-	  
-	  //--------------------
-	  // Now we know, that the mouse is currently exactly over an event trigger.  The
-	  // question to be answered still is whether this trigger also triggers a teleporter
-	  // action or not and if yes, where the connection leads to...
-	  //
-	  action_number = GiveNumberToThisActionLabel ( AllEventTriggers [ i ] . TargetActionLabel ) ;
-
-	  if(action_number == -1) return FALSE ;
-
-	  if ( AllTriggeredActions [ action_number ] . TeleportTargetLevel != (-1) )
+	    if ( ( ( (int) MapPositionOfMouse . x ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . x ) )
+		continue;
+	    if ( ( ( (int) MapPositionOfMouse . y ) != AllEventTriggers [ i ] . Influ_Must_Be_At_Point . y ) )
+		continue;
+	    if ( Me [ player_num ] . pos . z != AllEventTriggers [ i ] . Influ_Must_Be_At_Level )
+		continue;
+	    
+	    // DebugPrintf ( -1000 , "\nSome trigger seems to be here..." );
+	    
+	    //--------------------
+	    // Now we know, that the mouse is currently exactly over an event trigger.  The
+	    // question to be answered still is whether this trigger also triggers a teleporter
+	    // action or not and if yes, where the connection leads to...
+	    //
+	    action_number = GiveNumberToThisActionLabel ( AllEventTriggers [ i ] . TargetActionLabel ) ;
+	    
+	    if ( action_number == -1 ) return FALSE ;
+	    
+	    if ( AllTriggeredActions [ action_number ] . TeleportTargetLevel != (-1) )
 	    {
-	      sprintf ( ItemDescText , "To %s...." , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
-	      return ( TRUE );
+		sprintf ( ItemDescText , "To %s...." , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
+		return ( TRUE );
 	    }
 	}
     }
-  return ( FALSE );
+    return ( FALSE );
 }; // void teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 
 /* ----------------------------------------------------------------------

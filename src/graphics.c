@@ -1881,18 +1881,21 @@ SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function draws a transparent white rectangle over a specified
+ * area on the screen.
  * ---------------------------------------------------------------------- */
 void
 HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area )
 {
-  if ( use_open_gl )
-    GL_HighlightRectangle (Surface, Area , 255 , 255 , 255 , 100 );
-  else
-    SDL_HighlightRectangle ( Surface , Area );
 
-  return;
+    DebugPrintf ( 2 , "\n%s(): x=%d, y=%d, w=%d, h=%d." , __FUNCTION__ ,
+		  Area . x , Area . y , Area . w , Area . h );
+    if ( use_open_gl )
+	GL_HighlightRectangle (Surface, Area , 255 , 255 , 255 , 100 );
+    else
+	SDL_HighlightRectangle ( Surface , Area );
+
+    return;
 
 }; // void HighlightRectangle
 

@@ -103,14 +103,14 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "mouse_buttons/ConsoleIdentifyButton_red.png"    , {  50 ,  60 , 100 ,  50 } , FALSE } ,
     { NULL , "mouse_buttons/ConsoleIdentifyButton_yellow.png" , {  50 ,  60 , 100 ,  50 } , FALSE } ,
 
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } , FALSE } ,
-    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 201 , 340 ,  47 ,  47 } , FALSE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 280 ,  44 ,  37 ,  37 } , TRUE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 536 ,  44 ,  37 ,  37 } , TRUE } ,
+    { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 201 , 340 ,  47 ,  47 } , TRUE } ,
 
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {  22 , 447 ,  26 ,  26 } , FALSE } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } , FALSE } ,
-    { NULL , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } , FALSE } ,
-    { NULL , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } , FALSE } ,
+    { NULL , "mouse_buttons/LeftShopButton.png"               , {  22 , 447 ,  26 ,  26 } , TRUE } ,
+    { NULL , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } , TRUE } ,
+    { NULL , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } , TRUE } ,
+    { NULL , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } , TRUE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } , FALSE } ,
 
@@ -118,12 +118,12 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } , FALSE } ,
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { 404 , 244 ,  35 ,  35 } , FALSE } ,
 
-    { NULL , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } , FALSE } ,
-    { NULL , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } , FALSE } ,
-    { NULL , "mouse_buttons/get_button.png"                   , { 192 , 98 ,  60 ,  60 } , FALSE } ,
-    { NULL , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } , FALSE } ,
-    { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , FALSE } ,
-    { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , FALSE } ,
+    { NULL , "mouse_buttons/buy_button.png"                   , { 199 ,  98 ,  47 ,  47 } , TRUE } ,
+    { NULL , "mouse_buttons/sell_button.png"                  , { 199 , 153 ,  47 ,  47 } , TRUE } ,
+    { NULL , "mouse_buttons/get_button.png"                   , { 192 ,  98 ,  60 ,  60 } , TRUE } ,
+    { NULL , "mouse_buttons/put_button.png"                   , { 192 , 153 ,  60 ,  60 } , TRUE } ,
+    { NULL , "mouse_buttons/repair_button.png"                , { 199 , 225 ,  47 ,  47 } , TRUE } ,
+    { NULL , "mouse_buttons/identify_button.png"              , { 199 , 275 ,  47 ,  47 } , TRUE } ,
 
     { NULL , "THIS_DOESNT_NEED_BLITTING"                      , { CHARACTERRECT_X + 11 , 449 , 271 , 25 } , FALSE } ,
 
@@ -381,25 +381,37 @@ MouseCursorIsInRect ( SDL_Rect* our_rect , int x , int y )
 int
 MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 {
-  //--------------------
-  // First a sanity check if the button index given does make
-  // some sense.
-  //
-  if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
+    //--------------------
+    // First a sanity check if the button index given does make
+    // some sense.
+    //
+    if ( ( ButtonIndex >= MAX_MOUSE_PRESS_BUTTONS ) || ( ButtonIndex < 0 ) )
     {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 A Button that should be checked for mouse contact was requested, but the\n\
 button index given exceeds the number of buttons defined in freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
 
-  if ( y < AllMousePressButtons[ ButtonIndex ] . button_rect . y ) return ( FALSE );
+    //--------------------
+    // If this button needs scaling still, then we do it now...
+    //
+    if ( AllMousePressButtons [ ButtonIndex ] . scale_this_button )
+    {
+	AllMousePressButtons [ ButtonIndex ] . button_rect . x *= ((float)SCREEN_WIDTH)/640.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)SCREEN_WIDTH)/640.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)SCREEN_HEIGHT)/480.0 ;
+	AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)SCREEN_HEIGHT)/480.0 ;
+	AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
+    }
 
-  //--------------------
-  // So since the cursor is not outside of this rectangle, it must
-  // we inside, and so we'll return this answer.
-  //
-  return ( MouseCursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
+    if ( y < AllMousePressButtons[ ButtonIndex ] . button_rect . y ) return ( FALSE );
+
+    //--------------------
+    // So since the cursor is not outside of this rectangle, it must
+    // we inside, and so we'll return this answer.
+    //
+    return ( MouseCursorIsInRect ( & ( AllMousePressButtons[ ButtonIndex ] . button_rect ) , x , y ) ) ;
 
 }; // int MouseCursorIsOnButton( int ButtonIndex , int x , int y )
 
@@ -442,8 +454,13 @@ button index given exceeds the number of buttons defined in freedroid.",
 				   PLEASE_INFORM, IS_FATAL );
     }
     
-    // Now check if this button needs blitting
-    if (! strcmp(  AllMousePressButtons[ ButtonIndex ] . button_image_file_name, "THIS_DOESNT_NEED_BLITTING")) {
+    //--------------------
+    // Now check if this button needs blitting, and if not, we do the scaling once
+    // and disable the scaling ever afterwards...
+    //
+    if ( ! strcmp ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name, 
+		    "THIS_DOESNT_NEED_BLITTING") ) 
+    {
 	return ;
     }
     
@@ -478,6 +495,7 @@ This is an indication of a severe bug/installation problem of freedroid.",
 	    AllMousePressButtons [ ButtonIndex ] . button_rect . w *= ((float)SCREEN_WIDTH)/640.0 ;
 	    AllMousePressButtons [ ButtonIndex ] . button_rect . y *= ((float)SCREEN_HEIGHT)/480.0 ;
 	    AllMousePressButtons [ ButtonIndex ] . button_rect . h *= ((float)SCREEN_HEIGHT)/480.0 ;
+	    AllMousePressButtons [ ButtonIndex ] . scale_this_button = FALSE ;
 	}
     }
     
