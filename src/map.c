@@ -2289,8 +2289,7 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      //NORMALISATION      if (fx > (Block_Width - KONSOLEPASS_X))
-      if (fx > (1 - KONSOLEPASS_X))
+      if ( (fx < WALLPASS) || ( fx > ( 1 - KONSOLEPASS_X ) ) )
 	ret = CENTER;
       else
 	ret = -1;
@@ -2304,7 +2303,7 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if (fx < KONSOLEPASS_X)
+      if ( (fx < KONSOLEPASS_X) || (fx > 1 - WALLPASS) ) 
 	ret = CENTER;
       else
 	ret = -1;
@@ -2319,11 +2318,12 @@ IsPassable (float x, float y, int Checkpos)
 	  break;
 	}
       //NORMALISATION if (fy > (Block_Height - KONSOLEPASS_Y))
-      if (fy > (1 - KONSOLEPASS_Y))
+      if ( (fy < WALLPASS) || (fy > ( 1 - KONSOLEPASS_Y )) )
 	ret = CENTER;
       else
 	ret = -1;
       break;
+
 
     case KONSOLE_U:
     case CODEPANEL_D:
@@ -2333,11 +2333,13 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
-      if (fy < KONSOLEPASS_Y)
+      if ( (fy < KONSOLEPASS_Y) || (fy > 1 - WALLPASS) )
 	ret = CENTER;
       else
 	ret = -1;
       break;
+
+
 
     case H_WALL:
       //NORMALISATION if ((fy < WALLPASS) || (fy > Block_Height - WALLPASS))
