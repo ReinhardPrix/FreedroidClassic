@@ -2104,7 +2104,7 @@ Item description text="This small device automatically collects data about the a
 // Item No. 76
 ** Start of new item specification subsection **
 Item name="Strength Pill"
-Item can be applied in combat="no"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_strength"
@@ -2126,7 +2126,7 @@ Item description text="These pills permanently raise strength within a character
 // Item No. 77
 ** Start of new item specification subsection **
 Item name="Dexterity Pill"
-Item can be applied in combat="no"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_dexterity"
@@ -2148,7 +2148,7 @@ Item description text="These pills permanently raise dexterity within a characte
 // Item No. 78
 ** Start of new item specification subsection **
 Item name="Magic Pill"
-Item can be applied in combat="no"
+Item can be applied in combat="yes"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_magic"

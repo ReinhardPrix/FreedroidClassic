@@ -1121,6 +1121,19 @@ ApplyItem( item* CurItem )
     {
       RadialFireWave ( Me [ 0 ] . pos , FALSE );
     }
+  else if ( CurItem->type == ITEM_STRENGTH_PILL )
+    {
+      Me [ 0 ] . base_strength ++ ;
+    }
+  else if ( CurItem->type == ITEM_DEXTERITY_PILL )
+    {
+      Me [ 0 ] . base_dexterity ++ ;
+    }
+  else if ( CurItem->type == ITEM_MAGIC_PILL )
+    {
+      Me [ 0 ] . base_magic ++ ;
+    }
+  /*
   else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
       Me [ 0 ] . SkillLevel [ 3 ] ++ ;
@@ -1141,6 +1154,8 @@ ApplyItem( item* CurItem )
       Me [ 0 ] . SkillLevel [ 4 ] ++ ;
       Play_Spell_ForceToEnergy_Sound( );
     }
+  */
+  
 
   if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
   if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;

@@ -63,8 +63,8 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
 #define STR_BASE_X 100
 #define STR_NOW_X 148
 #define STR_Y 143
-#define MAG_Y 171
-#define DEX_Y 197
+#define DEX_Y 171
+#define MAG_Y 197
 #define VIT_Y 227
 #define POINTS_Y 252
 
@@ -474,10 +474,10 @@ UpdateAllCharacterStats ( int PlayerNum )
   //--------------------
   // Now we base PRIMARY stats
   //
-  Me [ PlayerNum ] .Strength = Me [ PlayerNum ] .base_strength;
-  Me [ PlayerNum ] .Dexterity = Me [ PlayerNum ] .base_dexterity;
-  Me [ PlayerNum ] .Magic = Me [ PlayerNum ] .base_magic;
-  Me [ PlayerNum ] .Vitality = Me [ PlayerNum ] .base_vitality;
+  Me [ PlayerNum ] . Strength = Me [ PlayerNum ] .base_strength;
+  Me [ PlayerNum ] . Dexterity = Me [ PlayerNum ] .base_dexterity;
+  Me [ PlayerNum ] . Magic = Me [ PlayerNum ] .base_magic;
+  Me [ PlayerNum ] . Vitality = Me [ PlayerNum ] .base_vitality;
 
   Me [ PlayerNum ] . freezing_melee_targets = 0;
   Me [ PlayerNum ] . double_ranged_damage = FALSE;
