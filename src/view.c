@@ -32,6 +32,9 @@
  * screen for the user.
  * ---------------------------------------------------------------------- */
 
+// hello hello, this is a test.  hope the cvs still works now that 
+// it's been messed with...
+
 #define _view_c
 
 #include "system.h"
