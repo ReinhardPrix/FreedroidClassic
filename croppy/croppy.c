@@ -25,6 +25,9 @@
 #include "../src/defs.h"
 #include "../src/getopt.h"
 
+#define SCREEN_WIDTH 640
+#define SCREEN_HEIGHT 480 
+
 void Terminate (int ExitCode);
 
 char* output_filename = NULL ;
