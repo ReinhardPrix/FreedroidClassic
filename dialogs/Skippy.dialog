@@ -1,8 +1,7 @@
 
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -33,9 +32,13 @@ BEGIN OF AUTORS NOTES
 
 
 
+
+
 You can use this text field to make some notes on ANYTHING.  
 It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
 The game engine will ignore this entry.
+
+
 
 
 
@@ -76,15 +79,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="How do I activate such a map-making device?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=224  
-Subtitle="Oh, that's too simple.  No need to activate anything at all.  Just carry is along with your other stuff in inventory."
+Subtitle="Oh, that's so simple.  No need to activate anything at all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just hold the device close to your head and it will break up into nanotechnological compartments that diffuse into your body."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They will merge with your visual nerves and transmit any data to your brain using the visual nerves."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The map-making device will automatically collect data from within 7 meters of wherever you're going."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="To take a look at the data, just hold the device to your eye."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The data will then be projected directly into your eye.  (Use the Tab key to turn on/off background map display)."
+Subtitle="It will be as if you see the data through your eye.  (Use the Tab key to turn on/off background map display)."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+ChangeOption=4 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -99,6 +105,18 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The only source of these devices is here.  It's me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText="Nanotechnology?  Isn't that dangerous?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=247  PositionY=299  
+Subtitle="No way, man, I guarantee it.  Don't believe anything you might have heard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is a perfectly safe and tried technology.  No risk at all, really!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
