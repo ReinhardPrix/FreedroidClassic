@@ -208,12 +208,16 @@ DisplayRahmen (unsigned char *screen)
   // unsigned int fg;
 
   // DisplayBlock(0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
-  DisplayMergeBlock (0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, screen);
+  DisplayMergeBlock (0, 0, RahmenPicture, RAHMENBREITE, RAHMENHOEHE, InternalScreen);
 
   /*    GetTextColor(&bg,&fg);
    SetTextColor(FONT_WHITE,FONT_RED);    *//* BG: Rahmenwei"s FG: FONT_RED */
-  SayRightInfo (RightInfo, screen);
-  SayLeftInfo (LeftInfo, screen);
+  SayRightInfo (RightInfo, InternalScreen);
+  SayLeftInfo (LeftInfo, InternalScreen);
+
+  if ( screen == RealScreen )
+    DisplayMergeBlock (0, 0, InternalScreen, RAHMENBREITE, RAHMENHOEHE, RealScreen);
+
   /*    SetTextColor(bg,fg); */
   return;
 }				/* DisplayRahmen */
@@ -268,13 +272,15 @@ UpdateInfoline (void)
   if (strcmp (LastLeft, LeftInfo) != 0)
     {
       SetTextColor (FONT_WHITE, FONT_RED);
-      SayLeftInfo (LeftInfo, RealScreen);
+      // SayLeftInfo (LeftInfo, RealScreen);
+      SayLeftInfo (LeftInfo, InternalScreen);
       strcpy (LastLeft, LeftInfo);
     }
 
   if (strcmp (LastRight, RightInfo) != 0)
     {
-      SayRightInfo (RightInfo, RealScreen);
+      // SayRightInfo (RightInfo, RealScreen);
+      SayRightInfo (RightInfo, InternalScreen);
       strcpy (LastRight, RightInfo);
     }
 
@@ -284,6 +290,6 @@ UpdateInfoline (void)
   DebugPrintf ("\nvoid UpdateInfoline(void): end of function reached.");
 
   return;
-}				// void UpdateInfoline(void)
+} // void UpdateInfoline(void)
 
 #undef _rahmen_c

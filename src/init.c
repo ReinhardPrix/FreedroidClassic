@@ -81,10 +81,38 @@ char TitleText1[] =
 
 
 char TitleText2[] =
-  "The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.\n\n        Press fire to play\n \n ";
+  "The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focussed on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take ist over. Failure to achieve transfer results in the device being a free agent once more.\n\n        Press space bar to skip instructions\n \n ";
 
 char TitleText3[] =
-  "An Influence Device can transmitt console. A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. \n  \n  \n  \n Press fire to play\n \n ";
+  "An Influence Device can transmitt data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to acces the console. \n  \n  \n  \n Press space bar to skip instructions\n\n\n";
+
+char TitleText4[] =
+  "Controls\n\
+\n\
+The game is controlled via keyboard input.\n\
+\n\
+Use cursor keys to move around.  The speed you can go \
+depends on the druid you currently control.\n\
+\n\
+If you press space bar in -addition- to a cursor key, this fires \
+the weapon of the druid you currently control.\n\n\
+If you press space bar whilst NOT pressing a cursor key, \
+this will enter transfer mode.  You will notice your robot to \
+take on a flashy red color.  \
+Now if you touch some other druid, this will initiate the takeover \
+process in which you have to win a small game of logical curcuits \
+within the given time.\n\
+If you succeed, you thereafter can control this new droid and for game \
+purposes, it is as if you were him.\n
+If you loose, you either are destroyed if you didn't control an enemy \
+druid at that time, or the host you controlled is destroyed together with \
+the unit you wished to control.\n\
+\n\
+Watch out for energy refreshing fields and elevators.\n
+\n\
+Elevators are also entered via transfer mode if you stand still on the elevaor.\n\
+\n\
+    Press Fire to Play\n \n \n \n \n \n";
 
 
 /* -----------------------------------------------------------------
@@ -625,6 +653,7 @@ Title (void)
   ScrollText (TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText (TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
+  ScrollText (TitleText4, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
 
   SetTextBorder (0, 0, SCREENBREITE, SCREENHOEHE, 40);
 

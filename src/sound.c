@@ -400,7 +400,7 @@ Switch_Background_Music_To (int Tune)
 void
 Play_YIFF_Server_Sound (int Tune)
 {
-  YEventSoundPlay Music_Parameters;
+  // YEventSoundPlay Music_Parameters;
 
   if ( !sound_on ) return;
 

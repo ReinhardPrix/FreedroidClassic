@@ -936,6 +936,8 @@ PutInternFenster (void)
 
   WaitVRetrace ();		//
 
+  DisplayRahmen ( RealScreen );
+
   for (i = 0; i < USERFENSTERHOEHE; i++)
     {
       source = InternWindow +
