@@ -132,9 +132,11 @@ GiveItemDescription ( char* ItemDescText , item* CurItem )
   char linebuf[1000];
 
   // --------------------
-  // First we print out the item name.  That's simple.
+  // First clear the string and the we print out the item name.  That's simple.
   //
-  strcpy( ItemDescText , ItemMap[ CurItem->type ].ItemName );
+  strcpy( ItemDescText , "" );
+  if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
+  strcat( ItemDescText , ItemMap[ CurItem->type ].ItemName );
   strcat( ItemDescText , "\n" );
 
   // --------------------
@@ -255,15 +257,14 @@ ShowCurrentHealthLevel( void )
   SDL_Rect Unhealth_Rect;
   SDL_Rect Whole_Health_Rect;
   
-
   Health_Rect.x = WHOLE_HEALTH_RECT_X;
   Health_Rect.y = WHOLE_HEALTH_RECT_Y;
   Health_Rect.w = WHOLE_HEALTH_RECT_W;
-  Health_Rect.h = ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
+  Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
   if ( Me.energy < 0 ) Health_Rect.h = 0;
 
   Unhealth_Rect.x = WHOLE_HEALTH_RECT_X;
-  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( 100 * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
   Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
@@ -490,7 +491,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
   int left_len, right_len;   /* the actualy string-lens */
 
   SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
+  // SDL_BlitSurface( banner_pic, NULL, Screen , NULL);
 
   ShowCurrentHealthLevel( );
 

@@ -430,24 +430,8 @@ Level_Editor(void)
 	      sscanf( NumericInputString , "%d" , &NewItemCode );
 	      if ( SpecialMapValue >= Number_Of_Item_Types ) NewItemCode=0;
 
-	      DropSpecificItemAtPosition( rintf( Me.pos.x ) , rintf( Me.pos.y ) , NewItemCode );
-
-	      /*
-	      for ( ItemIndex = 0 ; ItemIndex < MAX_ITEMS_PER_LEVEL ; ItemIndex++ )
-		{
-		  if ( CurLevel->ItemList[ ItemIndex ].type  == (-1) ) break;
-		}
-	      if ( ItemIndex >= MAX_ITEMS_PER_LEVEL )
-		{
-		  CenteredPutString   ( Screen ,  8*FontHeight(Menu_BFont), "Item maximum for level reached.");
-		  CenteredPutString   ( Screen ,  9*FontHeight(Menu_BFont), "--> Overwriting first item.");
-		  ItemIndex = 0;
-		}
-	      CurLevel->ItemList[ ItemIndex ].pos.x = rintf( Me.pos.x );
-	      CurLevel->ItemList[ ItemIndex ].pos.y = rintf( Me.pos.y );
-	      CurLevel->ItemList[ ItemIndex ].type = NewItemCode;
-	      */
-
+	      // DropSpecificItemAtPosition( rintf( Me.pos.x ) , rintf( Me.pos.y ) , NewItemCode );
+	      DropItemAt( NewItemCode , rintf( Me.pos.x ) , rintf( Me.pos.y ) );
 	    }
 
 	  //--------------------

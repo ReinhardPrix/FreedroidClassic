@@ -38,6 +38,7 @@
 
 #include "items.h"
 
+#define ITEM_TAKE_DIST (1.2)
 
 /* ----------------------------------------------------------------------
  *
@@ -47,10 +48,6 @@ void
 DropItemAt( int ItemType , int x , int y )
 {
   int i;
-
-#define ITEM_MONEY 6
-#define ITEM_HEALTH_POTION 1
-
 
   //--------------------
   // At first we must find a free item index on this level,
@@ -80,6 +77,19 @@ DropItemAt( int ItemType , int x , int y )
   CurLevel->ItemList[ i ].ac_bonus = ItemMap[ ItemType ].base_ac_bonus +
     MyRandom( ItemMap[ ItemType ].ac_bonus_modifier );
 
+  //--------------------
+  // In case of cyberbucks, we have to specify the amount of cyberbucks
+  //
+  if ( ItemType == ITEM_MONEY )
+    {
+      CurLevel->ItemList[ i ].gold_amount = MyRandom( 20 ) + 1;
+    }
+
+  //--------------------
+  // We now have to set a duration, as well a maximum duration
+  // as well as a current duration, the later of which will be
+  // a fraction of the maximum duration.
+  //
   if ( ItemMap[ ItemType ].base_item_duration != (-1) )
     {
       CurLevel->ItemList[ i ].max_duration = ItemMap[ ItemType ].base_item_duration +
@@ -89,6 +99,7 @@ DropItemAt( int ItemType , int x , int y )
   else
     {
       CurLevel->ItemList[ i ].max_duration = ( -1 );
+      CurLevel->ItemList[ i ].current_duration = 1 ;
     }
 
   PlayItemSound( ItemMap[ ItemType ].sound_number );
@@ -180,6 +191,7 @@ DamageAllEquipment( void )
  *
  *
  * ---------------------------------------------------------------------- */
+/*
 void 
 DropSpecificItemAtPosition( int x , int y , int NewItemCode )
 {
@@ -224,6 +236,8 @@ DropSpecificItemAtPosition( int x , int y , int NewItemCode )
     }
 
 }; // void DropSpecificItemAtPosition( int x , int y , int NewItemCode )
+*/
+
 
 void
 MakeHeldFloorItemOutOf( item* SourceItem )
@@ -1167,25 +1181,31 @@ ManageInventoryScreen ( void )
 	  // DebugPrintf( 1 , "\nCollecting items for direct addition to the invenotry without grabbing." );
 	  MapPositionOfMouse.x = Me.pos.x + (CurPos.x - UserCenter_x) / (float) Block_Width;
 	  MapPositionOfMouse.y = Me.pos.y + (CurPos.y - UserCenter_y) / (float) Block_Height;
-	  // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
-	  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
+
+	  // We only take items, when they are close enough 
+	  if ( ( fabsf( MapPositionOfMouse.x - Me.pos.x ) < ITEM_TAKE_DIST ) &&
+	       ( fabsf( MapPositionOfMouse.y - Me.pos.y ) < ITEM_TAKE_DIST ) )
 	    {
-	      if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
-	      
-	      if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
-		   ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+	      // DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+	      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 		{
-		  //--------------------
-		  // We've found some item to grab!!! How wonderful!!!
-		  // We simply add it to the inventory as good as we can.
-		  //
-		  Item_Held_In_Hand = ( -1 ); // ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
-		  // CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
-		  AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
-	
-		  MouseButtonPressedPreviousFrame = axis_is_active;
-		  RightPressedPreviousFrame = MouseRightPressed ( ) ;
-		  return;
+		  if ( CurLevel->ItemList[ i ].type == (-1) ) continue;
+		  
+		  if ( ( fabsf( MapPositionOfMouse.x - CurLevel->ItemList[ i ].pos.x ) < 0.5 ) &&
+		       ( fabsf( MapPositionOfMouse.y - CurLevel->ItemList[ i ].pos.y ) < 0.5 ) )
+		    {
+		      //--------------------
+		      // We've found some item to grab!!! How wonderful!!!
+		      // We simply add it to the inventory as good as we can.
+		      //
+		      Item_Held_In_Hand = ( -1 ); // ItemMap[ CurLevel->ItemList[ i ].type ].picture_number ;
+		      // CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+		      AddFloorItemDirectlyToInventory( &( CurLevel->ItemList[ i ] ) );
+		      
+		      MouseButtonPressedPreviousFrame = axis_is_active;
+		      RightPressedPreviousFrame = MouseRightPressed ( ) ;
+		      return;
+		    }
 		}
 	    }
 	}

@@ -42,6 +42,8 @@
 #define EXPERIENCE_Y 55
 #define NEXT_LEVEL_Y 82
 
+#define GOLD_Y 132
+
 #define STR_BASE_X 100
 #define STR_NOW_X 148
 #define STR_Y 143
@@ -400,6 +402,9 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%6ld", Me.ExpRequired ); 
   DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect );
 
+  sprintf( CharText , "%6ld", Me.Gold ); 
+  DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect );
+
   sprintf( CharText , "%d", Me.Strength );
   DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect );
   sprintf( CharText , "%d", Me.Strength );
@@ -481,6 +486,12 @@ ShowCharacterScreen ( void )
 	  Me.health += ENERGY_GAIN_PER_VIT_POINT;
 	  Me.energy += ENERGY_GAIN_PER_VIT_POINT;
 	}
+
+      //--------------------
+      // It might happen that the last str point was just spent.  Then we can
+      // automatically close the character window for convenience of the player.
+      //
+      if ( Me.PointsToDistribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
 
   //--------------------
@@ -488,7 +499,7 @@ ShowCharacterScreen ( void )
   // visible and therefore we must updated it here, since it is currently not
   // contained within the user rectangle that also gets updated every frame.
   //
-  SDL_UpdateRect( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
+  // SDL_UpdateRect( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
 
 
   //--------------------

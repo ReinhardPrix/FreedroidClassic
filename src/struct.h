@@ -276,6 +276,7 @@ typedef struct
   int ac_bonus;    // how much is ac increased by this item worn
   int damage; // how much damage does this item
   int max_duration;     // the maximum item durability reachable for this item
+  int gold_amount; // how much cyberbucks are there, IN CASE OF CYBERBUCKS
   float current_duration; // the currently remaining durability for this item
   grob_point inventory_position;
 } item, *Item;
@@ -347,6 +348,7 @@ typedef struct
   float RechargeTime; // the actual minimum time to wait for the influencer between shots
   int exp_level; // which 'experience level' is the influencer currenly at?
   int ExpRequired; // how much experience required for the next level?
+  long Gold;
   char character_name[25];
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
