@@ -61,7 +61,8 @@ SaveGame( void )
   FILE *SaveGameFile;  // to this file we will save all the ship data...
   char filename[1000];
   char linebuf[10000];
-  char *homedir;
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
   char* MenuTexts[10]={ "Back" , "" , "" , "" , "" ,
 			"" , "" , "" , "" , "" };
 
@@ -88,7 +89,7 @@ SaveGame( void )
 
   //--------------------
   // get home-directory to save in
-  if ( (homedir = getenv("HOME")) == NULL ) 
+  if ( ( homedir = getenv("HOME")) == NULL ) 
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
@@ -96,10 +97,12 @@ I need to know that for saving. Abort.\n");
       // return (ERR);
     }
 
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", homedir, Me[0].character_name, SHIP_EXT );
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT );
   if ( SaveShip( filename ) != OK )
     {
       fprintf(stderr, "\n\
@@ -125,7 +128,7 @@ Sorry...\n\
   //--------------------
   // First, we must determine the save game file name
   //
-  sprintf (filename, "%s/%s%s", homedir, Me[0].character_name, ".savegame");
+  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, ".savegame");
   
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
 
@@ -231,16 +234,17 @@ freedroid-discussion@lists.sourceforge.net\n\
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
   
   return OK;
-}; // void SaveGame( void )
+}; // int SaveGame( void )
 
 
 /* ----------------------------------------------------------------------
- * This function saves the current game of Freedroid to a file.
+ * This function loads an old saved game of Freedroid from a file.
  * ---------------------------------------------------------------------- */
 int 
 LoadGame( void )
 {
-  char *homedir;
+  char Saved_Games_Dir[1000];
+  char* homedir = NULL ;
   char *LoadGameData;
   char filename[1000];
   unsigned char* InfluencerRawDataPointer;
@@ -273,22 +277,33 @@ LoadGame( void )
   //
 
   // get home-directory to load from
-  if ( (homedir = getenv("HOME")) == NULL ) 
+  if ( ( homedir = getenv("HOME")) == NULL ) 
     {
-      DebugPrintf (0, "ERROR: Environment does not contain HOME variable... \n\
-I need to know that for loading. Abort.\n");
+      DebugPrintf (0, "\n----------------------------------------------------------------------\n\
+ERROR: Environment does not contain HOME variable... \n\
+I need to know that for loading.  Giving up loading of games....\n\
+Freedroid will not be terminated now, but continue running.\n\
+The game however could NOT be saved.\n\
+----------------------------------------------------------------------\n");
       return (ERR);
     }
+
+  //--------------------
+  // Now we generate the right directory for saving from the home
+  // directory.
+  //
+  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+
   //--------------------
   // First we save the full ship information, same as with the level editor
   //
-  sprintf( filename , "%s/%s%s", homedir, Me[0].character_name, SHIP_EXT);
+  sprintf( filename , "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SHIP_EXT);
   LoadShip( filename );
 
   //--------------------
   // First, we must determine the savedgame data file name
   //
-  sprintf (filename, "%s/%s%s", homedir, Me[0].character_name, SAVEDGAME_EXT);
+  sprintf (filename, "%s/%s%s", Saved_Games_Dir, Me[0].character_name, SAVEDGAME_EXT);
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): starting to read savegame data....");
 
@@ -365,6 +380,6 @@ I need to know that for loading. Abort.\n");
 
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): end of function reached.");
   return OK;
-};
+}; // int LoadGame ( void ) 
 
 #undef _saveloadgame_c
