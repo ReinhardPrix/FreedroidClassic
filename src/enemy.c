@@ -596,6 +596,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
       ThisRobot->pos.y = nextwp_pos.y;
       ThisRobot->speed.y = 0;
     }
+
 }; // void MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
@@ -912,13 +913,104 @@ IsActiveLevel ( int levelnum )
 }; // int IsActiveLevel ( int levelnum ) 
 
 /* ----------------------------------------------------------------------
+ * When a (hostile) robot is defeated and explodes, it will drop some 
+ * treasure, i.e. stuff it had or parts that it consisted of or similar
+ * things.  Maybe there will even be some extra magical treasures if the
+ * robot in question was a 'boss monster'.  This function does the 
+ * treasure dropping.
+ * ---------------------------------------------------------------------- */
+void
+DropEnemyTreasure ( Enemy ThisRobot )
+{
+  int i;
+
+  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
+		   ! ( MyRandom ( 6 ) ) , FALSE ) ;
+  for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
+    {
+      switch ( i )
+	{
+	case 0:
+	  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y + 0.5 , 
+			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	  break;
+	case 1:
+	  DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y - 0.5 , 
+			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	  break;
+	case 2:
+	  DropRandomItem ( ThisRobot->pos.x + 0.5 , ThisRobot->pos.y , 
+			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	  break;
+	case 3:
+	  DropRandomItem ( ThisRobot->pos.x - 0.5 , ThisRobot->pos.y , 
+			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	  break;
+	default:
+	  DropRandomItem ( ThisRobot->pos.x -0.7 + 0.07 * MyRandom(20) , 
+			   ThisRobot->pos.y -0.7 + 0.07 * MyRandom(20) , 
+			   Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
+	  break;
+	}
+    }
+}; // void DropEnemyTreasure ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
+ * When a robot has reached energy <= 1, then this robot will explode and
+ * die, lose some treasure and add up to the kill record of the Tux.  All
+ * the things that should happen when energy is that low are handled here
+ * while the check for low energy is done outside of this function namely
+ * somewhere in the movement processing for this enemy.
+ * ---------------------------------------------------------------------- */
+void 
+InitiateDeathOfEnemy ( Enemy ThisRobot )
+{
+  //--------------------
+  // If the Tux has killed his friend, he will regret it, or at least
+  // say so.
+  //
+  if ( ThisRobot->is_friendly )
+    {
+      Activate_Conservative_Frame_Computation();
+      PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE );
+    }
+  else
+    {
+      //--------------------
+      // The Tux gains experience from this, only for non-friends
+      //
+      Me[0].Experience += Druidmap[ ThisRobot->type ].score;
+    }
+  //--------------------
+  // The dead enemy will now explode.
+  //
+  ThisRobot->Status = OUT;
+  StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+  Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
+  
+  //--------------------
+  // Maybe that robot did have something with him?  The item should then
+  // fall to the floor with it's clanc
+  //
+  // Maybe the robots was also a boss monster.  Then some additional items
+  // must be dropped and they must always be magical.
+  //
+  DropEnemyTreasure ( ThisRobot ) ;
+  
+  if (LevelEmpty ())
+    curShip.AllLevels[ Me[ 0 ] . pos . z ] -> empty = WAIT_LEVELEMPTY;
+
+  if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
+
+}; // void InitiateDeathOfEnemy ( Enemy ThisRobot )
+
+/* ----------------------------------------------------------------------
  * This function moves a single enemy.  It is used by MoveEnemys().
  * ---------------------------------------------------------------------- */
 void 
 MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot = & AllEnemys[ EnemyNum ];
-  int i;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -937,70 +1029,7 @@ MoveThisEnemy( int EnemyNum )
   // explosion and all that...
   if ( ThisRobot->energy <= 1)
     {
-      //--------------------
-      // If the Tux has killed his friend, he will regret it, or at least
-      // say so.
-      //
-      if ( ThisRobot->is_friendly )
-	{
-	  Activate_Conservative_Frame_Computation();
-	  PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE );
-	}
-      else
-	{
-	  //--------------------
-	  // The Tux gains experience from this, only for non-friends
-	  //
-	  Me[0].Experience += Druidmap[ ThisRobot->type ].score;
-	}
-      //--------------------
-      // The dead enemy will now explode.
-      //
-      ThisRobot->Status = OUT;
-      StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
-      Me [ 0 ] . KillRecord [ ThisRobot -> type ] ++ ;
-
-      //--------------------
-      // Maybe that robot did have something with him?  The item should then
-      // fall to the floor with it's clanc
-      //
-      // Maybe the robots was also a boss monster.  Then some additional items
-      // must be dropped and they must always be magical.
-      //
-      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y , Druidmap [ ThisRobot->type ].monster_level , 
-		       ! ( MyRandom ( 6 ) ) , FALSE ) ;
-      for ( i = 0 ; i < Druidmap [ ThisRobot->type ].forced_magic_items ; i ++ )
-	{
-	  switch ( i )
-	    {
-	    case 0:
-	      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y + 0.5 , 
-			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	      break;
-	    case 1:
-	      DropRandomItem ( ThisRobot->pos.x , ThisRobot->pos.y - 0.5 , 
-			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	      break;
-	    case 2:
-	      DropRandomItem ( ThisRobot->pos.x + 0.5 , ThisRobot->pos.y , 
-			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	      break;
-	    case 3:
-	      DropRandomItem ( ThisRobot->pos.x - 0.5 , ThisRobot->pos.y , 
-			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	      break;
-	    default:
-	      DropRandomItem ( ThisRobot->pos.x -0.7 + 0.07 * MyRandom(20) , 
-			       ThisRobot->pos.y -0.7 + 0.07 * MyRandom(20) , 
-			       Druidmap [ ThisRobot->type ].monster_level , TRUE , TRUE ) ;
-	      break;
-	    }
-	}
-
-      if (LevelEmpty ())
-	curShip.AllLevels[ Me[ 0 ] . pos . z ] -> empty = WAIT_LEVELEMPTY;
-
-      if ( !ClientMode ) SwapThisRobotToFrontPosition ( ThisRobot );
+      InitiateDeathOfEnemy ( ThisRobot );
 
       return;	// this one's down, so we can move on to the next
     }
@@ -1025,7 +1054,6 @@ MoveThisEnemy( int EnemyNum )
   // Now comes the real movement part
   //
   MoveThisRobotThowardsHisWaypoint( EnemyNum );
-
 
   if ( Druidmap[ThisRobot->type].advanced_behaviour )
     SelectNextWaypointAdvanced( EnemyNum );
@@ -1277,6 +1305,101 @@ DetermineVectorToShotTarget( enemy* ThisRobot , moderately_finepoint* vect_to_ta
 }; // void DetermineVectorToShotTarget( enemy* ThisRobot , & vect_to_target )
 
 /* ----------------------------------------------------------------------
+ * Maybe there is a melee weapon using robot somewhere in the game.  In
+ * this case it might come to be that this robot can't use his weapon
+ * cause it is still too far away for a strike.  So the robot must move
+ * in closer to the target.  This is what this function is for.  It is
+ * called by the 'AttachInfluencer' functions and NOT directly by the
+ * MoveThisRobotThowardsHisWaypoint or so, cause what this function does
+ * is setting some new course parameters, NOT really alter the position
+ * of this robot directly.
+ * ---------------------------------------------------------------------- */
+void
+MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
+{
+  float TargetRange;
+  float StepSize;
+
+  //--------------------
+  // If the distance is not yet right, we find a new location to move to.  We
+  // do this WITHOUT consulting the waypoints, so that the robots become more
+  // 'intelligent' in their movement.
+  //
+  // ThisRobot->TextVisibleTime = 0 ;
+  // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
+  //
+  ThisRobot -> persuing_given_course = TRUE;
+  ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
+  ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
+  
+  //--------------------
+  // Now we check if it's perhaps time to make a step to the left/right in 
+  // order to get close enough to the target tux for a successful melee weapon
+  // swing.
+  //
+  TargetRange = 0.5;
+  StepSize = 0.5;
+  if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > TargetRange )
+    {
+      if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
+	{
+	  if ( ( DruidPassable ( ThisRobot -> pos.x + StepSize , 
+				 ThisRobot -> PrivatePathway [ 0 ] . y ,
+				 ThisRobot -> pos.z ) == CENTER ) &&
+	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+					    ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
+					    ThisRobot->pos.z , enemynum ) ) )
+	    {
+	      ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
+	    }
+	}
+      else
+	{
+	  if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , 
+				 ThisRobot->PrivatePathway[ 0 ].y ,
+				 ThisRobot->pos.z ) == CENTER ) &&
+	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+					    ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
+					    ThisRobot->pos.z , enemynum ) ) )
+	    {
+	      ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
+	    }
+	}
+    }
+  
+  //--------------------
+  // Now we check if it's perhaps time to make a step up/down in order to
+  // get close enough for a successful melee weapon swing at a tux.
+  //
+  if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > TargetRange )
+    {
+      if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
+	{
+	  if ( ( DruidPassable ( ThisRobot->pos.x , 
+				 ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
+				 ThisRobot->pos.z ) == CENTER ) &&
+	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+					    ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
+					    ThisRobot->pos.z , enemynum ) ) )
+	    ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
+	}
+      else
+	{
+	  if ( ( DruidPassable ( ThisRobot->pos.x , 
+				 ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
+				 ThisRobot->pos.z ) == CENTER ) &&
+	       ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
+					    ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
+					    ThisRobot->pos.z , enemynum ) ) )
+	    {
+	      ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
+	    }
+	}
+    } 
+
+}; // void MoveInCloserForMeleeCombat ( Enemy ThisRobot , int TargetPlayer , int enemynum )
+
+/* ----------------------------------------------------------------------
  * This function sometimes fires a bullet from enemy number enemynum 
  * directly into the direction of the influencer, but of course only if 
  * the odds are good i.e. requirements are met.
@@ -1378,83 +1501,10 @@ AttackInfluence (int enemynum)
   //
   if ( ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_angle_change != 0 )
     {
-      //--------------------
-      // If the distance is not yet right, we find a new location to move to.  We
-      // do this WITHOUT consulting the waypoints, so that the robots become more
-      // 'intelligent' in their movement.
-      //
-      // ThisRobot->TextVisibleTime = 0 ;
-      // ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
-      //
-      ThisRobot -> persuing_given_course = TRUE;
-      ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
-      ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
-      
-      //--------------------
-      // Now we check if it's perhaps time to make a step to the left/right in 
-      // order to get close enough to the target tux for a successful melee weapon
-      // swing.
-      //
-      TargetRange = 0.5;
-      StepSize = 0.5;
-      if ( fabsf ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > TargetRange )
-	{
-	  if ( ( Me [ TargetPlayer ] . pos . x - ThisRobot -> pos . x ) > 0 )
-	    {
-	      if ( ( DruidPassable ( ThisRobot -> pos.x + StepSize , 
-				     ThisRobot -> PrivatePathway [ 0 ] . y ,
-				     ThisRobot -> pos.z ) == CENTER ) &&
-		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-		  ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-		  ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
-		}
-	    }
-	  else
-	    {
-	      if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , 
-				     ThisRobot->PrivatePathway[ 0 ].y ,
-				     ThisRobot->pos.z ) == CENTER ) &&
-		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-		  ThisRobot->PrivatePathway [ 0 ] . x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
-		  ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway [ 0 ] . x = ThisRobot->pos.x - StepSize;
-		}
-	    }
-	}
 
-      //--------------------
-      // Now we check if it's perhaps time to make a step up/down in order to
-      // get close enough for a successful melee weapon swing at a tux.
-      //
-      if ( fabsf ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > TargetRange )
-	{
-	  if ( ( Me [ TargetPlayer ] . pos . y - ThisRobot -> pos . y ) > 0 )
-	    {
-	      if ( ( DruidPassable ( ThisRobot->pos.x , 
-				     ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-				     ThisRobot->pos.z ) == CENTER ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
-						ThisRobot->pos.z , enemynum ) ) )
-		ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
-	    }
-	  else
-	    {
-	      if ( ( DruidPassable ( ThisRobot->pos.x , 
-				     ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-				     ThisRobot->pos.z ) == CENTER ) &&
-		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
-						ThisRobot->pos.z , enemynum ) ) )
-		{
-		  ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y - StepSize;
-		}
-	    }
-	} // if a melee weapon is given.
-    }
+      MoveInCloserForMeleeCombat ( ThisRobot , TargetPlayer , enemynum );
+
+    } // if a melee weapon is given.
   else if (dist2 < 1.5)
     {
       //--------------------
