@@ -884,31 +884,11 @@ CursorIsOnWhichSpellLevelButton( int x , int y )
 void
 ShowSkillsExplanationScreen( void )
 {
-  // static SDL_Surface *SkillExplanationScreenImage = NULL;
-  // char* fpath;
-  // SDL_Surface *tmp;
   SDL_Rect TargetSkillRect;
 
   //--------------------
-  // At first we load the explanations screen background, if it has
-  // not been loaded already.
+  // This should draw the background...
   //
-  /*
-  if ( SkillExplanationScreenImage == NULL )
-    {
-      fpath = find_file ( SKILL_EXPLANATION_SCREEN_BACKGROUND_FILE , GRAPHICS_DIR, FALSE);
-      tmp = our_IMG_load_wrapper( fpath );
-      SkillExplanationScreenImage = our_SDL_display_format_wrapper ( tmp );
-      SDL_FreeSurface ( tmp );
-    }
-  
-  //--------------------
-  // Now we blit the explanation screen background and fill in all the
-  // information about this skill.
-  //
-  our_SDL_blit_surface_wrapper ( SkillExplanationScreenImage , NULL , Screen , NULL );
-  */
-
   blit_special_background ( 3 ) ;
 
   TargetSkillRect.x = 15;

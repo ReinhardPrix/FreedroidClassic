@@ -1655,6 +1655,8 @@ free_one_loaded_tux_image_series ( int tux_part_group )
   int j;
   int k;
 
+  // DebugPrintf ( -3 , "\nfree_one_loaded_tux_image_series:  part_group = %d." , tux_part_group );
+
   for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
     {
       for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
@@ -1764,7 +1766,41 @@ make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotatio
       strcpy ( previously_used_part_strings [ tux_part_group ] , part_string );
     }
 
-}; // void make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotation_index )
+}; // void make_sure_tux_image_is_loaded ( ... )
+
+/* ----------------------------------------------------------------------
+ * When the Tux changes equipment and ONE NEW PART IS EQUIPPED, then
+ * ALL THE IMAGES FOR THAT PART IN ALL DIRECTIONS AND ALL PHASES must
+ * get loaded and that's what is done here...
+ * ---------------------------------------------------------------------- */
+void
+make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , char* part_string )
+{
+  int our_phase;
+  int rotation_index;
+
+  for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
+    {
+      if ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] )
+	{
+	  for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
+	    make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+	}
+      else
+	{
+	  for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES - TUX_WALK_CYCLE_PHASES - TUX_RUN_CYCLE_PHASES ; our_phase ++ )
+	    make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+	}
+    }
+
+  //--------------------
+  // It can be expected, that this operation HAS TAKEN CONSIDERABLE TIME!
+  // Therefore we must activate the conservative frame time compution now,
+  // so as to prevent any unwanted jumps right now...
+  //
+  Activate_Conservative_Frame_Computation ();
+
+}; // void make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , char* part_string )
 
 /*----------------------------------------------------------------------
  * This function should blit the isometric version of the Tux to the
@@ -1789,8 +1825,14 @@ iso_put_tux_part ( int tux_part_group , char* part_string , int x , int y , int 
   //
   for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
     {
-      if ( ! strcmp ( previously_used_part_strings [ tux_part_group ] , part_string ) ) 
-	free_one_loaded_tux_image_series ( tux_part_group );
+      if ( strcmp ( previously_used_part_strings [ tux_part_group ] , part_string ) ) 
+	{
+	  // DebugPrintf ( -3 , "\nprevious string : %s. " , previously_used_part_strings [ tux_part_group ] );
+	  // DebugPrintf ( -3 , "\ncurrent part string : %s. " , part_string );
+	  free_one_loaded_tux_image_series ( tux_part_group );
+
+	  make_sure_whole_part_group_is_ready ( tux_part_group , motion_class , part_string );
+	}
     }
 
   //--------------------
@@ -1809,7 +1851,7 @@ Empty part string received!",
   //
   our_phase = get_current_phase ( tux_part_group , player_num , motion_class ) ;
 
-  make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
+  // make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
 
   //--------------------
   // Now everything should be loaded correctly and we just need to blit the Tux.  Anything
