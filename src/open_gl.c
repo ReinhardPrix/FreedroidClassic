@@ -1617,8 +1617,9 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define MOUSE_BUTTON_SKI_BACKGROUND_PICTURE "mouse_buttons/SKIButton.png"           
 #define MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE "mouse_buttons/PLUSButton.png"          
 #define CHAT_BACKGROUND_IMAGE_FILE "backgrounds/conversation.jpg"
+#define TO_BG_FILE		"lanzz_theme/to_background.jpg"
 
-#define ALL_KNOWN_BACKGROUNDS 28
+#define ALL_KNOWN_BACKGROUNDS 29
 
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
 static int backgrounds_should_be_loaded_now = TRUE;
@@ -1660,7 +1661,8 @@ blit_special_background ( int background_code )
 								  MOUSE_BUTTON_SKI_BACKGROUND_PICTURE , // 24 
 								  MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE , // 25
 								  CHAT_BACKGROUND_IMAGE_FILE ,        // 26
-								  CHAT_BACKGROUND_IMAGE_FILE };        // 27
+								  CHAT_BACKGROUND_IMAGE_FILE ,        // 27
+                                                                  TO_BG_FILE };        // 28
 
   SDL_Rect our_background_rects [ ALL_KNOWN_BACKGROUNDS ] = { { 0 , 0 , 0 , 0 } ,               // 0
 							      { CHARACTERRECT_X , 0 , 0 , 0 } , // 1 
@@ -1693,7 +1695,8 @@ blit_special_background ( int background_code )
                                                               { CHAT_SUBDIALOG_WINDOW_X , 
 								CHAT_SUBDIALOG_WINDOW_Y , 
 								CHAT_SUBDIALOG_WINDOW_W , 
-								CHAT_SUBDIALOG_WINDOW_H } } ;  // 27
+								CHAT_SUBDIALOG_WINDOW_H } ,     // 27
+                                                              { 0 , 0 , 0 , 0 } } ;             // 28
   int i;
   char *fpath;
   

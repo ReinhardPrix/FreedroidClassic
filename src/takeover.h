@@ -37,7 +37,6 @@ to_show_banner (const char* left, const char* right);
 
 /* File containing the Takeover-blocks */
 #define TO_BLOCK_FILE		"to_elem.png"
-#define TO_BG_FILE		"to_background.jpg"
 /* --------------- individual block dimensions --------------- */
 #define NUM_PHASES		5       /* number of color-phases for current "flow" */
 					/* inclusive "inactive" phase */
