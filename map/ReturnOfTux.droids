@@ -345,9 +345,12 @@ SpecialForce: Type=296 X=38 Y=11 Fixed=0 Marker=58 AdvancedCommand=2 Parameter1=
 
 ** Beginning of new Level **
 Level=9
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
+Maximum number of Random Droids=90
+Minimum number of Random Droids=85
 Allowed Type of Random Droid for this level: 571
+Allowed Type of Random Droid for this level: 476
+Allowed Type of Random Droid for this level: 420
+Allowed Type of Random Droid for this level: 302
 
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=9 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Mean Bone Crusher"
 SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=9 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Vile Sniper"
