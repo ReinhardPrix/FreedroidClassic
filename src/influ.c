@@ -663,6 +663,82 @@ round_tux_position ( int player_num )
 };
 
 /* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_tux_out_of_obstacle ( int player_num , obstacle* ThisObstacle )
+{
+  moderately_finepoint out_vect;
+  float v_len;
+
+  //--------------------
+  // We find the vector pointing outwards from the obstacle center,
+  // so we know in which direction to move the Tux
+  //
+  out_vect . x = Me [ player_num ] . pos . x - ThisObstacle -> pos . x ;
+  out_vect . y = Me [ player_num ] . pos . y - ThisObstacle -> pos . y ;
+
+  //--------------------
+  // Determining vector length and taking precautions against
+  // division by zero
+  //
+  v_len = vect_len ( out_vect );
+  if ( v_len < 0.01 ) v_len = 0.01;
+  
+  //--------------------
+  // We norm the outward vector length to 1.0
+  //
+  out_vect . x = out_vect . x / v_len ;
+  out_vect . y = out_vect . y / v_len ;
+
+  //--------------------
+  // We set the outwards speed to 1/2
+  //
+  out_vect . x *= 0.5 ;
+  out_vect . y *= 0.5 ;
+
+  //--------------------
+  // Now we can fix the Tux position.  Of course this again
+  // has to take into account the current framerate...
+  //
+  Me [ player_num ] . pos . x += out_vect . x * Frame_Time();
+  Me [ player_num ] . pos . y += out_vect . y * Frame_Time();
+
+}; // void move_tux_out_of_obstacle ( player_num , & ( ThisLevel -> ObstacleList [ obst_index ] ) );
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+move_tux_out_of_obstacles_on_square ( int x , int y , int player_num )
+{
+  Level ThisLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+  int obst_index;
+  int i;
+  
+  for ( i = 0 ; i < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; i ++ )
+    {
+      if ( ThisLevel -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] == (-1) )
+	{
+	  DebugPrintf ( -3 , "\nFALLBACK:  Last obstacle on correction-square reached...breaking..." );
+	  break;
+	}
+      obst_index = ThisLevel -> map [ y ] [ x ] . obstacles_glued_to_here [ i ] ;
+
+      if ( position_collides_with_this_obstacle ( Me [ player_num ] . pos . x , 
+						  Me [ player_num ] . pos . y , 
+						  & ( ThisLevel -> obstacle_list [ obst_index ] ) ) )
+	{
+	  DebugPrintf ( -3 , "\nFALLBACK:  One offending obstacle found.  Fixing Tux position..." );
+	  move_tux_out_of_obstacle ( player_num , & ( ThisLevel -> obstacle_list [ obst_index ] ) );
+	}
+    }
+  
+}; // void move_tux_out_of_obstacles_on_square ( int x , int y , int player_num )
+
+/* ----------------------------------------------------------------------
  * Self-explanatory.
  * This function also takes into account any conveyor belts the Tux might
  * be standing on.
@@ -672,6 +748,9 @@ MoveTuxAccordingToHisSpeed ( int player_num )
 {
   float planned_step_x;
   float planned_step_y;
+  int start_x, end_x, start_y, end_y;
+  int x , y ;
+  Level ThisLevel;
 
   //--------------------
   // Now we move influence according to current speed.  But there has been a problem
@@ -711,6 +790,56 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   //
   Me [ player_num ] . pos . x += planned_step_x;
   Me [ player_num ] . pos . y += planned_step_y;
+
+  //--------------------
+  // If the Tux got stuck, i.e. if he got no speed at all and still is 
+  // currently not in a 'passable' position, the fallback handling needs
+  // to be applied to move the Tux out of the offending obstacle (i.e. 
+  // simply away from the offending obstacles center)
+  //
+  if ( ( fabsf ( Me [ player_num ] . speed . x ) < 0.1 ) &&
+       ( fabsf ( Me [ player_num ] . speed . y ) < 0.1 ) )
+    {
+      //--------------------
+      // So there is no speed, so we check for passability...
+      //
+      if ( ! IsPassable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . pos . z ) )
+	{
+	  //--------------------
+	  // Now it's time to launch the stuck-fallback handling...
+	  //
+	  DebugPrintf ( -3 , "\nTux looks stuck...ENABLING FALLBACK just for this frame..." );
+
+	  start_x = (int) Me [ player_num ] . pos . x - 1 ;
+	  start_y = (int) Me [ player_num ] . pos . y - 1 ;
+	  end_x = start_x + 2 ;
+	  end_y = start_y + 2 ;
+
+	  ThisLevel = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
+
+	  if ( start_x < 0 ) start_x = 0 ;
+	  if ( start_y < 0 ) start_y = 0 ;
+	  if ( end_x >= ThisLevel -> xlen ) end_x = ThisLevel -> xlen - 1 ;
+	  if ( end_y >= ThisLevel -> ylen ) end_y = ThisLevel -> ylen - 1 ;
+
+	  //--------------------
+	  //
+	  for ( x = start_x ; x < end_x ; x ++ )
+	    {
+	      for ( y = start_y ; y < end_y ; y ++ )
+		{
+		  if ( position_collides_with_obstacles_on_square ( Me [ player_num ] . pos . x , 
+								    Me [ player_num ] . pos . y , 
+								    x , y , ThisLevel ) )
+		    {
+		      DebugPrintf ( -3, "\nFALLBACK: It seems like we got the offending square.  Starting check..." );
+		      
+		      move_tux_out_of_obstacles_on_square ( x , y , player_num );
+		    }
+		}
+	    }
+	}
+    }
 
   //--------------------
   // Even the Tux must not leave the map!  A sanity check is done
@@ -1228,7 +1357,7 @@ set_up_intermediate_course_for_tux ( int player_num )
 		      Me [ player_num ] . pos . y ,
 		      Me [ player_num ] . pos . z ) )
     {
-      DebugPrintf ( -3 , "\nSKIPPING RECURSION BECAUSE CURRENTLY TUX IS MOVING *THROUGH* WALL!" );
+      DebugPrintf ( 0 , "\nSkipping recursion because of passability reasons from current position..." );
       return;
     }
 

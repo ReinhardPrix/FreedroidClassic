@@ -247,6 +247,8 @@ EXTERN void LoadAndShowStats ( char* CoreFilename );
 #else
 #define EXTERN extern
 #endif
+EXTERN int position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle );
+EXTERN int position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int y_tile , Level PassLevel );
 EXTERN void glue_obstacles_to_floor_tiles_for_level ( int level_num );
 EXTERN void ResolveMapLabelOnShip ( char* MapLabel , location* PositionPointer );
 EXTERN void CollectAutomapData ( void ) ;
