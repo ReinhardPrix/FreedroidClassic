@@ -298,14 +298,14 @@ ShowCurrentHealthAndForceLevel( void )
   Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
   if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
   Unforce_Rect.x = Force_Rect.x;
-  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ) ;
   Unforce_Rect.w = WHOLE_FORCE_RECT_W;
-  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ) ;
   if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );
   SDL_FillRect( Screen , & ( Health_Rect ) , HEALTH_RECT_COLOR );
-  SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF0000 );
+  SDL_FillRect( Screen , & ( Unhealth_Rect ) , 0x0FF00000 );
   SDL_FillRect( Screen , & ( Force_Rect ) , FORCE_RECT_COLOR );
   SDL_FillRect( Screen , & ( Unforce_Rect ) , 0x0FF0000 );
 }; // void ShowCurrentHealthAndForceLevel( void )
