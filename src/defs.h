@@ -460,7 +460,7 @@ enum _non_player_characters
   };
 #define MAX_PERSONS             (LAST_PERSON)
 
-#define MAX_ANSWERS_PER_PERSON 40
+#define MAX_ANSWERS_PER_PERSON 100
 #define END_ANSWER (MAX_ANSWERS_PER_PERSON-1)
 
 #define MAX_MAP_INSERTS         6

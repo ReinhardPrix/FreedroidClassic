@@ -588,8 +588,16 @@ DisplaySubtitle( char* SubtitleText , void* SubtitleBackground )
 void
 GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 {
-  DisplaySubtitle ( SubtitleText , Background );
-  PlayOnceNeededSoundSample( SampleFilename , TRUE );
+
+  if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
+    {
+      DisplaySubtitle ( SubtitleText , Background );
+      PlayOnceNeededSoundSample( SampleFilename , TRUE );
+    }
+  else
+    {
+      PlayOnceNeededSoundSample( SampleFilename , FALSE );
+    }
 }; // void GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 
 /* ----------------------------------------------------------------------
@@ -627,6 +635,16 @@ ExecuteChatExtra ( char* ExtraCommandString )
     {
       Buy_Basic_Items( FALSE , TRUE );      
     }
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
+    {
+      Me [ 0 ] . melee_weapon_skill ++; 
+      SetNewBigScreenMessage( "Melee fighting ability improved!" );
+    }
+  else if ( ! strcmp ( ExtraCommandString , "IncreaseSpellcastingSkill" ) )
+    {
+      Me [ 0 ] . spellcasting_skill ++; 
+      SetNewBigScreenMessage( "Spellcasting ability improved!" );
+    }
   else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
     {
       DebugPrintf( 0 , "\nExtra invoked execution of action with label: %s. Doing it... " ,
@@ -648,6 +666,30 @@ ExecuteChatExtra ( char* ExtraCommandString )
 			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
       DebugPrintf( 0 , "\n...decoding...Mission to mark as complete is: %d." , TempValue );
       Me [ 0 ] . AllMissions[ TempValue ] . MissionIsComplete = TRUE;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AddBaseMagic:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked adding some base magic points. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "AddBaseMagic:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( 0 , "\n...decoding... amount of magic points mentioned is: %d." , TempValue );
+      Me [ 0 ] . base_magic += TempValue;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "SubtractPointsToDistribute:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked subtracting points to distribute. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "SubtractPointsToDistribute:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( 0 , "\n...decoding... amount of points mentioned is: %d." , TempValue );
+      Me [ 0 ] . points_to_distribute -= TempValue;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "SubtractGold:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked subtracting gold. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "SubtractGold:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
+      DebugPrintf( 0 , "\n...decoding... amount of gold mentioned is: %d." , TempValue );
+      Me [ 0 ] . Gold -= TempValue;
     }
   else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsOfType:" ) )
     {
@@ -832,6 +874,18 @@ TextConditionIsTrue ( char* ConditionString )
       DebugPrintf ( 0 , "\nCondition String mentioned concrete amout of gold: %d." , TempValue );
 
       if ( Me [ 0 ] . Gold < TempValue )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
+  else if ( CountStringOccurences ( ConditionString , "MeleeSkillLesserThan" ) )
+    {
+      DebugPrintf ( 0 , "\nCondition String identified as question for melee skill lesser than value." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( 0 , "\nCondition String mentioned level: %d." , TempValue );
+
+      if ( Me [ 0 ] . melee_weapon_skill < TempValue )
 	return ( TRUE );
       else
 	return ( FALSE );
@@ -1087,144 +1141,7 @@ ChatWithFriendlyDroid( int Enum )
 
       return;
 
-      //--------------------
-      // Now we do the dialog with SOR...
-      //
-      PrepareMultipleChoiceDialog( Enum );
-      
-      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ; // this is enabled ONLY ONCE in InitNewMissionList!
-      DialogMenuTexts [ 1 ] = "  " ;
-      DialogMenuTexts [ 2 ] = " What can you teach me about mental abilities? " ;
-      DialogMenuTexts [ 3 ] = " Mind +1 (costs 1 ability point)" ;
-      DialogMenuTexts [ 4 ] = " Mind +5 (costs 5 ability points)" ;
-      DialogMenuTexts [ 5 ] = " Improve spellcasting ability\n (cost 5 ability points, 100 cash) ";
-      DialogMenuTexts [ 6 ] = " BACK ";
-      DialogMenuTexts [ END_ANSWER ] = " END ";
-      
-      // GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
-
-      while (1)
-	{
-	  
-	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
-	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_SOR ]  , 1 , NULL , FPS_Display_BFont );
-	  
-	  switch( MenuSelection )
-	    {
-	    case 1:
-	      PlayOnceNeededSoundSample( "Tux_Hi_Im_New_0.wav" , TRUE );
-	      GiveSubtitleNSample( " Welcome then to this camp!  I'm Sorenson, teacher of magical abilities. " , "SOR_Welcome_Then_To_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // this should allow to ask about the magic abilities...
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // this should disallow to be new again...
-	      break;
-	    case 2:
-	      // PlayOnceNeededSoundSample( "Tux_SOR_Chandra_Said_You_0.wav" , TRUE );
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 0 ] = 0 ; // don't say this twice...
-	      break;
-	    case 3:
-	      PlayOnceNeededSoundSample( "Tux_SOR_What_Can_You_0.wav" , TRUE );
-	      GiveSubtitleNSample( "That depends.  What would you like to learn?" , "SOR_That_Depends_What_0.wav" );
-	      GiveSubtitleNSample( "I could help to enhance the force-capacity of your mind." , "SOR_I_Could_Help_0.wav" );
-	      GiveSubtitleNSample( "I could also teach you how to become more adapt at spellcasting." , "SOR_I_Could_Also_0.wav" );
-	      GiveSubtitleNSample( "Now, what will it be?" , "SOR_Now_What_Will_0.wav" );
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 1 ; // this enables some learning option
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 1 ; // this enables to go back from learning
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 0 ; // but disable to ask about learning options now again
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 0 ; // this disables to quit immediately	      	      
-	      break;
-
-	    case 4: // " Mind +1 (costs 1 ability point)" ;
-	      if ( Me [ 0 ] . points_to_distribute >= 1 )
-		{
-		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably." , 
-				       "SOR_The_ForceCapacity_Of_0.wav" );
-		  Me [ 0 ] . points_to_distribute -= 1;
-		  Me [ 0 ] . base_magic += 1;
-		}
-	      else
-		{
-		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
-				       "SOR_You_Dont_Have_0.wav" );
-		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
-				       "SOR_First_Collect_More_0.wav" );
-		}
-	      break;
-	    case 5: // " Mind +5 (costs 5 ability point)" ;
-	      if ( Me [ 0 ] . points_to_distribute >= 5 )
-		{
-		  GiveSubtitleNSample( "The force-capacity of your mind has risen considerably now." , 
-				       "SOR_The_ForceCapacity_Of_0.wav" );
-		  Me [ 0 ] . points_to_distribute -= 5;
-		  Me [ 0 ] . base_magic += 5;
-		}
-	      else 
-		{
-		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
-				       "SOR_You_Dont_Have_0.wav" );
-		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
-				       "SOR_First_Collect_More_0.wav" );
-		}
-	      break;
-	    case 6: // " Spellcasting ability ++ "
-	      PlayOnceNeededSoundSample( "Tux_SOR_I_Want_Learn_0.wav" , TRUE );
-	      if ( Me [ 0 ] . Gold < 100 )
-		{
-		  GiveSubtitleNSample( "You don't haven enough bucks on you!  Come back when you have the money." , 
-				       "SOR_You_Dont_Money_0.wav" );
-		}
-	      else if ( Me [ 0 ] . points_to_distribute >= 10 )
-		{
-		  Me [ 0 ] . points_to_distribute -= 10;
-		  Me [ 0 ] . spellcasting_skill ++;
-		  Me [ 0 ] . Gold -= 100;
-		  GiveSubtitleNSample( "The ability to cast spells is very complicated, and best transfered directly to you." , 
-				       "SOR_The_Ability_To_0.wav" );
-		  GiveSubtitleNSample( "We'll use magic to transfer the power.  Just a moment... and alright, it's done." , 
-				       "SOR_Just_A_Moment_0.wav" );
-		  GiveSubtitleNSample( "Your spellcasting ability has improved a lot.  Come back when you want to learn more." , 
-				       "SOR_Your_Spellcasting_Ability_0.wav" );
-		  SetNewBigScreenMessage( "Spellcasting ability improved!" );
-		}
-	      else
-		{
-		  GiveSubtitleNSample( "You don't have enough experience.  I can't teach you anything more right now." , 
-				       "SOR_You_Dont_Have_0.wav" );
-		  GiveSubtitleNSample( "First collect more experience.  Then we can go on." , 
-				       "SOR_First_Collect_More_0.wav" );
-		}
-
-	      // Me [ 0 ] . base_skill_level [ SPELL_REMOTE_STRIKE ] ++ ;
-	      // Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // don't say this twice in one dialog
-	      break;
-	    case 7:
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 3 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 4 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 5 ] = 0 ; // now disallow all learning options.
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 6 ] = 0 ; // now disallow also the BACK from lerning button
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 2 ] = 1 ; // but reallow to ask about learning
-	      Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ END_ANSWER ] = 1 ; // but reallow to quit the dialog
-	      break;
-	    case ( MAX_ANSWERS_PER_PERSON ):
-	    case (-1):
-	    default:
-	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
-	      PlayOnceNeededSoundSample( "SOR_I_Hope_You_0.wav" , FALSE ); // we do not need to wait here...
-	      return;
-	      break;
-	    }
-	}
-
-      //--------------------
-      // Since there won't be anyone else to talk to when already having
-      // talked to the SOR, we can safely return here.
-      //
-      return; 
-      
     }
-
-
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "614" ) == 0 )
     {
@@ -1274,6 +1191,24 @@ ChatWithFriendlyDroid( int Enum )
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
     {
+      //--------------------
+      // We clean out the chat roster from any previous use
+      //
+      InitChatRosterForNewDialogue(  );
+
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "PEN" );
+
+      DoChatFromChatRosterData( 0 , PERSON_PEN , Enum );
+
+      //--------------------
+      // Since there won't be anyone else to talk to when already having
+      // talked to the STO, we can safely return here.
+      //
+      return; 
+
       //--------------------
       // Now we do the dialog with PEN...
       //
