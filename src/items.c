@@ -38,6 +38,40 @@
 
 #include "items.h"
 
+int Item_Held_In_Hand = -1 ;
+
+void
+MakeHeldFloorItemOutOf( item* SourceItem )
+{
+  int i;
+
+  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+    {
+      if ( CurLevel->ItemList [ i ].type == ( -1 ) ) break;
+    }
+  if ( i >= MAX_ITEMS_PER_LEVEL )
+    {
+      DebugPrintf( 0 , "\n No free position to drop item!!! ");
+      i = 0 ;
+      Terminate( ERR );
+    }
+
+  // --------------------
+  // Now we enter the item into the item list of this level
+  //
+  CopyItem( SourceItem , &(CurLevel->ItemList[ i ]) );
+
+  CurLevel->ItemList[ i ].pos.x = Me.pos.x;
+  CurLevel->ItemList[ i ].pos.y = Me.pos.y;
+  CurLevel->ItemList[ i ].currently_held_in_hand = TRUE;
+  
+  Item_Held_In_Hand = ItemMap [ CurLevel->ItemList[ i ].type ].picture_number ;
+  
+  // The original item will be overwritten anyway when the new item
+  // replaces the old one afterwards.
+
+}; // void MakeHeldFloorItemOutOf( item* SourceItem )
+
 /* ----------------------------------------------------------------------
  * This function looks through the inventory list and returns the index
  * of the first inventory item that is marked as 'held in hand'.
@@ -87,42 +121,42 @@ item* GetHeldItemPointer( void )
 
   if ( InvIndex != (-1) )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in inventory was held in hand.  Good.");
       return ( & ( Me.Inventory[ InvIndex ] ) );
     } 
   else if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].weapon_item ) );
     }
   else if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].drive_item ) );
     }
   else if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].shield_item ) );
     }
   else if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].armour_item ) );
     }
   else if ( Druidmap[ Me.type ].special_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].special_item ) );
     }
   else if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].aux1_item ) );
     }
   else if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand )
     {
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : An item in weapon slot was held in hand.  Good.");
       return ( & ( Druidmap[ Me.type ].aux2_item ) );
     }
   else
@@ -141,7 +175,7 @@ item* GetHeldItemPointer( void )
 	}
 
 
-      DebugPrintf( 0 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
+      // DebugPrintf( 2 , "\nitem* GetHeldItemPointer( void ) : NO ITEM AT ALL SEEMS TO HAVE BEEN HELD IN HAND!!");
       return ( NULL );
     }
 
@@ -532,63 +566,10 @@ GetHeldItemCode ( void )
   // terminate immediately with severe error
   //
 
-  DebugPrintf( 0 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
+  // DebugPrintf( 2 , "\nint GetHeldItemCode ( void ):  COULDN't FIND HELD ITEM!! " );
   // Terminate( ERR );
   return ( -1 );
   
-
-  /*
-  int InvPos;
-
-  // --------------------
-  // First we find out the inventory index of the item we want to
-  // drop
-  //
-  for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY ; InvPos ++ )
-    {
-      if ( Me.Inventory[ InvPos ].currently_held_in_hand ) 
-	{
-	  return ( Me.Inventory[ InvPos ].type );
-	}
-    }
-
-  if ( Druidmap[ Me.type ].weapon_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].weapon_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].drive_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].drive_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].armour_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].armour_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].shield_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].shield_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].special_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].special_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].aux1_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].aux1_item.type );
-    }
-
-  if ( Druidmap[ Me.type ].aux2_item.currently_held_in_hand ) 
-    {
-      return ( Druidmap[ Me.type ].aux2_item.type );
-    }
-  */
-
-
 }; // int GetHeldItemCode ( void )
 
 /* ----------------------------------------------------------------------
@@ -688,7 +669,18 @@ DropHeldItemToWeaponSlot ( void )
       DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
-  
+
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].weapon_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].weapon_item ) );
+
+  //--------------------
   // Now the item is installed into the weapon slot of the influencer
   
   // Druidmap[ DRUID001 ].weapon_item = Me.Inventory[ InvPos ].type;
@@ -717,6 +709,16 @@ DropHeldItemToDriveSlot ( void )
       return;
     } 
 
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].drive_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].drive_item ) );
+
   // Now the item is installed into the drive slot of the influencer
   CopyItem( DropItemPointer , &(Druidmap[ DRUID001 ].drive_item) );
   Druidmap[ DRUID001 ].drive_item.currently_held_in_hand = FALSE;
@@ -742,6 +744,16 @@ DropHeldItemToArmourSlot ( void )
       DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
+
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].armour_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].armour_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
   // Druidmap[ DRUID001 ].armour_item = Me.Inventory[ InvPos ].type;
@@ -770,6 +782,16 @@ DropHeldItemToShieldSlot ( void )
       return;
     } 
 
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].shield_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].shield_item ) );
+
   // Now the item is installed into the weapon slot of the influencer
   CopyItem ( DropItemPointer , &(Druidmap[ DRUID001 ].shield_item) );
   Druidmap[ DRUID001 ].shield_item.currently_held_in_hand = FALSE;
@@ -795,6 +817,16 @@ DropHeldItemToSpecialSlot ( void )
       DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
+
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].special_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].special_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
   CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].special_item) );
@@ -822,6 +854,16 @@ DropHeldItemToAux1Slot ( void )
       return;
     } 
 
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].aux1_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux1_item ) );
+
   // Now the item is installed into the weapon slot of the influencer
   CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux1_item) );
   Druidmap[ DRUID001 ].aux1_item.currently_held_in_hand = FALSE;
@@ -847,6 +889,16 @@ DropHeldItemToAux2Slot ( void )
       DebugPrintf( 0 , "\nvoid DropHeldItemToWeaponSlot ( void ) : No item in inventory seems to be currently held in hand...");
       return;
     } 
+
+  //--------------------
+  // If there is an old item in the slot, we make a held item on the
+  // floor out of it and also set the HeldItemType accordingly, so that
+  // after the new item was placed successfully, the old item will
+  // be out of all inventory slots, but still in the hand of the 
+  // player and ready to be put somewhere else
+  //
+  if ( Druidmap[ DRUID001 ].aux2_item.type != (-1) )
+    MakeHeldFloorItemOutOf( &( Druidmap[ DRUID001 ].aux2_item ) );
 
   // Now the item is installed into the weapon slot of the influencer
   CopyItem( DropItemPointer , &( Druidmap[ DRUID001 ].aux2_item) );
@@ -972,7 +1024,6 @@ void
 ManageInventoryScreen ( void )
 {
   SDL_Rect TargetRect;
-  static int Item_Held_In_Hand = -1 ;
   static int MouseButtonPressedPreviousFrame = FALSE;
   point CurPos;
   point Inv_GrabLoc;
@@ -1246,8 +1297,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot ) )
 	    {
-	      DropHeldItemToWeaponSlot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToWeaponSlot ( );
 	    }
 	  else
 	    {
@@ -1266,8 +1317,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_drive_slot ) )
 	    {
-	      DropHeldItemToDriveSlot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToDriveSlot ( );
 	    }
 	  else
 	    {
@@ -1286,8 +1337,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_armour_slot ) )
 	    {
-	      DropHeldItemToArmourSlot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToArmourSlot ( );
 	    }
 	  else
 	    {
@@ -1306,8 +1357,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_shield_slot ) )
 	    {
-	      DropHeldItemToShieldSlot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToShieldSlot ( );
 	    }
 	  else
 	    {
@@ -1326,8 +1377,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_special_slot ) )
 	    {
-	      DropHeldItemToSpecialSlot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToSpecialSlot ( );
 	    }
 	  else
 	    {
@@ -1346,8 +1397,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
-	      DropHeldItemToAux1Slot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToAux1Slot ( );
 	    }
 	  else
 	    {
@@ -1366,8 +1417,8 @@ ManageInventoryScreen ( void )
 	  if ( ( GetHeldItemCode() != (-1) ) &&
 	       ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_aux_slot ) )
 	    {
-	      DropHeldItemToAux2Slot ( );
 	      Item_Held_In_Hand = ( -1 );
+	      DropHeldItemToAux2Slot ( );
 	    }
 	  else
 	    {
