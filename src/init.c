@@ -1664,184 +1664,184 @@ InitHarmlessTuxStatusVariables( int player_num )
 void
 PrepareStartOfNewCharacter ( void )
 {
-  int i , j ;
-  int StartingLevel=0;
-  int StartingXPos=0;
-  int StartingYPos=0;
-  int MissionTargetIndex = 0;
-  int PlayerNum;
-  location StartPosition;
-  
-  //--------------------
-  // At first we do the things that must be done for all
-  // missions, regardless of mission file given
-  //
-  Activate_Conservative_Frame_Computation();
-  ThisMessageTime = 0;
-  LevelDoorsNotMovedTime = 0.0;
-  RespectVisibilityOnMap = TRUE ;
-
-  //--------------------
-  // We mark all the big screen messages for this character
-  // as out of date, so they can be overwritten with new 
-  // messages...
-  //
-  Me [ 0 ] . BigScreenMessageIndex = 0 ;
-  for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
-    Me [ 0 ] . BigScreenMessageDuration [ i ] = 10000 ;
-
-  //--------------------
-  // We make sure we don't have garbage in our arrays from a 
-  // previous game or failed load-game attempt...
-  //
-  clear_out_arrays_for_fresh_game ( );
-
-  //--------------------
-  // Now the mission file is read into memory.  That means we can start to decode the details given
-  // in the body of the mission file.  
-  //
-  GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
-
-  if ( !skip_initial_menus )
-      PlayATitleFile ( "StartOfGame.title" );
-
-  //--------------------
-  // We also load the comment for the influencer to say at the beginning of the mission
-  //
-  Me [ 0 ] . TextToBeDisplayed = "Huh? What?  Where am I?" ;
-  Me [ 0 ] . TextVisibleTime = 0;
-
-  //--------------------
-  // initialize enemys according to crew file */
-  // WARNING!! THIS REQUIRES THE freedroid.ruleset FILE TO BE READ ALREADY, BECAUSE
-  // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
-  //
-  GetCrew ( "ReturnOfTux.droids" ) ;
-
-  // ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
-  ResolveMapLabelOnShip ( "NewTuxStartGameSquare" , &StartPosition );
-  Me [ 0 ] . pos . x = StartPosition . x ;
-  Me [ 0 ] . pos . y = StartPosition . y ;
-  Me [ 0 ] . pos . z = StartPosition . level ;
-
-  Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
-  Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
-  Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
-  
-  DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
-  
-  //--------------------
-  // At this point the position history can be initialized
-  //
-  InitInfluPositionHistory( 0 );
-
-  //--------------------
-  // Now we read in the mission targets for this mission
-  // Several different targets may be specified simultaneously
-  //
-  GetQuestList ( "QuestList" );
-
-  SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] -> Background_Song_Name );
-
-  InitHarmlessTuxStatusVariables( 0 );
-
-  InitInfluencerStartupSkills( 0 );
-
-  UpdateAllCharacterStats( 0 );
-
-  InitInfluencerChatFlags( 0 );
-
-  InitInfluencerPasswordsAndClearances( 0 );
-
-  clear_out_intermediate_points ( 0 ) ;
-
-  for ( j = 0 ; j < MAX_COOKIES ; j ++ )
+    int i , j ;
+    int StartingLevel=0;
+    int StartingXPos=0;
+    int StartingYPos=0;
+    int MissionTargetIndex = 0;
+    int PlayerNum;
+    location StartPosition;
+    
+    //--------------------
+    // At first we do the things that must be done for all
+    // missions, regardless of mission file given
+    //
+    Activate_Conservative_Frame_Computation();
+    ThisMessageTime = 0;
+    LevelDoorsNotMovedTime = 0.0;
+    RespectVisibilityOnMap = TRUE ;
+    
+    //--------------------
+    // We mark all the big screen messages for this character
+    // as out of date, so they can be overwritten with new 
+    // messages...
+    //
+    Me [ 0 ] . BigScreenMessageIndex = 0 ;
+    for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
+	Me [ 0 ] . BigScreenMessageDuration [ i ] = 10000 ;
+    
+    //--------------------
+    // We make sure we don't have garbage in our arrays from a 
+    // previous game or failed load-game attempt...
+    //
+    clear_out_arrays_for_fresh_game ( );
+    
+    //--------------------
+    // Now the mission file is read into memory.  That means we can start to decode the details given
+    // in the body of the mission file.  
+    //
+    GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
+    
+    if ( !skip_initial_menus )
+	PlayATitleFile ( "StartOfGame.title" );
+    
+    //--------------------
+    // We also load the comment for the influencer to say at the beginning of the mission
+    //
+    Me [ 0 ] . TextToBeDisplayed = "Huh? What?  Where am I?" ;
+    Me [ 0 ] . TextVisibleTime = 0;
+    
+    //--------------------
+    // initialize enemys according to crew file */
+    // WARNING!! THIS REQUIRES THE freedroid.ruleset FILE TO BE READ ALREADY, BECAUSE
+    // ROBOT SPECIFICATIONS ARE ALREADY REQUIRED HERE!!!!!
+    //
+    GetCrew ( "ReturnOfTux.droids" ) ;
+    
+    // ResolveMapLabelOnShip ( "TuxStartGameSquare" , &StartPosition );
+    ResolveMapLabelOnShip ( "NewTuxStartGameSquare" , &StartPosition );
+    Me [ 0 ] . pos . x = StartPosition . x ;
+    Me [ 0 ] . pos . y = StartPosition . y ;
+    Me [ 0 ] . pos . z = StartPosition . level ;
+    
+    Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
+    Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
+    Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
+    
+    DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
+    
+    //--------------------
+    // At this point the position history can be initialized
+    //
+    InitInfluPositionHistory( 0 );
+    
+    //--------------------
+    // Now we read in the mission targets for this mission
+    // Several different targets may be specified simultaneously
+    //
+    GetQuestList ( "QuestList" );
+    
+    SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] -> Background_Song_Name );
+    
+    InitHarmlessTuxStatusVariables( 0 );
+    
+    InitInfluencerStartupSkills( 0 );
+    
+    UpdateAllCharacterStats( 0 );
+    
+    InitInfluencerChatFlags( 0 );
+    
+    InitInfluencerPasswordsAndClearances( 0 );
+    
+    clear_out_intermediate_points ( 0 ) ;
+    
+    for ( j = 0 ; j < MAX_COOKIES ; j ++ )
     {
-      strcpy ( Me [ 0 ] . cookie_list [ j ] , "" ) ;
+	strcpy ( Me [ 0 ] . cookie_list [ j ] , "" ) ;
     }
-
-  //--------------------
-  // Now that the prime character stats have been initialized, we can
-  // set these much-varying variables too...
-  //
-  Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
-  Me [ 0 ] . mana = Me [ 0 ] . maxmana;
-  Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
-  Me [ 0 ] . health = Me [ 0 ] . energy;
-  Me [ 0 ] . firewait = 0 ;
-
-  Me [ 0 ] . TextVisibleTime = 0;
-  Me [ 0 ] . readied_skill = 0;
-  Me [ 0 ] . walk_cycle_phase = 0 ;
-  // CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-  Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
-
-  //--------------------
-  // None of the inventory slots like currently equipped weapons
-  // or the like should be held in hand, like when you take it
-  // 'into your hand' by clicking on it with the mouse button in
-  // the inventory screen.
-  //
-  Me [ 0 ] . weapon_item  . currently_held_in_hand = FALSE;
-  Me [ 0 ] . armour_item  . currently_held_in_hand = FALSE;
-  Me [ 0 ] . shield_item  . currently_held_in_hand = FALSE;
-  Me [ 0 ] . special_item . currently_held_in_hand = FALSE;
-  Me [ 0 ] . drive_item   . currently_held_in_hand = FALSE;
-  Me [ 0 ] . aux1_item    . currently_held_in_hand = FALSE;
-  Me [ 0 ] . aux2_item    . currently_held_in_hand = FALSE;
-  Item_Held_In_Hand = ( -1 );
-
-  FillInItemProperties ( & ( Me [ 0 ] . weapon_item ) , TRUE , 0 );
-  FillInItemProperties ( & ( Me [ 0 ] . drive_item ) , TRUE , 0 );
-
-
-  DebugPrintf ( 1 , "\n%s():  Shuffling droids on all %d levels!" , __FUNCTION__ , curShip.num_levels );
-  for ( i = 0 ; i < curShip.num_levels ; i ++ )
+    
+    //--------------------
+    // Now that the prime character stats have been initialized, we can
+    // set these much-varying variables too...
+    //
+    Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
+    Me [ 0 ] . mana = Me [ 0 ] . maxmana;
+    Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
+    Me [ 0 ] . health = Me [ 0 ] . energy;
+    Me [ 0 ] . firewait = 0 ;
+    
+    Me [ 0 ] . TextVisibleTime = 0;
+    Me [ 0 ] . readied_skill = 0;
+    Me [ 0 ] . walk_cycle_phase = 0 ;
+    // CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
+    Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+    
+    //--------------------
+    // None of the inventory slots like currently equipped weapons
+    // or the like should be held in hand, like when you take it
+    // 'into your hand' by clicking on it with the mouse button in
+    // the inventory screen.
+    //
+    Me [ 0 ] . weapon_item  . currently_held_in_hand = FALSE;
+    Me [ 0 ] . armour_item  . currently_held_in_hand = FALSE;
+    Me [ 0 ] . shield_item  . currently_held_in_hand = FALSE;
+    Me [ 0 ] . special_item . currently_held_in_hand = FALSE;
+    Me [ 0 ] . drive_item   . currently_held_in_hand = FALSE;
+    Me [ 0 ] . aux1_item    . currently_held_in_hand = FALSE;
+    Me [ 0 ] . aux2_item    . currently_held_in_hand = FALSE;
+    Item_Held_In_Hand = ( -1 );
+    
+    FillInItemProperties ( & ( Me [ 0 ] . weapon_item ) , TRUE , 0 );
+    FillInItemProperties ( & ( Me [ 0 ] . drive_item ) , TRUE , 0 );
+    
+    
+    DebugPrintf ( 1 , "\n%s():  Shuffling droids on all %d levels!" , __FUNCTION__ , curShip.num_levels );
+    for ( i = 0 ; i < curShip.num_levels ; i ++ )
     {
-      // ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
-      ShuffleEnemys( i ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+	// ShuffleEnemys( Me[0].pos.z ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
+	ShuffleEnemys( i ); // NOTE: THIS REQUIRES CurLevel TO BE INITIALIZED !! --> NOT ANY MORE!!!
     }
-
-
-  //--------------------
-  // Now we start those missions, that are to be assigned automatically to the
-  // player at game start
-  //
-  for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    
+    
+    //--------------------
+    // Now we start those missions, that are to be assigned automatically to the
+    // player at game start
+    //
+    for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
     {
-      if ( Me[0].AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
+	if ( Me[0].AllMissions[ MissionTargetIndex ].AutomaticallyAssignThisMissionAtGameStart ) 
 	{
-	  AssignMission( MissionTargetIndex );
+	    AssignMission( MissionTargetIndex );
 	}
     }
-
-  //--------------------
-  // To initialize the other players as well, for now, we make
-  // a copy of the main players struct right over the other players
-  // structs...
-  //
-  for ( PlayerNum = 1 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+    
+    //--------------------
+    // To initialize the other players as well, for now, we make
+    // a copy of the main players struct right over the other players
+    // structs...
+    //
+    for ( PlayerNum = 1 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
-      // memcpy ( & ( Me [ PlayerNum ] ) , & ( Me [ 0 ] ) , sizeof ( Me [ 0 ] ) );
-      Me [ PlayerNum ] . status = OUT ;
+	// memcpy ( & ( Me [ PlayerNum ] ) , & ( Me [ 0 ] ) , sizeof ( Me [ 0 ] ) );
+	Me [ PlayerNum ] . status = OUT ;
     }
-
-  Me [ 0 ] . mouse_move_target . x = ( -1 ) ;
-  Me [ 0 ] . mouse_move_target . y = ( -1 ) ;
-  Me [ 0 ] . mouse_move_target . z = ( -1 ) ;
-  Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
-  Me [ 0 ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ; // what extra action has to be done upon arrival?
-  Me [ 0 ] . mouse_move_target_combo_action_parameter = (-1) ; // extra data to use for the combo action
-
-  //--------------------
-  // Now we know that right after starting a new game, the Tux might have
-  // to 'change clothes' i.e. a lot of tux images need to be updated which can
-  // take a little time.  Therefore we print some message so the user will not
-  // panic and push the reset button :)
-  //
-  PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
-  our_SDL_flip_wrapper ( Screen );
-
+    
+    Me [ 0 ] . mouse_move_target . x = ( -1 ) ;
+    Me [ 0 ] . mouse_move_target . y = ( -1 ) ;
+    Me [ 0 ] . mouse_move_target . z = ( -1 ) ;
+    Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
+    Me [ 0 ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ; // what extra action has to be done upon arrival?
+    Me [ 0 ] . mouse_move_target_combo_action_parameter = (-1) ; // extra data to use for the combo action
+    
+    //--------------------
+    // Now we know that right after starting a new game, the Tux might have
+    // to 'change clothes' i.e. a lot of tux images need to be updated which can
+    // take a little time.  Therefore we print some message so the user will not
+    // panic and push the reset button :)
+    //
+    PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
+    our_SDL_flip_wrapper ( Screen );
+    
 }; // void PrepareStartOfNewCharacter ( char* MissionName )
 
 /* ----------------------------------------------------------------------

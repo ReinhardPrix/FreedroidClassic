@@ -1221,10 +1221,11 @@ MoveWaypointsSouthOf ( int FromWhere , int ByWhat , Level EditLevel )
 int
 level_editor_item_drop_index ( int row_len , int line_len )
 {
-    if ( ( GetMousePos_x ( )  > 55 ) && ( GetMousePos_x ( )  < 55 + 64 * line_len ) &&
-	 ( GetMousePos_y ( )  > 32 ) && ( GetMousePos_y ( )  < 32 + 66 * row_len ) )
+    if ( ( GetMousePos_x ( )  > 55 ) && ( GetMousePos_x ( )  < 55 + 64 * line_len * GameConfig . screen_width / 640 ) &&
+	 ( GetMousePos_y ( )  > 32 ) && ( GetMousePos_y ( )  < 32 + 66 * row_len * GameConfig . screen_height / 480 ) )
 	{
-	    return ( ( GetMousePos_x()  - 55 ) / 64 + ( GetMousePos_y()  - 32 ) / 66 * line_len ) ;
+	    return (   ( GetMousePos_x()  - 55 ) / ( 64 * GameConfig . screen_width / 640 ) + 
+		     ( ( GetMousePos_y()  - 32 ) / ( 66 * GameConfig . screen_height / 480 ) ) * line_len ) ;
 	}
 
     //--------------------
@@ -1271,7 +1272,7 @@ ItemDropFromLevelEditor( void )
 	    {
 		temp_item . type = i + j * line_len + item_group * line_len * row_len ;
 		if ( temp_item.type >= Number_Of_Item_Types )  temp_item.type = 1 ;
-		ShowRescaledItem ( i , 32 + (64+2) * j, & ( temp_item ) );
+		ShowRescaledItem ( i , 32 + (64*GameConfig.screen_height/480+2) * j, & ( temp_item ) );
 	    }
 	}
 	
@@ -1291,28 +1292,28 @@ ItemDropFromLevelEditor( void )
 	    {
 		previous_mouse_position_index = Number_Of_Item_Types - 1 ;
 	    }
-	    PutStringFont ( Screen , FPS_Display_BFont , 20 , 440 , ItemMap [ previous_mouse_position_index ] . item_name ) ;
+	    PutStringFont ( Screen , FPS_Display_BFont , 20 , 440 * GameConfig . screen_height / 480 , ItemMap [ previous_mouse_position_index ] . item_name ) ;
 	}
 
 	if ( previous_prefix_selected != (-1) )
 	{
-	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 370 , 
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 * GameConfig . screen_width / 640 , 370 * GameConfig . screen_height / 480, 
 			    PrefixList [ previous_prefix_selected ] . bonus_name ) ;
 	}
 	else
 	{
-	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 370 , 
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 * GameConfig . screen_width / 640 , 370 * GameConfig . screen_height / 480, 
 			    "NO PREFIX" ) ;
 	}
 
 	if ( previous_suffix_selected != (-1) )
 	{
-	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 410 , 
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 * GameConfig . screen_width / 640 , 410 * GameConfig . screen_height / 480 , 
 			    SuffixList [ previous_suffix_selected ] . bonus_name ) ;
 	}
 	else
 	{
-	    PutStringFont ( Screen , FPS_Display_BFont , 300 , 410 , 
+	    PutStringFont ( Screen , FPS_Display_BFont , 300 * GameConfig . screen_width / 640 , 410 * GameConfig . screen_height / 480 , 
 			    "NO SUFFIX" ) ;
 	}
 	
@@ -1320,8 +1321,21 @@ ItemDropFromLevelEditor( void )
 	
 	while ( ( ! SpacePressed() ) && ( level_editor_item_drop_index ( row_len , line_len ) + 
 					  item_group * line_len * row_len == previous_mouse_position_index ) )
-	    SDL_Delay(1);
+	{
+	    SDL_Delay ( 1 );
+	    if ( EscapePressed() )
+	    {
+		while ( EscapePressed() );
+		return ;
+	    }
+	}
 	
+	if ( EscapePressed() )
+	{
+	    while ( EscapePressed() );
+	    return ;
+	}
+
 	if ( SpacePressed() )
 	{
 	    if ( MouseCursorIsOnButton ( 

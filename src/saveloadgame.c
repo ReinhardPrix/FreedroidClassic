@@ -114,89 +114,89 @@ LoadAndShowThumbnail ( char* CoreFilename )
 }; // void LoadAndShowThumbnail ( char* CoreFilename )
 
 /* ----------------------------------------------------------------------
- *
+ * 
  *
  * ---------------------------------------------------------------------- */
 void
 LoadAndShowStats ( char* CoreFilename )
 {
-  char filename[1000];
-  struct stat FileInfoBuffer;
-  char InfoString[5000];
-  struct tm *LocalTimeSplitup;
-  long int FileSize;
-
-  if (!ConfigDir)
-    return;
-
-  DebugPrintf ( 2 , "\nTrying to get file stats for character '%s'. " , CoreFilename );
-
-  //--------------------
-  // First we save the full ship information, same as with the level editor
-  //
-
-  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVEDGAME_EXT );
-
-  if ( stat ( filename , & ( FileInfoBuffer) ) )
+    char filename[1000];
+    struct stat FileInfoBuffer;
+    char InfoString[5000];
+    struct tm *LocalTimeSplitup;
+    long int FileSize;
+    
+    if ( ! ConfigDir )
+	return;
+    
+    DebugPrintf ( 2 , "\nTrying to get file stats for character '%s'. " , CoreFilename );
+    
+    //--------------------
+    // First we save the full ship information, same as with the level editor
+    //
+    
+    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVEDGAME_EXT );
+    
+    if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
-      fprintf( stderr, "\n\nfilename: %s. \n" , filename );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfilename: %s. \n" , filename );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
 or file permissions of ~/.freedroid_rpg are somehow not right.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
+				   NO_NEED_TO_INFORM, IS_FATAL );
     };
-
-  LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
-
-  sprintf( InfoString , "%d/%02d/%02d %02d:%02d" , 
-	   1900 + LocalTimeSplitup->tm_year ,
-	   LocalTimeSplitup->tm_mon ,
-	   LocalTimeSplitup->tm_mday ,
-	   LocalTimeSplitup->tm_hour ,
-	   LocalTimeSplitup->tm_min );
-
-  PutString ( Screen , 240 , GameConfig . screen_height - 3 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
-  PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , InfoString );
-
-  //--------------------
-  // Now that the modification time has been set up, we can start to compute
-  // the overall disk space of all files in question.
-  //
-  FileSize = FileInfoBuffer.st_size;
-
-  //--------------------
-  // The saved ship must exist.  On not, it's a sever error!
-  //
-  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , ".shp" );
-  if ( stat ( filename , & ( FileInfoBuffer) ) )
+    
+    LocalTimeSplitup = localtime ( & ( FileInfoBuffer.st_mtime ) ) ;
+    
+    sprintf( InfoString , "%d/%02d/%02d %02d:%02d" , 
+	     1900 + LocalTimeSplitup->tm_year ,
+	     LocalTimeSplitup->tm_mon ,
+	     LocalTimeSplitup->tm_mday ,
+	     LocalTimeSplitup->tm_hour ,
+	     LocalTimeSplitup->tm_min );
+    
+    PutString ( Screen , 240 , GameConfig . screen_height - 3 * FontHeight ( GetCurrentFont () ) , "Last Modified:" );
+    PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , InfoString );
+    
+    //--------------------
+    // Now that the modification time has been set up, we can start to compute
+    // the overall disk space of all files in question.
+    //
+    FileSize = FileInfoBuffer.st_size;
+    
+    //--------------------
+    // The saved ship must exist.  On not, it's a sever error!
+    //
+    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , ".shp" );
+    if ( stat ( filename , & ( FileInfoBuffer) ) )
     {
-      fprintf( stderr, "\n\nfilename: %s. \n" , filename );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nfilename: %s. \n" , filename );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Freedroid was unable to determine the time of the last modification on\n\
 your saved game file.\n\
 This is either a bug in Freedroid or an indication, that the directory\n\
 or file permissions of ~/.freedroid_rpg are somehow not right.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
-    };
-  FileSize += FileInfoBuffer.st_size;
-
-  //--------------------
-  // A thumbnail may not yet exist.  We won't make much fuss if it doesn't.
-  //
-  sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
-  if ( ! stat ( filename , & ( FileInfoBuffer) ) )
+				   NO_NEED_TO_INFORM, IS_FATAL );
+    }
+    FileSize += FileInfoBuffer.st_size;
+    
+    //--------------------
+    // A thumbnail may not yet exist.  We won't make much fuss if it doesn't.
+    //
+    sprintf( filename , "%s/%s%s", ConfigDir, CoreFilename , SAVE_GAME_THUMBNAIL_EXT );
+    if ( ! stat ( filename , & ( FileInfoBuffer) ) )
     {
         FileSize += FileInfoBuffer.st_size;
     }
-
-  sprintf( InfoString , "File Size: %2.3f MB" , 
-	   ((float)FileSize) / ( 1024.0 * 1024.0 ) );
-
-  // PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
-  PutString ( Screen , 240 , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
-
+    
+    sprintf( InfoString , "File Size: %2.3f MB" , 
+	     ((float)FileSize) / ( 1024.0 * 1024.0 ) );
+    
+    // PutString ( Screen , 240 , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont () ) , "File Size:" );
+    PutString ( Screen , 240 , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont () ) , InfoString );
+    
 }; // void LoadAndShowStats ( char* filename );
 
 /* ----------------------------------------------------------------------

@@ -158,192 +158,192 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 int
 DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int background_code , void* MenuFont )
 {
-  int h;
-  int i;
-  static int MenuPosition = 1;
-  int NumberOfOptionsGiven;
-  SDL_Rect HighlightRect;
-  int first_menu_item_pos_y;
-
-  //--------------------
-  // At first we show the mouse cursor...
-  //
-  SDL_ShowCursor( SDL_ENABLE );
-
-  //--------------------
-  // We set the given font, if appropriate, and set the font height variable...
-  //
-  if ( MenuFont != NULL )
-    SetCurrentFont ( MenuFont );
-  h = FontHeight ( GetCurrentFont ( ) );
-
-  //--------------------
-  // Some menus are intended to start with the default setting of the
-  // first menu option selected.  However this is not always desired.
-  // It might happen, that a submenu returns to the upper menu and then
-  // the upper menu should not be reset to the first position selected.
-  // For this case we have some special '-1' entry reserved as the marked
-  // menu entry.  This means, taht the menu position from last time will
-  // simply be re-used.
-  //
-  if ( FirstItem != (-1) ) MenuPosition = FirstItem;
-
-  //--------------------
-  // First thing we do is find out how may options we have
-  // been given for the menu
-  //
-  for ( i = 0 ; TRUE ; i ++ )
+    int h;
+    int i;
+    static int MenuPosition = 1;
+    int NumberOfOptionsGiven;
+    SDL_Rect HighlightRect;
+    int first_menu_item_pos_y;
+    
+    //--------------------
+    // At first we show the mouse cursor...
+    //
+    SDL_ShowCursor( SDL_ENABLE );
+    
+    //--------------------
+    // We set the given font, if appropriate, and set the font height variable...
+    //
+    if ( MenuFont != NULL )
+	SetCurrentFont ( MenuFont );
+    h = FontHeight ( GetCurrentFont ( ) );
+    
+    //--------------------
+    // Some menus are intended to start with the default setting of the
+    // first menu option selected.  However this is not always desired.
+    // It might happen, that a submenu returns to the upper menu and then
+    // the upper menu should not be reset to the first position selected.
+    // For this case we have some special '-1' entry reserved as the marked
+    // menu entry.  This means, taht the menu position from last time will
+    // simply be re-used.
+    //
+    if ( FirstItem != (-1) ) MenuPosition = FirstItem;
+    
+    //--------------------
+    // First thing we do is find out how may options we have
+    // been given for the menu
+    //
+    for ( i = 0 ; TRUE ; i ++ )
     {
-      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+	if ( strlen( MenuTexts[ i ] ) == 0 ) break;
     }
-  NumberOfOptionsGiven = i;
-
-  //--------------------
-  // In those cases where we don't reset the menu position upon 
-  // initalization of the menu, we must check for menu positions
-  // outside the bounds of the current menu.
-  //
-  if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
-
-  first_menu_item_pos_y = ( GameConfig . screen_height - NumberOfOptionsGiven * h ) / 2 ;
-
-  print_menu_text ( InitialText , MenuTexts , first_menu_item_pos_y , background_code , MenuFont ) ;
-
-  if ( ! use_open_gl ) StoreMenuBackground ( 0 );
-
-  while ( 1 )
+    NumberOfOptionsGiven = i;
+    
+    //--------------------
+    // In those cases where we don't reset the menu position upon 
+    // initalization of the menu, we must check for menu positions
+    // outside the bounds of the current menu.
+    //
+    if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = 1 ; 
+    
+    first_menu_item_pos_y = ( GameConfig . screen_height - NumberOfOptionsGiven * h ) / 2 ;
+    
+    print_menu_text ( InitialText , MenuTexts , first_menu_item_pos_y , background_code , MenuFont ) ;
+    
+    if ( ! use_open_gl ) StoreMenuBackground ( 0 );
+    
+    while ( 1 )
     {
-      //--------------------
-      // We write out the normal text of the menu, either by doing it once more
-      // in the open_gl case or by restoring what we have saved earlier, in the 
-      // SDL output case.
-      //
-      if ( ! use_open_gl ) 
-	RestoreMenuBackground ( 0 );
-      else
-	print_menu_text ( InitialText , MenuTexts , FirstItem , background_code , MenuFont ) ;
-
-      //--------------------
-      // Maybe we should display some thumbnails with the saved games entries?
-      // But this will only apply for the load_hero and the delete_hero menus...
-      //
-      if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
-	   ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
+	//--------------------
+	// We write out the normal text of the menu, either by doing it once more
+	// in the open_gl case or by restoring what we have saved earlier, in the 
+	// SDL output case.
+	//
+	if ( ! use_open_gl ) 
+	    RestoreMenuBackground ( 0 );
+	else
+	    print_menu_text ( InitialText , MenuTexts , FirstItem , background_code , MenuFont ) ;
+	
+	//--------------------
+	// Maybe we should display some thumbnails with the saved games entries?
+	// But this will only apply for the load_hero and the delete_hero menus...
+	//
+	if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
+	     ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
 	{
-	  //--------------------
-	  // We load the thumbnail, or at least we try to do it...
-	  //
-	  LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
-	  LoadAndShowStats ( MenuTexts [ MenuPosition - 1 ] );
+	    //--------------------
+	    // We load the thumbnail, or at least we try to do it...
+	    //
+	    LoadAndShowThumbnail ( MenuTexts [ MenuPosition - 1 ] );
+	    LoadAndShowStats ( MenuTexts [ MenuPosition - 1 ] );
 	}
-
-      //--------------------
-      // Depending on what highlight method has been used, we so some highlighting
-      // of the currently selected menu options location on the screen...
-      //
-      HighlightRect.x = ( GameConfig . screen_width - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
-      HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
-      HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
-      HighlightRect.h = h;		    
-      HighlightRectangle ( Screen , HighlightRect );
-
-      if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
-	   ( GameConfig . menu_mode == MENU_MODE_DEFAULT ) )
+	
+	//--------------------
+	// Depending on what highlight method has been used, we so some highlighting
+	// of the currently selected menu options location on the screen...
+	//
+	HighlightRect.x = ( GameConfig . screen_width - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
+	HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+	HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
+	HighlightRect.h = h;		    
+	HighlightRectangle ( Screen , HighlightRect );
+	
+	if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
+	     ( GameConfig . menu_mode == MENU_MODE_DEFAULT ) )
 	{
-	  for ( i = 0 ; TRUE ; i ++ )
+	    for ( i = 0 ; TRUE ; i ++ )
 	    {
-	      if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-	      CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-	      CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
+		if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+		CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
+		CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	    }
-	  if ( strlen( InitialText ) > 0 ) 
-	    DisplayText ( InitialText , 50 , 50 , NULL );
+	    if ( strlen( InitialText ) > 0 ) 
+		DisplayText ( InitialText , 50 , 50 , NULL );
 	}
-
-      //--------------------
-      // Image should be ready now, so we can show it...
-      //
-      our_SDL_flip_wrapper( Screen );
-  
-      //--------------------
-      // Now it's time to handle the possible keyboard and mouse 
-      // input from the user...
-      //
-      if ( EscapePressed() )
+	
+	//--------------------
+	// Image should be ready now, so we can show it...
+	//
+	our_SDL_flip_wrapper( Screen );
+	
+	//--------------------
+	// Now it's time to handle the possible keyboard and mouse 
+	// input from the user...
+	//
+	if ( EscapePressed() )
 	{
-	  while ( EscapePressed() );
-	  MenuItemDeselectedSound();
-
-	  SDL_ShowCursor( SDL_ENABLE );
-	  return ( -1 );
+	    while ( EscapePressed() );
+	    MenuItemDeselectedSound();
+	    
+	    SDL_ShowCursor( SDL_ENABLE );
+	    return ( -1 );
 	}
-      if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
+	if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
 	{
-	  //--------------------
-	  // The space key or enter key or left mouse button all indicate, that
-	  // the user has made a selection.
-	  //
-	  // In the case of the mouse button, we must of couse first check, if 
-	  // the mouse button really was over a valid menu item and otherwise
-	  // ignore the button.
-	  //
-	  // In case of a key, we always have a valid selection.
-	  //
-	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
-	  MenuItemSelectedSound();
-
-	  SDL_ShowCursor( SDL_ENABLE );
-	  return ( MenuPosition );
-
+	    //--------------------
+	    // The space key or enter key or left mouse button all indicate, that
+	    // the user has made a selection.
+	    //
+	    // In the case of the mouse button, we must of couse first check, if 
+	    // the mouse button really was over a valid menu item and otherwise
+	    // ignore the button.
+	    //
+	    // In case of a key, we always have a valid selection.
+	    //
+	    while ( EnterPressed() || SpacePressed() ); 
+	    MenuItemSelectedSound();
+	    
+	    SDL_ShowCursor( SDL_ENABLE );
+	    return ( MenuPosition );
+	    
 	}
-      if ( axis_is_active )
+	if ( axis_is_active )
 	{
-	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
-	  //--------------------
-	  // Only when the mouse click really occured on the menu do we
-	  // interpret it as a menu choice.  Otherwise we'll just ignore
-	  // it.
-	  //
-	  if ( MouseCursorIsOverMenuItem( first_menu_item_pos_y , h ) == MenuPosition )
+	    while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	    //--------------------
+	    // Only when the mouse click really occured on the menu do we
+	    // interpret it as a menu choice.  Otherwise we'll just ignore
+	    // it.
+	    //
+	    if ( MouseCursorIsOverMenuItem( first_menu_item_pos_y , h ) == MenuPosition )
 	    {
-	      MenuItemSelectedSound();
-	      SDL_ShowCursor( SDL_ENABLE );
-	      return ( MenuPosition );
+		MenuItemSelectedSound();
+		SDL_ShowCursor( SDL_ENABLE );
+		return ( MenuPosition );
 	    }
 	}
-      if ( UpPressed() || MouseWheelUpPressed() ) 
+	if ( UpPressed() || MouseWheelUpPressed() ) 
 	{
-	  if (MenuPosition > 1) MenuPosition--;
-	  MoveMenuPositionSound();
-	  HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
-	  HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
-	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
-	  while (UpPressed());
+	    if (MenuPosition > 1) MenuPosition--;
+	    MoveMenuPositionSound();
+	    HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	    HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+	    SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
+	    while (UpPressed());
 	}
-      if ( DownPressed() || MouseWheelDownPressed() ) 
+	if ( DownPressed() || MouseWheelDownPressed() ) 
 	{
-	  if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
-	  MoveMenuPositionSound();
-	  HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
-	  HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
-	  SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
-	  while (DownPressed());
+	    if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
+	    MoveMenuPositionSound();
+	    HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	    HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
+	    SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
+	    while (DownPressed());
 	}
-
-      MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y , h );
-      if ( MenuPosition < 1 ) MenuPosition = 1 ;
-      if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = NumberOfOptionsGiven ;
-
-      //--------------------
-      // At this the while (1) overloop ends.  But for the menu, we really do not
-      // need to hog the CPU.  Therefore some waiting should be introduced here.
-      //
-      SDL_Delay (1);
-      //usleep ( 1 ) ;
+	
+	MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y , h );
+	if ( MenuPosition < 1 ) MenuPosition = 1 ;
+	if ( MenuPosition > NumberOfOptionsGiven ) MenuPosition = NumberOfOptionsGiven ;
+	
+	//--------------------
+	// At this the while (1) overloop ends.  But for the menu, we really do not
+	// need to hog the CPU.  Therefore some waiting should be introduced here.
+	//
+	SDL_Delay (1);
+	//usleep ( 1 ) ;
     }
-
-  SDL_ShowCursor( SDL_ENABLE );
-  return ( -1 );
+    
+    SDL_ShowCursor( SDL_ENABLE );
+    return ( -1 );
 }; // int DoMenuSelection( ... )
 
 /* ----------------------------------------------------------------------
@@ -2358,7 +2358,16 @@ Get_New_Character_Name ( void )
     //
     if ( Temp == NULL )
     {
-	strcpy ( Me [ 0 ] . character_name , "" );
+	//--------------------
+	// WARNING:  We should not use "" here, since that is also used inside
+	//           the menu code as the termination string for the list of menu
+	//           options.  That would cause problems in the load and display
+	//           directory content later.
+	//           Therefore we supply some default name if empty
+	//           string was received...  (some more decent workaround for the
+	//           problem might be written some time later...)
+	//
+	strcpy ( Me [ 0 ] . character_name , "HaveNoName" );
 	return ;
     }
     
@@ -2568,101 +2577,101 @@ one (const struct dirent *unused)
 int 
 Load_Existing_Hero_Menu ( void )
 {
-  char *homedir;
-  char Saved_Games_Dir[1000];
-  char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
-  struct dirent **eps;
-  int n;  
-  int cnt;
-  int MenuPosition;
-
-  DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
-  InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
-
-  //--------------------
-  // First we must find the home directory of the user.  From there on
-  // we can then construct the full directory path of the saved games directory.
-  //
-
+    char *homedir;
+    char Saved_Games_Dir[1000];
+    char* MenuTexts[ 10 ] = { "" , "" , "" , "" , "" , "" , "" , "" , "" , "" } ;
+    struct dirent **eps;
+    int n;  
+    int cnt;
+    int MenuPosition;
+    
+    DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
+    InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
+    
+    //--------------------
+    // First we must find the home directory of the user.  From there on
+    // we can then construct the full directory path of the saved games directory.
+    //
+    
 #if __WIN32__
-  homedir = ".";
+    homedir = ".";
 #else
-  // first we need the user's homedir for loading/saving stuff
-  if ( (homedir = getenv("HOME")) == NULL )
+    // first we need the user's homedir for loading/saving stuff
+    if ( (homedir = getenv("HOME")) == NULL )
     {
-      DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
+	DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
-      return ( ERR );
+	return ( ERR );
     }
 #endif
-
-  //--------------------
-  // Now we generate the right directory for loading from the home
-  // directory.
-  //
-  sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
-  // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
-
-  //--------------------
-  // This is a slightly modified copy of the code sniplet from the
-  // GNU C Library description on directory operations...
-  //
-  n = scandir ( Saved_Games_Dir , &eps, one , alphasort);
-  if (n > 0)
+    
+    //--------------------
+    // Now we generate the right directory for loading from the home
+    // directory.
+    //
+    sprintf ( Saved_Games_Dir , "%s/.freedroid_rpg" , homedir );
+    // DisplayText ( "This is the record of all your characters:\n\n" , 50 , 50 , NULL );
+    
+    //--------------------
+    // This is a slightly modified copy of the code sniplet from the
+    // GNU C Library description on directory operations...
+    //
+    n = scandir ( Saved_Games_Dir , &eps, one , alphasort);
+    if (n > 0)
     {
-      for (cnt = 0; cnt < n; ++cnt) 
+	for (cnt = 0; cnt < n; ++cnt) 
 	{
-	  puts ( eps[cnt]->d_name );
-	  DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
-	  if ( cnt < 10 ) 
+	    puts ( eps[cnt]->d_name );
+	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL );
+	    if ( cnt < 10 ) 
 	    {
-	      MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
+		DebugPrintf ( 2 , "\nAnother load game name found: %s." , MenuTexts [ cnt ] );
 	    }
 	}
-
-      MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-
-      if ( MenuPosition == (-1) ) return ( FALSE );
-      else
+	
+	MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	
+	if ( MenuPosition == (-1) ) return ( FALSE );
+	else
 	{
-	  // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	  // PrepareStartOfNewCharacter ( NEW_MISSION );
-	  strcpy( Me[0].character_name , MenuTexts[ MenuPosition -1 ] );
-	  if ( LoadGame ( ) == OK )
+	    // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	    // PrepareStartOfNewCharacter ( NEW_MISSION );
+	    strcpy ( Me [ 0 ] . character_name , MenuTexts [ MenuPosition -1 ] );
+	    if ( LoadGame ( ) == OK )
 	    {
-	      GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
-	      Item_Held_In_Hand = ( -1 );
-	      return ( TRUE );
+		GetEventsAndEventTriggers ( "EventsAndEventTriggers" );
+		Item_Held_In_Hand = ( -1 );
+		return ( TRUE );
 	    }
 	}
     }
-  else
+    else
     {
-      fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 Either it couldn't open the directory for the saved games\n\
 which should be %s,\n\
 or there were no saved games present in this directory.\n\
 Freedroid will continue execution now, since this problem\n\
  will be dealt with in-game.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-
-      MenuTexts[0]="BACK";
-      MenuTexts[1]="";
-
-      while ( SpacePressed() || EnterPressed() );
-      DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-      
-      //--------------------
-      // Now we got to return the problem to the calling function...
-      //
-      return ( FALSE );
+				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	
+	MenuTexts[0]="BACK";
+	MenuTexts[1]="";
+	
+	while ( SpacePressed() || EnterPressed() );
+	DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	
+	//--------------------
+	// Now we got to return the problem to the calling function...
+	//
+	return ( FALSE );
     }
+    
+    our_SDL_flip_wrapper( Screen );
 
-
-  our_SDL_flip_wrapper( Screen );
-
-  return ( OK );
+    return ( OK );
 }; // int Load_Existing_Hero_Menu ( void )
 
 
@@ -2802,84 +2811,84 @@ Freedroid will continue execution now, since this problem\n\
 int
 Single_Player_Menu (void)
 {
-  int Weiter = 0;
-  int MenuPosition=1;
-  char* MenuTexts[10];
-
-enum
-  { 
-    NEW_HERO_POSITION=1, 
-    LOAD_EXISTING_HERO_POSITION, 
-    DELETE_EXISTING_HERO_POSITION,
-    BACK_POSITION
-  };
-
-  MenuTexts[0]="New Hero";
-  MenuTexts[1]="Load existing Hero";
-  MenuTexts[2]="Delete existing Hero";
-  MenuTexts[3]="Back";
-  MenuTexts[4]="";
-
-  while (!Weiter)
+    int Weiter = 0;
+    int MenuPosition=1;
+    char* MenuTexts[10];
+    
+    enum
+	{ 
+	    NEW_HERO_POSITION=1, 
+	    LOAD_EXISTING_HERO_POSITION, 
+	    DELETE_EXISTING_HERO_POSITION,
+	    BACK_POSITION
+	};
+    
+    MenuTexts[0]="New Hero";
+    MenuTexts[1]="Load existing Hero";
+    MenuTexts[2]="Delete existing Hero";
+    MenuTexts[3]="Back";
+    MenuTexts[4]="";
+    
+    while (!Weiter)
     {
-
-      if ( ! skip_initial_menus )
-	  MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
-      else
-	  MenuPosition = NEW_HERO_POSITION ;
-
-      switch (MenuPosition) 
+	
+	if ( ! skip_initial_menus )
+	    MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
+	else
+	    MenuPosition = NEW_HERO_POSITION ;
+	
+	switch (MenuPosition) 
 	{
-	case NEW_HERO_POSITION:
-	  while ( EnterPressed() || SpacePressed() ) ;
-
-	  if ( PrepareNewHero ( ) == TRUE )
-	    {
-	      LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
-	      PrepareStartOfNewCharacter ( ) ;
-	      Weiter=TRUE;
-	      load_game_command_came_from_inside_running_game = TRUE ;
-	      return ( TRUE );
-	    }
-	  else
-	    {
-	      Weiter=FALSE;
-	    }
-	  break;
-
-	case LOAD_EXISTING_HERO_POSITION: 
-	  while ( EnterPressed() || SpacePressed() ) ;
-
-	  if ( Load_Existing_Hero_Menu ( ) == TRUE )
-	    {
-	      Weiter = TRUE;
-	      return ( TRUE );
-	    }
-	  else
-	    {
-	      Weiter = FALSE;
-	      // return ( FALSE );
-	    }
-	  break;
-
-	case DELETE_EXISTING_HERO_POSITION: 
-	  while (EnterPressed() || SpacePressed() ) ;
-	  Delete_Existing_Hero_Menu ( ) ;
-	  Weiter= FALSE ;
-	  // return ( FALSE );
-	  break;
-
-	case (-1):
-	case BACK_POSITION:
-	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
-	  Weiter=!Weiter;
-	  return ( FALSE );
-	  break;
-	default: 
-	  break;
+	    case NEW_HERO_POSITION:
+		while ( EnterPressed() || SpacePressed() ) ;
+		
+		if ( PrepareNewHero ( ) == TRUE )
+		{
+		    LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+		    PrepareStartOfNewCharacter ( ) ;
+		    Weiter=TRUE;
+		    load_game_command_came_from_inside_running_game = TRUE ;
+		    return ( TRUE );
+		}
+		else
+		{
+		    Weiter=FALSE;
+		}
+		break;
+		
+	    case LOAD_EXISTING_HERO_POSITION: 
+		while ( EnterPressed() || SpacePressed() ) ;
+		
+		if ( Load_Existing_Hero_Menu ( ) == TRUE )
+		{
+		    Weiter = TRUE;
+		    return ( TRUE );
+		}
+		else
+		{
+		    Weiter = FALSE;
+		    // return ( FALSE );
+		}
+		break;
+		
+	    case DELETE_EXISTING_HERO_POSITION: 
+		while (EnterPressed() || SpacePressed() ) ;
+		Delete_Existing_Hero_Menu ( ) ;
+		Weiter= FALSE ;
+		// return ( FALSE );
+		break;
+		
+	    case (-1):
+	    case BACK_POSITION:
+		while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
+		Weiter=!Weiter;
+		return ( FALSE );
+		break;
+	    default: 
+		break;
 	}
     }
-  return ( TRUE );
+    return ( TRUE );
 }; // void Single_Player_Menu ( void );
 
 

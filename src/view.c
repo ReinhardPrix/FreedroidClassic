@@ -2201,45 +2201,45 @@ PutMouseMoveCursor ( void )
 void
 clear_all_loaded_tux_images ( int with_free )
 {
-  int i;
-  int j;
-  int k;
-
-  strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
-  strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
-  strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
-  strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
-  strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
-  strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
-  
-  for ( i = 0 ; i < ALL_TUX_PARTS ; i ++ )
+    int i;
+    int j;
+    int k;
+    
+    strcpy ( previous_part_strings [ 0 ] , NOT_LOADED_MARKER );
+    strcpy ( previous_part_strings [ 1 ] , NOT_LOADED_MARKER );
+    strcpy ( previous_part_strings [ 2 ] , NOT_LOADED_MARKER );
+    strcpy ( previous_part_strings [ 3 ] , NOT_LOADED_MARKER );
+    strcpy ( previous_part_strings [ 4 ] , NOT_LOADED_MARKER );
+    strcpy ( previous_part_strings [ 5 ] , NOT_LOADED_MARKER );
+    
+    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
     {
-      for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
+	for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
 	{
-	  for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	    for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 	    {
-	      if ( ( with_free ) && ( loaded_tux_images [ i ] [ j ] [ k ] . surface != NULL ) )
-		SDL_FreeSurface ( loaded_tux_images [ i ] [ j ] [ k ] . surface ) ;
-	      loaded_tux_images [ i ] [ j ] [ k ] . surface = NULL ;
+		if ( ( with_free ) && ( loaded_tux_images [ i ] [ j ] [ k ] . surface != NULL ) )
+		    SDL_FreeSurface ( loaded_tux_images [ i ] [ j ] [ k ] . surface ) ;
+		loaded_tux_images [ i ] [ j ] [ k ] . surface = NULL ;
 	    }
 	}
     }
-
-  //--------------------
-  // If we're using continuous tux update policy, we'll also need
-  // the following...
-  //
-  for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
+    
+    //--------------------
+    // If we're using continuous tux update policy, we'll also need
+    // the following...
+    //
+    for ( i = 0 ; i < ALL_PART_GROUPS ; i ++ )
     {
-      for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
+	for ( j = 0 ; j < TUX_TOTAL_PHASES ; j ++ )
 	{
-	  for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
+	    for ( k = 0 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 	    {
-	      strcpy ( previous_part_strings_for_each_phase_and_direction [ i ] [ j ] [ k ] , NOT_LOADED_MARKER );
+		strcpy ( previous_part_strings_for_each_phase_and_direction [ i ] [ j ] [ k ] , NOT_LOADED_MARKER );
 	    }
 	}
     }
-
+    
 }; // void clear_all_loaded_tux_images ( int force_free )
 
 /* ----------------------------------------------------------------------
@@ -2349,43 +2349,6 @@ get_motion_class ( player_num )
 }; // int get_motion_class ( player_num ) 
 
 /* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-make_sure_tux_image_is_loaded ( int tux_part_group , int our_phase , int rotation_index , int motion_class , char* part_string )
-{
-  static char constructed_filename[5000];
-  char* fpath;
-
-  //--------------------
-  // Now if the iso_image we want to blit right now has not yet been loaded,
-  // then we need to do something about is and at least attempt to load the
-  // surface
-  //
-  if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
-    {
-      //--------------------
-      // Either we load all missing images at once or we just load the one missing
-      // image right now and the next one when we come to it.
-      //
-      sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s_%02d_%04d.png" , motion_class_string[motion_class] , part_group_strings [ tux_part_group ] , part_string , rotation_index , our_phase + 1 );
-      fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
-      get_iso_image_from_file_and_path ( fpath , & ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] ) , TRUE ) ;
-      strcpy ( previous_part_strings [ tux_part_group ] , part_string );
-
-      //--------------------
-      // If we're using the continuous tux image update policy, we'll also need to set
-      // the individual strings for previous tux parts...
-      //
-      strcpy ( previous_part_strings_for_each_phase_and_direction [ tux_part_group ] [ our_phase ] [ rotation_index ] , part_string );
-
-      // DebugPrintf ( -1000 , "\nmake_sure_tux_image_is_loaded ( ... ): new image has just been loaded!" );
-    }
-
-}; // void make_sure_tux_image_is_loaded ( ... )
-
-/* ----------------------------------------------------------------------
  * While earlier we used lots and lots of isolated .png and .offset files
  * to store the information about the Tux, we've now moved over to using
  * a single archive file that holds all the image and all the offset 
@@ -2441,7 +2404,8 @@ This indicates a serious bug in this installation of Freedroid.",
 
     for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
     {
-	for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
+	// for ( our_phase = 0 ; our_phase < 35 ; our_phase ++ )
+	for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES ; our_phase ++ )
 	{	    
 	    //--------------------
 	    // Now if the iso_image we want to blit right now has not yet been loaded,
@@ -2759,23 +2723,7 @@ belonging to Freedroid.",
 void
 make_sure_whole_part_group_is_ready ( int tux_part_group , int motion_class , char* part_string )
 {
-    int our_phase;
-    int rotation_index;
-
-    //--------------------
-    // 
-    if ( use_walk_cycle_for_part [ tux_part_group ] [ motion_class ] )
-    {
-	grab_tux_images_from_archive ( tux_part_group , motion_class , part_string );
-    }
-    else
-    {
-	for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
-	{
-	    for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES - TUX_WALK_CYCLE_PHASES - TUX_RUN_CYCLE_PHASES ; our_phase ++ )
-		make_sure_tux_image_is_loaded ( tux_part_group , our_phase , rotation_index , motion_class , part_string );
-	}
-    }
+    grab_tux_images_from_archive ( tux_part_group , motion_class , part_string );
 
     //--------------------
     // It can be expected, that this operation HAS TAKEN CONSIDERABLE TIME!

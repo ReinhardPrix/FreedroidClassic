@@ -142,22 +142,25 @@ void
 ParalyzeBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_PARALYZE_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  moderately_finepoint target_location;
 
+  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
   if ( Me [ 0 ] . mana >= SpellCost )
-    {
+  {
       Me[0].mana -= SpellCost;
-
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
-
+      
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+      
       Play_Spell_ForceToEnergy_Sound( );
-
-    }
+      
+  }
   else
-    {
+  {
       Me[0].TextVisibleTime = 0;
       Me[0].TextToBeDisplayed = "Not enough force left within me.";
       Not_Enough_Mana_Sound(  );
-    }
+  }
 }; // void ParalyzeBoltSpell ( gps PortalTarget )
 
 /* ----------------------------------------------------------------------
@@ -167,12 +170,16 @@ void
 FireyBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_FIREY_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  moderately_finepoint target_location;
+
+  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -192,12 +199,16 @@ void
 ColdBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_COLD_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  moderately_finepoint target_location;
+
+  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -217,13 +228,17 @@ void
 PoisonBoltSpell ( gps BoltSource )
 {
   int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+  moderately_finepoint target_location;
+
+  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
   if ( Me [ 0 ] . mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
 
       //FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -535,7 +550,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    
 	    if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 				      GetMousePos_y()  ) )
-		tux_wants_to_attack_now ( 0 );
+		tux_wants_to_attack_now ( 0 , TRUE );
 	    
 	    break;
 	case  SPELL_TRANSFERMODE:

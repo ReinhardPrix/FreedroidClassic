@@ -447,7 +447,7 @@ smashable_barrel_below_mouse_cursor ( int player_num )
  * possible.
  * ---------------------------------------------------------------------- */
 void
-tux_wants_to_attack_now ( int player_num ) 
+tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting ) 
 {
     
     if ( Me [ 0 ] . firewait > 0 ) 
@@ -460,13 +460,16 @@ tux_wants_to_attack_now ( int player_num )
 	//
 	Me [ player_num ] . speed . x = 0 ;
 	Me [ player_num ] . speed . y = 0 ;
+
 	Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
 	Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
 	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
-	Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
+	// Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
 	
 	return; 
     }
+
+    
     
     //--------------------
     // If the Tux has a weapon and this weapon requires some ammunition, then
@@ -491,7 +494,7 @@ tux_wants_to_attack_now ( int player_num )
 	}
     }
     
-    PerformTuxAttackRaw ( 0 ) ;      
+    PerformTuxAttackRaw ( 0 , use_mouse_cursor_for_targeting ) ;      
 
 }; // void tux_wants_to_attack_now ( int player_num ) 
 
@@ -983,63 +986,90 @@ a bug in the currently used map system of Freedroid RPG.",
 void
 UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
 {
-  moderately_finepoint RemainingWay;
-  float RemainingWayLength;
+    moderately_finepoint RemainingWay;
+    float RemainingWayLength;
+    
+    //--------------------
+    // If the mouse move target got destroyed, there's no reason
+    // to move toward it any more.  The use can request a new move
+    // if that should be done.
+    //
+    if ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
+	 ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z != 
+	   Me [ player_num ] . pos . z ) ||
+	 ( Me [ player_num ] . mouse_move_target . z == ( -1 ) ) )
+    {
+	Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
+	Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
+	Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
 
-  //--------------------
-  // If the mouse move target got destroyed, there's no reason
-  // to move toward it any more.  The use can request a new move
-  // if that should be done.
-  //
-  if ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
-       ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z != 
-	 Me [ player_num ] . pos . z ) )
-    {
-      Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-      Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-      Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-      Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
+	DebugPrintf ( 1 , "\n%s(): enemy mouse move target disabled because of OUT/out_of_level." , __FUNCTION__ );
+	return;
     }
-  else
-    {
-      //--------------------
-      // But now that there is a an enemy selected as mouse move target, the Tux 
-      // use the coordiantes of this enemy (or a position directly in front of it)
-      // as the new mouse move target coordinates.
-      //
-      Me [ player_num ] . mouse_move_target . x = 
+
+    //--------------------
+    // But now that there is a an enemy selected as mouse move target, the Tux 
+    // use the coordiantes of this enemy (or a position directly in front of it)
+    // as the new mouse move target coordinates.
+    //
+    Me [ player_num ] . mouse_move_target . x = 
 	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x ;
-      Me [ player_num ] . mouse_move_target . y = 
+    Me [ player_num ] . mouse_move_target . y = 
 	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y ;
-      Me [ player_num ] . mouse_move_target . z = 
+    Me [ player_num ] . mouse_move_target . z = 
 	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z ;
-      
-      RemainingWay . x = Me [ player_num ] . pos . x - Me [ player_num ] . mouse_move_target . x ;
-      RemainingWay . y = Me [ player_num ] . pos . y - Me [ player_num ] . mouse_move_target . y ;
-      
-      RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
-				   ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
-      
-      RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
-	( RemainingWayLength - BEST_MELEE_DISTANCE ) ;
-      RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
-	( RemainingWayLength - BEST_MELEE_DISTANCE ) ;
-      
-      Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
-      Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
-
-      //--------------------
-      // Now that the mouse move target has implicitly affected the recursive
-      // waypoint stuff, we might need to establish a new waypoint route, so we
-      // do this here as well...
-      //
-      // (redundancy will be caught inside that function anyway...)
-      //
-      set_up_intermediate_course_for_tux ( player_num ) ;
-
-      // DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
-
+    
+    
+    //--------------------
+    // If we have a ranged weapon in hand, there is no need to approach the
+    // enemy in question.  We just try to fire a shot.
+    //
+    if ( Me [ player_num ] . weapon_item . type != (-1) )
+    {
+	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
+	{
+	    if ( ! AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly )
+		tux_wants_to_attack_now ( player_num , FALSE ) ;
+	    return;
+	}
     }
+
+    //--------------------
+    // But with melee weapons, we need to get into a suitable range before we can
+    // do any attacking, so that needs to be done here.
+    //
+    RemainingWay . x = Me [ player_num ] . pos . x - Me [ player_num ] . mouse_move_target . x ;
+    RemainingWay . y = Me [ player_num ] . pos . y - Me [ player_num ] . mouse_move_target . y ;
+    
+    RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
+				 ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
+    
+    RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
+	( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
+    RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
+	( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
+    
+    Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
+    Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
+    
+    //--------------------
+    // Now that the mouse move target has implicitly affected the recursive
+    // waypoint stuff, we might need to establish a new waypoint route, so we
+    // do this here as well...
+    //
+    // (redundancy will be caught inside that function anyway...)
+    //
+    set_up_intermediate_course_for_tux ( player_num ) ;
+    
+    if ( ( RemainingWayLength <= BEST_MELEE_DISTANCE * sqrt(2) + 0.01 ) && ( ! AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) )
+    {
+	
+	tux_wants_to_attack_now ( player_num , FALSE ) ;
+    } 
+    
+    // DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
+    
 }; // void UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -1049,20 +1079,20 @@ UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
 void
 round_tux_position ( int player_num )
 {
-  // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 1024.0 ) ) / 1024.0 ;
-  // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 1024.0 ) ) / 1024.0 ;
-  // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 5000.0 * LIGHT_RADIUS_CHUNK_SIZE) ) / ( 5000.0 * LIGHT_RADIUS_CHUNK_SIZE ) ;
-  // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 5000.0 * LIGHT_RADIUS_CHUNK_SIZE) ) / ( 5000.0 * LIGHT_RADIUS_CHUNK_SIZE ) ;
+    // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 1024.0 ) ) / 1024.0 ;
+    // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 1024.0 ) ) / 1024.0 ;
+    // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 5000.0 * LIGHT_RADIUS_CHUNK_SIZE) ) / ( 5000.0 * LIGHT_RADIUS_CHUNK_SIZE ) ;
+    // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 5000.0 * LIGHT_RADIUS_CHUNK_SIZE) ) / ( 5000.0 * LIGHT_RADIUS_CHUNK_SIZE ) ;
+    
+    // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ) ) / ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ;
+    // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ) ) / ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ;
+    
+    // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 24.0 ) ) / 24.0 ;
+    // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 24.0 ) ) / 24.0 ;
+    
+    // DebugPrintf ( 0 , "\nwidth: %d 
 
-  // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ) ) / ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ;
-  // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ) ) / ( iso_floor_tile_width / 10.0 * iso_floor_tile_height / 10.0 ) ;
-
-  // Me [ player_num ] . pos . x = ( (int) ( Me [ player_num ] . pos . x * 24.0 ) ) / 24.0 ;
-  // Me [ player_num ] . pos . y = ( (int) ( Me [ player_num ] . pos . y * 24.0 ) ) / 24.0 ;
-
-  // DebugPrintf ( 0 , "\nwidth: %d 
-
-};
+}; // void round_tux_position ( int player_num )
 
 /* ----------------------------------------------------------------------
  *
@@ -1766,173 +1796,174 @@ clear_out_intermediate_points ( int player_num )
 void
 set_up_intermediate_course_for_tux ( int player_num )
 {
-  int i;
-  moderately_finepoint tmp;
-  static moderately_finepoint last_given_course_target = { -2 , -2 };
-
-  //--------------------
-  // For the protocol, we want to know how many cases of the cursion
-  // ending unresolved have occured.  Therefore we initialize a counter
-  // here and give out the result later after the recursion.
-  //
-  bad_luck_in_4_directions_counter = 0;
-
-  //--------------------
-  // For optimisation purposes, we'll not do anything unless a new target
-  // has been given.
-  //
-  if ( ( fabsf ( Me [ player_num ] . mouse_move_target . x - last_given_course_target . x ) < 0.3 ) &&
-       ( fabsf ( Me [ player_num ] . mouse_move_target . y - last_given_course_target . y ) < 0.3 ) )
+    int i;
+    moderately_finepoint tmp;
+    static moderately_finepoint last_given_course_target = { -2 , -2 };
+    
+    //--------------------
+    // For the protocol, we want to know how many cases of the cursion
+    // ending unresolved have occured.  Therefore we initialize a counter
+    // here and give out the result later after the recursion.
+    //
+    bad_luck_in_4_directions_counter = 0;
+    
+    //--------------------
+    // For optimisation purposes, we'll not do anything unless a new target
+    // has been given.
+    //
+    if ( ( fabsf ( Me [ player_num ] . mouse_move_target . x - last_given_course_target . x ) < 0.3 ) &&
+	 ( fabsf ( Me [ player_num ] . mouse_move_target . y - last_given_course_target . y ) < 0.3 ) )
     {
-      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF REDUNDANCY!" );
-      return;
+	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF REDUNDANCY!" );
+	return;
     }
-
-  //--------------------
-  // If the target position cannot be reached at all, because of being inside an obstacle
-  // for example, then we know what to do:  Set up one waypoint to the target and that's it.
-  //
-  if ( ! IsPassable ( Me [ player_num ] . mouse_move_target . x ,
-		    Me [ player_num ] . mouse_move_target . y ,
-		    Me [ player_num ] . mouse_move_target . z ) )
+    
+    //--------------------
+    // If the target position cannot be reached at all, because of being inside an obstacle
+    // for example, then we know what to do:  Set up one waypoint to the target and that's it.
+    //
+    if ( ! IsPassable ( Me [ player_num ] . mouse_move_target . x ,
+			Me [ player_num ] . mouse_move_target . y ,
+			Me [ player_num ] . mouse_move_target . z ) )
     {
-      DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
-      return;
+	DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nSKIPPING RECURSION BECAUSE OF UNREACHABLENESS!" );
+	return;
     }
-
-  //--------------------
-  // If the target position cannot be reached at all, because of being inside an obstacle
-  // for example, then we know what to do:  Set up one waypoint to the target and that's it.
-  //
-  if ( ! IsPassable ( Me [ player_num ] . pos . x ,
-		      Me [ player_num ] . pos . y ,
-		      Me [ player_num ] . pos . z ) )
+    
+    //--------------------
+    // If the target position cannot be reached at all, because of being inside an obstacle
+    // for example, then we know what to do:  Set up one waypoint to the target and that's it.
+    //
+    if ( ! IsPassable ( Me [ player_num ] . pos . x ,
+			Me [ player_num ] . pos . y ,
+			Me [ player_num ] . pos . z ) )
     {
-      DebugPrintf ( 0 , "\nSkipping recursion because of passability reasons from current position..." );
-      return;
+	DebugPrintf ( 0 , "\nSkipping recursion because of passability reasons from current position..." );
+	return;
     }
-
-  //--------------------
-  // By default, we clear out any combo action for the target position.
-  // The calling function must set the combo action it has in mind.
-  //
-  // Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-  Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
-  Me [ player_num ] . mouse_move_target_combo_action_parameter = -1 ;
-
-  //--------------------
-  // We give out a well visible debug message, so that the heavy process
-  // can easily be seen as redundant if that's really the case.
-  //
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , 
-"\n\n\n\n\
+    
+    //--------------------
+    // By default, we clear out any combo action for the target position.
+    // The calling function must set the combo action it has in mind.
+    //
+    // Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+    Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
+    Me [ player_num ] . mouse_move_target_combo_action_parameter = -1 ;
+    
+    //--------------------
+    // We give out a well visible debug message, so that the heavy process
+    // can easily be seen as redundant if that's really the case.
+    //
+    DebugPrintf ( DEBUG_TUX_PATHFINDING , 
+		  "\n\n\n\n\
 *******************************************\n\
 *** Setting up new intermediate course using recursion...\n\
 *******************************************\n" );
-
-  //--------------------
-  // First we clear out the position grid and initialize the target
-  // point, which will be the result of the recursion.
-  //
-  memset ( & ( recursion_grid [ 0 ] ) , TILE_IS_UNPROCESSED , sizeof ( char ) * MAX_MAP_LINES * MAX_MAP_LINES );
-  
-  clear_out_intermediate_points ( player_num );
-
-  next_index_to_set_up = 0 ;
-
-  recursive_find_walkable_point ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , 0 ) ;
-
-  //--------------------
-  // We delete the current position from the courseway, cause this position
-  // would only lead to jittering in the process of the walk.
-  //
-  next_index_to_set_up -- ;
-  if ( next_index_to_set_up > 0 )
+    
+    //--------------------
+    // First we clear out the position grid and initialize the target
+    // point, which will be the result of the recursion.
+    //
+    memset ( & ( recursion_grid [ 0 ] ) , TILE_IS_UNPROCESSED , sizeof ( char ) * MAX_MAP_LINES * MAX_MAP_LINES );
+    
+    clear_out_intermediate_points ( player_num );
+    
+    next_index_to_set_up = 0 ;
+    
+    recursive_find_walkable_point ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . mouse_move_target . x , Me [ player_num ] . mouse_move_target . y , 0 ) ;
+    
+    //--------------------
+    // We delete the current position from the courseway, cause this position
+    // would only lead to jittering in the process of the walk.
+    //
+    next_index_to_set_up -- ;
+    if ( next_index_to_set_up > 0 )
     {
-      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . x = (-1) ;
-      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . y = (-1) ;
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . x = (-1) ;
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up ] . y = (-1) ;
     }
-
-  //--------------------
-  // We print out the final result for debug purposes
-  //
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nTHE FINAL WAYPOINT HISTORY LOOKS LIKE THIS:" );
-  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    
+    //--------------------
+    // We print out the final result for debug purposes
+    //
+    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nTHE FINAL WAYPOINT HISTORY LOOKS LIKE THIS:" );
+    for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
     {
-      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
 	{
-	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
-			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
-			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			  Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			  Me [ player_num ] . next_intermediate_point [ i ] . y );
 	}
     }
-
-  //--------------------
-  // We invert the intermediate waypoint list, because the Tux is coming from the
-  // other side of course...
-  //
-  for ( i = 0 ; i < next_index_to_set_up / 2 ; i ++ )
+    
+    //--------------------
+    // We invert the intermediate waypoint list, because the Tux is coming from the
+    // other side of course...
+    //
+    for ( i = 0 ; i < next_index_to_set_up / 2 ; i ++ )
     {
-      tmp . x = Me [ player_num ] . next_intermediate_point [ i ] . x ;
-      tmp . y = Me [ player_num ] . next_intermediate_point [ i ] . y ;
-
-      Me [ player_num ] . next_intermediate_point [ i ] . x = 
-	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x;
-      Me [ player_num ] . next_intermediate_point [ i ] . y = 
-	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y;
-
-      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x =
-	tmp . x ;
-      Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y =
-	tmp . y ;
-      
+	tmp . x = Me [ player_num ] . next_intermediate_point [ i ] . x ;
+	tmp . y = Me [ player_num ] . next_intermediate_point [ i ] . y ;
+	
+	Me [ player_num ] . next_intermediate_point [ i ] . x = 
+	    Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x;
+	Me [ player_num ] . next_intermediate_point [ i ] . y = 
+	    Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y;
+	
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . x =
+	    tmp . x ;
+	Me [ player_num ] . next_intermediate_point [ next_index_to_set_up -1 - i ] . y =
+	    tmp . y ;
+	
     }
-
-  //--------------------
-  // We print out the final result for debug purposes
-  //
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER INVERSION OF THE LIST, THIS LOOKS LIKE THIS:" );
-  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    
+    //--------------------
+    // We print out the final result for debug purposes
+    //
+    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER INVERSION OF THE LIST, THIS LOOKS LIKE THIS:" );
+    for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
     {
-      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
 	{
-	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
-			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
-			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			  Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			  Me [ player_num ] . next_intermediate_point [ i ] . y );
 	}
     }
-
-  streamline_tux_intermediate_course ( player_num ) ;
-
-  //--------------------
-  // We print out the final result for debug purposes
-  //
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER STREAMLINING THE LIST, THIS LOOKS LIKE THIS:" );
-  for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
+    
+    streamline_tux_intermediate_course ( player_num ) ;
+    
+    //--------------------
+    // We print out the final result for debug purposes
+    //
+    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nAFTER STREAMLINING THE LIST, THIS LOOKS LIKE THIS:" );
+    for ( i = 0 ; i < MAX_INTERMEDIATE_WAYPOINTS_FOR_TUX ; i ++ )
     {
-      if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
+	if ( Me [ player_num ] . next_intermediate_point [ i ] . x != (-1) )
 	{
-	  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
-			Me [ player_num ] . next_intermediate_point [ i ] . x ,	
-			Me [ player_num ] . next_intermediate_point [ i ] . y );
+	    DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nIndex: %d.  Position: (%f,%f)." , i , 
+			  Me [ player_num ] . next_intermediate_point [ i ] . x ,	
+			  Me [ player_num ] . next_intermediate_point [ i ] . y );
 	}
     }
-
-
-  //--------------------
-  // Finally, we set the reminder what the last given target was, so that
-  // we'll be able to identify redundant orders later, which is IMPORTANT
-  // for performance!
-  //
-  last_given_course_target . x = Me [ player_num ] . mouse_move_target . x ;
-  last_given_course_target . y = Me [ player_num ] . mouse_move_target . y ;
-
-  //--------------------
-  // We give the number of 4-way-unresolved situations here.
-  //
-  DebugPrintf ( DEBUG_TUX_PATHFINDING , "\nFinal value of bad_luck_in_4_directions_counter after recursion: %d. " , 
-		bad_luck_in_4_directions_counter );
-
+    
+    
+    //--------------------
+    // Finally, we set the reminder what the last given target was, so that
+    // we'll be able to identify redundant orders later, which is IMPORTANT
+    // for performance!
+    //
+    last_given_course_target . x = Me [ player_num ] . mouse_move_target . x ;
+    last_given_course_target . y = Me [ player_num ] . mouse_move_target . y ;
+    
+    //--------------------
+    // We give the number of 4-way-unresolved situations here.
+    //
+    DebugPrintf ( DEBUG_TUX_PATHFINDING , 
+		  "\nFinal value of bad_luck_in_4_directions_counter after recursion: %d. " , 
+		  bad_luck_in_4_directions_counter );
+    
 }; // void set_up_intermediate_course_for_tux ( int player_num )
 
 /* ----------------------------------------------------------------------
@@ -2189,13 +2220,11 @@ animate_tux ( int player_num )
   //--------------------
   // First we handle the case of just getting hit...
   //
-  if ( Me [ player_num ] .got_hit_time != (-1) )
+  if ( Me [ player_num ] . got_hit_time != (-1) )
     {
-      Me [ player_num ] . phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES + 
-	( Me [ player_num ] . got_hit_time * TUX_GOT_HIT_PHASES * 1.0 / TOTAL_STUNNED_TIME ) ;
-      if ( Me [ player_num ] . got_hit_time > TOTAL_STUNNED_TIME ) Me [ player_num ] .got_hit_time = (-1) ;
-
-      Me [ player_num ] . walk_cycle_phase = 17 ;
+	Me [ player_num ] . phase = TUX_SWING_PHASES + TUX_BREATHE_PHASES;
+	if ( Me [ player_num ] . got_hit_time > TOTAL_STUNNED_TIME ) Me [ player_num ] .got_hit_time = (-1) ;
+	Me [ player_num ] . walk_cycle_phase = 17 ;
     }
 
   //--------------------
@@ -2248,7 +2277,7 @@ animate_tux ( int player_num )
     }
 
   
-  if (((int) (Me [ player_num ] .phase)) >= TUX_SWING_PHASES + TUX_BREATHE_PHASES + TUX_GOT_HIT_PHASES )
+  if ( ( ( int ) ( Me [ player_num ] . phase ) ) >= TUX_TOTAL_PHASES )
     {
       Me [ player_num ] .phase = 0;
     }
@@ -2482,151 +2511,153 @@ GetLivingDroidBelowMouseCursor ( int player_num )
  * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
  * ---------------------------------------------------------------------- */
 void
-FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) 
+FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage , moderately_finepoint target_location ) 
 {
-  int i = 0;
-  Bullet CurBullet = NULL;
-  double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
-  double speed_norm;
-  moderately_finepoint speed;
-  float OffsetFactor;
-  moderately_finepoint offset;
-  OffsetFactor = 0.25 ;
+    int i = 0;
+    Bullet CurBullet = NULL;
+    double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
+    double speed_norm;
+    moderately_finepoint speed;
+    float OffsetFactor;
+    moderately_finepoint offset;
+    OffsetFactor = 0.25 ;
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 1
-
-  //--------------------
-  // We search for the first free bullet entry in the 
-  // bullet list...
-  //
-  i = find_free_bullet_index ();
-  CurBullet = & ( AllBullets [ i ] ) ;
-
-  //--------------------
-  // Now that we have found a fresh and new bullet entry, we can start
-  // to fill in sensible values...
-  //
-  CurBullet -> pos . x = Me [ player_num ] . pos . x ;
-  CurBullet -> pos . y = Me [ player_num ] . pos . y ;
-  CurBullet -> pos . z = Me [ player_num ] . pos . z ;
-  CurBullet -> type = bullet_image_type;
-
-  //--------------------
-  // Previously, we had the damage done only dependant upon the weapon used.  Now
-  // the damage value is taken directly from the character stats, and the UpdateAll...stats
-  // has to do the right computation and updating of this value.  hehe. very conventient.
-  CurBullet->damage = Me [ player_num ] . base_damage + MyRandom( Me [ player_num ] .damage_modifier);
-  CurBullet->mine = TRUE;
-  CurBullet->owner = -1;
-  CurBullet -> time_to_hide_still = 0.3 ;
-  CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
-  CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
-  CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
-  CurBullet->ignore_wall_collisions = ItemMap[ weapon_item_type ].item_gun_bullet_ignore_wall_collisions;
-  CurBullet->owner_pos = & ( Me [ player_num ] .pos );
-  CurBullet->time_in_frames = 0;
-  CurBullet->time_in_seconds = 0;
-  CurBullet->was_reflected = FALSE;
-  CurBullet->reflect_other_bullets   = ItemMap[ weapon_item_type ].item_gun_bullet_reflect_other_bullets;
-  CurBullet->pass_through_explosions = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_explosions;
-  CurBullet->pass_through_hit_bodies = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_hit_bodies;
-  CurBullet->miss_hit_influencer = UNCHECKED ;
-  memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
-
-  //--------------------
-  // Depending on whether this is a real bullet (-1 given as parameter)
-  // or not, we assign this bullet the appropriate to-hit propability
-  //
-  if ( HitPercentage == (-1) ) CurBullet->to_hit = Me [ player_num ] .to_hit;
-  else CurBullet->to_hit = HitPercentage ;
-
-  //--------------------
-  // Maybe the bullet has some magic properties.  This is handled here.
-  //
-  CurBullet->freezing_level = FreezeSeconds;
-  CurBullet->poison_duration = PoisonDuration;
-  CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
-  CurBullet->paralysation_duration = ParalysationDuration;
-
-  //--------------------
-  // Now we can set up recharging time for the Tux...
-  // The recharging time is now modified by the ranged weapon skill
-  //
-  Me [ player_num ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
-  Me [ player_num ] . firewait *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
-
-  //--------------------
-  // Use the map location to
-  // pixel translation and vice versa to compute firing direction...
-  //
-  // But this is ONLY A FIRST ESTIMATE!  It will be fixed shortly!
-  //
-  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x ;
-  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y ;
-  speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
-  CurBullet -> speed.x = ( speed . x / speed_norm );
-  CurBullet -> speed.y = ( speed . y / speed_norm );
-  CurBullet -> speed . x *= BulletSpeed;
-  CurBullet -> speed . y *= BulletSpeed;
-
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
-
-  //--------------------
-  // Now the above vector would generate a fine bullet, but it will
-  // be modified later to come directly from the Tux weapon muzzle.
-  // Therefore it might often miss a target standing very close.
-  // As a reaction, we will shift the target point by a similar vector
-  // and then re-compute the bullet vector.
-  //
-  offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
-  offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
-  RotateVectorByAngle ( & ( offset ) , -60 );
-
-  //--------------------
-  // And now we re-do it all!  But this time with the extra offset
-  // applied to the SHOT TARGET POINT!
-  //
-  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x - offset . x ;
-  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y - offset . y ;
-  speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
-  CurBullet -> speed.x = ( speed . x / speed_norm );
-  CurBullet -> speed.y = ( speed . y / speed_norm );
-  CurBullet -> speed . x *= BulletSpeed;
-  CurBullet -> speed . y *= BulletSpeed;
-
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
-
-  //--------------------
-  // Now we determine the angle of rotation to be used for
-  // the picture of the bullet itself
-  //
-  
-  CurBullet -> angle = - ( atan2 ( speed . y ,  speed . x ) * 180 / M_PI + 90 + 45 );
-
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
-  
-  //--------------------
-  // To prevent influ from hitting himself with his own bullets,
-  // move them a bit..
-  //
-  offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
-  offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
-  RotateVectorByAngle ( & ( offset ) , -60 );
-
-  CurBullet -> pos . x += offset . x ;
-  CurBullet -> pos . y += offset . y ; 
-  DebugPrintf ( 0 , "\nOffset:  x=%f y=%f." , offset . x , offset . y );
-
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , 
-	       CurBullet->pos . x , CurBullet->pos . y );
-  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-	       "\nFireTuxRangedWeaponRaw(...) : BulletSpeed=%f." , BulletSpeed );
-  
+    
+    //--------------------
+    // We search for the first free bullet entry in the 
+    // bullet list...
+    //
+    i = find_free_bullet_index ();
+    CurBullet = & ( AllBullets [ i ] ) ;
+    
+    //--------------------
+    // Now that we have found a fresh and new bullet entry, we can start
+    // to fill in sensible values...
+    //
+    CurBullet -> pos . x = Me [ player_num ] . pos . x ;
+    CurBullet -> pos . y = Me [ player_num ] . pos . y ;
+    CurBullet -> pos . z = Me [ player_num ] . pos . z ;
+    CurBullet -> type = bullet_image_type;
+    
+    //--------------------
+    // Previously, we had the damage done only dependant upon the weapon used.  Now
+    // the damage value is taken directly from the character stats, and the UpdateAll...stats
+    // has to do the right computation and updating of this value.  hehe. very conventient.
+    CurBullet->damage = Me [ player_num ] . base_damage + MyRandom( Me [ player_num ] .damage_modifier);
+    CurBullet->mine = TRUE;
+    CurBullet->owner = -1;
+    CurBullet -> time_to_hide_still = 0.3 ;
+    CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
+    CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
+    CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
+    CurBullet->ignore_wall_collisions = ItemMap[ weapon_item_type ].item_gun_bullet_ignore_wall_collisions;
+    CurBullet->owner_pos = & ( Me [ player_num ] .pos );
+    CurBullet->time_in_frames = 0;
+    CurBullet->time_in_seconds = 0;
+    CurBullet->was_reflected = FALSE;
+    CurBullet->reflect_other_bullets   = ItemMap[ weapon_item_type ].item_gun_bullet_reflect_other_bullets;
+    CurBullet->pass_through_explosions = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_explosions;
+    CurBullet->pass_through_hit_bodies = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_hit_bodies;
+    CurBullet->miss_hit_influencer = UNCHECKED ;
+    memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
+    
+    //--------------------
+    // Depending on whether this is a real bullet (-1 given as parameter)
+    // or not, we assign this bullet the appropriate to-hit propability
+    //
+    if ( HitPercentage == (-1) ) CurBullet->to_hit = Me [ player_num ] .to_hit;
+    else CurBullet->to_hit = HitPercentage ;
+    
+    //--------------------
+    // Maybe the bullet has some magic properties.  This is handled here.
+    //
+    CurBullet->freezing_level = FreezeSeconds;
+    CurBullet->poison_duration = PoisonDuration;
+    CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
+    CurBullet->paralysation_duration = ParalysationDuration;
+    
+    //--------------------
+    // Now we can set up recharging time for the Tux...
+    // The recharging time is now modified by the ranged weapon skill
+    //
+    Me [ player_num ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
+    Me [ player_num ] . firewait *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
+    
+    //--------------------
+    // Use the map location to
+    // pixel translation and vice versa to compute firing direction...
+    //
+    // But this is ONLY A FIRST ESTIMATE!  It will be fixed shortly!
+    //
+    // speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , TRUE ) - Me [ player_num ] . pos . x ;
+    // speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) - Me [ player_num ] . pos . y ;
+    speed . x = target_location . x - Me [ player_num ] . pos . x ; 
+    speed . y = target_location . y - Me [ player_num ] . pos . y ; 
+    speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
+    CurBullet -> speed.x = ( speed . x / speed_norm );
+    CurBullet -> speed.y = ( speed . y / speed_norm );
+    CurBullet -> speed . x *= BulletSpeed;
+    CurBullet -> speed . y *= BulletSpeed;
+    
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
+    
+    //--------------------
+    // Now the above vector would generate a fine bullet, but it will
+    // be modified later to come directly from the Tux weapon muzzle.
+    // Therefore it might often miss a target standing very close.
+    // As a reaction, we will shift the target point by a similar vector
+    // and then re-compute the bullet vector.
+    //
+    offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
+    offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
+    RotateVectorByAngle ( & ( offset ) , -60 );
+    
+    //--------------------
+    // And now we re-do it all!  But this time with the extra offset
+    // applied to the SHOT TARGET POINT!
+    //
+    speed . x = target_location . x - Me [ player_num ] . pos . x - offset . x ;
+    speed . y = target_location . y - Me [ player_num ] . pos . y - offset . y ;
+    speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
+    CurBullet -> speed.x = ( speed . x / speed_norm );
+    CurBullet -> speed.y = ( speed . y / speed_norm );
+    CurBullet -> speed . x *= BulletSpeed;
+    CurBullet -> speed . y *= BulletSpeed;
+    
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
+    
+    //--------------------
+    // Now we determine the angle of rotation to be used for
+    // the picture of the bullet itself
+    //
+    
+    CurBullet -> angle = - ( atan2 ( speed . y ,  speed . x ) * 180 / M_PI + 90 + 45 );
+    
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
+    
+    //--------------------
+    // To prevent influ from hitting himself with his own bullets,
+    // move them a bit..
+    //
+    offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
+    offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
+    RotateVectorByAngle ( & ( offset ) , -60 );
+    
+    CurBullet -> pos . x += offset . x ;
+    CurBullet -> pos . y += offset . y ; 
+    DebugPrintf ( 0 , "\nOffset:  x=%f y=%f." , offset . x , offset . y );
+    
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , 
+		 CurBullet->pos . x , CurBullet->pos . y );
+    DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+		 "\nFireTuxRangedWeaponRaw(...) : BulletSpeed=%f." , BulletSpeed );
+    
 }; // void FireTuxRangedWeaponRaw ( player_num ) 
 
 /* ----------------------------------------------------------------------
@@ -2698,16 +2729,18 @@ ButtonPressWasNotMeantAsFire( player_num )
  * weapon use.
  * ---------------------------------------------------------------------- */
 void
-PerformTuxAttackRaw ( int player_num ) 
+PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting ) 
 {
     int guntype = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_bullet_image_type ;
     float angle;
-    moderately_finepoint Weapon_Target_Vector;
+    moderately_finepoint Weapon_Target_Vector ;
+    moderately_finepoint target_location ;
     int i;
     int melee_weapon_hit_something = FALSE ;
     int droid_under_melee_attack_cursor; 
     int do_melee_strike ;
     finepoint MapPositionOfMouse;
+    
 #define PERFORM_TUX_ATTACK_RAW_DEBUG 1
 
     //--------------------
@@ -2732,14 +2765,75 @@ PerformTuxAttackRaw ( int player_num )
     // Now that an attack is being made, the Tux must turn thowards the direction
     // of the attack, no matter what.
     //
-    Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) ,  
-					    ServerThinksInputAxisX ( player_num ) ) * 180 / M_PI + 90 );
+    // Note:  This is just some default value.  The real fine-tuning of the direction
+    //        is done further below...
+    //
+    if ( use_mouse_cursor_for_targeting )
+    {
+	Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) ,  
+						ServerThinksInputAxisX ( player_num ) ) * 180 / M_PI + 90 );
+    }
     Me [ player_num ] . speed . x = 0 ;
     Me [ player_num ] . speed . y = 0 ;
-    Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
-    Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
-    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
-    Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
+
+    if ( !APressed() )
+    {
+	//--------------------
+	//
+	if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
+	{
+	    droid_under_melee_attack_cursor = Me [ player_num ] . mouse_move_target_is_enemy ;
+	    DebugPrintf ( 1 , "\n%s(): using MOUSE MOVE TARGET at X=%d Y=%d for attack direction of tux." , __FUNCTION__ , (int) Me [ player_num ] . mouse_move_target . x , (int) Me [ player_num ] . mouse_move_target . y );
+	}
+	else
+	{
+	    droid_under_melee_attack_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+	    DebugPrintf ( 1 , "\n%s(): Using droid under mouse cursor for attack positioning..." , __FUNCTION__ );
+	}
+	
+	
+	if ( droid_under_melee_attack_cursor != (-1) )
+	{
+	    angle = - ( atan2 ( Me [ player_num ] . pos . y - 
+				AllEnemys [ droid_under_melee_attack_cursor ] . pos . y ,
+				Me [ player_num ] . pos . x - 
+				AllEnemys [ droid_under_melee_attack_cursor ] . pos . x ) * 180 / M_PI - 90 + 22.5 );
+	    target_location . x = AllEnemys [ droid_under_melee_attack_cursor ] . pos . x ;
+	    target_location . y = AllEnemys [ droid_under_melee_attack_cursor ] . pos . y ; 
+	}
+	else
+	{
+	    //--------------------
+	    // We leave the angle at the current value...
+	    // (this is because later angle is written over Me[..].angle
+	    //
+	    angle = Me [ player_num ] . angle ;
+	    DebugPrintf ( -4 , "\n%s(): defaulting to PREVIOUS ANGLE!" , __FUNCTION__ );
+	}
+    }
+    else
+    {
+	MapPositionOfMouse . x = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
+	MapPositionOfMouse . y = translate_pixel_to_map_location ( 
+	    player_num , 
+	    (float) ServerThinksInputAxisX ( player_num ) , 
+	    (float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
+	angle = - ( atan2 ( Me [ player_num ] . pos . y - MapPositionOfMouse . y ,
+			    Me [ player_num ] . pos . x - MapPositionOfMouse . x ) * 180 / M_PI - 90 + 22.5 );
+	target_location . x = MapPositionOfMouse . x ;
+	target_location . y = MapPositionOfMouse . y ; 
+    }
+    
+    
+    //--------------------
+    // We need to write this back into the Tux struct, because the
+    // value from there is used in the blitting code.
+    //
+    Me [ player_num ] . angle = angle ;
+    
     
     //--------------------
     // But if the currently used weapon is a melee weapon, the tux no longer
@@ -2763,33 +2857,7 @@ PerformTuxAttackRaw ( int player_num )
 	// mouse pointer is not the way, since the droid (e.g. 302) might be high
 	// above the floor and the click right on it might point to a floor spot
 	// right behind the Tux actual position, so care is advised in that case...
-	//
-	droid_under_melee_attack_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
-	if ( ( droid_under_melee_attack_cursor != (-1) )
-	     && ( !APressed() ) )
-	{
-	    angle = - ( atan2 ( Me [ player_num ] . pos . y - AllEnemys [ droid_under_melee_attack_cursor ] . pos . y ,
-				Me [ player_num ] . pos . x - AllEnemys [ droid_under_melee_attack_cursor ] . pos . x ) * 180 / M_PI - 90 + 22.5 );
-	    DebugPrintf ( 1 , "\nUsing droid under mouse cursor for attack positioning..." );
-	}
-	else
-	{
-	    MapPositionOfMouse . x = translate_pixel_to_map_location ( 
-		player_num , 
-		(float) ServerThinksInputAxisX ( player_num ) , 
-		(float) ServerThinksInputAxisY ( player_num ) , TRUE ) ;
-	    MapPositionOfMouse . y = translate_pixel_to_map_location ( 
-		player_num , 
-		(float) ServerThinksInputAxisX ( player_num ) , 
-		(float) ServerThinksInputAxisY ( player_num ) , FALSE ) ;
-	    angle = - ( atan2 ( Me [ player_num ] . pos . y - MapPositionOfMouse . y ,
-				Me [ player_num ] . pos . x - MapPositionOfMouse . x ) * 180 / M_PI - 90 + 22.5 );
-	}
-	//--------------------
-	// We need to write this back into the Tux struct, because the
-	// value from there is used in the blitting code.
-	//
-	Me [ player_num ] . angle = angle ;
+	// 
 
 	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: angle=%f. " , angle ) ;
 	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet: InpAxis: X=%d Y=%d . " , 
@@ -2893,7 +2961,7 @@ PerformTuxAttackRaw ( int player_num )
     if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
     else Fire_Bullet_Sound ( LASER_SWORD_1 );
     
-    FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 ) ;
+    FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 , target_location ) ;
     
 }; // void PerformTuxAttackRaw ( int player_num ) ;
 
@@ -3042,6 +3110,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 		case ISO_V_CHEST_OPEN:
 		    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
 		    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+		    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 		    Me [ player_num ] . mouse_move_target . x += 0.8 ;
 		    set_up_intermediate_course_for_tux ( player_num ) ;
 		    
@@ -3054,6 +3123,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 		case ISO_H_CHEST_OPEN:
 		    Me [ player_num ] . mouse_move_target . x = our_level -> obstacle_list [ chest_index ] . pos . x ;
 		    Me [ player_num ] . mouse_move_target . y = our_level -> obstacle_list [ chest_index ] . pos . y ;
+		    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 		    Me [ player_num ] . mouse_move_target . y += 0.8 ;
 		    set_up_intermediate_course_for_tux ( player_num ) ;
 		    
@@ -3138,6 +3208,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 		    Me [ player_num ] . mouse_move_target . y = 
 			our_level -> obstacle_list [ barrel_index ] . pos . y + 
 			step_vector . y ;
+		    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 		    set_up_intermediate_course_for_tux ( player_num ) ;
 		    
 		    //--------------------
@@ -3181,7 +3252,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 	//--------------------
 	// We start an attack motion...
 	//
-	tux_wants_to_attack_now ( player_num ) ;
+	tux_wants_to_attack_now ( player_num , FALSE ) ;
 	
 	//--------------------
 	// We set a direction of facing directly thowards the barrel in question
@@ -3240,7 +3311,7 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
     }
     else if ( APressed() )
     {
-	tux_wants_to_attack_now ( player_num ) ;
+	tux_wants_to_attack_now ( player_num , TRUE ) ;
     }
     
     if ( index_of_droid_below_mouse_cursor != (-1) )
@@ -3291,6 +3362,8 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 		// to the enemy and then start the attack upon arrival, i.e. use a
 		// standard combo-action for this again...
 		//
+		
+		
 
 		return;
 	    }
@@ -3307,6 +3380,8 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	    // standard combo-action for this again...
 	    //
 	    
+
+
 	    return;
 	}
 
@@ -3314,7 +3389,7 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	// But if we're close enough or there is a ranged weapon in Tux hands,
 	// then we can finally start the attack motion right away...
 	//
-	tux_wants_to_attack_now ( player_num ) ;
+	tux_wants_to_attack_now ( player_num , TRUE ) ;
     }
 }; // void check_for_droids_to_attack ( int player_num ) 
 
