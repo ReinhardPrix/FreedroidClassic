@@ -293,8 +293,24 @@ smashable_barred_below_mouse_cursor ( int player_num )
 void
 tux_wants_to_attack_now ( int player_num ) 
 {
-
-  if ( Me [ 0 ] . firewait > 0 ) return; 
+    
+    if ( Me [ 0 ] . firewait > 0 ) 
+    {
+	//--------------------
+	// When wanting to attack (even in case currently in reload 
+	// phase) there should not be much movement to the target.
+	// Otherwise (while reloading e.g. laser weapon) the click
+	// will make the Tux go to the target...
+	//
+	Me [ player_num ] . speed . x = 0 ;
+	Me [ player_num ] . speed . y = 0 ;
+	Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
+	Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
+	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
+	Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
+	
+	return; 
+    }
   
   //--------------------
   // If the Tux has a weapon and this weapon requires some ammunition, then
@@ -2292,18 +2308,18 @@ void
 FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage ) 
 {
   int i = 0;
-  Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
-  // int bullet_image_type = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
+  Bullet CurBullet = NULL;
   double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
   double speed_norm;
   moderately_finepoint speed;
   float OffsetFactor;
   moderately_finepoint offset;
-
-#define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 
+  OffsetFactor = 0.25 ;
+#define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 1
 
   //--------------------
-  // search for the next free bullet list entry
+  // We search for the first free bullet entry in the 
+  // bullet list...
   //
   i = find_free_bullet_index ();
   CurBullet = & ( AllBullets [ i ] ) ;
@@ -2312,10 +2328,10 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   // Now that we have found a fresh and new bullet entry, we can start
   // to fill in sensible values...
   //
-  CurBullet->pos.x = Me [ player_num ] .pos.x;
-  CurBullet->pos.y = Me [ player_num ] .pos.y;
-  CurBullet->pos.z = Me [ player_num ] .pos.z;
-  CurBullet->type = bullet_image_type;
+  CurBullet -> pos . x = Me [ player_num ] . pos . x ;
+  CurBullet -> pos . y = Me [ player_num ] . pos . y ;
+  CurBullet -> pos . z = Me [ player_num ] . pos . z ;
+  CurBullet -> type = bullet_image_type;
 
   //--------------------
   // Previously, we had the damage done only dependant upon the weapon used.  Now
@@ -2354,31 +2370,52 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
   CurBullet->paralysation_duration = ParalysationDuration;
 
-  Me [ player_num ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
-
   //--------------------
+  // Now we can set up recharging time for the Tux...
   // The recharging time is now modified by the ranged weapon skill
   //
+  Me [ player_num ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
   Me [ player_num ] . firewait *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
 
   //--------------------
   // Use the map location to
   // pixel translation and vice versa to compute firing direction...
   //
-  speed.x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , TRUE ) - Me [ player_num ] . pos . x ;
-  speed.y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , FALSE ) - Me [ player_num ] . pos . y ;
+  // But this is ONLY A FIRST ESTIMATE!  It will be fixed shortly!
+  //
+  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , TRUE ) - Me [ player_num ] . pos . x ;
+  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , FALSE ) - Me [ player_num ] . pos . y ;
+  speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
+  CurBullet -> speed.x = ( speed . x / speed_norm );
+  CurBullet -> speed.y = ( speed . y / speed_norm );
+  CurBullet -> speed . x *= BulletSpeed;
+  CurBullet -> speed . y *= BulletSpeed;
+
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+	       "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
 
   //--------------------
-  // It might happen, that this is not a normal shot, but rather the
-  // swing of a melee weapon.  Then of course, we should make a swing
-  // and not start in this direction, but rather somewhat 'before' it,
-  // so that the rotation will hit the target later.
+  // Now the above vector would generate a fine bullet, but it will
+  // be modified later to come directly from the Tux weapon muzzle.
+  // Therefore it might often miss a target standing very close.
+  // As a reaction, we will shift the target point by a similar vector
+  // and then re-compute the bullet vector.
   //
-  // RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ] . item_gun_start_angle_modifier );
+  offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
+  offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
+  RotateVectorByAngle ( & ( offset ) , -60 );
 
+  //--------------------
+  // And now we re-do it all!  But this time with the extra offset
+  // applied to the SHOT TARGET POINT!
+  //
+  speed . x = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , TRUE ) - Me [ player_num ] . pos . x - offset . x ;
+  speed . y = translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) + 16 , ServerThinksInputAxisY ( player_num ) + 16 , FALSE ) - Me [ player_num ] . pos . y - offset . y ;
   speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
-  CurBullet->speed.x = (speed.x/speed_norm);
-  CurBullet->speed.y = (speed.y/speed_norm);
+  CurBullet -> speed.x = ( speed . x / speed_norm );
+  CurBullet -> speed.y = ( speed . y / speed_norm );
+  CurBullet -> speed . x *= BulletSpeed;
+  CurBullet -> speed . y *= BulletSpeed;
 
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : speed_norm = %f." , speed_norm );
@@ -2388,43 +2425,31 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   // the picture of the bullet itself
   //
   
-  CurBullet -> angle = -( atan2 (speed.y,  speed.x) * 180 / M_PI + 90 + 45 );
+  CurBullet -> angle = - ( atan2 ( speed . y ,  speed . x ) * 180 / M_PI + 90 + 45 );
 
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : Phase of bullet=%d." , CurBullet->phase );
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : angle of bullet=%f." , CurBullet->angle );
   
-  CurBullet -> speed . x *= BulletSpeed;
-  CurBullet -> speed . y *= BulletSpeed;
-
   //--------------------
   // To prevent influ from hitting himself with his own bullets,
   // move them a bit..
   //
-  if ( CurBullet -> angle_change_rate == 0 ) 
-    OffsetFactor = 0.0; 
-  else 
-    OffsetFactor = 1;
-
-  OffsetFactor = 0.25 ;
-
   offset . x = OffsetFactor * ( CurBullet -> speed . x / BulletSpeed );
   offset . y = OffsetFactor * ( CurBullet -> speed . y / BulletSpeed );
   RotateVectorByAngle ( & ( offset ) , -60 );
+
   CurBullet -> pos . x += offset . x ;
   CurBullet -> pos . y += offset . y ; 
   DebugPrintf ( 0 , "\nOffset:  x=%f y=%f." , offset . x , offset . y );
 
-  DebugPrintf( 0 , // FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
+  DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : final position of bullet = (%f/%f)." , 
 	       CurBullet->pos . x , CurBullet->pos . y );
   DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
 	       "\nFireTuxRangedWeaponRaw(...) : BulletSpeed=%f." , BulletSpeed );
   
-  // CurBullet->pos.x += 0.5 ;
-  // CurBullet->pos.y += 0.5 ;
-
 }; // void FireTuxRangedWeaponRaw ( player_num ) 
 
 /* ----------------------------------------------------------------------
