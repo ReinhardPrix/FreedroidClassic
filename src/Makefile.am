@@ -10,4 +10,6 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	text.h proto.h struct.h system.h BFont.h \
 	SDL_rotozoom.c SDL_rotozoom.h highscore.c
 
+man_MANS = freedroidRPG.6
 
+EXTRA_DIST = $(man_MANS)

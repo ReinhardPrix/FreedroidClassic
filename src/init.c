@@ -1891,11 +1891,19 @@ InitNewMissionList ( char *MissionName )
   Me[0].base_skill_level [ 0 ] = 1;
   Me[0].base_skill_level [ 1 ] = 1;
   Me[0].base_skill_level [ 2 ] = 1;
+  Me[0].base_skill_level [ 3 ] = 1;
+  Me[0].base_skill_level [ 4 ] = 1;
   Me[0].base_skill_level [ 5 ] = 1;
   Me[0].base_skill_level [ 6 ] = 1;
+  Me[0].base_skill_level [ 7 ] = 1;
   Me[0].base_skill_level [ 8 ] = 1;
+  Me[0].base_skill_level [ 9 ] = 1;
+  Me[0].base_skill_level [ 10 ] = 1;
+  Me[0].base_skill_level [ 11 ] = 1;
   Me[0].base_skill_level [ 12 ] = 1;
   Me[0].base_skill_level [ 13 ] = 1;
+  Me[0].base_skill_level [ 14 ] = 1;
+  Me[0].base_skill_level [ 14 ] = 1;
   GameConfig.spell_level_visible = 0;
 
   Me [ 0 ] . melee_weapon_skill = 0 ;
