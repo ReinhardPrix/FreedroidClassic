@@ -70,6 +70,12 @@ dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 itemspec* ItemMap;
 int Number_Of_Item_Types = 0 ; 
 
+// int all_object_directions = 16 ;
+// int max_object_phases = 35 ;
+int all_object_directions = -1 ;
+int max_object_phases = -1 ;
+int tux_direction_numbering = FALSE ;
+
 //--------------------
 // Another dummy function, such that the (unused) parts of the
 // text_public module will not cause undefined references...
@@ -281,13 +287,16 @@ ParseCommandLine (int argc, char *const argv[])
 	    { "version",          0, 0,  'v' },
 	    { "help",             0, 0,  'h' },
 	    { "input_file",       required_argument , 0,  'i' },
-	    { "debug",            2, 0,  'd' },
+	    { "max_object_phases",       required_argument , 0,  'p' },
+	    { "all_object_directions",       required_argument , 0,  'd' },
+	    { "tux_16_direction_numbering",      0 , 0,  't' },
+	    // { "debug",            2, 0,  'd' },
 	    {  0,                 0, 0,   0  }
 	};
     
     while (1)
     {
-	c = getopt_long (argc, argv, "vi:h?d::", long_options, NULL);
+	c = getopt_long (argc, argv, "tvi:h?d:p:", long_options, NULL);
 	if (c == -1)
 	    break;
 	
@@ -307,6 +316,10 @@ ParseCommandLine (int argc, char *const argv[])
 		exit (0);
 		break;
 		
+	    case 't':
+		tux_direction_numbering = TRUE ;
+		break;
+		
 	    case 'i':
 		if ( optarg )
 		{
@@ -320,11 +333,30 @@ ParseCommandLine (int argc, char *const argv[])
 		}
 		break;
 		
+	    case 'p':
+		if ( optarg )
+		{
+		    sscanf ( optarg , "%d" , &max_object_phases ) ;
+		    DebugPrintf ( 1 , "\nmax_object_phases set to: %d " , max_object_phases );
+		}
+		else
+		{
+		    printf ("\nERROR! -p specified, but no phases number given... Exiting.\n\n" );
+		    exit ( 0 );
+		}
+		break;
+		
 	    case 'd':
-		// if (!optarg) 
-		// debug_level = 1;
-		// else
-		// debug_level = atoi (optarg);
+		if ( optarg )
+		{
+		    sscanf ( optarg , "%d" , &all_object_directions ) ;
+		    DebugPrintf ( 1 , "\nall_object_directions set to: %d " , all_object_directions );
+		}
+		else
+		{
+		    printf ("\nERROR! -d specified, but no directions number given... Exiting.\n\n" );
+		    exit ( 0 );
+		}
 		break;
 		
 	    default:
@@ -339,6 +371,35 @@ ParseCommandLine (int argc, char *const argv[])
 	Terminate ( ERR );
     }
     
+    if ( current_file_series_prefix == NULL )
+    {
+	DebugPrintf ( 0 , "\nERROR:  No current_file_series_prefix specified... Terminating... " );
+	Terminate ( ERR );
+    }
+    
+    if ( all_object_directions == (-1) )
+    {
+	DebugPrintf ( 0 , "\nERROR:  No all_object_directions specified... Terminating... " );
+	Terminate ( ERR );
+    }
+    
+    if ( max_object_phases == (-1) )
+    {
+	DebugPrintf ( 0 , "\nERROR:  No max_object_phases... Terminating... " );
+	Terminate ( ERR );
+    }
+
+    if ( tux_direction_numbering )
+	DebugPrintf ( 0 , "\nTux direction numbering ENABLED.\n" );
+    else
+	DebugPrintf ( 0 , "\nTux direction numbering DISABLED.\n" );
+
+    if ( ( 16 % all_object_directions ) && tux_direction_numbering )
+    {
+	DebugPrintf ( 0 , "\nTux direction numbering enabled but directions don't divide 16!\nERROR!-->terminating.\n\n" );
+	exit ( -1 ) ;
+    }
+
 }; // ParseCommandLine 
 
 /* -----------------------------------------------------------------
@@ -521,8 +582,6 @@ int
 main (int argc, char *const argv[])
 {
     char current_filename[10000];
-    int all_tux_directions = 16 ;
-    int max_tux_phases = 35 ;
     int i, j;
     char output_file_filename[10000]="/home/johannes/FreeDroid/gluem/test.tux_image_archive" ;
 #define MAIN_DEBUG 1 
@@ -550,11 +609,22 @@ main (int argc, char *const argv[])
     else
 	DebugPrintf( 0 , "\nOpening output file successful...\n" );
 
-    for ( j = 0 ; j < all_tux_directions ; j ++ )
+    for ( j = 0 ; j < all_object_directions ; j ++ )
     {
-	for ( i = 0 ; i < max_tux_phases ; i ++ )
+	for ( i = 0 ; i < max_object_phases ; i ++ )
 	{
-	    sprintf ( current_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , j , i + 1 );
+	    //--------------------
+	    // Maybe this is a bot using the tux direction numbering convention
+	    // for the files and file names on disk.  Then we need to take care
+	    // of this...  --> we just advance the counter a bit in this case.
+	    //
+	    if ( tux_direction_numbering && ( all_object_directions < 16 ) )
+	    {
+		sprintf ( current_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , j * ( 16 / all_object_directions ) , i + 1 );
+	    }
+	    else
+		sprintf ( current_filename , "./%s_%02d_%04d.png" , current_file_series_prefix , j , i + 1 );
+
 	    input_surface = IMG_Load ( current_filename ) ;
 	    if ( input_surface == NULL )
 	    {
@@ -578,6 +648,7 @@ main (int argc, char *const argv[])
 	    DebugPrintf ( 0 , "\nSuccessfully loaded input image %s." , current_filename );
 	    
 	}
+
     }
 
     //--------------------
