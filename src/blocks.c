@@ -3771,7 +3771,7 @@ load_all_obstacles ( void )
 	else
 	    get_iso_image_with_colorkey_from_file_and_path ( fpath , & ( obstacle_map [ i ] . shadow_image ) ) ;
 
-	DebugPrintf ( -4 , "\n%s(): shadow image %s loaded successfully." , __FUNCTION__ , shadow_file_name );
+	DebugPrintf ( 1 , "\n%s(): shadow image %s loaded successfully." , __FUNCTION__ , shadow_file_name );
     }
 
 }; // void load_all_obstacles ( void )

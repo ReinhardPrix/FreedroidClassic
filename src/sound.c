@@ -143,158 +143,165 @@ void channelDone(int channel) {
 void
 PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
 {
-  //--------------------
-  // These variables will always be needed!
-  //
-  int simulated_playback_starting_time;
-  static char PreviousFileName [1000]="HalloHallo";
-  static Uint32 PreviousStartTicks = 0 ;
-  Uint32 TicksNow;
-
-  //--------------------
-  // These variables will only be needed when compiling with sound!
-  //
+    //--------------------
+    // These variables will always be needed!
+    //
+    int simulated_playback_starting_time;
+    static char PreviousFileName [1000]="HalloHallo";
+    static Uint32 PreviousStartTicks = 0 ;
+    Uint32 TicksNow;
+    
+    //--------------------
+    // These variables will only be needed when compiling with sound!
+    //
 #ifdef HAVE_LIBSDL_MIXER
-  int Newest_Sound_Channel=0;
-  Mix_Chunk *One_Shot_WAV_File;
-  char Temp_Filename[5000];
-  char* fpath="no_fpath_has_been_set";
+    int Newest_Sound_Channel=0;
+    Mix_Chunk *One_Shot_WAV_File;
+    char Temp_Filename[5000];
+    char* fpath="no_fpath_has_been_set";
 #endif
-
-  //--------------------
-  // In case the same sample is played again and again in a very
-  // short time, we might refuse operation here, since this could
-  // lead to non-loadability errors with the sound files.
-  //
-  TicksNow = SDL_GetTicks();
-  if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) && ( ! no_double_catching ) ) return;
-
-  //--------------------
-  // For now, we disable the bombardment with 'no voice sample yet...'
-  //
-  // if ( ! strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) return;
-
-  PreviousStartTicks = TicksNow;
-  strcpy ( PreviousFileName , SoundSampleFileName );
-
-  //--------------------
-  // In case there are no sound capabilities on this machine, we 
-  // wait if that is appropriate or otherwise terminate immediately.
-  //
+    
+    //--------------------
+    // In case the same sample is played again and again in a very
+    // short time, we might refuse operation here, since this could
+    // lead to non-loadability errors with the sound files.
+    //
+    TicksNow = SDL_GetTicks();
+    if ( ( strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) && ( ! strcmp ( PreviousFileName , SoundSampleFileName ) ) && ( ( TicksNow - PreviousStartTicks ) < 2.5 * 1000 ) && ( ! no_double_catching ) ) return;
+    
+    //--------------------
+    // For now, we disable the bombardment with 'no voice sample yet...'
+    //
+    // if ( ! strcmp ( "Sorry_No_Voice_Sample_Yet_0.wav" , SoundSampleFileName ) ) return;
+    
+    PreviousStartTicks = TicksNow;
+    strcpy ( PreviousFileName , SoundSampleFileName );
+    
+    //--------------------
+    // In case there are no sound capabilities on this machine, we 
+    // wait if that is appropriate or otherwise terminate immediately.
+    //
 #ifndef HAVE_LIBSDL_MIXER
-  if ( With_Waiting )
+    if ( With_Waiting )
     {
-      simulated_playback_starting_time = SDL_GetTicks() ;
-      
-      while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
-	      !EscapePressed() && !SpacePressed() );
-      
-      if ( EscapePressed() ) while ( EscapePressed() );
-      if ( SpacePressed() ) while ( SpacePressed() );
+	simulated_playback_starting_time = SDL_GetTicks() ;
+	
+	while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+		!EscapePressed() && !SpacePressed() );
+	
+	if ( EscapePressed() ) while ( EscapePressed() );
+	if ( SpacePressed() ) while ( SpacePressed() );
     }
-
-  return;
+    
+    return;
 #else
-
-  //--------------------
-  // In case sound has been disabled, we don't do anything here...
-  //
-  if ( !sound_on ) 
+    
+    //--------------------
+    // In case sound has been disabled, we don't do anything here...
+    //
+    if ( !sound_on ) 
     {
-      //--------------------
-      // Maybe this sound sample was intended to be hooking the CPU and the
-      // program flow, so that nothing happens until the sample has been
-      // played fully.  In this case we must introduce a waiting time even
-      // now that no sound sample is played.  A default of 7 seconds seems to
-      // be appropriate.  On pressing the left button or space or escape
-      // the waiting time will be cancelled anyway.
-      //
-      if ( With_Waiting )
+	//--------------------
+	// Maybe this sound sample was intended to be hooking the CPU and the
+	// program flow, so that nothing happens until the sample has been
+	// played fully.  In this case we must introduce a waiting time even
+	// now that no sound sample is played.  A default of 7 seconds seems to
+	// be appropriate.  On pressing the left button or space or escape
+	// the waiting time will be cancelled anyway.
+	//
+	if ( With_Waiting )
 	{
-	  simulated_playback_starting_time = SDL_GetTicks() ;
-	  
-	  while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
-		  !EscapePressed() && !SpacePressed() );
-	  
-	  if ( EscapePressed() ) while ( EscapePressed() );
-	  if ( SpacePressed() ) while ( SpacePressed() );
+	    simulated_playback_starting_time = SDL_GetTicks() ;
+	    
+	    while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+		    !EscapePressed() && !SpacePressed() );
+	    
+	    if ( EscapePressed() ) while ( EscapePressed() );
+	    if ( SpacePressed() ) while ( SpacePressed() );
 	}
-
-      //--------------------
-      // Since sound is disabled otherwise we MUST return here and not
-      // try to do any sound operations on this machine with perhaps no sound
-      // modules and no SDL sound initialized.
-      //
-      return;
+	
+	//--------------------
+	// Since sound is disabled otherwise we MUST return here and not
+	// try to do any sound operations on this machine with perhaps no sound
+	// modules and no SDL sound initialized.
+	//
+	return;
     }
-
-  //--------------------
-  // Now we set a callback function, that should be called by SDL
-  // as soon as ANY other sound channel finishes playing...
-  //
-  Mix_ChannelFinished( channelDone );
-
-  //--------------------
-  // Now we try to load the requested sound file into memory...
-  //
-  One_Shot_WAV_File=NULL;
-
-  strcpy ( Temp_Filename , "speeches/" );
-  strcat ( Temp_Filename , SoundSampleFileName );
-
-  //--------------------
-  // Only if the file name wasn't 'no_voice_sample', we really
-  // try to load anything...
-  //  
-  if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
+    
+    //--------------------
+    // Now we set a callback function, that should be called by SDL
+    // as soon as ANY other sound channel finishes playing...
+    //
+    Mix_ChannelFinished( channelDone );
+    
+    //--------------------
+    // Now we try to load the requested sound file into memory...
+    //
+    One_Shot_WAV_File=NULL;
+    
+    strcpy ( Temp_Filename , "speeches/" );
+    strcat ( Temp_Filename , SoundSampleFileName );
+    
+    //--------------------
+    // Only if the file name wasn't 'no_voice_sample', we really
+    // try to load anything...
+    //  
+    if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
     {
-      // This code searches for different kinds of 
-      int i;
-      int pathlen;
-      char *extension;
-      char *extensions[] = { ".spx", ".ogg", ".wav", NULL };  // Extensions to try for audio
-      
-      pathlen = strlen(Temp_Filename);
-
-      if(strcmp(Temp_Filename+pathlen-4, ".wav") == 0)
-      {
-          extension = Temp_Filename + pathlen - 4;
-      }
-      else
-      {
-          extension = Temp_Filename + pathlen;
-      }
-      
-      i = 0;
-      while(extensions[i] != NULL)
-      {
-        strcpy(extension, extensions[i]);
-        fpath = find_file_silent ( Temp_Filename , SOUND_DIR, FALSE);
-        One_Shot_WAV_File = Mix_LoadWAV( fpath );
-        if(One_Shot_WAV_File != NULL)
-        {
-            break;
-        }
-
-        i++;
-      }
-    }
-  else
-    One_Shot_WAV_File = NULL ;
-
-  //--------------------
-  // Now some error checking against failed/missing sound samples...
-  //
-  if ( One_Shot_WAV_File == NULL )
-    {
-      //--------------------
-      // A warning message about a missing speech file should only be issued,
-      // if it wasn't the 'no_voice_sample' dummy entry anyway...
-      //
-      if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
+	// This code searches for different kinds of 
+	int i;
+	int pathlen;
+	char *extension;
+	char *extensions[] = { ".spx", ".ogg", ".wav", NULL };  // Extensions to try for audio
+	
+	pathlen = strlen(Temp_Filename);
+	
+	if(strcmp(Temp_Filename+pathlen-4, ".wav") == 0)
 	{
-	  fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
+	    extension = Temp_Filename + pathlen - 4;
+	}
+	else
+	{
+	    extension = Temp_Filename + pathlen;
+	}
+	
+	i = 0;
+	while ( extensions [ i ] != NULL)
+	{
+	    strcpy(extension, extensions[i]);
+	    fpath = find_file_silent ( Temp_Filename , SOUND_DIR, FALSE);
+	    //--------------------
+	    // find_file_silent may return a NULL pointer, in case the file name
+	    // composed hasn't been found.  We need to catch that case of course.
+	    //
+	    if ( fpath != NULL )
+	    {
+		One_Shot_WAV_File = Mix_LoadWAV ( fpath ) ;
+		if ( One_Shot_WAV_File != NULL )
+		{
+		    break;
+		}
+	    }
+
+	    i++;
+	}
+    }
+    else
+	One_Shot_WAV_File = NULL ;
+    
+    //--------------------
+    // Now some error checking against failed/missing sound samples...
+    //
+    if ( One_Shot_WAV_File == NULL )
+    {
+	//--------------------
+	// A warning message about a missing speech file should only be issued,
+	// if it wasn't the 'no_voice_sample' dummy entry anyway...
+	//
+	if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
+	{
+	    fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO LOAD A CERTAIN SOUND FILE INTO MEMORY.\n\
 The reason for this is as follows:  Speech files are stored in wav format\n\
 for technical reasons in conjunction with the SDL and the background music.\n\
@@ -306,124 +313,124 @@ But to ensure smooth gameplay even with missing sound files, there is an option\
 to have freedroid either ignore the missing dialog sound samples or to terminate\n\
 on encountering a missing sound sample.  According to this option, Freedroid will\n\
 either terminate or continue running now.",
-				     NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
+				       NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 	}
-
-      if ( !GameConfig.terminate_on_missing_speech_sample )
+	
+	if ( !GameConfig.terminate_on_missing_speech_sample )
 	{
-	  //--------------------
-	  // Maybe this sound sample was intended to be hooking the CPU and the
-	  // program flow, so that nothing happens until the sample has been
-	  // played fully.  In this case we must introduce a waiting time even
-	  // if no sound sample is played.  A default of 7 seconds seems to
-	  // be appropriate.  On pressing the left button or space or escape
-	  // the waiting time will be cancelled anyway.
-	  //
-	  if ( With_Waiting )
+	    //--------------------
+	    // Maybe this sound sample was intended to be hooking the CPU and the
+	    // program flow, so that nothing happens until the sample has been
+	    // played fully.  In this case we must introduce a waiting time even
+	    // if no sound sample is played.  A default of 7 seconds seems to
+	    // be appropriate.  On pressing the left button or space or escape
+	    // the waiting time will be cancelled anyway.
+	    //
+	    if ( With_Waiting )
 	    {
-	      simulated_playback_starting_time = SDL_GetTicks() ;
-
-	      while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
-		      !EscapePressed() && !SpacePressed() );
-
-	      while ( EscapePressed() || SpacePressed() );
+		simulated_playback_starting_time = SDL_GetTicks() ;
+		
+		while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
+			!EscapePressed() && !SpacePressed() );
+		
+		while ( EscapePressed() || SpacePressed() );
 	    }
-
-	  //--------------------
-	  // Now we must return, since we do not want to 'free' the sound sample, that
-	  // hasn't been loaded successfully and produce a segfault, do we?
-	  //
-	  return;
-
+	    
+	    //--------------------
+	    // Now we must return, since we do not want to 'free' the sound sample, that
+	    // hasn't been loaded successfully and produce a segfault, do we?
+	    //
+	    return;
+	    
 	}
     } // if ( !Loaded_WAV...
-  else
+    else
     {
-      DebugPrintf ( 1 , "\nSuccessfully loaded file %s into memory for playing once, filename is %s ." , 
-		    SoundSampleFileName , fpath );
+	DebugPrintf ( 1 , "\nSuccessfully loaded file %s into memory for playing once, filename is %s ." , 
+		      SoundSampleFileName , fpath );
     }
-
-  //--------------------
-  // Hoping, that this will not take up too much processor speed, we'll
-  // now change the volume of the sound sample in question to what is normal
-  // for sound effects right now...
-  //
-  Mix_VolumeChunk( One_Shot_WAV_File , (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
-
-  //--------------------
-  // Now we try to play the sound file that has just been successfully
-  // loaded into memory...
-  //
-  // In case of an error, we will of course print an error message
-  // and quit...
-  //
-  Newest_Sound_Channel = Mix_PlayChannel( -1 , One_Shot_WAV_File , 0 );
-  if ( Newest_Sound_Channel <= -1 )
+    
+    //--------------------
+    // Hoping, that this will not take up too much processor speed, we'll
+    // now change the volume of the sound sample in question to what is normal
+    // for sound effects right now...
+    //
+    Mix_VolumeChunk( One_Shot_WAV_File , (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
+    
+    //--------------------
+    // Now we try to play the sound file that has just been successfully
+    // loaded into memory...
+    //
+    // In case of an error, we will of course print an error message
+    // and quit...
+    //
+    Newest_Sound_Channel = Mix_PlayChannel( -1 , One_Shot_WAV_File , 0 );
+    if ( Newest_Sound_Channel <= -1 )
     {
-      fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	fprintf( stderr, "\n\nSoundSampleFileName: '%s' Mix_GetError(): %s \n" , SoundSampleFileName , Mix_GetError() );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY FOR PLAYING ONCE.\n",
-				 PLEASE_INFORM, IS_WARNING_ONLY );
-
-      //--------------------
-      // If we receive an error playing a sound file here, this is very inconvenient.
-      // We must see to it that the callback code and allocation there and all that doesn't
-      // get touched.  I hope that the following fix does already what we want here...
-      // But it should :->
-      //
-      Mix_FreeChunk ( One_Shot_WAV_File );
-      return;
-
+				   PLEASE_INFORM, IS_WARNING_ONLY );
+	
+	//--------------------
+	// If we receive an error playing a sound file here, this is very inconvenient.
+	// We must see to it that the callback code and allocation there and all that doesn't
+	// get touched.  I hope that the following fix does already what we want here...
+	// But it should :->
+	//
+	Mix_FreeChunk ( One_Shot_WAV_File );
+	return;
+	
     } // if ( ... = -1
-  else
+    else
     {
-      SoundChannelList[ Newest_Sound_Channel ] = 1;
-      DebugPrintf( 1 , "\nSuccessfully playing the 'ONCE NEEDED' file %s.", SoundSampleFileName ) ;
+	SoundChannelList[ Newest_Sound_Channel ] = 1;
+	DebugPrintf( 1 , "\nSuccessfully playing the 'ONCE NEEDED' file %s.", SoundSampleFileName ) ;
     }
-
-  //--------------------
-  // Maybe this sound sample is intended to be hooking the CPU and the
-  // program flow, so that nothing happens until the sample has been
-  // played fully...
-  //
-  if ( With_Waiting )
+    
+    //--------------------
+    // Maybe this sound sample is intended to be hooking the CPU and the
+    // program flow, so that nothing happens until the sample has been
+    // played fully...
+    //
+    if ( With_Waiting )
     {
-      while ( SoundChannelList[ Newest_Sound_Channel ] && !EscapePressed() && !SpacePressed() );
-      //--------------------
-      // In case escape was pressed, the currently playing voice sample must
-      // be terminated immediately.
-      //
-      if ( EscapePressed() || SpacePressed() )
+	while ( SoundChannelList[ Newest_Sound_Channel ] && !EscapePressed() && !SpacePressed() );
+	//--------------------
+	// In case escape was pressed, the currently playing voice sample must
+	// be terminated immediately.
+	//
+	if ( EscapePressed() || SpacePressed() )
 	{
-	  Mix_HaltChannel( Newest_Sound_Channel );
-	  while ( EscapePressed() || SpacePressed() );
-
-	  //--------------------
-	  // Now the channel has finished playing (or we have stopped it) and
-	  // now we can unallocate the resources used by it...
-	  //
-	  Mix_FreeChunk ( One_Shot_WAV_File );
-	  
+	    Mix_HaltChannel( Newest_Sound_Channel );
+	    while ( EscapePressed() || SpacePressed() );
+	    
+	    //--------------------
+	    // Now the channel has finished playing (or we have stopped it) and
+	    // now we can unallocate the resources used by it...
+	    //
+	    Mix_FreeChunk ( One_Shot_WAV_File );
+	    
 	}
     }
-  else
+    else
     {
-      //--------------------
-      // Otherwise, if there was no 'With_Waiting' flag set, 
-      // we do nothing here, cause we can't halt the channel and 
-      // we also can't free the channel, that is still playing.
-      //
-      // All we will do is set the channels flag to 2, so that the
-      // callback function will know what to do when called:  TO
-      // FREE THE SOUND CHUNK!
-      //
-      SoundChannelList[ Newest_Sound_Channel ] = 2;
-      List_Of_Sustained_Release_WAV_Files[ Newest_Sound_Channel ] = One_Shot_WAV_File ;
+	//--------------------
+	// Otherwise, if there was no 'With_Waiting' flag set, 
+	// we do nothing here, cause we can't halt the channel and 
+	// we also can't free the channel, that is still playing.
+	//
+	// All we will do is set the channels flag to 2, so that the
+	// callback function will know what to do when called:  TO
+	// FREE THE SOUND CHUNK!
+	//
+	SoundChannelList[ Newest_Sound_Channel ] = 2;
+	List_Of_Sustained_Release_WAV_Files[ Newest_Sound_Channel ] = One_Shot_WAV_File ;
     }
-
-
+    
+    
 #endif // HAVE_LIBSDL_MIXER
-
+    
 }; // void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting) 
 
 /* ----------------------------------------------------------------------

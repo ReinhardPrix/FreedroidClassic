@@ -2335,7 +2335,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	InitiateMenu( -1 );
 	
 	i = 0 ;
-	MenuTexts[ i ] = "Save whole ship to 'Asteroids.map'" ; i++;
+	MenuTexts[ i ] = "SAVE EVERYTHING" ; i++;
 	sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
 	MenuTexts[ i ] = Options [ 0 ]; i++;
 	sprintf( Options [ 1 ] , "Light radius bonus: %d" , EditLevel -> light_radius_bonus );
