@@ -257,6 +257,8 @@ ShowCurrentHealthLevel( void )
   SDL_Rect Unhealth_Rect;
   SDL_Rect Whole_Health_Rect;
   
+  if ( GameConfig.Inventory_Visible ) return;
+
   Health_Rect.x = WHOLE_HEALTH_RECT_X;
   Health_Rect.y = WHOLE_HEALTH_RECT_Y;
   Health_Rect.w = WHOLE_HEALTH_RECT_W;
@@ -311,8 +313,6 @@ ShowCurrentTextWindow ( void )
 
   CurPos.x = GetMousePos_x() + 16 ;
   CurPos.y = GetMousePos_y() + 16 ;
-  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
-  SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
 
   //--------------------
   // In case some item is held in hand by the player, the situation is simple:
@@ -430,6 +430,11 @@ ShowCurrentTextWindow ( void )
 	}
     }
 
+  SDL_SetClipRect( Screen , NULL );  // this unsets the clipping rectangle
+  if ( strlen( ItemDescText ) > 1 )
+    {
+      SDL_FillRect( Screen , &Banner_Text_Rect , BANNER_TEXT_REC_BACKGROUNDCOLOR );
+    }
   SetCurrentFont( FPS_Display_BFont );
   // SetCurrentFont( Red_BFont );
 
