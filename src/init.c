@@ -1101,6 +1101,30 @@ InitNewMission ( char *MissionName )
       printf("\nMission target killclass entry found!  It reads: %d" , Me.mission.KillClass );
     }
 
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_CLASS_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST BE CLASS ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_CLASS_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeClass );
+      printf("\nMission target MustBeClass entry found!  It reads: %d" , Me.mission.MustBeClass );
+    }
+
+  if ( ( MissionTargetPointer = strstr ( MainMissionPointer, MISSION_TARGET_MUST_BE_TYPE_STRING )) == NULL )
+    {
+      printf("\nERROR! NO MISSION TARGET MUST BE TYPE ENTRY FOUND! TERMINATING!");
+      Terminate(ERR);
+    }
+  else
+    {
+      MissionTargetPointer += strlen ( MISSION_TARGET_MUST_BE_TYPE_STRING );
+      sscanf ( MissionTargetPointer , "%d" , &Me.mission.MustBeType );
+      printf("\nMission target MustBeType entry found!  It reads: %d" , Me.mission.MustBeType );
+    }
+
   /* Reactivate the light on alle Levels, that might have been dark */
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
@@ -1520,6 +1544,18 @@ CheckIfMissionIsComplete (void)
 	      return;
 	    }
 	}
+    }
+
+  if ( Me.mission.MustBeClass != (-1) )
+    {
+      // printf("\nMe.type is now: %d.", Me.type );
+      if ( Druidmap[Me.type].class != Me.mission.MustBeClass ) return;
+    }
+
+  if ( Me.mission.MustBeType != (-1) )
+    {
+      // printf("\nMe.type is now: %d.", Me.type );
+      if ( Me.type != Me.mission.MustBeType ) return;
     }
 
   EndTitle();

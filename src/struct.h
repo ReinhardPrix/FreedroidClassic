@@ -87,6 +87,7 @@ typedef struct
   int KillAll;
   int KillClass;
   int KillOne;
+  int   ReachLevel;
   point ReachPoint;
   float MustLiveTime;
   int MustBeClass;
@@ -146,12 +147,12 @@ typedef struct
   int levelnum;			/* Level in dem sich enemy befindet */
   finepoint pos;		/* gibt die Koordinaten der Momentanposition an */
   finepoint speed;		/* current speed  */
-  double energy;			/* gibt die Energie dieses Robots an */
+  double energy;		/* gibt die Energie dieses Robots an */
   double feindphase;		/* gibt die Phase an in der der Feind gedreht ist */
   byte nextwaypoint;		/* gibt den naechsten Zielpunkt an */
   byte lastwaypoint;		/* Waypoint, von dem ausgegangen wurde */
   byte Status;			/* gibt z.B. an ob der Robotter abgeschossen wurde */
-  double warten;			/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
+  double warten;		/* gibt Wartezeit an bis Fahrt wieder aufgenommen wird */
   byte passable;		/* Zeit (counter), in der druid passable ist */
   double firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   // byte onscreen;		/* gibt an ob der Robot im moment sichtbar ist */
