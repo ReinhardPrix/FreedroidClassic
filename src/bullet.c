@@ -132,7 +132,9 @@ MoveBullets (void)
   Bullet CurBullet;
   Level BulletLevel;
 
-  // movement of hte bullets
+  //--------------------
+  // We move all the bullets
+  //
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
       //--------------------

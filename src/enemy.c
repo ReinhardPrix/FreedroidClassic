@@ -1306,40 +1306,13 @@ MoveEnemys ( void )
 }; // MoveEnemys( void ) 
 
 /* ----------------------------------------------------------------------
- * This function is low-level:  It simply sets off a shot from enemy
- * through the pointer ThisRobot at the target VECTOR xdist ydist, which
- * is a DISTANCE VECTOR, NOT ABSOLUTE COORDINATES OF THE TARGET!!!
+ * When an enemy is firing a shot, the newly created bullet must be 
+ * assigned a speed, that would lead the bullet thowards the intended
+ * target, which is done here.
  * ---------------------------------------------------------------------- */
-void 
-RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
+void
+set_bullet_speed_to_target_direction ( bullet* NewBullet , float bullet_speed , float xdist , float ydist )
 {
-  int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
-  double bullet_speed = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
-  int j;
-  float OffsetFactor;
-  bullet* NewBullet=NULL;
-  int bullet_index = 0 ;
-  enemy* target_robot;
-
-  if ( ThisRobot -> animation_phase > 0 ) return ;
-  // if ( ThisRobot -> animation_type != WALK_ANIMATION ) return ;
-
-  // find a bullet entry, that isn't currently used... 
-  for (j = 0; j < MAXBULLETS; j++)
-    {
-      if (AllBullets[ j ].type == OUT)
-	{
-	  NewBullet = & ( AllBullets[j] );
-	  bullet_index = j ;
-	  break;
-	}
-    }
-  if ( NewBullet == NULL )
-    {
-      DebugPrintf ( 0 , "\nvoid RawStartEnemysShot ( ... ) :  Ran out of Bullets.... Terminating....");
-      Terminate (ERR);
-    }
-  
   //--------------------
   // determine the direction of the shot, so that it will go into the direction of
   // the target
@@ -1365,6 +1338,66 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	  NewBullet->speed.y = -NewBullet->speed.y;
 	}
     }
+}; // void set_bullet_speed_to_target_direction ( bullet* NewBullet , float bullet_speed , float xdist , float ydist )
+
+/* ----------------------------------------------------------------------
+ * 
+ *
+ * ---------------------------------------------------------------------- */
+int
+find_free_bullet_index ( void )
+{
+  int j;
+
+  for (j = 0; j < MAXBULLETS; j++)
+    {
+      if (AllBullets[ j ].type == OUT)
+	{
+	  return ( j ) ;
+	  break;
+	}
+    }
+
+  //--------------------
+  // If this point is ever reached, there's a severe bug in here...
+  //
+  GiveStandardErrorMessage ( "find_free_bullet_entry_pointer ( ... )" , "\
+I seem to have run out of free bullet entries.  This can't normally happen.  --> some bug in here, oh no..." ,
+			     PLEASE_INFORM, IS_FATAL );
+  
+  return ( -1 ) ; // can't happen.  just to make compilers happy (no warnings)
+
+}; // void find_free_bullet_entry_pointer ( void )
+
+/* ----------------------------------------------------------------------
+ * This function is low-level:  It simply sets off a shot from enemy
+ * through the pointer ThisRobot at the target VECTOR xdist ydist, which
+ * is a DISTANCE VECTOR, NOT ABSOLUTE COORDINATES OF THE TARGET!!!
+ * ---------------------------------------------------------------------- */
+void 
+RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
+{
+  int guntype = ItemMap[ Druidmap[ThisRobot->type].weapon_item.type ].item_gun_bullet_image_type;
+  float bullet_speed = (float) ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_speed;
+  int j;
+  float OffsetFactor;
+  bullet* NewBullet=NULL;
+  int bullet_index = 0 ;
+  enemy* target_robot;
+
+  // if ( ThisRobot -> animation_phase > 0 ) return ;
+  if ( ThisRobot -> animation_type != WALK_ANIMATION ) return ;
+
+  //--------------------
+  // find a bullet entry, that isn't currently used... 
+  //
+  bullet_index = find_free_bullet_index ();
+  NewBullet = & ( AllBullets [ bullet_index ] );
+
+  //--------------------
+  // We send the bullet onto it's way thowards the given target
+  //
+  set_bullet_speed_to_target_direction ( NewBullet , bullet_speed , xdist , ydist );
   
   //--------------------
   // Newly, also enemys have to respect the angle modifier in their weapons...
@@ -1437,7 +1470,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
   // can delete the bullet that might have been created and just apply some
   // damage to the Tux if the Tux was sufficiently close
   //
-  if ( ( last_attack_animation_image [ ThisRobot -> type ] - first_attack_animation_image [ ThisRobot -> type ] > 0 ) && ( ThisRobot -> animation_phase == 0 ) )
+  if ( ( last_attack_animation_image [ ThisRobot -> type ] - first_attack_animation_image [ ThisRobot -> type ] > 0 ) ) // && ( ThisRobot -> animation_phase == 0 ) )
     {
       ThisRobot -> animation_phase = ((float)first_attack_animation_image [ ThisRobot -> type ]) + 0.1 ;
       ThisRobot -> animation_type = ATTACK_ANIMATION;
@@ -1461,11 +1494,24 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	}
       else
 	{
+	  //--------------------
+	  // For now, we just damage the Tux according to this enemys 'damage' value.  We
+	  // don't fuss around whether this is a hit/miss yet, even if the Tux is close at
+	  // all or not or has armour or not.  In later releases, a more complex ruleset,
+	  // taking into account position, armour, maybe even bocks with the shield, should
+	  // be implemented here.
+	  //
 	  Me [ 0 ] . energy -= Druidmap [ ThisRobot -> type ] . physical_damage ;
 	}
 
+      //--------------------
+      // While we don't have sound samples for individual attack motions,
+      // we'll use the death sound sample here too, even if noone is dying.
+      // So far, that seems to work well, but it would be good, if sooner or
+      // later bots could have separate attack and death sound samples, maybe
+      // in some later release...
+      //
       play_death_sound_for_bot ( ThisRobot );
-
     }
   else
     {

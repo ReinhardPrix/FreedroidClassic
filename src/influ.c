@@ -2028,28 +2028,12 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
   moderately_finepoint offset;
 
 #define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 0 
+
   //--------------------
   // search for the next free bullet list entry
   //
-  for (i = 0; i < (MAXBULLETS); i++)
-    {
-      if (AllBullets[i].type == OUT)
-	{
-	  CurBullet = &AllBullets[i];
-	  break;
-	}
-    }
-  //--------------------
-  // didn't find any free bullet entry? --> take the first and issue a warning...
-  //
-  if (CurBullet == NULL)
-    {      
-      CurBullet = &AllBullets[0];
-      GiveStandardErrorMessage ( "FireTuxRangedWeaponRaw(...)" , "\
-There seems to be no more free bullet entry to fire the shot of the Tux...\n\
-This is very strange.  Well, we'll overwrite the first entry and continue.",
-				 NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-    }
+  i = find_free_bullet_index ();
+  CurBullet = & ( AllBullets [ i ] ) ;
 
   //--------------------
   // Now that we have found a fresh and new bullet entry, we can start
@@ -2103,32 +2087,6 @@ This is very strange.  Well, we'll overwrite the first entry and continue.",
   // The recharging time is now modified by the ranged weapon skill
   //
   Me [ player_num ] . firewait *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
-
-  /*
-  speed.x = 0.0;
-  speed.y = 0.0;
-
-  if ( ServerThinksDownPressed ( player_num ) )
-    speed.y = 1.0;
-  if ( ServerThinksUpPressed ( player_num ) )
-    speed.y = -1.0;
-  if ( ServerThinksLeftPressed ( player_num ) )
-    speed.x = -1.0;
-  if ( ServerThinksRightPressed ( player_num ) )
-    speed.x = 1.0;
-
-    // if using a joystick/mouse, allow exact directional shots! 
-  if ( ServerThinksAxisIsActive ( player_num ) || ForceMouseUse )
-    {
-      max_val = max ( abs( ServerThinksInputAxisX ( player_num ) ) , 
-		      abs( ServerThinksInputAxisY ( player_num ) ) );
-      speed.x = 1.0 * ServerThinksInputAxisX ( player_num ) / max_val ;
-      speed.y = 1.0 * ServerThinksInputAxisY ( player_num ) / max_val ;
-
-      DebugPrintf( FIRE_TUX_RANGED_WEAPON_RAW_DEBUG , 
-      "\nFireTuxRangedWeaponRaw(...) : Server thinks axis: (%d/%d)." , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisX ( player_num ) );
-      }
-  */
 
   //--------------------
   // Use the map location to
