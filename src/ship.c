@@ -213,10 +213,6 @@ EnterLift (void)
 
   // UnfadeLevel ();
 
-  // if the level is empty, let's color it in gray
-  if (CurLevel->empty)
-    LevelGrauFaerben ();
-
   InitBars = TRUE;
 
   while (SpacePressed ()) ;
@@ -295,9 +291,14 @@ void
 EnterKonsole (void)
 {
   int ReenterGame = FALSE;
+  SDL_Rect TmpRect;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
+
+
+  Copy_Rect (User_Rect, TmpRect);
+  Copy_Rect (Full_User_Rect, User_Rect);
 
   while (SpacePressed ());  /* wait for user to release Space */
 
@@ -306,8 +307,6 @@ EnterKonsole (void)
   ResetMouseWheel ();
 
   SetCurrentFont( Para_BFont );
-
-  Switch_Background_Music_To (CONSOLE_BACKGROUND_MUSIC_SOUND);
 
   ConsoleMenuPos=0;
   PaintConsoleMenu (0);
@@ -324,6 +323,7 @@ EnterKonsole (void)
       
       if (UpPressed () || WheelUpPressed())
 	{
+	  MoveMenuPositionSound ();
 	  if (ConsoleMenuPos > 0) ConsoleMenuPos--;
 	  else ConsoleMenuPos = 3;
 	  PaintConsoleMenu (UPDATE_ONLY);
@@ -331,6 +331,7 @@ EnterKonsole (void)
 	}
       if (DownPressed () || WheelDownPressed())
 	{
+	  MoveMenuPositionSound ();
 	  if (ConsoleMenuPos < 3) ConsoleMenuPos++;
 	  else ConsoleMenuPos = 0;
 	  PaintConsoleMenu (UPDATE_ONLY);
@@ -339,6 +340,7 @@ EnterKonsole (void)
 
       if (SpacePressed ())
 	{
+	  MenuItemSelectedSound();
 	  while (SpacePressed());
 	  switch (ConsoleMenuPos)
 	    {
@@ -350,10 +352,12 @@ EnterKonsole (void)
 	      PaintConsoleMenu (0);
 	      break;
 	    case 2:
+	      ClearUserFenster();
 	      ShowDeckMap (CurLevel);
 	      PaintConsoleMenu(0);
 	      break;
 	    case 3:
+	      ClearUserFenster ();
 	      ShowLifts (CurLevel->levelnum, -1);
 	      Wait4Fire();
 	      PaintConsoleMenu(0);
@@ -367,10 +371,9 @@ EnterKonsole (void)
 
     }	/* (while !ReenterGane) */
 
-  Me.status = MOBILE;
+  Copy_Rect (TmpRect, User_Rect);
 
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
-  Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+  Me.status = MOBILE;
 
   ClearGraphMem();
 
@@ -602,24 +605,28 @@ GreatDruidShow (void)
 
       if (UpPressed() || WheelUpPressed())
 	{
+	  MoveMenuPositionSound();
 	  while (UpPressed());
 	  if (droidtype < Me.type) droidtype ++;
 	  key_pressed = TRUE;
 	}
       if (DownPressed() || WheelDownPressed())
 	{
+	  MoveMenuPositionSound();
 	  while (DownPressed());
 	  if (droidtype > 0) droidtype --;
 	  key_pressed = TRUE;
 	}
       if (RightPressed() )
 	{
+	  MoveMenuPositionSound();
 	  while (RightPressed());
 	  if (page < 2) page ++;
 	  key_pressed = TRUE;
 	}
       if (LeftPressed() )
 	{
+	  MoveMenuPositionSound();
 	  while (LeftPressed());
 	  if (page > 0) page --;
 	  key_pressed = TRUE;

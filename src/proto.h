@@ -149,7 +149,6 @@ EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
 EXTERN void Init_Video (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
-EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN void Flimmern (int type);
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);

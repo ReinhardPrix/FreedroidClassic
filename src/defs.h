@@ -176,13 +176,6 @@ enum
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
 // The order of appearance here should match the order of appearance 
 // in the SoundSampleFilenames definition located in sound.c!
-
-#define COMBAT_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-// #define TAKEOVER_BACKGROUND_MUSIC_SOUND "The_Last_V8.mod"
-#define TAKEOVER_BACKGROUND_MUSIC_SOUND "Intro-Music.mod"
-#define CONSOLE_BACKGROUND_MUSIC_SOUND "Arda.mod"
-#define CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC "A_City_at_Night.mod"
-
 enum _sounds
 {
   ERRORSOUND = 0,
@@ -215,6 +208,11 @@ enum _sounds
   ALL_SOUNDS   // marks the last entry always!
 };
 
+
+// choose background music by level-color:
+// if filename_raw==BYCOLOR then chose bg_music[color]
+#define BYCOLOR "BYCOLOR"   
+ 
 // The sounds when the influencers energy is low or when he is in transfer mode
 // occur periodically.  These constants specify which intervals are to be used
 // for these periodic happenings...

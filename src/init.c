@@ -1159,7 +1159,7 @@ InitFreedroid (void)
   // This might be replaced later with values from a 
   // private user Freedroid config file.  But for now
   // this code is good enough...
-  GameConfig.Current_BG_Music_Volume=1.0;
+  GameConfig.Current_BG_Music_Volume=0.6;
   GameConfig.Current_Sound_FX_Volume=0.5;
 
   GameConfig.WantedTextVisibleTime = 3;
@@ -1380,6 +1380,8 @@ ThouArtDefeated (void)
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
     }
   
+  Mix_HaltMusic ();
+
   if (!SpacePressed()) 
     white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
 

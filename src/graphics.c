@@ -1138,18 +1138,6 @@ LadeZeichensatz (char *Zeichensatzname)
     }
 }  // void LadeZeichensatz(char* Zeichensatzname)
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-LevelGrauFaerben (void)
-{
-  CurLevel->color = PD_DARK;
-}; 
-
 
 /*@Function============================================================
 @Desc: 

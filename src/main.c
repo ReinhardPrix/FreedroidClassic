@@ -39,6 +39,7 @@
 #include "text.h"
 #include "vars.h"
 #include "ship.h"
+#include "map.h"
 
 #define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
 
@@ -144,8 +145,9 @@ main (int argc, char *const argv[])
 
 	  if (CurLevel->empty == 2)
 	    {
-	      LevelGrauFaerben ();
+	      CurLevel->color = PD_DARK;
 	      CurLevel->empty = TRUE;
+	      Switch_Background_Music_To (BYCOLOR);  // start new background music
 	    }			/* if */
 
 	  CheckIfMissionIsComplete ();

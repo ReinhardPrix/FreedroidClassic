@@ -39,7 +39,6 @@
 #include "global.h"
 #include "proto.h"
 
-
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
 // The order of appearance here should match the order of appearance 
@@ -79,19 +78,18 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-#define ALL_MOD_MUSICS NUM_COLORS    // we have a mod-background song per color now
-char *MOD_Music_SampleFilenames[ALL_MOD_MUSICS] = {
-  "A_City_at_Night.mod",
-  "AnarchyMenu1.mod",     
-  "Arda.mod",	       
-  "Elysium.mod",	       
-  "Intro-Music.mod",      
-  "The_Last_V8.mod",
-  "Beachhead_2.mod"
+char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
+  "AnarchyMenu1.mod",                 // RED
+  "starpaws.mod",                     // YELLOW
+  "The_Last_V8.mod",                  // GREEN
+  "dreamfish-green_beret.mod",        // GRAY
+  "dreamfish-sanxion.mod",            // BLUE
+  "kollaps-tron.mod",                 // GREENBLUE
+  "dreamfish-uridium2_loader.mod"     // DARK
 };
 
 #ifdef HAVE_LIBSDL_MIXER
-Mix_Music *Loaded_MOD_Files[ALL_MOD_MUSICS];
+Mix_Music *MusicSongs[NUM_COLORS];
 Mix_Music *Tmp_MOD_File;
 #endif
 
@@ -184,76 +182,29 @@ Sorry...\n\
       Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
       if ( Loaded_WAV_Files[i] == NULL )
 	{
-	  fprintf (stderr,
-		   "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN FILE INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , SoundSampleFilenames[ i ]);
+	  DebugPrintf (0, "Error: could not load Sound-sample: %s", SoundSampleFilenames[ i ]);
 	  Terminate (ERR);
 	} // if ( !Loaded_WAV...
       else
 	{
 	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
 	}
-    } // for (i=0; ...
+    } // for (i=1; ...
 
-
-  
-  Loaded_MOD_Files[0]=NULL;
-  for (i = 0; i < ALL_MOD_MUSICS; i++)
+  for (i = 0; i < NUM_COLORS; i++)
     {
-      fpath = find_file ( MOD_Music_SampleFilenames [ i ], SOUND_DIR, FALSE);
-      Loaded_MOD_Files [ i ] = Mix_LoadMUS( fpath );
-      if ( Loaded_MOD_Files[ i ] == NULL )
+      fpath = find_file ( MusicFiles [ i ], SOUND_DIR, FALSE);
+      MusicSongs [ i ] = Mix_LoadMUS( fpath );
+      if ( MusicSongs[ i ] == NULL )
 	{
-	  fprintf (stderr,
-		   "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO LOAD A CERTAIN MOD FILE INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-The SDL says the reason for this would be the following:\n\
-%s \n\
-\n\
-If the problem persists and you do not find this sound file in the\n\
-Freedroid archive, please inform the developers about the problem.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" , MOD_Music_SampleFilenames[ i ] , Mix_GetError() );
-	  Terminate (ERR);
+	  DebugPrintf ( 0, "\nError loading sound-file: %s. Mixer-Error: %s\n", 
+			MusicFiles[ i ] , Mix_GetError() ); 
+	  Terminate(ERR);
 	} // if ( !Loaded_WAV...
       else
-	{
-	  DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MOD_Music_SampleFilenames[ i ]);
-	}
-
-    } // for (i=1, ... MOD_FILES...
+	DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MusicFiles[ i ]);
+    } // for
+  
 
   //--------------------
   // Now that the music files have been loaded successfully, it's time to set
@@ -374,7 +325,6 @@ Technical details:
 void
 Switch_Background_Music_To ( char* filename_raw )
 {
-  static int MOD_Music_Channel = -1;
   char* fpath;
 
 #ifndef HAVE_LIBSDL_MIXER
@@ -389,15 +339,13 @@ Switch_Background_Music_To ( char* filename_raw )
       //printf("\nOld Background music channel has been halted.");
       // fflush(stdout);
       Mix_HaltMusic( ); // this REALLY is a VOID-argument function!!
-      MOD_Music_Channel = -1;
       return;
     }
 
   // New feature: choose background music by level-color:
   // if filename_raw==BYCOLOR then chose bg_music[color]
-#define BYCOLOR "BYCOLOR"
   if (!strcmp( filename_raw, BYCOLOR))
-      MOD_Music_Channel = Mix_PlayMusic (Loaded_MOD_Files[CurLevel->color], -1);
+      Mix_PlayMusic (MusicSongs[CurLevel->color], -1);
   else
     {
       if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);      
@@ -409,7 +357,7 @@ Switch_Background_Music_To ( char* filename_raw )
 		       fpath , Mix_GetError() );
 	  Terminate (ERR);
 	} // if ( !Loaded_WAV...
-      MOD_Music_Channel = Mix_PlayMusic (Tmp_MOD_File, -1);
+      Mix_PlayMusic (Tmp_MOD_File, -1);
     }      
   
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
@@ -545,7 +493,7 @@ MenuItemSelectedSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( MENU_ITEM_SELECTED_SOUND );
+  Play_Sound (MENU_ITEM_SELECTED_SOUND);
 }				// void MoveLiftSound(void)
 
 /*@Function============================================================
@@ -559,7 +507,7 @@ MoveMenuPositionSound (void)
 {
   if (!sound_on) return;
 
-  Play_Sound ( MOVE_MENU_POSITION_SOUND );
+  Play_Sound (MOVE_MENU_POSITION_SOUND);
 }				// void MoveLiftSound(void)
 
 
