@@ -159,6 +159,7 @@ UpdateCountersForThisFrame (void)
 
   LastBlastHit++;
 
+  Total_Frames_Passed_In_Mission++;
   // The next couter counts the frames displayed by freedroid during this
   // whole run!!  DO NOT RESET THIS COUNTER WHEN THE GAME RESTARTS!!
   Overall_Frames_Displayed++;

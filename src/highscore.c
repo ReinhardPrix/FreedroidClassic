@@ -105,7 +105,7 @@ update_highscores (void)
   prev_font = GetCurrentFont();
   SetCurrentFont (Highscore_BFont);
 
-  MakeGridOnScreen ();
+  MakeGridOnScreen ( NULL );
   printf_SDL (ne_screen, User_Rect.x, User_Rect.y, "Great Score !\n");
   printf_SDL (ne_screen, -1, -1, "Enter your name: ");
   tmp_name = GetString (MAX_NAME_LEN, 2);
@@ -142,7 +142,8 @@ Show_Highscores (void)
   BFont_Info *prev_font;
 
   DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
-  MakeGridOnScreen ();
+  MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
+  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
 
   prev_font = GetCurrentFont();
   SetCurrentFont (Highscore_BFont);  

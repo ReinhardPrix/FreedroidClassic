@@ -496,6 +496,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   finepoint nextwp_pos;
   float maxspeed;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
+  int HistoryIndex;
 
   DebugPrintf( 2 , "\n void MoveThisRobotThowardsHisWaypoint ( int EnemyNum ) : real function call confirmed. ");
 
@@ -518,8 +519,13 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
       if ( ( fabsf( ThisRobot->pos.x - Me.pos.x ) > 1 ) || 
            ( fabsf( ThisRobot->pos.y - Me.pos.y ) > 1 ) )
 	{
-	  nextwp_pos.y = Me.Position_History[10].y;
-	  nextwp_pos.x = Me.Position_History[10].x;
+	  if ( Total_Frames_Passed_In_Mission <= MAX_INFLU_POSITION_HISTORY ) 
+	    HistoryIndex = Total_Frames_Passed_In_Mission-1;
+	  else
+	    HistoryIndex = MAX_INFLU_POSITION_HISTORY-1;
+
+	  nextwp_pos.y = Me.Position_History[ HistoryIndex ].y;
+	  nextwp_pos.x = Me.Position_History[ HistoryIndex ].x;
 	}
       else
 	{
@@ -535,6 +541,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
   // --------------------
   // As long a the distance from the current position of the enemy
   // to its next wp is large, movement is rather sinple:
+  //
 
   if ( fabsf (Restweg.x)  > Frame_Time() * maxspeed )
     {
@@ -564,8 +571,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
       ThisRobot->pos.y = nextwp_pos.y;
       ThisRobot->speed.y = 0;
     }
-};
-
+}; // void MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 
 /* ----------------------------------------------------------------------
  * This function selects the next waypoints or 'parawaypoints' for the

@@ -76,7 +76,7 @@ ChatWithFriendlyDroid( int Enum )
   SDL_Surface* Background;
 
   Activate_Conservative_Frame_Computation( );
-  MakeGridOnScreen();
+  MakeGridOnScreen( NULL );
   // Now the background is basically there as we need it.  We store it
   // in its current pure form for later use as background for scrolling
   //
@@ -155,10 +155,11 @@ Of course you can ask the droid about anything else it has told you or about wha
       if ( !strcmp ( RequestString , "stay" ) )
 	{
 	  DisplayTextWithScrolling( 
-		      "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  \n\
+				   "Ok.  I'll stay here and not move a bit.  I will do so until I receive further instructions from you.  \n\
 I hope you know what you're doing." , 
 		      MyCursorX , MyCursorY , NULL , Background );
 	  AllEnemys[ Enum ].CompletelyFixed = TRUE;
+	  AllEnemys[ Enum ].FollowingInflusTail = FALSE;
 	  continue;
 	}
       if ( !strcmp ( RequestString , "status" ) )
@@ -166,7 +167,23 @@ I hope you know what you're doing." ,
 	  DisplayTextWithScrolling( 
 				   "Here's my status report:\n" ,
 				   MyCursorX , MyCursorY , NULL , Background );
-	  printf_SDL( ne_screen , -1 , -1 , "Energy: %d/%d." , (int) AllEnemys[ Enum ].energy , (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
+	  printf_SDL( ne_screen , -1 , -1 , "Energy: %d/%d.\n" , (int) AllEnemys[ Enum ].energy , (int) Druidmap[ AllEnemys[Enum].type ].maxenergy );
+	  if ( AllEnemys[ Enum ].FollowingInflusTail )
+	    DisplayTextWithScrolling( 
+				     "I'm currently following you.\n" ,
+				     MyCursorX , MyCursorY , NULL , Background );
+	  else
+	    DisplayTextWithScrolling( 
+				     "I'm currently not following you.\n" ,
+				     MyCursorX , MyCursorY , NULL , Background );
+	  if ( AllEnemys[ Enum ].CompletelyFixed )
+	    DisplayTextWithScrolling( 
+				     "I am instructed to wait here for your return.\n" ,
+				     MyCursorX , MyCursorY , NULL , Background );
+	  else
+	    DisplayTextWithScrolling( 
+				     "I'm free to move.\n" ,
+				     MyCursorX , MyCursorY , NULL , Background );
 	  continue;
 	}
 
@@ -414,7 +431,8 @@ ScrollText (char *Text, int startx, int starty, int EndLine , char* TitlePicture
       usleep (30000);
 
       DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
-      MakeGridOnScreen();
+      MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
+      DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
       // ClearUserFenster(); 
 
       if (!DisplayText (Text, startx, InsertLine, &User_Rect))

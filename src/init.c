@@ -832,6 +832,7 @@ InitNewMission ( char *MissionName )
   //At first we do the things that must be done for all
   //missions, regardless of mission file given
   Activate_Conservative_Frame_Computation();
+  Total_Frames_Passed_In_Mission=0;
   LastBlastHit = 0;
   LastGotIntoBlastSound = 2;
   LastRefreshSound = 2;

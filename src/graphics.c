@@ -249,15 +249,17 @@ TakeScreenshot(void)
 ----------------------------------------------------------------------
 */
 void 
-MakeGridOnScreen(void)
+MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 {
   int x,y;
 
+  if ( Grid_Rectangle == NULL ) Grid_Rectangle = & User_Rect ;
+
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
   SDL_LockSurface( ne_screen );
-  for (y=0; y<SCREENHEIGHT; y++) 
+  for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++) 
     {
-      for (x=0; x<SCREENLEN; x++) 
+      for ( x = Grid_Rectangle->x ; x < Grid_Rectangle->w ; x++ ) 
 	{
 	  if ((x+y)%2 == 0) 
 	    {

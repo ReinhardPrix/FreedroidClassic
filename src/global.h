@@ -37,6 +37,7 @@
 #define EXTERN extern
 
 EXTERN SDL_Rect User_Rect;
+EXTERN const SDL_Rect Full_Screen_Rect;
 EXTERN const SDL_Rect Menu_Rect;
 
 
@@ -127,6 +128,7 @@ EXTERN int mouse_control;       /* allow for mouse control */
 #else
 #define EXTERN extern
 #endif
+EXTERN long Total_Frames_Passed_In_Mission;
 EXTERN int Number_Of_Droids_On_Ship;
 EXTERN double Time_For_Each_Phase_Of_Door_Movement;
 EXTERN double Blast_Damage_Per_Second;

@@ -305,6 +305,7 @@ enum _directions
 #define MAXMAPLINES 		50
 #define MAX_ENEMYS_ON_SHIP	1000
 #define MAX_CHAT_KEYWORDS_PER_DROID 20
+#define MAX_INFLU_POSITION_HISTORY 1000
 
 #define MAX_LIFTS	 	50  	/* actually the entries to the lifts */
 #define MAX_LEVELS		29   	/* don't change this easily */

@@ -443,11 +443,10 @@ GreatDruidShow (void)
   int Infodroid;
   int LeaveThisInformationPart;
   char PassOn = 0;
-  SDL_Rect Droid_Text_Rect;
 
   DebugPrintf (2, "\nvoid GreadDruidShow(void): Function call confirmed.");
 
-  /* Warte, bis User Space auslaesst */
+  // wait for user to release the space, that has been pressed for transfer-mode
   while (SpacePressed ()) ;
 
   SetUserfenster ( KON_BG_COLOR );
@@ -455,86 +454,10 @@ GreatDruidShow (void)
   for (Infodroid = Me.type; Infodroid > -1;)
     {
 
-      PassOn = 0;
-      /*
-      while (!PassOn)
-	{
-
-	  ClearUserFenster( );
-	  // SetTextColor (208, BANNER_VIOLETT );	// RED // YELLOW
-
-	  SDL_SetClipRect ( ne_screen , NULL );
-	  DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
-	  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-
-
-
-	  strcpy (InfoText, "Unit type ");
-	  strcat (InfoText, Druidmap[Infodroid].druidname);
-	  strcat (InfoText, " - ");
-	  strcat (InfoText, Classname[Druidmap[Infodroid].class]);
-
-	  Droid_Text_Rect.x=User_Rect.x;
-	  Droid_Text_Rect.y=User_Rect.y;
-	  Droid_Text_Rect.w=User_Rect.w-20;  // keep away from the right border
-	  Droid_Text_Rect.h=User_Rect.h;
-
-	  //
-	  //	  SetTextBorder (USERFENSTERPOSX , USERFENSTERPOSY , USERFENSTERPOSX + 
-	  //		 USERFENSTERBREITE-2*FONTBREITE ,
-	  //		 USERFENSTERPOSY + USERFENSTERHOEHE , 36 );
-	  //
-
-	  DisplayText (InfoText, USERFENSTERPOSX, USERFENSTERPOSY, &Droid_Text_Rect);
-
-	  ShowRobotPicture (USERFENSTERPOSX, USERFENSTERPOSY + 2 * FONTHOEHE,
-			    Infodroid);
-
-	  SDL_Flip (ne_screen);
-
-	  while (!LeftPressed () && !UpPressed () && !DownPressed ()
-		 && !RightPressed () && !SpacePressed ()) ;
-
-
-
-	  if (UpPressed ())
-	    {
-	      Infodroid--;
-	      // Einem zu schnellen Weiterbl"attern vorbeugen
-	      while (UpPressed () || DownPressed ()) ;
-	    }
-
-	  if (DownPressed ())
-	    {
-	      Infodroid++;
-	      // Einem zu schnellen Weiterbl"attern vorbeugen
-	      while (UpPressed () || DownPressed ()) ;
-	    }
-
-	  if ((RightPressed ()) || (LeftPressed ()))
-	    PassOn = 1;
-
-	  if (Infodroid > Me.type)
-	    Infodroid = DRUID001;
-	  if (Infodroid < DRUID001)
-	    Infodroid = Me.type;
-	  if (SpacePressed ())
-	    {
-	      while (SpacePressed ()) ;
-	      return;
-	    }
-
-	}
-      while (LeftPressed () || UpPressed () || DownPressed ()
-	     || RightPressed () || SpacePressed ()) ;
-
-      */
-
-      /*
-       * Ausgabe der Liste von Werten dieses Druids
-       *
-       */
-
+      //--------------------
+      // At first we print out the most general information about this droid
+      //
+      
       LeaveThisInformationPart = FALSE;
       while ( !LeaveThisInformationPart )
 	{

@@ -135,7 +135,7 @@ EXTERN void DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , in
 EXTERN void TakeScreenshot( void );
 EXTERN void replace_color (SDL_Surface *surf, SDL_Color src, SDL_Color dst);
 EXTERN void DisplayImage(char *file_name);
-EXTERN void MakeGridOnScreen(void);
+EXTERN void MakeGridOnScreen( SDL_Rect* Grid_Rectangle );
 EXTERN void SetCombatScaleTo(float);
 EXTERN int ReInitPictures (void);
 EXTERN int InitPictures (void);

@@ -69,7 +69,7 @@ InitiateMenu( void )
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
   Assemble_Combat_Picture ( 0 );
   SDL_SetClipRect( ne_screen, NULL );
-  MakeGridOnScreen();
+  MakeGridOnScreen( NULL );
 } // void InitiateMenu(void)
 
 /*@Function============================================================
@@ -686,7 +686,7 @@ enum
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      MakeGridOnScreen( NULL );
 
       // 
       // we highlight the currently selected option with an 
@@ -897,7 +897,7 @@ enum
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      MakeGridOnScreen( NULL );
 
       // 
       // we highlight the currently selected option with an 
@@ -1025,7 +1025,7 @@ enum
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      MakeGridOnScreen( NULL );
 
       // 
       // we highlight the currently selected option with an 
@@ -1163,7 +1163,7 @@ enum
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       Assemble_Combat_Picture ( 0 );
       SDL_SetClipRect( ne_screen, NULL );
-      MakeGridOnScreen();
+      MakeGridOnScreen( NULL );
 
       // 
       // we highlight the currently selected option with an 

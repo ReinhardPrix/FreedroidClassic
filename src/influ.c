@@ -197,10 +197,12 @@ MoveInfluence (void)
 
   DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
-  for (i=0; i<10; i++)
+  for ( i = 0 ; i < (MAX_INFLU_POSITION_HISTORY-1) ; i++ )
     {
-      Me.Position_History[10-i].x=Me.Position_History[9-i].x;
-      Me.Position_History[10-i].y=Me.Position_History[9-i].y;
+      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].x = 
+	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].x;
+      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].y = 
+	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].y;
     }
   Me.Position_History[0].x=Me.pos.x;
   Me.Position_History[0].y=Me.pos.y;
