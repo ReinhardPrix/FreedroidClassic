@@ -720,7 +720,7 @@ void
 copy_and_crop_input_file ( ) 
 {
   char parameter_buf[5000];
-  char mdk_filename[5000];
+  char mgk_filename[5000];
 
   sprintf ( parameter_buf , "mogrify -crop %dx%d+%d+%d %s" , input_surface->w - cut_left - cut_right ,
 	    input_surface->h - cut_up - cut_down , cut_left , cut_up , input_filename );
@@ -728,26 +728,26 @@ copy_and_crop_input_file ( )
   system ( parameter_buf );
 
   //--------------------
-  // Now we must determine mdk-filename
+  // Now we must determine mgk-filename
   //
-  strcpy ( mdk_filename , input_filename );
-  if ( strstr ( mdk_filename , ".png" ) == NULL )
+  strcpy ( mgk_filename , input_filename );
+  if ( strstr ( mgk_filename , ".png" ) == NULL )
     {
       DebugPrintf ( -1000 , "\nCROPPY ERROR:  input_filename doesn't have .png?  strange!" );      
       Terminate ( ERR );
     }
   else
     {
-      mdk_filename [ strlen ( mdk_filename ) - 4 ] = 0 ;
-      strcat ( mdk_filename , ".mdk" );
+      mgk_filename [ strlen ( mgk_filename ) - 4 ] = 0 ;
+      strcat ( mgk_filename , ".mgk" );
     }
 
   //--------------------
-  // Now we can copy any existing .mdk file over the surely existing .png file.
+  // Now we can copy any existing .mgk file over the surely existing .png file.
   // (This measure seems to be nescessary with mogrify versions like the one used
   // on basse's machine.)
   //
-  sprintf ( parameter_buf , "mv %s %s" , mdk_filename , input_filename );
+  sprintf ( parameter_buf , "mv %s %s" , mgk_filename , input_filename );
   DebugPrintf ( 0 , "\nCROPPY:  Now executing command : %s" , parameter_buf );
   system ( parameter_buf );
 
