@@ -990,25 +990,13 @@ void
 Load_Tux_Surfaces( void )
 {
   SDL_Surface* Whole_Image;
-  SDL_Surface* tmp_surf;
-  SDL_Rect Source;
-  SDL_Rect Target;
   int i , j , k;
   char *fpath;
   int PlayerNum;
+  char ConstructedFileName[2000];
 
 #define TUX_WIDTH 130
 #define TUX_HEIGHT 130
-
-
-  fpath = find_file ( TUX_MOTIONS_FILE , GRAPHICS_DIR, TRUE);
-
-  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
-  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
-  SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
-
-  tmp_surf = SDL_CreateRGBSurface( 0 , TUX_WIDTH , TUX_HEIGHT , vid_bpp , 0 , 0 , 0 , 0 );
-  SDL_SetColorKey( tmp_surf , 0 , 0 ); // this should clear any color key in the source surface
 
   for ( j = 0 ; j < TUX_MODELS ; j ++ )
     {
@@ -1017,21 +1005,29 @@ Load_Tux_Surfaces( void )
 
       for ( i=0 ; i < TUX_GOT_HIT_PHASES + TUX_SWING_PHASES + TUX_BREATHE_PHASES ; i++ )
 	{
-	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( tmp_surf ); // now we have an alpha-surf of right size
+	  
+	  sprintf ( ConstructedFileName , "tux_motion_parts/tux_motion_%02d_%02d.png" , j , i );
+	  
+	  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	  Whole_Image = IMG_Load( fpath ); // This is a surface with alpha channel, since the picture is one of this type
+	  if ( Whole_Image == NULL )
+	    {
+	      fprintf( stderr, "\n\nfpath: '%s'\n" , fpath );
+	      GiveStandardErrorMessage ( "Load_Tux_Surfaces(...)" , "\
+Freedroid was unable to load a certain Tux surface from the hard disk\n\
+into memory.\n\
+This error indicates some installation problem with freedroid.",
+					 PLEASE_INFORM, IS_FATAL );
+	    }
 
+	  SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE ); // this should 
+	  SDL_SetColorKey( Whole_Image , 0 , 0 ); // this should clear any color key in the source surface
+
+	  TuxMotionArchetypes[j][i] = SDL_DisplayFormatAlpha( Whole_Image ); // now we have an alpha-surf of right size
 	  SDL_SetColorKey ( TuxMotionArchetypes[j][i] , SDL_SRCCOLORKEY, 
 			    SDL_MapRGB( TuxMotionArchetypes[j][i]->format, 255, 0, 255) ); 
-	  // Now we can copy the image Information
-	  Source.x=i*( TUX_WIDTH  + 2 );
-	  Source.y=( 0 + j ) * ( TUX_HEIGHT + 2 ) ;
-	  Source.w=TUX_WIDTH;
-	  Source.h=TUX_HEIGHT;
-	  Target.x=0;
-	  Target.y=0;
-	  Target.w=Block_Width;
-	  Target.h=Block_Height;
-	  SDL_BlitSurface ( Whole_Image , &Source , TuxMotionArchetypes[j][i] , &Target );
 	  SDL_SetAlpha( TuxMotionArchetypes[j][i] , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+	  SDL_FreeSurface( Whole_Image );
 
 	  //--------------------
 	  // And at this point, we also initialize the Tux working copys, so we
@@ -1043,20 +1039,16 @@ Load_Tux_Surfaces( void )
 		{
 		  TuxWorkingCopy [ PlayerNum ] [i] [ 0 ] = SDL_DisplayFormatAlpha( TuxMotionArchetypes[j][i] );
 		}
-	    }
-
-	  for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
-	    {
-	      for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+	      for ( k = 1 ; k < MAX_TUX_DIRECTIONS ; k ++ )
 		{
-		  TuxWorkingCopy [ PlayerNum ] [i] [ k ] = NULL ;
+		  for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
+		    {
+		      TuxWorkingCopy [ PlayerNum ] [i] [ k ] = NULL ;
+		    }
 		}
 	    }
 	}
     }
-
-  SDL_FreeSurface( Whole_Image );
-  SDL_FreeSurface( tmp_surf );
 
 }; // void Load_Tux_Surfaces( void )
 
