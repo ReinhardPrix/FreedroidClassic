@@ -127,29 +127,29 @@ typedef struct {
 } blast, *Blast;
 
 typedef struct {
-	byte level;	/* Level - 'Koordinate' */
-	int x;	/* x,y Koordinaten */
-	int y;
+  byte level;	/* Level - 'Koordinate' */
+  int x;	/* x,y Koordinaten */
+  int y;
 } location, *Location;
 
 typedef struct {
-	/* current location */
-	byte level;
-	byte x;		/* Grob */
-	byte y;
+  /* current location */
+  byte level;
+  byte x;		/* Grob */
+  byte y;
 	
-	/* connections: Numbers in Elevator-Array */
-	signed char up;
-	signed char down;
-
-	/* row */
-	byte elevator_row; /* number of elev. column */
+  /* connections: Numbers in Elevator-Array */
+  signed char up;
+  signed char down;
+  
+  /* row */
+  byte elevator_row; /* number of elev. column */
 } elevator, *Elevator;
 
 typedef struct {
-	byte x;		/* Grob */
-	byte y;
-	signed char connections[MAX_WP_CONNECTIONS];
+  byte x;		/* Grob */
+  byte y;
+  signed char connections[MAX_WP_CONNECTIONS];
 } waypoint, *Waypoint;
 
 typedef struct {
@@ -166,26 +166,26 @@ typedef struct {
 } level, *Level; 
 
 typedef struct {
-	int LevelsOnShip;
-	Level AllLevels[MAX_LEVELS_ON_SHIP];
-	elevator AllElevators[ALLELEVATORS];
+  int LevelsOnShip;
+  Level AllLevels[MAX_LEVELS_ON_SHIP];
+  elevator AllElevators[ALLELEVATORS];
 } ship, *Ship;
 
 
 typedef struct {
-	char* FCUName;
+  char* FCUName;
 } FCU;
 
 typedef struct {
-	char* shieldname;
+  char* shieldname;
 } shieldspec, *Shieldspec;
 
 typedef struct {
-	point pos;
-	int len;
-	int hgt;
-	int oldval;
-	int col;
+  point pos;
+  int len;
+  int hgt;
+  int oldval;
+  int col;
 } bar, *Bar;
 
 #endif
@@ -201,6 +201,9 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.13  1997/06/08 23:19:38  jprix
+ * Transition to floating point coordinates started.  This version is still working.
+ *
  * Revision 1.12  1997/06/08 21:46:00  jprix
  * Modified energy of influence and enemys to be now floats instead of ints. cool.
  *

@@ -21,36 +21,40 @@
 #include "map.h"
 
 /*@Function============================================================
-@Desc: unsigned char GetMapBrick(Level deck, int x, int y): liefert
-intern-code des Elements, das sich auf (deck x/y) befindet
+  @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
+  intern-code des Elements, das sich auf (deck x/y) befindet
 
 @Ret: 
 @Int:
 * $Function----------------------------------------------------------*/
-unsigned char GetMapBrick(Level deck, int x, int y)
+unsigned char GetMapBrick(Level deck, float x, float y)
 {
-  if (y/BLOCKHOEHE >= deck->ylen) {
-    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler1! Terminiere...");
+
+  // ATTENTION! BE CAREFUL HERE!  What we want is an integer division with rest, not an exact
+  // foating point division!  Beware of "improvements" here!!!
+
+  if (((int)rintf(y))/BLOCKHOEHE >= deck->ylen) {
+    printf("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler1! Terminiere...");
     return VOID;
     Terminate(-1);
   }
-  if (x/BLOCKBREITE >= deck->xlen) {
-    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler2! Terminiere...");
+  if (((int)rintf(x))/BLOCKBREITE >= deck->xlen) {
+    printf("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler2! Terminiere...");
     return VOID;
     Terminate(-1);
   }
-  if (y/BLOCKHOEHE <0) {
-    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler3! Terminiere...");
+  if (((int)rintf(y))/BLOCKHOEHE < 0) {
+    printf("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler3! Terminiere...");
     return VOID;
     Terminate(-1);
   }
-  if (x/BLOCKBREITE <0) {
-    printf("\nunsigned char GetMapBrick(Level deck,int x,int y): Fehler4! Terminiere...");
+  if (((int)rintf(x))/BLOCKBREITE < 0) {
+    printf("\nunsigned char GetMapBrick(Level deck, float x, float y): Fehler4! Terminiere...");
     return VOID;
     Terminate(-1);
   }
-  return deck->map[y/BLOCKHOEHE][x/BLOCKBREITE];
-} // unsigned char GetMapBrick(Level deck, int x, int y)
+  return deck->map[((int)rintf(y))/BLOCKHOEHE][((int)rintf(x))/BLOCKBREITE];
+} // unsigned char GetMapBrick(Level deck, float x, float y)
 
 /*@Function============================================================
 @Desc: int GetCurrentElevator: finds Elevator-number to your position 
@@ -92,7 +96,7 @@ void ActSpecialField(int x, int y)
 	unsigned char MapBrick;
 	int cx, cy;		/* tmp: NullPunkt im Blockzentrum */
 	
-	MapBrick = GetMapBrick(CurLevel, x, y);
+	MapBrick = GetMapBrick(CurLevel,(float) x,(float) y);
 
 	switch(MapBrick) {
 		case LIFT:
@@ -721,7 +725,7 @@ int IsPassable(int x, int y, int Checkpos) {
 	unsigned char MapBrick;
 	int ret = -1;
 	
-	MapBrick = GetMapBrick(CurLevel, x, y);
+	MapBrick = GetMapBrick(CurLevel, (float)x, (float)y);
 
 	fx = x % BLOCKBREITE;
 	fy = y % BLOCKHOEHE;
@@ -1042,6 +1046,9 @@ int IsVisible(Point objpos){
  * $Author$
  *
  * $Log$
+ * Revision 1.12  1997/06/08 23:19:38  jprix
+ * Transition to floating point coordinates started.  This version is still working.
+ *
  * Revision 1.11  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *

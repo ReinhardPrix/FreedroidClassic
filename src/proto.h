@@ -186,7 +186,7 @@ EXTERN void Flimmern(void);
 #else
 #define EXTERN extern
 #endif
-EXTERN unsigned char GetMapBrick(Level deck, int x, int y);
+EXTERN unsigned char GetMapBrick(Level deck, float x, float y);
 EXTERN int GetCurrentElevator(void);
 EXTERN void ActSpecialField(int x, int y);
 
