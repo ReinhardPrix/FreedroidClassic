@@ -92,6 +92,31 @@ SDL_Rect SkillScreenRect;
  * This function creates a teleporter portal to the home location.
  * ---------------------------------------------------------------------- */
 void
+FireyBoltSpell ( gps BoltSource , moderately_finepoint BoltTarget )
+{
+  int SpellCost = ManaCostTable [ 6 ][ Me[ 0 ].SkillLevel [ 6 ] ] ;
+
+  if ( Me [ 0 ] . mana >= SpellCost )
+    {
+      Me[0].mana -= SpellCost;
+
+
+
+      Play_Spell_ForceToEnergy_Sound( );
+
+    }
+  else
+    {
+      Me[0].TextVisibleTime = 0;
+      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Not_Enough_Mana_Sound(  );
+    }
+}; // void CreateTeleportal ( gps PortalTarget )
+
+/* ----------------------------------------------------------------------
+ * This function creates a teleporter portal to the home location.
+ * ---------------------------------------------------------------------- */
+void
 CreateTeleportal ( gps PortalTarget )
 {
   int SpellCost = ManaCostTable [ 4 ][ Me[ 0 ].SkillLevel [ 4 ] ] ;
@@ -489,7 +514,8 @@ ShowSkillsScreen ( void )
   if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
        axis_is_active &&
        ! MouseButtonPressedPreviousFrame )
-    Me[0].readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y );
+    Me[0].readied_skill = CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
+      NUMBER_OF_SKILLS_PER_SKILL_LEVEL * GameConfig.spell_level_visible ;
 
   //--------------------
   // Now we see if perhaps the player has just clicked on another skill level
