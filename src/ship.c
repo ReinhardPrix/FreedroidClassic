@@ -850,13 +850,13 @@ GreatDruidShow (void)
   droidtype = Me[0].type;
   page = 0;
 
-  show_droid_info (droidtype, page);
+  show_droid_info (droidtype, page , TRUE );
 
   while (!finished)
     {
       if (key_pressed)
 	{
-	  show_droid_info (droidtype, page);
+	  show_droid_info (droidtype, page , TRUE );
 	  key_pressed = FALSE;
 	}
 
@@ -886,7 +886,6 @@ GreatDruidShow (void)
 	      if (page > 0) page --;
 	      key_pressed = TRUE;
 	    }
-
 
 	  if ( ! CursorIsOnUPButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
 	       ! CursorIsOnDOWNButton( GetMousePos_x() + 16 , GetMousePos_y() + 16 ) &&
@@ -940,7 +939,7 @@ GreatDruidShow (void)
  * does update the screen, no SDL_Flip() necesary !
  * ------------------------------------------------------------ */
 void 
-show_droid_info (int droidtype, int page)
+show_droid_info (int droidtype, int page , char ShowArrows )
 {
   char InfoText[1000];
   char None[20] = "none";
@@ -950,7 +949,7 @@ show_droid_info (int droidtype, int page)
   DisplayImage ( find_file( NE_CONSOLE_BG_PIC2_FILE , GRAPHICS_DIR, FALSE) );
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
 
-  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype);
+  ShowRobotPicture (Cons_Menu_Rect.x, Cons_Menu_Rect.y,  droidtype );
 
   switch (page)
     {
@@ -997,7 +996,7 @@ Notes: %s", Druidmap[droidtype].druidname , Classname[Druidmap[droidtype].class]
   SetCurrentFont( Para_BFont );
   DisplayText (InfoText, Cons_Text_Rect.x, Cons_Text_Rect.y, &Cons_Text_Rect);
 
-  ShowLeftRightDroidshowButtons (  );
+  if ( ShowArrows ) ShowLeftRightDroidshowButtons (  );
 
   SDL_Flip (Screen);
 

@@ -526,7 +526,7 @@ EXTERN int LevelEmpty (void);
 EXTERN int ShipEmpty (void);
 EXTERN void ClearUserFenster (void);
 void GreatDruidShow (void);
-void show_droid_info (int droidtype, int page);
+void show_droid_info (int droidtype, int page , char ShowArrows );
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int menu_pos);
 

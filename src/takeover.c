@@ -162,7 +162,7 @@ Takeover (int enemynum)
 
   Me[0].status = MOBILE; /* the new status _after_ the takeover game */
 
-  show_droid_info ( AllEnemys[enemynum].type, 0 );
+  show_droid_info ( AllEnemys[enemynum].type, 0 , FALSE );
   key = 0;
 
   /*
