@@ -131,6 +131,9 @@ EXTERN void ClearGraphMem ( void );
 EXTERN Uint32 getpixel(SDL_Surface *surface, int x, int y);
 EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
+EXTERN void ScaleGraphics (float scale);
+EXTERN void ScalePic (SDL_Surface **pic, float scale);
+
 /* map.c */
 #undef EXTERN
 #ifdef _map_c

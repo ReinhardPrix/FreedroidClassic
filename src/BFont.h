@@ -19,7 +19,7 @@ BFont_Info;
 
 
 /* Load and store le font in the BFont_Info structure */
-BFont_Info *LoadFont (char *filename);
+BFont_Info *LoadFont (char *filename, float scale);
 
 /* Free memory */
 void FreeFont (BFont_Info * Font);

@@ -765,7 +765,7 @@ Credits_Menu (void)
   
   Copy_Rect (Screen_Rect, screen);
   SDL_SetClipRect( ne_screen, NULL );
-  DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL) );
+  DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL));
   MakeGridOnScreen (&screen);
 
 

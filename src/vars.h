@@ -30,9 +30,8 @@
  * the variable _declarations_ should be made in global.h under _main_c
  *
  */
-
-// this defines our "Userfenster"
-SDL_Rect Block_Rect = {0, 0, 64, 64};
+SDL_Rect OrigBlock_Rect = {0, 0, 64, 64};      // not to be rescaled ever!!
+SDL_Rect Block_Rect = {0, 0, 64, 64};     
 SDL_Rect Screen_Rect = {0, 0, 640, 480};
 SDL_Rect User_Rect = {0, 0, 0, 0};
 SDL_Rect Classic_User_Rect = {64, 170, 9*64, 4*64}; 
@@ -44,6 +43,7 @@ SDL_Rect Cons_Droid_Rect = {30, 190, 132, 180};
 SDL_Rect Menu_Rect = {2*64, 180, 640 - 3*64, 480 - 64};
 SDL_Rect OptionsMenu_Rect = {232, 0, 0, 0};
 
+SDL_Rect OrigDigit_Rect = {0, 0, 16, 18};  	 // not to be rescaled!
 SDL_Rect Digit_Rect = {0, 0, 16, 18};
 
 SDL_Rect Cons_Header_Rect = {75, 64+40, 640 - 80, 135 - 64};
@@ -55,6 +55,9 @@ SDL_Rect Cons_Menu_Rects[4] = {
   {60, 181 + 2*64, 100, 62},
   {60, 181 + 3*64, 100, 62} };
 
+// Startpos + dimensions of Banner-Texts 
+SDL_Rect LeftInfo_Rect = { 26, 44, 0, 0 };
+SDL_Rect RightInfo_Rect ={484, 44, 0, 0 };
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 

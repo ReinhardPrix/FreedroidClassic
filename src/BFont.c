@@ -71,7 +71,7 @@ InitFont (BFont_Info * Font)
 
 /* Load the font and stores it in the BFont_Info structure */
 BFont_Info *
-LoadFont (char *filename)
+LoadFont (char *filename, float scale)
 {
   SDL_Surface *surface = NULL;
   int x;
@@ -83,6 +83,8 @@ LoadFont (char *filename)
       if (Font != NULL)
 	{
 	  surface = (SDL_Surface *) IMG_Load (filename);
+	  ScalePic (&surface, scale);
+
 	  if (surface != NULL)
 	    {
 	      Font->Surface = surface;

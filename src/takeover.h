@@ -25,11 +25,6 @@
 #ifndef _takeover_h
 #define _takeover_h
 
-#ifndef _defs_h
-#include "defs.h"    // we need this here for path defines
-#endif
-
-
 /* Background-color of takeover-game */
 #define TO_BG_COLOR			63
 

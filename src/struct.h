@@ -83,7 +83,7 @@ typedef struct
   int TakeoverActivates;		// toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
   int ShowDecals;       		// show dead droids-ashes...
   int AllMapVisible;    		// complete map is visible?
-  float vid_ScaleFactor;   		// scale the whole graphics by this at load-time
+  float scale;  	 		// scale the whole graphics by this at load-time
 }
 config_t;
 
@@ -159,7 +159,6 @@ typedef struct
   float TextVisibleTime;
   char* TextToBeDisplayed;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
-  SDL_Surface *pic;              // assembly of influ pic is done here.
 }
 influence_t, *Influence_t;
 
@@ -235,14 +234,6 @@ typedef struct
   bool mine;
 }
 blast, *Blast;
-
-typedef struct
-{
-  byte level;			/* Level - 'Koordinate' */
-  int x;			/* x,y Koordinaten */
-  int y;
-}
-location, *Location;
 
 typedef struct
 {

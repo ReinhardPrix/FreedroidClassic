@@ -52,6 +52,19 @@ SDL_Color Flash_Dark  = {230, 230, 230};
 
 #define BLINK_LEN 1.0   // length of one blink cycle at low energy (in s)
 
+/*----------------------------------------------------------------------
+ * Map2ScreenXY (): translate a map-pos (x,y) to screen-coords (X,Y)
+ *                  using influ-position Me.pos
+ *
+ *----------------------------------------------------------------------*/
+void
+Map2ScreenXY (finepoint mappos, point *screenpos)
+{
+  
+
+
+}// Map2ScreenXY()
+
 /*
 -----------------------------------------------------------------
 @Desc: This function assembles the contents of the combat window 
@@ -247,9 +260,7 @@ to the specified coordinates anywhere on the screen, useful e.g.
 for using the influencer as a cursor in the menus.
 
 @Ret: none
------------------------------------------------------------------
-*/
-
+-----------------------------------------------------------------*/
 void
 PutInfluence ( int x, int y)
 {
@@ -265,24 +276,23 @@ PutInfluence ( int x, int y)
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
   // Now we draw the hat and shoes of the influencer
-  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , Me.pic, NULL);
+  SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , BuildBlock, NULL);
 
 
   // Now we draw the first digit of the influencers current number.
-  dst.x = First_Digit_Pos_X ;
-  dst.y = First_Digit_Pos_Y ;
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ], NULL, Me.pic, &dst);
+  dst.x = FirstDigit_Rect.x;
+  dst.y = FirstDigit_Rect.y;
+  SDL_BlitSurface (InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[0]-'1'+1 ], NULL, BuildBlock, &dst);
 
   // Now we draw the second digit of the influencers current number.
-  dst.x= Second_Digit_Pos_X;
-  dst.y= Second_Digit_Pos_Y;
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ], NULL, Me.pic, &dst);
+  dst.x = SecondDigit_Rect.x;
+  dst.y = SecondDigit_Rect.y;
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[1]-'1'+1 ], NULL, BuildBlock, &dst);
 
   // Now we draw the third digit of the influencers current number.
-  dst.x = Third_Digit_Pos_X ;
-  dst.y = Third_Digit_Pos_Y;
-
-  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, Me.pic, &dst);
+  dst.x = ThirdDigit_Rect.x ;
+  dst.y = ThirdDigit_Rect.y;
+  SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, BuildBlock, &dst);
 
   if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == -1 ) ) 
     {
@@ -293,7 +303,7 @@ PutInfluence ( int x, int y)
       else
 	filt = 0.40 + (2.0*rest/BLINK_LEN - 1.0)*0.60;  // increase back to white
 
-      ApplyFilter (Me.pic, filt, filt, filt);
+      ApplyFilter (BuildBlock, filt, filt, filt);
 
       // ... and also maybe start a new cry-sound
 
@@ -310,7 +320,7 @@ PutInfluence ( int x, int y)
 
   if ( Me.status == TRANSFERMODE  && (x == -1))
     {
-      ApplyFilter (Me.pic, 1.0, 0.0, 0.0);
+      ApplyFilter (BuildBlock, 1.0, 0.0, 0.0);
 
       if ( Me.LastTransferSoundTime > TRANSFER_SOUND_INTERVAL )
 	{
@@ -332,7 +342,7 @@ PutInfluence ( int x, int y)
     }
 
 
-  SDL_BlitSurface (Me.pic, NULL, ne_screen, &dst);
+  SDL_BlitSurface (BuildBlock, NULL, ne_screen, &dst);
 
 
 
@@ -347,7 +357,8 @@ PutInfluence ( int x, int y)
       //		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 ,  
       //		      Me.TextToBeDisplayed );
       SetCurrentFont( FPS_Display_BFont );
-      DisplayText( Me.TextToBeDisplayed , User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 , User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 , &Text_Rect );
+      DisplayText( Me.TextToBeDisplayed, User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3,
+		   User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 , &Text_Rect );
     }
 
   DebugPrintf (2, "\nvoid PutInfluence(void): enf of function reached.");
@@ -365,13 +376,11 @@ PutInfluence ( int x, int y)
 void
 PutEnemy (int Enum , int x , int y)
 {
-  const char *druidname;	/* the number-name of the Enemy */
-  int phase;
-  enemy *droid;
-
-  SDL_Rect TargetRectangle;
-
-  droid = &AllEnemys[Enum];
+  SDL_Rect dst;
+  enemy *droid  = &AllEnemys[Enum];
+  int type = droid->type;
+  int phase = droid->phase;
+  char *name = Druidmap[type].druidname;
 
   if ( (droid->status == TERMINATED) || (droid->status == OUT) || 
        (droid->levelnum != CurLevel->levelnum) )
@@ -388,93 +397,40 @@ PutEnemy (int Enum , int x , int y)
   // heavy editing of the crew initialisation functions ;)
   if ( droid->type >= Number_Of_Droid_Types )
     {
-      DebugPrintf (0, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-There was a droid type on this level, that does not really exist.\n\
-\n\
-We might use a fallback to shortly work around this problem.  That would\n\
-not be difficult.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      AllEnemys[Enum].type = 0;
+      DebugPrintf (0, "ERROR: nonexistant droid-type encountered: %d\n", droid->type);
       Terminate(ERR);
     }
 
   //--------------------
   // First blit just the enemy hat and shoes.
-  // If no coordinates, i.e. "-1", were given, we blit to the correct location in
-  // the combat window, else we blit to the given location.
-  // The number will be blittet later
-
-  druidname = Druidmap[AllEnemys[Enum].type].druidname;
-  phase = AllEnemys[Enum].phase;
-
-  if ( x == (-1) ) 
-    {
-      TargetRectangle.x=UserCenter_x+ 
-	( (-Me.pos.x+AllEnemys[Enum].pos.x ) ) * Block_Rect.w  -Block_Rect.w/2;
-      TargetRectangle.y=UserCenter_y+ 
-	( (-Me.pos.y+AllEnemys[Enum].pos.y ) ) * Block_Rect.h -Block_Rect.h/2;
-    }
-  else
-    {
-      TargetRectangle.x=x;
-      TargetRectangle.y=y;
-    }
-
-  SDL_BlitSurface( EnemySurfacePointer[ phase ] , NULL , ne_screen, &TargetRectangle);
+  SDL_BlitSurface (EnemySurfacePointer[phase], NULL, BuildBlock, NULL);
 
   //--------------------
   // Now the numbers should be blittet.
-  // again, if no coordinates, i.e. "-1", were given, we blit to the correct location in
-  // the combat window, else we blit to the given location.
-  if ( x == (-1) )
-    {
-      TargetRectangle.x=UserCenter_x - 
-	(Me.pos.x-AllEnemys[Enum].pos.x) * Block_Rect.w + First_Digit_Pos_X  - Block_Rect.w/2; 
-      TargetRectangle.y=UserCenter_y - 
-	(Me.pos.y-AllEnemys[Enum].pos.y) * Block_Rect.h + First_Digit_Pos_Y - Block_Rect.h/2;
-    }
-  else
-    {
-     TargetRectangle.x=x + First_Digit_Pos_X;
-     TargetRectangle.y=y + First_Digit_Pos_Y;
-    }
-
-  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[0]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
+  dst.x = FirstDigit_Rect.x;
+  dst.y = FirstDigit_Rect.y;
+  SDL_BlitSurface( EnemyDigitSurfacePointer[name[0]-'1'+1 ], NULL, BuildBlock, &dst);
   
-  if ( x == (-1) )
+  dst.x = SecondDigit_Rect.x;
+  dst.y = SecondDigit_Rect.y;
+  SDL_BlitSurface( EnemyDigitSurfacePointer[name[1]-'1'+1 ], NULL, BuildBlock, &dst);
+
+  dst.x = ThirdDigit_Rect.x;
+  dst.y = ThirdDigit_Rect.y;
+  SDL_BlitSurface( EnemyDigitSurfacePointer[name[2]-'1'+1], NULL,  BuildBlock, &dst);
+  
+  // now blit the whole construction to screen:
+  if ( x == -1 ) 
     {
-  TargetRectangle.x=UserCenter_x - 
-    (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Rect.h + Second_Digit_Pos_X - Block_Rect.w/2;
-  TargetRectangle.y=UserCenter_y - 
-    (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Rect.h + Second_Digit_Pos_Y - Block_Rect.h/2 ;
+      dst.x=UserCenter_x + (droid->pos.x - Me.pos.x) * Block_Rect.w - Block_Rect.w/2;
+      dst.y=UserCenter_y + (droid->pos.y - Me.pos.y) * Block_Rect.h - Block_Rect.h/2;
     }
   else
     {
-     TargetRectangle.x=x + Second_Digit_Pos_X;
-     TargetRectangle.y=y + Second_Digit_Pos_Y;
+      dst.x=x ;
+      dst.y=y ;
     }
-
-  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[1]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-
-  if ( x == (-1) )
-    {
-      TargetRectangle.x=UserCenter_x - (Me.pos.x-AllEnemys[Enum].pos.x)*Block_Rect.w - Block_Rect.w/2 + Third_Digit_Pos_X ;
-      TargetRectangle.y=UserCenter_y - (Me.pos.y-AllEnemys[Enum].pos.y)*Block_Rect.w - Block_Rect.h/2 + Third_Digit_Pos_Y;
-    }
-  else
-    {
-     TargetRectangle.x=x + Third_Digit_Pos_X ;
-     TargetRectangle.y=y + Third_Digit_Pos_Y;
-    }
-
-  SDL_BlitSurface( EnemyDigitSurfacePointer[ Druidmap[AllEnemys[Enum].type].druidname[2]-'1'+1 ] , NULL, ne_screen, &TargetRectangle );
-
+  SDL_BlitSurface (BuildBlock, NULL, ne_screen, &dst);
 
   //--------------------
   // At this point we can assume, that the enemys has been blittet to the
@@ -529,7 +485,7 @@ void
 PutBullet (int BulletNummer)
 {
   Bullet CurBullet = &AllBullets[BulletNummer];
-  SDL_Rect TargetRectangle;
+  SDL_Rect dst;
   // SDL_Surface *tmp;
   int PhaseOfBullet;
   int i;
@@ -590,12 +546,12 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = UserCenter_x
+  dst.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = UserCenter_y
+  dst.y = UserCenter_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
-  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &dst );
 #else
   tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
 
@@ -604,12 +560,12 @@ PutBullet (int BulletNummer)
   // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
   // This has to be taken into account when calculating the target position for the 
   // blit of these surfaces!!!!
-  TargetRectangle.x = UserCenter_x
+  dst.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
-  TargetRectangle.y = UserCenter_y
+  dst.y = UserCenter_y
     - (Me.pos.y-CurBullet->pos.y)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->h/2;
 
-  SDL_BlitSurface( tmp , NULL, ne_screen , &TargetRectangle );
+  SDL_BlitSurface( tmp , NULL, ne_screen , &dst );
   SDL_FreeSurface( tmp );
 #endif
 
@@ -628,18 +584,18 @@ void
 PutBlast (int BlastNummer)
 {
   Blast CurBlast = &AllBlasts[BlastNummer];
-  SDL_Rect TargetRectangle;
+  SDL_Rect dst;
 
   // If the blast is already long deat, we need not do anything else here
   if (CurBlast->type == OUT)
     return;
 
   
-  TargetRectangle.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Rect.w  -Block_Rect.w/2;
-  TargetRectangle.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Rect.h -Block_Rect.h/2;
+  dst.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Rect.w  -Block_Rect.w/2;
+  dst.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Rect.h -Block_Rect.h/2;
   // SDL_BlitSurface( ne_blocks, 
-  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &TargetRectangle);
-  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
+  // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &dst);
+  SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &dst);
 
 }  // void PutBlast(int BlastNummer)
 
@@ -682,23 +638,23 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
 }
 
 /*-----------------------------------------------------------------
-@Desc: This function updates the top status bar.
-To save framerate on slow machines however it will only work
-if it thinks that work needs to be done. 
-You can however force update if you say so with a flag.
-
-BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
-
-BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
-text.
-
-BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
-
------------------------------------------------------------------*/
+ * @Desc: This function updates the top status bar.
+ * To save framerate on slow machines however it will only work
+ * if it thinks that work needs to be done. 
+ * You can however force update if you say so with a flag.
+ *
+ * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
+ *
+ * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
+ * text.
+ * 
+ * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
+ * 
+ * -----------------------------------------------------------------*/
 void
 DisplayBanner (const char* left, const char* right,  int flags )
 {
-  SDL_Rect TargetRectangle;
+  SDL_Rect dst;
   char dummy[80];
   char left_box [LEFT_TEXT_LEN + 10];
   char right_box[RIGHT_TEXT_LEN + 10];
@@ -755,10 +711,10 @@ DisplayBanner (const char* left, const char* right,  int flags )
        (strcmp( right_box , previous_right_box )) )
     {
       // Redraw the whole background of the top status bar
-      TargetRectangle.x=0;
-      TargetRectangle.y=0;
+      dst.x=0;
+      dst.y=0;
       SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
-      SDL_BlitSurface( banner_pic, NULL, ne_screen , &TargetRectangle );
+      SDL_BlitSurface( banner_pic, NULL, ne_screen , &dst );
 
       // Now the text should be ready and its
       // time to display it...
@@ -766,11 +722,13 @@ DisplayBanner (const char* left, const char* right,  int flags )
 	   (strcmp( right_box , previous_right_box )) ||
 	   ( flags & BANNER_FORCE_UPDATE ) )
 	{
-	  PrintStringFont ( ne_screen, Para_BFont,
-			    LEFT_INFO_X , LEFT_INFO_Y , left_box );
+	  dst.x = LeftInfo_Rect.x;
+	  dst.y = LeftInfo_Rect.y - FontHeight(Para_BFont);
+	  PrintStringFont (ne_screen, Para_BFont, dst.x, dst.y, left_box );
 	  strcpy( previous_left_box , left_box );
-	  PrintStringFont ( ne_screen, Para_BFont,
-			    RIGHT_INFO_X , RIGHT_INFO_Y , right_box );
+	  dst.x = RightInfo_Rect.x;
+	  dst.y = RightInfo_Rect.y - FontHeight(Para_BFont);
+	  PrintStringFont (ne_screen, Para_BFont, dst.x, dst.y, right_box );
 	  strcpy( previous_right_box , right_box );
 	}
 

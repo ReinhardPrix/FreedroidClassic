@@ -695,7 +695,7 @@ Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
       show_title = TRUE;
       show_arrows = TRUE;
       sprintf( InfoText , "\
-Armamant : %s\n\
+Armament : %s\n\
 Sensors  1: %s\n\
                     2: %s\n\
                     3: %s", 

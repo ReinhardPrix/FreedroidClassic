@@ -42,15 +42,6 @@
 #include "map.h"
 
 Uint32 cur_time;  		/* current time in ms */
-SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
-
-/* the rectangles containing the blocks */
-SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
-SDL_Rect CapsuleBlocks[NUM_CAPS_BLOCKS];
-SDL_Rect ToGameBlocks[NUM_TO_BLOCKS];
-SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
-SDL_Rect ToColumnBlock;
-SDL_Rect ToLeaderBlock;
 
 /* Class seperation of the blocks */
 int BlockClass[TO_BLOCKS] = {

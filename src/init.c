@@ -544,7 +544,7 @@ parse_command_line (int argc, char *const argv[])
 
   while (1)
     {
-      c = getopt_long (argc, argv, "vqst:h?d::wfj:", long_options, NULL);
+      c = getopt_long (argc, argv, "vqst:h?d::wfj:r:", long_options, NULL);
       if (c == -1)
 	break;
 
@@ -597,7 +597,13 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 
 	case 'r':
-	  GameConfig.vid_ScaleFactor = atof(optarg);
+	  GameConfig.scale = (float)atof (optarg);
+	  if (GameConfig.scale == 0)
+	    {
+	      DebugPrintf (0, "ERROR: illegal scale entered: %s\n", optarg);
+	      Terminate (ERR);
+	    }
+	  DebugPrintf (1, "Graphics scale set to %f\n", GameConfig.scale);
 	  break;
 
 	case 'f':
@@ -916,7 +922,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.TakeoverActivates = TRUE;  
   GameConfig.ShowDecals = TRUE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
-  GameConfig.vid_ScaleFactor = 1.0;   // overall scaling of _all_ graphics (e.g. for 320x200 displays)
+  GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -932,7 +938,7 @@ InitFreedroid (int argc, char *const argv[])
 
   FindAllThemes ();  // put all found themes into a list: AllThemes[]
 
-
+  ScaleRect (Screen_Rect, GameConfig.scale);   // make sure we open a window of the right (rescaled) size!
   Init_Video ();
 
   DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL)); // show title pic

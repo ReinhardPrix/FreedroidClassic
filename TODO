@@ -1,5 +1,7 @@
 #-*- mode: text -*-
 
+Current version: 1.0.2
+
 Release TODO
 ============
 (done) - write some Changelog summary vs 0.8.4
@@ -12,11 +14,20 @@ Release TODO
 
 Bugs
 =======
-Preparing "final" release 1.0.0:
-==> all bugs are to be considered release-critical now!
 
 Outstanding release-critical bugs (priority: high) 
 --------------------------------------------------
+- allow initial scaling of the _whole_ game (-> Sharp Zaurus 320x200!)
+  * theme changes
+  * droid-console
+  * text+font
+  * banner-text
+  * takeover
+
+- limit fps to get smoother play?
+
+- use OpenGL for accel and smoother play?
+
 - playtest on a _really_ slow machine...
 
 - adjust Alert params (->freedroid.rules)

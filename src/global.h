@@ -27,16 +27,20 @@
 #ifndef _global_h
 #define _global_h
 
+#include "system.h"
 #include "BFont.h"
+#include "takeover.h"
 
 #undef EXTERN
 #ifdef _main_c
 #define EXTERN
 #else
 #define EXTERN extern
+#endif
 
 EXTERN char ConfigDir[255];
 
+EXTERN SDL_Rect OrigBlock_Rect; 
 EXTERN SDL_Rect Block_Rect;
 EXTERN SDL_Rect Screen_Rect;
 EXTERN SDL_Rect User_Rect;
@@ -47,12 +51,19 @@ EXTERN SDL_Rect Portrait_Rect;
 EXTERN SDL_Rect Cons_Droid_Rect;
 EXTERN SDL_Rect Menu_Rect;
 EXTERN SDL_Rect OptionsMenu_Rect;
+EXTERN SDL_Rect OrigDigit_Rect;
 EXTERN SDL_Rect Digit_Rect;
+EXTERN SDL_Rect FirstDigit_Rect;
+EXTERN SDL_Rect SecondDigit_Rect;
+EXTERN SDL_Rect ThirdDigit_Rect;
 
 EXTERN SDL_Rect Cons_Header_Rect;
 EXTERN SDL_Rect Cons_Menu_Rect;
 EXTERN SDL_Rect Cons_Text_Rect;
 EXTERN SDL_Rect Cons_Menu_Rects[4];
+
+EXTERN SDL_Rect LeftInfo_Rect;
+EXTERN SDL_Rect RightInfo_Rect;
 
 
 EXTERN float LastRefreshSound;
@@ -62,19 +73,11 @@ EXTERN float FPSover10;
 EXTERN float FPSover100;
 EXTERN char *Alertcolor[AL_LAST];
 EXTERN char *Shipnames[ALLSHIPS];
+
 EXTERN char *Classname[];
 EXTERN char *Classes[];
-EXTERN char *Height[];
-EXTERN char *Weight[];
-EXTERN char *Entry[];
 EXTERN char *Weaponnames[];
 EXTERN char *Sensornames[];
-EXTERN int Sensor1[];
-EXTERN int Sensor2[];
-EXTERN int Sensor3[];
-EXTERN int Armament[];
-EXTERN int Drive[];
-EXTERN int Brain[];
 EXTERN char *Brainnames[];
 EXTERN char *Drivenames[];
 EXTERN char *InfluenceModeNames[];
@@ -84,7 +87,6 @@ EXTERN influence_t Me;		/* the influence data */
 EXTERN Druidspec Druidmap;     
 EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
-#endif
 
 EXTERN int Number_Of_Droid_Types;
 EXTERN int PreTakeEnergy;
@@ -173,15 +175,10 @@ EXTERN SDL_Surface *EnemyDigitSurfacePointer[ DIGITNUMBER ];   // A pointer to t
                                                // influencer in different phases of rotation
 EXTERN SDL_Surface *MapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];   // A pointer to the surfaces containing the map-pics, which may be rescaled with respect to
 EXTERN SDL_Surface *OrigMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];   // A pointer to the surfaces containing the original map-pics as read from disk
+EXTERN SDL_Surface *BuildBlock;			// a block for temporary pic-construction
 
 EXTERN int BannerIsDestroyed;
 
-EXTERN int First_Digit_Pos_X;
-EXTERN int First_Digit_Pos_Y;
-EXTERN int Second_Digit_Pos_X;
-EXTERN int Second_Digit_Pos_Y;
-EXTERN int Third_Digit_Pos_X;
-EXTERN int Third_Digit_Pos_Y;
 EXTERN int screen_bpp; 			/* bits per pixel */
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
@@ -242,6 +239,14 @@ EXTERN int num_highscores;  /* total number of entries in our list (fixed) */
 #else
 #define EXTERN extern
 #endif
+EXTERN SDL_Surface *to_blocks;      /* the global surface containing all game-blocks */
+/* the rectangles containing the blocks */
+EXTERN SDL_Rect FillBlocks[NUM_FILL_BLOCKS];
+EXTERN SDL_Rect CapsuleBlocks[NUM_CAPS_BLOCKS];
+EXTERN SDL_Rect ToGameBlocks[NUM_TO_BLOCKS];
+EXTERN SDL_Rect ToGroundBlocks[NUM_GROUND_BLOCKS];
+EXTERN SDL_Rect ToColumnBlock;
+EXTERN SDL_Rect ToLeaderBlock;
 
 
 #endif  // _global_h
