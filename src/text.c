@@ -775,10 +775,17 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
   first_call = FALSE ;
 
   //--------------------
-  // All of the portrait files will now be loaded one after the
-  // other...
+  // We look up the model number for this chat partner.
   //
   model_number = this_droid -> type ;
+
+  //--------------------
+  // We should make sure, that we don't double-load images that we have loaded
+  // already, thereby wasting more resources, including OpenGL texture positions.
+  //
+  if ( this_type_has_been_loaded [ model_number ] )
+    return;
+  this_type_has_been_loaded [ model_number ] = TRUE ;
 
   //--------------------
   // At first we try to load the image, that is named after this
