@@ -149,9 +149,9 @@ AddInfluBurntText( void )
 {
   int FinalTextNr;
 
-  Me.TextVisibleTime=0;
-  
   if ( !GameConfig.Influencer_Blast_Text ) return;
+  
+  Me.TextVisibleTime=0;
   
   FinalTextNr=MyRandom(2);
   switch ( FinalTextNr )

@@ -986,17 +986,24 @@ RefreshInfluencer (void)
 	  LastRefreshSound = 0;
 	}
 
+      //--------------------
+      // since robots like the refresh, the influencer might also say so...
       //
-      // since robots like the refresh, the influencer will also say so...
-      //
-      Me.TextToBeDisplayed="Ahhh, that feels so good...";
-      Me.TextVisibleTime=0;
+      if ( GameConfig.Influencer_Refresh_Text )
+	{
+	  Me.TextToBeDisplayed="Ahhh, that feels so good...";
+	  Me.TextVisibleTime=0;
+	}
     }
   else
     {
+      //--------------------
       // If nothing more is to be had, the influencer might also say so...
-      Me.TextToBeDisplayed="Oh, it seems that was it again.";
-      Me.TextVisibleTime=0;
+      if ( GameConfig.Influencer_Refresh_Text )
+	{
+	  Me.TextToBeDisplayed="Oh, it seems that was it again.";
+	  Me.TextVisibleTime=0;
+	}
     }
 
   return;
