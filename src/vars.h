@@ -59,6 +59,10 @@ SDL_Rect Cons_Menu_Rects[4] = {
 SDL_Rect LeftInfo_Rect = { 26, 44, 0, 0 };
 SDL_Rect RightInfo_Rect ={484, 44, 0, 0 };
 
+SDL_Rect ProgressMeter_Rect = {100, 100, 100, 100};  // FIXME: 
+SDL_Rect ProgressBar_Rect = {30, 30, 80, 10}; // FIXME, relative to ProgressMeter_Rect
+SDL_Rect ProgressText_Rect = {10, 10, 80, 10}; // FIXME, relative to ...
+
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
 influence_t Me = {

@@ -55,6 +55,8 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+SDL_Color progress_color = {200, 20, 20};
+
 // ------------------------------------------------------------
 // just a plain old sign-function
 // ------------------------------------------------------------
@@ -1071,6 +1073,62 @@ FS_filelength (FILE *f)
   return end;
 }
 
+/*----------------------------------------------------------------------
+ * show_progress: display empty progress meter with given text
+ *----------------------------------------------------------------------*/
+void
+init_progress (char *text)
+{
+  char *fpath;
+  SDL_Rect dst;
+  BFont_Info *oldfont;
 
+  if (text == NULL)
+    text = "Progress...";
+
+  if (!progress_meter_pic)
+    {
+      fpath = find_file (PROGRESS_METER_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
+      progress_meter_pic = Load_Block (fpath, 0, 0, NULL, 0);
+    }
+
+  oldfont = GetCurrentFont ();
+  
+  SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
+  SDL_BlitSurface( progress_meter_pic, NULL, ne_screen , &ProgressMeter_Rect );
+  
+  Copy_Rect (ProgressText_Rect, dst);
+  dst.x += ProgressMeter_Rect.x;
+  dst.y += ProgressMeter_Rect.y;
+
+  printf_SDL (ne_screen, dst.x, dst.y, text);
+
+  SDL_Flip (ne_screen);
+
+} // show_progress()
+
+
+/*----------------------------------------------------------------------
+ *  update the progress bar
+ *----------------------------------------------------------------------*/
+void
+update_progress (int percent)
+{
+  SDL_Rect dst;
+
+  Copy_Rect (ProgressBar_Rect, dst);
+
+  dst.x += ProgressMeter_Rect.x;
+  dst.y += ProgressMeter_Rect.y;
+
+  dst.w = (Uint16) (1.0*ProgressBar_Rect.w * percent / 100.0);
+
+  Fill_Rect (dst, progress_color);
+
+  SDL_UpdateRects (ne_screen, 1, &dst);
+  
+  return;
+
+} // update_progress()
 
 #undef _misc_c

@@ -136,6 +136,7 @@ EXTERN void ScaleGraphics (float scale);
 EXTERN void ScalePic (SDL_Surface **pic, float scale);
 EXTERN void ScaleStatRects (float scale);
 EXTERN void toggle_fullscreen (void);
+EXTERN SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 
 /* map.c */
 #undef EXTERN
@@ -267,6 +268,8 @@ EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void Terminate (int);
 EXTERN void *MyMalloc (long);
 EXTERN int FS_filelength (FILE *f);
+EXTERN void init_progress (char *txt);
+EXTERN void update_progress (int percent);
 
 /* enemy.c */
 #undef EXTERN

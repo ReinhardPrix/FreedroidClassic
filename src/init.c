@@ -926,13 +926,19 @@ InitFreedroid (int argc, char *const argv[])
     Copy_Rect(Classic_User_Rect, User_Rect);
 
 
-  FindAllThemes ();  // put all found themes into a list: AllThemes[]
-
   ScaleRect (Screen_Rect, GameConfig.scale);   // make sure we open a window of the right (rescaled) size!
   Init_Video ();
 
   DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL)); // show title pic
   SDL_Flip(ne_screen);
+
+  Load_Fonts (); // we need this for progress-meter!
+
+  init_progress ("Loading Freedroid ...");
+
+  FindAllThemes ();  // put all found themes into a list: AllThemes[]
+
+  update_progress (5);
 
   Init_Audio ();
   
@@ -940,6 +946,8 @@ InitFreedroid (int argc, char *const argv[])
 
   Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be */
 			       // overwritten from the mission file.
+
+  update_progress (10);
 
   // The default should be, that no rescaling of the
   // combat window at all is done.
@@ -964,6 +972,8 @@ InitFreedroid (int argc, char *const argv[])
       DebugPrintf (1, "\n Error in InitPictures reported back...\n");
       Terminate(ERR);
     }
+
+  update_progress (100); // finished init
 
   // Initialisieren der Schildbilder
   //  GetShieldBlocks ();

@@ -47,6 +47,8 @@
 const SDL_VideoInfo *vid_info;	/* info about current video mode */
 int vid_bpp;
 
+int fonts_loaded = FALSE;
+
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
@@ -581,17 +583,15 @@ InitPictures (void)
 
   oldfont = GetCurrentFont ();
 
-  if (first_call)
+  if (!fonts_loaded)
     Load_Fonts ();
 
   SetCurrentFont (FPS_Display_BFont);
-  printf_SDL (ne_screen, User_Rect.x + 50, Screen_Rect.h - 100, "Loading Theme config ...");
 
   LoadThemeConfigurationFile();
 
-  printf_SDL (ne_screen, -1, -1, " ok\n");
+  update_progress (15);
 
-  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
   //---------- get Map blocks
   fpath = find_file (MAP_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL, INIT_ONLY);	/* init function */
@@ -602,7 +602,7 @@ InitPictures (void)
 	OrigMapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &OrigBlock_Rect,0); 
 	MapBlockSurfacePointer[line][col] = OrigMapBlockSurfacePointer[line][col];
       }
-  printf_SDL (ne_screen, -1, -1, ".");
+  update_progress (20);
   //---------- get Droid-model  blocks
   fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
@@ -619,7 +619,7 @@ InitPictures (void)
 
   //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
 
-  printf_SDL (ne_screen, -1, -1, ".");
+  update_progress (30);
   //---------- get Bullet blocks
   fpath = find_file (BULLET_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
@@ -629,7 +629,8 @@ InitPictures (void)
 	FreeIfUsed (Bulletmap[line].SurfacePointer[col]);
 	Bulletmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &OrigBlock_Rect, 0);
       }
-  printf_SDL (ne_screen, -1, -1, ".");
+
+  update_progress (35);
 
   //---------- get Blast blocks
   fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
@@ -640,7 +641,9 @@ InitPictures (void)
 	FreeIfUsed (Blastmap[line].SurfacePointer[col]);
 	Blastmap[line].SurfacePointer[col] = Load_Block (NULL, line, col, &OrigBlock_Rect, 0);
       }
-  printf_SDL (ne_screen, -1, -1, ".");
+
+  update_progress (45);
+
   //---------- get Digit blocks
   fpath = find_file (DIGIT_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
@@ -651,11 +654,11 @@ InitPictures (void)
       FreeIfUsed (EnemyDigitSurfacePointer[col]);
       EnemyDigitSurfacePointer[col] = Load_Block (NULL, 0, col + 10, &OrigDigit_Rect, 0);
     }
-  printf_SDL (ne_screen, -1, -1, ".");
+  update_progress(50);
 
   //---------- get Takeover pics
   GetTakeoverGraphics ();
-  printf_SDL (ne_screen, -1, -1, ".");
+  update_progress (60);
 
   FreeIfUsed(ship_on_pic);
   ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL));
@@ -683,7 +686,9 @@ InitPictures (void)
       console_bg_pic1 = Load_Block (fpath, 0, 0, NULL, 0);
       fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       console_bg_pic2 = Load_Block (fpath, 0, 0, NULL, 0);
-      printf_SDL (ne_screen, -1, -1, ".");
+
+      update_progress (75);
+
       arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
@@ -691,7 +696,8 @@ InitPictures (void)
       //---------- get Banner
       fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       banner_pic = Load_Block (fpath, 0, 0, NULL, 0);
-      printf_SDL (ne_screen, -1, -1, ".");
+
+      update_progress (80);
       //---------- get Droid images ----------
       for (i=0; i<NUM_DROIDS; i++)
 	{
@@ -710,6 +716,7 @@ InitPictures (void)
 	  packed_portraits[i] = load_raw_pic (fpath);
 	}
 
+      update_progress (90);
       // we need the 999.png in any case for transparency!
       strcpy( fname, Druidmap[DRUID999].druidname );
       strcat( fname , ".png" );
@@ -732,11 +739,12 @@ InitPictures (void)
 	}
 
     } // if first_call
-  
-  printf_SDL (ne_screen, -1, -1, " ok\n");
 
+  update_progress (92);
   // if scale != 1 then we need to rescale everything now
   ScaleGraphics (GameConfig.scale);
+
+  update_progress (95);
 
   // make sure bullet-surfaces get re-generated!
   for ( i = 0 ; i < MAXBULLETS ; i++ )
@@ -1074,6 +1082,8 @@ Load_Fonts (void)
   /* choose a font for highscore displaying... */
   Highscore_BFont = Para_BFont;
 
+  fonts_loaded = TRUE;
+
   return (OK);
 } // Load_Fonts ()
 
@@ -1348,6 +1358,10 @@ ScaleStatRects (float scale)
   
   ScaleRect (LeftInfo_Rect, scale);
   ScaleRect (RightInfo_Rect, scale);
+
+  ScaleRect (ProgressMeter_Rect, scale);
+  ScaleRect (ProgressBar_Rect, scale);
+  ScaleRect (ProgressText_Rect, scale);
   
   for (i=0; i<NUM_FILL_BLOCKS; i++)
     ScaleRect (FillBlocks[i], scale);
