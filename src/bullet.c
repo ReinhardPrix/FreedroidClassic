@@ -383,18 +383,27 @@ CheckBulletCollisions (int num)
       ydist = Me.pos.y - CurBullet->pos.y;
       if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)
 	{
-	  GotHitSound ();
-	  
 	  if (!InvincibleMode)
 	    {
-	      // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
-	      Me.energy -= CurBullet->damage;	// loose some energy
+	      //--------------------
+	      // NEW RULE:  Even when the bullet hits, there's still a chance that
+	      // the armour will compensate the shot
+	      //
+	      if ( MyRandom( 100 ) > Me.AC )
+		{
+		  Me.TextVisibleTime = 0;
+		  Me.TextToBeDisplayed = "That one went into the armour.";		  
+		}
+	      else
+		{
+		  // ITEMS Me.energy -= Bulletmap[CurBullet->type].damage;	// loose some energy
+		  Me.TextVisibleTime = 0;
+		  Me.TextToBeDisplayed = "Ouch!";
+		  Me.energy -= CurBullet->damage;	// loose some energy
+		  GotHitSound ();
+		}
 	    }
 	  
-	  // The bullet has hit.  The damage has been calculated.  Now it can be disabled.
-	  // ATTENTION!  These instructions belong here and must not be moved up.
-	  // CurBullet->type = OUT;
-	  // CurBullet->mine = FALSE;
 	  DeleteBullet( num , TRUE ); // we want a bullet-explosion
 	  return;			/* Bullet ist hin */
 	}

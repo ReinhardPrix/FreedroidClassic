@@ -330,6 +330,7 @@ typedef struct
   float RechargeTime; // the actual minimum time to wait for the influencer between shots
   int exp_level; // which 'experience level' is the influencer currenly at?
   int ExpRequired; // how much experience required for the next level?
+  char character_name[25];
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
   mission AllMissions[ MAX_MISSIONS_IN_GAME ];         // What must be done to fullfill this mission?
   float MissionTimeElapsed;
