@@ -1193,7 +1193,7 @@ parse_command_line (int argc, char *const argv[])
 	  /* version statement -v or --version
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
-	  //printf ("\n%s %s  \n", PACKAGE, VERSION); 
+	  printf ("\n%s %s  \n", PACKAGE, VERSION); 
 	  printf (copyright);
 	  exit (0);
 	  break;
