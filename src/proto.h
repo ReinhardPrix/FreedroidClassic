@@ -490,7 +490,6 @@ EXTERN void AnimateCurrents (void);
 
 EXTERN void ClearPlayground (void);
 EXTERN int IsActive (int color, int row);
-EXTERN void ShowOpponent (void);
 
 #undef EXTERN
 #ifdef _highscore_c
