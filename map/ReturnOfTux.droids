@@ -92,6 +92,11 @@ SpecialForce: Type=GUA X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0
 SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MichelangeloStartGameSquare" RushTux="no" DialogSectionToUse="Michelangelo" ShortLabel="Michelangelo -- Colony Cook"
 
 //--------------------
+// This is Skippy.  He makes map-maker devices.
+//
+SpecialForce: Type=WOR X=29 Y=27 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SkippyStartGameSquare" RushTux="no" DialogSectionToUse="Skippy" ShortLabel="Skippy -- Map-Maker Maker"
+
+//--------------------
 // This is Pendragon 'PEN', who can train you in the fighting arts.
 //
 SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="PEN" ShortLabel="Pendragon -- Melee Combat Teacher"

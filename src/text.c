@@ -99,6 +99,47 @@ dialogue_option, *Dialogue_option;
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
 /* ----------------------------------------------------------------------
+ * This function finds the index of the array where the chat flags for
+ * this person are stored.  It does this by exploiting on the (unique?)
+ * dialog section to use entry of each (friendly) droid.
+ * ---------------------------------------------------------------------- */
+int
+ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
+{
+  if ( strcmp ( SectionName , "Chandra" ) == 0 ) return PERSON_CHA ;
+  if ( strcmp ( SectionName , "SOR" ) == 0 ) return PERSON_SORENSON;
+  if ( strcmp ( SectionName , "614" ) == 0 ) return PERSON_614;
+  if ( strcmp ( SectionName , "STO" ) == 0 ) return PERSON_STONE;
+  if ( strcmp ( SectionName , "PEN" ) == 0 ) return PERSON_PENDRAGON;
+  if ( strcmp ( SectionName , "DIX" ) == 0 ) return PERSON_DIXON;
+  if ( strcmp ( SectionName , "RMS" ) == 0 ) return PERSON_RMS;
+  if ( strcmp ( SectionName , "MER" ) == 0 ) return PERSON_MER;
+  if ( strcmp ( SectionName , "Francis" ) == 0 ) return PERSON_FRANCIS;
+  if ( strcmp ( SectionName , "Ernie" ) == 0 ) return PERSON_ERNIE;
+  if ( strcmp ( SectionName , "Bruce" ) == 0 ) return PERSON_BRUCE;
+  if ( strcmp ( SectionName , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
+  if ( strcmp ( SectionName , "Bender" ) == 0 ) return PERSON_BENDER;
+  if ( strcmp ( SectionName , "Spencer" ) == 0 ) return PERSON_SPENCER;
+  if ( strcmp ( SectionName , "Darwin" ) == 0 ) return PERSON_DARWIN;
+  if ( strcmp ( SectionName , "Doc Moore" ) == 0 ) return PERSON_DOC_MOORE;
+  if ( strcmp ( SectionName , "Melfis" ) == 0 ) return PERSON_MELFIS;
+  if ( strcmp ( SectionName , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
+  if ( strcmp ( SectionName , "Skippy" ) == 0 ) return PERSON_SKIPPY;
+  if ( strcmp ( SectionName , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
+  if ( strcmp ( SectionName , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
+  if ( strcmp ( SectionName , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
+  if ( strcmp ( SectionName , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
+  if ( strcmp ( SectionName , "HEA" ) == 0 ) return PERSON_HEA;
+
+  GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
+There was a dialogue section to be used with a droid, that does not have a \n\
+corresponding chat flags array index." ,
+			     PLEASE_INFORM, IS_FATAL );
+  return (-1);
+
+}; // int ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
+
+/* ----------------------------------------------------------------------
  * This function plants a cookie, i.e. sets a new text string with the
  * purpose of serving as a flag.  These flags can be set from the dialog
  * file and used from within there and they get stored and loaded with
@@ -725,23 +766,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 
   if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
     {
-      Buy_Basic_Items( FALSE , FALSE );
-    }
-  else if ( ! strcmp ( ExtraCommandString , "Sell_Items" ) )
-    {
-      Sell_Items( FALSE );
-    }
-  else if ( ! strcmp ( ExtraCommandString , "Identify_Items" ) )
-    {
-      Identify_Items(  );      
-    }
-  else if ( ! strcmp ( ExtraCommandString , "Repair_Items" ) )
-    {
-      Repair_Items(  );
-    }
-  else if ( ! strcmp ( ExtraCommandString , "Buy_Magical_Items" ) )
-    {
-      Buy_Basic_Items( FALSE , TRUE );      
+      InitTradeWithCharacter( PERSON_STONE );
     }
   else if ( ! strcmp ( ExtraCommandString , "BreakOffAndBecomeHostile" ) )
     {
@@ -826,6 +851,11 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked planting of a cookie: %s. Doing it... " ,
 		   ExtraCommandString + strlen ( "PlantCookie:" ) );
       PlantCookie ( ExtraCommandString + strlen ( "PlantCookie:" ) , 0 ) ;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "InitTradeWithCharacter:" ) )
+    {
+      TempValue = ResolveDialogSectionToChatFlagsIndex ( ExtraCommandString + strlen ( "InitTradeWithCharacter:" ) ) ;
+      InitTradeWithCharacter( TempValue );
     }
   else if ( CountStringOccurences ( ExtraCommandString , "AssignMission:" ) )
     {
@@ -1289,50 +1319,6 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 }; // void DoChatFromChatRosterData( void )
 
 /* ----------------------------------------------------------------------
- * This function finds the index of the array where the chat flags for
- * this person are stored.  It does this by exploiting on the (unique?)
- * dialog section to use entry of each (friendly) droid.
- * ---------------------------------------------------------------------- */
-int
-ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
-{
-
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Chandra" ) == 0 ) return PERSON_CHA ;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "SOR" ) == 0 ) return PERSON_SORENSON;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "614" ) == 0 ) return PERSON_614;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "STO" ) == 0 ) return PERSON_STONE;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "PEN" ) == 0 ) return PERSON_PENDRAGON;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "DIX" ) == 0 ) return PERSON_DIXON;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "RMS" ) == 0 ) return PERSON_RMS;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "MER" ) == 0 ) return PERSON_MER;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Francis" ) == 0 ) return PERSON_FRANCIS;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERNIE;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Bender" ) == 0 ) return PERSON_BENDER;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Spencer" ) == 0 ) return PERSON_SPENCER;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Darwin" ) == 0 ) return PERSON_DARWIN;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Doc Moore" ) == 0 ) return PERSON_DOC_MOORE;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Melfis" ) == 0 ) return PERSON_MELFIS;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Michelangelo" ) == 0 ) return PERSON_MICHELANGELO;
-
-  if ( strcmp ( ChatDroid -> dialog_section_name , "StandardOldTownGateGuard" ) == 0 ) return PERSON_STANDARD_OLD_TOWN_GATE_GUARD;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "OldTownGateGuardLeader" ) == 0 ) return PERSON_OLD_TOWN_GATE_GUARD_LEADER;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
-
-  if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
-
-  GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
-There was a dialogue section to be used with a droid, that does not have a \n\
-corresponding chat flags array index." ,
-			     PLEASE_INFORM, IS_FATAL );
-
-  return (-1);
-
-}; // int ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -1436,7 +1422,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   //
   InitChatRosterForNewDialogue(  );
 
-  ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid ) ;
+  ChatFlagsIndex = ResolveDialogSectionToChatFlagsIndex ( ChatDroid -> dialog_section_name ) ;
 
   //--------------------
   // Now we do the dialog with Dixon, the teleporter service man...

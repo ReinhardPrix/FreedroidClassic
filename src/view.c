@@ -98,6 +98,12 @@ ShowAutomapData( void )
   if ( GameConfig.Automap_Visible == FALSE ) return;
 
   //--------------------
+  // Also if there is no map-maker present in inventory, then we need not
+  // do a thing here...
+  //
+  if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+
+  //--------------------
   // At first, we only blit the known data about the pure wall-type
   // obstacles on this level
   //

@@ -660,6 +660,12 @@ CollectAutomapData ( void )
   TimePassed = (int) Me[0].MissionTimeElapsed;
 
   //--------------------
+  // Also if there is no map-maker present in inventory, then we need not
+  // do a thing here...
+  //
+  if ( ! CountItemtypeInInventory( ITEM_MAP_MAKER_SIMPLE , 0 ) ) return;
+
+  //--------------------
   // Earlier we had
   //
   // start_x = 0 ; start_y = 0 ; end_x = AutomapLevel->xlen ; end_y = AutomapLevel->ylen ;

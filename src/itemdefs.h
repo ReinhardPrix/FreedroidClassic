@@ -110,9 +110,13 @@
 #define ITEM_LASER_AMMUNITION 67
 #define ITEM_EXTERMINATOR_AMMUNITION 68
 
+#define ITEM_MAP_MAKER_SIMPLE 75
+
 #define ITEM_STRENGTH_PILL 76
 #define ITEM_DEXTERITY_PILL 77
 #define ITEM_MAGIC_PILL 78
+
+#define ITEM_MAP_MAKER_SIMPLE 75
 
 //--------------------
 // And now we put here all the rectangle definitions and that...

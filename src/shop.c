@@ -163,6 +163,91 @@ write some suitable code here...",
 }; // void TryToPutItem( ... )
 
 /* ----------------------------------------------------------------------
+ * This function prepares a new set of items, that will be displayed for
+ * the Tux to buy.
+ *
+ * This function is different from the other 'AssemblePointerList..'
+ * functions in the sense, that here we really must first CREATE the items.
+ *
+ * Since the shop will always COPY and DELETE items and not only point
+ * some pointer to different directions, recurrent calls of this function
+ * should not cause any damage, as long as there is only ONE player in 
+ * the game.
+ * ---------------------------------------------------------------------- */
+void
+AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode )
+{
+  item* ListPointer = ListToBeFilled;
+  int i;
+
+  //--------------------
+  // At first we clean out the given list.
+  //
+  ListPointer = ListToBeFilled;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      ListPointer->type = (-1) ;
+      ListPointer->prefix_code = (-1) ;
+      ListPointer->suffix_code = (-1) ;
+      ListPointer++;
+    }
+
+  //--------------------
+  // Depending on the character code given, we'll now refill the list
+  // of items to be made available
+  //
+  ListPointer = ListToBeFilled;
+  if ( ShopCharacterCode == PERSON_STONE )
+    {
+      ListPointer->type = ITEM_SHORT_BOW; ListPointer++;
+      ListPointer->type = ITEM_HUNTERS_BOW; ListPointer++;
+      ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
+      ListPointer->type = ITEM_BUCKLER; ListPointer++;
+      ListPointer->type = ITEM_SMALL_SHIELD; ListPointer++;
+      ListPointer->type = ITEM_CLOAK; ListPointer++;
+      ListPointer->type = ITEM_ROBE; ListPointer++;
+      ListPointer->type = ITEM_DAGGER; ListPointer++;
+      ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;
+      ListPointer->type = ITEM_SCIMITAR; ListPointer++;
+      ListPointer->type = ITEM_STAFF; ListPointer++;
+      ListPointer->type = ITEM_CAP; ListPointer++;
+      ListPointer->type = ITEM_SMALL_HELM; ListPointer++;
+    }
+  else if ( ShopCharacterCode == PERSON_DOC_MOORE )
+    {
+      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
+      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+      ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+    }
+  else if ( ShopCharacterCode == PERSON_SKIPPY )
+    {
+      ListPointer->type = ITEM_MAP_MAKER_SIMPLE; ListPointer++;
+    }
+  else
+    {
+      GiveStandardErrorMessage ( "AssembleItemListForTradeCharacter( ... )" , "\
+The function has received an unexpected character code.  This is not handled\n\
+currently and therefore initiates immediate termination now...",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
+  // Now it's time to fill in the correct item properties and set
+  // the right flags, so that we get a 'normal' item.
+  //
+  ListPointer = ListToBeFilled;
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+      if ( ListPointer->type == (-1) ) break;
+      FillInItemProperties( ListPointer , TRUE , 0 );
+      ListPointer -> is_identified = TRUE;
+      ListPointer++;
+    }
+
+}; // void AssembleItemListForTradeCharacter ( .. )
+  
+/* ----------------------------------------------------------------------
  * At some points in the game, like when at the shop interface or at the
  * items browser at the console, we wish to show a list of the items 
  * currently in inventory.  This function assembles this list.  It lets
@@ -1447,7 +1532,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
  * This is the menu, where you can buy basic items.
  * ---------------------------------------------------------------------- */
 void
-Buy_Basic_Items( int ForHealer , int ForceMagic )
+InitTradeWithCharacter( int CharacterCode )
 {
 
 #define FIXED_SHOP_INVENTORY TRUE
@@ -1455,91 +1540,21 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
   // #define NUMBER_OF_ITEMS_IN_SHOP 4
 
   item SalesList[ MAX_ITEMS_IN_INVENTORY ];
-  item* Buy_Pointer_List[ MAX_ITEMS_IN_INVENTORY ];
+  item* BuyPointerList[ MAX_ITEMS_IN_INVENTORY ];
   item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
   int i;
   int ItemSelected=0;
   shop_decision ShopOrder;
   int NumberOfItemsInTuxRow=0;
+  int NumberOfItemsInShop=0;
 
-  int StandardShopInventory[ NUMBER_OF_ITEMS_IN_SHOP ] = 
-    { 
-      ITEM_SMALL_HEALTH_POTION,
-      ITEM_SMALL_MANA_POTION,
-      ITEM_MEDIUM_HEALTH_POTION,
-      ITEM_MEDIUM_MANA_POTION,
-
-      ITEM_SHORT_BOW,
-      ITEM_HUNTERS_BOW,
-      ITEM_LASER_AMMUNITION,
-
-      ITEM_BUCKLER,
-      ITEM_SMALL_SHIELD,
-
-      ITEM_CLOAK,
-      ITEM_ROBE,
-
-      ITEM_DAGGER,
-      ITEM_SHORT_SWORD,
-      ITEM_SCIMITAR,
-      ITEM_STAFF,
-
-      ITEM_CAP,
-      ITEM_SMALL_HELM,
-      
-    };
-
-  //--------------------
-  // First we make a selection of items, that can be considered 'basic'.
-  // This selection depends of course on wheter the menu is generated
-  // for the smith or for the healer.
-  //
-  for ( i = 0 ; i < NUMBER_OF_ITEMS_IN_SHOP ; i++ )
+  AssembleItemListForTradeCharacter ( & (SalesList[0]) , CharacterCode );
+  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( ForHealer ) 
-	{
-	  //--------------------
-	  // Here comes the random item selection for the healer
-	  //
-	  SalesList[ i ].type = 0 ; // something that can NOT be applied in combat
-	  while ( ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) ||
-		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) )
-	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-	}
-      else
-	{
-	  //--------------------
-	  // Here comes the random item selection for the general shop
-	  //
-	  SalesList[ i ].type = 1 ; // something that can be applied in combat
-	  while ( ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat || 
-		  ( ! ItemMap [ SalesList[ i ].type ].item_can_be_bought_in_shop ) ||
-		  ( SalesList [ i ].type == ITEM_MONEY ) )
-	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-
-	  if ( FIXED_SHOP_INVENTORY )
-	    {
-	      SalesList[ i ].type = StandardShopInventory [ i ];
-	    }
-	}
-
-      SalesList[ i ].prefix_code = ( -1 );
-      if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
-      else SalesList[ i ].suffix_code = ( -1 );
-
-      FillInItemProperties( & ( SalesList[ i ] ) , TRUE , 0 );
-      SalesList[ i ].is_identified = TRUE;
-
-      Buy_Pointer_List [ i ] = & ( SalesList[ i ] ) ;
+      if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
+      else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
     }
-  //--------------------
-  // Now me make sure that this list really gets terminated
-  // as required by the item selection function.
-  //
-  Buy_Pointer_List [ i ] = NULL ; 
   
-
-
   //--------------------
   // Now here comes the new thing:  This will be a loop from now
   // on.  The buy and buy and buy until at one point we say 'BACK'
@@ -1548,20 +1563,29 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
     {
 
       NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( &( TuxItemsList[0]), FALSE, 0 );
+      
+      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	{
+	  if ( BuyPointerList [ i ] == NULL )
+	    {
+	      NumberOfItemsInShop = i ;
+	      break;
+	    }
+	}
 
-      ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List , 
+      ItemSelected = GreatShopInterface ( NumberOfItemsInShop , BuyPointerList , 
 					  NumberOfItemsInTuxRow , TuxItemsList , &(ShopOrder) , FALSE );
 
       switch ( ShopOrder . shop_command )
 	{
 	case BUY_1_ITEM:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 1 ) ;
+	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 1 ) ;
 	  break;
 	case BUY_10_ITEMS:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 10 ) ;
+	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
 	  break;
 	case BUY_100_ITEMS:
-	  TryToBuyItem( Buy_Pointer_List[ ShopOrder . item_selected ] , FALSE , 100 ) ;
+	  TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 100 ) ;
 	  break;
 	case SELL_1_ITEM:
 	  TryToSellItem( TuxItemsList[ ShopOrder . item_selected ] , FALSE , 1 ) ;
@@ -1582,6 +1606,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       // out of supply for a certain good, we can as well restore
       // the shop inventory list at this position.
       //
+      /*
       if ( FIXED_SHOP_INVENTORY )
 	{
 	  for ( i = 0 ; i < NUMBER_OF_ITEMS_IN_SHOP ; i++ )
@@ -1594,9 +1619,17 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
 	    }
 	  Buy_Pointer_List [ i ] = NULL ; 
 	}
+      */
+      AssembleItemListForTradeCharacter ( & (SalesList[0]) , CharacterCode );
+      for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+	{
+	  if ( SalesList [ i ] . type == ( - 1 ) ) BuyPointerList [ i ] = NULL ;
+	  else BuyPointerList [ i ] = & ( SalesList[ i ] ) ;
+	}
+
     }
 
-}; // void Buy_Basic_Items( void )
+}; // void InitTradeWithCharacter( void )
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can select items for repair.
@@ -1899,11 +1932,11 @@ enum
 	  break;
 	case BUY_BASIC_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items( FALSE , FALSE );
+	  InitTradeWithCharacter( FALSE );
 	  break;
 	case BUY_PREMIUM_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items( FALSE , TRUE );
+	  InitTradeWithCharacter( FALSE );
 	  break;
 	case SELL_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
