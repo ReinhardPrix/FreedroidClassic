@@ -147,7 +147,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_0.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1747,7 +1747,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_29.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=150
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These large containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -1987,7 +1987,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_34.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These medium sized containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2027,7 +2027,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="inventory_image_35.png"
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=100
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These medium sized containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3387,7 +3387,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=400
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="This manual allows you to throw balls of fire from your hands causing considerable damage to your target."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3427,7 +3427,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=450
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3467,7 +3467,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=450
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible spell, allowing you to poison varies targets, giving them a slow death."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3507,7 +3507,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=450
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible spell turning the target into stone."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3547,7 +3547,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=600
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible spell, causing a wave of the dreaded radial EMP to explode around you."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3587,7 +3587,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=600
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible spell, causing a wave of the dreaded radial VMX to explode around you."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3627,7 +3627,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=600
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible spell, causing a wave of the dreaded radial plasma to explode around you; burning everything that it hits."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3667,7 +3667,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=200
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible detection spell, allowing you to know when a item is near by."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -3947,7 +3947,7 @@ Base item duration=30 plus duration modifier=8
 File or directory name for inventory image="small_shield/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=330
-Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
+Item description text="A medium sized, lightweight and pretty straightforward shield. Provides decent protection."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
