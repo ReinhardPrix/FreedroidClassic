@@ -193,20 +193,20 @@ HomeMadeItemRepair ( Item RepairItem )
   //
   if ( RepairItem->max_duration == (-1) )
     {
-      PlayOnceNeededSoundSample ( "../effects/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
+      PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
     }
   else
     {
       if ( RepairItem -> max_duration <= 3 ) 
 	{
-	  PlayOnceNeededSoundSample ( "../effects/Tux_Item_Too_Fragile_0.wav" , FALSE , FALSE );
+	  PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Too_Fragile_0.wav" , FALSE , FALSE );
 	}
       else
 	{
 	  RepairItem->max_duration *= 0.5 ;
 	  RepairItem->current_duration = RepairItem->max_duration;
 	  // Play_Shop_ItemRepairedSound( );
-	  PlayOnceNeededSoundSample ( "../effects/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
+	  PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
 	}
     }
 }; // void HomeMadeItemRepair ( Item RepairItem ) 

@@ -646,7 +646,7 @@ Not_Enough_Power_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/Not_Enough_Power_Sound_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Power_Sound_0.wav", FALSE , FALSE );
       PreviousSound = now;
     }
 }; // void Not_Enough_Power_Sound ( void )
@@ -668,7 +668,7 @@ Not_Enough_Dist_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/Not_Enough_Dist_Sound_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Dist_Sound_0.wav", FALSE , FALSE );
       PreviousSound = now;
     }
 }
@@ -691,7 +691,7 @@ Not_Enough_Mana_Sound ( void )
   now = SDL_GetTicks() ;
   if ( SDL_GetTicks() - PreviousNotEnoughForceSound >= 1.15 * 1000 )
     {
-      play_sample_using_WAV_cache( "../effects/Not_Enough_Mana_0.wav", FALSE , FALSE );
+      play_sample_using_WAV_cache( "../effects/tux_ingame_comments/Not_Enough_Mana_0.wav", FALSE , FALSE );
       PreviousNotEnoughForceSound = now;
     }
 
