@@ -40,11 +40,9 @@
 #include "proto.h"
 
 // The following is the definition of the sound file names used in freedroid
-// DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
-// The order of appearance here should match the order of appearance 
-// in the enum-Environment located in defs.h!
+// DO NOT CHANGE THE ORDER OF APPEARENCE IN THIS LIST unless you
+// also adjust the order of appearance in defs.h!
 
-// haha
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
@@ -114,60 +112,28 @@ Init_Audio(void)
 
   if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
     {
-      fprintf(stderr, "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The SDL AUDIO SUBSYSTEM COULD NOT BE INITIALIZED.\n\
-\n\
-Please check that your sound card is properly configured,\n\
-i.e. if other applications are able to play sounds.\n\
-\n\
-If you for some reason cannot get your sound card ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate(ERR);
-    } else
-      {
-	printf("\nSDL Audio initialisation successful.\n");
-      }
+      DebugPrintf (0, "WARNING: SDL Sound subsystem could not be initialized.\n\
+Continuing with sound disabled\n");
+      sound_on = FALSE;
+      return;
+    } 
+  else
+    DebugPrintf(1, "SDL Audio initialisation successful.\n");
 
   // Now that we have initialized the audio SubSystem, we must open
   // an audio channel.  This will be done here (see code from Mixer-Tutorial):
 
   if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL AUDIO CHANNEL COULD NOT BE OPEND.\n\
-\n\
-Please check that your sound card is properly configured,\n\
-i.e. if other applications are able to play sounds.\n\
-\n\
-If you for some reason cannot get your sound card ready, \n\
-you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  But for now Freedroid will terminate to draw attention \n\
-to the sound problem it could not resolve.\n\
-Sorry...\n\
-----------------------------------------------------------------------\n\
-\n" );
-      Terminate (ERR);
+      DebugPrintf (0, "WARNING: SDL audio channel could not be opened. \n");
+      DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
+		   Mix_GetError());
+      sound_on = FALSE;
+      return;
     }
   else 
-    {
-      DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
-    }
+    DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
+  
 
   // Now that the audio channel is opend, its time to load all the
   // WAV files into memory, something we NEVER did while using the yiff,
@@ -180,13 +146,15 @@ Sorry...\n\
       Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
       if ( Loaded_WAV_Files[i] == NULL )
 	{
-	  DebugPrintf (0, "Error: could not load Sound-sample: %s", SoundSampleFilenames[ i ]);
-	  Terminate (ERR);
+	  DebugPrintf (0, "Error: could not load Sound-sample: %s", 
+		       SoundSampleFilenames[ i ]);
+	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
+		   Mix_GetError());
+	  sound_on = FALSE;
+	  return;
 	} // if ( !Loaded_WAV...
       else
-	{
-	  DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
-	}
+	DebugPrintf (1, "\nSuccessfully loaded file %s.", SoundSampleFilenames[i]);
     } // for (i=1; ...
 
   for (i = 0; i < NUM_COLORS; i++)
@@ -197,7 +165,10 @@ Sorry...\n\
 	{
 	  DebugPrintf ( 0, "\nError loading sound-file: %s. Mixer-Error: %s\n", 
 			MusicFiles[ i ] , Mix_GetError() ); 
-	  Terminate(ERR);
+	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
+		       Mix_GetError());
+	  sound_on = FALSE;
+	  return;
 	} // if ( !Loaded_WAV...
       else
 	DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MusicFiles[ i ]);
@@ -216,12 +187,6 @@ Sorry...\n\
 #endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
-
-int i;
-unsigned char *ptr;
-unsigned char v = 128;
-int SampleLaenge;
-
 void 
 Set_BG_Music_Volume(float NewVolume)
 {
@@ -231,24 +196,15 @@ Set_BG_Music_Volume(float NewVolume)
 #else
   if ( !sound_on ) return;
 
-  // Set the volume IN the loaded files, if SDL is used...
-  /*
-    That is old and way used, when music was technically still a sound
-  for ( i=1 ; i<5 ; i++ )
-    {
-      Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
-    }
-  */
-
   Mix_VolumeMusic( (int) rintf( NewVolume * MIX_MAX_VOLUME ) );
 
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
 #endif // HAVE_LIBSDL_MIXER
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void 
 Set_Sound_FX_Volume(float NewVolume)
 {
+  int i;
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
@@ -398,37 +354,12 @@ Play_Sound (int Tune)
   Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
   if ( Newest_Sound_Channel == -1 )
     {
-      fprintf (stderr,
-	       "\n\
-\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-The a SDL MIXER WAS UNABLE TO PLAY A CERTAIN FILE LOADED INTO MEMORY.\n\
-\n\
-The name of the problematic file is:\n\
-%s \n\
-\n\
-Analysis of the error has returned the following explanation through SDL:\n\
-%s \n\
-The most likely cause for the problem however is, that too many sounds\n\
-have been played in too rapid succession, which should be caught.\n\
-If the problem persists, please inform the developers about it.\n\
-\n\
-In the meantime you can choose to play without sound.\n\
-\n\
-If you want this, use the appropriate command line option and Freedroid will \n\
-not complain any more.  Freedroid will NOT be terminated now to draw attention \n\
-to this sound problem, because the problem is not lethal and will not interfere\n\
-with game performance in any way.  I think this is really not dangerous.\n\
-----------------------------------------------------------------------\n\
-\n" , SoundSampleFilenames[ Tune ] , Mix_GetError() );
-      // Terminate (ERR);
+      DebugPrintf (1, "WARNING: Could not play sound-sample: %s Error: %s\n\
+This usually just means that too many samples where played at the same time\n",
+		   SoundSampleFilenames[ Tune ] , Mix_GetError() );
     } // if ( ... = -1
   else
-    {
-      DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-      // DebugPrintf (1, "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-    }
+    DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
 
 #endif // HAVE_LIBSDL_MIXER
   
