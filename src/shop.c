@@ -128,19 +128,23 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
   static int WasPressed = FALSE ;
   // item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ];
   // int NumberOfItems;
-  int ItemIndex=0;
+  static int ItemIndex=0;
   int PasswordIndex = (-1) ;
   // int ClearanceIndex = (-1) ;
   int IdentifyAllowed = FALSE ;
   char* MenuTexts[ 10 ];
   int i;
   
-  int RowStart=0;
+  static int RowStart=0;
   int RowLength=SHOP_ROW_LENGTH;
 
-  MenuTexts[0]="Yes";
-  MenuTexts[1]="No";
-  MenuTexts[2]="";
+  //--------------------
+  // We add some secutiry against indexing beyond the
+  // range of items given in the list.
+  //
+  while ( ItemIndex >= NumberOfItems ) ItemIndex -- ;
+  if ( RowStart + RowLength  > NumberOfItems ) RowStart = 0 ;
+
 
   //--------------------
   // We initialize the text rectangle
@@ -810,7 +814,7 @@ TryToSellItem( item* SellItem )
  * reduce influencers money.
  * ---------------------------------------------------------------------- */
 void 
-TryToBuyItem( item* BuyItem )
+TryToBuyItem( item* BuyItem , int WithBacktalk )
 {
   int x, y;
   int MenuPosition;
@@ -825,13 +829,6 @@ TryToBuyItem( item* BuyItem )
   MenuTexts[0]="Yes";
   MenuTexts[1]="No";
   MenuTexts[2]="";
-  MenuTexts[3]="";
-  MenuTexts[4]="";
-  MenuTexts[5]="";
-  MenuTexts[8]="";
-  MenuTexts[6]="";
-  MenuTexts[7]="";
-  MenuTexts[9]="";
 
   DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
 
@@ -842,11 +839,14 @@ TryToBuyItem( item* BuyItem )
   if ( CalculateItemPrice ( BuyItem , FALSE ) > Me[0].Gold )
     {
       PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE );
-      MenuTexts[0]=" BACK ";
-      MenuTexts[1]="";
-      GiveItemDescription( linebuf , BuyItem , TRUE );
-      strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
-      DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+      if ( WithBacktalk )
+	{
+	  MenuTexts[0]=" BACK ";
+	  MenuTexts[1]="";
+	  GiveItemDescription( linebuf , BuyItem , TRUE );
+	  strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
+	  DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+	}
       return;
     }
 
@@ -862,15 +862,34 @@ TryToBuyItem( item* BuyItem )
 	    {
 	      while ( 1 )
 		{
-		  GiveItemDescription( linebuf , BuyItem , TRUE );
-		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-		  switch (MenuPosition) 
+		  if ( WithBacktalk )
 		    {
-		    case (-1):
-		      return;
-		      break;
-		    case ANSWER_YES:
+		      GiveItemDescription( linebuf , BuyItem , TRUE );
+		      strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
+		      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+		      switch (MenuPosition) 
+			{
+			case (-1):
+			  return;
+			  break;
+			case ANSWER_YES:
+			  while (EnterPressed() || SpacePressed() );
+			  Me [ 0 ] . Inventory [ i ] . multiplicity += BuyItem -> multiplicity ;
+			  Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+			  Play_Shop_ItemBoughtSound( );
+			  //--------------------
+			  // This is new.  I hope it's not dangerous.
+			  DeleteItem ( BuyItem );
+			  return;
+			  break;
+			case ANSWER_NO:
+			  while (EnterPressed() || SpacePressed() );
+			  return;
+			  break;
+			}
+		    }
+		  else
+		    {
 		      while (EnterPressed() || SpacePressed() );
 		      Me [ 0 ] . Inventory [ i ] . multiplicity += BuyItem -> multiplicity ;
 		      Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
@@ -879,11 +898,6 @@ TryToBuyItem( item* BuyItem )
 		      // This is new.  I hope it's not dangerous.
 		      DeleteItem ( BuyItem );
 		      return;
-		      break;
-		    case ANSWER_NO:
-		      while (EnterPressed() || SpacePressed() );
-		      return;
-		      break;
 		    }
 		}
 	    }
@@ -903,15 +917,37 @@ TryToBuyItem( item* BuyItem )
 	    {
 	      while ( 1 )
 		{
-		  GiveItemDescription( linebuf , BuyItem , TRUE );
-		  strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
-		  MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
-		  switch (MenuPosition) 
+		  if ( WithBacktalk )
 		    {
-		    case (-1):
-		      return;
-		      break;
-		    case ANSWER_YES:
+		      GiveItemDescription( linebuf , BuyItem , TRUE );
+		      strcat ( linebuf , "\n\n    Are you sure you wish to purchase this item?" );
+		      MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , NULL , NULL );
+		      switch (MenuPosition) 
+			{
+			case (-1):
+			  return;
+			  break;
+			case ANSWER_YES:
+			  while (EnterPressed() || SpacePressed() );
+			  CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
+			  Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
+			  Me[0].Inventory[ FreeIndex ].inventory_position.x = x;
+			  Me[0].Inventory[ FreeIndex ].inventory_position.y = y;
+			  Me[0].Gold -= CalculateItemPrice ( BuyItem , FALSE );
+			  Play_Shop_ItemBoughtSound( );
+			  //--------------------
+			  // This is new.  I hope it's not dangerous.
+			  DeleteItem ( BuyItem );
+			  return;
+			  break;
+			case ANSWER_NO:
+			  while (EnterPressed() || SpacePressed() );
+			  return;
+			  break;
+			}
+		    }
+		  else
+		    {
 		      while (EnterPressed() || SpacePressed() );
 		      CopyItem( BuyItem , & ( Me[0].Inventory[ FreeIndex ] ) , TRUE );
 		      Me[0].Inventory[ FreeIndex ].currently_held_in_hand = FALSE;
@@ -923,11 +959,6 @@ TryToBuyItem( item* BuyItem )
 		      // This is new.  I hope it's not dangerous.
 		      DeleteItem ( BuyItem );
 		      return;
-		      break;
-		    case ANSWER_NO:
-		      while (EnterPressed() || SpacePressed() );
-		      return;
-		      break;
 		    }
 		}
 	    }
@@ -1055,7 +1086,7 @@ Buy_Basic_Items( int ForHealer , int ForceMagic )
       // ItemSelected = DoEquippmentShowSelection ( DescriptionText , Buy_Pointer_List , PRICING_FOR_BUY );
       // ItemSelected = GreatItemShow ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
       ItemSelected = GreatShopInterface ( NUMBER_OF_ITEMS_IN_SHOP , Buy_Pointer_List );
-      if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] ) ;
+      if ( ItemSelected != (-1) ) TryToBuyItem( Buy_Pointer_List[ ItemSelected ] , FALSE ) ;
 
       //--------------------
       // And since it can be assumed that the shop never runs
