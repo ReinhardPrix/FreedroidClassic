@@ -21,7 +21,7 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	takeover.c bullet.c  influ.c misc.c text.c text_public.c sound.c \
 	enemy.c   input.c  main.c  rahmen.c view.c automap.c BFont.c \
 	colodefs.h itemdefs.h defs.h map.h vars.h ship.h takeover.h global.h \
-	proto.h struct.h system.h BFont.h DialogEditor.h ItemEditor.h \
+	proto.h struct.h system.h BFont.h DialogEditor.h ItemEditor.h assign_license_string.h \
 	SDL_rotozoom.c SDL_rotozoom.h open_gl.c \
 	getopt.c getopt1.c getopt.h scandir.c scandir.h 
 
