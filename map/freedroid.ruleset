@@ -2616,6 +2616,44 @@ Going to request reinforcements typical for this droid : 0
 This is Mr. Stone, a sales representative of the United Machines Corporation.
 
 ** Start of new Robot: ** 
+Droidname: HEA
+Droid portrait file name (without extension) to use="999"
+Maximum speed of this droid: 6.1
+Class of this droid: 10
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of energyloss under influence control: 15.1
+Weapon type this droid uses: 2
+Aggression rate of this droid: 60
+Is this droid immune to disruptor blasts? 1
+Score gained for destroying one of this type: 225
+Monster Level and maximum treasure chest to pick from=0
+Force how many additional magic items to be dropped=0
+Height of this droid : 1.87
+Weight of this droid : 162
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 2 of this droid : 5
+Sensor 3 of this droid : 3
+Drive item=9
+Weapon item=-1
+Shield item=-1
+Armour item=-1
+Aux1 item=-1
+Aux2 item=-1
+Special item=-1
+Greeting Sound number=-1
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Going to request reinforcements typical for this droid : 0
+This is the healer within the small startup town.
+
+** Start of new Robot: ** 
 Droidname: RMS
 Droid portrait file name (without extension) to use="999"
 Maximum speed of this droid: 6.1

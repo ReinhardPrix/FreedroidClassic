@@ -75,7 +75,6 @@ MoveBullets (void)
   int map_y;
   Bullet CurBullet;
   moderately_finepoint dist_vector;
-  float dist_vec_len;
 
   // movement of hte bullets
   for (CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)

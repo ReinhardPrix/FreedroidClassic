@@ -46,7 +46,6 @@ void Multi_Player_Menu (void);
 void Credits_Menu (void);
 void Options_Menu (void);
 void Show_Mission_Log_Menu (void);
-int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char* BackgroundToUse );
 EXTERN void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
@@ -243,25 +242,41 @@ TryToBuyItem( item* BuyItem )
  * This is the menu, where you can buy basic items.
  * ---------------------------------------------------------------------- */
 void
-Buy_Basic_Items( void )
+Buy_Basic_Items( int ForHealer , int ForceMagic )
 {
-#define BASIC_ITEMS_NUMBER 10
 #define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
 #define ITEM_MENU_DISTANCE 80
-  item SalesList[ BASIC_ITEMS_NUMBER ];
+  item SalesList[ 1000 ];
   int i;
   int InMenuPosition = 0;
   int MenuInListPosition = 0;
   char DescriptionText[5000];
+  int basic_items_number = 10;
 
   //--------------------
-  // First we make a selection of items, that can be considered 'basic'
+  // First we make a selection of items, that can be considered 'basic'.
+  // This selection depends of course on wheter the menu is generated
+  // for the smith or for the healer.
   //
-  for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
+  for ( i = 0 ; i < basic_items_number ; i++ )
     {
-      SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+      if ( ForHealer ) 
+	{
+	  SalesList[ i ].type = 0 ; // something that can NOT be applied in combat
+	  while ( ! ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat ) 
+	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+	}
+      else
+	{
+	  SalesList[ i ].type = 1 ; // something that can be applied in combat
+	  while ( ItemMap [ SalesList[ i ].type ].item_can_be_applied_in_combat || 
+		  SalesList [ i ].type == ITEM_MONEY ) 
+	    SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+	}
+
       SalesList[ i ].prefix_code = ( -1 );
-      SalesList[ i ].suffix_code = ( -1 );
+      if ( ForceMagic ) SalesList[ i ].suffix_code = ( MyRandom(10) );
+      else SalesList[ i ].suffix_code = ( -1 );
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
     }
 
@@ -312,7 +327,7 @@ Buy_Basic_Items( void )
 	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
 	  else 
 	    {
-	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
+	      if ( MenuInListPosition < basic_items_number - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
 		MenuInListPosition ++;
 	    }
 	  while ( DownPressed() );
@@ -324,94 +339,6 @@ Buy_Basic_Items( void )
   while ( SpacePressed() || EscapePressed() );
 
 }; // void Buy_Basic_Items( void )
-
-
-/* ----------------------------------------------------------------------
- * This is the menu, where you can buy basic items.
- * ---------------------------------------------------------------------- */
-void
-Buy_Premium_Items( void )
-{
-#define BASIC_ITEMS_NUMBER 10
-#define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
-#define ITEM_MENU_DISTANCE 80
-  item SalesList[ BASIC_ITEMS_NUMBER ];
-  int i;
-  int InMenuPosition = 0;
-  int MenuInListPosition = 0;
-  char DescriptionText[5000];
-
-  //--------------------
-  // First we make a selection of items, that can be considered 'basic'
-  //
-  for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
-    {
-      SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
-      SalesList[ i ].prefix_code = ( -1 );
-      SalesList[ i ].suffix_code = ( MyRandom(10) );
-      FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
-    }
-
-  while ( !SpacePressed() && !EscapePressed() )
-    {
-      InitiateMenu ( NULL );
-
-      //--------------------
-      // Now we draw our selection of items to the screen, at least the part
-      // of it, that's currently visible
-      //
-      DisplayText( " I HAVE THESE ITEMS FOR SALE         YOUR GOLD:" , 50 , 50 + (0) * ITEM_MENU_DISTANCE , NULL );
-      sprintf( DescriptionText , "%4ld" , Me.Gold );
-      DisplayText( DescriptionText , 580 , 50 + ( 0 ) * 80 , NULL );
-      for ( i = 0 ; i < NUMBER_OF_ITEMS_ON_ONE_SCREEN ; i++ )
-	{
-	  // DisplayText( ItemMap [ SalesList[ i ].type ].ItemName , 50 , 50 + i * 50 , NULL );
-	  // DisplayText( "\n" , -1 , -1, NULL );
-	  GiveItemDescription( DescriptionText , & ( SalesList[ i + MenuInListPosition ] ) , TRUE );
-	  DisplayText( DescriptionText , 50 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	  sprintf( DescriptionText , "%4ld" , 
-		   CalculateItemPrice ( & ( SalesList[ i + MenuInListPosition ] ) , FALSE ) );
-	  DisplayText( DescriptionText , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
-	}
-      
-      //--------------------
-      // Now we draw the influencer as a cursor
-      //
-      PutInfluence ( 10 , 50 + ( InMenuPosition + 1 ) * ITEM_MENU_DISTANCE );
-
-      //--------------------
-      //
-      //
-      SDL_Flip ( Screen );
-
-      if ( UpPressed() )
-	{
-	  if ( InMenuPosition > 0 ) InMenuPosition --;
-	  else 
-	    {
-	      if ( MenuInListPosition > 0 )
-		MenuInListPosition --;
-	    }
-	  while ( UpPressed() );
-	}
-      if ( DownPressed() )
-	{
-	  if ( InMenuPosition < NUMBER_OF_ITEMS_ON_ONE_SCREEN - 1 ) InMenuPosition ++;
-	  else 
-	    {
-	      if ( MenuInListPosition < BASIC_ITEMS_NUMBER - NUMBER_OF_ITEMS_ON_ONE_SCREEN )
-		MenuInListPosition ++;
-	    }
-	  while ( DownPressed() );
-	}      
-    } // while not space pressed...
-
-  if ( SpacePressed() ) TryToBuyItem( & ( SalesList[ InMenuPosition + MenuInListPosition ] ) ) ;
-
-  while ( SpacePressed() || EscapePressed() );
-
-}; // void Buy_Premium_Items( void )
-
 
 /* ----------------------------------------------------------------------
  * This is the menu, where you can buy basic items.
@@ -566,7 +493,7 @@ Repair_Items( void )
  * This is the menu, where you can sell inventory items.
  * ---------------------------------------------------------------------- */
 void
-Sell_Items( void )
+Sell_Items( int ForHealer )
 {
 #define BASIC_ITEMS_NUMBER 10
 #define NUMBER_OF_ITEMS_ON_ONE_SCREEN 4
@@ -606,6 +533,13 @@ Sell_Items( void )
       if ( Me.Inventory [ i ].type == (-1) ) continue;
       else
 	{
+	  //--------------------
+	  // Now depending on whether we sell to the healer or to
+	  // the weaponsmith, we can either sell one thing or the
+	  // other
+	  //
+	  if ( ( ForHealer ) &&  ! ItemMap [ Me.Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
+	  if ( ! ( ForHealer ) &&  ItemMap [ Me.Inventory[ i ].type ].item_can_be_applied_in_combat ) continue;
 	  Sell_Pointer_List [ Pointer_Index ] = & ( Me.Inventory[ i ] );
 	  Pointer_Index ++;
 	}
@@ -812,7 +746,7 @@ enum
 
   Me.status=MENU;
 
-  DebugPrintf (2, "\nvoid EscapeMenu(void): real function call confirmed."); 
+  DebugPrintf (2, "\nvoid BuySellMenu(void): real function call confirmed."); 
 
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
@@ -826,9 +760,9 @@ enum
       MenuTexts[2]="Sell Items";
       MenuTexts[3]="Repair Items";
       MenuTexts[4]="Leave the Sales Representative";
-      MenuTexts[5]="XABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      MenuTexts[8]="xabcdefghijklmnopqrstuvwxyz";
-      MenuTexts[6]="x01234567890";
+      MenuTexts[5]="";
+      MenuTexts[8]="";
+      MenuTexts[6]="";
       MenuTexts[7]="";
       MenuTexts[9]="";
 
@@ -841,15 +775,15 @@ enum
 	  break;
 	case BUY_BASIC_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
-	  Buy_Basic_Items();
+	  Buy_Basic_Items( FALSE , FALSE );
 	  break;
 	case BUY_PREMIUM_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
-	  Buy_Premium_Items();
+	  Buy_Basic_Items( FALSE , TRUE );
 	  break;
 	case SELL_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
-	  Sell_Items();
+	  Sell_Items( FALSE );
 	  break;
 	case REPAIR_ITEMS:
 	  while (EnterPressed() || SpacePressed() );
@@ -871,6 +805,83 @@ enum
 
   return;
 }; // void BuySellMenu ( void )
+
+/* ----------------------------------------------------------------------
+ * This function does all the buying/selling interaction with the 
+ * healer of the small starting town.
+ * ---------------------------------------------------------------------- */
+void
+HealerMenu ( void )
+{
+enum
+  { 
+    BUY_POTIONS=1, 
+    SELL_POTIONS, 
+    HEALER_GOSSIP, 
+    LEAVE_HEALER
+  };
+
+  int Weiter = 0;
+  int MenuPosition=1;
+  char* MenuTexts[10];
+
+  Me.status=MENU;
+
+  DebugPrintf (2, "\nvoid HealerMenu(void): real function call confirmed."); 
+
+  // Prevent distortion of framerate by the delay coming from 
+  // the time spend in the menu.
+  Activate_Conservative_Frame_Computation();
+  while ( EscapePressed() );
+
+  while (!Weiter)
+    {
+      MenuTexts[0]="Buy Potions and Stuff";
+      MenuTexts[1]="Sell Stuff";
+      MenuTexts[2]="Gossip";
+      MenuTexts[3]="Leave the Healer alone";
+      MenuTexts[4]="";
+      MenuTexts[5]="";
+      MenuTexts[8]="";
+      MenuTexts[6]="";
+      MenuTexts[7]="";
+      MenuTexts[9]="";
+
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NULL );
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  Weiter=!Weiter;
+	  break;
+	case BUY_POTIONS:
+	  while (EnterPressed() || SpacePressed() );
+	  Buy_Basic_Items ( TRUE , FALSE );
+	  break;
+	case SELL_POTIONS:
+	  while (EnterPressed() || SpacePressed() );
+	  Sell_Items ( TRUE );
+	  break;
+	case HEALER_GOSSIP:
+	  while (EnterPressed() || SpacePressed() );
+	  // Sell_Items( TRUE );
+	  break;
+	case LEAVE_HEALER:
+	  Weiter = !Weiter;
+	  break;
+	default: 
+	  break;
+	} 
+    }
+
+  ClearGraphMem();
+  // Since we've faded out the whole scren, it can't hurt
+  // to have the top status bar redrawn...
+  BannerIsDestroyed=TRUE;
+  Me.status=MOBILE;
+
+  return;
+}; // void HealerMenu ( void )
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and 

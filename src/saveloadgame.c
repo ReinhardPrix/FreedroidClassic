@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all Bullet AND Blast - related functions.
- *	 
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -29,6 +22,17 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * All functions that have to do with loading and saving of games.
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file should not contain any german, since it originates from
+ * a time where we didn't use german for comments any more.
+ *
+ */
+
 #define _saveloadgame_c
 
 #include "system.h"

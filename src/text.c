@@ -210,11 +210,13 @@ You must go and put a end to the thing so that further evil is prevented and the
 
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "STO" ) == 0 )
     {
-      // Switch_Background_Music_To ( "Chandra01.ogg" );
-      // ScrollText ( MyText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NULL );
-      // AnarchyMenu1.mod
-      // Switch_Background_Music_To ( CurLevel->Background_Song_Name );
       BuySellMenu( );
+      return;
+    }
+
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "HEA" ) == 0 )
+    {
+      HealerMenu( );
       return;
     }
 
