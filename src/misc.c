@@ -2250,4 +2250,31 @@ char
   return string;	
 }
 
+/*----------------------------------------------------------------------
+ * try getting round endian-differences with minimal intervention
+ * to the code.. 
+ *
+ * read out a 2-byte short-int from give memory pointer, either using
+ * the given byte-order (PCs) or SDL's 'network byte order' (Mac)
+ *
+ *
+ * FIXME: Ideally all binar read/write should use SDLNet_Read/Write fcts, 
+ * but this would imply larger changes to the code...
+ *----------------------------------------------------------------------*/
+Sint16 
+ReadSint16 (void * memory)
+{
+  Sint16 ret;
+
+#ifdef __APPLE_CC__
+  ret = SDLNet_Read16 (memory);
+#else
+  memcpy (&ret, memory, sizeof(Sint16));
+#endif
+
+  return (ret);
+
+} /* ReadSint16() */
+
+
 #undef _misc_c

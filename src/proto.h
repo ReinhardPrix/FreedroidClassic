@@ -625,6 +625,7 @@ EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel , int player_num ) ;
 EXTERN void ExecuteEvent ( int EventNumber , int player_num );
 EXTERN char *va (char *format, ...);
+EXTERN Sint16 ReadSint16 (void * memory);
 
 // enemy.c 
 #undef EXTERN

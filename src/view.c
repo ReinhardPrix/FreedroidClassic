@@ -2208,11 +2208,11 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     int rotation_index;
     int our_phase ;
     FILE *DataFile;
-    size_t chunks_read;
     void* tmp_buff;
-
+    int filelen, tmplen;
     char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
+    char *DataBuffer, *ptr;
 
     Sint16 cooked_walk_object_phases;
     Sint16 cooked_attack_object_phases;
@@ -2230,8 +2230,16 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     //
     DebugPrintf ( 1 , "\n%s():  grabbing new image series..." , __FUNCTION__ );
 
+    // reading binary-files requires endian swapping depending on platform
+    // Therefore we read the whole file into memory first then read out the 
+    // numbers using SDLNet_Read..(). The file have to be written using SDLNet_Write..()
     DataFile = open_tux_image_archive_file ( tux_part_group , motion_class , part_string );
+    filelen = FS_filelength (DataFile);
+    DataBuffer = MyMalloc(filelen);
+    fread ( DataBuffer, filelen, 1, DataFile );
+    fclose ( DataFile );
 
+    ptr = DataBuffer;
     //--------------------
     // We store the currently loaded part string, so that we can later
     // decide if we need to do something upon an equipment change or
@@ -2245,8 +2253,10 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     // and therefore it should have the right header bytes (keyword tuxX)
     // and it also should be suitable for pure SDL (keyword sdlX)
     //
-    fread ( archive_type_string , 4 , 1 , DataFile ) ;
-    fread ( ogl_support_string , 4 , 1 , DataFile ) ;
+    memcpy ( archive_type_string , ptr, 4 );
+    ptr += 4;
+    memcpy ( ogl_support_string ,  ptr, 4 );
+    ptr += 4;
 
     //--------------------
     // We check if this is really an image archive of ENEMY type...
@@ -2277,38 +2287,47 @@ images.  Therefore I refuse to process this file any further here.",
     // enemy image collections and then disregard them, because for
     // tux, we don't need this kind of information anyway.
     //
-    fread ( & ( cooked_walk_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_attack_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_gethit_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_death_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_stand_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+
+    cooked_walk_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_attack_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_gethit_object_phases  = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_death_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_stand_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
 
     //--------------------
     // Now we can start to really load the images.
     //
     for ( rotation_index = 0 ; rotation_index < MAX_TUX_DIRECTIONS ; rotation_index ++ )
-    {
+      {
 	for ( our_phase = 0 ; our_phase < TUX_TOTAL_PHASES ; our_phase ++ )
-	{	    
+	  {	    
 	    //--------------------
 	    // Now if the iso_image we want to blit right now has not yet been loaded,
 	    // then we need to do something about is and at least attempt to load the
 	    // surface
 	    //
 	    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
-	    {
-
-		fread ( & ( img_xlen ) , 1 , sizeof ( img_xlen ) , DataFile ) ;
-		fread ( & ( img_ylen ) , 1 , sizeof ( img_ylen ) , DataFile ) ;
-		fread ( & ( img_x_offs ) , 1 , sizeof ( img_x_offs ) , DataFile ) ;
-		fread ( & ( img_y_offs ) , 1 , sizeof ( img_y_offs ) , DataFile ) ;
+	      {
+		img_xlen = ReadSint16 ( ptr );
+		ptr += sizeof ( Sint16 );
+		img_ylen = ReadSint16 ( ptr );
+		ptr += sizeof ( Sint16 );
+		img_x_offs = ReadSint16 ( ptr );
+		ptr += sizeof ( Sint16 );
+		img_y_offs = ReadSint16 ( ptr );
+		ptr += sizeof ( Sint16 );
 		
 		//--------------------
 		// Some extra checks against illegal values for the length and height
 		// of the tux images.
 		//
 		if ( ( img_xlen <= 0 ) || ( img_ylen <= 0 ) )
-		{
+		  {
 		    GiveStandardErrorMessage ( __FUNCTION__  , "\
 Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 					       PLEASE_INFORM, IS_FATAL );
@@ -2318,20 +2337,22 @@ Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 		// loaded data.  That is much cleaner than hard-writing the data into the 
 		// memory, that SDL has prepared internally.
 		//
-		tmp_buff = MyMalloc ( 4 * ( img_xlen * img_ylen + 1 ) ) ;
-		chunks_read = fread ( tmp_buff , 1 , 4 * img_xlen * img_ylen , DataFile ) ;
-		if ( chunks_read < 4 * img_xlen * img_ylen )
-		{
-		    fprintf( stderr, "\n\ntux_part_group: %d, our_phase: %d rotation_index: %d\n" , 
-			     tux_part_group, our_phase , rotation_index );
+		tmplen = 4 * img_xlen * img_ylen;
+		tmp_buff = MyMalloc ( tmplen ) ;
+		memcpy ( tmp_buff , ptr, tmplen );
+		ptr += tmplen;
+		
+		if ( ptr - DataBuffer > filelen )
+		  {
 		    GiveStandardErrorMessage ( __FUNCTION__  , "\
-Reading the image archive file met an unexpected lack of read data.",
+Datafile-length seems inconsistent with size of contained graphics-data", 
 					       PLEASE_INFORM, IS_FATAL );
-		}
-
+		  }
+	
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . attached_pixel_data = tmp_buff ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface = 
-		    SDL_CreateRGBSurfaceFrom ( tmp_buff , img_xlen , img_ylen , 32, 4 * img_xlen , 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
+		    SDL_CreateRGBSurfaceFrom ( tmp_buff , img_xlen , img_ylen , 32, 4 * img_xlen , 
+					       0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
 		
 		if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface == NULL )
 		{
@@ -2353,20 +2374,22 @@ Creation of an Tux SDL software surface from pixel data failed.",
 		// This might be useful later, when using only SDL output...
 		//
 		// SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-		// our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+		// our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image );
+		// now we have an alpha-surf of right size
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . zoomed_out_surface = NULL ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . texture_has_been_created = FALSE ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x = img_x_offs ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y = img_y_offs ;
 		
-		SDL_SetColorKey( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface , 0 , 0 ); // this should clear any color key in the dest surface
+		// this should clear any color key in the dest surface
+		SDL_SetColorKey( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface , 0 , 0 );
+		
 
 		if ( ! use_open_gl ) 		  
-		    flip_image_horizontally ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface ) ;
-
-	    }
+		  flip_image_horizontally ( loaded_tux_images[tux_part_group][our_phase][rotation_index].surface ) ;
+	      }
 	    else
-	    {
+	      {
 		//--------------------
 		// If the surface pointer hasn't been NULL in the first place, then
 		// obviously something with the initialisation was wrong in the first
@@ -2376,24 +2399,16 @@ Creation of an Tux SDL software surface from pixel data failed.",
 Surface to be loaded didn't have empty (NULL) pointer in the first place.",
 					   PLEASE_INFORM, IS_FATAL );
 
-	    }
-	}
-    }
+	      }
+	  }
+      } /* for rotation_index < MAX_TUX_DIRECTIONS */
 
-    if ( fclose ( DataFile ) == EOF)
-    {
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Freedroid was unable to close the image archive file.\n\
-This indicates a strange bug in this installation of Freedroid, that is\n\
-very likely a problem with the file/directory permissions of the files\n\
-belonging to Freedroid.",
-				   PLEASE_INFORM, IS_FATAL );
-    }
-    else
-    {
-	DebugPrintf( 1 , "\n%s(): file closed successfully...\n" , __FUNCTION__ );
-    }
     
+    /* ok, we're done reading. Don't forget to free data-file */
+    free ( DataBuffer );
+
+    return;
+
 }; // void grab_tux_images_from_archive ( ... )
 
 /* ----------------------------------------------------------------------
