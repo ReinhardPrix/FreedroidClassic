@@ -89,7 +89,7 @@ enum
 #define NE_DIGIT_BLOCK_FILE     "ne_digits.gif"
 
 #define NE_CONSOLEN_PIC_FILE    "ne_cons.png" 
-#define NE_BANNER_BLOCK_FILE    "ne_rahmen.gif"
+#define NE_BANNER_BLOCK_FILE    "ne_rahmen.png"
 #define NE_TITLE_PIC_FILE       "ne_title.jpg"
 #define NE_CONSOLE_BG_PIC1_FILE  "console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE  "console_bg2.jpg"

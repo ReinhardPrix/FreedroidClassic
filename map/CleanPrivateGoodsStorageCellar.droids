@@ -66,7 +66,7 @@ SpecialForce: Type=629 X=3 Y=3 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 P
 SpecialForce: Type=629 X=1 Y=1 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=6 Friendly=0
 SpecialForce: Type=751 X=1 Y=7 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
 SpecialForce: Type=751 X=1 Y=10 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=7 Friendly=0
-SpecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
+S**pecialForce: Type=883 X=3 Y=11 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
 
 // These two are guarding the lift, so that noone can escape the level
 SpecialForce: Type=883 X=19 Y=4 Fixed=1 Marker=1 AdvancedCommand=0 Parameter1=9 Parameter2=8 Friendly=0
@@ -84,6 +84,42 @@ Question="name" Answer="Technically speaking, my name is 198.0.0.142.34.12, but 
 Question="auda" Answer="Yes, that's my alias name.  It's beautiful, isn't it?  I received it from my maker Dr. Chandra."
 Question="chandra" Answer="Actually, the family of Professor Chandra has a long history of research and successes in artificiall intelligence development.  Of course this has brought him many enemys as well, especially since Dr. Chandra rejected an offer by the MS to work for them."
 End of Question-Response List for this friendly droid
+
+//**********************************************************************
+// This is the friendly 296 'Butch' unit inside the bunker
+SpecialForce: Type=296 X=29 Y=11 Fixed=1 Marker=0 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1
+Start of Question-Response List for this friendly droid
+
+Question="name" Answer="Technically speaking, my name is 198.0.0.142.2.22, but I prefer my alias name, which is Butch."
+
+Question="butch" Answer="Yes, that's me."
+
+Question="hello" Answer="Hello!  Come inside quickly and pray that they have not seen us!  There are MS droidic killerbots right outside, over at the elevator entrance!  You must be more careful.  Say, are you the droid they said they wanted to contruct from the forbidden archive data?  Has their plan succeeded?"
+
+Question="job" Answer="I used to serve Dr. Sorenson.  But I fear that she is no longer alive."
+
+Question="Sorenson" Answer="She taught me lot of things.  But now I fear that she is no longer alive."
+
+Question="taught" Answer="Yes.  Like to talk polite or to pray."
+
+Question="alive" Answer="We were on the quarters deck, when the 751 laser generated plasma chunk hit her in the chest.  Her head and guts and arms were spilling all over the room and redening the walls.  I fear that she might not have survived this.  I came here to look for medical supplies in her private goods, but didn't find any."
+
+Question="goods" Answer="She used to have lots of clothes in big boxes cause they didn't fit into her room any more.  She really loved clothes."
+
+Question="sorry" Answer="It's a sad thing indeed."
+
+Question="pray" Answer="Yes.  It's a technique I've learned from my maker Dr. Sorenson.  She taught me lots of useful things."
+
+Question="MS" Answer="The MS killer machines are assaulting the scientists retreat.  Why are they doing this?  They have kiled people up at the private quarters deck.  I fear that once they are done with the humans, they will go for us droids too."
+
+Question="droids" Answer=""
+
+Question="yes" Answer="Wonderful."
+
+Question="no" Answer="A pitty."
+
+End of Question-Response List for this friendly droid
+
 
 ** End of this levels droid data **
 
