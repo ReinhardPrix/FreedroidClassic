@@ -48,17 +48,11 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText="Hacked bot login :  tux
-Password : *******"
+New Option Nr=0  OptionText="Hacked bot login : tux  Password : *******"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
-Subtitle="You have new mail in /var/mail/tux.
-last login from dev/ttyS0 on Sun, 23 mar 2314.
-tux@hacked_bot:~>"
+Subtitle="You have new mail in /var/mail/tux.  last login from dev/ttyS0 on Sun, 23 mar 2314. tux@hacked_bot:~>"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="
-"
-ReplySample=""
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
@@ -70,12 +64,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=1  OptionText="./pull_breaks.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186  
-Subtitle="...pulling breaks, using script V 1.0.2 
-(c) gnu.org, 2324
-...checking requirements...
-...energy on breaks... done.
-Status:  All movement suppressed.
-"
+Subtitle="...pulling breaks, using script V 1.0.2 (c) gnu.org, 2324 ...checking requirements... energy on breaks... done. Status:  All movement suppressed. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="SetCompletelyFixedProperty"
@@ -86,12 +75,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="./follow_me.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=107  
-Subtitle="Initiating tacking sequence...
-Energy on breaks removed...
-Trying to keep up with Tux position now.
-Ok.  Following you.
-
-"
+Subtitle="Initiating tacking sequence... Energy on breaks removed... Trying to keep up with Tux position now. Ok.  Following you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="SetFollowTuxProperty"
@@ -102,11 +86,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="sh ./move_freely.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=250  
-Subtitle="...removing energy from breaks...
-...resuming normal patrol operations....
-Done.
-Status:  Patroling, using script V 1.0.2 
-(c) gnu.org, 2324"
+Subtitle="...removing energy from breaks... resuming normal patrol operations....Done. Status:  Patroling, using script V 1.0.2 (c) gnu.org, 2324"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"
