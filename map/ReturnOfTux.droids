@@ -537,9 +537,12 @@ SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=34 AdvancedCommand=2 Parameter1=
 
 ** Beginning of new Level **
 Level=17
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
-Allowed Type of Random Droid for this level: 751
+Maximum number of Random Droids=60
+Minimum number of Random Droids=70
+Allowed Type of Random Droid for this level: 123
+Allowed Type of Random Droid for this level: 139
+Allowed Type of Random Droid for this level: 247
+Allowed Type of Random Droid for this level: 249
 
 SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=16 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot1StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
 SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=16 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="FieldBot2StartGameSquare" RushTux="no" DialogSectionToUse="883" ShortLabel="Avenger Bot"
