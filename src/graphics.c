@@ -197,6 +197,8 @@ set_mouse_cursor_to_shape ( int given_shape )
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR: Unhandled mouse cursor shape type received.",
 				       PLEASE_INFORM, IS_FATAL );
+	    SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
+	    current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
 	    break;
     }
 }; // void set_mouse_cursor_to_shape ( int given_shape ) 

@@ -1036,7 +1036,7 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 
     if ( ! success )
     {
-	DebugPrintf ( -4 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
+	DebugPrintf ( 1 , "\n%s():  bad luck with random walk point this time..." , __FUNCTION__ );
 	ThisRobot -> warten = 1.6 ;
 	
     }
@@ -2524,7 +2524,7 @@ ProcessAttackStateMachine ( int enemynum )
 	     ThisRobot -> combat_state != RUSH_TUX_ON_SIGHT_AND_OPEN_TALK )
 	{
 	    if ( ThisRobot -> combat_state != FIGHT_ON_TUX_SIDE )
-		DebugPrintf ( -1000, "\nFriendly bot of type (%d) now switched to FIGHT_ON_TUX_SIDE." , ThisRobot -> type );
+		DebugPrintf ( 1 , "\nFriendly bot of type (%d) now switched to FIGHT_ON_TUX_SIDE." , ThisRobot -> type );
 	    ThisRobot -> combat_state = FIGHT_ON_TUX_SIDE ;
 	}
     }
