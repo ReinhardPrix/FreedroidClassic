@@ -42,10 +42,11 @@
 
 int CursorIsOnRect (SDL_Rect *rect);
 SDL_Rect up_rect,down_rect,left_rect,right_rect;
+extern bool show_cursor;
 
 #define UPDATE_ONLY 0x01
 
-extern bool show_cursor;
+
 //--------------------
 // Definitions for the menu inside the in-game console
 //
@@ -66,10 +67,10 @@ SDL_Rect Cons_Menu_Rect = {60, 180, 100, 256};
 SDL_Rect Cons_Text_Rect = {180, 180, SCREENLEN-175, 305}; 
 
 SDL_Rect Cons_Menu_Rects[4] = {
-  {60, 180 + 0*64, 100, 64},
-  {60, 180 + 1*64, 100, 64},
-  {60, 180 + 2*64, 100, 64},
-  {60, 180 + 3*64, 100, 64} };
+  {60, 180 + 0*64, 100, 62},
+  {60, 181 + 1*64, 100, 62},
+  {60, 181 + 2*64, 100, 62},
+  {60, 181 + 3*64, 100, 62} };
 
 SDL_Rect up_rect;
 SDL_Rect down_rect;
@@ -99,6 +100,7 @@ EnterLift (void)
   Me.status= ELEVATOR;
 
   ResetMouseWheel ();  // forget previous mouse-wheel action
+  SDL_ShowCursor(SDL_DISABLE);
 
   curLevel = CurLevel->levelnum;
 
@@ -123,10 +125,10 @@ EnterLift (void)
   ShowLifts (curLevel, liftrow);
 
   /* Warten, bis User Feuer auslaesst */
-  while (SpacePressed ()) ;
+  while (SpacePressed ()||MouseRightPressed()) ;
 
 
-  while (!SpacePressed ())
+  while (! (SpacePressed()||MouseLeftPressed()))
     {
       if (UpPressed () || WheelUpPressed ())
 	if (upLift != -1)
@@ -218,7 +220,7 @@ EnterLift (void)
 
   // UnfadeLevel ();
 
-  while (SpacePressed ()) ;
+  while (SpacePressed()||MouseLeftPressed()) ;
 
   Me.status = MOBILE;
   Me.TextVisibleTime=0;
@@ -246,6 +248,7 @@ ShowLifts (int level, int liftrow)
   int xoffs = (User_Rect.w - 578)/2;
   int yoffs = (User_Rect.h - 211)/2;
 
+  SDL_ShowCursor(SDL_DISABLE);
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
 
@@ -296,24 +299,21 @@ void
 EnterKonsole (void)
 {
   int ReenterGame = FALSE;
-  int i, pos;
+  int i, pos, mousemove_buf;
   SDL_Rect TmpRect;
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
-
   Copy_Rect (User_Rect, TmpRect);
   Copy_Rect (Full_User_Rect, User_Rect);
 
-  while (SpacePressed () || MouseRightPressed() );  /* wait for user to release Space */
+  while (SpacePressed()||MouseRightPressed() );  /* wait for user to release Space */
 
   Me.status = CONSOLE;
 
   ResetMouseWheel ();
-
   SDL_SetCursor (arrow_cursor);
-  SDL_ShowCursor (SDL_ENABLE);
 
   SetCurrentFont( Para_BFont );
 
@@ -324,6 +324,9 @@ EnterKonsole (void)
 
   while (!ReenterGame)
     {
+      if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
+      else SDL_ShowCursor (SDL_DISABLE);
+
       if (EscapePressed() || MouseRightPressed())
 	{
 	  while (EscapePressed() || MouseRightPressed());
@@ -335,8 +338,15 @@ EnterKonsole (void)
 	  MoveMenuPositionSound ();
 	  if (pos > 0) pos--;
 	  else pos = 3;
-	  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
-			 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+	  // when warping the mouse-cursor: don't count that as a mouse-activity
+	  // this is a dirty hack, but that should be enough for here...
+	  mousemove_buf = last_mouse_event;
+	  if (show_cursor)
+	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+	  keyboard_update ();  // this sets a new last_mouse_event
+	  last_mouse_event = mousemove_buf; //... which we override.. ;)
+	  
 
 	  PaintConsoleMenu (pos, UPDATE_ONLY);
 	  while (UpPressed());
@@ -346,8 +356,14 @@ EnterKonsole (void)
 	  MoveMenuPositionSound ();
 	  if (pos < 3) pos++;
 	  else pos = 0;
-	  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
-			 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+	  // when warping the mouse-cursor: don't count that as a mouse-activity
+	  // this is a dirty hack, but that should be enough for here...
+	  mousemove_buf = last_mouse_event;
+	  if (show_cursor)
+	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+	  keyboard_update ();  // this sets a new last_mouse_event
+	  last_mouse_event = mousemove_buf; //... which we override.. ;)
 
 	  PaintConsoleMenu (pos, UPDATE_ONLY);
 	  while (DownPressed());
@@ -355,17 +371,17 @@ EnterKonsole (void)
 
       // check if the mouse-cursor is on any of the console-menu points
       for (i=0; i < 4; i++)
-	if (CursorIsOnRect (&Cons_Menu_Rects[i]) && (pos != i) )
+	if (show_cursor && (pos != i) && CursorIsOnRect(&Cons_Menu_Rects[i]) )
 	  {
 	    MoveMenuPositionSound ();
 	    pos = i;
 	    PaintConsoleMenu (pos, UPDATE_ONLY);
 	  }
 
-      if (SpacePressed ())
+      if (SpacePressed () || MouseLeftPressed ())
 	{
 	  MenuItemSelectedSound();
-	  while (SpacePressed());
+	  while (SpacePressed() || MouseLeftPressed());
 	  switch (pos)
 	    {
 	    case 0:
@@ -382,7 +398,9 @@ EnterKonsole (void)
 	    case 3:
 	      Fill_Rect(User_Rect, Black);
 	      ShowLifts (CurLevel->levelnum, -1);
-	      Wait4Fire();
+	      // this sucks, but we dont have anything better at the moment....
+	      while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() ));
+	      while (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed());
 	      PaintConsoleMenu(pos, 0);
 	      break;
 	    default: 
@@ -468,6 +486,8 @@ ShowDeckMap (Level deck)
   Me.pos.x = CurLevel->xlen/2;
   Me.pos.y = CurLevel->ylen/2;
 
+  SDL_ShowCursor (SDL_DISABLE);
+
   SetCombatScaleTo( 0.25 );
 
   Assemble_Combat_Picture( ONLY_SHOW_MAP );
@@ -477,7 +497,9 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  Wait4Fire();
+  // this sucks, but we dont have anything better at the moment....
+  while (! (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed() ));
+  while (SpacePressed() || EscapePressed() || MouseLeftPressed() || MouseRightPressed());
 
   SetCombatScaleTo (1.0);
 
@@ -543,9 +565,13 @@ GreatDruidShow (void)
   page = 0;
 
   show_droid_info (droidtype, page);
+  while (SpacePressed() || MouseLeftPressed());
 
   while (!finished)
     {
+      if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
+      else SDL_ShowCursor (SDL_DISABLE);
+
       if (key_pressed)
 	{
 	  show_droid_info (droidtype, page);
@@ -558,61 +584,76 @@ GreatDruidShow (void)
 
 	  if ( CursorIsOnRect (&left_rect) )
 	    {
-	      if (page > 0) page --;
-	      MoveMenuPositionSound();
+	      if (page > 0) {
+		page --;
+		MoveMenuPositionSound();
+	      }
 	      key_pressed = TRUE;
 	    }
 	  else if (CursorIsOnRect (&right_rect))
 	    {
-	      if (page < 2) page ++;
-	      MoveMenuPositionSound();
+	      if (page < 2) {
+		page ++;
+		MoveMenuPositionSound();
+	      }
 	      key_pressed = TRUE;
 	    }
 	  else if (CursorIsOnRect (&up_rect))
 	    {
-	      if (droidtype < Me.type) droidtype ++;	      
-	      MoveMenuPositionSound();
+	      if (droidtype < Me.type) {
+		droidtype ++;
+		MoveMenuPositionSound();
+	      }
 	      key_pressed = TRUE;
 	    }
 	  else if (CursorIsOnRect (&down_rect))
 	    {
-	      if (droidtype > 0) droidtype --;
-	      MoveMenuPositionSound();
+	      if (droidtype > 0) {
+		droidtype --;
+		MoveMenuPositionSound();
+	      }
 	      key_pressed = TRUE;
 	    }
 	}
-      if (EscapePressed () || MouseRightPressed())
+      if (SpacePressed() || EscapePressed () || MouseRightPressed())
 	finished = TRUE;
 
-      while (EscapePressed() || MouseRightPressed ());
-
+      while (SpacePressed() || EscapePressed() || MouseRightPressed ());
 
       if (UpPressed() || WheelUpPressed())
 	{
-	  MoveMenuPositionSound();
 	  while (UpPressed());
-	  if (droidtype < Me.type) droidtype ++;
+	  if (droidtype < Me.type) {
+	    droidtype ++;
+	    MoveMenuPositionSound();
+	  }
 	  key_pressed = TRUE;
 	}
       if (DownPressed() || WheelDownPressed())
 	{
-	  MoveMenuPositionSound();
 	  while (DownPressed());
-	  if (droidtype > 0) droidtype --;
+	  if (droidtype > 0) {
+	    droidtype --;
+	    MoveMenuPositionSound();
+	  }
 	  key_pressed = TRUE;
 	}
       if (RightPressed() )
 	{
-	  MoveMenuPositionSound();
 	  while (RightPressed());
-	  if (page < 2) page ++;
+	  if (page < 2) {
+	    page ++;
+	    MoveMenuPositionSound();
+	  }
 	  key_pressed = TRUE;
 	}
       if (LeftPressed() )
 	{
-	  MoveMenuPositionSound();
 	  while (LeftPressed());
-	  if (page > 0) page --;
+	  if (page > 0) {
+	    page --;
+	    MoveMenuPositionSound();
+	  }
 	  key_pressed = TRUE;
 	}
 

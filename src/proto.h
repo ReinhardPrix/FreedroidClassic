@@ -46,11 +46,11 @@ EXTERN int ShipEmptyCounter;
 #endif
 EXTERN void parse_command_line (int argc, char *const argv[]);
 EXTERN void Title ( char *MissionBriefingPointer );
-EXTERN void EndTitle (void);
 EXTERN void InitFreedroid (int argc, char *const argv[]);
 EXTERN void InitNewMission (char *MissionName);
-EXTERN void ThouArtDefeated (void);
 EXTERN void CheckIfMissionIsComplete (void);
+EXTERN void ThouArtDefeated (void);
+EXTERN void ThouArtVictorious (void);
 
 /* influ.c */
 #undef EXTERN

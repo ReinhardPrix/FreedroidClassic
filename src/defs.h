@@ -46,8 +46,6 @@
 
 #define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
 
-#define Wait4Fire() do { while (!SpacePressed() && !EscapePressed()); while(SpacePressed() || EscapePressed());} while(0)
-
 #define COLLISION_STEPSIZE   0.1
 
 // **********************************************************************

@@ -44,6 +44,9 @@
 #define SDL_BUTTON_WHEELDOWN 5
 #endif
 
+bool show_cursor;    // show mouse-cursor or not?
+#define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
+
 int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
 Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
@@ -174,26 +177,6 @@ ReactToSpecialKeys(void)
   //
   if ( QPressed() ) QuitGameMenu();
 
-/*   if ( DPressed() ) */
-/*     Me.energy = 0; */
-
-  
-  // To debug the Debriefing() I added a function to add or subtract
-  // a thousand points of score via numerical keyboard functions.
-  // Activate this if you want to test that.  
-  
-/*   if ( KP0Pressed() ) */
-/*     { */
-/*       while (KP0Pressed()); */
-/*       RealScore-=1000; */
-/*     } */
-/*   if ( KP1Pressed() ) */
-/*     { */
-/*       while (KP1Pressed()); */
-/*       RealScore+=1000; */
-/*     } */
-  
-  
   if ( CPressed() && Alt_Was_Pressed()
        && Ctrl_Was_Pressed() && Shift_Was_Pressed() ) 
     Cheatmenu ();
@@ -227,6 +210,12 @@ int
 keyboard_update(void)
 {
   Uint8 axis; 
+
+  // switch mouse-cursor visibility as a function of time of last activity
+  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
+    show_cursor = FALSE;
+  else
+    show_cursor = TRUE;
 
   while( SDL_PollEvent( &event ) )
     {
@@ -787,7 +776,9 @@ keyboard_update(void)
 	case SDL_MOUSEMOTION:
 	  input_axis.x = event.button.x - USER_FENSTER_CENTER_X + 16; 
 	  input_axis.y = event.button.y - USER_FENSTER_CENTER_Y + 16; 	  
+
 	  last_mouse_event = SDL_GetTicks ();
+
 	  break;
 	  
 	  /* Mouse control */
@@ -795,7 +786,6 @@ keyboard_update(void)
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlyMouseLeftPressed = TRUE;
-	      CurrentlySpacePressed = TRUE;
 	      axis_is_active = TRUE;
 	    }
 
@@ -820,7 +810,6 @@ keyboard_update(void)
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      CurrentlyMouseLeftPressed = FALSE;
-	      CurrentlySpacePressed = FALSE;
 	      axis_is_active = FALSE;
 	    }
 

@@ -474,11 +474,11 @@ EscapeMenu (void)
 	      finished = TRUE;
 	      key_pressed = TRUE;
 	    }
-	  if (SpacePressed() ) 
+	  if ((SpacePressed() || MouseLeftPressed()) ) 
 	    {
 	      key_pressed = TRUE;
 	      MenuItemSelectedSound();
-	      while (SpacePressed()) ;
+	      while ((SpacePressed() || MouseLeftPressed())) ;
 
 	      switch (MenuPosition) 
 		{
@@ -683,10 +683,10 @@ enum
 		}
 	    }
 
-	  if (SpacePressed() ) 
+	  if ((SpacePressed() || MouseLeftPressed()) ) 
 	    {
 	      MenuItemSelectedSound();
-	      while (SpacePressed());
+	      while ((SpacePressed() || MouseLeftPressed()));
 	      key_pressed = TRUE;
 	      switch (MenuPosition) 
 		{
@@ -696,7 +696,7 @@ enum
 		  break;
 
 		case BACK:
-		  while (EnterPressed() || SpacePressed() );
+		  while (EnterPressed() || (SpacePressed() || MouseLeftPressed()) );
 		  finished=TRUE;
 		  break;
 		default: 
@@ -777,10 +777,10 @@ enum
 	      key_pressed = TRUE;
 	    }
 
-	  if (SpacePressed() ) 
+	  if ((SpacePressed() || MouseLeftPressed()) ) 
 	    {
 	      MenuItemSelectedSound();
-	      while (SpacePressed());
+	      while ((SpacePressed() || MouseLeftPressed()));
 	      key_pressed = TRUE;
 	      switch (MenuPosition) 
 		{
@@ -891,10 +891,10 @@ Droid_Talk_Options_Menu (void)
 	      key_pressed = TRUE;
 	    }
 
-	  if (SpacePressed() ) 
+	  if ((SpacePressed() || MouseLeftPressed()) ) 
 	    {
 	      MenuItemSelectedSound();
-	      while (SpacePressed());
+	      while ((SpacePressed() || MouseLeftPressed()));
 	      key_pressed = TRUE;
 	      switch (MenuPosition) 
 		{
@@ -998,10 +998,10 @@ enum
 	      key_pressed = TRUE;
 	    }
 
-	  if (SpacePressed() ) 
+	  if ((SpacePressed() || MouseLeftPressed()) ) 
 	    {
 	      MenuItemSelectedSound();
-	      while (SpacePressed());
+	      while ((SpacePressed() || MouseLeftPressed()));
 	      key_pressed = TRUE;
 	      switch (MenuPosition) 
 		{
@@ -1099,8 +1099,8 @@ Credits_Menu (void)
 
   SDL_Flip( ne_screen );
 
-  while (!SpacePressed() && !EscapePressed());
-  while (SpacePressed() || EscapePressed());
+  while (!(SpacePressed() || MouseLeftPressed() || EscapePressed()));
+  while ((SpacePressed() || MouseLeftPressed() || EscapePressed()));
 
   return;
 
@@ -1555,7 +1555,7 @@ Level_Editor(void)
 		CurLevel->map[BlockY][BlockX]=V_ZUTUERE;	            	      
 	      else CurLevel->map[BlockY][BlockX]=H_ZUTUERE;	            	      
 	    }
-	  if (SpacePressed())
+	  if ((SpacePressed() || MouseLeftPressed()))
 	    CurLevel->map[BlockY][BlockX]=FLOOR;	            	      	    
 
 	} // while (!EscapePressed())
@@ -1605,10 +1605,10 @@ Level_Editor(void)
 		  key_pressed = TRUE;
 		}
 	  
-	      if (SpacePressed() ) 
+	      if ((SpacePressed() || MouseLeftPressed()) ) 
 		{
 		  MenuItemSelectedSound();
-		  while (SpacePressed() );
+		  while ((SpacePressed() || MouseLeftPressed()) );
 		  key_pressed = TRUE;
 		  switch (MenuPosition) 
 		    {
@@ -1617,7 +1617,8 @@ Level_Editor(void)
 		      SaveShip("Testship");
 		      CenteredPutString ( ne_screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		      SDL_Flip ( ne_screen );
-		      Wait4Fire();
+		      while (!(SpacePressed() || MouseLeftPressed())); 
+		      while ((SpacePressed() || MouseLeftPressed()));
 		      break;
 		    case CHANGE_LEVEL_POSITION: 
 		      break;

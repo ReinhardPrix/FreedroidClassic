@@ -1015,21 +1015,17 @@ Title ( char *MissionBriefingPointer )
 
 } /* Title() */
 
-/*@Function============================================================
-@Desc: Diese Prozedur ist fuer die Introduction in das Spiel verantwortlich. Im
-   Moment beschr„nkt sich ihre Funktion auf das Laden und anzeigen eines
-   Titelbildes, das dann ausgeblendet wird.
-
-@Ret: keiner
-@Int: keiner
-* $Function----------------------------------------------------------*/
+/*----------------------------------------------------------------------*/
+/* $Function----------------------------------------------------------*/
 void
-EndTitle (void)
+ThouArtVictorious(void)
 {
   SDL_Rect rect;
   Uint32 now;
 
   Switch_Background_Music_To ( DebriefingSong );
+
+  SDL_ShowCursor (SDL_DISABLE);
 
   ShowScore = (long)RealScore;
   Me.status = VICTORY;
@@ -1037,7 +1033,7 @@ EndTitle (void)
 
   SetCurrentFont( Para_BFont);
 
-  while (SpacePressed());
+  while ((SpacePressed()||MouseLeftPressed()));
 
   now=SDL_GetTicks();
 
@@ -1057,9 +1053,10 @@ EndTitle (void)
   rect.w -= 20;  //leave some border
   ScrollText (DebriefingText , &rect , 6 );
 
-  while ( SpacePressed() );
+  while ( (SpacePressed()||MouseLeftPressed()) );
 
-} /* EndTitle() */
+  return;
+} 
 
 /*@Function============================================================
 @Desc: Show end-screen 
@@ -1076,14 +1073,13 @@ ThouArtDefeated (void)
   Activate_Conservative_Frame_Computation ();
 
   Me.status = TERMINATED;
+  SDL_ShowCursor (SDL_DISABLE);
   ThouArtDefeatedSound ();
   ExplodeInfluencer ();
 
-  //  while (SpacePressed());
-
   now=SDL_GetTicks();
 
-  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )//&& (!SpacePressed()))
+  while ( (SDL_GetTicks() - now < WAIT_AFTER_KILLED) )
     {
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
@@ -1093,7 +1089,6 @@ ThouArtDefeated (void)
   
   Mix_HaltMusic ();
 
-  //  if (!SpacePressed()) 
   white_noise (ne_screen, &User_Rect, WAIT_AFTER_KILLED);
 
   Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
@@ -1107,7 +1102,7 @@ ThouArtDefeated (void)
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
   now=SDL_GetTicks();
-  while (  (SDL_GetTicks() - now < SHOW_WAIT) ); //&& (!SpacePressed()) );
+  while (  (SDL_GetTicks() - now < SHOW_WAIT) ); 
 
   UpdateHighscores ();
 
@@ -1118,7 +1113,7 @@ ThouArtDefeated (void)
 
 /*----------------------------------------------------------------------
  * This function checks, if the influencer has succeeded in his given 
- * mission.  If not it returns, if yes the EndTitle/Debriefing is
+ * mission.  If not it returns, if yes the Debriefing is
  * started.
  ----------------------------------------------------------------------*/
 void 
@@ -1133,7 +1128,7 @@ CheckIfMissionIsComplete (void)
   // mission complete: all droids have been killed
   RealScore += MISSION_COMPLETE_BONUS;
 
-  EndTitle();
+  ThouArtVictorious();
 
   //  UpdateHighscores();
 

@@ -224,14 +224,14 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 	{
 	  just_started = FALSE;
 	  now = SDL_GetTicks();
-	  while ( !SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT)) ;  // wait before scrolling
+	  while ( !(SpacePressed()||MouseLeftPressed()) && (SDL_GetTicks() - now < SHOW_WAIT)) ;  // wait before scrolling
 
 	  //--------------------
 	  // Returning from this function is only possible after the minimum display time has been
 	  // reached.  This is useful for the game-won-phase, where the text must not disappear, even
 	  // if several clicks occur from heavy combat just instants before.
 	  //
-	  if ( SpacePressed() && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
+	  if ( (SpacePressed()||MouseLeftPressed()) && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
 	    {
 	      ret = 1;
 	      break;
@@ -258,7 +258,7 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
       // reached.  This is useful for the game-won-phase, where the text must not disappear, even
       // if several clicks occur from heavy combat just instants before.
       //
-      if ( SpacePressed() && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
+      if ( (SpacePressed()||MouseLeftPressed()) && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
 	{
 	  ret = 1;
 	  break;

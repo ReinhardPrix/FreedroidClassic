@@ -135,17 +135,7 @@ MoveInfluence (void)
   // We store the influencers position for the history record and so that others
   // can follow his trail.
   //
-  /*
-  for ( i = 0 ; i < (MAX_INFLU_POSITION_HISTORY-1) ; i++ )
-    {
-      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].x = 
-	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].x;
-      Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 1 - i ].y = 
-	Me.Position_History[ MAX_INFLU_POSITION_HISTORY - 2 - i ].y;
-    }
-  Me.Position_History[0].x=Me.pos.x;
-  Me.Position_History[0].y=Me.pos.y;
-  */
+
   CurrentZeroRingIndex++;
   CurrentZeroRingIndex %= MAX_INFLU_POSITION_HISTORY;
   Me.Position_History_Ring_Buffer [CurrentZeroRingIndex].x = Me.pos.x;
@@ -206,27 +196,13 @@ MoveInfluence (void)
        (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
 
-  if ( (SpacePressed ()) && (!NoDirectionPressed () ) &&
+  if ( (SpacePressed() || MouseLeftPressed()) && (!NoDirectionPressed () ) &&
        (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
 
 
-  if (stop_influencer)
-    {
-      Me.speed.x = 0.0;
-      Me.speed.y = 0.0;
-      if (SpacePressed())
-	{
-	  Me.firewait = 0;
-	  FireBullet ();
-	}
-    }
-  else
-    {
-      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
-	  && (Me.firewait == 0) && (NoInfluBulletOnWay ()))
-	FireBullet ();
-    }
+  if ((SpacePressed()||MouseLeftPressed())&&(!NoDirectionPressed())&&(Me.status==WEAPON)&&(Me.firewait == 0) )
+    FireBullet ();
 
 
   InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed

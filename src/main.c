@@ -40,14 +40,11 @@
 #include "vars.h"
 #include "map.h"
 
-#define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
-
 int ThisMessageTime;
 float LastGotIntoBlastSound = 2;
 float LastRefreshSound = 2;
 
-bool show_cursor;
-
+extern bool show_cursor;
 void UpdateCountersForThisFrame (void);
 
 /*-----------------------------------------------------------------
@@ -70,20 +67,20 @@ main (int argc, char *const argv[])
   joy_sensitivity = 1;
   sound_on = TRUE;	 /* default value, can be overridden by command-line */
 
-  show_cursor = TRUE;
-
   now = SDL_GetTicks();
   InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
+
+  SDL_ShowCursor (SDL_DISABLE);
 
   while (!QuitProgram)
     {
       InitNewMission ( STANDARD_MISSION );
 
-      while (SpacePressed ());
+      while ((SpacePressed()||MouseLeftPressed()));
       show_droid_info (Me.type, -3);  // show unit-intro page
 
       now=SDL_GetTicks();
-      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
+      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!(SpacePressed()||MouseLeftPressed())) );
 
       ClearGraphMem();
       DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -94,23 +91,14 @@ main (int argc, char *const argv[])
 
       while (!GameOver && !QuitProgram)
 	{
-
 	  StartTakingTimeForFPSCalculation(); 
-
-	  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
-	    {
-	      if (show_cursor) SDL_ShowCursor (SDL_DISABLE);
-	      show_cursor = FALSE;
-	    }
-	  else
-	    {
-	      if (!show_cursor) SDL_ShowCursor (SDL_ENABLE);
-	      show_cursor = TRUE;
-	    }
 
 	  UpdateCountersForThisFrame ();
 
 	  ReactToSpecialKeys();
+
+	  if (show_cursor) SDL_ShowCursor(SDL_ENABLE);
+	  else SDL_ShowCursor(SDL_DISABLE);
 
 	  MoveLevelDoors ();	
 
@@ -122,7 +110,7 @@ main (int argc, char *const argv[])
 
 	  DisplayBanner (NULL, NULL,  0 );
 
-	  MoveBullets ();   // please leave this in front of graphics output, so that time_in_frames always starts with 1
+	  MoveBullets ();   // leave this in front of graphics output: time_in_frames should start with 1
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
 

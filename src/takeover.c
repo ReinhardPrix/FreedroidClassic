@@ -145,7 +145,7 @@ Takeover (int enemynum)
    */
   Activate_Conservative_Frame_Computation ();
 
-  while (SpacePressed ()) ;  /* make sure space is release before proceed */
+  while ((SpacePressed()||MouseLeftPressed())) ;  /* make sure space is release before proceed */
 
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
@@ -157,15 +157,16 @@ Takeover (int enemynum)
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
+  SDL_ShowCursor (SDL_DISABLE); // no mouse-cursor in takeover game!
 
   show_droid_info ( Me.type, -1 );
-  while ( !SpacePressed() );
-  while ( SpacePressed() );
+  while ( !(SpacePressed() || MouseLeftPressed()) );
+  while ( (SpacePressed() || MouseLeftPressed()) );
   
 
   show_droid_info ( AllEnemys[enemynum].type, -2 );
-  while ( !SpacePressed() );
-  while ( SpacePressed() );
+  while ( !(SpacePressed() || MouseLeftPressed()) );
+  while ( (SpacePressed() || MouseLeftPressed()) );
 
 
   while (!FinishTakeover)
@@ -261,13 +262,12 @@ Takeover (int enemynum)
       DisplayBanner (message, NULL , 0 );	
       ShowPlayground ();
       now = SDL_GetTicks();
-      while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT) );
+      while (!(SpacePressed() || MouseLeftPressed()) && (SDL_GetTicks() - now < SHOW_WAIT) );
 
     }	/* while !FinishTakeover */
 
   // restore User_Rect
   Copy_Rect (buf, User_Rect);
-
 
   ClearGraphMem();
 
@@ -302,35 +302,36 @@ ChooseColor (void)
 
   while (!ColorChosen)
     {
-      /* wait for next countdown tick */
-      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ); 
-
-      prev_count_tick += count_tick_len; /* set for next tick */
-      
-      if (RightPressed () || WheelDownPressed ())
+      if (RightPressed() || WheelDownPressed())
 	{
 	  if (YourColor != VIOLETT) MoveMenuPositionSound();
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
-      if (LeftPressed () || WheelUpPressed ())
+      if (LeftPressed() || WheelUpPressed())
 	{
 	  if (YourColor != GELB) MoveMenuPositionSound();
 	  YourColor = GELB;
 	  OpponentColor = VIOLETT;
 	}
 
-      if (SpacePressed ())
+      if (SpacePressed()||MouseLeftPressed())
 	{
 	  ColorChosen = TRUE;
-	  while (SpacePressed ()) ;
+	  while (SpacePressed()||MouseLeftPressed()) ;
+	  MoveMenuPositionSound();
 	}
 
-      countdown--;		/* Count down */
-      sprintf (count_text, "Color-%d", countdown);
+      /* wait for next countdown tick */
+      if ( SDL_GetTicks() >= prev_count_tick + count_tick_len )
+	{ 
+	  prev_count_tick += count_tick_len; /* set for next tick */
+	  countdown--;		/* Count down */
+	  sprintf (count_text, "Color-%d", countdown);
 
-      DisplayBanner (count_text, NULL , 0);
-      ShowPlayground ();
+	  DisplayBanner (count_text, NULL , 0);
+	  ShowPlayground ();
+	}
 
 
       if (countdown == 0)
@@ -394,7 +395,7 @@ PlayGame (void)
 	  last_movekey_time = SDL_GetTicks();
 	}
 
-      set  = set  || SpacePressed();
+      set  = set  || (SpacePressed() || MouseLeftPressed());
 
       if (WheelUpPressed()) wheel_up ++;
       if (WheelDownPressed()) wheel_down ++;
