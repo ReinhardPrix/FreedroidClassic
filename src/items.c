@@ -45,6 +45,7 @@ enum
     WEAPON_SLOT = 0 ,
     SHIELD_SLOT , 
     SPECIAL_SLOT , 
+    ARMOUR_SLOT , 
     AUX1_SLOT , 
     AUX2_SLOT , 
     DRIVE_SLOT ,
@@ -89,6 +90,10 @@ GetPositionCode ( Item ItemPointer )
  else if ( & ( Me [ 0 ] . shield_item ) == ItemPointer )
    {
       return SHIELD_SLOT;
+   }
+ else if ( & ( Me [ 0 ] . armour_item ) == ItemPointer )
+   {
+      return ARMOUR_SLOT;
    }
  else if ( & ( Me [ 0 ] . special_item ) == ItemPointer )
    {
@@ -155,13 +160,18 @@ FindPointerToPositionCode ( int SlotCode , int PlayerNum )
       break;
     case SPECIAL_SLOT:
       DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from special slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
+		    Me [ PlayerNum ] . special_item . type ) ;
       return ( & ( Me [ PlayerNum ] . special_item ) ) ;
       break;
     case SHIELD_SLOT:
       DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from shield slot. " , 
-		    Me [ PlayerNum ] . weapon_item . type ) ;
+		    Me [ PlayerNum ] . shield_item . type ) ;
       return ( & ( Me [ PlayerNum ] . shield_item ) ) ;
+      break;
+    case ARMOUR_SLOT:
+      DebugPrintf ( 0 , "\nItem Found! It's of type %d. It's from armour slot. " , 
+		    Me [ PlayerNum ] . armour_item . type ) ;
+      return ( & ( Me [ PlayerNum ] . armour_item ) ) ;
       break;
     case AUX1_SLOT:
       return ( & ( Me [ PlayerNum ] . aux1_item ) ) ;
@@ -1721,12 +1731,7 @@ DropHeldItemToInventory( void )
 	      DropItemPointer->currently_held_in_hand = FALSE ;
 
 	      //--------------------
-	      // Now we inform the server of our performed move....
-	      //
-	      // WARNING!!  In this case here, the temporarily disabled item does not get
-	      // restored!!  Therefore we have to inform the server, that now there is an 
-	      // additional item move, namely the disabling of the one item.  This must
-	      // be done FIRST!
+	      // Now we inform the server of the second part of our performed move....
 	      //
 	      if ( ClientMode && ! ServerMode ) 
 		{
@@ -2335,6 +2340,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
   int item_width;
   grob_point Inv_Loc;
   char TempText[1000];
+  int SourceCode , DestCode ;
 
   //--------------------
   // In case we found an item on the floor, we remove it from the floor
@@ -2425,6 +2431,18 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 
 	  // ItemPointer->type = (-1);
 	  DeleteItem( ItemPointer );
+
+	  //--------------------
+	  // And of course we shouldn't forget to tell the server about this 
+	  // movement as well....
+	  //
+	  if ( ClientMode && ! ServerMode ) 
+	    {
+	      SourceCode = GetPositionCode ( ItemPointer ) ;
+	      DestCode = GetPositionCode ( & ( Me [ 0 ] . Inventory [ InvPos ] ) ) ;
+	      SendPlayerItemMoveToServer ( SourceCode , DestCode , Inv_Loc.x , Inv_Loc.y ) ;
+	    }
+  
 	}
     }
   
