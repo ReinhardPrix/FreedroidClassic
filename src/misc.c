@@ -776,8 +776,13 @@ ComputeFPSForThisFrame(void)
   tenframedelay=Now_SDL_Ticks-Ten_Frame_SDL_Ticks;
   onehundredframedelay=Now_SDL_Ticks-Onehundred_Frame_SDL_Ticks;
   
-  FPSover1 = 1000 * 1 / (float) oneframedelay;
-  FPSover10 = 1000 * 10 / (float) tenframedelay;
+  if ( !oneframedelay ) FPSover1 = 1000 * 1 / 0.5 ;
+  else FPSover1 = 1000 * 1 / (float) oneframedelay;
+
+  if ( !tenframedelay ) FPSover10 = 1000 * 10 / 0.5 ;
+  else FPSover10 = 1000 * 10 / (float) tenframedelay;
+
+  if ( !tenframedelay ) FPSover100 = 1000 * 100 / 0.5 ;
   FPSover100 = 1000 * 100 / (float) onehundredframedelay;
   
 #else

@@ -1052,7 +1052,7 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
   Level ThisLevel = curShip . AllLevels [ ThisRobot->pos.z ] ;
   int BestWaypoint = ( -1 );
 
-  DebugPrintf ( 0 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
+  DebugPrintf ( 1 , "\nAdvancedCommand == 2 encountered --> teleporting to closest wp." );
   ThisRobot->AdvancedCommand = 0 ;
   
   for ( i = 0 ; i < MAXWAYPOINTS ; i ++ )
@@ -1069,7 +1069,6 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
 	  BestDistance = NewDistance;
 	  BestWaypoint = i ;
 	}
-
     }
 
   //--------------------

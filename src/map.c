@@ -128,7 +128,7 @@ ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelN
 	  PositionPointer->x = ResolveLevel->labels [ i ] . pos . x ;
 	  PositionPointer->y = ResolveLevel->labels [ i ] . pos . y ;
 	  PositionPointer->level = LevelNum ;
-	  DebugPrintf ( 0 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
+	  DebugPrintf ( 1 , "\nResolving map label '%s' succeeded: pos.x=%d, pos.y=%d, pos.z=%d." ,
 			MapLabel , PositionPointer->x , PositionPointer->y , PositionPointer->level );
 	  return;
 	}
@@ -137,7 +137,7 @@ ResolveMapLabelOnLevel ( char* MapLabel , location* PositionPointer , int LevelN
   PositionPointer->x = -1;
   PositionPointer->y = -1;
   PositionPointer->level = -1 ;
-  DebugPrintf ( 0 , "\nResolving map label '%s' failed on level %d." ,
+  DebugPrintf ( 1 , "\nResolving map label '%s' failed on level %d." ,
 		MapLabel , LevelNum );
 }; // void ResolveMapLabel ( char* MapLabel , grob_point* PositionPointer )
 
@@ -436,7 +436,7 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
   PreservedLetter=MapLabelSectionEnd[0];
   MapLabelSectionEnd[0]=0;
   NumberOfMapLabelsInThisLevel = CountStringOccurences ( MapLabelSectionBegin , LABEL_ITSELF_ANNOUNCE_STRING ) ;
-  DebugPrintf( 0 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
+  DebugPrintf( 1 , "\nNumber of map labels found in this level : %d." , NumberOfMapLabelsInThisLevel );
 
   //--------------------
   // Now we decode all the map label information

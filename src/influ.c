@@ -65,7 +65,7 @@ int NoInfluBulletOnWay (void);
 int CurrentZeroRingIndex=0;
 
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
-#define MAXIMAL_STEP_SIZE ( 7.0/20 )
+#define MAXIMAL_STEP_SIZE ( 7.0/20.0 )
 
 /* ----------------------------------------------------------------------
  *
@@ -414,13 +414,13 @@ MoveTuxAccordingToHisSpeed ( PlayerNum )
   //
   // NOTE:  PLEASE LEAVE THE .0 in the code or gcc will round it down to 0 like an integer.
   //
-  planned_step_x = Me [ PlayerNum ] .speed.x * Frame_Time ();
-  planned_step_y = Me [ PlayerNum ] .speed.y * Frame_Time ();
-  if ( fabsf(planned_step_x) >= MAXIMAL_STEP_SIZE )
+  planned_step_x = Me [ PlayerNum ] . speed . x * Frame_Time ();
+  planned_step_y = Me [ PlayerNum ] . speed . y * Frame_Time ();
+  if ( fabsf( planned_step_x ) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_x = copysignf( MAXIMAL_STEP_SIZE , planned_step_x );
     }
-  if ( fabsf(planned_step_y) >= MAXIMAL_STEP_SIZE )
+  if ( fabsf( planned_step_y ) >= MAXIMAL_STEP_SIZE )
     {
       planned_step_y = copysignf( MAXIMAL_STEP_SIZE , planned_step_y );
     }

@@ -666,7 +666,8 @@ Cheatmenu (void)
 
 	  printf_SDL (Screen, 15, -1," --- END --- \n");
 	  printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
-	  getchar_raw ();
+	  while ( ( !SpacePressed()) && (!EscapePressed()) );
+	  while ( SpacePressed() || EscapePressed() );
 	  break;
 
 	case 'g': /* complete robot list of this ship */
@@ -1833,7 +1834,7 @@ Load_Existing_Hero_Menu ( void )
   int cnt;
   int MenuPosition;
 
-  DebugPrintf ( 0 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
+  DebugPrintf ( 1 , "\nint Load_Existing_Hero_Menu ( void ): real function call confirmed.");
   InitiateMenu( NE_TITLE_PIC_FILE );
   MenuTexts[0]="";
   MenuTexts[1]="";

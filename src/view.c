@@ -794,6 +794,82 @@ PutMouseMoveCursor ( void )
 
 }; // void PutMouseMoveCursor ( void )
 
+/* ----------------------------------------------------------------------
+ * The 'Influencer can be either displayed as a ball or as the more telling
+ * and well known Tux, the cute penguin linux mascot.  This function is
+ * invoked in the later case, but the generic 'PutInfluencer' function.
+ * ---------------------------------------------------------------------- */
+void
+PutTux ( int x , int y , int PlayerNum )
+{
+  static float Previous_angle [ MAX_PLAYERS ]  = { -1000 , -1000 , -1000 , -1000 , -1000 } ; // a completely unrealistic value
+  static SDL_Surface* tmp_influencer [ MAX_PLAYERS ]  = { NULL , NULL , NULL , NULL , NULL };
+  static int Previous_phase [ MAX_PLAYERS ] = { -100 , -100 , -100 , -100 , -100 } ; // a completely unrealistic value
+  moderately_finepoint in_tile_shift;
+  float angle;
+  SDL_Rect TargetRectangle;
+
+  //--------------------
+  // If we make the angle dependent upon direction of movement we use
+  // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
+  //
+  // But currently, we use as the angle the current location of the mouse on the local
+  // client for the first player,
+  // but for other players, we use the last known mouse possision as reported by the server
+  //
+  if ( PlayerNum == 0 ) 
+    {
+      angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
+    }
+  else
+    {
+      angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
+    }
+  
+  //--------------------
+  // Now we see if we must re-rotate the tux for this player...
+  //
+  if ( ( angle != Previous_angle [ PlayerNum ] ) || ( tmp_influencer [ PlayerNum ] == NULL ) || ( ( (int) Me [ PlayerNum ].phase) != Previous_phase [ PlayerNum ] ) )
+    {
+      if ( tmp_influencer [ PlayerNum ] != NULL ) SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
+      tmp_influencer [ PlayerNum ] = 
+	rotozoomSurface( TuxWorkingCopy [ PlayerNum ] [ ((int) Me [ PlayerNum ].phase) ] , angle , 1.0 , FALSE );
+      Previous_angle [ PlayerNum ] = angle;
+      Previous_phase [ PlayerNum ] = (int) Me [ PlayerNum ].phase;
+    }
+  // SDL_SetColorKey ( tmp_influencer [ PlayerNum ], SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer[ PlayerNum ]->format , 255 , 0 , 255 ) ); 
+  SDL_SetColorKey ( tmp_influencer [ PlayerNum ] , 0 , SDL_MapRGB ( tmp_influencer [ PlayerNum ]->format , 255 , 0 , 255 ) ); // turn off colorkey
+  // SDL_SetAlpha( TuxMotionArchetypes[5][i] , SDL_SRCALPHA , 0 );
+  
+  //--------------------
+  // The rotation may of course have changed the dimensions of the
+  // block to be blitted, so we must adapt the blit target coordinates
+  // accoridngly
+  //
+  in_tile_shift.x = 0 ;
+  in_tile_shift.y = - Block_Height/2 ; // tux is half a tile lower the tux_tile center
+  RotateVectorByAngle ( & in_tile_shift , angle );
+  
+  if ( x == -1 ) 
+    {
+      // TargetRectangle.x = UserCenter_x - tmp_influencer [ PlayerNum ]->w / 2 + in_tile_shift.x ;
+      // TargetRectangle.y = UserCenter_y - tmp_influencer [ PlayerNum ]->h / 2 + in_tile_shift.y ;
+      TargetRectangle.x = UserCenter_x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x +
+	( ( - Me[0].pos.x + Me[ PlayerNum ].pos.x ) ) * Block_Width;
+      TargetRectangle.y = UserCenter_y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y +
+	( ( - Me[0].pos.y + Me[ PlayerNum ].pos.y ) ) * Block_Width;
+    }
+  else
+    {
+      TargetRectangle.x = x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x;
+      TargetRectangle.y = y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y;
+    }
+  
+  SDL_BlitSurface( tmp_influencer[ PlayerNum ] , NULL , Screen, &TargetRectangle );
+  // SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
+  
+}; // void PutTux ( int x , int y , int PlayerNum );
+
 /* -----------------------------------------------------------------
  * This function draws the influencer to the screen, either
  * to the center of the combat window if (-1,-1) was specified, or
@@ -809,14 +885,9 @@ PutInfluence ( int x , int y , int PlayerNum )
   SDL_Rect TargetRectangle;
   SDL_Rect Text_Rect;
   int alpha_value;
-  int i;
   int use_tux = TRUE;
   point UpperLeftBlitCorner;
-  float angle;
-  static float Previous_angle [ MAX_PLAYERS ]  = { -1000 , -1000 , -1000 , -1000 , -1000 } ; // a completely unrealistic value
-  static SDL_Surface* tmp_influencer [ MAX_PLAYERS ]  = { NULL , NULL , NULL , NULL , NULL };
-  static int Previous_phase [ MAX_PLAYERS ] = { -100 , -100 , -100 , -100 , -100 } ; // a completely unrealistic value
-  moderately_finepoint in_tile_shift;
+  int i;
 
   Text_Rect.x=UserCenter_x + Block_Width/3;
   Text_Rect.y=UserCenter_y  - Block_Height/2;
@@ -838,7 +909,6 @@ PutInfluence ( int x , int y , int PlayerNum )
       if ( Me [ PlayerNum ] . status == OUT ) return;
       if ( Me [ PlayerNum ] . pos . z != Me [ 0 ] . pos . z ) return;
       
-
       UpperLeftBlitCorner.x = UserCenter_x - Block_Width  / 2 ;
       UpperLeftBlitCorner.y = UserCenter_y - Block_Height / 2 ;
 
@@ -910,67 +980,7 @@ PutInfluence ( int x , int y , int PlayerNum )
   //
   if ( use_tux )
     {
-      //--------------------
-      // If we make the angle dependent upon direction of movement we use
-      // angle = - ( atan2 (Me [ PlayerNum ].speed.y,  Me [ PlayerNum ].speed.x) * 180 / M_PI + 90 );
-      //
-      // But currently, we use as the angle the current location of the mouse on the local
-      // client for the first player,
-      // but for other players, we use the last known mouse possision as reported by the server
-      //
-      if ( PlayerNum == 0 ) 
-	{
-	  angle = - ( atan2 ( input_axis.y,  input_axis.x ) * 180 / M_PI + 90 );
-	}
-      else
-	{
-	  angle = - ( atan2 ( Me [ PlayerNum ] . LastMouse_Y ,  Me [ PlayerNum ] . LastMouse_X ) * 180 / M_PI + 90 );
-	}
-
-      //--------------------
-      // Now we see if we must re-rotate the tux for this player...
-      //
-      if ( ( angle != Previous_angle [ PlayerNum ] ) || ( tmp_influencer [ PlayerNum ] == NULL ) || ( ( (int) Me [ PlayerNum ].phase) != Previous_phase [ PlayerNum ] ) )
-	{
-	  if ( tmp_influencer [ PlayerNum ] != NULL ) SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
-	  tmp_influencer [ PlayerNum ] = 
-	    rotozoomSurface( TuxWorkingCopy [ PlayerNum ] [ ((int) Me [ PlayerNum ].phase) ] , angle , 1.0 , FALSE );
-	  Previous_angle [ PlayerNum ] = angle;
-	  Previous_phase [ PlayerNum ] = (int) Me [ PlayerNum ].phase;
-	}
-      // SDL_SetColorKey ( tmp_influencer [ PlayerNum ], SDL_SRCCOLORKEY, SDL_MapRGB ( tmp_influencer[ PlayerNum ]->format , 255 , 0 , 255 ) ); 
-      SDL_SetColorKey ( tmp_influencer [ PlayerNum ] , 0 , SDL_MapRGB ( tmp_influencer [ PlayerNum ]->format , 255 , 0 , 255 ) ); // turn off colorkey
-      SDL_SetAlpha( TuxMotionArchetypes[5][i] , SDL_SRCALPHA , 0 );
-
-
-      //--------------------
-      // The rotation may of course have changed the dimensions of the
-      // block to be blitted, so we must adapt the blit target coordinates
-      // accoridngly
-      //
-      in_tile_shift.x = 0 ;
-      in_tile_shift.y = - Block_Height/2 ; // tux is half a tile lower the tux_tile center
-      RotateVectorByAngle ( & in_tile_shift , angle );
-	  
-      if ( x == -1 ) 
-	{
-	  // TargetRectangle.x = UserCenter_x - tmp_influencer [ PlayerNum ]->w / 2 + in_tile_shift.x ;
-	  // TargetRectangle.y = UserCenter_y - tmp_influencer [ PlayerNum ]->h / 2 + in_tile_shift.y ;
-	  TargetRectangle.x = UserCenter_x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x +
-	    ( ( - Me[0].pos.x + Me[ PlayerNum ].pos.x ) ) * Block_Width;
-	  TargetRectangle.y = UserCenter_y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y +
-	    ( ( - Me[0].pos.y + Me[ PlayerNum ].pos.y ) ) * Block_Width;
-
-
-	}
-      else
-	{
-	  TargetRectangle.x = x - tmp_influencer[ PlayerNum ]->w / 2 + in_tile_shift.x;
-	  TargetRectangle.y = y - tmp_influencer[ PlayerNum ]->h / 2 + in_tile_shift.y;
-	}
-      
-      SDL_BlitSurface( tmp_influencer[ PlayerNum ] , NULL , Screen, &TargetRectangle );
-      // SDL_FreeSurface( tmp_influencer[ PlayerNum ] );
+      PutTux ( x , y , PlayerNum );
     }
   else
     {

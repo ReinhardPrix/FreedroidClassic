@@ -52,6 +52,8 @@ char* DebriefingSong;
 char* NextMissionName;
 char Previous_Mission_Name[1000];
 
+extern int feenableexcept (int TheExceptionFlags );
+
 /* ---------------------------------------------------------------------- 
  * This function displays a startup status bar that shows a certain
  * percentage of loading done.
@@ -828,7 +830,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nMapchange label unused..." );
+	  DebugPrintf ( 1 , "\nMapchange label unused..." );
 	}
 
       //--------------------
@@ -853,7 +855,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nTeleport target label unused..." );
+	  DebugPrintf ( 1 , "\nTeleport target label unused..." );
 	}
 
       // Now we read in the new value for that map tile
@@ -915,7 +917,7 @@ Get_Game_Events ( char* EventSectionPointer )
 	}
       else
 	{
-	  DebugPrintf ( 0 , "\nTrigger label unused..." );
+	  DebugPrintf ( 1 , "\nTrigger label unused..." );
 	}
 
 
@@ -1306,20 +1308,6 @@ timeout (int sig)
   DebugPrintf (2, "\n\nstatic void timeout(int sig): Automatic termination NOW!!");
   Terminate (0);
 }; // static void timeout (int sig)
-
-/* ----------------------------------------------------------------------
- * To better keep track of floating point operations gone awry, we'll 
- * also keep track of the SIGFPE and 'redirect' it so a SIGSEGV, so the
- * debugger will stop at the right place....
- * ---------------------------------------------------------------------- */
-static void
-FloatingPointException (int sig)
-{
-  fprintf ( stderr , "\n\nstatic void FloatingPointException(int sig): redirecting to SIGSEGV...\n\n" );
-  // Terminate (0);
-  raise ( SIGSEGV );
-}; // static void timeout (int sig)
-
 
 char copyright[] = "\nCopyright (C) 2002 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
@@ -2101,22 +2089,10 @@ InitFreedroid ( void )
 {
   struct timeval timestamp;
   int i;
-  // float test;
-  // float test2=0;
 
   // feenableexcept ( FE_ALL_EXCEPT );
-  feenableexcept ( FE_DIVBYZERO | FE_INVALID | FE_UNDERFLOW | FE_OVERFLOW ); // FE_INEXACT
-
+  feenableexcept ( FE_DIVBYZERO | FE_INVALID | FE_OVERFLOW ); // FE_INEXACT | FE_UNDERFLOW 
   // fesetexceptflag (const fexcept_t *flagp, int excepts);
-
-  // DebugPrintf ( 0 , "\nSetting up handler to handle FPEs..." );
-  // signal ( SIGFPE , FloatingPointException );
-
-  // test = 15 / test2;
-
-  // raise ( SIGFPE );
-
-  // InvincibleMode = TRUE;
 
   //--------------------
   // It might happen, that the uninitialized AllBullets array contains a 1
@@ -2142,7 +2118,6 @@ InitFreedroid ( void )
   Me[0].TextVisibleTime = 0;
   Me[0].readied_skill = 0;
   CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-  // Me[0].TextToBeDisplayed = "Hello, I'm 001.";
   Me[0].TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
 
   // --------------------
