@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: all features, movement, fireing, collision and extras of the
- *	influencer are done in here.
- *
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -29,6 +22,18 @@
  *  MA  02111-1307  USA
  *
  */
+
+/* ----------------------------------------------------------------------
+ * This file contains all features, movement, fireing, collision and 
+ * extras of the influencer.
+ * ---------------------------------------------------------------------- */
+
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please let me know.
+ */
+
+
 #define _influ_c
 
 #include "system.h"
@@ -41,7 +46,6 @@
 #define TIMETILLNEXTBULLET 14
 
 #define REFRESH_ENERGY		3
-// NORMALISATION #define COLLISION_PUSHSPEED	70
 #define COLLISION_PUSHSPEED	7
 
 #define BOUNCE_LOSE_ENERGY 3	/* amount of lose-energy at enemy-collisions */
@@ -55,33 +59,13 @@ int CurrentZeroRingIndex=0;
 #define max(x,y) ((x) < (y) ? (y) : (x) ) 
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
-
-/*
-void
-Move_Influencers_Friends ( void )
-{
-  int Enum;
-
-  if ( Me.FramesOnThisLevel == MAX_INFLU_POSITION_HISTORY )
-    {
-
-      printf(" Level correction occured...\n");
-      fflush( stdout );
-
-      for ( Enum = 0 ; Enum < Number_Of_Droids_On_Ship ; Enum ++ )
-	{
-	  if ( ( AllEnemys[ Enum ].Friendly ) &&
-	       ( AllEnemys[ Enum ].FollowingInflusTail) )
-	    {
-	      AllEnemys[ Enum ].levelnum = CurLevel->levelnum;
-	      AllEnemys[ Enum ].pos.x = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].x;
-	      AllEnemys[ Enum ].pos.y = Me.Position_History[ MAX_INFLU_POSITION_HISTORY -1 ].y;
-	    }
-	}
-    }
-}; // void Move_Influencers_Friends (void)
-*/
-
+/* ----------------------------------------------------------------------
+ * This function initializes the influencers position history, which is
+ * a ring buffer and is needed for throwing the influencer back (only one
+ * or two positions would be needed for that) and for influencers followers
+ * to be able to track the influencers path (10000 or so positions are used
+ * for that, and that's why it is a ring buffer).
+ * ---------------------------------------------------------------------- */
 void 
 InitInfluPositionHistory( void )
 {
@@ -138,136 +122,6 @@ GetInfluPositionHistoryZ( int HowLongPast )
 }
 
 
-/*@Function============================================================
-@Desc: Fires Bullets automatically
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-AutoFireBullet (void)
-{
-  int j, i;
-  int TargetNum = -1;
-  signed long BestDist = 200000;
-  int guntype;
-  int xdist, ydist;
-  signed long LDist, LXDist, LYDist;
-  float bullet_speed;
-
-  if (CurLevel->empty)
-    return;
-
-  if (Me.firewait)
-    return;
-  Me.firewait = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_recharging_time;
-
-  // find out the number of the shots target
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
-    {
-      if (AllEnemys[i].Status == OUT)
-	continue;
-      if (AllEnemys[i].levelnum != CurLevel->levelnum)
-	continue;
-      if (!IsVisible (&AllEnemys[i].pos))
-	continue;
-      LXDist = (AllEnemys[i].pos.x - Me.pos.x);
-      LYDist = (AllEnemys[i].pos.y - Me.pos.y);
-      LDist = LXDist * LXDist + LYDist * LYDist;
-      if (LDist <= 0)
-	{
-	  DebugPrintf (2, " ERROR determination of LDist !!.");
-	  getchar ();
-	  Terminate (-1);
-	}
-      if (LDist < BestDist)
-	{
-	  TargetNum = i;
-	  BestDist = LDist;
-	}
-    }
-  if (TargetNum == -1)
-    {
-      //                  gotoxy(1,1);
-      //                  printf(" Sorry, nobody in reach.");
-      //                  getchar();
-      //                  Terminate(-1);
-      return;
-    }
-
-  guntype = ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_bullet_image_type;
-
-  Fire_Bullet_Sound ( guntype );
-
-  xdist = AllEnemys[TargetNum].pos.x - Me.pos.x;
-  ydist = AllEnemys[TargetNum].pos.y - Me.pos.y;
-
-  // some protection against division by zero
-  if (xdist == 0)
-    xdist = 2;
-  if (ydist == 0)
-    ydist = 2;
-  if (xdist == 1)
-    xdist = 2;
-  if (ydist == 1)
-    ydist = 2;
-  if (xdist == -1)
-    xdist = 2;
-  if (ydist == -1)
-    ydist = 2;
-
-  // find a bullet entry, that isn't used yet...
-  for (j = 0; j < MAXBULLETS - 1; j++)
-    {
-      if (AllBullets[j].type == OUT)
-	break;
-    }
-
-  bullet_speed = ItemMap[ Druidmap[ Me.type ].weapon_item.type ].item_gun_speed;
-  // determine the direction of the shot
-  if (abs (xdist) > abs (ydist))
-    {
-      AllBullets[j].speed.x = bullet_speed;
-      AllBullets[j].speed.y = ydist * AllBullets[j].speed.x / xdist;
-      if (xdist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-
-  if (abs (xdist) < abs (ydist))
-    {
-      AllBullets[j].speed.x = bullet_speed;
-      AllBullets[j].speed.y = xdist * AllBullets[j].speed.y / ydist;
-      if (ydist < 0)
-	{
-	  AllBullets[j].speed.x = -AllBullets[j].speed.x;
-	  AllBullets[j].speed.y = -AllBullets[j].speed.y;
-	}
-    }
-
-  // determine the angle of the shot
-  AllBullets[j].angle= - ( atan2 ( AllBullets[j].speed.y , AllBullets[j].speed.x ) * 180 / M_PI + 90 );
-
-  // start the bullet in the center of the droid fireing
-  AllBullets[j].pos.x = Me.pos.x;
-  AllBullets[j].pos.y = Me.pos.y;
-
-  // fire bullet so, that the shooter doesn't hit himself
-  AllBullets[j].pos.x += AllBullets[j].speed.x;
-  AllBullets[j].pos.y += AllBullets[j].speed.y;
-  AllBullets[j].pos.x += Me.speed.x;
-  AllBullets[j].pos.y += Me.speed.y;
-
-  // set the type of bullet according to the gun used by the shooter
-  AllBullets[j].type = guntype;
-
-  // set the type of bullet according to the gun used by the shooter
-  AllBullets[j].damage = ItemMap[ Druidmap[ Me.type].weapon_item.type ].base_item_gun_damage;
-
-} // void AutoFireBullet(void)
-
 
 /*@Function============================================================
 @Desc: This function moves the influencer, adjusts his speed according to
@@ -285,8 +139,6 @@ MoveInfluence (void)
   static float TransferCounter = 0;
 
   accel *= Frame_Time();
-
-  DebugPrintf (2, "\nvoid MoveInfluence(void):  Real function call confirmed.");
 
   //--------------------
   // We store the influencers position for the history record and so that others
@@ -385,14 +237,11 @@ MoveInfluence (void)
     }
   else
     {
-  if (Me.autofire)
-    AutoFireBullet ();
-  else
-    if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
-	&& (Me.firewait == 0) && (NoInfluBulletOnWay ()))
-    FireBullet ();
-    }
 
+      if ((SpacePressed ()) && (!NoDirectionPressed ()) && (Me.status == WEAPON)
+	  && (Me.firewait == 0) && (NoInfluBulletOnWay ()))
+	FireBullet ();
+    }
 
   InfluenceFrictionWithAir (); // The influ should lose some of his speed when no key is pressed
 
@@ -450,29 +299,25 @@ MoveInfluence (void)
   Me.pos.y += planned_step_y;
 
   //--------------------
-  // Check it the influ is on a special field like a lift, a console or a refresh
+  // Check it the influ is on a special field like a lift, a console or a refresh or a conveyor belt
+  //
   ActSpecialField ( Me.pos.x , Me.pos.y );
 
   AnimateInfluence ();	// move the "phase" of influencers rotation
 
-  DebugPrintf (2, "\nvoid MoveInfluence(void):  Usual end of function reached.");
-
-} /* MoveInfluence */
+}; // void MoveInfluence( void );
 
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if there is a bullet from the influencer still
+ * flying around somewhere.  This is needed in case no new shot can be
+ * made until the old one has passed out, a feature which is currently
+ * not used anywhere in the code I think.
+ * ---------------------------------------------------------------------- */
 int
 NoInfluBulletOnWay (void)
 {
   int i;
-
-  if (PlusExtentionsOn)
-    return TRUE;
 
   if ( ! ItemMap[ Druidmap[Me.type].weapon_item.type ].item_gun_oneshotonly )
     return TRUE;
@@ -484,22 +329,17 @@ NoInfluBulletOnWay (void)
     }
 
   return TRUE;
-} // NoInfluBulletOnWay
+}; // int NoInfluBulletOnWay( void )
 
-/*@Function============================================================
-@Desc: AnimateInfluence: zaehlt die Phasen weiter, falls der Roboter
-							mehrphasig ist
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does the 'rotation' of the influencer, according to the
+ * current energy level of the influencer.  If his energy is low, the
+ * rotation will also go slow, if his energy is high, rotation will go
+ * fast. 
+ * ---------------------------------------------------------------------- */
 void
 AnimateInfluence (void)
 {
-
-  /*
-   * Phase des Influencers in fein gestuften Schritten weiterz"ahlen
-   */
-
   if (Me.type != DRUID001)
     {
       Me.phase +=
@@ -518,48 +358,32 @@ AnimateInfluence (void)
       Me.phase = 0;
     }
 
+}; // void AnimateInfluence ( void )
 
-}				// void AnimateInfluence(void)
-
-/*@Function============================================================
-@Desc: This function checks for collisions of the influencer with walls,
-doors, consoles, boxes and all other map elements.
-In case of a collision, the position and speed of the influencer are
-adapted accordingly.
-NOTE: Of course this functions HAS to take into account the current framerate!
-     
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks for collisions of the influencer with walls,
+ * doors, consoles, boxes and all other map elements.
+ * In case of a collision, the position and speed of the influencer are
+ * adapted accordingly.
+ * ---------------------------------------------------------------------- */
 void
 CheckInfluenceWallCollisions (void)
 {
-  int sign;
   double SX = Me.speed.x * Frame_Time ();
   double SY = Me.speed.y * Frame_Time ();
   finepoint lastpos;
   int res; 
-  int NumberOfShifts=0;
-  int safty_sx = 0, safty_sy = 0;	// pushback speed -- if nescessary
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
-  // double maxspeed = Druidmap[Me.type].maxspeed;
   double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
-
-  int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
 
   lastpos.x = Me.pos.x - SX;
   lastpos.y = Me.pos.y - SY;
 
-  // lastpos.x = Me.Position_History[0].x;
-  // lastpos.y = Me.Position_History[0].y;
-
   res = DruidPassable (Me.pos.x, Me.pos.y);
 
-#define NEW_BOUNCE_CHECK
-#ifdef NEW_BOUNCE_CHECK
-
+  //--------------------
   // Influence-Wall-Collision only has to be checked in case of
   // a collision of course, which is indicated by res not CENTER.
   if (res != CENTER )
@@ -657,172 +481,15 @@ CheckInfluenceWallCollisions (void)
 
     }
 
-  return;
-
-#endif 
-
-  switch (res)
-    {
-      // In this case, the influencer is (completely?) blocked.
-    case -1:
-      // --------------------
-      // We handle here the case, that the influencer is completely blocked.
-      // WHAT DO WE DO?  ---  The new algorithm proceeds as follows:
-      // 1. Check if the north-south axis would be free FROM THE PREVIOUS POSITION
-      // 2. Check if the east-west axis would be free FROM THE PREVIOUS POSITION
-      //    and both of the above under the assumption of full speed.
-      // 3. If the north south axis is free, it must have been the east-west movement
-      //    otherwise it must have been the north-west movement, which caused the
-      //    collision.
-      // 4. Therefore restore the last position and move from there, but only in
-      //    the free direction and not in the other.
-      //
-
-      /*
-      if ( ( DruidPassable(lastpos.x , lastpos.y + Druidmap[Me.type].maxspeed * Frame_Time() ) == CENTER ) &&
-	   ( DruidPassable(lastpos.x , lastpos.y - Druidmap[Me.type].maxspeed * Frame_Time() ) == CENTER ) )
-	{
-	  printf("\nNorth-south-Axis seems to be free.");
-	}
-      else
-	{
-	  printf("\nNorth-south-Axis seems NOT to be free.");
-	  printf("\nCorrection movement and position in this direction...");
-	  Me.pos.y = lastpos.y;
-	  Me.speed.y = 0;
-	  // return;
-	}
-
-      if ( ( DruidPassable(lastpos.x + Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) &&
-	   ( DruidPassable(lastpos.x - Druidmap[Me.type].maxspeed * Frame_Time() , lastpos.y ) == CENTER ) )
-	{
-	  printf("\nEast-west-Axis seems to be free.");
-	}
-      else 
-	{
-	  printf("\nEast-west-Axis seems NOT to be free.");
-	  printf("\nCorrection movement and position in this direction...");
-	  Me.pos.x = lastpos.x;
-	  Me.speed.x = 0;
-	  //return;
-	}
-
-      return;
-
-      */
-
-      /* Festellen, in welcher Richtung die Mauer lag,
-         und den Influencer entsprechend stoppen */
-      if ( rintf(SX) && (DruidPassable (lastpos.x + SX, lastpos.y) != CENTER))
-	{
-	  crashx = TRUE;	/* In X wurde gecrasht */
-	  sign = (SX < 0) ? -1 : 1;
-	  SX = abs (SX);
-	  NumberOfShifts=0;
-	  while (--SX
-		 && (DruidPassable (lastpos.x + sign * SX, lastpos.y) !=
-		     CENTER) && (NumberOfShifts++ < 4));
-	  Me.pos.x = lastpos.x + SX * sign;
-	  Me.speed.x = 0;
-
-	  /* falls Influencer weggestossen werden muss ! */
-	  safty_sx = (-1) * sign * PUSHSPEED;
-	}
-
-      if (rintf(SY) && (DruidPassable (lastpos.x, lastpos.y + SY) != CENTER))
-	{
-	  crashy = TRUE;	/* in Y wurde gecrasht */
-	  sign = (SY < 0) ? -1 : 1;
-	  SY = abs (SY);
-	  NumberOfShifts=0;
-	  while (--SY
-		 && (DruidPassable (lastpos.x, lastpos.y + sign * SY) !=
-		     CENTER) && (NumberOfShifts++ < 4));
-	  Me.pos.y = lastpos.y + SY * sign;
-	  Me.speed.y = 0;
-
-	  /* Falls Influencer weggestossen werden muss */
-	  safty_sy = (-1) * sign * PUSHSPEED;
-	}
-
-      /* Hat das nichts geholfen, noch etwas wegschubsen */
-      if (DruidPassable (Me.pos.x, Me.pos.y) != CENTER)
-	{
-	  if (crashx)
-	    {
-	      Me.speed.x = safty_sx;
-	      Me.pos.x += Me.speed.x * Frame_Time() ;
-	    }
-
-	  if (crashy)
-	    {
-	      Me.speed.y = safty_sy;
-	      Me.pos.y += Me.speed.y * Frame_Time() ;
-	    }
-	}
-
-      break;
-
-      /* Von Tuerrand wegschubsen */
-    case OBEN:
-      Me.speed.y = -PUSHSPEED;
-      Me.pos.y += Me.speed.y; // * Frame_Time();
-      break;
-
-    case UNTEN:
-      Me.speed.y = PUSHSPEED;
-      Me.pos.y += Me.speed.y; // * Frame_Time() ;
-      break;
-
-    case RECHTS:
-      Me.speed.x = PUSHSPEED;
-      Me.pos.x += Me.speed.x; // * Frame_Time() ;
-      break;
-
-    case LINKS:
-      Me.speed.x = -PUSHSPEED;
-      Me.pos.x += Me.speed.x; // * Frame_Time() ;
-      break;
-
-      /* Not blocked at all ! */
-    case CENTER:
-      break;
-
-    default:
-      DebugPrintf (2, "Illegal return value from DruidPassable() ");
-      Terminate (-1);
-      break;
-
-    } /* switch */
-
-  // This old bouncing code is no longer working in all cases due to bigger numbers
-  // and frame_rate dependence.  I therefore introduce some extra security:  Obviously
-  // if the influencer is blocked FOR THE SECOND TIME, then the throw-back-algorithm
-  // above HAS FAILED.  The absolutely fool-proof and secure handling is now done by
-  // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
-  // For this reason, a history of influ-coordinates has been introduced.  This will all
-  // be done here and now:
-
-  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
-       (DruidPassable ( GetInfluPositionHistoryX ( 0 ) , GetInfluPositionHistoryY ( 0 ) != CENTER ) ) &&
-       (DruidPassable ( GetInfluPositionHistoryX ( 1 ) , GetInfluPositionHistoryY ( 1 ) != CENTER ) ) ) 
-    {
-      Me.pos.x = GetInfluPositionHistoryX ( 2 );
-      Me.pos.y = GetInfluPositionHistoryY ( 2 );      
-    }
-
 } /* CheckInfluenceWallCollisions */
 
-/*@Function============================================================
-@Desc: Dies Prozedur passt die momentane Geschwindigkeit an die Hoechst-
-	geschwindigkeit an.
-@Ret: keiner
-@Int: keiner
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function adapts the influencers current speed to the maximal speed
+ * possible for the influencer (determined by the currely used drive type).
+ * ---------------------------------------------------------------------- */
 void
 AdjustSpeed (void)
 {
-  // double maxspeed = Druidmap[Me.type].maxspeed;
   double maxspeed = ItemMap [ Druidmap[Me.type].drive_item.type ].item_drive_maxspeed ;
   if (Me.speed.x > maxspeed)
     Me.speed.x = maxspeed;
@@ -833,16 +500,12 @@ AdjustSpeed (void)
     Me.speed.y = maxspeed;
   if (Me.speed.y < (-maxspeed))
     Me.speed.y = (-maxspeed);
-}				// void AdjustSpeed(void)
+}; // void AdjustSpeed ( void ) 
 
-
-/*@Function============================================================
-@Desc: Diese Funktion reduziert die Fahrt des Influencers sobald keine
-	Taste Richtungstaste mehr gedrueckt ist
-
-@Ret: keiner
-
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function reduces the influencers speed as long as no direction 
+ * key of any form is pressed.
+ * ---------------------------------------------------------------------- */
 void
 InfluenceFrictionWithAir (void)
 {
@@ -868,15 +531,13 @@ InfluenceFrictionWithAir (void)
       Me.speed.x *= exp(log(0.02) * Frame_Time());
     }
 
-} // InfluenceFrictionWithAir (void)
+}; // InfluenceFrictionWithAir (void)
 
-/*@Function============================================================
-@Desc: ExplodeInfluencer(): generiert eine grosse Explosion an
-				der Position des Influencers
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function creates several exprosions around the location where the
+ * influencer is (was) positioned.  It is used after the influencers 
+ * death to make his death more spectacular.
+ * ---------------------------------------------------------------------- */
 void
 ExplodeInfluencer (void)
 {
@@ -887,10 +548,11 @@ ExplodeInfluencer (void)
 
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Real function call confirmed.");
 
-  /* ein paar versetze Explosionen */
+  // create a few shifted explosions...
   for (i = 0; i < 10; i++)
     {
-      /* freien Blast finden */
+
+      // find a free blast
       counter = 0;
       while (AllBlasts[counter++].type != OUT);
       counter -= 1;
@@ -908,14 +570,12 @@ ExplodeInfluencer (void)
     }
 
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
-}				/* ExplodeInfluencer */
+}; // void ExplodeInfluencer ( void )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function checks if the influencer is currently colliding with an
+ * enemys and throws him back in that case.
+ * ---------------------------------------------------------------------- */
 void
 CheckInfluenceEnemyCollision (void)
 {
@@ -927,84 +587,49 @@ CheckInfluenceEnemyCollision (void)
   int swap;
   int first_collision = TRUE;	/* marker */
 
-  // return;
-
+  //--------------------
+  // We need to go through the whole list of enemys...
+  //
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
-      /* ignore enemy that are not on this level or dead */
+
+      //--------------------
+      // ignore enemy that are not on this level or dead 
+      //
       if (AllEnemys[i].levelnum != CurLevel->levelnum)
 	continue;
       if (AllEnemys[i].Status == OUT)
 	continue;
 
+      //--------------------
+      // We determine the distance and back out immediately if there
+      // is still one whole square distance or even more...
+      //
       xdist = Me.pos.x - AllEnemys[i].pos.x;
       ydist = Me.pos.y - AllEnemys[i].pos.y;
-
       if (abs (xdist) > 1)
 	continue;
       if (abs (ydist) > 1)
 	continue;
 
+      //--------------------
+      // Now at this point we know, that we are pretty close.  It is time
+      // to calculate the exact distance and to see if the exact distance
+      // indicates a collision or not, in which case we can again back out
+      //
       dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
       if ( dist2 > 2 * Druid_Radius_X )
 	continue;
 
-
-      if (Me.status != TRANSFERMODE)
-	{
-
-	  if (first_collision)
-	    {			
-	      /* nur beim ersten mal !!! */
-	      /* den Geschwindigkeitsvektor des Influencers invertieren */
-	      Me.speed.x = -Me.speed.x;
-	      Me.speed.y = -Me.speed.y;
-
-	      if (Me.speed.x != 0)
-		Me.speed.x +=
-		  COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
-	      else if (xdist)
-		Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
-	      if (Me.speed.y != 0)
-		Me.speed.y +=
-		  COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
-	      else if (ydist)
-		Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
-
-	      // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-	      max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
-	      Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
-	      Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
-	      AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
-	      AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
-	      // Me.pos.x += Me.speed.x * Frame_Time ();
-	      // Me.pos.y += Me.speed.y * Frame_Time ();
-
-	      // there might be walls close too, so lets check again for collisions with them
-	      CheckInfluenceWallCollisions ();
-
-	      BounceSound ();
-
-	      InsertMessage ("void InfEnemColl: Collision detected");
-
-	    }			/* if first_collision */
-
-	  // shortly stop this enemy, then send him back to previous waypoint
-	  if (!AllEnemys[i].warten)
-	    {
-	      AllEnemys[i].warten = WAIT_COLLISION;
-	      swap = AllEnemys[i].nextwaypoint;
-	      AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
-	      AllEnemys[i].lastwaypoint = swap;
-
-	      // Add some funny text!
-	      EnemyInfluCollisionText ( i );
-
-	    }
-	  InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
-
-	}
-      else
+      //--------------------
+      // At this point we know, that the influencer *has* collided with some
+      // form of 'enemy' robot.  In case of the influencer being in transfer
+      // mode, we just either start the transfer subgame or we start the
+      // chat interface, but after that we're sure to back out, since collsions
+      // after either of that don't interest us, at least not in this frame
+      // any more.
+      //
+      if ( Me.status == TRANSFERMODE )
 	{
 	  if ( ! AllEnemys[i].Friendly ) Takeover (i);
 	  else ChatWithFriendlyDroid( i );
@@ -1012,18 +637,70 @@ CheckInfluenceEnemyCollision (void)
 	  if (LevelEmpty ())
 	    CurLevel->empty = WAIT_LEVELEMPTY;
 
-	}			/* if !Transfer else .. */
+	  return;
+	}
 
+      //--------------------
+      // Now we've arrived at a real classical 'boing'-influencer-enemy-collision
+      //
+      // THE FIRST_COLLSION VARIABLE IS CURRENTLY WITHOUT MEANING ALWAYS TRUE!!!
+      //
+      if (first_collision)
+	{			
+	  //--------------------
+	  // we invert the speed vector of the influencer
+	  //
+	  Me.speed.x = -Me.speed.x;
+	  Me.speed.y = -Me.speed.y;
+	  
+	  if (Me.speed.x != 0)
+	    Me.speed.x +=
+	      COLLISION_PUSHSPEED * (Me.speed.x / fabsf (Me.speed.x));
+	  else if (xdist)
+	    Me.speed.x = COLLISION_PUSHSPEED * (xdist / fabsf (xdist));
+	  if (Me.speed.y != 0)
+	    Me.speed.y +=
+	      COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
+	  else if (ydist)
+	    Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
+	  
+	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
+	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+	  Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
+	  Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
+	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
+	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
+	  
+	  // there might be walls close too, so lets check again for collisions with them
+	  CheckInfluenceWallCollisions ();
+	  
+	  BounceSound ();
+	  
+	} // if first_collision (ALWAYS TRUE ANYWAY...)
+      
+      // shortly stop this enemy, then send him back to previous waypoint
+      if (!AllEnemys[i].warten)
+	{
+	  AllEnemys[i].warten = WAIT_COLLISION;
+	  swap = AllEnemys[i].nextwaypoint;
+	  AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
+	  AllEnemys[i].lastwaypoint = swap;
+	  
+	  // Add some funny text!
+	  EnemyInfluCollisionText ( i );
+	  
+	}
+      InfluEnemyCollisionLoseEnergy (i);	/* someone loses energy ! */
+      
     }				/* for */
 
-} // CheckInfluenceEnemyCollision
+}; // void CheckInfluenceEnemyCollision( void )
 
-/*@Function============================================================
-@Desc: Fire-Routine for the Influencer only !! (should be changed)
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function fires a bullet from the influencer in some direction, or
+ * at least it TRIES to fire a bullet from the influencer, cause maybe
+ * the influencer can't fire for this reason or another right now...
+ * ---------------------------------------------------------------------- */
 void
 FireBullet (void)
 {
@@ -1161,27 +838,15 @@ FireBullet (void)
   return;
 }; // FireBullet 
 
-/*@Function============================================================
-@Desc: RefreshInfluencer(): Refresh fields can be used to regain energy
-lost due to bullets or collisions, but not energy lost due to permanent
-loss of health in PermanentLoseEnergy.
-
-NEW: this function now takes into account the framerates.
-
-@Ret: void
-@In
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function does all the things needed, when the influencer is on
+ * some refresh field, i.e. it increases influencers current energy but
+ * it also decreases his current score = experience points...
+ * ---------------------------------------------------------------------- */
 void
 RefreshInfluencer (void)
 {
-  static int timecounter = 3;	/* to slow down healing process */
 
-  if (--timecounter)
-    return;
-  if (timecounter == 0)
-    timecounter = 3;
-
-  // if (Me.energy < Me.health)
   if ( Me.energy < Druidmap [ Me.type ].maxenergy )
     {
       Me.energy += REFRESH_ENERGY * Frame_Time () * 5;
@@ -1216,7 +881,7 @@ RefreshInfluencer (void)
     }
 
   return;
-}				/* RefreshInfluence */
+}; // void RefreshInfluence ( void )
 
 /*@Function============================================================
 @Desc: influ-enemy collisions are sucking someones
@@ -1258,16 +923,15 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
   return;
 }; // void InfluEnemyCollisionLoseEnergy(int enemynum)
 
-/*@Function============================================================
-@Desc: PermanentLoseEnergy(): In the classic paradroid game, the influencer
-continuously lost energy.  This loss was, in contrast to damage from fighting
-and collisions, NOT regainable by using refresh fields.
-
-NEW: this function now takes into account the framerate.
-
-@Ret: void
-@Int:
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ *
+ * In the classic paradroid game, the influencer
+ * continuously lost energy.  This loss was, in contrast to damage from fighting
+ * and collisions, NOT regainable by using refresh fields.
+ * 
+ * NEW: this function now takes into account the framerate.
+ *
+ * ---------------------------------------------------------------------- */
 void
 PermanentLoseEnergy (void)
 {

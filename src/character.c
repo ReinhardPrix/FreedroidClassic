@@ -258,13 +258,12 @@ CursorIsOnVitButton( int x , int y )
 void 
 UpdateAllCharacterStats ( void )
 {
-  int BaseExpRequired = 1500;
+  int BaseExpRequired = 2000;
 
   //--------------------
   // Maybe the influencer has reached a new experience level?
   // Let's check this.
   // 
-  // if ( Me.exp_level == 1 ) Me.ExpRequired = BaseExpRequired;
   Me.ExpRequired = BaseExpRequired * ( exp ( ( Me.exp_level - 1 ) * log ( 2 ) ) ) ;
 
   if ( Me.Experience > Me.ExpRequired ) 
