@@ -612,7 +612,7 @@ EXTERN void SetLineLength (int);
 
 EXTERN int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* Background );
 EXTERN int DisplayText (char *text, int startx, int starty, const SDL_Rect *clip);
-EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid );
+EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update );
 
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
@@ -638,7 +638,7 @@ EXTERN void InitChatRosterForNewDialogue( void );
 EXTERN void Get_Item_Data ( char* DataPointer );
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void *MyMalloc (long);
-EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid );
+EXTERN void PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip );
 EXTERN int FS_filelength (FILE *f);
 
 // rahmen.c 

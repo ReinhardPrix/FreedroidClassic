@@ -438,7 +438,7 @@ DisplaySubtitle( char* SubtitleText , int subtitle_background )
  *
  * ---------------------------------------------------------------------- */
 void
-display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
+display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update )
 {
   SDL_Rect Subtitle_Window;
   int lines_needed ;
@@ -471,7 +471,7 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
   // garbage from the previous subtitle in there...
   //
   // blit_special_background ( CHAT_DIALOG_BACKGROUND_EXCERPT_CODE ) ;
-  PrepareMultipleChoiceDialog ( ChatDroid );
+  PrepareMultipleChoiceDialog ( ChatDroid , FALSE );
 
   //--------------------
   // Now we can display the text and update the screen...
@@ -484,9 +484,9 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
   DisplayText ( chat_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window );
   ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
   ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
-  our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
+  if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
 
-}; // void display_current_chat_protocol ( int background_picture_code )
+}; // void display_current_chat_protocol ( int background_picture_code , int with_update )
 
 /* ----------------------------------------------------------------------
  * This function should first display a subtitle and then also a sound
@@ -494,7 +494,7 @@ display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid )
  * important, because this combination does indeed occur so often.
  * ---------------------------------------------------------------------- */
 void
-GiveSubtitleNSample( char* SubtitleText , char* SampleFilename , enemy* ChatDroid )
+GiveSubtitleNSample( char* SubtitleText , char* SampleFilename , enemy* ChatDroid , int with_update )
 {
 
   strcat ( chat_protocol , SubtitleText );
@@ -503,7 +503,7 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename , enemy* ChatDroi
   if ( strcmp ( SubtitleText , "NO_SUBTITLE_AND_NO_WAITING_EITHER" ) )
     {
       // DisplaySubtitle ( SubtitleText , CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
-      display_current_chat_protocol ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE , ChatDroid );
+      display_current_chat_protocol ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE , ChatDroid , with_update );
       PlayOnceNeededSoundSample( SampleFilename , TRUE , FALSE );
     }
   else
@@ -972,7 +972,7 @@ chat interface of Freedroid.  But:  Loading this file has ALSO failed.",
  * image of the dialog partner and also sets the right font.
  * ---------------------------------------------------------------------- */
 void
-PrepareMultipleChoiceDialog ( Enemy ChatDroid )
+PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
 {
   //--------------------
   // The dialog will always take more than a few seconds to process
@@ -996,7 +996,20 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid )
   our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
 				 Screen , &Droid_Image_Window );
 
-  our_SDL_flip_wrapper( Screen );
+  if ( with_flip ) 
+      our_SDL_flip_wrapper( Screen );
+
+#if __WIN32__
+  //--------------------
+  // When using win32, after flipping we may have a damaged (or rather out of date)
+  // screen in the other buffer or something... dunno... well, we just paint the
+  // same background a second time.  That should resolve the problem in all cases.
+  //
+  blit_special_background ( CHAT_DIALOG_BACKGROUND_PICTURE_CODE );
+  our_SDL_blit_surface_wrapper ( chat_portrait_of_droid [ ChatDroid -> type ] . surface , NULL , 
+				 Screen , &Droid_Image_Window );
+  if ( with_flip ) our_SDL_flip_wrapper( Screen );
+#endif
 
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
@@ -1171,7 +1184,7 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
       // PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
       strcat ( chat_protocol , "\1TUX:" );
       GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . option_text ,
-			    ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid ) ;
+			    ChatRoster [ MenuSelection ] . option_sample_file_name , ChatDroid , TRUE ) ;
       strcat ( chat_protocol , "\2" );
     }
   
@@ -1189,7 +1202,7 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	break;
       
       GiveSubtitleNSample ( ChatRoster [ MenuSelection ] . reply_subtitle_list [ i ] ,
-			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ] , ChatDroid ) ;
+			    ChatRoster [ MenuSelection ] . reply_sample_list [ i ] , ChatDroid , TRUE ) ;
     }
   
   //--------------------
@@ -1239,7 +1252,7 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
       //--------------------
       // It can't hurt to have the overall background redrawn after each extra command
       // which could have destroyed the background by drawing e.g. a shop interface
-      PrepareMultipleChoiceDialog ( ChatDroid ) ;
+      PrepareMultipleChoiceDialog ( ChatDroid , FALSE ) ;
     }
 
   //--------------------
@@ -1296,7 +1309,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
       chat_protocol_scroll_override_from_user = 0 ;
     }
 
-  PrepareMultipleChoiceDialog ( ChatDroid );
+  PrepareMultipleChoiceDialog ( ChatDroid , TRUE );
 
   Chat_Window . x = 242 ; Chat_Window . y = 100 ; Chat_Window . w = 380; Chat_Window . h = 314 ;
 
@@ -1354,7 +1367,6 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	}
 
       ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-
 
       if ( ! ChatDroid -> is_friendly ) return ;
 
@@ -1525,8 +1537,6 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   int ChatFlagsIndex = (-1);
   char *fpath;
   char tmp_filename[5000];
-
-
 
   //--------------------
   // Now that we know, that a chat with a friendly droid is planned, the 
@@ -2492,7 +2502,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   vsprintf (tmp, fmt, args);
   PutString (screen, x, y, tmp);
 
-  our_SDL_flip_wrapper (screen);
+  // our_SDL_flip_wrapper (screen);
 
   if (tmp[strlen(tmp)-1] == '\n')
     {
