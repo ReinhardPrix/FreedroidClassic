@@ -208,6 +208,7 @@ EXTERN void Switch_Background_Music_To ( char * filename_raw );
 EXTERN void Play_Sound (int);
 EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
+EXTERN void Influencer_Scream_Sound (void);
 EXTERN void GotIntoBlastSound (void);
 EXTERN void Not_Enough_Power_Sound( void );
 EXTERN void Not_Enough_Dist_Sound( void );

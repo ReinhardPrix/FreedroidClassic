@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 41
+#define ALL_SOUNDS 46
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -87,7 +87,12 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "First_Contact_Sound_0.wav",
    "First_Contact_Sound_1.wav",
    "Not_Enough_Power_Sound_0.wav",
-   "Not_Enough_Dist_Sound_0.wav"
+   "Not_Enough_Dist_Sound_0.wav",
+   "Influencer_Scream_Sound_0.wav",
+   "Influencer_Scream_Sound_1.wav",
+   "Influencer_Scream_Sound_2.wav",
+   "Influencer_Scream_Sound_3.wav",
+   "Influencer_Scream_Sound_4.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -646,6 +651,40 @@ GotHitSound (void)
 
   Play_Sound (GOT_HIT_SOUND);
 }				// void GotHitSound(void)
+
+
+/*@Function============================================================
+@Desc: 
+
+@Ret: 
+@Int:
+* $Function----------------------------------------------------------*/
+void
+Influencer_Scream_Sound (void)
+{
+  if (!sound_on) return;
+
+  switch( MyRandom( 4 ) )
+    {
+    case 0 :
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_0 );
+      break;
+    case 1 :
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_1 );
+      break;
+    case 2 :
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_2 );
+      break;
+    case 3 :
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_3 );
+      break;
+    case 4 :
+      Play_Sound ( INFLUENCER_SCREAM_SOUND_4 );
+      break;
+    default:
+      break;
+    }
+}; // void Influencer_Scream_Sound (void)
 
 
 /*@Function============================================================

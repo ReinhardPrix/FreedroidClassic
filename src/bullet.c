@@ -501,7 +501,8 @@ CheckBulletCollisions (int num)
 		  Me.TextVisibleTime = 0;
 		  Me.TextToBeDisplayed = "Ouch!";
 		  Me.energy -= CurBullet->damage;	// loose some energy
-		  GotHitSound ();
+		  // GotHitSound ();
+		  Influencer_Scream_Sound ( );
 		}
 	      //--------------------
 	      // NEW RULE:  All items equipped suffer damage when the influencer gets hit
