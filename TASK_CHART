@@ -8,6 +8,7 @@ jp
 - more doku!
 - Web-page admin
 - public relations ;)
+- level/ship-editor 
 
 The list of things I'm going to work on next:
 
@@ -92,22 +93,13 @@ rp
 - cvs archive mangagement
 - Takeover game
 - Lift & ship view
-- map-editor (maped)
 - Automake/configure/Makefile 
 - cheatmenu
 
 more detailed list of planned activities:
 
-*) "clean-up" code, esp. get rid of all the obsolete "Screens"..
-*) Takeover game: rahmen, points etc + Keyboard-sensitivity better
 *) Add the Homepage-Makefile into the general autoconf/automake machinery
 
-
-
-limo
-----
-- play& find bugs? ;-)
-- ... ?
 
 
 
