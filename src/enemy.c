@@ -592,7 +592,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 void 
 Persue_Given_Course ( int EnemyNum )
 {
-  finepoint Restweg;
+  moderately_finepoint Restweg;
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
@@ -1016,6 +1016,8 @@ AttackInfluence (int enemynum)
   // float xdist, ydist;
   float dist2;
   Enemy ThisRobot=&AllEnemys[ enemynum ];
+  float StepSize;
+  float TargetRange;
 
   //--------------------
   // At first, we check for a lot of cases in which we do not
@@ -1101,58 +1103,61 @@ AttackInfluence (int enemynum)
       ThisRobot->TextToBeDisplayed = "Seeking to get closer to target...";
       
       ThisRobot->persuing_given_course = TRUE;
-      ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x );
-      ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y );
+      ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x ;
+      ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y ;
       
       //--------------------
       // Now we check if it's perhaps time to make a step to the left/right
       //
-      if ( fabsf ( Me.pos.x - ThisRobot->pos.x ) > 1 )
+      TargetRange = 0.5;
+      StepSize = 0.5;
+      if ( fabsf ( Me.pos.x - ThisRobot->pos.x ) > TargetRange )
 	{
 	  if ( ( Me.pos.x - ThisRobot->pos.x ) > 0 )
 	    {
-	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) + 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot->pos.x + StepSize , 
+				     ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-		  ThisRobot->PrivatePathway[ 0 ].x + 1 , ThisRobot->PrivatePathway[ 0 ].y,
+		  ThisRobot->PrivatePathway[ 0 ].x + StepSize , ThisRobot->PrivatePathway[ 0 ].y,
 		  ThisRobot->levelnum , enemynum ) ) )
 		{
-		  ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) + 1;
+		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x + StepSize ;
 		}
 	    }
 	  else
 	    {
-	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) - 1 , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot->pos.x - StepSize , ThisRobot->PrivatePathway[ 0 ].y ) == CENTER ) &&
 		  ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-		  ThisRobot->PrivatePathway[ 0 ].x - 1 , ThisRobot->PrivatePathway[ 0 ].y,
+		  ThisRobot->PrivatePathway[ 0 ].x - StepSize , ThisRobot->PrivatePathway[ 0 ].y,
 		  ThisRobot->levelnum , enemynum ) ) )
 		{
-		  ThisRobot->PrivatePathway[ 0 ].x = rintf ( ThisRobot->pos.x ) - 1;
+		  ThisRobot->PrivatePathway[ 0 ].x = ThisRobot->pos.x - StepSize;
 		}
 	    }
 	}
       //--------------------
       // Now we check if it's perhaps time to make a step up/down
       //
-      if ( fabsf ( Me.pos.y - ThisRobot->pos.y ) > 1 )
+      if ( fabsf ( Me.pos.y - ThisRobot->pos.y ) > TargetRange )
 	{
 	  if ( ( Me.pos.y - ThisRobot->pos.y ) > 0 )
 	    {
-	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
-				     rintf ( ThisRobot->PrivatePathway[ 0 ].y ) + 1 ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot->pos.x , 
+				     ThisRobot->PrivatePathway[ 0 ].y + StepSize ) == CENTER ) &&
 		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + 1 ,
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + StepSize ,
 						ThisRobot->levelnum , enemynum ) ) )
-		ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) + 1;
+		ThisRobot->PrivatePathway[ 0 ].y = ThisRobot->pos.y + StepSize ;
 	    }
 	  else
 	    {
-	      if ( ( DruidPassable ( rintf ( ThisRobot->pos.x ) , 
-				     rintf ( ThisRobot->PrivatePathway[ 0 ].y ) - 1 ) == CENTER ) &&
+	      if ( ( DruidPassable ( ThisRobot->pos.x , 
+				     ThisRobot->PrivatePathway[ 0 ].y - StepSize ) == CENTER ) &&
 		   ( CheckIfWayIsFreeOfDroids ( ThisRobot->pos.x , ThisRobot->pos.y , 
-						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y + 1 ,
+						ThisRobot->PrivatePathway[ 0 ].x , ThisRobot->PrivatePathway[ 0 ].y - StepSize ,
 						ThisRobot->levelnum , enemynum ) ) )
 		{
-		  ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - 1;
+		  ThisRobot->PrivatePathway[ 0 ].y = rintf ( ThisRobot->pos.y ) - StepSize;
 		}
 	    }
 	}
@@ -1185,9 +1190,22 @@ CheckEnemyEnemyCollision (int enemynum)
   float xdist, ydist;
   float dist2;
   float speed_x, speed_y;
+  enemy* ListEnemy;
+  enemy* OurBot= & ( AllEnemys[ enemynum ] );
 
-  check_x = AllEnemys[enemynum].pos.x;
-  check_y = AllEnemys[enemynum].pos.y;
+  //--------------------
+  // Enemys persuing a specific course may pass through other enerys
+  // and are therefore exempted from the collision check
+  //
+  if ( OurBot->persuing_given_course == TRUE ) return ( FALSE );
+
+  check_x = OurBot->pos.x;
+  check_y = OurBot->pos.y;
+
+  //--------------------
+  // Now we check through all the other enemys on the ship if there is
+  // perhaps a collision with them...
+  //
 
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP	; i++)
   for (i = 0; i < Number_Of_Droids_On_Ship ; i++)
@@ -1199,9 +1217,14 @@ CheckEnemyEnemyCollision (int enemynum)
       if (i == enemynum)
 	continue;
 
+      //--------------------
+      // We set up a pointer to the next one in the list...
+      //
+      ListEnemy = & ( AllEnemys[ i ] );
+
       /* get distance between enemy i and enemynum */
-      xdist = check_x - AllEnemys[i].pos.x;
-      ydist = check_y - AllEnemys[i].pos.y;
+      xdist = check_x - ListEnemy->pos.x;
+      ydist = check_y - ListEnemy->pos.y;
 
       dist2 = sqrt(xdist * xdist + ydist * ydist);
 
@@ -1210,46 +1233,38 @@ CheckEnemyEnemyCollision (int enemynum)
 	{
 
 	  // am I waiting already?  If so, keep waiting... 
-	  if (AllEnemys[enemynum].warten)
+	  if ( OurBot->warten)
 	    {
-	      /* weiter warten */
-	      AllEnemys[enemynum].warten = WAIT_COLLISION;
+	      // keep waiting
+	      OurBot->warten = WAIT_COLLISION;
 	      continue;
 	    }
 
-	  /* Sonst: Feind stoppen und selbst umdrehen */
-	  AllEnemys[i].warten = WAIT_COLLISION;
+	  // otherwise: stop this one enemy and go back youself
+	  ListEnemy->warten = WAIT_COLLISION;
+	  swap = OurBot->nextwaypoint;
+	  OurBot->nextwaypoint = OurBot->lastwaypoint;
+	  OurBot->lastwaypoint = swap;
 
-	  /* gestoppten gegner ein wenig zurueckstossen */
+	  // push the stopped colleague a little bit backwards...
 	  if (xdist)
-	    AllEnemys[i].pos.x -= xdist / fabsf (xdist) * Frame_Time();
+	    ListEnemy->pos.x -= xdist / fabsf (xdist) * Frame_Time();
 	  if (ydist)
-	    AllEnemys[i].pos.y -= ydist / fabsf (ydist) * Frame_Time();
+	    ListEnemy->pos.y -= ydist / fabsf (ydist) * Frame_Time();
 
-	  swap = AllEnemys[enemynum].nextwaypoint;
-	  AllEnemys[enemynum].nextwaypoint =
-	    AllEnemys[enemynum].lastwaypoint;
-	  AllEnemys[enemynum].lastwaypoint = swap;
+	  // Move a little bit out of the colleague yourself...
+	  speed_x = OurBot->speed.x;
+	  speed_y = OurBot->speed.y;
 
-	  /* Etwas aus Gegner herausbewegen !! */
-	  speed_x = AllEnemys[enemynum].speed.x;
-	  speed_y = AllEnemys[enemynum].speed.y;
-
-	  if (speed_x)
-	    AllEnemys[enemynum].pos.x -=
-	      Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
-	  if (speed_y)
-	    AllEnemys[enemynum].pos.y -=
-	      Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
+	  if (speed_x) OurBot->pos.x -= Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
+	  if (speed_y) OurBot->pos.y -= Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
 
 	  return TRUE;
-
-	}			/* if dist zu klein */
-
-    }				/* for */
+	} // if collision distance reached
+    } // for all the bots...
 
   return FALSE;
-} // int CheckEnemyEnemyCollision
+}; // int CheckEnemyEnemyCollision
 
 
 /*@Function============================================================

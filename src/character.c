@@ -72,10 +72,10 @@
 #define CHARACTERRECT_H (User_Rect.h)
 
 #define ENERGY_GAIN_PER_VIT_POINT 2
-#define MANA_GAIN_PER_MAGIC_POINT 4
+#define MANA_GAIN_PER_MAGIC_POINT 2
 #define DAMAGE_GAIN_PER_STR_POINT 2
 #define AC_GAIN_PER_DEX_POINT 1
-#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 3
+#define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
 #define TOHIT_PERCENT_PER_DEX_POINT (0.5)
 
 // #define INV_BUTTON_X 20
@@ -277,9 +277,11 @@ UpdateAllCharacterStats ( void )
   //--------------------
   // First we compute the maximum energy of the influencer
   //
-  Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
-  Druidmap[ DRUID001 ].maxmana = 100 + (Me.Magic - 15) * MANA_GAIN_PER_MAGIC_POINT;
-  
+  // Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
+  // Druidmap[ DRUID001 ].maxmana = 100 + (Me.Magic - 15) * MANA_GAIN_PER_MAGIC_POINT;
+  Druidmap[ DRUID001 ].maxenergy = (Me.Vitality) * ENERGY_GAIN_PER_VIT_POINT;
+  Druidmap[ DRUID001 ].maxmana = (Me.Magic) * MANA_GAIN_PER_MAGIC_POINT;
+
   //--------------------
   // Now we compute the damage the influecer can do
   //

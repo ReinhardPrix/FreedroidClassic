@@ -423,7 +423,8 @@ typedef struct
   int persuing_given_course;    // is this robot persuing a given course via PersueGivenCourse( EnemyNum )?
   int StayHowManyFramesBehind;  // how many frames shall this droid trott behind the influ when follwing his tail?
   int StayHowManySecondsBehind;  // how many seconds shall this droid trott behind the influ when follwing his tail?
-  point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+  // point PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
+  moderately_finepoint PrivatePathway[ MAX_STEPS_IN_GIVEN_COURSE ];
   float TextVisibleTime;
   char* TextToBeDisplayed;
   int has_greeted_influencer;
