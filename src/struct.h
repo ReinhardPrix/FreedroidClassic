@@ -233,6 +233,7 @@ typedef struct
   int bonus_to_force;
   int bonus_to_tohit;
   int bonus_to_all_attibutes;
+  float price_factor;
 } item_bonus , *Item_bonus;
 
 typedef struct

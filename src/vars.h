@@ -137,25 +137,25 @@ typedef struct
 } item_bonus , *Item_bonus;
 */
 
-//    NAME                      DEX  STR  VIT  MAG  HP  MANA  TOHIT ALLATT
+//    NAME                      DEX  STR  VIT  MAG  HP  MANA  TOHIT ALLATT PRICE-FACTOR
 item_bonus SuffixList[] = {
-  { " of Dexterity"           ,  5 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of Strength"            ,  0 ,  5 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of Life"                ,  0 ,  0 ,  5 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of Mind"                ,  0 ,  0 ,  0 ,  5 ,  0 ,  0 ,   0 ,  0 },
-  { " of Life"                ,  0 ,  0 ,  0 ,  0 , 15 ,  0 ,   0 ,  0 },
-  { " of the Force"           ,  0 ,  0 ,  0 ,  0 ,  0 , 15 ,   0 ,  0 },
-  { " of the Sniper"          ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   5 ,  0 },
-  { " of the Open Source"     ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  5 },
+  { " of Dexterity"           ,  5 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 ,   10.0 },
+  { " of Strength"            ,  0 ,  5 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 ,   10.0 },
+  { " of Life"                ,  0 ,  0 ,  5 ,  0 ,  0 ,  0 ,   0 ,  0 ,   10.0 },
+  { " of Mind"                ,  0 ,  0 ,  0 ,  5 ,  0 ,  0 ,   0 ,  0 ,   10.0 },
+  { " of Life"                ,  0 ,  0 ,  0 ,  0 , 15 ,  0 ,   0 ,  0 ,   10.0 },
+  { " of the Force"           ,  0 ,  0 ,  0 ,  0 ,  0 , 15 ,   0 ,  0 ,   20.0 },
+  { " of the Sniper"          ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   5 ,  0 ,   20.0 },
+  { " of the Open Source"     ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  5 ,   20.0 },
 
-  { " of advanced Dexterity"  , 10 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of advanced Strength"   ,  0 , 10 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of advanced Vitality"   ,  0 ,  0 , 10 ,  0 ,  0 ,  0 ,   0 ,  0 },
-  { " of advanced Magic"      ,  0 ,  0 ,  0 , 10 ,  0 ,  0 ,   0 ,  0 },
-  { " of long life"           ,  0 ,  0 ,  0 ,  0 , 25 ,  0 ,   0 ,  0 },
-  { " of the spirits"         ,  0 ,  0 ,  0 ,  0 ,  0 , 25 ,   0 ,  0 },
-  { " of the Guerillias"      ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  10 ,  0 },
-  { " of the GPL"             ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , 10 }
+  { " of advanced Dexterity"  , 10 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 ,   20.0 },
+  { " of advanced Strength"   ,  0 , 10 ,  0 ,  0 ,  0 ,  0 ,   0 ,  0 ,   20.0 },
+  { " of advanced Vitality"   ,  0 ,  0 , 10 ,  0 ,  0 ,  0 ,   0 ,  0 ,   20.0 },
+  { " of advanced Magic"      ,  0 ,  0 ,  0 , 10 ,  0 ,  0 ,   0 ,  0 ,   20.0 },
+  { " of long life"           ,  0 ,  0 ,  0 ,  0 , 25 ,  0 ,   0 ,  0 ,   30.0 },
+  { " of the spirits"         ,  0 ,  0 ,  0 ,  0 ,  0 , 25 ,   0 ,  0 ,   30.0 },
+  { " of the Guerillias"      ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  10 ,  0 ,   30.0 },
+  { " of the GPL"             ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,   0 , 10 ,   40.0 }
 };
 
 char *Shipnames[ALLSHIPS] = {

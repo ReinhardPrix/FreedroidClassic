@@ -942,9 +942,20 @@ void
 DisplayChar (unsigned char c)
 {
 
+
   if ( c == 1 ) 
     {
       SetCurrentFont ( Red_BFont );
+      return;
+    }
+  else if ( c == 2 ) 
+    {
+      SetCurrentFont ( Blue_BFont );
+      return;
+    }
+  else if ( c == 3 ) 
+    {
+      SetCurrentFont ( FPS_Display_BFont );
       return;
     }
   else if ( !isprint(c) ) // don't accept non-printable characters

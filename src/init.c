@@ -2041,22 +2041,30 @@ ThouArtDefeated (void)
   DropItemAt ( Me.aux2_item.type , Me.pos.x , Me.pos.y - 0.5 , -1 , -1 );
   DropItemAt ( ITEM_MONEY , Me.pos.x , Me.pos.y , -1 , -1 );
 
-  while ( SDL_GetTicks()-now < 3000 * WAIT_AFTER_KILLED )
+  GameOver = TRUE;
+
+  while ( ( SDL_GetTicks() - now < 10000 * WAIT_AFTER_KILLED ) && ( GameOver == TRUE ) )
     {
+      StartTakingTimeForFPSCalculation(); 
+
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       DisplayBanner (NULL, NULL,  0 );
       ExplodeBlasts ();
       MoveBullets ();
       MoveEnemys ();
+      MoveLevelDoors ();	
+
+      ReactToSpecialKeys();
 
       for (j = 0; j < MAXBULLETS; j++)
 	CheckBulletCollisions (j);
+
+      ComputeFPSForThisFrame();
+
     }
 
   // update_highscores ();
-  EscapeMenu();
-
-  // GameOver = TRUE;
+  // EscapeMenu();
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
   DebugPrintf (1, "\n\n DefeatedDone \n\n");

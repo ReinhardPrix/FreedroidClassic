@@ -262,6 +262,8 @@ Buy_Basic_Items( void )
   for ( i = 0 ; i < BASIC_ITEMS_NUMBER ; i++ )
     {
       SalesList[ i ].type = MyRandom( Number_Of_Item_Types - 2 ) + 1;
+      SalesList[ i ].prefix_code = ( -1 );
+      SalesList[ i ].suffix_code = ( -1 );
       FillInItemProperties( & ( SalesList[ i ] ) , TRUE );
     }
 
@@ -1343,7 +1345,7 @@ EscapeMenu (void)
 enum
   { 
     SAVE_GAME_POSITION=1,
-    SINGLE_PLAYER_POSITION, 
+    // SINGLE_PLAYER_POSITION, 
     OPTIONS_POSITION, 
     SET_THEME,
     LEVEL_EDITOR_POSITION, 
@@ -1377,14 +1379,16 @@ enum
 	strcat (theme_string, "unknown");
 
       MenuTexts[1]="Single Player";
+
       MenuTexts[0]="Save Game";
-      MenuTexts[2]="Options";
-      MenuTexts[3]=theme_string;
-      MenuTexts[4]="Level Editor";
-      MenuTexts[8]="";
-      MenuTexts[6]="Quit Game";
-      MenuTexts[5]="Load Game";
+      MenuTexts[1]="Options";
+      MenuTexts[2]=theme_string;
+      MenuTexts[3]="Level Editor";
+      MenuTexts[4]="Load Game";
+      MenuTexts[5]="Quit Game";
+      MenuTexts[6]="";
       MenuTexts[7]="";
+      MenuTexts[8]="";
       MenuTexts[9]="";
 
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
@@ -1394,12 +1398,14 @@ enum
 	case (-1):
 	  Weiter=!Weiter;
 	  break;
+	  /*
 	case SINGLE_PLAYER_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  New_Game_Requested=FALSE;
 	  Single_Player_Menu();
-	  if (New_Game_Requested) Weiter = TRUE;   /* jp forgot this... ;) */
+	  if (New_Game_Requested) Weiter = TRUE;   // jp forgot this... ;) 
 	  break;
+	  */
 	case OPTIONS_POSITION:
 	  while (EnterPressed() || SpacePressed() );
 	  Options_Menu();
@@ -2187,7 +2193,7 @@ enum
 
   while (!Weiter)
     {
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_FILE );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_FILE );
 
       switch (MenuPosition) 
 	{
