@@ -820,8 +820,8 @@ Armageddon (void)
   else
     for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
       {
-	AllEnemys[i].energy = 0;
-	AllEnemys[i].Status = OUT;
+	AllEnemys[i].energy = -10;
+	// AllEnemys[i].Status = OUT;
       }
 }; // void Armageddon(void)
 
