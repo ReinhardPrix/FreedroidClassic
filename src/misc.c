@@ -178,7 +178,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { ARMOUR_RECT_X  , ARMOUR_RECT_Y  , ARMOUR_RECT_WIDTH , ARMOUR_RECT_HEIGHT } , FALSE , FALSE } ,
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 233 , (480-20-130-20) , 160 ,  20 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20) , 160 ,  20 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 233 , (480-20+1) , 160 ,  20 } , TRUE , FALSE } ,
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
