@@ -34,8 +34,8 @@ the MS and didn't respond to the commands of their former superiors at the MS an
 Mankind was under attack by it's bots and had to flee to various secret underground
 caverns on remote planets of the universe and cannot return any more.
 
-This is where the game begins.  The Tux awakens from 200000 years of stasis to save
-the world.
+This is where the game begins.  The Tux awakens from several years of stasis that the MS
+has put him into and now returns to save the world from the horrible bots.
 .\" 
 .\" 
 .\" 
@@ -57,6 +57,20 @@ Please note that it is strongly recommended that your X Window system is configu
 a move with 640x480 screen resolution, but it will also work if this is not the case.
 Note that fullscreen or window mode can also be toggled from within the game via the options
 menu.
+.TP 8
+.B -o \fRor\fB --open_gl
+This instructs FreedroidRPG to use OpenGL as the method for graphics output.  If you have
+hardware accelerated OpenGL on your X11 or your Microsoft Windows installation, this is the
+recommended output method to achieve much better frame rates and also better graphics quality.
+
+NOTE:  If you wish to use OpenGL for graphics output, your FreedroidRPG executable must have
+been compiled to support OpenGL.  You can see if that is the case and also if OpenGL graphics
+output is active in the very first startup menu of the game.
+.TP 8
+.B -n \fRor\fB --no_open_gl
+This instructs FreedroidRPG to use plain SDL instead of OpenGL as the method for graphics output.
+This is usually (much) slower than hardware-accelerated OpenGL graphics output and also some
+features are disabled in this mode because of speed considerations.
 .TP 8
 .B -w \fRor\fB --window
 Start FreedroidRPG in a window rather than using full screen mode.
@@ -84,6 +98,9 @@ Moving the Tux can now be done exclusively by using the left mouse button.
 Attacking an enemy is done by clicking on that enemy.  
 The Tux will, in case of a melee weapon wielded, approach the target and then strike.  
 In order to attack an object without moving, you must hold down the shift key and then click the left mouse button.
+
+RUNNING:  If you hold down the left ctrl key, Tux will run instead of walk.
+
 .RE
 .\" 
 .\" 
@@ -120,9 +137,15 @@ Others will just work on the area where the Tux is standing.
 .\" 
 .B Opening chests and searching dead bodies or containers
 .RS
-To do this, you must be standing in front of the chest or on the dead body and then use the loot skill (see above).  
+
+NEW METHOD:  Clicking the left mouse button on a chest (while standing sufficiently close by) should spill all
+the chests content onto the floor.  However there is also the old method of chest interaction, which also allows
+you to put stuff back into the chest and take stuff more selectively out of the chest:
+
+OLD METHOD:  To do this, you must be standing in front of the chest or on the dead body and then use the loot skill (see above).  
 This skill is easily recognized by the open chest icon used for it.
 This will open up an interface screen where you can then trade stuff from your inventory to the container and vice versa.
+
 .RE
 .\" 
 .\" 
@@ -203,6 +226,9 @@ Quick-Use items from the quick-inventory.  (That's those small items placed on t
 .B Space 
 Closes all opened screens.
 .TP
+.B Left Ctrl Key
+Running instead of walking is active as long as you hold down this key.
+.TP
 .B F12 
 Take a screenshot
 .RE
@@ -256,8 +282,7 @@ While the FreedroidRPG engine can now be considered fairly stable, the story and
 .SH AUTHOR
 Johannes Prix, 
 Reinhard Prix,
-Bastian Salmela, 
-Lanzz.
+Bastian Salmela.
 .\" 
 .\" 
 .\" 
