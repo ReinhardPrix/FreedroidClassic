@@ -617,6 +617,81 @@ ChatWithFriendlyDroid( int Enum )
       return; 
     } // 614 character dialog
 
+  if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "PEN" ) == 0 )
+    {
+      //--------------------
+      // Now we do the dialog with PEN...
+      //
+      PrepareMultipleChoiceDialog( Enum );
+
+      DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
+      DialogMenuTexts [ 1 ] = " Do you also train fighters?" ; 
+      DialogMenuTexts [ 2 ] = " Melee weapons level 1 (cost 20 skill points)" ;
+      DialogMenuTexts [ 3 ] = " Melee weapons level 2 (cost 30 skill points)" ;
+      DialogMenuTexts [ 4 ] = " BACK ";
+      DialogMenuTexts [ END_ANSWER ] = " END ";
+      
+      GiveSubtitleNSample( " Welcome Traveller! " , "Chandra_Welcome_Traveller_0.wav" );
+
+      while (1)
+	{
+	  
+	  // MenuSelection = ChatDoMenuSelection ( "What will you say?" , MenuTexts , 1 , NULL , FPS_Display_BFont );
+	  MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me[0].Chat_Flags [ PERSON_PEN ]  , 1 , NULL , FPS_Display_BFont );
+	  
+	  switch( MenuSelection )
+	    {
+	    case 1:
+	      PlayOnceNeededSoundSample( "Tux_PEN_Hi_Im_New_0.wav" , TRUE );
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 0 ] = 0 ; // don't say this twice...
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // allow to ask for training possibilities
+	      GiveSubtitleNSample( "Really!  I'm not really living here either.  I'm just on vacasion. " , "PEN_Really_Im_Not_0.wav" );
+	      GiveSubtitleNSample( "Normally I'm a fighter among the ranks of the rebel army.  But now I try to relax. " , "PEN_Normally_Im_A_0.wav" );
+	      break;
+	    case 2:
+	      PlayOnceNeededSoundSample( "Tux_PEN_Do_You_Also_0.wav" , TRUE );
+	      GiveSubtitleNSample( "Well, I don't do that for a living, but I certainly could.  But not for free." , "PEN_No_The_MS_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 0 ; // allow to ask for training possibilities
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 1 ; // allow training request 1
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 1 ; // allow training request 2
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 1 ; // allow back from training requests
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ END_ANSWER ] = 0 ; // disallow direct quit
+	      break;
+	    case 3:
+	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_To_0.wav" , TRUE ); // ... to become more adapt with melee weapon
+	      GiveSubtitleNSample( "The most important thing about melee combat is how you are holding your weapon." , "PEN_The_Official_Manual_0.wav" );
+	      GiveSubtitleNSample( "Hold it too laxly and you will loose it, hold it too firmly and your movements will be uncontrolled." , "PEN_Hold_It_Too_0.wav" );
+	      GiveSubtitleNSample( "Now, you've already improved a lot.  Come back when you want to learn more." , "PEN_Now_Youve_Already_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // don't say this twice...
+	      break;
+	    case 4:
+	      PlayOnceNeededSoundSample( "Tux_PEN_I_Want_Master_0.wav" , TRUE ); // ... to become a master of melee weapon
+	      GiveSubtitleNSample( "You should first learn the basics of melee combat.  Only then you can become a master of melee." , "PEN_You_Should_First_0.wav" );
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // don't say this twice...
+	      break;
+	    case 5:
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 2 ] = 0 ; // disallow training request 1
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 3 ] = 0 ; // disallow training request 2
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 4 ] = 0 ; // disallow back from training requests
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ 1 ] = 1 ; // reallow to ask for training possibilities
+	      Me [ 0 ] . Chat_Flags [ PERSON_PEN ] [ END_ANSWER ] = 1 ; // reallow direct quit
+	      break;
+	    case ( MAX_ANSWERS_PER_PERSON ):
+	    case (-1):
+	    default:
+	      PlayOnceNeededSoundSample( "Tux_See_You_Later_0.wav" , TRUE );
+	      return;
+	      break;
+	    }
+	}
+
+      //--------------------
+      // Since there won't be anyone else to talk to when already having
+      // talked to the PEN, we can safely return here.
+      //
+      return; 
+    } // PEN character dialog
+
   if ( strcmp ( Druidmap[ AllEnemys[ Enum ].type ].druidname , "DIX" ) == 0 )
     {
       //--------------------
