@@ -432,6 +432,7 @@ enum _non_player_characters
     PERSON_MS_FACILITY_GATE_GUARD_LEADER,
     PERSON_HEA,
     PERSON_BRUCE,
+    PERSON_SUBDIALOG_DUMMY,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)

@@ -26,9 +26,7 @@
 /* ----------------------------------------------------------------------
  * This file contains all functions dealing with the HUGE, BIG font used for
  * the top status line, the score and the text displayed during briefing
- * and highscore inverview.  This has NOTHING to do with the fonts
- * of the SVGALIB or the fonts used for the horizontal srolling
- * message line!
+ * and highscore inverview.  
  * ---------------------------------------------------------------------- */
 
 #define _text_c
@@ -43,6 +41,7 @@
 #include "SDL_rotozoom.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground );
+void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid );
 
 char *Wordpointer;
 unsigned char *Fontpointer;
@@ -72,6 +71,33 @@ float BigScreenMessageDuration[ MAX_BIG_SCREEN_MESSAGES ] = { 10000, 10000, 1000
 SDL_Surface* Background;
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
+
+#define PUSH_ROSTER 2
+#define POP_ROSTER 3 
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+push_or_pop_chat_roster ( int push_or_pop )
+{
+  static dialogue_option LocalChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
+
+  if ( push_or_pop == PUSH_ROSTER )
+    {
+      memcpy ( LocalChatRoster , ChatRoster , sizeof ( dialogue_option ) * MAX_DIALOGUE_OPTIONS_IN_ROSTER ) ;
+    }
+  else if ( push_or_pop == POP_ROSTER )
+    {
+      memcpy ( ChatRoster , LocalChatRoster , sizeof ( dialogue_option ) * MAX_DIALOGUE_OPTIONS_IN_ROSTER ) ;
+    }
+  else
+    {
+      
+    }
+  
+}; // push_or_pop_chat_roster ( int push_or_pop )
 
 /* ----------------------------------------------------------------------
  * In some cases it will be nescessary to inform the user of something in
@@ -144,6 +170,8 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
   if ( strcmp ( SectionName , "StandardMSFacilityGateGuard" ) == 0 ) return PERSON_STANDARD_MS_FACILITY_GATE_GUARD;
   if ( strcmp ( SectionName , "MSFacilityGateGuardLeader" ) == 0 ) return PERSON_MS_FACILITY_GATE_GUARD_LEADER;
   if ( strcmp ( SectionName , "HEA" ) == 0 ) return PERSON_HEA;
+
+  if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
   DebugPrintf ( 0 , "\n--------------------\nSectionName: %s." , SectionName );
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
@@ -391,6 +419,9 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
   char WorkString[5000];
   char *TempMessage;
   item NewItem;
+  char tmp_filename [ 5000 ] ;
+  char* fpath;
+  int i;
 
   if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
     {
@@ -480,6 +511,34 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
       DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked execution of action with label: %s. Doing it... " ,
 		   ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) );
       ExecuteActionWithLabel ( ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) , 0 ) ;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "ExecuteSubdialog:" ) )
+    {
+      strcpy ( tmp_filename , ExtraCommandString + strlen ( "ExecuteSubdialog:" ) ) ;
+      DebugPrintf( 0 , "\nExtra invoked start of SUBDIALOG! with label: %s. Doing it... " ,
+		   tmp_filename );
+
+      push_or_pop_chat_roster ( PUSH_ROSTER );
+
+      //--------------------
+      // We have to load the subdialog specified...
+      //
+      // InitChatRosterForNewDialogue(  );
+      strcat ( tmp_filename , ".dialog" );
+      fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
+
+      for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
+	{
+	  delete_one_dialog_option ( i , TRUE ); // this must be done so, that no freeing is done...
+	}
+
+      LoadChatRosterWithChatSequence ( fpath );
+      // ChatDroid -> will_rush_tux = TRUE ;
+      ChatDroid -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
+      DoChatFromChatRosterData( 0 , PERSON_SUBDIALOG_DUMMY , ChatDroid );
+
+      push_or_pop_chat_roster ( POP_ROSTER );
+
     }
   else if ( CountStringOccurences ( ExtraCommandString , "PlantCookie:" ) )
     {
