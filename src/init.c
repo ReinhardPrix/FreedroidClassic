@@ -601,6 +601,7 @@ Get_Robot_Data ( void* DataPointer )
   double energyloss_calibrator;
   double aggression_calibrator;
   double score_calibrator;
+  double range_of_vision_calibrator;
 
 #define MAXSPEED_CALIBRATOR_STRING "Common factor for all droids maxspeed values: "
 #define ACCELERATION_CALIBRATOR_STRING "Common factor for all droids acceleration values: "
@@ -608,7 +609,7 @@ Get_Robot_Data ( void* DataPointer )
 #define ENERGYLOSS_CALIBRATOR_STRING "Common factor for all droids energyloss values: "
 #define AGGRESSION_CALIBRATOR_STRING "Common factor for all droids aggression values: "
 #define SCORE_CALIBRATOR_STRING "Common factor for all droids score values: "
-
+#define RANGE_OF_VISION_CALIBRATOR_STRING "Common factor for all droids range of vision: "
 
 #define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
 #define ROBOT_SECTION_END_STRING "*** End of Robot Data Section: ***" 
@@ -686,6 +687,10 @@ Get_Robot_Data ( void* DataPointer )
   // Now we read in the score calibration factor for all droids
   ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%lf" , 
 		       &score_calibrator , EndOfDataPointer );
+
+  // Now we read in the range of vision calibration factor for all droids
+  ReadValueFromString( RobotPointer , RANGE_OF_VISION_CALIBRATOR_STRING , "%lf" , 
+		       &range_of_vision_calibrator , EndOfDataPointer );
 
   DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
   //--------------------
@@ -939,6 +944,7 @@ Get_Robot_Data ( void* DataPointer )
       Druidmap[i].lose_health *= energyloss_calibrator;
       Druidmap[i].aggression *= aggression_calibrator;
       Druidmap[i].score *= score_calibrator;
+      Druidmap[i].range_of_vision *= range_of_vision_calibrator;
 
       Druidmap[i].weapon_item.currently_held_in_hand = FALSE ;
     }

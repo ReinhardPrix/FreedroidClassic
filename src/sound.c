@@ -215,19 +215,19 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
   if ( ! strcmp ( "../effects/bot_sounds/123_death_sound.wav" , SoundSampleFileName ) )
     {
       PlaySound ( DEATH_SOUND_123 );
-      DebugPrintf ( -3 , "\nPrematurely caught 123 death sound for safe playing..." );
+      DebugPrintf ( 1 , "\nPrematurely caught 123 death sound for safe playing..." );
       return;
     }
   if ( ! strcmp ( "../effects/bot_sounds/247_death_sound.wav" , SoundSampleFileName ) )
     {
       PlaySound ( DEATH_SOUND_247 );
-      DebugPrintf ( -3 , "\nPrematurely caught 247 death sound for safe playing..." );
+      DebugPrintf ( 1 , "\nPrematurely caught 247 death sound for safe playing..." );
       return;
     }
   if ( ! strcmp ( "../effects/bot_sounds/302_death_sound.wav" , SoundSampleFileName ) )
     {
       PlaySound ( DEATH_SOUND_302 );
-      DebugPrintf ( -3 , "\nPrematurely caught 302 death sound for safe playing..." );
+      DebugPrintf ( 1 , "\nPrematurely caught 302 death sound for safe playing..." );
       return;
     }
 
