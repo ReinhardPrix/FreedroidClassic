@@ -286,7 +286,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
       if ( SuffixList[ CurItem->suffix_code ].bonus_to_mag )
 	{
 	  if ( ForShop ) strcat( ItemDescText , "             " );
-	  sprintf( linebuf , "+%d to Force\n" , SuffixList[ CurItem->suffix_code ].bonus_to_mag );
+	  sprintf( linebuf , "+%d to Mind\n" , SuffixList[ CurItem->suffix_code ].bonus_to_mag );
 	  strcat( ItemDescText , linebuf );
 	}
 
@@ -366,6 +366,9 @@ ShowCurrentSkill( void )
 {
   SDL_Rect Target_Rect;
 
+  if ( Me.status == BRIEFING ) return;
+  if ( GameConfig.Inventory_Visible ) return;
+
   Target_Rect.x = CURRENT_SKILL_RECT_X ;
   Target_Rect.y = CURRENT_SKILL_RECT_Y ;
   Target_Rect.w = CURRENT_SKILL_RECT_W ;
@@ -404,22 +407,22 @@ ShowCurrentHealthAndForceLevel( void )
 
   Health_Rect.y = WHOLE_HEALTH_RECT_Y;
   Health_Rect.w = WHOLE_HEALTH_RECT_W;
-  Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ;
+  Health_Rect.h = ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ;
   if ( Me.energy < 0 ) Health_Rect.h = 0;
   Force_Rect.y = WHOLE_FORCE_RECT_Y;
   Force_Rect.w = WHOLE_FORCE_RECT_W;
-  Force_Rect.h = ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ;
+  Force_Rect.h = ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ;
   if ( Me.mana < 0 ) Force_Rect.h = 0;
 
   Unhealth_Rect.x = Health_Rect.x;
-  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.y = WHOLE_HEALTH_RECT_Y + ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ) ;
   Unhealth_Rect.w = WHOLE_HEALTH_RECT_W;
-  Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Druidmap[ DRUID001 ].maxenergy ) ;
+  Unhealth_Rect.h = WHOLE_HEALTH_RECT_H - ( ( WHOLE_HEALTH_RECT_H * Me.energy ) / Me.maxenergy ) ;
   if ( Unhealth_Rect.h > WHOLE_HEALTH_RECT_H ) Unhealth_Rect.h = 0;
   Unforce_Rect.x = Force_Rect.x;
-  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ) ;
+  Unforce_Rect.y = WHOLE_FORCE_RECT_Y + ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ) ;
   Unforce_Rect.w = WHOLE_FORCE_RECT_W;
-  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Druidmap[ DRUID001 ].maxmana ) ;
+  Unforce_Rect.h = WHOLE_FORCE_RECT_H - ( ( WHOLE_FORCE_RECT_H * Me.mana ) / Me.maxmana ) ;
   if ( Unforce_Rect.h > WHOLE_FORCE_RECT_H ) Unforce_Rect.h = 0;
 
   SDL_SetClipRect( Screen , NULL );

@@ -252,24 +252,30 @@ CursorIsOnVitButton( int x , int y )
 }; // int CursorIsOnVitButton( int x , int y )
 
 /* ----------------------------------------------------------------------
- * This function adds any bonuses that might be on the influencers armour
- * to the influencers current stats in the character structure.
+ * This function adds any bonuses that might be on the influencers things
+ * concerning ONLY PRIMARY STATS, NOT SECONDARY STATS!
  * ---------------------------------------------------------------------- */
 void
-AddInfluencerItemBonus( item* BonusItem )
+AddInfluencerItemAttributeBonus( item* BonusItem )
 {
   //--------------------
   // In case of no item, the thing to do is pretty easy...
+  //
   if ( BonusItem->type == ( -1 ) ) return;
 
   //--------------------
   // In case of a suffix modifier, we need to apply the suffix...
+  //
   if ( BonusItem->suffix_code != ( -1 ) )
     {
-      Me.Strength += SuffixList[ BonusItem->suffix_code ].bonus_to_str;
-      Me.Dexterity += SuffixList[ BonusItem->suffix_code ].bonus_to_dex;
-      Me.Magic += SuffixList[ BonusItem->suffix_code ].bonus_to_mag;
-      Me.Vitality += SuffixList[ BonusItem->suffix_code ].bonus_to_vit;
+      Me.Strength  += SuffixList[ BonusItem->suffix_code ].bonus_to_str + 
+	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
+      Me.Dexterity += SuffixList[ BonusItem->suffix_code ].bonus_to_dex + 
+	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
+      Me.Magic     += SuffixList[ BonusItem->suffix_code ].bonus_to_mag + 
+	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
+      Me.Vitality  += SuffixList[ BonusItem->suffix_code ].bonus_to_vit + 
+	SuffixList[ BonusItem->suffix_code ].bonus_to_all_attributes ;
     }
 
   //--------------------
@@ -278,9 +284,46 @@ AddInfluencerItemBonus( item* BonusItem )
     {
 
     }
+}; // void AddInfluencerItemAttributeBonus( item* BonusItem )
+
+/* ----------------------------------------------------------------------
+ * This function adds any bonuses that might be on the influencers things
+ * concerning ONLY SECONDARY STATS, NOT PRIMARY STATS!
+ * ---------------------------------------------------------------------- */
+void
+AddInfluencerItemSecondaryBonus( item* BonusItem )
+{
+  //--------------------
+  // In case of no item, the thing to do is pretty easy...
+  //
+  if ( BonusItem->type == ( -1 ) ) return;
+
+  //--------------------
+  // In case of a suffix modifier, we need to apply the suffix...
+  //
+  if ( BonusItem->suffix_code != ( -1 ) )
+    {
+      Me.to_hit += SuffixList[ BonusItem->suffix_code ].bonus_to_tohit ;
+      Me.maxmana   += SuffixList[ BonusItem->suffix_code ].bonus_to_force ;
+      Me.maxenergy += SuffixList[ BonusItem->suffix_code ].bonus_to_life ; 
+      Me.Vitality  += SuffixList[ BonusItem->suffix_code ].bonus_to_vit ;
+
+      Me.resist_force       += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_force ;
+      Me.resist_fire        += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_fire ;
+      Me.resist_electricity += SuffixList[ BonusItem->suffix_code ].bonus_to_resist_electricity ;
+
+    }
+
+  //--------------------
+  // In case of a prefix modifier, we need to apply the suffix...
+  //
+  if ( BonusItem->prefix_code != ( -1 ) )
+    {
+
+    }
 
 
-}; // void 
+}; // void AddInfluencerItemSecondaryBonus( item* BonusItem )
 
 /* ----------------------------------------------------------------------
  * This function should re-compute all character stats according to the
@@ -306,45 +349,42 @@ UpdateAllCharacterStats ( void )
       // When a droid reaches a new experience level, all health and 
       // force are restored to full this one time
       //
-      Me.energy = Druidmap [ Me.type ].maxenergy ;
-      Me.mana = Druidmap [ Me.type ].maxmana ;
+      Me.energy = Me.maxenergy ;
+      Me.mana   = Me.maxmana   ;
     }
 
   //--------------------
-  // Now we compute the maximum energy of the influencer
+  // Now we base PRIMARY stats
   //
   Me.Strength = Me.base_strength;
   Me.Dexterity = Me.base_dexterity;
   Me.Magic = Me.base_magic;
   Me.Vitality = Me.base_vitality;
 
-  AddInfluencerItemBonus( & Me.armour_item );
-  AddInfluencerItemBonus( & Me.weapon_item );
-  AddInfluencerItemBonus( & Me.drive_item );
-  AddInfluencerItemBonus( & Me.shield_item );
-  AddInfluencerItemBonus( & Me.special_item );
-  AddInfluencerItemBonus( & Me.aux1_item );
-  AddInfluencerItemBonus( & Me.aux2_item );
+  //--------------------
+  // Now we add all bonuses to the influencers PRIMARY stats
+  //
+  AddInfluencerItemAttributeBonus( & Me.armour_item );
+  AddInfluencerItemAttributeBonus( & Me.weapon_item );
+  AddInfluencerItemAttributeBonus( & Me.drive_item );
+  AddInfluencerItemAttributeBonus( & Me.shield_item );
+  AddInfluencerItemAttributeBonus( & Me.special_item );
+  AddInfluencerItemAttributeBonus( & Me.aux1_item );
+  AddInfluencerItemAttributeBonus( & Me.aux2_item );
 
   //--------------------
-  // Now we compute the maximum energy of the influencer
+  // At this point we know, that the primary stats of the influencer
+  // have been fully computed.  So that means, that finally we can compute
+  // all base SECONDARY stats, that are dependent upon the influencer primary
+  // stats.  Once we are done with that, the modifiers to the secondary
+  // stats can be applied as well.
   //
-  // Druidmap[ DRUID001 ].maxenergy = 100 + (Me.Vitality - 15) * ENERGY_GAIN_PER_VIT_POINT;
-  // Druidmap[ DRUID001 ].maxmana = 100 + (Me.Magic - 15) * MANA_GAIN_PER_MAGIC_POINT;
-  Druidmap[ DRUID001 ].maxenergy = (Me.Vitality) * ENERGY_GAIN_PER_VIT_POINT;
-  Druidmap[ DRUID001 ].maxmana = (Me.Magic) * MANA_GAIN_PER_MAGIC_POINT;
-
-  //--------------------
-  // Now we compute the damage the influecer can do
-  //
+  Me.to_hit = 60 + ( Me.Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+  Me.maxenergy = (Me.Vitality) * ENERGY_GAIN_PER_VIT_POINT;
+  Me.maxmana   = (Me.Magic)    * MANA_GAIN_PER_MAGIC_POINT;
+  // This includes damage done as well...
   if ( Me.weapon_item.type != (-1) )
     {
-      /*
-      Me.Base_Damage = Me.weapon_item.damage + 
-	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
-      Me.Damage_Modifier = Me.weapon_item.damage_modifier + 
-	(Me.Strength - 15) * DAMAGE_GAIN_PER_STR_POINT;
-      */
       if ( ItemMap[ Me.weapon_item.type ].item_gun_angle_change != 0 )
 	{
 	  Me.Base_Damage = Me.weapon_item.damage * 
@@ -363,31 +403,31 @@ UpdateAllCharacterStats ( void )
   else
     {
       Me.Base_Damage = 0;
+      Me.Damage_Modifier = 0;
     }
-
-  //--------------------
-  // Now we compute the armour class of the influecer
-  //
+  // ... and also armour class
   Me.AC = ( Me.Dexterity - 15 ) * AC_GAIN_PER_DEX_POINT;
   if ( Me.armour_item.type != (-1) )
     {
-      // DebugPrintf( 2 , "\nAn armour is beeing used!!!, type = %d" , Me.armour_item.type);
-      // DebugPrintf( 2 , "\nAC bonus = %f" , ItemMap[ Me.armour_item.type ].item_armour_ac_bonus );
-      // Me.AC += ItemMap[ Me.armour_item.type ].item_armour_ac_bonus;
       Me.AC += Me.armour_item.ac_bonus;
     }
   if ( Me.shield_item.type != (-1) )
     {
-      // DebugPrintf( 0 , "\nA shield is beeing used!!!, type = %d" , Me.shield_item.type);
-      // DebugPrintf( 0 , "\nAC bonus = %f" , ItemMap[ Me.shield_item.type ].item_shield_ac_bonus );
-      // Me.AC += ItemMap[ Me.shield_item.type ].item_shield_ac_bonus;
       Me.AC += Me.shield_item.ac_bonus;
     }
 
   //--------------------
-  // Now we compute the current to-hit chance of the influencer
-  // 
-  Me.to_hit = 60 + ( Me.Dexterity - 15 ) * TOHIT_PERCENT_PER_DEX_POINT;
+  // So at this point we can finally apply all the modifiers to the influencers
+  // SECONDARY stats due to 'magical' items and spells and the like
+  //
+  AddInfluencerItemSecondaryBonus( & Me.armour_item );
+  AddInfluencerItemSecondaryBonus( & Me.weapon_item );
+  AddInfluencerItemSecondaryBonus( & Me.drive_item );
+  AddInfluencerItemSecondaryBonus( & Me.shield_item );
+  AddInfluencerItemSecondaryBonus( & Me.special_item );
+  AddInfluencerItemSecondaryBonus( & Me.aux1_item );
+  AddInfluencerItemSecondaryBonus( & Me.aux2_item );
+
 
 }; // void UpdateAllCharacterStats ( void )
 
@@ -521,13 +561,13 @@ ShowCharacterScreen ( void )
   sprintf( CharText , "%d", Me.PointsToDistribute );
   DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Druidmap[ DRUID001 ].maxenergy );
+  sprintf( CharText , "%d", (int) Me.maxenergy );
   DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", (int) Me.energy );
   DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect );
 
-  sprintf( CharText , "%d", (int) Druidmap[ DRUID001 ].maxmana );
+  sprintf( CharText , "%d", (int) Me.maxmana );
   DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect );
 
   sprintf( CharText , "%d", (int) Me.mana );

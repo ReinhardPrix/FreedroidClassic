@@ -1002,7 +1002,7 @@ Cheatmenu (void)
 	  else
 	    {
 	      Me.type = i;
-	      Me.energy = Druidmap[Me.type].maxenergy;
+	      Me.energy = Me.maxenergy;
 	      Me.health = Me.energy;
 	      printf_SDL (Screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();

@@ -513,7 +513,7 @@ PutInfluence ( int x , int y )
   //
   
 #define alpha_offset 80
-  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == (-1) ) ) 
+  if ( ( ( Me.energy * 100 / Me.maxenergy ) <= BLINKENERGY ) && ( x == (-1) ) ) 
     {
 
       // In case of low energy, do the fading effect...
