@@ -597,7 +597,7 @@ GetTakeoverGraphics (void)
 
   FreeIfUsed(to_blocks);   /* this happens when we do theme-switching */
 
-  TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, TRUE));
+  TempLoadSurface = IMG_Load (find_file (TO_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL));
   to_blocks = SDL_DisplayFormatAlpha( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
 

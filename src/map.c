@@ -165,7 +165,7 @@ ActSpecialField (float x, float y)
   switch (MapBrick)
     {
     case LIFT:
-      if ( (Me.status != TRANSFERMODE) || (myspeed2 > 1) )
+      if ( (Me.status != ACTIVATE) || (myspeed2 > 1) )
 	break;
 
       cx = rintf(x) - x ;
@@ -180,7 +180,7 @@ ActSpecialField (float x, float y)
     case KONSOLE_L:
     case KONSOLE_O:
     case KONSOLE_U:
-      if (Me.status == TRANSFERMODE && (myspeed2 < 1) )
+      if (Me.status == ACTIVATE && (myspeed2 < 1) )
 	{
 	  EnterKonsole ();
 	  DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  Back from EnterKonsole().\n");
@@ -307,7 +307,7 @@ LoadShip (char *filename)
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
 
   /* Read the whole ship-data to memory */
-  fpath = find_file (filename, MAP_DIR, FALSE);
+  fpath = find_file (filename, MAP_DIR, NO_THEME, CRITICAL);
   ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
   //--------------------
@@ -1168,7 +1168,7 @@ GetLiftConnections (char *filename)
 
   /* Now get the lift-connection data from "FILE.elv" file */
 
-  fpath = find_file (filename, MAP_DIR, FALSE);
+  fpath = find_file (filename, MAP_DIR, NO_THEME, CRITICAL);
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_LIFT_DATA_STRING ) ;
 
@@ -1287,7 +1287,7 @@ GetCrew (char *filename)
   //For that, we must get it into memory first.
   //The procedure is the same as with LoadShip
   //
-  fpath = find_file (filename, MAP_DIR, FALSE);
+  fpath = find_file (filename, MAP_DIR, NO_THEME, CRITICAL);
 
   MainDroidsFilePointer = ReadAndMallocAndTerminateFile( fpath , END_OF_DROID_DATA_STRING ) ;
 

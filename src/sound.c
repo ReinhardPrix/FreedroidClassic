@@ -130,8 +130,7 @@ Continuing with sound disabled\n");
   if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
     {
       DebugPrintf (0, "WARNING: SDL audio channel could not be opened. \n");
-      DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
-		   Mix_GetError());
+      DebugPrintf (0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", Mix_GetError());
       sound_on = FALSE;
       return;
     }
@@ -148,14 +147,12 @@ Continuing with sound disabled\n");
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, FALSE);
-      Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
+      fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, NO_THEME, WARNONLY);
+      if (fpath) Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath); 
       if ( Loaded_WAV_Files[i] == NULL )
 	{
-	  DebugPrintf (0, "Error: could not load Sound-sample: %s", 
-		       SoundSampleFilenames[ i ]);
-	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
-		   Mix_GetError());
+	  DebugPrintf (0, "Error: could not load Sound-sample: %s", SoundSampleFilenames[ i ]);
+	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
 	  sound_on = FALSE;
 	  return;
 	} // if ( !Loaded_WAV...
@@ -165,14 +162,12 @@ Continuing with sound disabled\n");
 
   for (i = 0; i < NUM_COLORS; i++)
     {
-      fpath = find_file ( MusicFiles [ i ], SOUND_DIR, FALSE);
-      MusicSongs [ i ] = Mix_LoadMUS( fpath );
+      fpath = find_file ( MusicFiles [ i ], SOUND_DIR, NO_THEME, WARNONLY);
+      if (fpath) MusicSongs [ i ] = Mix_LoadMUS( fpath );
       if ( MusicSongs[ i ] == NULL )
 	{
-	  DebugPrintf ( 0, "\nError loading sound-file: %s. Mixer-Error: %s\n", 
-			MusicFiles[ i ] , Mix_GetError() ); 
-	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", 
-		       Mix_GetError());
+	  DebugPrintf ( 0, "\nError loading sound-file: %s\n", MusicFiles[ i ]);
+	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
 	  sound_on = FALSE;
 	  return;
 	} // if ( !Loaded_WAV...
@@ -335,13 +330,14 @@ Switch_Background_Music_To ( char* filename_raw )
   else  // not using BYCOLOR mechanism: just play specified song
     {
       if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);      
-      fpath = find_file (filename_raw, SOUND_DIR, FALSE);    
-      Tmp_MOD_File = Mix_LoadMUS (fpath);
+      fpath = find_file (filename_raw, SOUND_DIR, NO_THEME, WARNONLY);    
+      if (fpath) Tmp_MOD_File = Mix_LoadMUS (fpath);
       if ( Tmp_MOD_File == NULL )
 	{
-	  DebugPrintf (0, "ERROR: Could not load soundfile: %s \n SDL-Error: %s\n", 
-		       fpath , Mix_GetError() );
-	  Terminate (ERR);
+	  DebugPrintf (0, "\nError loading sound-file: %s\n", filename_raw);
+	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
+	  sound_on = FALSE;
+	  return;
 	} // if ( !Loaded_WAV...
       Mix_PlayMusic (Tmp_MOD_File, -1);
     }      

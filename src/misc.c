@@ -521,28 +521,41 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 /*-----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 
- * using theme subdir if use_theme==TRUE
  *
- * if you pass NULL as subdir, it will be ignored
+ * if you pass NULL as "subdir", it will be ignored
+ *
+ * use current-theme subdir if "use_theme" == USE_THEME, otherwise NO_THEME
+ *
+ * behavior on file-not-found depends on parameter "critical"
+ *  IGNORE: just return NULL
+ *  WARNONLY: warn and return NULL
+ *  CRITICAL: Error-message and Terminate
  *
  * returns pointer to _static_ string array File_Path, which 
  * contains the full pathname of the file.
  *
- * !! do never try to free the returned string !!
+ * !! do never try to free the returned string !! 
+ * or to keep using it after a new call to find_file!
  *
- * if file is not found, return NULL pointer
  *-----------------------------------------------------------------*/
 char *
-find_file (char *fname, char *subdir, int use_theme)
+find_file (char *fname, char *subdir, int use_theme, int critical)
 {
   static char File_Path[5000];   /* hope this will be enough */
   FILE *fp;  // this is the file we want to find?
   int i;
   bool found = FALSE;
 
+  if ( (critical != IGNORE) && (critical != WARNONLY) && (critical != CRITICAL) )
+    {
+      DebugPrintf (0, "WARNING: unknown critical-value passed to find_file(): %d. Assume CRITICAL\n", 
+		   critical);
+      critical = CRITICAL;
+    }
+    
   if (!fname)
     {
-      printf ("\nError. find_file() called with empty filename!\n");
+      DebugPrintf (0, "\nError: find_file() called with empty filename!\n");
       return (NULL);
     }
   if (!subdir)
@@ -559,7 +572,7 @@ find_file (char *fname, char *subdir, int use_theme)
       strcat (File_Path, subdir);
       strcat (File_Path, "/");
 
-      if (use_theme)
+      if (use_theme == USE_THEME)
 	strcat (File_Path, GameConfig.Theme_SubPath);
 
       strcat (File_Path, fname);
@@ -568,6 +581,7 @@ find_file (char *fname, char *subdir, int use_theme)
 	{
 	  fclose (fp);
 	  found = TRUE;
+	  DebugPrintf (1, "find_file() found %s in %s\n", fname, File_Path);
 	  break;
 	}
     } /* for i */
@@ -575,8 +589,28 @@ find_file (char *fname, char *subdir, int use_theme)
   if (found)
     return (File_Path);
   else
-    return (NULL);
-	
+    { // how critical is this file for the game:
+      switch (critical)
+	{
+	case WARNONLY:
+	  DebugPrintf (0, "WARNING: file %s not found. \n", fname);
+	  return (NULL);
+	case IGNORE:
+	  return (NULL);
+	case CRITICAL:
+	  DebugPrintf (0, "ERROR: file %s not found, cannot run without it!\n", fname);
+	  Terminate (ERR);
+	default:
+	  DebugPrintf (0, "ERROR in find_file(): Code should never reach this line!! Harakiri\n");
+	  Terminate (ERR);
+	}
+    }
+
+  DebugPrintf (0, "ERROR in find_file(): Code should never reach this line!! Harakiri\n");
+  Terminate (ERR);
+
+  return (NULL);  // just to keep the compiler quiet ;)
+
 } /* find_file */
 
 /*@Function============================================================

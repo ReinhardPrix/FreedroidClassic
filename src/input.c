@@ -234,21 +234,34 @@ keyboard_update(void)
 		
 	  break;
 	  
-	case SDL_JOYBUTTONDOWN:
-	  // map first button onto fire, all others on right mouse button
+	case SDL_JOYBUTTONDOWN:  // here we do some brute-force remappings...
+	  // map first button onto fire, 
 	  if (event.jbutton.button == 0)
 	    key_pressed[SDLK_SPACE] = TRUE;
-	  else
+
+	  // second button onto MouseRight (i.e Takeover)
+	  else if (event.jbutton.button == 1) 
 	    CurrentlyMouseRightPressed = TRUE;
-	    
+
+	  // and third button onto 'RSHIFT' , i.e Activate
+	  else if (event.jbutton.button == 2) 
+	    key_pressed[SDLK_RSHIFT] = TRUE;
+
 	  axis_is_active = TRUE;
 	  break;
 
 	case SDL_JOYBUTTONUP:
+	  // map first button onto fire, 
 	  if (event.jbutton.button == 0)
 	    key_pressed[SDLK_SPACE] = FALSE;
-	  else
+
+	  // second button onto MouseRight (i.e Takeover)
+	  else if (event.jbutton.button == 1) 
 	    CurrentlyMouseRightPressed = FALSE;
+
+	  // and third button onto 'RSHIFT' , i.e Activate
+	  else if (event.jbutton.button == 2) 
+	    key_pressed[SDLK_RSHIFT] = FALSE;
 
 	  axis_is_active = FALSE;
 	  break;
@@ -272,8 +285,9 @@ keyboard_update(void)
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    CurrentlyMouseRightPressed = TRUE;
 
-	  if (event.button.button == SDL_BUTTON_MIDDLE)  // we just map middle->Escape
-	    key_pressed[SDLK_ESCAPE] = TRUE;
+	  // we just map middle->Rshift (i.e. Activate)
+	  if (event.button.button == SDL_BUTTON_MIDDLE)  
+	    key_pressed[SDLK_RSHIFT] = TRUE;
 
 	  // wheel events are immediately released, so we rather
 	  // count the number of not yet read-out events
@@ -297,7 +311,7 @@ keyboard_update(void)
 	    CurrentlyMouseRightPressed = FALSE;
 
 	  if (event.button.button == SDL_BUTTON_MIDDLE)  // we just map middle->Escape
-	    key_pressed[SDLK_ESCAPE] = FALSE;
+	    key_pressed[SDLK_RSHIFT] = FALSE;
 
 	  break;
 

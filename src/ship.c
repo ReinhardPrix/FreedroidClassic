@@ -388,11 +388,14 @@ EnterKonsole (void)
 	      PaintConsoleMenu (pos, 0);
 	      break;
 	    case 2:
+	      ClearGraphMem();
+	      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
 	      ShowDeckMap (CurLevel);
 	      PaintConsoleMenu(pos, 0);
 	      break;
 	    case 3:
-	      Fill_Rect(User_Rect, Black);
+	      ClearGraphMem();
+	      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
 	      ShowLifts (CurLevel->levelnum, -1);
 
 	      while (! (FirePressedR() || EscapePressed() || MouseRightPressedR() ))
@@ -719,7 +722,7 @@ Armamant : %s\n\
 Sensors  1: %s\n\
                     2: %s\n\
                     3: %s", 
-	       Weaponnames [ Druidmap[droidtype].armament],
+	       Weaponnames [ Druidmap[droidtype].gun],
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);

@@ -453,8 +453,8 @@ LoadThemeConfigurationFile(void)
 #define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***" 
 #define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***" 
 
-  fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
-
+  fpath = find_file ("config.theme", GRAPHICS_DIR, USE_THEME, CRITICAL);
+  
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 
   EndOfThemesBulletData = LocateStringInData ( Data , END_OF_THEME_BULLET_DATA_STRING );
@@ -600,7 +600,7 @@ InitPictures (void)
 
   printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading image data ");
   //---------- get Map blocks
-  fpath = find_file (MAP_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (MAP_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL);	/* init function */
   for (line = 0; line < NUM_COLORS; line ++)
     for (col = 0; col < NUM_MAP_BLOCKS; col ++)
@@ -611,7 +611,7 @@ InitPictures (void)
       }
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Droid-model  blocks
-  fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL);
   for (col = 0; col < DROID_PHASES; col ++) 
     {
@@ -629,7 +629,7 @@ InitPictures (void)
 
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Bullet blocks
-  fpath = find_file (BULLET_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (BULLET_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL);
   for (line = 0; line < Number_Of_Bullet_Types; line ++)
     for (col = 0; col < Bulletmap[line].phases; col ++)
@@ -640,7 +640,7 @@ InitPictures (void)
   printf_SDL (ne_screen, -1, -1, ".");
 
   //---------- get Blast blocks
-  fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL);	
   for (line = 0; line <  ALLBLASTTYPES; line ++)
     for (col = 0; col < Blastmap[line].phases; col ++)
@@ -650,7 +650,7 @@ InitPictures (void)
       }
   printf_SDL (ne_screen, -1, -1, ".");
   //---------- get Digit blocks
-  fpath = find_file (DIGIT_BLOCK_FILE, GRAPHICS_DIR, TRUE);
+  fpath = find_file (DIGIT_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL);
   for (col = 0; col < 10; col++)
     {
@@ -666,9 +666,9 @@ InitPictures (void)
   printf_SDL (ne_screen, -1, -1, ".");
 
   FreeIfUsed(ship_on_pic);
-  ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, TRUE));
+  ship_on_pic = IMG_Load (find_file (SHIP_ON_PIC_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL));
   FreeIfUsed(ship_off_pic);
-  ship_off_pic= IMG_Load (find_file (SHIP_OFF_PIC_FILE, GRAPHICS_DIR, TRUE));
+  ship_off_pic= IMG_Load (find_file (SHIP_OFF_PIC_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL));
 
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
@@ -677,19 +677,19 @@ InitPictures (void)
       arrow_cursor = init_system_cursor (arrow_xpm);
       crosshair_cursor = init_system_cursor (crosshair_xpm);
       //---------- get Console pictures
-      fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
+      fpath = find_file (CONSOLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       console_pic = Load_Block (fpath, 0, 0, NULL);
-      fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, FALSE);
+      fpath = find_file (CONSOLE_BG_PIC1_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       console_bg_pic1 = Load_Block (fpath, 0, 0, NULL);
-      fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, FALSE);
+      fpath = find_file (CONSOLE_BG_PIC2_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       console_bg_pic2 = Load_Block (fpath, 0, 0, NULL);
       printf_SDL (ne_screen, -1, -1, ".");
-      arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, FALSE) );
-      arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, FALSE) );
-      arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, FALSE) );
-      arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, FALSE) );
+      arrow_up = IMG_Load (find_file ("arrow_up.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
+      arrow_down = IMG_Load (find_file ("arrow_down.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
+      arrow_right = IMG_Load (find_file ("arrow_right.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
+      arrow_left = IMG_Load (find_file ("arrow_left.png", GRAPHICS_DIR, NO_THEME, CRITICAL) );
       //---------- get Banner
-      fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, FALSE);
+      fpath = find_file (BANNER_BLOCK_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
       banner_pic = Load_Block (fpath, 0, 0, NULL);
       printf_SDL (ne_screen, -1, -1, ".");
       //---------- get Droid images ----------
@@ -697,7 +697,7 @@ InitPictures (void)
 	{
 	  strcpy( fname, Druidmap[i].druidname );
 	  strcat( fname , ".png" );
-	  if ( (fpath = find_file (fname, GRAPHICS_DIR, FALSE)) == NULL)
+	  if ( (fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL)) == NULL)
 	    {
 	      DebugPrintf (0, "ERROR: Droid pic %s not found!\n", fname);
 	      Terminate (ERR);
@@ -825,8 +825,8 @@ Init_Video (void)
   if (vid_info->wm_available)  /* if there's a window-manager */
     {
       SDL_WM_SetCaption ("Freedroid", "");
-      fpath = find_file (ICON_FILE, GRAPHICS_DIR, FALSE);
-      SDL_WM_SetIcon( IMG_Load (fpath), NULL);
+      fpath = find_file (ICON_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
+      if (fpath) SDL_WM_SetIcon( IMG_Load (fpath), NULL);
     }
 
 
@@ -963,7 +963,7 @@ Load_Fonts (void)
   if (Para_BFont) 
     return (OK);
 
-  fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, FALSE);
+  fpath = find_file (PARA_FONT_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
   if ( ( Para_BFont = LoadFont (fpath) ) == NULL )
     {
       DebugPrintf (0, "ERROR: font file named %s was not found.\n", PARA_FONT_FILE );
@@ -973,7 +973,7 @@ Load_Fonts (void)
 
   Menu_BFont = Para_BFont;
 
-  fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, FALSE);
+  fpath = find_file (FPS_FONT_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
   if ( ( FPS_Display_BFont = LoadFont (fpath) ) == NULL )
     {
       DebugPrintf (0, "ERROR: font file named %s was not found.\n", FPS_FONT_FILE);

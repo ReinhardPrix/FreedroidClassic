@@ -133,7 +133,6 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
-  int armament;
   char *notes;			/* notes on the druid of this type */
 }
 druidspec, *Druidspec;

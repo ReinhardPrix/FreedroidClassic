@@ -74,10 +74,6 @@
 
 #define COLLISION_STEPSIZE   0.1
 
-// **********************************************************************
-// Constants influencing code generation and
-// constants defining flags for some functions:
-
 /* ************************************************************
  * Highscore related defines 
  *************************************************************/
@@ -86,6 +82,19 @@
 #define MAX_NAME_LEN 	15     /* max len of highscore name entry */
 #define MAX_HIGHSCORES  10     /* only keep Top10 */
 #define DATE_LEN	10     /* reserved for the date-string */
+//***************************************************************
+
+// find_file(): use current-theme subdir in search or not
+enum _themed {
+  NO_THEME= 0,
+  USE_THEME
+};
+// find_file(): how important is the file in question:
+enum _criticality {
+  IGNORE = 0,    // ignore if not found and return NULL
+  WARNONLY,      // warn if not found and return NULL
+  CRITICAL       // Error-message and Terminate
+};
 
 // The flags for DisplayBanner are:
 enum
@@ -389,7 +398,8 @@ enum _status
   ELEVATOR,
   BRIEFING,
   MENU,
-  VICTORY
+  VICTORY,
+  ACTIVATE
 };
 
 #define DECKCOMPLETEBONUS 500

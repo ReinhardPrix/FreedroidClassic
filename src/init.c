@@ -269,7 +269,6 @@ Get_Robot_Data ( void* DataPointer )
 #define SENSOR1_BEGIN_STRING "Sensor 1 of this droid : "
 #define SENSOR2_BEGIN_STRING "Sensor 2 of this droid : "
 #define SENSOR3_BEGIN_STRING "Sensor 3 of this droid : "
-#define ARMAMENT_BEGIN_STRING "Armament of this droid : "
 #define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
@@ -393,10 +392,6 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , SENSOR3_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].sensor3, EndOfDataPointer );
 
-      // Now we read in the armament of this droid type
-      ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].armament , EndOfDataPointer );
-
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
       // line after the NOTES_BEGIN_STRING until the "\n" is found.
       Druidmap[RobotIndex].notes = 
@@ -440,7 +435,7 @@ Init_Game_Data ( char * Datafilename )
   DebugPrintf (2, "\nint Init_Game_Data ( char* Datafilename ) called.");
 
   /* Read the whole game data to memory */
-  fpath = find_file (Datafilename, MAP_DIR, FALSE);
+  fpath = find_file (Datafilename, MAP_DIR, NO_THEME, CRITICAL);
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_GAME_DAT_STRING ) ;
 
@@ -673,7 +668,7 @@ InitNewMission ( char *MissionName )
   //  printf_SDL (ne_screen, User_Rect.x + 50, -1, "Loading mission data ");
 
   /* Read the whole mission data to memory */
-  fpath = find_file (MissionName, MAP_DIR, FALSE);
+  fpath = find_file (MissionName, MAP_DIR, NO_THEME, CRITICAL);
 
   MainMissionPointer = ReadAndMallocAndTerminateFile( fpath , END_OF_MISSION_DATA_STRING ) ;
 
@@ -894,7 +889,7 @@ InitFreedroid (int argc, char *const argv[])
 
   Init_Video ();
 
-  DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, FALSE)); // show title pic
+  DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL)); // show title pic
   SDL_Flip(ne_screen);
 
   Init_Audio ();
@@ -956,12 +951,6 @@ Title ( char *MissionBriefingPointer )
 #define NEXT_BRIEFING_SUBSECTION_START_STRING "* New Mission Briefing Text Subsection *"
 #define END_OF_BRIEFING_SUBSECTION_STRING "* End of Mission Briefing Text Subsection *"
 
-  // STRANGE!! This command will be silently ignored by SDL?
-  // WHY?? DONT KNOW!!!
-  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-  // Play_Sound ( CLASSICAL_BEEP_BEEP_BACKGROUND_MUSIC );
-  // Switch_Background_Music_To ( COMBAT_BACKGROUND_MUSIC_SOUND );
-
   TitleSongName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_SONG_STRING , "\n" ) ;
 
   Switch_Background_Music_To ( TitleSongName );
@@ -969,10 +958,8 @@ Title ( char *MissionBriefingPointer )
   TitlePictureName = ReadAndMallocStringFromData ( MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING , "\n" ) ;
 
   SDL_SetClipRect ( ne_screen, NULL );
-  // DisplayImage ( find_file(TitlePictureName, GRAPHICS_DIR, FALSE) );
-  // SDL_Flip (ne_screen);
 
-  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, FALSE) );
+  DisplayImage ( find_file(TitlePictureName,GRAPHICS_DIR, NO_THEME, CRITICAL) );
   MakeGridOnScreen( (SDL_Rect*) &Full_Screen_Rect );
   Me.status=BRIEFING;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 

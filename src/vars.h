@@ -62,6 +62,7 @@ char *InfluenceModeNames[] = {
   "Briefing",
   "Menu",
   "Victory",
+  "Activate",
   NULL
 };
 
@@ -134,12 +135,13 @@ char *Brainnames[] = {
   "error"
 };
 
-char *Weaponnames[] = {
-  "none",
-  "lasers",
-  "laser rifle",
-  "disruptor",
-  "exterminator",
+char *Weaponnames[] = {      // Bullet-names:
+  "none",                    // pulse
+  "lasers",                  // single
+  "lasers",                  // Military
+  "disruptor",               // flash
+  "exterminator",            // exterminator
+  "laser rifle",             // laser-rifle
   "error"
 };
 

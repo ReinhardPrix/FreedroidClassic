@@ -190,16 +190,15 @@ MoveInfluence (void)
 
   if (MouseRightPressed() == 1)
     Me.status = TRANSFERMODE;
-    
 
-  if ( (SpacePressed ()) && (NoDirectionPressed ()) &&
-       (Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
+  if (KeyIsPressed('e')||KeyIsPressed(SDLK_RSHIFT)) // activate mode for Konsole and Lifts
+    Me.status = ACTIVATE;
+
+  if ( (SpacePressed ()) && (NoDirectionPressed ()) &&(Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
     TransferCounter += Frame_Time();
 
-  if ( (SpacePressed() || MouseLeftPressed()) && (!NoDirectionPressed () ) &&
-       (Me.status != TRANSFERMODE) )
+  if ( (SpacePressed() || MouseLeftPressed()) && (!NoDirectionPressed () ) && (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
-
 
   if ((SpacePressed()||MouseLeftPressed())&&(!NoDirectionPressed())&&(Me.status==WEAPON)&&(Me.firewait == 0) )
     FireBullet ();

@@ -198,8 +198,10 @@ ShowHighscores (void)
   int y0, height, len;
   int i;
   BFont_Info *prev_font;
+  char *fpath;
 
-  DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+  fpath = find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
+  if(fpath) DisplayImage (fpath);
   MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
   DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
 
