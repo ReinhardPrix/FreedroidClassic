@@ -186,7 +186,7 @@ enum
 
 // The flags for AssembleCombatWindow are:
 enum
-{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 , ONLY_SHOW_MAP_AND_TEXT = 4 , SHOW_GRID = 8 };
+{ ONLY_SHOW_MAP = 1 , DO_SCREEN_UPDATE = 2 , ONLY_SHOW_MAP_AND_TEXT = 4 , SHOW_GRID = 8 , SHOW_TUX_AND_ENEMIES = 16 , SHOW_TEXT = 32 , SHOW_ITEMS = 64 };
 
 // The color filters are:
 enum

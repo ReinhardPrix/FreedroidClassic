@@ -32,11 +32,6 @@
  * screen for the user.
  * ---------------------------------------------------------------------- */
 
-/*
- * This file has been checked for remnants of german comments.  If you still find
- * any, please let me know.
- */
-
 #define _view_c
 
 #include "system.h"
@@ -780,17 +775,21 @@ AssembleCombatPicture (int mask)
       return;
     }
 
+
+  if ( mask & SHOW_ITEMS )
+    {
+      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
+	{
+	  PutItem( i );
+	}
+    }
+
   if ( ! ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
       //--------------------
       // At this point we know that now NOT ONLY the map is to be drawn.
       // so we start drawing the rest of the INTERIOR of the combat window:
       
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-	{
-	  PutItem( i );
-	}
-
       PutMiscellaneousSpellEffects ( );
       
       for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
@@ -1654,7 +1653,7 @@ There was an item type given, that exceeds the range of item images loaded.",
   ItemGPS . x = CurItem -> pos . x ;
   ItemGPS . y = CurItem -> pos . y ;
   ItemGPS . z = Me [ 0 ] . pos . z ; // this is silly.  The item is always from this leve...
-  if ( ! IsVisible ( & ItemGPS , 0 ) ) return;
+  if ( ( ! IsVisible ( & ItemGPS , 0 ) ) && RespectVisibilityOnMap ) return;
 
   TargetRectangle . x = UserCenter_x - ( Me [ 0 ] . pos . x - CurItem -> pos . x ) * Block_Width  - 
     ( 16 * ItemImageList [ ItemMap [ CurItem -> type ] . picture_number ] . inv_size . x ) ;

@@ -66,22 +66,6 @@ enum
   };
 
 enum
-  { 
-    SAVE_LEVEL_POSITION=1, 
-    CHANGE_LEVEL_POSITION, 
-    CHANGE_TILE_SET_POSITION, 
-    CHANGE_SIZE_X, 
-    CHANGE_SIZE_Y, 
-    SET_LEVEL_NAME , 
-    SET_BACKGROUND_SONG_NAME , 
-    SET_LEVEL_COMMENT, 
-    ADD_NEW_LEVEL , 
-    SET_LEVEL_INTERFACE_POSITION , 
-    EDIT_LEVEL_DIMENSIONS,
-    QUIT_LEVEL_EDITOR_POSITION 
-};
-
-enum
   {
     INSERTREMOVE_COLUMN_VERY_WEST = 1,
     INSERTREMOVE_COLUMN_WESTERN_INTERFACE,
@@ -97,7 +81,9 @@ enum
   };
 
 /* ----------------------------------------------------------------------
- *
+ * This function drops an item onto the floor.  It works with a selection
+ * of item images and clicking with the mouse on an item image or on one
+ * of the buttons presented to the person editing the level.
  * ---------------------------------------------------------------------- */
 void
 ItemDropFromLevelEditor( void )
@@ -107,7 +93,6 @@ ItemDropFromLevelEditor( void )
   int i;
   int j;
   item temp_item;
-  SDL_Rect tmp_rect;
   int row_len = 5 ;
   int line_len = 8 ; 
   int item_group = 0 ; 
@@ -119,23 +104,12 @@ ItemDropFromLevelEditor( void )
 
       while ( SpacePressed() );
 
-      tmp_rect . x = i * 64 + 55 ;
-      tmp_rect . y = 32 + (64+2) * j ; 
-      tmp_rect . w = 64 ;
-      tmp_rect . h = 64 ; 
       SDL_FillRect ( Screen , NULL , 0 );
 
       for ( j = 0 ; j < row_len ; j ++ )
 	{
 	  for ( i = 0 ; i < line_len ; i ++ ) 
 	    {
-	      /*
-	      tmp_rect . x = i * 64 + 55 ;
-	      tmp_rect . y = 32 + (64+2) * j ; 
-	      tmp_rect . w = 64 ;
-	      tmp_rect . h = 64 ; 
-	      SDL_FillRect ( Screen , &tmp_rect , 0 );
-	      */
 	      temp_item . type = i + j * line_len + item_group * line_len * row_len ;
 	      if ( temp_item.type >= Number_Of_Item_Types )  temp_item.type = 1 ;
 	      ShowRescaledItem ( i , 32 + (64+2) * j, & ( temp_item ) );
@@ -172,7 +146,6 @@ ItemDropFromLevelEditor( void )
 	  NewItemCode = ( ( GetMousePos_x()+16 - 55 ) / 64 + ( GetMousePos_y()+16 - 32 ) / 66 * line_len + item_group * line_len * row_len ) ;
 	}
     }
-  
 
   if ( NewItemCode >= Number_Of_Item_Types ) 
     {
@@ -181,10 +154,13 @@ ItemDropFromLevelEditor( void )
   
   DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );
 
-}; // void ZoomIn( void )
+  while ( SpacePressed() );
+
+}; // void ItemDropFromLevelEditor( void )
 
 /* ----------------------------------------------------------------------
- *
+ * This function zooms into the level.  It is available only from the 
+ * level editor.  Using it in the real game is depreciated.
  * ---------------------------------------------------------------------- */
 void
 ZoomIn( void )
@@ -195,7 +171,8 @@ ZoomIn( void )
 }; // void ZoomIn( void )
 
 /* ----------------------------------------------------------------------
- *
+ * This function zooms out of the level.  It is available only from the 
+ * level editor.  Using it in the real game is depreciated.
  * ---------------------------------------------------------------------- */
 void
 ZoomOut( void )
@@ -992,13 +969,27 @@ EditLevelDimensions ( void )
 int
 DoLevelEditorMainMenu ( Level EditLevel )
 {
-  char* MenuTexts[ 20 ];
+  char* MenuTexts[ 100 ];
   char Options [ 20 ] [1000];
   int Weiter = FALSE ;
   int MenuPosition=1;
   int Done=FALSE;
-  // int i;
-  // char* OldMapPointer;
+  int i;
+
+enum
+  { 
+    SAVE_LEVEL_POSITION=1, 
+    CHANGE_LEVEL_POSITION, 
+    CHANGE_TILE_SET_POSITION, 
+    CHANGE_SIZE_X, 
+    SET_LEVEL_NAME , 
+    SET_BACKGROUND_SONG_NAME , 
+    SET_LEVEL_COMMENT, 
+    ADD_NEW_LEVEL , 
+    SET_LEVEL_INTERFACE_POSITION , 
+    EDIT_LEVEL_DIMENSIONS,
+    QUIT_LEVEL_EDITOR_POSITION 
+};
 
   while (!Weiter)
     {
@@ -1007,29 +998,27 @@ DoLevelEditorMainMenu ( Level EditLevel )
 
       InitiateMenu( NULL );
       
-      MenuTexts[ 0 ] = "Save whole ship to 'Testship.shp'" ;
+      i=0;
+      MenuTexts[ i ] = "Save whole ship to 'Testship.shp'" ; i++;
       sprintf( Options [ 0 ] , "Current: %d.  Level Up/Down" , EditLevel->levelnum );
-      MenuTexts[ 1 ] = Options [ 0 ];
-      MenuTexts[ 2 ] = "Change tile set" ;
+      MenuTexts[ i ] = Options [ 0 ]; i++;
+      MenuTexts[ i ] = "Change tile set" ; i++;
       sprintf( Options [ 1 ] , "Current levelsize: %d x %d map tiles." , EditLevel->xlen , EditLevel->ylen );
-      MenuTexts[ 3 ] = Options [ 1 ];
-      sprintf( Options [ 2 ] , " --- UNUSED --- " );
-      MenuTexts[ 4 ] = Options [ 2 ] ;
+      MenuTexts[ i ] = Options [ 1 ]; i++;
       sprintf( Options [ 3 ] , "Level name: %s" , EditLevel->Levelname );
-      MenuTexts[ 5 ] = Options [ 3 ] ;
+      MenuTexts[ i ] = Options [ 3 ] ; i++;
       sprintf( Options [ 4 ] , "Background music file name: %s" , EditLevel->Background_Song_Name );
-      MenuTexts[ 6 ] = Options [ 4 ] ;
+      MenuTexts[ i ] = Options [ 4 ] ; i++;
       sprintf( Options [ 5 ] , "Set Level Comment: %s" , EditLevel->Level_Enter_Comment );
-      MenuTexts[ 7 ] = Options [ 5 ] ;
-      MenuTexts[ 8 ] = "Add completely new level" ; 
-      MenuTexts[ 9 ] = "Set Level Interfaces" ;
-      MenuTexts[ 10 ] = "Edit Level Dimensions" ;
-      MenuTexts[ 11 ] = "Quit Level Editor" ;
-      MenuTexts[ 12 ] = "" ;
+      MenuTexts[ i ] = Options [ 5 ] ; i++;
+      MenuTexts[ i ] = "Add completely new level" ; i++;
+      MenuTexts[ i ] = "Set Level Interfaces" ; i++;
+      MenuTexts[ i ] = "Edit Level Dimensions" ; i++;
+      MenuTexts[ i ] = "Quit Level Editor" ; i++;
+      MenuTexts[ i ] = "" ; i++;
 	  
-
-
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NULL , FPS_Display_BFont );
+
       
       while (EnterPressed() || SpacePressed() );
       
@@ -1039,7 +1028,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	case (-1):
 	  while ( EscapePressed() );
 	  Weiter=!Weiter;
-	  if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
+	  // if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
 	  break;
 	case SAVE_LEVEL_POSITION:
 	  while (EnterPressed() || SpacePressed() ) ;
@@ -1149,9 +1138,6 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	      break;
 
 	    case CHANGE_SIZE_X:
-	      break;
-	    case CHANGE_SIZE_Y:
-
 	      break;
 	      
 	    }
@@ -2815,7 +2801,6 @@ LevelEditor(void)
   int Weiter=FALSE;
   int i ;
   int SpecialMapValue;
-  int NewItemCode;
   char* NumericInputString;
   char linebuf[10000];
   long OldTicks;
@@ -2865,7 +2850,7 @@ LevelEditor(void)
 	  OldTicks = SDL_GetTicks ( ) ;
 
 	  ClearUserFenster();
-	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID );
+	  AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS );
 	  Highlight_Current_Block();
 	  ShowWaypoints( FALSE );
 	  ShowMapLabels( );
@@ -3003,19 +2988,7 @@ LevelEditor(void)
 	  //
 	  if ( GPressed () )
 	    {
-	      while ( GPressed() );
-	      NumericInputString = 
-		GetEditableStringInPopupWindow ( 10 , "\n You have chosen to drop an item to the floor here.\n\nPlease enter the numeric value of the new item below: \n\n" ,
-						 "" );
-	      sscanf( NumericInputString , "%d" , &NewItemCode );
-	      if ( NewItemCode >= Number_Of_Item_Types ) 
-		{
-		  NewItemCode=0;
-		  
-		}
-
-	      // DropSpecificItemAtPosition( rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , NewItemCode );
-	      DropItemAt( NewItemCode , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , -1 , -1 , 0 );
+	      ItemDropFromLevelEditor(  );
 	    }
 
 	  //--------------------

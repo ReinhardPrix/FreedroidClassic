@@ -137,7 +137,7 @@ main (int argc, char *const argv[])
 
 	  if ( ! GameOver ) 
 	    {
-	      AssembleCombatPicture ( 0 ); 
+	      AssembleCombatPicture ( SHOW_ITEMS ); 
 	      DisplayBanner (NULL, NULL,  0 ); // this is a pure client issue
 	      SDL_Flip ( Screen );
 	    }

@@ -1386,8 +1386,8 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 {
   int TurningDone = FALSE;
   float AngleInBetween;
-  float WaitBeforeTurningTime = 0.5 ;
-  float WaitAfterTurningTime = 0.9 ;
+  float WaitBeforeTurningTime = 0.4 ;
+  float WaitAfterTurningTime = 0.4 ;
   int TurningStartTime;
   float OldAngle;
   float RightAngle;
@@ -1405,7 +1405,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
       StartTakingTimeForFPSCalculation();       
 
-      AssembleCombatPicture ( 0 ); 
+      AssembleCombatPicture ( SHOW_ITEMS ); 
       SDL_Flip ( Screen );
       
       if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
@@ -1468,7 +1468,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
       StartTakingTimeForFPSCalculation();       
 
-      AssembleCombatPicture ( 0 ); 
+      AssembleCombatPicture ( SHOW_ITEMS ); 
       SDL_Flip ( Screen );
 
       OldAngle = ChatDroid -> current_angle;
@@ -1499,7 +1499,7 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     {
       StartTakingTimeForFPSCalculation();       
 
-      AssembleCombatPicture ( 0 ); 
+      AssembleCombatPicture ( SHOW_ITEMS ); 
       SDL_Flip ( Screen );
       
       if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )
