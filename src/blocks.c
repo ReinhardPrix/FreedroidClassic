@@ -367,7 +367,9 @@ Load_Enemy_Surfaces( void )
   int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 
   i=0;
-  PrefixToFilename [ i ] = "123" ; // 0
+  PrefixToFilename [ i ] = "001" ; // 0
+  ModelMultiplier  [ i ] = 1 ; i++;
+  PrefixToFilename [ i ] = "123" ; 
   ModelMultiplier  [ i ] = 5 ; i++;
   PrefixToFilename [ i ] = "139" ;
   ModelMultiplier  [ i ] = 5 ;i++;
@@ -385,14 +387,30 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "476" ;
   ModelMultiplier  [ i ] = 5 ;i++;
-  PrefixToFilename [ i ] = "493" ;
-  ModelMultiplier  [ i ] = 5 ;i++;
-  PrefixToFilename [ i ] = "516" ; // 10
+  PrefixToFilename [ i ] = "493" ; // 10
+  ModelMultiplier  [ i ] = 5 ;i++; 
+  PrefixToFilename [ i ] = "516" ; 
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "571" ;
   ModelMultiplier  [ i ] = 5 ;i++;
+  PrefixToFilename [ i ] = "598" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "614" ;
   ModelMultiplier  [ i ] = 5 ;i++;
+  PrefixToFilename [ i ] = "615" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "629" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "711" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "742" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "751" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "821" ; // 20
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "834" ; 
+  ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "883" ;
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ;

@@ -3027,7 +3027,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
 This is a dark Apprentice of the evil MS Super-Corporation.
 
@@ -3107,7 +3107,7 @@ Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
-Individual shape of this droid or just -1 for classic ball shaped : 0
+Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
 
@@ -3188,7 +3188,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
 This is Dr. Chanra, a leading scientist in the field of artificial intelligence and droid construction optimization theory.
 
@@ -3308,7 +3308,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
 Friendly Mrs. Stone, who runs a small equipment shop.
 
@@ -3348,7 +3348,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
 Sorenson, teacher of magical abilities.
 
@@ -3388,7 +3388,7 @@ Chance modifier, that this robot gets hit=30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 23
 Going to request reinforcements typical for this droid : 0
 This is the healer within the small startup town.
 
@@ -3428,7 +3428,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 7
 Going to request reinforcements typical for this droid : 0
 This is the RMS, who lost most of his code due to MS deletion initiative
 
@@ -3468,7 +3468,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 8
 Going to request reinforcements typical for this droid : 0
 This is Dixon, who maintains the teleporters.
 
@@ -3508,7 +3508,7 @@ Chance modifier, that this robot gets hit=-30
 Armament of this droid : 1
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
-Individual shape of this droid or just -1 for classic ball shaped : 13
+Individual shape of this droid or just -1 for classic ball shaped : 9
 Going to request reinforcements typical for this droid : 0
 This is Pendragon, who can train you in the fighting arts.
 
