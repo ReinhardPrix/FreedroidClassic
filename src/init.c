@@ -310,7 +310,7 @@ Get_Item_Data ( char* DataPointer )
   // in advance.  We count already, though it's not yet dynamic memory that is used.
   //
   Number_Of_Item_Types = CountStringOccurences ( DataPointer , NEW_ITEM_TYPE_BEGIN_STRING ) ;
-  if ( Number_Of_Item_Types < ALL_ITEMS )
+  if ( Number_Of_Item_Types < MAX_ITEM_TYPES_IN_GAME )
     {
       DebugPrintf ( 1 , "\nWe have counted %d different item types in the game data file.\n" , Number_Of_Item_Types );
     }

@@ -2195,7 +2195,7 @@ Item name="Fork"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="brain_enlargement_antidode"
+Item uses rotation series with prefix="eating_fork"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -2217,7 +2217,7 @@ Item name="(Eating) Plate"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="brain_enlargement_antidode"
+Item uses rotation series with prefix="eating_plate"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -2239,7 +2239,7 @@ Item name="Mug"
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="brain_enlargement_antidode"
+Item uses rotation series with prefix="drinking_mug"
 Item can be bought in shop="no"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
@@ -2254,6 +2254,783 @@ Sound number=4
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ** End of new item specification subsection **
+
+// Item No. 83
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 84
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 85
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 86
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 87
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 88
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 89
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 90
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 91
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 92
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 93
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 94
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 95
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 96
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 97
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 98
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 99
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 100
+** Start of new item specification subsection **
+Item name="Dummy Entry For Replacement"
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="drinking_mug"
+Item can be bought in shop="no"
+Items of this type collect together in inventory="yes"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=-1 plus duration modifier=0
+Picture number=66
+Rotation model number=0
+Sound number=4
+Base list price=50
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+** End of new item specification subsection **
+
+// Item No. 101
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword A"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=2
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 102
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword B
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=4
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 103
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword C
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=6
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 104
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword D
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=8
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 105
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword E"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=10
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 106
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword F"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=12
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 107
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword G"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=14
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 108
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword H"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=16
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 109
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword I"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=18
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
+// Item No. 110
+** Start of new item specification subsection **
+Item name="Droid Short Lasersword J"
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="laser_sword_yellow"
+Item can be bought in shop="yes"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as gun: recharging time=0.60
+Item as gun: speed of bullets=0.01
+Item as gun: angle change of bullets=720
+Item as gun: damage of bullets=20
+Item as gun: modifier for damage of bullets=5
+Item as gun: blast type to create=1
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=8
+Item as gun: bullet_lifetime=0.20
+Item as gun: offset for melee weapon=0.85
+Item as gun: modifier for starting angle=-60
+Item as gun: ignore collisions with wall="yes"
+Item as gun: reflect other bullets="yes"
+Item as gun: pass through explosions="yes"
+Item as gun: pass through hit bodies="yes"
+Item as gun: required ammunition type="none"
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+Picture number=19
+Rotation model number=0
+Sound number=0 
+Base list price=120
+Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+** End of new item specification subsection **
+
 
 // Item No. 10000 LAST ITEM !!! DUMMY ENTRY!!!!
 ** Start of new item specification subsection **

@@ -1108,15 +1108,20 @@ CheckInfluenceEnemyCollision (void)
 	  
 	} // if first_collision (ALWAYS TRUE ANYWAY...)
       
+      //--------------------
       // shortly stop this enemy, then send him back to previous waypoint
-      if (!AllEnemys[i].warten)
+      //
+      if ( ! AllEnemys[i].warten )
 	{
 	  AllEnemys[i].warten = WAIT_COLLISION;
 	  swap = AllEnemys[i].nextwaypoint;
 	  AllEnemys[i].nextwaypoint = AllEnemys[i].lastwaypoint;
 	  AllEnemys[i].lastwaypoint = swap;
-	  
-	  // Add some funny text!
+
+	  //--------------------
+	  // Maybe we add some fun collision text, but only
+	  // sometimes and only if configured to do so...
+	  //
 	  EnemyInfluCollisionText ( i );
 	  
 	}
@@ -1545,7 +1550,8 @@ PerformTuxAttackRaw ( int PlayerNum )
 	  AllEnemys[ i ] . frozen += Me [ PlayerNum ] . freezing_melee_targets ; 
 
 	  AllEnemys[ i ] . firewait = 
-	    2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
+	    1 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
+	    // 2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	  PlayEnemyGotHitSound ( Druidmap [ AllEnemys [ i ] . type ] . got_hit_sound_type );
 	  DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet hit something.... melee ... " ) ;
 	}
@@ -1750,6 +1756,12 @@ void
 InfluEnemyCollisionLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
+
+  //--------------------
+  // This will not be done any more...
+  //
+
+  return;
 
   if ( AllEnemys[enemynum].is_friendly ) return;
 

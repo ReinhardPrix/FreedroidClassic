@@ -72,12 +72,12 @@ enum
 
 #define MAX_ITEMS_PER_LEVEL 300
 #define MAX_MAP_LABELS_PER_LEVEL 100
+#define MAX_ITEM_TYPES_IN_GAME 300
 #define MAX_ITEMS_IN_INVENTORY 100
 #define INVENTORY_GRID_WIDTH 9
 #define INVENTORY_GRID_HEIGHT 6
 #define NUMBER_OF_ITEM_PICTURES 68
 #define NUMBER_OF_MOUSE_CURSOR_PICTURES 2
-#define ALL_ITEMS 100
 
 #define ITEM_DROP_PERCENTAGE 20
 #define GOLD_DROP_PERCENTAGE 20
@@ -213,7 +213,6 @@ enum
 #define SHOP_BACKGROUND_IMAGE   "backgrounds/shoppe.jpg"
 
 #define NE_CONSOLE_PIC_FILE     "backgrounds/console_fg.png" 
-// #define NE_BANNER_BLOCK_FILE    "backgrounds/banner.png"
 #define NE_TITLE_PIC_FILE       "backgrounds/title.jpg"
 #define NE_CONSOLE_BG_PIC1_FILE "backgrounds/console_bg1.jpg"
 #define NE_CONSOLE_BG_PIC2_FILE "backgrounds/console_bg2.jpg"

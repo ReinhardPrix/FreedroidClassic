@@ -145,7 +145,7 @@ EXTERN mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] ;
 EXTERN int Item_Held_In_Hand;
 EXTERN point InventorySize;
 // EXTERN item AllItems[ MAX_ITEMS_PER_LEVEL ];
-EXTERN itemspec ItemMap[ ALL_ITEMS ];
+EXTERN itemspec ItemMap[ MAX_ITEM_TYPES_IN_GAME ];
 
 // EXTERN SDL_Surface* ItemSurfaceList[ NUMBER_OF_ITEM_PICTURES ];
 // EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];

@@ -458,7 +458,7 @@ ReactToSpecialKeys(void)
 		       CurLevel->StatementList[ i ].x , CurLevel->StatementList[ i ].Statement_Text );
 	}
 
-      for ( i=0 ; i < ALL_ITEMS ; i ++ )
+      for ( i=0 ; i < MAX_ITEM_TYPES_IN_GAME ; i ++ )
 	{
 	  if ( ItemMap[ i ].item_name == NULL ) continue;
 	  DebugPrintf( 0 , "\n\nitem_name: %s " , ItemMap[ i ].item_name );

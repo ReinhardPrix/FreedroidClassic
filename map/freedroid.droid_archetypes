@@ -1,14 +1,8 @@
 
-----------------------------------------------------------------------
-
-This is a data file for Freedroid.
-It contains the specification of all droids appearing in freedroid.
-This file is, as all of Freedroid, put under the GPL License:
-
+ * ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
- *
  *
  *  This file is part of Freedroid
  *
@@ -27,9 +21,11 @@ This file is, as all of Freedroid, put under the GPL License:
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
-
-Feel free to make any modifications you like.  If you set up 
-something cool, please send your file in to the Freedroid project.
+ * 
+ * Feel free to make any modifications you like.  If you set up 
+ * something cool, please send your file in to the Freedroid project.
+ *
+ * ----------------------------------------------------------------------
 
 You can edit it with a standard text editor of your choice.
 Feel free to make any modifications you like.
@@ -69,6 +65,10 @@ Common factor for all droids aggression values: 1.0
 Common factor for all droids score values: 2.0
 Common factor for all droids recovery time after hit: 1.0
 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
 Now we come to the description of all the droids:
 
 ** Start of new Robot: ** 
@@ -84,7 +84,7 @@ Rate of energyloss under influence control: 0.0
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 0
+Score gained for destroying one of this type: 5
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
@@ -125,13 +125,13 @@ Droid uses portrait rotation series with prefix="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 2.1
+Maximum energy of this droid: 10.1
 Maximum mana of this droid: 10.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 99
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 25
+Score gained for destroying one of this type: 40
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.37
@@ -173,13 +173,13 @@ Droid uses portrait rotation series with prefix="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 2.1
-Maximum mana of this droid: 10.1
+Maximum energy of this droid: 14.1
+Maximum mana of this droid: 14.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 25
+Score gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.22
@@ -220,8 +220,8 @@ Droid uses portrait rotation series with prefix="247"
 Maximum speed of this droid: 4.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 6.1
-Maximum mana of this droid: 20.1
+Maximum energy of this droid: 16.1
+Maximum mana of this droid: 16.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 82
@@ -238,7 +238,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
-Weapon item=27
+Weapon item=101
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -273,7 +273,7 @@ Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 84
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
+Score gained for destroying one of this type: 70
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.63
@@ -314,13 +314,13 @@ Droid uses portrait rotation series with prefix="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 40.1
-Maximum mana of this droid: 40.1
+Maximum energy of this droid: 30.1
+Maximum mana of this droid: 30.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 80
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 50
+Score gained for destroying one of this type: 90
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
@@ -332,7 +332,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=24
+Weapon item=102
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -367,7 +367,7 @@ Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 75
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 200
+Score gained for destroying one of this type: 120
 Monster Level and maximum treasure chest to pick from=3
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
@@ -380,7 +380,9 @@ Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=11
 W**eapon item=12
-Weapon item=24
+W**eapon item=27
+W**eapon item=24
+Weapon item=103
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -415,7 +417,7 @@ Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 93
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 75
+Score gained for destroying one of this type: 140
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.07
@@ -427,7 +429,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=7
-Weapon item=24
+Weapon item=104
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -462,7 +464,7 @@ Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 99
 Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 100
+Score gained for destroying one of this type: 180
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.41
@@ -474,7 +476,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=10
-Weapon item=24
+Weapon item=105
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -503,13 +505,13 @@ Droid uses portrait rotation series with prefix="476"
 Maximum speed of this droid: 4.1
 Class of this droid: 4
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 16.1
+Maximum energy of this droid: 70.1
 Maximum mana of this droid: 70.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 100
+Score gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.32
@@ -556,7 +558,7 @@ Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 94
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 100
+Score gained for destroying one of this type: 240
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.48
@@ -568,7 +570,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=5
-Weapon item=24
+Weapon item=106
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -597,13 +599,13 @@ Droid uses portrait rotation series with prefix="516"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
+Maximum energy of this droid: 90.1
+Maximum mana of this droid: 90.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 98
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 125
+Score gained for destroying one of this type: 280
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.57
@@ -615,7 +617,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=24
+Weapon item=107
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -644,13 +646,13 @@ Droid uses portrait rotation series with prefix="571"
 Maximum speed of this droid: 4.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 81
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 125
+Score gained for destroying one of this type: 320
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.76
@@ -662,7 +664,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=24
+Weapon item=108
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -691,13 +693,13 @@ Droid uses portrait rotation series with prefix="598"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 80.1
-Maximum mana of this droid: 80.1
+Maximum energy of this droid: 120.1
+Maximum mana of this droid: 120.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 0
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 125
+Score gained for destroying one of this type: 400
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.72
@@ -709,7 +711,7 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Armament of this droid : 0
 Drive item=9
-Weapon item=-1
+Weapon item=109
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
@@ -738,13 +740,13 @@ Droid uses portrait rotation series with prefix="614"
 Maximum speed of this droid: 3.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
+Maximum energy of this droid: 130.1
+Maximum mana of this droid: 130.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 5
 Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 150
+Score gained for destroying one of this type: 460
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
@@ -785,13 +787,13 @@ Droid uses portrait rotation series with prefix="615"
 Maximum speed of this droid: 4.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
+Maximum energy of this droid: 140.1
+Maximum mana of this droid: 140.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 30
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 150
+Score gained for destroying one of this type: 500
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.20
@@ -832,13 +834,13 @@ Droid uses portrait rotation series with prefix="629"
 Maximum speed of this droid: 2.1
 Class of this droid: 6
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
+Maximum energy of this droid: 160.1
+Maximum mana of this droid: 160.1
 Rate of energyloss under influence control: 3.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 40
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 150
+Score gained for destroying one of this type: 600
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.09
@@ -879,13 +881,13 @@ Droid uses portrait rotation series with prefix="711"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 110.1
-Maximum mana of this droid: 110.1
+Maximum energy of this droid: 180.1
+Maximum mana of this droid: 180.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 175
+Score gained for destroying one of this type: 650
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
@@ -911,7 +913,7 @@ Number of Tach. Condensators=0
 Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
+Chance modifier, that this robot gets hit=300
 Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
@@ -926,13 +928,13 @@ Droid uses portrait rotation series with prefix="742"
 Maximum speed of this droid: 4.1
 Class of this droid: 7
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 130.1
-Maximum mana of this droid: 130.1
+Maximum energy of this droid: 210.1
+Maximum mana of this droid: 210.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 3
 Aggression rate of this droid: 60
 Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 175
+Score gained for destroying one of this type: 700
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.87
@@ -979,7 +981,7 @@ Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 80
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 175
+Score gained for destroying one of this type: 800
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.93
@@ -1005,7 +1007,7 @@ Number of Tach. Condensators=0
 Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
+Chance modifier, that this robot gets hit=500
 Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
@@ -1020,13 +1022,13 @@ Droid uses portrait rotation series with prefix="821"
 Maximum speed of this droid: 6.1
 Class of this droid: 8
 Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 160.1
-Maximum mana of this droid: 160.1
+Maximum energy of this droid: 200.1
+Maximum mana of this droid: 200.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 65
 Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 200
+Score gained for destroying one of this type: 1000
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.00
@@ -1052,7 +1054,7 @@ Number of Tach. Condensators=0
 Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
+Chance modifier, that this robot gets hit=800
 Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
@@ -1067,13 +1069,13 @@ Droid uses portrait rotation series with prefix="834"
 Maximum speed of this droid: 7.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 140.1
-Maximum mana of this droid: 140.1
+Maximum energy of this droid: 220.1
+Maximum mana of this droid: 220.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 1
 Aggression rate of this droid: 55
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 200
+Score gained for destroying one of this type: 1200
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.10
@@ -1099,7 +1101,7 @@ Number of Tach. Condensators=0
 Greeting Sound number=-1
 Got Hit Sound number=-1
 Chance of this robot scoring a hit=50
-Chance modifier, that this robot gets hit=30
+Chance modifier, that this robot gets hit=1000
 Time to recover after getting hit=0.30
 Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
@@ -1114,13 +1116,13 @@ Droid uses portrait rotation series with prefix="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
 Maximum acceleration of this droid: 1.1
-Maximum energy of this droid: 180.1
-Maximum mana of this droid: 180.1
+Maximum energy of this droid: 240.1
+Maximum mana of this droid: 240.1
 Rate of energyloss under influence control: 4.1
 Weapon type this droid uses: 4
 Aggression rate of this droid: 92
 Is this droid immune to disruptor blasts? 0
-Score gained for destroying one of this type: 200
+Score gained for destroying one of this type: 1500
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=1
 Height of this droid : 1.62
@@ -1161,13 +1163,13 @@ Droid uses portrait rotation series with prefix="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
 Maximum acceleration of this droid: 2.1
-Maximum energy of this droid: 100.1
-Maximum mana of this droid: 100.1
+Maximum energy of this droid: 300.1
+Maximum mana of this droid: 300.1
 Rate of energyloss under influence control: 15.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 90
 Is this droid immune to disruptor blasts? 1
-Score gained for destroying one of this type: 225
+Score gained for destroying one of this type: 2000
 Monster Level and maximum treasure chest to pick from=0
 Force how many additional magic items to be dropped=0
 Height of this droid : 1.87

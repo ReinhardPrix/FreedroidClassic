@@ -631,19 +631,25 @@ typedef struct
   int nextwaypoint;		// the next waypoint target
   int lastwaypoint;		// the waypoint from whence this robot just came
   int Status;			// current status like OUT=TERMINATED or not OUT
+
+  int combat_state;             // UNAWARE_OF_TUX, BACK_OFF_AFTER_GETTING_HIT, MAKE_ATTACK_RUN, SEEK_BETTER_POSITION
+
   float frozen;                 // is this droid currently frozen and for how long will it stay this way?
   float poison_duration_left;   // is this droid currently poisoned and for how long will it stay this way?
   float poison_damage_per_sec;  // is this droid currently poisoned and how much poison is at work?
   float paralysation_duration_left;  // is this droid currently paralyzed and for how long will it stay this way?
   double warten;		// time till the droid will start to move again
   double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
+
   int CompletelyFixed;          // set this flat to make the robot entirely immobile
   int FollowingInflusTail;      // does this robot follow influs tail? (trott behind him? )
   int SpecialForce;             // This flag will exclude the droid from initial shuffling of droids
+
   int Marker;                   // This provides a marker for special mission targets
   int AdvancedCommand;          // An advanced command that modifies the behaviour of the droid (in new missions)
   double Parameter1;            // This contains special information for AdvancedCommand
   double Parameter2;            // This contains special information for AdvancedCommand
+
   int is_friendly;                 // is this a friendly droid or is it a MS controlled one?
   char dialog_section_name[ MAX_LENGTH_FOR_DIALOG_SECTION_NAME ]; // This should indicate one of the many sections of the Freedroid.dialogues file
   char short_description_text[ MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING ]; // This should indicate one of the many sections of the Freedroid.dialogues file
