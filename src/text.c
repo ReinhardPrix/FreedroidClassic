@@ -593,7 +593,7 @@ DisplayBigScreenMessage( void )
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
 int
-DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
+DisplayText ( char *Text, int startx, int starty, const SDL_Rect *clip )
 {
     char *tmp;	// mobile pointer to the current position in the string to be printed
     SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
@@ -660,7 +660,8 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
     // ScrollText() wants to know if we still wrote something inside the
     // clip-rectangle, of if the Text has been scrolled out
     //
-    if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
+    if ( clip && 
+	 ( ( MyCursorY < clip -> y ) || ( starty > clip -> y + clip -> h ) ) )
 	return FALSE;  // no text was written inside clip 
     else
 	return TRUE; 

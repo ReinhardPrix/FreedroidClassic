@@ -24,10 +24,9 @@
  */
 
 /* ----------------------------------------------------------------------
- * This file contains all functions dealing with texts on the screen,
- * that have to be blitted somehow, using bitmaps or OpenGL texturers,
- * but at least strongly rely on graphics concepts, not pure internal
- * text-processing.
+ * This file contains all functions dealing with the dialog interface,
+ * including blitting the chat protocol to the screen and drawing the
+ * right portrait images to the screen.
  * ---------------------------------------------------------------------- */
 
 #define _chat_c

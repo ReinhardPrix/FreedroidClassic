@@ -47,8 +47,9 @@
 int currently_selected_mission = (-1) ;
 SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ; 
 SDL_Rect mission_description_rect = { 134 , 86 , 280 , 320 } ; 
-
 char complete_mission_display_text [ 50000 ];
+float mission_list_offset = 0 ;
+int mission_list_scroll_override_from_user = 0 ;
 
 #define QUEST_BROWSER_SHOW_OPEN_MISSIONS (-1011)
 #define QUEST_BROWSER_SHOW_DONE_MISSIONS (-1012)
@@ -244,6 +245,7 @@ There was an illegal mission number received.",
 
 }; // void quest_browser_append_mission_info ( int mis_num )
 
+extern int MyCursorY;
 /* ----------------------------------------------------------------------
  *
  *
@@ -285,7 +287,12 @@ quest_browser_display_mission_list ( int list_type )
 
     if ( something_was_displayed )
     {
-	DisplayText( complete_mission_display_text , -1 , -1 , &mission_description_rect );	    
+	mission_list_offset = ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) 
+	    * ( mission_list_scroll_override_from_user ) * 1.00 ;
+	SetTextCursor ( mission_description_rect . x , 
+			mission_description_rect . y );
+	DisplayText( complete_mission_display_text , mission_description_rect . x , 
+		     mission_description_rect . y - mission_list_offset , &mission_description_rect );	    
     }
     else
     {
@@ -308,6 +315,10 @@ Illegal quest browser status encountered.",
 	}
     }
     
+    ShowGenericButtonFromList ( QUEST_BROWSER_SCROLL_UP_BUTTON );
+    if ( MyCursorY >= mission_description_rect . y + mission_description_rect . h - 50 )
+	ShowGenericButtonFromList ( QUEST_BROWSER_SCROLL_DOWN_BUTTON );
+
 }; // void quest_browser_display_mission_list ( void )
 
 /* ----------------------------------------------------------------------
@@ -369,18 +380,32 @@ Illegal quest browser status encountered.",
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_OPEN_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_OPEN_MISSIONS ;
+		mission_list_scroll_override_from_user = 0 ;
 		while ( SpacePressed() );
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_DONE_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_DONE_MISSIONS ;
+		mission_list_scroll_override_from_user = 0 ;
 		while ( SpacePressed() );
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_NOTES_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_NOTES ;
+		mission_list_scroll_override_from_user = 0 ;
 		while ( SpacePressed() );
 	    }
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_SCROLL_UP_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		mission_list_scroll_override_from_user -- ;
+		while ( SpacePressed() );
+	    }
+	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_SCROLL_DOWN_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+	    {
+		mission_list_scroll_override_from_user ++ ;
+		while ( SpacePressed() );
+	    }
+
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_EXIT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		back_to_game = TRUE ;
