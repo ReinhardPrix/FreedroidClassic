@@ -9,27 +9,8 @@
  * $Author$
  *
  * $Log$
- * Revision 1.2  1993/10/25 17:54:27  prix
- * Fri Jul 30 11:50:42 1993: new door phases: map werte verschoben
- * Wed Aug 04 10:37:50 1993: made symtrans struct more readable
- * Wed Aug 04 13:18:53 1993: added some defines from defs.h that belong to here
- * Wed Aug 04 13:28:56 1993: Konstanten fuer Kartenwerte
- * Wed Aug 04 13:32:05 1993: moved PUSHSPEED to defs.h again
- * Wed Aug 04 13:39:20 1993: moved BLOCKANZAHL in here
- * Wed Aug 04 13:42:34 1993: removed BLOCKANZAHL again
- * Wed Aug 04 15:12:04 1993: added KONSOLEPASS_*
- * Sun Aug 08 22:39:41 1993: added Waypoint-symbol (x) to Translator
- * Mon Aug 09 18:15:02 1993: moved DRUIDRADIUS* to defs.h
- * Sat Aug 21 15:00:42 1993: NEW DEFINES
- * Sat Aug 21 15:01:42 1993: added some defines of maped.h
- * Sat Aug 21 19:30:31 1993: NEUE Reihenfolge der Bloecke
- * Sat Aug 21 19:43:30 1993: 4 refresh phases now
- * Fri Aug 27 20:59:17 1993: inserted a void-block
- * Sat Sep 18 12:45:20 1993: added REFRESH_WAIT_COUNTER
- * Sat Sep 18 17:17:17 1993: added inner-refresh values
- * Sat Sep 18 17:29:20 1993: OUTER and INNER REFRESH_COUNTER
- * Sat Sep 18 17:31:41 1993: added INNER_PHASES
- * Mon Oct 25 13:53:46 1993: added translation for block4 and 5
+ * Revision 1.3  1994/06/19 16:43:06  prix
+ * clean up
  *
  * Revision 1.2  1993/10/25  17:54:27  prix
  * Fri Jul 30 11:50:42 1993: new door phases: map werte verschoben
