@@ -232,7 +232,11 @@ typedef struct
   int bonus_to_life;
   int bonus_to_force;
   int bonus_to_tohit;
-  int bonus_to_all_attibutes;
+  int bonus_to_all_attributes;
+  int bonus_to_ac_or_damage; // this is a percentage
+  int bonus_to_resist_fire;  // this is a percentage
+  int bonus_to_resist_electricity; // this is a percentage
+  int bonus_to_resist_force; // this is a percentage
   float price_factor;
 } item_bonus , *Item_bonus;
 
@@ -331,6 +335,10 @@ typedef struct
   int sensor1;
   int sensor2;
   int sensor3;
+
+  int monster_level;
+  int forced_magic_items;
+
   item drive_item;
   item weapon_item;
   item armour_item;
@@ -338,6 +346,7 @@ typedef struct
   item special_item;
   item aux1_item;
   item aux2_item;
+
   int Greeting_Sound_Type; // which sample to play in order to 'greet' the influencer?
   int to_hit; // chance that this droid hits an unarmoured target
   int getting_hit_modifier; // modifier for this droid to receive a hit from the player

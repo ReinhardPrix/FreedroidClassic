@@ -274,7 +274,7 @@ EXTERN void ManageInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
-EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical );
+EXTERN void DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop );
 
 // character.c
 #undef EXTERN

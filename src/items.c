@@ -175,25 +175,36 @@ Sorry if that stops a major game of yours....\n\
  *
  * ---------------------------------------------------------------------- */
 void
-DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical )
+DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop )
 {
   int Rand;
   int Suf; int Pre;
 
   //--------------------
   // First we determine if there is something dropped at all or not,
-  // cause in the later case, we can return immediately
+  // cause in the later case, we can return immediately.  If a drop is
+  // forced, we need not check for not do drop.
   //
-  Rand = MyRandom( 1000 );
-  if ( Rand < 800 )
+  if ( !ForceDrop )
     {
-      return;
+      Rand = MyRandom( 1000 );
+      if ( Rand < 800 )
+	{
+	  return;
+	}
+    }
+  else
+    {
+      DebugPrintf( 0 , "\n FORCED ITEM DROP ENCOUNTERED!!!" );
     }
 
+  //--------------------
+  // Since there are no prefixes set up yet, we just need to consider
+  // the suffixes.  In case 
   Pre = ( -1 ) ;
   if ( ForceMagical )
     {
-      Suf = MyRandom(4);
+      Suf = MyRandom( 4 * TreasureChestRange );
     }
   else
     {
@@ -233,6 +244,64 @@ DropRandomItem( float x , float y , int TreasureChestRange , int ForceMagical )
 	}
       break;
     case 1:
+      switch ( MyRandom ( 7 ) )
+	{
+	case 0:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 1:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 2:
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  break;
+	case 3:
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  break;
+	case 4:
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  break;
+	case 5:
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  break;
+	case 6:
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  break;
+	case 7:
+	  DropItemAt( ITEM_WHEELS , x , y , Pre , Suf );
+	  break;
+	}
+      break;
+    case 2:
+      switch ( MyRandom ( 7 ) )
+	{
+	case 0:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 1:
+	  DropItemAt( ITEM_MONEY , x , y , -1 , -1 );
+	  break;
+	case 2:
+	  DropItemAt( ITEM_FULL_HEALTH_POTION , x , y , -1 , -1 );
+	  break;
+	case 3:
+	  DropItemAt( ITEM_FULL_MANA_POTION , x , y , -1 , -1 );
+	  break;
+	case 4:
+	  DropItemAt( ITEM_SMALL_SHIELD , x , y , Pre , Suf );
+	  break;
+	case 5:
+	  DropItemAt( ITEM_SCIMITAR , x , y , Pre , Suf );
+	  break;
+	case 6:
+	  DropItemAt( ITEM_HUNTERS_BOW , x , y , Pre , Suf );
+	  break;
+	case 7:
+	  DropItemAt( ITEM_ANTIGRAV_BETA , x , y , Pre , Suf );
+	  break;
+	}
+      break;
+    case 3:
       switch ( MyRandom ( 7 ) )
 	{
 	case 0:

@@ -289,7 +289,7 @@ StartBlast (float x, float y, int type)
     {
       CurLevel->map[ map_y ][ map_x ] = FLOOR;
       StartBlast( map_x , map_y , DRUIDBLAST );
-      DropRandomItem( map_x , map_y , 1 , FALSE );
+      DropRandomItem( map_x , map_y , 1 , FALSE , FALSE );
     }
   if ( ( CurLevel->map[ map_y ][ map_x ] == BOX_1 ) ||
        ( CurLevel->map[ map_y ][ map_x ] == BOX_2 ) ||

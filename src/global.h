@@ -36,6 +36,7 @@
 #else
 #define EXTERN extern
 
+EXTERN item_bonus PrefixList[];
 EXTERN item_bonus SuffixList[];
 EXTERN char EndTitleText1[];
 EXTERN char EndTitleText2[];
