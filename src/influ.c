@@ -1683,6 +1683,7 @@ AnalyzePlayersMouseClick ( int PlayerNum )
 	  if ( !CountItemtypeInInventory ( ItemMap [ Me [ PlayerNum ] . weapon_item . type ] . item_gun_use_ammunition , 
 					  PlayerNum ) )
 	    {
+	      No_Ammo_Sound();
 	      //--------------------
 	      // So no ammunition... We should say so and return...
 	      //

@@ -45,7 +45,7 @@
 // The order of appearance here should match the order of appearance 
 // in the enum-Environment located in defs.h!
 
-#define ALL_SOUNDS 67
+#define ALL_SOUNDS 68
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Combat_Background_Music.wav",
@@ -114,7 +114,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Shop_ItemSoldSound_0.wav",
    "Shop_ItemBoughtSound_0.wav",
    "Shop_ItemRepairedSound_0.wav",
-   "Shop_ItemIdentifiedSound_0.wav"
+   "Shop_ItemIdentifiedSound_0.wav",
+   "No_Ammo_Sound_0.wav"
 };
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -683,16 +684,38 @@ Play_Spell_DetectItems_Sound( )
  * file being played.
  * ---------------------------------------------------------------------- */
 void
-Not_Enough_Power_Sound ( void )
+No_Ammo_Sound ( void )
 {
-  static Uint32 PreviousNotEnoughSound = (-1) ;
+  static Uint32 PreviousSound = (-1) ;
   Uint32 now;
 
   now = SDL_GetTicks() ;
-  if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
+  if ( SDL_GetTicks() - PreviousSound >= 0.25 * 1000 )
+    {
+      PlaySound ( NO_AMMO_SOUND_0 );
+      PreviousSound = now;
+    }
+}; // void Not_Enough_Power_Sound ( void )
+
+/* ----------------------------------------------------------------------
+ * This function plays a voice sample, stating that not enough power
+ * (strength) is available to use a certain item.
+ * The sample must of course only be played, if it hasn't been played just
+ * milliseconds before, so a check is made to see that the file is played
+ * with at least a certain interval in between to the last occasion of the
+ * file being played.
+ * ---------------------------------------------------------------------- */
+void
+Not_Enough_Power_Sound ( void )
+{
+  static Uint32 PreviousSound = (-1) ;
+  Uint32 now;
+
+  now = SDL_GetTicks() ;
+  if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
       PlaySound ( NOT_ENOUGH_POWER_SOUND );
-      PreviousNotEnoughSound = now;
+      PreviousSound = now;
     }
 }; // void Not_Enough_Power_Sound ( void )
 
@@ -707,14 +730,14 @@ Not_Enough_Power_Sound ( void )
 void
 Not_Enough_Dist_Sound ( void )
 {
-  static Uint32 PreviousNotEnoughSound = (-1) ;
+  static Uint32 PreviousSound = (-1) ;
   Uint32 now;
 
   now = SDL_GetTicks() ;
-  if ( SDL_GetTicks() - PreviousNotEnoughSound >= 1.15 * 1000 )
+  if ( SDL_GetTicks() - PreviousSound >= 1.15 * 1000 )
     {
       PlaySound ( NOT_ENOUGH_DIST_SOUND );
-      PreviousNotEnoughSound = now;
+      PreviousSound = now;
     }
 }
 

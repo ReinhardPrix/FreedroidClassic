@@ -646,7 +646,7 @@ Item description text="A simple cover for your head. Dont expect to be incognito
 
 // Item No. 21
 ** Start of new item specification subsection **
-Item name="Warrior Plug-in from the North Pole"
+Item name="Warrior Wristband"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
@@ -1536,7 +1536,7 @@ Item description text="A rather useful helmet, has a few defense issues here and
 
 // Item No. 51
 ** Start of new item specification subsection **
-Item name="Sniper Plug-in from the North Pole"
+Item name="Sniper Wristband"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
@@ -1553,12 +1553,12 @@ Picture number=41
 Rotation model number=0
 Sound number=0 
 Base list price=0
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Oh yes! This comment can go over multiple lines. Please insert something sensible here."
 ** End of new item specification subsection **
 
 // Item No. 52
 ** Start of new item specification subsection **
-Item name="Hacker Plug-in from the North Pole"
+Item name="Hacker Wristband"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
@@ -1729,7 +1729,7 @@ Picture number=47
 Rotation model number=0
 Sound number=4
 Base list price=9000
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is a common teleporter service toolbox.  It's complete and orderly, though a few dents on the outside give prof of frequent use.  'C. Dixon' is carved into the outside with fine print."
 ** End of new item specification subsection **
 
 // Item No. 60
@@ -1767,7 +1767,7 @@ Picture number=12
 Rotation model number=0
 Sound number=7
 Base list price=5000
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is one of the most powerful ranged weapons in the game."
 ** End of new item specification subsection **
 
 // Item No. 61
@@ -2009,7 +2009,7 @@ Picture number=58
 Rotation model number=0
 Sound number=4
 Base list price=32
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="What would modern science be without this important item?"
 ** End of new item specification subsection **
 
 // Item No. 72

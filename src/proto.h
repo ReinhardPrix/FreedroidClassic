@@ -228,6 +228,7 @@ EXTERN void StartSound (int);
 EXTERN void GotHitSound (void);
 EXTERN void Influencer_Scream_Sound (void);
 EXTERN void GotIntoBlastSound (void);
+EXTERN void No_Ammo_Sound ( void );
 EXTERN void Not_Enough_Power_Sound( void );
 EXTERN void Not_Enough_Dist_Sound( void );
 EXTERN void Not_Enough_Mana_Sound( void );
