@@ -93,45 +93,43 @@ int GetCurrentElevator(void)
 * $Function----------------------------------------------------------*/
 void ActSpecialField(int x, int y)
 {
-	unsigned char MapBrick;
-	int cx, cy;		/* tmp: NullPunkt im Blockzentrum */
+  unsigned char MapBrick;
+  int cx, cy;		/* tmp: NullPunkt im Blockzentrum */
 	
-	MapBrick = GetMapBrick(CurLevel,(float) x,(float) y);
+  MapBrick = GetMapBrick(CurLevel,(float) x,(float) y);
 
-	switch(MapBrick) {
-		case LIFT:
-			if (!((Me.status == TRANSFERMODE) &&
-				(Me.speed.x == 0) && (Me.speed.y == 0))) break;
+  switch(MapBrick) {
+  case LIFT:
+    if (!((Me.status == TRANSFERMODE) &&
+	  (Me.speed.x == 0) && (Me.speed.y == 0))) break;
+    
+    cx = x % BLOCKBREITE - BLOCKBREITE/2;
+    cy = y % BLOCKHOEHE - BLOCKHOEHE/2;
 			
-			cx = x % BLOCKBREITE - BLOCKBREITE/2;
-			cy = y % BLOCKHOEHE - BLOCKHOEHE/2;
-			
-			/* Lift nur betreten, wenn ca. im Zentrum */
-			if( (cx*cx + cy*cy) < DRUIDRADIUSX*DRUIDRADIUSX)
-				EnterElevator();
-			break;
-			
-		case KONSOLE_R:
-		case KONSOLE_L:
-		case KONSOLE_O:
-		case KONSOLE_U:
-			if( Me.status == TRANSFERMODE)
-				EnterKonsole();
-			break;
+    /* Lift nur betreten, wenn ca. im Zentrum */
+    if( (cx*cx + cy*cy) < DRUIDRADIUSX*DRUIDRADIUSX)
+      EnterElevator();
+    break;
+    
+  case KONSOLE_R:
+  case KONSOLE_L:
+  case KONSOLE_O:
+  case KONSOLE_U:
+    if( Me.status == TRANSFERMODE)
+      EnterKonsole();
+    break;
 
-
-		case REFRESH1:
-		case REFRESH2:
-		case REFRESH3:
-		case REFRESH4:
-			RefreshInfluencer();
-			break;
-			
-		default:
-			break;
-	} /* switch */
-
-
+    
+  case REFRESH1:
+  case REFRESH2:
+  case REFRESH3:
+  case REFRESH4:
+    RefreshInfluencer();
+    break;
+    
+  default:
+    break;
+  } /* switch */
 	
 } /* ActSpecialField */
 
@@ -149,37 +147,36 @@ void AnimateRefresh(void)
   int i,j;
   int x, y;
 
-	OuterWaitCounter ++;
-	OuterWaitCounter %= OUTER_REFRESH_COUNTER;
-	InnerWaitCounter ++;
-	InnerWaitCounter %= INNER_REFRESH_COUNTER;
+  OuterWaitCounter ++;
+  OuterWaitCounter %= OUTER_REFRESH_COUNTER;
+  InnerWaitCounter ++;
+  InnerWaitCounter %= INNER_REFRESH_COUNTER;
+  
+  if( InnerWaitCounter == 0) {
+    InnerPhase ++;
+    InnerPhase %= INNER_PHASES;
+  }
 	
-	if( InnerWaitCounter == 0) {
-		InnerPhase ++;
-		InnerPhase %= INNER_PHASES;
-	}
-	
-	for(i=0; i<MAX_REFRESHES_ON_LEVEL; i++) {
-		x = CurLevel->refreshes[i].x;
-		y = CurLevel->refreshes[i].y;
-		if( x == 0 || y == 0 ) break;
-
-		if( OuterWaitCounter == 0)
-			CurLevel->map[y][x] ++;
-		if( CurLevel->map[y][x] > REFRESH4 ) CurLevel->map[y][x] = REFRESH1;
-
-		/* Inneres Refresh animieren */
-		for( j=0; j<4; j++) {
-			MergeBlockToWindow(
-				MapBlocks+(unsigned)(I_REFRESH1+InnerPhase)*BLOCKMEM,
-				MapBlocks+(unsigned)(REFRESH1+j)*BLOCKMEM,
-				BLOCKBREITE,
-				FALSE);
-		} /* for */
+  for(i=0; i<MAX_REFRESHES_ON_LEVEL; i++) {
+    x = CurLevel->refreshes[i].x;
+    y = CurLevel->refreshes[i].y;
+    if( x == 0 || y == 0 ) break;
+    
+    if( OuterWaitCounter == 0)
+      CurLevel->map[y][x] ++;
+    if( CurLevel->map[y][x] > REFRESH4 ) CurLevel->map[y][x] = REFRESH1;
+    
+    /* Inneres Refresh animieren */
+    for( j=0; j<4; j++) {
+      MergeBlockToWindow(
+			 MapBlocks+(unsigned)(I_REFRESH1+InnerPhase)*BLOCKMEM,
+			 MapBlocks+(unsigned)(REFRESH1+j)*BLOCKMEM,
+			 BLOCKBREITE,
+			 FALSE);
+    } /* for */
 				
-	} /* for */
+  } /* for */
 	
-
 } /* AnimateRefresh */
 
 /*@Function============================================================
@@ -354,79 +351,76 @@ Level LevelToStruct(char *data)
 * $Function----------------------------------------------------------*/
 int GetDoors(Level Lev)
 {
-	int i,line, col;
-	int xlen, ylen;
-	int curdoor = 0;
-	char brick;
+  int i,line, col;
+  int xlen, ylen;
+  int curdoor = 0;
+  char brick;
+  
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
+
+  /* init Doors- Array to 0 */
+  for(i=0; i<MAX_DOORS_ON_LEVEL; i++)
+    Lev->doors[i].x = Lev->doors[i].y = 0;
+
+  /* now find the doors */
+  for(line=0; line<ylen; line++) {
+    for(col=0; col<xlen; col++) {
+      brick = Lev->map[line][col];
+      if( brick == '=' || brick == '"' ) {
+	Lev->doors[curdoor].x = col;
+	Lev->doors[curdoor++].y = line;
 	
-	xlen = Lev->xlen;
-	ylen = Lev->ylen;
+	if( curdoor > MAX_DOORS_ON_LEVEL) {
+	  return ERR;
+	}
+	
+      } /* if */
+    } /* for */
+  } /* for */
 
-	/* init Doors- Array to 0 */
-	for(i=0; i<MAX_DOORS_ON_LEVEL; i++)
-		Lev->doors[i].x = Lev->doors[i].y = 0;
-
-	/* now find the doors */
-	for(line=0; line<ylen; line++) {
-		for(col=0; col<xlen; col++) {
-			brick = Lev->map[line][col];
-			if( brick == '=' || brick == '"' ) {
-				Lev->doors[curdoor].x = col;
-				Lev->doors[curdoor++].y = line;
-				
-				if( curdoor > MAX_DOORS_ON_LEVEL) {
-					return ERR;
-				}
-				
-			} /* if */
-		} /* for */
-	} /* for */
-
-	return curdoor;
+  return curdoor;
 } /* GetDoors */	
 		
 /*@Function============================================================
 @Desc: GetWaypoints: initialisiert Waypoint-Koordinaten des
-						Waypoint-arrays der uebergebenen Level-struct
-					ACHTUNG: Map-daten muessen schon in struct stehen 
+Waypoint-arrays der uebergebenen Level-struct
+ACHTUNG: Map-daten muessen schon in struct stehen 
 
 @Ret: Anz. der Waypoints || ERR
 @Int:
 * $Function----------------------------------------------------------*/
 int GetWaypoints(Level Lev)
 {
-	int i, line, col;
-	int xlen, ylen;
-	int curwp = 0;
+  int i, line, col;
+  int xlen, ylen;
+  int curwp = 0;
+  
+  xlen = Lev->xlen;
+  ylen = Lev->ylen;
 
-	xlen = Lev->xlen;
-	ylen = Lev->ylen;
+  /* Init Wp-array to 0 */
+  for(i=0; i<MAXWAYPOINTS; i++) {
+    Lev->AllWaypoints[i].x = 0;
+    Lev->AllWaypoints[i].y = 0;
+  }
 
-	/* Init Wp-array to 0 */
-	for(i=0; i<MAXWAYPOINTS; i++) {
-		Lev->AllWaypoints[i].x = 0;
-		Lev->AllWaypoints[i].y = 0;
+  /* Now find the waypoints */
+  for(line=0; line<ylen; line++)
+    for(col=0; col<xlen; col++) {
+      if( Lev->map[line][col] == WAYPOINT_CHAR ) {
+	Lev->AllWaypoints[curwp].x = col;
+	Lev->AllWaypoints[curwp++].y = line;
+	
+	if( curwp > MAXWAYPOINTS ) {
+	  return ERR;
 	}
-
-	/* Now find the waypoints */
-	for(line=0; line<ylen; line++)
-		for(col=0; col<xlen; col++) {
-			if( Lev->map[line][col] == WAYPOINT_CHAR ) {
-				Lev->AllWaypoints[curwp].x = col;
-				Lev->AllWaypoints[curwp++].y = line;
-				
-				if( curwp > MAXWAYPOINTS ) {
-					return ERR;
-				}
-				
-			} /* if */
-		} /* for */
-		
-				
 	
-	return curwp;
+      } /* if */
+    } /* for */
 	
-}	/* GetWaypoints */
+  return curwp;
+} /* GetWaypoints */
 
 /*@Function============================================================
 @Desc: int GetRefreshes(Level Lev): legt array der refr. positionen an
@@ -506,38 +500,38 @@ int TranslateMap(Level Lev)
 * $Function----------------------------------------------------------*/
 int GetElevatorConnections(char *shipname)
 {
-	char filename[FILENAME_LEN+1];
-	int i;
-	FILE *Elevfile;
-	int cur_lev, cur_x, cur_y, up, down, elev_row;
-	Elevator CurElev;
+  char filename[FILENAME_LEN+1];
+  int i;
+  FILE *Elevfile;
+  int cur_lev, cur_x, cur_y, up, down, elev_row;
+  Elevator CurElev;
 	
-	/* Now get the elevator-connection data from "FILE.elv" file */
-	strcpy(filename, shipname);		/* get elevator filename */
-	strcat(filename, ELEVEXT);
+  /* Now get the elevator-connection data from "FILE.elv" file */
+  strcpy(filename, shipname);		/* get elevator filename */
+  strcat(filename, ELEVEXT);
 	
-	if( (Elevfile=fopen(filename, "r")) == NULL) return FALSE;
+  if( (Elevfile=fopen(filename, "r")) == NULL) return FALSE;
 	
-	for(i=0; i<ALLELEVATORS; i++) {
-		if( fscanf(Elevfile, "%d %d %d %d %d %d",
-				&cur_lev, &cur_x, &cur_y, &up, &down, &elev_row) == EOF)
-		{
-				printf("Illegal Elevator file: %s", filename);
-				return FALSE;
-		}
-		CurElev = &(curShip.AllElevators[i]);
-		CurElev->level = cur_lev;
-		CurElev->x = cur_x;
-		CurElev->y = cur_y;
-		CurElev->up = up;
-		CurElev->down = down;
-		CurElev->elevator_row = elev_row;
-	}
+  for(i=0; i<ALLELEVATORS; i++) {
+    if( fscanf(Elevfile, "%d %d %d %d %d %d",
+	       &cur_lev, &cur_x, &cur_y, &up, &down, &elev_row) == EOF)
+      {
+	printf("Illegal Elevator file: %s", filename);
+	return FALSE;
+      }
+    CurElev = &(curShip.AllElevators[i]);
+    CurElev->level = cur_lev;
+    CurElev->x = cur_x;
+    CurElev->y = cur_y;
+    CurElev->up = up;
+    CurElev->down = down;
+    CurElev->elevator_row = elev_row;
+  }
+  
+  if( fclose(Elevfile) == EOF ) return ERR;
 
-	if( fclose(Elevfile) == EOF ) return ERR;
-
-	return OK;
-}
+  return OK;
+} // int GetElevatorConnections(char *shipname)
 
 /*@Function============================================================
 @Desc: int GetCrew(char *shipname): intialisiert Feindesliste
@@ -609,103 +603,100 @@ int GetCrew(char *shipname)
 @Int:
 * $Function----------------------------------------------------------*/
 void MoveLevelDoors(void){
-	int i,j;
-	int doorx, doory;
-	long xdist, ydist;
-	long dist2;
-	char *Pos;
-
-	for(i=0; i<MAX_DOORS_ON_LEVEL; i++) {
-		doorx = (CurLevel->doors[i].x);
-		doory = (CurLevel->doors[i].y);
-
-		/* Keine weiteren Tueren */
-		if ( doorx == 0 && doory == 0 ) break;
-		
-		Pos = &(CurLevel->map[doory][doorx]);
-
-		doorx = doorx * BLOCKBREITE + BLOCKBREITE/2;
-		doory = doory * BLOCKHOEHE + BLOCKHOEHE/2;
-		
-		/* first check Influencer gegen Tuer */
-		xdist = Me.pos.x - doorx;
-		ydist = Me.pos.y - doory;
-		dist2 = xdist*xdist + ydist*ydist;
-
-		if ( dist2 < DOOROPENDIST2 ) {
-			if ((*Pos != H_GANZTUERE )&&( *Pos != V_GANZTUERE ) )
-				*Pos += 1;
-		} else {
-			/* alle Enemys checken */
-			for(j=0; j < NumEnemys; j++ ) {
+  int i,j;
+  int doorx, doory;
+  long xdist, ydist;
+  long dist2;
+  char *Pos;
+  
+  for(i=0; i<MAX_DOORS_ON_LEVEL; i++) {
+    doorx = (CurLevel->doors[i].x);
+    doory = (CurLevel->doors[i].y);
+    
+    /* Keine weiteren Tueren */
+    if ( doorx == 0 && doory == 0 ) break;
+    
+    Pos = &(CurLevel->map[doory][doorx]);
+    
+    doorx = doorx * BLOCKBREITE + BLOCKBREITE/2;
+    doory = doory * BLOCKHOEHE + BLOCKHOEHE/2;
+    
+    /* first check Influencer gegen Tuer */
+    xdist = Me.pos.x - doorx;
+    ydist = Me.pos.y - doory;
+    dist2 = xdist*xdist + ydist*ydist;
+    
+    if ( dist2 < DOOROPENDIST2 ) {
+      if ((*Pos != H_GANZTUERE )&&( *Pos != V_GANZTUERE ) )
+	*Pos += 1;
+    } else {
+      /* alle Enemys checken */
+      for(j=0; j < NumEnemys; j++ ) {
 				/* ignore druids that are dead or on other levels */
-				if( Feindesliste[j].Status == OUT ||
-						Feindesliste[j].levelnum != CurLevel->levelnum )
-							continue;
-							
-				xdist = abs(Feindesliste[j].pos.x - doorx);
-				if (xdist < BLOCKBREITE) {
-					ydist = abs(Feindesliste[j].pos.y - doory);
-					if (ydist < BLOCKHOEHE) {
-						dist2 = xdist*xdist + ydist*ydist;
-						if ( dist2 < DOOROPENDIST2 ) {
-							if ((*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE) )
-								*Pos += 1;
-
-							break; 	/* one druid is enough to open a door */
-						} /* if */
-					} /* if */
-				} /* if */
-			} /* for */
-			
-			/* No druid near: close door if it isnt closed */
-			if ( j == NumEnemys)
-				if ( (*Pos != V_ZUTUERE) && (*Pos != H_ZUTUERE) )
-							*Pos -= 1;
-							
-		} /* else */
-	} /* for */
+	if( Feindesliste[j].Status == OUT ||
+	    Feindesliste[j].levelnum != CurLevel->levelnum )
+	  continue;
 	
-
+	xdist = abs(Feindesliste[j].pos.x - doorx);
+	if (xdist < BLOCKBREITE) {
+	  ydist = abs(Feindesliste[j].pos.y - doory);
+	  if (ydist < BLOCKHOEHE) {
+	    dist2 = xdist*xdist + ydist*ydist;
+	    if ( dist2 < DOOROPENDIST2 ) {
+	      if ((*Pos != H_GANZTUERE) && (*Pos != V_GANZTUERE) )
+		*Pos += 1;
+	      
+	      break; 	/* one druid is enough to open a door */
+	    } /* if */
+	  } /* if */
+	} /* if */
+      } /* for */
+      
+      /* No druid near: close door if it isnt closed */
+      if ( j == NumEnemys)
+	if ( (*Pos != V_ZUTUERE) && (*Pos != H_ZUTUERE) )
+	  *Pos -= 1;
+      
+    } /* else */
+  } /* for */
 } /* MoveLevelDoors */
 
 
 /*@Function============================================================
 @Desc: 	int DruidPassable(int x, int y) - prueft, ob Pos x/y fuer
-						Druid passierbar ist, liefert Richtungswerte, falls
-						der Druid von einer Tuer "weggestossen" wird
-			
+Druid passierbar ist, liefert Richtungswerte, falls
+der Druid von einer Tuer "weggestossen" wird
 
 @Ret: 	-1:		Not passable
-		Direction:  Druid in Richtung Direction wegschubsen
-		CENTER:		Position passable
+Direction:  Druid in Richtung Direction wegschubsen
+CENTER:		Position passable
 * $Function----------------------------------------------------------*/
 int DruidPassable(int x, int y)
 {
-	point testpos[DIRECTIONS+1];
-	int ret=-1;
-	int i;
+  point testpos[DIRECTIONS+1];
+  int ret=-1;
+  int i;
 
-	/* get 8 Check-Points on the druidsurface */
-	testpos[OBEN].x=x;testpos[OBEN].y=y-DRUIDRADIUSY;	
-	testpos[RECHTSOBEN].x=x+DRUIDRADIUSXY;testpos[RECHTSOBEN].y=y-DRUIDRADIUSXY;
-	testpos[RECHTS].x=x+DRUIDRADIUSX;testpos[RECHTS].y=y;
-	testpos[RECHTSUNTEN].x=x+DRUIDRADIUSXY;testpos[RECHTSUNTEN].y=y+DRUIDRADIUSXY;
-	testpos[UNTEN].x=x;testpos[UNTEN].y=y+DRUIDRADIUSY;
-	testpos[LINKSUNTEN].x=x-DRUIDRADIUSXY;testpos[LINKSUNTEN].y=y+DRUIDRADIUSXY;
-	testpos[LINKS].x=x-DRUIDRADIUSX;testpos[LINKS].y=y;
-	testpos[LINKSOBEN].x=x-DRUIDRADIUSXY;testpos[LINKSOBEN].y=y-DRUIDRADIUSXY;
-		
-	for (i=0; i<DIRECTIONS; i++) {
-			
-		ret = IsPassable(testpos[i].x, testpos[i].y, i);			
-					
-		if ( ret != CENTER ) break;
-			
-	} /* for */
-
-	return ret;
-}
+  /* get 8 Check-Points on the druidsurface */
+  testpos[OBEN].x=x;testpos[OBEN].y=y-DRUIDRADIUSY;	
+  testpos[RECHTSOBEN].x=x+DRUIDRADIUSXY;testpos[RECHTSOBEN].y=y-DRUIDRADIUSXY;
+  testpos[RECHTS].x=x+DRUIDRADIUSX;testpos[RECHTS].y=y;
+  testpos[RECHTSUNTEN].x=x+DRUIDRADIUSXY;testpos[RECHTSUNTEN].y=y+DRUIDRADIUSXY;
+  testpos[UNTEN].x=x;testpos[UNTEN].y=y+DRUIDRADIUSY;
+  testpos[LINKSUNTEN].x=x-DRUIDRADIUSXY;testpos[LINKSUNTEN].y=y+DRUIDRADIUSXY;
+  testpos[LINKS].x=x-DRUIDRADIUSX;testpos[LINKS].y=y;
+  testpos[LINKSOBEN].x=x-DRUIDRADIUSXY;testpos[LINKSOBEN].y=y-DRUIDRADIUSXY;
+  
+  for (i=0; i<DIRECTIONS; i++) {
+    
+    ret = IsPassable(testpos[i].x, testpos[i].y, i);			
+    
+    if ( ret != CENTER ) break;
+    
+  } /* for */
+  
+  return ret;
+} // int DruidPassable(int x, int y)
 
 
 /*@Function============================================================
@@ -721,263 +712,262 @@ Directions mean Push Druid if it is one, else is's not passable
 @Int:
 * $Function----------------------------------------------------------*/
 int IsPassable(int x, int y, int Checkpos) {
-	int fx, fy;  	/* Feinkoordinaten von x/y */
-	unsigned char MapBrick;
-	int ret = -1;
+  int fx, fy;  	/* Feinkoordinaten von x/y */
+  unsigned char MapBrick;
+  int ret = -1;
+  
+  MapBrick = GetMapBrick(CurLevel, (float)x, (float)y);
+  
+  fx = x % BLOCKBREITE;
+  fy = y % BLOCKHOEHE;
 	
-	MapBrick = GetMapBrick(CurLevel, (float)x, (float)y);
+  switch (MapBrick) {
+  case FLOOR:
+  case LIFT:
+  case VOID:
+  case BLOCK4:
+  case BLOCK5:
+  case REFRESH1:
+  case REFRESH2:
+  case REFRESH3:
+  case REFRESH4:
+    ret = CENTER;	/* these are passable */
+    break;
 
-	fx = x % BLOCKBREITE;
-	fy = y % BLOCKHOEHE;
-	
-	switch (MapBrick) {
-		case FLOOR:
-		case LIFT:
-		case VOID:
-		case BLOCK4:
-		case BLOCK5:
-		case REFRESH1:
-		case REFRESH2:
-		case REFRESH3:
-		case REFRESH4:
-			ret = CENTER;	/* these are passable */
-			break;
-
-		case ALERT:
-			if( Checkpos == LIGHT)
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-			
-		case KONSOLE_L:
- 			if( Checkpos == LIGHT) {
-				ret = CENTER;
-				break;
-			}
-			if( fx > (BLOCKBREITE-KONSOLEPASS_X) ) ret = CENTER;
-			else ret = -1;
-			break;
+  case ALERT:
+    if( Checkpos == LIGHT)
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case KONSOLE_L:
+    if( Checkpos == LIGHT) {
+      ret = CENTER;
+      break;
+    }
+    if( fx > (BLOCKBREITE-KONSOLEPASS_X) ) ret = CENTER;
+    else ret = -1;
+    break;
 				
-		case KONSOLE_R:
-			if( Checkpos == LIGHT) {
-				ret = CENTER;
-				break;
-			}
-			if( fx < KONSOLEPASS_X ) ret = CENTER;
-			else ret = -1;
-			break;
+  case KONSOLE_R:
+    if( Checkpos == LIGHT) {
+      ret = CENTER;
+      break;
+    }
+    if( fx < KONSOLEPASS_X ) ret = CENTER;
+    else ret = -1;
+    break;
 
-		case KONSOLE_O:
-			if( Checkpos == LIGHT) {
-				ret = CENTER;
-				break;
-			}		
-			if( fy > (BLOCKHOEHE-KONSOLEPASS_Y) )	ret = CENTER;
-			else ret = -1;
-			break;
+  case KONSOLE_O:
+    if( Checkpos == LIGHT) {
+      ret = CENTER;
+      break;
+    }		
+    if( fy > (BLOCKHOEHE-KONSOLEPASS_Y) )	ret = CENTER;
+    else ret = -1;
+    break;
+    
+  case KONSOLE_U:
+    if( Checkpos == LIGHT) {
+      ret = CENTER;
+      break;
+    }		
+    if( fy < KONSOLEPASS_Y ) ret = CENTER;
+    else ret = -1;
+    break;
+    
+  case H_WALL:
+    if( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ) ret = CENTER;
+    else ret =-1;
+    break;
+    
+  case V_WALL:
+    if( (fx < WALLPASS) || (fx > BLOCKBREITE-WALLPASS) ) ret = CENTER;
+    else ret =-1;
+    break;
+    
+  case ECK_RO:
+    if( (fx > BLOCKBREITE-WALLPASS) || (fy < WALLPASS) ||
+	( (fx < WALLPASS) && (fy > BLOCKHOEHE-WALLPASS)) )
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
 
-		case KONSOLE_U:
-			if( Checkpos == LIGHT) {
-				ret = CENTER;
-				break;
-			}		
-			if( fy < KONSOLEPASS_Y ) ret = CENTER;
-			else ret = -1;
-			break;
-
-		case H_WALL:
-			if( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ) ret = CENTER;
-			else ret =-1;
-			break;
-
-		case V_WALL:
-			if( (fx < WALLPASS) || (fx > BLOCKBREITE-WALLPASS) ) ret = CENTER;
-			else ret =-1;
-			break;
-
-		case ECK_RO:
-			if( (fx > BLOCKBREITE-WALLPASS) || (fy < WALLPASS) ||
-					( (fx < WALLPASS) && (fy > BLOCKHOEHE-WALLPASS)) )
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case ECK_RU:
-			if( (fx > BLOCKBREITE-WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ||
-					( (fx < WALLPASS) && (fy < WALLPASS) ) )
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case ECK_LU:
-			if( (fx < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ||
-					( (fx > BLOCKBREITE-WALLPASS) && (fy < WALLPASS) ) )
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case ECK_LO:
-			if( (fx < WALLPASS) || (fy < WALLPASS) ||
-					( (fx > BLOCKBREITE-WALLPASS) && (fy > BLOCKHOEHE-WALLPASS)))
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case T_O:
-			if( (fy < WALLPASS) ||
-					( (fy > BLOCKHOEHE-WALLPASS) &&
-					( (fx <WALLPASS) || (fx > BLOCKBREITE-WALLPASS))))
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case T_R:
-			if( (fx>BLOCKBREITE-WALLPASS) ||
-					( (fx < WALLPASS) &&
-					( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS))))
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case T_U:
-			if( (fy > BLOCKHOEHE-WALLPASS) ||
-					( (fy < WALLPASS) &&
-						( (fx < WALLPASS) || (fx > BLOCKBREITE-WALLPASS))))
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-		case T_L:
-			if( (fx < WALLPASS) ||
-					( (fx > BLOCKBREITE-WALLPASS) &&
-						( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS))))
-				ret = CENTER;
-			else
-				ret = -1;
-			break;
-
-
-		case H_GANZTUERE:
-		case H_HALBTUERE3:		
-		case H_HALBTUERE2:
-			if( Checkpos == LIGHT ) {
-				 ret = CENTER;
-				 break;
-			}		
-		case H_HALBTUERE1:
-		case H_ZUTUERE:
- 			if( Checkpos == LIGHT ) {
- 				ret = -1;
- 				break;
- 			}
- 			
-			/* pruefen, ob Rand der Tuer angefahren */
-			if ( ( (fx < H_RANDBREITE) || (fx > (BLOCKBREITE-H_RANDBREITE)) )
-					&& ((fy >= H_RANDSPACE) && (fy <= (BLOCKHOEHE-H_RANDSPACE)) ) ){
+  case ECK_RU:
+    if( (fx > BLOCKBREITE-WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ||
+	( (fx < WALLPASS) && (fy < WALLPASS) ) )
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case ECK_LU:
+    if( (fx < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS) ||
+	( (fx > BLOCKBREITE-WALLPASS) && (fy < WALLPASS) ) )
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case ECK_LO:
+    if( (fx < WALLPASS) || (fy < WALLPASS) ||
+	( (fx > BLOCKBREITE-WALLPASS) && (fy > BLOCKHOEHE-WALLPASS)))
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case T_O:
+    if( (fy < WALLPASS) ||
+	( (fy > BLOCKHOEHE-WALLPASS) &&
+	  ( (fx <WALLPASS) || (fx > BLOCKBREITE-WALLPASS))))
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case T_R:
+    if( (fx>BLOCKBREITE-WALLPASS) ||
+	( (fx < WALLPASS) &&
+	  ( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS))))
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case T_U:
+    if( (fy > BLOCKHOEHE-WALLPASS) ||
+	( (fy < WALLPASS) &&
+	  ( (fx < WALLPASS) || (fx > BLOCKBREITE-WALLPASS))))
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case T_L:
+    if( (fx < WALLPASS) ||
+	( (fx > BLOCKBREITE-WALLPASS) &&
+	  ( (fy < WALLPASS) || (fy > BLOCKHOEHE-WALLPASS))))
+      ret = CENTER;
+    else
+      ret = -1;
+    break;
+    
+  case H_GANZTUERE:
+  case H_HALBTUERE3:		
+  case H_HALBTUERE2:
+    if( Checkpos == LIGHT ) {
+      ret = CENTER;
+      break;
+    }		
+  case H_HALBTUERE1:
+  case H_ZUTUERE:
+    if( Checkpos == LIGHT ) {
+      ret = -1;
+      break;
+    }
+    
+    /* pruefen, ob Rand der Tuer angefahren */
+    if ( ( (fx < H_RANDBREITE) || (fx > (BLOCKBREITE-H_RANDBREITE)) )
+	 && ((fy >= H_RANDSPACE) && (fy <= (BLOCKHOEHE-H_RANDSPACE)) ) ){
 				/* DRUIDS: Nur bei Fahrt durch Tuer wegstossen */
-				if ( (Checkpos != CENTER) && (Checkpos != LIGHT)
-					&& (Me.speed.y != 0) ) {
-					switch(Checkpos) {
-						case RECHTSOBEN:
-						case RECHTSUNTEN:
-						case RECHTS:
-							if(fx > BLOCKBREITE-H_RANDBREITE) ret = LINKS;
-							else ret = -1;
-							break;
-						case LINKSOBEN:
-						case LINKSUNTEN:
-						case LINKS:
-							if(fx < H_RANDBREITE) ret = RECHTS;
-							else ret = -1;
-							break;
-						default:
-							ret = -1;
-							break;
-					} /* switch Checkpos */
-				} /* if DRUID && Me.speed.y != 0 */
-				else ret = -1;
-			} /* if Rand angefahren */
-			else {	/* mitten in der Tuer */
-				if( (MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
-					ret = CENTER; 	/* Tuer offen */
-				else if( (fy < TUERBREITE) || (fy > BLOCKHOEHE-TUERBREITE) ) 
-					ret = CENTER; /* Tuer zu, aber noch nicht ganz drin */
-				else ret = -1;		/* an geschlossener tuer */
-			} /* else Mitten in der Tuer */
-					
-			break;
-		case V_GANZTUERE:				
-		case V_HALBTUERE3:
-		case V_HALBTUERE2:
-			if( Checkpos == LIGHT ) {
-				ret = CENTER;
-				break;
-			}
-		case V_HALBTUERE1:
-		case V_ZUTUERE:
-			if( Checkpos == LIGHT ) {
-				ret = -1;
-				break;
-			}
-
-			/* pruefen , ob Rand der Tuer angefahren */
-			if ( (fy < V_RANDBREITE || fy > (BLOCKHOEHE-V_RANDBREITE)) &&
-				(fx >= V_RANDSPACE && fx <= (BLOCKBREITE-V_RANDSPACE)) ) {
-							
+      if ( (Checkpos != CENTER) && (Checkpos != LIGHT)
+	   && (Me.speed.y != 0) ) {
+	switch(Checkpos) {
+	case RECHTSOBEN:
+	case RECHTSUNTEN:
+	case RECHTS:
+	  if(fx > BLOCKBREITE-H_RANDBREITE) ret = LINKS;
+	  else ret = -1;
+	  break;
+	case LINKSOBEN:
+	case LINKSUNTEN:
+	case LINKS:
+	  if(fx < H_RANDBREITE) ret = RECHTS;
+	  else ret = -1;
+	  break;
+	default:
+	  ret = -1;
+	  break;
+	} /* switch Checkpos */
+      } /* if DRUID && Me.speed.y != 0 */
+      else ret = -1;
+    } /* if Rand angefahren */
+    else {	/* mitten in der Tuer */
+      if( (MapBrick == H_GANZTUERE) || (MapBrick == H_HALBTUERE3))
+	ret = CENTER; 	/* Tuer offen */
+      else if( (fy < TUERBREITE) || (fy > BLOCKHOEHE-TUERBREITE) ) 
+	ret = CENTER; /* Tuer zu, aber noch nicht ganz drin */
+      else ret = -1;		/* an geschlossener tuer */
+    } /* else Mitten in der Tuer */
+    
+    break;
+  case V_GANZTUERE:				
+  case V_HALBTUERE3:
+  case V_HALBTUERE2:
+    if( Checkpos == LIGHT ) {
+      ret = CENTER;
+      break;
+    }
+  case V_HALBTUERE1:
+  case V_ZUTUERE:
+    if( Checkpos == LIGHT ) {
+      ret = -1;
+      break;
+    }
+    
+    /* pruefen , ob Rand der Tuer angefahren */
+    if ( (fy < V_RANDBREITE || fy > (BLOCKHOEHE-V_RANDBREITE)) &&
+	 (fx >= V_RANDSPACE && fx <= (BLOCKBREITE-V_RANDSPACE)) ) {
+      
 				/* DRUIDS: bei Fahrt durch Tuer wegstossen */
-				if( (Checkpos != CENTER) && (Checkpos != LIGHT)
-					&& (Me.speed.x != 0) ) {
-					switch(Checkpos) {
-						case RECHTSOBEN:
-						case LINKSOBEN:
-						case OBEN:
-							if( fy < V_RANDBREITE )
-								ret = UNTEN;
-							else
-								ret = -1;
-							break;
-						case RECHTSUNTEN:
-						case LINKSUNTEN:
-						case UNTEN:
-							if( fy > BLOCKHOEHE-V_RANDBREITE )
-								ret = OBEN;
-							else
-								ret = -1;
-							break;
-						default:
-							ret = -1;
-							break;
-					} /* switch Checkpos */
-				} /* if DRUID && Me.speed.x != 0 */
-				else ret = -1;
-			} /* if Rand angefahren */
-			else {	/* mitten in die tuer */
-				if( (MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3) )
-					ret = CENTER;	/* Tuer offen */
-				else if( (fx < TUERBREITE) || (fx > BLOCKBREITE-TUERBREITE) )
-					ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
-				else
-					ret = -1;		/* an geschlossener Tuer */
-			} /* else Mitten in der Tuer */
-
-			break;
-				
-		default:
-			ret = -1;
-			break;
-	} /* switch MapBrick */
-
-	return ret;		
-
-}	/* IsPassable */
+      if( (Checkpos != CENTER) && (Checkpos != LIGHT)
+	  && (Me.speed.x != 0) ) {
+	switch(Checkpos) {
+	case RECHTSOBEN:
+	case LINKSOBEN:
+	case OBEN:
+	  if( fy < V_RANDBREITE )
+	    ret = UNTEN;
+	  else
+	    ret = -1;
+	  break;
+	case RECHTSUNTEN:
+	case LINKSUNTEN:
+	case UNTEN:
+	  if( fy > BLOCKHOEHE-V_RANDBREITE )
+	    ret = OBEN;
+	  else
+	    ret = -1;
+	  break;
+	default:
+	  ret = -1;
+	  break;
+	} /* switch Checkpos */
+      } /* if DRUID && Me.speed.x != 0 */
+      else ret = -1;
+    } /* if Rand angefahren */
+    else {	/* mitten in die tuer */
+      if( (MapBrick == V_GANZTUERE) || (MapBrick == V_HALBTUERE3) )
+	ret = CENTER;	/* Tuer offen */
+      else if( (fx < TUERBREITE) || (fx > BLOCKBREITE-TUERBREITE) )
+	ret = CENTER;	/* tuer zu, aber noch nicht ganz dort */
+      else
+	ret = -1;		/* an geschlossener Tuer */
+    } /* else Mitten in der Tuer */
+    
+    break;
+    
+  default:
+    ret = -1;
+    break;
+  } /* switch MapBrick */
+  
+  return ret;		
+  
+} /* IsPassable */
 
 
 /*@Function============================================================
@@ -1046,6 +1036,11 @@ int IsVisible(Finepoint objpos){
  * $Author$
  *
  * $Log$
+ * Revision 1.14  1997/06/09 21:00:56  jprix
+ * The constants for the druids have been largely rescaled to MUCH larger values.
+ * This is for the new float and framedependent movement of the enemys.  It works nicley
+ * as you will see from the now very smooth movement of each of them.
+ *
  * Revision 1.13  1997/06/09 10:50:29  jprix
  * Halfway through with making robot coordinates also info floats.  Still works :->
  *

@@ -67,7 +67,7 @@ typedef grob_Point Vect;
 
 typedef struct {
   const char *druidname;
-  byte maxspeed;    /* the maximum of speed it can go */
+  float maxspeed;    /* the maximum of speed it can go */
   int class;
   byte accel;       /* its acceleration */
   int maxenergy;    /* the maximum energy the batteries can carry */
@@ -116,9 +116,9 @@ typedef struct {
 } enemy, *Enemy;
 
 typedef struct {
-   byte speed;        /* speed of the bullet */
-   byte damage;					/* damage done by this bullettype */
-   byte time;              /* how long does bullet exist */
+   int  speed;        /* speed of the bullet */
+   int  damage;					/* damage done by this bullettype */
+   int  time;              /* how long does bullet exist */
    byte phases;             /* how many phases in motion to show */
    byte blast;              /* which blast does this bullet create */
    unsigned char *picpointer; /* pointer to picture of bullet */
@@ -223,6 +223,11 @@ typedef struct {
  * $Author$
  *
  * $Log$
+ * Revision 1.18  1997/06/09 21:00:56  jprix
+ * The constants for the druids have been largely rescaled to MUCH larger values.
+ * This is for the new float and framedependent movement of the enemys.  It works nicley
+ * as you will see from the now very smooth movement of each of them.
+ *
  * Revision 1.17  1997/06/09 16:22:07  jprix
  * Original images partly overwritten by old versions corrected.
  * Started Load_PCX_Image(..) function.

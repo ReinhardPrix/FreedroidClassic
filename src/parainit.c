@@ -9,6 +9,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.7  1997/06/09 21:00:56  jprix
+ * The constants for the druids have been largely rescaled to MUCH larger values.
+ * This is for the new float and framedependent movement of the enemys.  It works nicley
+ * as you will see from the now very smooth movement of each of them.
+ *
  * Revision 1.6  1997/06/09 19:44:13  jprix
  * Improved the Title.
  *
@@ -95,7 +100,7 @@ char TitleText3[]="An Influence Device can transmitt\nconsole. A small-scale pla
 //                                                                           jp, 10.04.2002
 //
 
-int AutoTerminationTime=120;
+int AutoTerminationTime=300;
 
 // static void timeout(int sig);
 

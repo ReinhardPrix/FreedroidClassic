@@ -154,32 +154,33 @@ shieldspec AllShields[]={
 
 druidspec Druidmap[ALLDRUIDTYPES]={
 /*
-name maxspeed cl. accel. energy lose_health gun vneut. aggr.  firewait fl.imm. score notes
+                 accel.  lose_health          aggr.  fl.imm.
+name maxspeed cl.      energy     gun      vneut.  firewait score notes
 ---------------------------------------------------------------------- */
-{"001", 125,    0,   1, 	165, 		2, 	PULSE,1,			00,	0,	0,   0,NULL },
-{"123", 2,    1,   1,		 20,		2,		PULSE,1,			00,	0,	0,  25,NULL },
-{"139", 2,    1,   1,		 20,		2,		PULSE,1,			00,	0,	0,  25,NULL },
-{"247", 4,    2,   1,		 20,		2,		PULSE,1,			00,	0,	0,	 50,NULL },
-{"249", 4,    2,   1,		 20,		2,		PULSE,1,			00,	0,	0,	 50,NULL },
-{"296", 2,    2,   1,		 40,		2,		PULSE,1,			00,	0,	0,  50,NULL },
-{"302", 7,    3,   2, 	 40, 		2, 	PULSE,1,			00,	0,	0,	 75,NULL },
-{"329", 1,    3,		1,		 40,		2,		PULSE,1,			00,	0,	0,	 75,NULL },
-{"420",	2,    4,		1,		 60,		2,		PULSE,1,			00,	0,	1,	100,NULL },
-{"476", 4,    4, 		1, 	 70, 		2, 	SINGLE_PULSE,2,65,	6,	0,	100,NULL },
-{"493", 4,    4,		1,		 80,		3,		PULSE,2,			00,	0,	0,	100,NULL },
-{"516",	3,    5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
-{"571",	4,    5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
-{"598",	3,    5,		1,		 80,		3,		PULSE,2,			00,	0,	0,	125,NULL },
-{"614",	3,6,		1,		100,		3,		SINGLE_PULSE,2,50,	6,	0,	150,NULL },
-{"615",	4,6,		1,		100,		3,		SINGLE_PULSE,2,50,	6,	0,	150,NULL },
-{"629",	2,6,		1,		100,		3,		MILITARY,2,		60,	6,	0,	150,NULL },
-{"711",	5,7,		1,		110,		3,		FLASH,2,			30,	5,	1,	175,NULL },
-{"742",	4,7,		1,		130,		3,		FLASH,2,			30,	5,	1,	175,NULL },
-{"751",	5,7,		1,		150,		3,		SINGLE_PULSE,2,60,	5,	0,	175,NULL },
-{"821", 6,8, 		2, 	160, 		3, 	MILITARY,2,		70,	3,	1,	200,NULL },
-{"834", 7,8, 		1, 	140, 		3, 	SINGLE_PULSE,2,70,	5,	0,	200,NULL },
-{"883", 2,8, 		1, 	180, 		3, 	SINGLE_PULSE,2,80,	3,	0,	200,NULL },
-{"999", 6,9, 		2, 	300, 		5, 	MILITARY,2,		60,	3,	1,	225,NULL }
+{"001", 30*5,  0, 1*30, 165, 2,  PULSE,       1, 00,  0,  0,   0, NULL },
+{"123", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
+{"139", 30*2,  1, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  25, NULL },
+{"247", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"249", 30*4,  2, 1*30,  20, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"296", 30*2,  2, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  50, NULL },
+{"302", 30*7,  3, 2*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
+{"329", 30*1,  3, 1*30,  40, 2,  PULSE,       1, 00,  0,  0,  75, NULL },
+{"420",	30*2,  4, 1*30,  60, 2,  PULSE,       1, 00,  0,  1, 100, NULL },
+{"476", 30*4,  4, 1*30,  70, 2, SINGLE_PULSE, 2, 65,  6,  0, 100, NULL },
+{"493", 30*4,  4, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 100, NULL },
+{"516",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"571",	30*4,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"598",	30*3,  5, 1*30,  80, 3,  PULSE,       2, 00,  0,  0, 125, NULL },
+{"614",	30*3,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
+{"615",	30*4,  6, 1*30, 100, 3, SINGLE_PULSE, 2, 50,  6,  0, 150, NULL },
+{"629",	30*2,  6, 1*30, 100, 3, MILITARY,     2, 60,  6,  0, 150, NULL },
+{"711",	30*5,  7, 1*30, 110, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
+{"742",	30*4,  7, 1*30, 130, 3,  FLASH,       2, 30,  5,  1, 175, NULL },
+{"751",	30*5,  7, 1*30, 150, 3, SINGLE_PULSE, 2, 60,  5,  0, 175, NULL },
+{"821", 30*6,  8, 2*30, 160, 3,  MILITARY,    2, 70,  3,  1, 200, NULL },
+{"834", 30*7,  8, 1*30, 140, 3, SINGLE_PULSE, 2, 70,  5,  0, 200, NULL },
+{"883", 30*2,  8, 1*30, 180, 3, SINGLE_PULSE, 2, 80,  3,  0, 200, NULL },
+{"999", 30*6,  9, 2*30, 300, 5,  MILITARY,    2, 60,  3,  1, 225, NULL }
 };
 
 
@@ -189,10 +190,10 @@ bulletspec Bulletmap[ALLBULLETTYPES]={
 speed     salve         blast                 oneshotonly
      damage 	phases	                pic.	
 ------------------------------------------------------------*/
-{ 10*25,  25,    1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
-{ 10*25,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
-{ 10*25,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
-{ 10*25,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
+{ 10*35,  25,    1,  4, 	BULLETBLAST,	NULL ,	FALSE, 34},	/* 01: PULSE */
+{ 10*35,  40,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},	/* single_pulse */
+{ 10*35,  55,    1,  4,	BULLETBLAST,	NULL ,	FALSE, 34},     /* military */
+{ 10*35,  30,    1,  3,	BULLETBLAST,	NULL ,	FALSE, 44}      /* flash */  
 };
 
 blastspec Blastmap[ALLBLASTTYPES]={

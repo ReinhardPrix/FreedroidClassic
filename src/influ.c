@@ -10,6 +10,11 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.14  1997/06/09 21:00:56  jprix
+ * The constants for the druids have been largely rescaled to MUCH larger values.
+ * This is for the new float and framedependent movement of the enemys.  It works nicley
+ * as you will see from the now very smooth movement of each of them.
+ *
  * Revision 1.13  1997/06/09 13:42:17  jprix
  * Bullets work now completle adjusted to the framerate.  That looks smooth. fine.
  * Modified makefile to depend also on the important paravars.h .
@@ -365,7 +370,7 @@ void BounceInfluencer(void)
   float SY=Me.speed.y*Frame_Time();
   finepoint lastpos;
   int res;		/* Ergebnis aus DruidPassable() */
-  int safty_sx, safty_sy;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
+  int safty_sx=0, safty_sy=0;	/* wegstoss - Geschwindigkeiten (falls noetig)*/
   
   int crashx = FALSE, crashy = FALSE;		/* Merker wo kollidiert wurde */
   
@@ -373,6 +378,7 @@ void BounceInfluencer(void)
   lastpos.y = Me.pos.y - SY;
   
   res=DruidPassable(Me.pos.x, Me.pos.y);
+
   switch (res) {
   case -1:
     /* Influence ist blockiert: zurueckwerfen */
@@ -476,13 +482,17 @@ void AdjustSpeed(void)
 
 * $Function----------------------------------------------------------*/
 void Reibung(void){
-  if ( !UpPressed() && !DownPressed()) {
-    if (Me.speed.y < 0) Me.speed.y ++;
-    if (Me.speed.y > 0) Me.speed.y --;
-  }
-  if ( !RightPressed() && !LeftPressed()) {
-    if (Me.speed.x < 0) Me.speed.x ++;
-    if (Me.speed.x > 0) Me.speed.x --;
+  int i;
+
+  for (i=0; i<5; i++) {
+    if ( !UpPressed() && !DownPressed()) {
+      if (Me.speed.y < 0) Me.speed.y ++;
+      if (Me.speed.y > 0) Me.speed.y --;
+    }
+    if ( !RightPressed() && !LeftPressed()) {
+      if (Me.speed.x < 0) Me.speed.x ++;
+      if (Me.speed.x > 0) Me.speed.x --;
+    }
   }
 } // void Reibung(void)
 
