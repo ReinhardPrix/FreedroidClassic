@@ -352,6 +352,7 @@ EXTERN void PutMessages (void);
 EXTERN void InsertMessage (char *MText);
 EXTERN void *MyMalloc (long);
 EXTERN void ShowDebugInfos (void);
+EXTERN int GiveNumberToThisActionLabel ( char* ActionLabel );
 EXTERN void ExecuteActionWithLabel ( char* ActionLabel );
 EXTERN void ExecuteEvent ( int EventNumber );
 

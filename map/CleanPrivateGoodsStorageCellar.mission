@@ -117,8 +117,8 @@ Mission target is to live for how many seconds : -1
 
 On mission assignment immediately trigger action Nr. : 0
 
-
-On mission completition immediately trigger action Nr. : 1
+On mission completition immediately trigger action labeled="open_barrier"
+On mission completition immediately trigger action labeled="wow_done_mission_zero"
 
 ** End of this mission target subsection **
 
@@ -186,7 +186,7 @@ Influencer must be at x-coordinate=5
 Influencer must be at y-coordinate=7
 Influencer must be at maplevel=2
 E**vent Action to be triggered by this trigger=0
-Event Action to be triggered by this trigger="thanks"
+Event Action to be triggered by this trigger="open_barrier"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
@@ -283,7 +283,7 @@ Delete the event trigger after it has been triggered=-1
 
 * Start of an Event Action Subsection *
 ACTION INDEX NUMBER TO USE=0
-Action label for this action="thanks"
+Action label for this action="open_barrier"
 Action is mapchange at positionX=4
 Action is mapchange at positionY=7
 Action is mapchange at maplevel=2
@@ -389,6 +389,19 @@ Action is change map there to new value=-1
 Action is Influencer saying something=1
 Action is Influencer saying the following text="Hey, I think I've been assigned another mission!  Super!"
 Action is mission assignment=1
+* End of this Event Action Subsection *
+
+// This is a pure mission assignment
+* Start of an Event Action Subsection *
+ACTION INDEX NUMBER TO USE=8
+Action label for this action="wow_done_mission_zero"
+Action is mapchange at positionX=-1
+Action is mapchange at positionY=-1
+Action is mapchange at maplevel=-1
+Action is change map there to new value=-1
+Action is Influencer saying something=1
+Action is Influencer saying the following text="Hey, I think I've completed this mission!  Hey, cool!"
+Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 ** End of Mission Event Section **
