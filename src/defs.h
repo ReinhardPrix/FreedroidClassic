@@ -431,6 +431,7 @@ enum _non_player_characters
     PERSON_STANDARD_BOT_AFTER_TAKEOVER,
     PERSON_BRUCE,
     PERSON_SUBDIALOG_DUMMY,
+    PERSON_TYBALT,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)
