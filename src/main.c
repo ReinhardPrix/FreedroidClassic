@@ -86,6 +86,7 @@ main (int argc, char *const argv[])
 
       show_droid_info (Me.type, -3);  // show unit-intro page
       ClearGraphMem();
+      DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
       now=SDL_GetTicks();
       while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!SpacePressed()) );
 

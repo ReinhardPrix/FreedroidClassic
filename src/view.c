@@ -261,7 +261,7 @@ Assemble_Combat_Picture (int mask)
   // and all that remains to be done is updating the screen.
 
   if ( mask & DO_SCREEN_UPDATE )
-    SDL_Flip (ne_screen);
+    SDL_UpdateRect (ne_screen, Full_User_Rect.x, Full_User_Rect.y, Full_User_Rect.w, Full_User_Rect.h);
 
   return;
 

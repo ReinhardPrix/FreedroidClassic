@@ -368,6 +368,8 @@ ReInitPictures (void)
 	}
     }
 
+  SDL_FreeSurface( ship_off_pic );
+  SDL_FreeSurface( ship_on_pic );
 
   // return ( OK );
   return (InitPictures());
@@ -892,7 +894,7 @@ InitPictures (void)
 
   LoadThemeConfigurationFile();
 
-  printf_SDL (ne_screen, -1, -1, "ok\n");
+  printf_SDL (ne_screen, -1, -1, " ok\n");
 
   SDL_SetCursor( init_system_cursor( arrow ) );
 
@@ -966,6 +968,15 @@ InitPictures (void)
   ne_console_bg_pic2 = SDL_DisplayFormat (tmp2);
   SDL_FreeSurface (tmp2);
   printf_SDL (ne_screen, -1, -1, ".");
+
+  // the very first time this can't be donw here, because we first need to read
+  // the mission data. Nevertheless we need this here, in case the tile-set is changed
+  if (ship_off_filename)
+    {
+      ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
+      ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
+      printf_SDL (ne_screen, -1, -1, ".");
+    }
 
   GetTakeoverGraphics();
   printf_SDL (ne_screen, -1, -1, " ok\n");

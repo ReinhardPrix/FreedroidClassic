@@ -94,6 +94,10 @@ EnterLift (void)
 
   liftrow = curShip.AllLifts[curLift].lift_row;
 
+  // clear the whole screen
+  ClearGraphMem();
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
+
   ShowLifts (curLevel, liftrow);
 
   /* Warten, bis User Feuer auslaesst */
@@ -239,14 +243,8 @@ ShowLifts (int level, int liftrow)
   int xoffs = (User_Rect.w - 578)/2;
   int yoffs = (User_Rect.h - 211)/2;
 
-  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
-  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
-
-  // clear the whole screen
-  ClearGraphMem();
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
@@ -276,9 +274,6 @@ ShowLifts (int level, int liftrow)
     }
 
   SDL_Flip (ne_screen);
-
-  SDL_FreeSurface( ship_off_pic );
-  SDL_FreeSurface( ship_on_pic );
 
   return;
 

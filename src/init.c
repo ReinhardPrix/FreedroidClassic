@@ -1062,6 +1062,12 @@ InitNewMission ( char *MissionName )
   for (i = 0; i < curShip.num_levels; i++)
     curShip.AllLevels[i]->empty = FALSE;
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All levels have been set to 'active'...");
+
+  if (ship_off_pic) SDL_FreeSurface (ship_off_pic);
+  if (ship_on_pic) SDL_FreeSurface (ship_on_pic);
+  ship_off_pic= IMG_Load (find_file (ship_off_filename, GRAPHICS_DIR, TRUE));
+  ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
+
   printf_SDL (ne_screen, -1, -1, " ok\n");
   SetCurrentFont (oldfont);
   //--------------------

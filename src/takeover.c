@@ -137,7 +137,7 @@ Takeover (int enemynum)
   int FinishTakeover = FALSE;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   char *message;
-
+  Uint32 now;
 
   /* Prevent distortion of framerate by the delay coming from 
    * the time spend in the menu.
@@ -262,16 +262,11 @@ Takeover (int enemynum)
 	  AllEnemys[enemynum].energy = -1.0;  /* to be sure */
 	  OpponentType = -1;	/* dont display enemy any more */
 	}
-
-      //        /* Wait a turn */ */
-      //        waiter = WAIT_AFTER_GAME; */
-      //       while (waiter != 0) */
-      //  	{ */
-      //  	  usleep (30000); */
-      // 	  waiter--; */
-  	  DisplayBanner (message, NULL , 0 );	
-  	  ShowPlayground ();
-	  // 	} /* WHILE waiter */ */
+      
+      DisplayBanner (message, NULL , 0 );	
+      ShowPlayground ();
+      now = SDL_GetTicks();
+      while (!SpacePressed() && (SDL_GetTicks() - now < SHOW_WAIT) );
 
     }	/* while !FinishTakeover */
 
@@ -365,8 +360,7 @@ PlayGame (void)
 
   Uint32 prev_count_tick, count_tick_len;  /* tick vars for count-down */
   Uint32 prev_move_tick, move_tick_len;    /* tick vars for motion */
-  int wait_move_ticks;    /* number of move-ticks to wait before "key-repeat" */
-
+  Uint32 last_movekey_time, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
 
   int up, down, set; 
   int up_counter, down_counter; 
@@ -378,8 +372,6 @@ PlayGame (void)
   up = down = set = FALSE;
   up_counter = down_counter = 0;
   wheel_up = wheel_down = 0;
-
-  wait_move_ticks = 2;  
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
   
@@ -393,15 +385,21 @@ PlayGame (void)
        * here we register if there have been key-press events in the
        * "waiting period" between move-ticks :
        */
-      up   = up  || UpPressed();
-      down = down || DownPressed();
+      if ( !up && UpPressed () )
+	{
+	  up = TRUE;
+	  last_movekey_time = SDL_GetTicks();
+	}
+      if (!down && DownPressed() )
+	{
+	  down = TRUE;
+	  last_movekey_time = SDL_GetTicks();
+	}
+
       set  = set  || SpacePressed();
 
       if (WheelUpPressed()) wheel_up ++;
       if (WheelDownPressed()) wheel_down ++;
-
-      if (!up) up_counter = 0;    /* reset counters for released keys */
-      if (!down) down_counter =0;
 
       /* allow for a WIN-key that give immedate victory */
       if ( WPressed () && Ctrl_Was_Pressed () && Alt_Was_Pressed () )
@@ -431,30 +429,24 @@ PlayGame (void)
 	  prev_move_tick += move_tick_len; /* set for next motion tick */
 	  EnemyMovements ();
 
-	  if (up || wheel_up)
+	  if (wheel_up || (up && (SDL_GetTicks() - last_movekey_time > wait_move_ticks)))
 	    {
-	      if (wheel_up || !up_counter || (up_counter > wait_move_ticks) )
-		{
-		  CapsuleCurRow[YourColor]--;
-		  if (CapsuleCurRow[YourColor] < 1)
-		    CapsuleCurRow[YourColor] = NUM_LINES;
-		}
-	      up = FALSE;  
-	      up_counter ++;
+	      CapsuleCurRow[YourColor]--;
+	      if (CapsuleCurRow[YourColor] < 1)
+		CapsuleCurRow[YourColor] = NUM_LINES;
+	
+	      if (!UpPressed()) up = FALSE;  
 	      if (wheel_up) wheel_up --;
 	    }
-	  if (down || wheel_down)
+	  if (wheel_down || (down && (SDL_GetTicks() - last_movekey_time > wait_move_ticks)))
 	    {
-	      if (wheel_down || !down_counter || (down_counter > wait_move_ticks))
-		{
-		  CapsuleCurRow[YourColor]++;
-		  if (CapsuleCurRow[YourColor] > NUM_LINES)
-		    CapsuleCurRow[YourColor] = 1;
-		}
-	      down = FALSE;
-	      down_counter ++;
+	      CapsuleCurRow[YourColor]++;
+	      if (CapsuleCurRow[YourColor] > NUM_LINES)
+		CapsuleCurRow[YourColor] = 1;
+
+	      if (!DownPressed()) down = FALSE;
 	      if (wheel_down) wheel_down --;
-	    }
+	    }    
 
 	  if ( set && (NumCapsules[YOU] > 0))
 	    {
@@ -505,6 +497,7 @@ PlayGame (void)
       ProcessPlayground ();
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
+      AnimateCurrents ();
       ShowPlayground ();
     }	/* while (countdown) */
 
