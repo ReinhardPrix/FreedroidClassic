@@ -50,7 +50,8 @@ EXTERN void Level_Editor(void);
 
 EXTERN char Previous_Mission_Name[1000];
 
-#define FIRST_MENU_ITEM_POS_X (2*Block_Width)
+#define FIRST_MENU_ITEM_POS_X (1*Block_Width)
+#define FIRST_MENU_ITEM_POS_XX ( SCREENLEN - FIRST_MENU_ITEM_POS_X )
 #define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont) * 3 )
 
 /* ----------------------------------------------------------------------
@@ -824,8 +825,8 @@ Sell_Items( int ForHealer )
 }; // void Sell_Items( void )
 
 /* ----------------------------------------------------------------------
- * 
- *
+ * This function tells over which menu item the mouse cursor would be,
+ * if there were infinitely many menu items.
  * ---------------------------------------------------------------------- */
 int
 MouseCursorIsOverMenuItem( first_menu_item_pos_y )
@@ -882,6 +883,9 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
 		    first_menu_item_pos_y +
 		    ( MenuPosition - 0.5 ) * h , 0 );
+      PutInfluence( FIRST_MENU_ITEM_POS_XX , 
+		    first_menu_item_pos_y +
+		    ( MenuPosition - 0.5 ) * h , 0 );
 
       for ( i = 0 ; i < 10 ; i ++ )
 	{
@@ -901,9 +905,33 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	}
       if ( EnterPressed() || SpacePressed() ) 
 	{
-	  while ( EnterPressed() || SpacePressed() );
-	  MenuItemSelectedSound();
-	  return ( MenuPosition );
+	  //--------------------
+	  // The space key or enter key or left mouse button all indicate, that
+	  // the user has made a selection.
+	  //
+	  // In the case of the mouse button, we must of couse first check, if 
+	  // the mouse button really was over a valid menu item and otherwise
+	  // ignore the button.
+	  //
+	  // In case of a key, we always have a valid selection.
+	  //
+	  if ( axis_is_active )
+	    {
+	      if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
+		   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
+		{
+		  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
+		  while ( EnterPressed() || SpacePressed() );
+		  MenuItemSelectedSound();
+		  return ( MenuPosition );
+		}
+	    }
+	  else
+	    {
+	      while ( EnterPressed() || SpacePressed() );
+	      MenuItemSelectedSound();
+	      return ( MenuPosition );
+	    }
 	}
       if (UpPressed()) 
 	{
@@ -918,11 +946,14 @@ DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , char*
 	  while (DownPressed());
 	}
 
+      /*
       if ( ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) >= 1 ) &&
 	   ( MouseCursorIsOverMenuItem( first_menu_item_pos_y ) <= NumberOfOptionsGiven ) )
 	{
 	  MenuPosition = MouseCursorIsOverMenuItem( first_menu_item_pos_y );
 	}
+      */
+
     }
 
   return ( -1 );
