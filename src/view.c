@@ -599,62 +599,59 @@ blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
 void
 isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 {
-  int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
-  Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
-  //--------------------
-  // Maybe we should be using a more elegant function here, that will automatically
-  // compute the right amount of squares to blit in each direction from the known amount
-  // of pixel one floor tile takes...  But that must follow later...
-  if ( mask & ZOOM_OUT )
+    int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
+    Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+    
+    //--------------------
+    // Maybe we should be using a more elegant function here, that will automatically
+    // compute the right amount of squares to blit in each direction from the known amount
+    // of pixel one floor tile takes...  But that must follow later...
+    if ( mask & ZOOM_OUT )
     {
-      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
-      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
-      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
-      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
+	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * FIXED_ZOOM_OUT_FACT ;
     }
-  else
+    else
     {
-      LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-      ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
     }
-                     
-  SDL_SetClipRect (Screen , &User_Rect);
-
-  if ( mask & ZOOM_OUT )
+    
+    SDL_SetClipRect (Screen , &User_Rect);
+    
+    if ( mask & ZOOM_OUT )
     {
-      for (line = LineStart; line < LineEnd; line++)
+	for (line = LineStart; line < LineEnd; line++)
 	{
-	  for (col = ColStart; col < ColEnd; col++)
+	    for (col = ColStart; col < ColEnd; col++)
 	    {
-	      if ( ( MapBrick = GetMapBrick ( DisplayLevel, col , line ) ) != INVISIBLE_BRICK )
+		MapBrick = GetMapBrick ( DisplayLevel, col , line ) ;
+		
+		if ( use_open_gl )
 		{
-		  if ( use_open_gl )
-		    {
-		      blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-								    ((float)col)+0.5 , ((float)line) +0.5 , 1.0 , 1.0 , 1.0 , FALSE );
-		    }
-		  else
-		    {
-		      blit_zoomed_iso_image_to_map_position ( & ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] ) , ((float)col)+0.5 , ((float)line) +0.5 ) ;
-		    }
-		}	// if !INVISIBLE_BRICK 
+		    blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
+								  ((float)col)+0.5 , ((float)line) +0.5 , 1.0 , 1.0 , 1.0 , FALSE );
+		}
+		else
+		{
+		    blit_zoomed_iso_image_to_map_position ( & ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] ) , ((float)col)+0.5 , ((float)line) +0.5 ) ;
+		}
 	    }		// for(col) 
 	}		// for(line) 
     }
-  else
+    else
     {
-      for (line = LineStart; line < LineEnd; line++)
+	for ( line = LineStart ; line < LineEnd ; line++ )
 	{
-	  for (col = ColStart; col < ColEnd; col++)
+	    for ( col = ColStart ; col < ColEnd ; col++ )
 	    {
-	      if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
-		{
-		  blit_this_floor_tile_to_screen ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-						   ((float)col)+0.5 , ((float)line) +0.5 );
-		}	// if !INVISIBLE_BRICK 
+		MapBrick = GetMapBrick( DisplayLevel, col , line ) ;
+		blit_this_floor_tile_to_screen ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
+						 ((float)col)+0.5 , ((float)line) +0.5 );
 	    }		// for(col) 
 	}		// for(line) 
     }
