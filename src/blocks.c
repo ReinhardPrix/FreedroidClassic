@@ -1360,9 +1360,12 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_1 = 0.25 ;
   obstacle_map [ ISO_V_DOOR_LOCKED ] . block_area_parm_2 = 1.2 ;
-  obstacle_map [ ISO_V_DOOR_LOCKED ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_V_DOOR_LOCKED ] . filename = "iso_doors_0012.png" ;
 
-  obstacle_map [ ISO_H_DOOR_LOCKED ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_H_DOOR_LOCKED ] . filename = "iso_doors_0011.png" ;
+  obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_H_DOOR_LOCKED ] . block_area_parm_2 = 0.25 ;
+
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . is_smashable = FALSE ;
   obstacle_map [ ISO_H_DOOR_000_OPEN ] . filename = "iso_doors_0001.png" ;
   obstacle_map [ ISO_H_DOOR_025_OPEN ] . is_smashable = FALSE ;
