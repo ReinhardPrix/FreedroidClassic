@@ -1,0 +1,16 @@
+
+Welcome to
+
+   F R E E P A R A D R O I D P L U S  :  Troubleshooting secion
+   ---------------------------------
+
+A game available for Linux only by Johannes Prix, Reinhard Prix and Rene Limarutti.
+(c) 1992-2002 by Reinhard Prix, Johannes Prix and Rene Limarutti.
+
+Q: My program responds with 'svgalib: Cannot get I/O permission.' and exits.
+A: You need to be logged in as root to play or you must set the permissions
+   of the executable to suid root.
+
+If you experience other difficulies and problems, send mail to 
+johannes.prix@kfunigraz.ac.at.
+

@@ -567,7 +567,7 @@ int Init_YIFF_Sound_Server(void){
   // Now a new connection to the yiff server can be opend.  The first argument to open is not NULL,
   // therefore a yiff server will be started even if none is running!!  great!!
   BackgroundMusic_con = YOpenConnection(
-			"yiff",
+			"/usr/sbin/yiff",
 			CON_ARG
 			);
 
