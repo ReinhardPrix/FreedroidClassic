@@ -42,6 +42,7 @@
 
 #include "map.h"
 
+#include "maped.h"
 
 symtrans Translator[BLOCKANZAHL] = {
   {'.', FLOOR},
@@ -67,6 +68,68 @@ symtrans Translator[BLOCKANZAHL] = {
   {0, -1}			// marks the end
 };
 
+/*@Function============================================================
+@Desc: int ScanMapToStruct(): liest die map aus dem Edit-Fenster
+				in die map - struct von CurLevel.
+			updates doors and waypoints array
+
+@Ret: int OK | ERR
+@Int:
+* $Function----------------------------------------------------------*/
+int ScanMapToStruct()
+{
+  int row, col;
+  struct text_info *CurTi;		/* momentan geltende Koordinaten */
+  int endrow=0, endcol=0;		/* the last col/row filled with a mapchar */
+  int xlen, ylen;
+  char onbrick[2];
+  char linebuf[W_EDIT_LEN*2 + 1];  /* Buffer for a map line with attr. bytes */ 
+  int i;
+  
+  if( CurLevel == NULL ) return ERR;
+  
+  CurTi = &EditTextInfo;		/* Damit die Koordinaten stimmen */
+	
+  // MouHideMouse();
+  
+  /* Get the minimum dimensions of the map on the screen */
+  /* xlen : */
+  //	for( col = CurTi->winright; (col>=CurTi->winleft) && !endcol; col--) {
+  //		for(row=CurTi->wintop; row <= CurTi->winbottom; row++) {
+  //			gettext(col, row, col, row, onbrick);
+  //			if( onbrick[0] != VOID_BOXCHAR ) {
+  //				endcol = col;
+  //				break;
+  //			} /* if */
+  //		} /* for row */
+  //	} /* for col */
+  
+  /* ylen */
+  //	for( row = CurTi->winbottom; (row>=CurTi->wintop) && !endrow; row--) {
+  //		for(col=CurTi->winleft; col<=CurTi->winright; col ++) {
+  //			gettext(col, row, col, row, onbrick);
+  //			if( onbrick[0] != VOID_BOXCHAR ) {
+  //				endrow = row;
+  //				break;
+  //			} /* if */
+  //		} /* for col */
+  //	} /* for row */
+  
+  // xlen = endcol - CurTi->winleft +1;
+  // ylen = endrow - CurTi->wintop +1;
+  
+  // NOW I INSERT THIS INSTEAD:
+  
+	
+  GetDoors(CurLevel);
+
+	
+  GetWaypoints(CurLevel);
+
+  // PORT MouShowMouse();
+
+  return OK;
+} /* ScanMapToStruct */
 
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
@@ -277,7 +340,6 @@ LoadShip (char *shipname)
   int level_anz;
   int i;
 
-
   /* build complete filename from ship-name */
   filename = (char *) MyMalloc (strlen (shipname) + strlen (SHIP_EXT) + 10);
 
@@ -343,6 +405,175 @@ LoadShip (char *shipname)
   return OK;
 } /* LoadShip () */
 
+/*@Function============================================================
+@Desc: char *StructToMem(Level Lev):
+
+@Ret: 	char *: pointer to Map in a memory field
+@Int:
+* $Function----------------------------------------------------------*/
+char *StructToMem(Level Lev)
+{
+  char *LevelMem;
+  int i, j;
+  int MemAmount=0;		/* the size of the level-data */
+  int xlen = Lev->xlen, ylen = Lev->ylen;
+  int anz_wp;		/* Anzahl der Waypoints */
+  char linebuf[81];		/* Buffer */
+  
+  /* Get the number of waypoints */
+  anz_wp = 0;
+  while( Lev->AllWaypoints[anz_wp++].x != 0 );
+  anz_wp --;		/* we counted one too much */
+		
+  /* Groesse des benoetigten Speichers abschaetzen */
+  MemAmount = (xlen+1) * ylen; 	/* Map-memory */
+  MemAmount += anz_wp * MAX_WP_CONNECTIONS * 4;
+  MemAmount += 1000;		/* Puffer fuer Dimensionen, mark-strings .. */
+  
+  /* Speicher reservieren */
+  if( (LevelMem = (char*)malloc(MemAmount)) == NULL) {
+    printf("\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
+    Terminate(ERR);
+    return NULL;
+  }
+
+  // Daten in Speicher schreiben :
+  // Here the levelnumber and general information about the level is written
+  sprintf(linebuf, "%d\n%d\n%d\n%d\n",
+	  Lev->levelnum, Lev->xlen, Lev->ylen, Lev->color);
+  strcpy(LevelMem, linebuf);
+  
+  // Now the beginning of the actual map data is marked:
+  strcat(LevelMem, MAP_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+  
+  // Now in the loop each line of map data should be saved as a whole
+  for(i=0; i<ylen; i++) {
+    strncat(LevelMem, Lev->map[i], xlen);
+    strcat(LevelMem, "\n");
+  }
+  
+  // Now a newline seems to indicate the beginning of the next map
+  //
+  strcat(LevelMem, WP_BEGIN_STRING);
+  strcat(LevelMem, "\n");
+  
+  for(i=0; i<anz_wp; i++) {
+    for( j=0; j<MAX_WP_CONNECTIONS; j++) {
+      sprintf(linebuf, "%d \t ", Lev->AllWaypoints[i].connections[j]);
+      strcat(LevelMem, linebuf);
+    } /* for connections */
+    strcat(LevelMem, "\n");
+  } /* for waypoints */
+  
+  strcat(LevelMem, LEVEL_END_STRING);
+  strcat(LevelMem, "\n");
+  
+  /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
+  /* wenn nicht: :-(  */
+  if( strlen(LevelMem) >= MemAmount) 
+    {
+      printf("\n\nError in StructToMem:  Estimate of memory was wrong...\n\nTerminating...\n\n");
+      Terminate(ERR);
+      return NULL;
+    } 
+  
+  /* all ok : */
+  return LevelMem;
+  
+} /* Struct to Mem */
+
+/*@Function============================================================
+@Desc: int SaveShip(void): saves ship-data to disk
+
+@Ret: OK | ERR
+@Int:
+* $Function----------------------------------------------------------*/
+int SaveShip(char *shipname)
+{
+  char *LevelMem;		/* linear memory for one Level */
+  FILE *ShipFile;
+  char filename[FILENAME_LEN+1];
+  int level_anz;
+  int array_i, array_num;
+  int i;
+
+  DebugPrintf("\nint SaveShip(char *shipname): real function call confirmed.");
+  /* Aktuellen Level updaten */
+  // PORT ScanMapToStruct();
+  
+  /* Get the complete filename */
+  strcpy(filename, shipname);
+  strcat(filename, SHIP_EXT);
+  
+  /* count the levels */
+  level_anz = 0;
+  while(curShip.AllLevels[level_anz++]);
+  level_anz --;
+  
+  DebugPrintf("\nint SaveShip(char *shipname): now opening the ship file...");
+
+  /* open file */
+  if( (ShipFile = fopen(filename, "w")) == NULL) {
+    printf("\n\nError opening ship file...\n\nTerminating...\n\n");
+    Terminate(ERR);
+    return ERR;
+  }
+  
+  /* Save all Levels */
+  
+  DebugPrintf("\nint SaveShip(char *shipname): now saving levels...");
+
+  for( i=0; i<level_anz; i++) 
+    {
+      array_i =-1;
+      array_num = -1;
+      while( curShip.AllLevels[++array_i] != NULL) 
+	{
+	  if( curShip.AllLevels[array_i]->levelnum == i)
+	    {
+	      if( array_num != -1 ) 
+		{
+		  printf("\n\nIdentical Levelnumber Error in SaveShip...\n\nTerminating\n\n");
+		  Terminate(ERR);
+		  return ERR;
+		} 
+	      else array_num = array_i;
+	    }
+	} // while 
+    
+      if ( array_num == -1 ) {
+	char buf[10];
+	itoa(i, buf, 10);
+      
+	// DialogErr(MISSING_LEVELNUMBER, buf);
+	printf("\n\nMissing Levelnumber error in SaveShip...\n\nTerminating\n\n");
+	Terminate(ERR);
+      
+	level_anz ++;
+	continue;
+      }
+    
+      LevelMem = StructToMem(curShip.AllLevels[array_num]);
+      fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
+    
+      free(LevelMem);
+    }
+  
+  DebugPrintf("\nint SaveShip(char *shipname): now closing ship file...");
+
+  if( fclose(ShipFile) == EOF) 
+    {
+      printf("\n\nClosing of ship file failed in SaveShip...\n\nTerminating\n\n");
+      Terminate(ERR);
+      return ERR;
+    }
+  
+  DebugPrintf("\nint SaveShip(char *shipname): end of function reached.");
+  
+  return OK;
+} /* SaveShip */
+
 
 /*@Function============================================================
  * @Desc: Level LevelToStruct(char *data):
@@ -379,7 +610,6 @@ LevelToStruct (char *data)
   if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
     return NULL;
 
-
   /* set position to Waypoint-Data */
   if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
     return NULL;
@@ -391,7 +621,6 @@ LevelToStruct (char *data)
   for (i = 0; i < loadlevel->ylen; i++)
     if ((loadlevel->map[i] = strtok (NULL, "\n")) == NULL)
       return NULL;
-
 
   /* Get Doors Array */
   // NumDoors =
@@ -421,7 +650,7 @@ LevelToStruct (char *data)
 	}
     }
   return loadlevel;
-}				/* LevelToStruct */
+} /* LevelToStruct */
 
 
 

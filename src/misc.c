@@ -1286,6 +1286,11 @@ Level_Editor(void)
 		  
 		case SAVE_LEVEL_POSITION:
 		  while (EnterPressed() || SpacePressed() ) ;
+		  SaveShip("Testship");
+		  CenteredPutString (ScaledSurface ,  9*FontHeight(Font1),    "Your ship was saved...");
+		  SDL_UpdateRect(ScaledSurface, 0, 0, SCREENBREITE*SCALE_FACTOR, SCREENHOEHE*SCALE_FACTOR);
+		  while (!EnterPressed() && !SpacePressed() ) ;
+		  while (EnterPressed() || SpacePressed() ) ;
 		  // Weiter=!Weiter;
 		  break;
 		case SET_LEVEL_NAME_POSITION: 

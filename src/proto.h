@@ -215,6 +215,7 @@ EXTERN int GetCurrentElevator (void);
 EXTERN void ActSpecialField (float, float);
 
 EXTERN int LoadShip (char *shipname);
+EXTERN int SaveShip(char *shipname);
 EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetWaypoints (Level Lev);
