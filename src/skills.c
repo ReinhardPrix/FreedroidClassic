@@ -530,6 +530,7 @@ HandleCurrentlyActivatedSkill( void )
   moderately_finepoint TargetPoint;
   int i;
   float xdist, ydist, dist2;
+  Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
   switch ( Me [ 0 ] . readied_skill )
     {
@@ -573,6 +574,39 @@ HandleCurrentlyActivatedSkill( void )
       // Maybe we're standing right on a chest field.  That is the
       // easiest case.  Then we just need to open the chest.
       //
+      for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
+	{
+	  switch ( ChestLevel -> obstacle_list [ i ] . type )
+	    {
+	    case ISO_V_CHEST_OPEN:
+	    case ISO_H_CHEST_OPEN:
+	      if ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+		   ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+		   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+		   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) )
+		{
+		  EnterChest();
+		  return;
+		  // i = MAX_OBSTACLES_ON_MAP ;
+		}
+	      break;
+	    case ISO_V_CHEST_CLOSED:
+	    case ISO_H_CHEST_CLOSED:
+	      if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
+		     ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
+		     ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
+		{
+		  EnterChest();
+		  return;
+		  // i = MAX_OBSTACLES_ON_MAP ;
+		}
+	      break;
+	    default:
+	      break;
+	    }
+	}
+      /*
       switch ( GetMapBrick ( curShip.AllLevels [ Me [ 0 ] . pos . z ] ,
 			     Me [ 0 ] . pos . x , 
 			     Me [ 0 ] . pos . y ) ) 
@@ -586,7 +620,8 @@ HandleCurrentlyActivatedSkill( void )
 	default:
 	  break;
 	}
-      
+      */
+
       //--------------------
       // Now we check if maybe a dead body is close and if then
       // the player meant to loot this dead body...

@@ -1602,21 +1602,6 @@ ActSpecialField ( int PlayerNum )
 
   switch (MapBrick)
     {
-      /*
-    case LIFT:
-      if ( ! ( ( Me [ 0 ] . status == TRANSFERMODE ) &&
-	       ( abs(Me[0].speed.x) <= 1) && ( abs(Me[0].speed.y) <= 1)))
-	break;
-
-      cx = rintf(x) - x ;
-      cy = rintf(y) - y ;
-
-      // only enter the lift, when approximately in the center (of the map tile)
-      if ((cx * cx + cy * cy) < Druid_Radius_X * Druid_Radius_X)
-	EnterLift ();
-      break;
-      */
-
     case CONSOLE_R:
     case CONSOLE_L:
     case CONSOLE_U:
@@ -1628,22 +1613,6 @@ ActSpecialField ( int PlayerNum )
 	  EnterConsole ( ) ;
 	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterConsole().\n");
 	}
-      break;
-
-    case CHEST_R:
-    case CHEST_L:
-    case CHEST_U:
-    case CHEST_D:
-      /*
-      if ( ( Me [ 0 ] . readied_skill == SPELL_LOOT_CHEST_OR_DEAD_BODY ) &&
-	   ( PlayerNum == 0 ) &&
-	   ( MouseRightPressed() ) && 
-	   ( ! ServerMode ) )
-	{
-	  EnterChest ( ) ;
-	  DebugPrintf ( 2 , "\nvoid ActSpecialField(int x, int y):  Back from EnterChest().\n");
-	}
-      */
       break;
 
       /*
@@ -1672,15 +1641,6 @@ ActSpecialField ( int PlayerNum )
       break;
       */
 
-      /*
-    case REFRESH1:
-    case REFRESH2:
-    case REFRESH3:
-    case REFRESH4:
-      RefreshInfluencer ();
-      break;
-      */
-
     case CONSUMER_1:
     case CONSUMER_2:
     case CONSUMER_3:
@@ -1695,7 +1655,7 @@ ActSpecialField ( int PlayerNum )
 
     default:
       break;
-    }				/* switch */
+    }	// switch 
 
   DebugPrintf (2, "\nvoid ActSpecialField(int x, int y):  end of function reached.");
 
