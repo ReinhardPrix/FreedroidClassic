@@ -241,7 +241,7 @@ MoveEnemys (void)
 	 continue;
 
        // Now check for collisions of this enemy with his colleagues
-       // NORMALISATION EnemyEnemyCollision (i);
+       EnemyEnemyCollision (i);
 
        /* Ermittlung des Restweges zum naechsten Ziel */
        WpList = CurLevel->AllWaypoints;
@@ -462,22 +462,22 @@ EnemyEnemyCollision (int enemynum)
 {
   int i;
   int curlev = CurLevel->levelnum;
-  int check_x, check_y;
+  float check_x, check_y;
   int swap;
-  long xdist, ydist;
-  long dist2;
-  long crit_dist2 = 4 * DRUIDRADIUSX * DRUIDRADIUSX;
-  int speed_x, speed_y;
+  float xdist, ydist;
+  float dist2;
+  float crit_dist2 = 4 * DRUIDRADIUSX * DRUIDRADIUSX;
+  float speed_x, speed_y;
 
   check_x = Feindesliste[enemynum].pos.x;
   check_y = Feindesliste[enemynum].pos.y;
 
   for (i = 0; i < NumEnemys; i++)
     {
-      /* only living enemys on this level */
+      // check only collisions of LIVING enemys on this level
       if (Feindesliste[i].Status == OUT || Feindesliste[i].levelnum != curlev)
 	continue;
-      /* dont check yourself */
+      // dont check yourself...
       if (i == enemynum)
 	continue;
 
@@ -485,13 +485,13 @@ EnemyEnemyCollision (int enemynum)
       xdist = check_x - Feindesliste[i].pos.x;
       ydist = check_y - Feindesliste[i].pos.y;
 
-      dist2 = xdist * xdist + ydist * ydist;
+      dist2 = sqrt(xdist * xdist + ydist * ydist);
 
-      /* Kollision ?? */
-      if (dist2 <= crit_dist2)
+      // Is there a Collision?
+      if ( dist2 <= 2*DRUIDRADIUSXY )
 	{
 
-	  /* Warte ich ??: */
+	  // am I waiting already?  If so, keep waiting... 
 	  if (Feindesliste[enemynum].warten)
 	    {
 	      /* weiter warten */
@@ -504,9 +504,9 @@ EnemyEnemyCollision (int enemynum)
 
 	  /* gestoppten gegner ein wenig zurueckstossen */
 	  if (xdist)
-	    Feindesliste[i].pos.x -= xdist / abs ((int) xdist);
+	    Feindesliste[i].pos.x -= xdist / fabsf (xdist) * Frame_Time();
 	  if (ydist)
-	    Feindesliste[i].pos.y -= ydist / abs ((int) ydist);
+	    Feindesliste[i].pos.y -= ydist / fabsf (ydist) * Frame_Time();
 
 	  swap = Feindesliste[enemynum].nextwaypoint;
 	  Feindesliste[enemynum].nextwaypoint =
@@ -519,10 +519,10 @@ EnemyEnemyCollision (int enemynum)
 
 	  if (speed_x)
 	    Feindesliste[enemynum].pos.x -=
-	      COL_SPEED * (speed_x) / abs (speed_x);
+	      Frame_Time() * COL_SPEED * (speed_x) / fabsf (speed_x);
 	  if (speed_y)
 	    Feindesliste[enemynum].pos.y -=
-	      COL_SPEED * (speed_y) / abs (speed_y);
+	      Frame_Time() * COL_SPEED * (speed_y) / fabsf (speed_y);
 
 	  return TRUE;
 
