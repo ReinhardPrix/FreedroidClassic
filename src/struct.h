@@ -459,6 +459,11 @@ typedef struct
   int resist_force;        // percentage to reduce from force damage
   int resist_fire;         // percentage to reduce from fire damage
   int resist_electricity;  // percentage to reduce from electricity damage
+  
+  int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
+  int double_ranged_damage;   // does this Tux do double ranged weapon damage?
+  int spell_level_bonus;      // does this Tux get any bonus to his spell levels?
+
   float maxenergy; // current top limit for the influencers energy
   float maxmana;   // current top limit for the influencers magic power
   int exp_level;       // which 'experience level' is the influencer currenly at?
