@@ -2209,10 +2209,10 @@ grab_tux_images_from_archive ( int tux_part_group , int motion_class , char* par
     int our_phase ;
     FILE *DataFile;
     void* tmp_buff;
-    int filelen, tmplen;
     char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char *DataBuffer, *ptr;
+    int filelen, tmplen;
 
     Sint16 cooked_walk_object_phases;
     Sint16 cooked_attack_object_phases;
@@ -2430,6 +2430,8 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     char* fpath;
     char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
+    char *DataBuffer, *ptr, *dest;
+    int filelen, tmplen;
 
     Sint16 img_xlen;
     Sint16 img_ylen;
@@ -2474,13 +2476,25 @@ This indicates a serious bug in this installation of Freedroid.",
 	DebugPrintf ( 1 , "\n%s() : Opening file succeeded..." , __FUNCTION__ );
     }
 
+    /* read the whole file into memory, then use ReadSint16() for correct
+     * endianness of byte-reading 
+     */
+    filelen = FS_filelength (DataFile);
+    DataBuffer = MyMalloc(filelen);
+    fread ( DataBuffer, filelen, 1, DataFile );
+    fclose ( DataFile );
+
+    ptr = DataBuffer;    
+
     //--------------------
     // Now we assume, that this is an image collection file for an enemy
     // and therefore it should have the right header bytes (keyword eneX)
     // and it also should be suitable for use with OpenGl (keyword oglX)
     //
-    fread ( archive_type_string , 4 , 1 , DataFile ) ;
-    fread ( ogl_support_string , 4 , 1 , DataFile ) ;
+    memcpy ( archive_type_string , ptr , 4 );
+    ptr += 4;
+    memcpy ( ogl_support_string ,  ptr, 4 );
+    ptr += 4;
 
     //--------------------
     // We check if this is really an image archive of ENEMY type...
@@ -2498,11 +2512,16 @@ This indicates a serious bug in this installation of Freedroid.",
     // we can start to read out some entries, that are only found in
     // enemy image collections.
     //
-    fread ( & ( cooked_walk_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_attack_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_gethit_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_death_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
-    fread ( & ( cooked_stand_object_phases ) , 1 , sizeof ( Sint16 ) , DataFile ) ;
+    cooked_walk_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_attack_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_gethit_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_death_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
+    cooked_stand_object_phases = ReadSint16 ( ptr );
+    ptr += sizeof ( Sint16 );
 
     //--------------------
     // The information about cycle length needs to be entered into the 
@@ -2537,23 +2556,34 @@ The number of images found in the image collection to bigger than currently allo
     // collection archive file
     //
     for ( rotation_index = 0 ; rotation_index < ROTATION_ANGLES_PER_ROTATION_MODEL ; rotation_index ++ )
-    {
+      {
 	for ( enemy_phase = 0 ; enemy_phase < last_stand_animation_image [ enemy_model_nr ] ; enemy_phase ++ )
-	{	
+	  {	
 	    //--------------------
 	    // We read the image parameters.  We need those to construct the
 	    // surface.  Therefore this must come first.
 	    //
-	    fread ( & ( img_xlen ) , 1 , sizeof ( img_xlen ) , DataFile ) ;
-	    fread ( & ( img_ylen ) , 1 , sizeof ( img_ylen ) , DataFile ) ;
-	    fread ( & ( img_x_offs ) , 1 , sizeof ( img_x_offs ) , DataFile ) ;
-	    fread ( & ( img_y_offs ) , 1 , sizeof ( img_y_offs ) , DataFile ) ;
-	    fread ( & ( orig_img_xlen ) , 1 , sizeof ( orig_img_xlen ) , DataFile ) ;
-	    fread ( & ( orig_img_ylen ) , 1 , sizeof ( orig_img_ylen ) , DataFile ) ;
+	    img_xlen = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
+	    img_ylen = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
+	    img_x_offs = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
+	    img_y_offs = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
+	    orig_img_xlen = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
+	    orig_img_ylen = ReadSint16 ( ptr );
+	    ptr += sizeof(Sint16);
 
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface = 
-		SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
-	    fread ( enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface -> pixels , 4 * img_xlen * img_ylen , 1 , DataFile ) ;
+	      SDL_CreateRGBSurface ( SDL_SWSURFACE , img_xlen , img_ylen, 32, 
+				     0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 ) ;
+
+	    dest = enemy_iso_images[enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . surface -> pixels;
+	    tmplen = 4 * img_xlen * img_ylen;
+	    memcpy ( dest, ptr, tmplen );
+	    ptr += tmplen;
 
 	    //--------------------
 	    // Depending on whether this is supposed to work with faster but less
@@ -2567,7 +2597,8 @@ The number of images found in the image collection to bigger than currently allo
 	    // This might be useful later, when using only SDL output...
 	    //
 	    // SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-	    // our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); // now we have an alpha-surf of right size
+	    // our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
+	    // now we have an alpha-surf of right size
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . zoomed_out_surface = NULL ;
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . texture_has_been_created = FALSE ;
 	    enemy_iso_images [ enemy_model_nr ] [ rotation_index ] [ enemy_phase ] . offset_x = img_x_offs ;
@@ -2621,22 +2652,11 @@ to draw attention to the possible problem...",
 	}
     }
 
-    if ( fclose ( DataFile ) == EOF)
-    {
-	fprintf( stderr, "\n\nfilename: '%s'\n" , fpath );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Freedroid was unable to close the image archive file.\n\
-This indicates a strange bug in this installation of Freedroid, that is\n\
-very likely a problem with the file/directory permissions of the files\n\
-belonging to Freedroid.",
-				   PLEASE_INFORM, IS_FATAL );
-    }
-    else
-    {
-	DebugPrintf( 1 , "\n%s(): file closed successfully...\n" , __FUNCTION__ );
-    }
+    free (DataBuffer);
     
     DebugPrintf ( 1 , "\n%s: grabbing new image series DONE." , __FUNCTION__ );
+
+    return;
 
 }; // void grab_enemy_images_from_archive ( ... )
 
