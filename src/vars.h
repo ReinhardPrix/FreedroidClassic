@@ -476,13 +476,6 @@ item_bonus SuffixList[] = {
 
 };
 
-char *Shipnames[ALLSHIPS] = {
-  "Paradroid",
-  "Metahawk",
-  "Graftgold",
-  NULL
-};
-
 char *Alertcolor[ALLALERTCOLORS] = {
   "green",
   "yellow",

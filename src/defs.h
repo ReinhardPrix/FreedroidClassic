@@ -628,14 +628,7 @@ enum
 #define EL_BLOCK_HEIGHT		8
 #define EL_BLOCK_MEM 		EL_BLOCK_LEN * EL_BLOCK_HEIGHT
 
-#define ELEVATOR_LEN		38
-#define ELEVATOR_HEIGHT		12
-
 #define BULLETSPEEDINFLUENCE 	2
-
-#define DIRECTIONS 		8
-
-#define ALLSHIPS 		4
 
 #define DROID_PHASES            8
 #define DEAD_DROID_PHASES       1

@@ -927,6 +927,7 @@ typedef struct
     moderately_finepoint spell_center;
     float spell_radius;
     float spell_age;
+    int active_directions [ MAX_TUX_DIRECTIONS ] ;
 }
 spell_active, *Spell_Active;
 
