@@ -413,8 +413,8 @@ enum
       PutInfluence( FIRST_MIS_SELECT_ITEM_POS_X , FIRST_MIS_SELECT_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
 
       CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y -2*FontHeight(GetCurrentFont()), "Mission Selection Menu");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classical Paradroid");
-      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Skip Classical Paradroid Episode");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y ,    "Classic Paradroid");
+      CenteredPutString (ne_screen ,  FIRST_MIS_SELECT_ITEM_POS_Y +1*FontHeight(GetCurrentFont()), "Skip Classic Paradroid Episode");
 
       // SDL_UpdateRect(ne_screen, 0, 0, SCREENLEN*SCALE_FACTOR, SCREENHEIGHT*SCALEb_FACTOR);
       SDL_Flip( ne_screen );
@@ -481,6 +481,7 @@ enum
     SINGLE_PLAYER_POSITION=1, 
     MULTI_PLAYER_POSITION, 
     OPTIONS_POSITION, 
+    SET_THEME,
     LEVEL_EDITOR_POSITION, 
     CREDITS_POSITION,
     QUIT_POSITION
@@ -488,7 +489,9 @@ enum
 
   int Weiter = 0;
   int MenuPosition=1;
-
+  int h;
+  char theme_string[40];
+  int i;
 
   Me.status=MENU;
 
@@ -517,17 +520,27 @@ enum
       // PutInfluence( FIRST_MENU_ITEM_POS_X , 
       // FIRST_MENU_ITEM_POS_Y + (MenuPosition-1) * (FontHeight(Menu_BFont)) - Block_Width/4 );
       SetCurrentFont ( Menu_BFont );
+      h = FontHeight (GetCurrentFont());
       PutInfluence( FIRST_MENU_ITEM_POS_X , 
-		    FIRST_MENU_ITEM_POS_Y + ( MenuPosition - 1.5 ) * (FontHeight( Menu_BFont )) );
+		    FIRST_MENU_ITEM_POS_Y +
+		    ( MenuPosition - 1.5 ) * h );
+
+      strcpy (theme_string, "Theme: ");
+      if (strstr (GameConfig.Theme_SubPath, "default"))
+	strcat (theme_string, "default");
+      else if (strstr (GameConfig.Theme_SubPath, "lanzz"))
+	strcat (theme_string, "lanzz");
+      else
+	strcat (theme_string, "unknown");
 
       CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y ,    "Single Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*FontHeight(GetCurrentFont()),    "Multi Player");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*FontHeight(GetCurrentFont()),    "Options");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*FontHeight(GetCurrentFont()),    "Level Editor");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*FontHeight(GetCurrentFont()),    "Credits");
-      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*FontHeight(GetCurrentFont()),    "Quit Game");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +1*h,    "Multi Player");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +2*h,    "Options");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +3*h,  theme_string);
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +4*h,    "Level Editor");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +5*h,    "Credits");
+      CenteredPutString (ne_screen ,  FIRST_MENU_ITEM_POS_Y +6*h,    "Quit Game");
 
-      // SDL_UpdateRect(ne_screen, 0, 0, SCREENLEN*SCALE_FACTOR, SCREENHEIGHT*SCALE_FACTOR);
       SDL_Flip( ne_screen );
 
       // Wait until the user does SOMETHING
@@ -561,6 +574,32 @@ enum
 	      while (EnterPressed() || SpacePressed() );
 	      Options_Menu();
 	      // Weiter = TRUE;   /* jp forgot this... ;) */
+	      break;
+	    case SET_THEME:
+	      while (EnterPressed() || SpacePressed() );
+	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
+		{
+		  GameConfig.Theme_SubPath="lanzz_theme/";
+		}
+	      else
+		{
+		  GameConfig.Theme_SubPath="default_theme/";
+		}
+	      ReInitPictures();
+
+	      //--------------------
+	      // Now we have loaded a new theme with new images!!  It might however be the
+	      // case, that also the number of phases per bullet, which is specific to each
+	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
+	      // Because the old number of phases is still attached to living bullets, it
+	      // might try to blit a new (higher) number of phases although there are only
+	      // less Surfaces generated for the bullet in the old theme.  The solution seems
+	      // to be simply to request new graphics to be attached to each bullet, which
+	      // should be simply setting a flag for each of the bullets:
+	      for ( i = 0 ; i < MAXBULLETS ; i++ )
+		{
+		  AllBullets[i].Surfaces_were_generated = FALSE ;
+		}
 	      break;
 	    case LEVEL_EDITOR_POSITION:
 	      while (EnterPressed() || SpacePressed() );
@@ -616,7 +655,6 @@ enum
 void
 GraphicsSound_Options_Menu (void)
 {
-  int i;
   int Weiter = 0;
   int MenuPosition=1;
 
@@ -626,7 +664,6 @@ enum
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    SET_THEME, 
     LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
@@ -662,8 +699,6 @@ enum
 		       "Gamma Correction: %1.2f", GameConfig.Current_Gamma_Correction );
       PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
-      PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Theme: %s", GameConfig.Theme_SubPath );
       //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
       //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       //PrintStringFont (ne_screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
@@ -747,32 +782,7 @@ enum
 	      SDL_WM_ToggleFullScreen (ne_screen);
 	      fullscreen_on = !fullscreen_on;
 	      break;
-	    case SET_THEME:
-	      while (EnterPressed() || SpacePressed() );
-	      if ( !strcmp ( GameConfig.Theme_SubPath , "default_theme/" ) )
-		{
-		  GameConfig.Theme_SubPath="lanzz_theme/";
-		}
-	      else
-		{
-		  GameConfig.Theme_SubPath="default_theme/";
-		}
-	      ReInitPictures();
 
-	      //--------------------
-	      // Now we have loaded a new theme with new images!!  It might however be the
-	      // case, that also the number of phases per bullet, which is specific to each
-	      // theme, has been changed!!! THIS MUST NOT BE IGNORED, OR WE'LL SEGFAULT!!!!
-	      // Because the old number of phases is still attached to living bullets, it
-	      // might try to blit a new (higher) number of phases although there are only
-	      // less Surfaces generated for the bullet in the old theme.  The solution seems
-	      // to be simply to request new graphics to be attached to each bullet, which
-	      // should be simply setting a flag for each of the bullets:
-	      for ( i = 0 ; i < MAXBULLETS ; i++ )
-		{
-		  AllBullets[i].Surfaces_were_generated = FALSE ;
-		}
-	      break;
 	    case LEAVE_OPTIONS_MENU:
 	      while (EnterPressed() || SpacePressed() );
 	      Weiter=TRUE;

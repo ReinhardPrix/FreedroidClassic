@@ -213,12 +213,14 @@ ShowLifts (int level, int liftrow)
   ship_on_pic = IMG_Load (find_file (ship_on_filename, GRAPHICS_DIR, TRUE));
 
   // clear the whole screen
-  //  ClearGraphMem();
+  //ClearGraphMem();
   // fill the user fenster with some color
   SetUserfenster ( EL_BG_COLOR );
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
 
   /* First blit ship "lights off" */
+  Copy_Rect (User_Rect, dst);
+  SDL_SetClipRect (ne_screen, &dst);
   Copy_Rect (User_Rect, dst);
   SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
   
@@ -337,6 +339,7 @@ EnterKonsole (void)
       if ((ConsoleMenuPos == 3) & (SpacePressed ()))
 	{
 	  while (SpacePressed ());
+	  ClearGraphMem();
 	  ShowLifts (CurLevel->levelnum, -1);
 	  while (!SpacePressed ());
 	  while (SpacePressed ());
