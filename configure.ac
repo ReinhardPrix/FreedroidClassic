@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([src/main.c])
 
-AM_INIT_AUTOMAKE(freedroid, 0.7.1)
+AM_INIT_AUTOMAKE(freedroid, 0.7.2)
 
 AM_CONFIG_HEADER(config.h)
 
@@ -10,20 +10,29 @@ AC_PROG_AWK
 AC_PROG_CC
 
 # Checks for libraries.
-AC_MSG_NOTICE([[Checking for standard maths library]])
-AC_MSG_NOTICE([[-----------------------------------]])
-AC_CHECK_LIB([m], [sin])
+AC_CHECK_LIB([m], [sin],, 
+AC_MSG_ERROR([libm not found!! 
+No maths library?? What kinda crazy system is that??]))
 
-# I think we don't need yiff any more...
-#AC_MSG_NOTICE([[Checking for Yiff sound server]])
-#AC_MSG_NOTICE([[-----------------------------------]])
-#AC_CHECK_LIB([Y2], [YOpenConnection])
+AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
+AC_CHECK_LIB([SDL], [SDL_Init],, 
+	AC_MSG_ERROR([libSDL not found!
+*******************************************************
+You need the SDL library to compile/run Freedroid!
+*******************************************************]))
 
-AC_MSG_NOTICE([[Checking for SDL libraries]])
-AC_MSG_NOTICE([[-----------------------------------]])
-AC_CHECK_LIB([SDL], [SDL_Init])
-AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio])
-AC_CHECK_LIB([SDL_image], [IMG_Load])
+AC_CHECK_LIB([SDL_image], [IMG_Load],,
+	AC_MSG_ERROR([libSDL_image not found!
+*******************************************************
+You need the SDL_image library to compile/run Freedroid!
+*******************************************************]))
+
+AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
+AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio],,
+	AC_MSG_WARN([libSDL_mixer not found!
+*******************************************************
+you need the SDL_mixer library if you want sound!
+*******************************************************]))
 
 # Checks for header files.
 AC_HEADER_STDC
