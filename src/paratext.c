@@ -12,6 +12,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.8  1997/06/09 19:44:13  jprix
+ * Improved the Title.
+ *
  * Revision 1.7  1997/06/09 18:01:51  jprix
  * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
  * LBM files have been removed from repository. (I hope all of them.)
@@ -28,6 +31,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 #include <vga.h>
 #include <vgagl.h>
 #include <vgakeyboard.h>
@@ -176,9 +180,10 @@ void SetTextColor(unsigned bg, unsigned fg)
   register unsigned char *source;
   
   /* Sicherheitsabrage bez. Schriftzerst"orung durch Kontrastausl"oschung */
-  if ((bg == LastFg) || (bg == fg)) {
-    printf(" WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
+  if ( (bg == LastFg) || (bg == fg) ) {
+    printf("\nvoid SetTextColor(...): WARNING ! Die Schrift wird durch diesen Aufruf vernichtet !\n");
     getchar();
+    Terminate(ERR);
   }
   CurrentFontFG=fg;
   CurrentFontBG=bg;
@@ -213,11 +218,11 @@ void GetTextColor(unsigned int* bg,unsigned int* fg){
 
 /*@Function============================================================
 @Desc: SetTextBorder(): setzt die Bezugs-daten fuer die folgenden
-							Text-ausgaben
-					RightTextBorder:
-					LeftTextBorder:
-					UpperTextBorder:
-					LowerTextBorder:
+Text-ausgaben
+RightTextBorder:
+LeftTextBorder:
+UpperTextBorder:
+LowerTextBorder:
 
 @Ret: 
 @Int:
@@ -288,6 +293,9 @@ int ScrollText(char *Text, int startx, int starty, int EndLine) {
   int speed = +2;
   int maxspeed = 4;
 
+
+  ClearGraphMem(InternalScreen);
+
   /* Zeilen zaehlen */
   textpt = Text;
   while(*textpt++)
@@ -303,20 +311,15 @@ int ScrollText(char *Text, int startx, int starty, int EndLine) {
     if( UpPressed() ) {
       speed--;
       if( speed < -maxspeed ) speed = -maxspeed;
-      // PORT UpPressed = FALSE;
     }
     if( DownPressed() ) {
       speed ++;
       if( speed > maxspeed ) speed = maxspeed;
-      // PORT DownPressed = FALSE;
     }
 		
-    KillTastaturPuffer();
-		
-    // PORT if( !TimerFlag ) continue;		/* Synchronisierung */
-    // PORT TimerFlag = FALSE;
+    usleep(30000);
 
-    ClearTextBorder(InternalScreen,CurrentFontBG );
+    ClearTextBorder( InternalScreen , CurrentFontBG );
     DisplayText(Text, startx, InsertLine, InternalScreen, FALSE);
     InsertLine -= speed;
     

@@ -10,6 +10,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.17  1997/06/09 19:44:13  jprix
+ * Improved the Title.
+ *
  * Revision 1.16  1997/06/09 18:01:51  jprix
  * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
  * LBM files have been removed from repository. (I hope all of them.)
@@ -89,7 +92,7 @@
 #define PALBILD_PCX                "./graphics/palbild.pcx"
 #define BLOCKBILD1_PCX             "./graphics/block.pcx"
 #define BLOCKBILD2_PCX             ""
-#define TITELBILD1_PCX             "./graphics/title.pcx"
+#define TITELBILD1_PCX             "./graphics/title4.pcx"
 #define RAHMENBILD1_PCX            "./graphics/rahmen.pcx"
 #define PARAPLUSRAHMENBILD_PCX     "./graphics/plusrah1.pcx"
 #define BLASTBILD_PCX              "./graphics/blast.pcx"
@@ -110,6 +113,8 @@
 #define DATA70ZEICHENSATZ          "./graphics/para8x8.fnt"
 #define SHIPNAME                   "./map/ship1" 
 #define COLORFILE                  "./map/levels.col"
+
+#define PARADROID_ORIGINAL_TITLE_MUSIC "/sound/Paradroid_8000.wav" // do not add a leading . in this filename!!!
 
 /* Konstanten die unmittelbar die Hardware betreffen */
 #define SCREENADDRESS		0xa000	/* screen - data */

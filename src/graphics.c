@@ -627,57 +627,36 @@ void FadeLevel(void)
 void FadeColors1(void)
 {
 /*
-	Diese Prozedur blendet das momentan angezeigte Bild aus. Dabei werden die
-   Farbregister des DAC-Converters an einen absteigenden Hoechstwert angepasst.
-
-   Parameter: keine
-   Returnwert: keiner
+  Diese Prozedur blendet das momentan angezeigte Bild aus. Dabei werden die
+  Farbregister des DAC-Converters an einen absteigenden Hoechstwert angepasst.
+  
+  Parameter: keine
+  Returnwert: keiner
 */
 
 /* lokale Variablen der Funktion */
-  // char* CMAPBuffer;
-  // int CMAPOffset=0;
-  // int CMAPSegment=0;
-  // int i;
-  // int ii;
+   int* CMAPBuffer;
+   int i;
+   int ii;
 
 /* Speicherplatz fuer die Farbregister reservieren  */
-//	CMAPBuffer=MyMalloc(257*3);		// wird wieder freigegeben 
-//	CMAPOffset=FP_OFF(CMAPBuffer);
-//	CMAPSegment=FP_SEG(CMAPBuffer);
+   CMAPBuffer=MyMalloc(2*257*3);		// wird wieder freigegeben 
 
-/* Farbregisterwerte aus den DAC-Registern auslesen */
-//	asm{
-//		mov ax,1017h
-//		mov bx,0
-//		mov dx,CMAPOffset
-//		mov cx,CMAPSegment
-//		mov es,cx
-//		mov cx,256
-//		int 10h
-//	}
+/* Farbregisterwerte auslesen */
+   vga_getpalvec( 0 , 256 , CMAPBuffer );
 
 /* Farbregisterwerte an einen absteigenden Hoechstwert anpassen */
-//	for(i=64;i>0;i--)
-//	{
-//		for(ii=0;ii<(256*3);ii++)
-//		{
-//			if (CMAPBuffer[ii]>i) CMAPBuffer[ii]--;
-//		}
+   for(i=64;i>0;i--) {
+     for(ii=0;ii<(256*3);ii++) {
+       if (CMAPBuffer[ii]>i) CMAPBuffer[ii]--;
+     }
+     /* Farbregisterwerte in die DAC-Register eintragen */
+     vga_setpalvec( 0 , 256 , CMAPBuffer );
+   } // for(i=64,...)
 
-/* Farbregisterwerte in die DAC-Register eintragen */
-//		asm{
-//			mov ax,1012h
-//			mov bx,0
-//			mov cx,256
-//			mov dx,CMAPSegment
-//			mov es,dx
-//			mov dx,CMAPOffset
-//			int 10h
-//		}
-//	}
-//	free(CMAPBuffer);
-}
+
+   free(CMAPBuffer);
+} // void FadeColors1(void)
 
 
 /* *********************************************************************** */
@@ -915,8 +894,9 @@ void LevelGrauFaerben(void){ SetLevelColor(PD_DARK); }
 * $Function----------------------------------------------------------*/
 void ClearGraphMem(unsigned char* screen){
   printf("\nvoid ClearGraphMem(unsigned char* screen): Real function called.");
-
-  memset(screen,SCREENBREITE*SCREENHOEHE,0);
+  
+  if (screen == RealScreen) vga_clear();
+  else memset( screen , SCREENBREITE*SCREENHOEHE , 0 );
 
   printf("\nvoid ClearGraphMem(unsigned char* screen): Usual end of function reached.");
 } // void ClearGraphMem(unsigned char* screen)

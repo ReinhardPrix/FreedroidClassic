@@ -11,6 +11,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.19  1997/06/09 19:44:13  jprix
+ * Improved the Title.
+ *
  * Revision 1.18  1997/06/08 16:33:10  jprix
  * Eliminated all warnings, that resulted from the new -Wall gcc flag.
  *
@@ -64,7 +67,6 @@ unsigned char* MessageBar;
 message* Queue=NULL;
 
 // int ThisMessageTime=0;		/* Counter fuer Message-Timing */
-
 
 // This Function is for the PORT!!!!
 // Replacing all MyRandom-calls with MyMyRandom-calls

@@ -9,6 +9,9 @@
  * $Author$
  *
  * $Log$
+ * Revision 1.6  1997/06/09 19:44:13  jprix
+ * Improved the Title.
+ *
  * Revision 1.5  1997/06/09 18:01:51  jprix
  * PCX Loading function is now ready. LBM load commands have been replaced by pcx load commands.
  * LBM files have been removed from repository. (I hope all of them.)
@@ -333,7 +336,7 @@ void InitParaplus(void) {
   /* ScreenPointer setzen */
   // PORT RealScreen = MK_FP(SCREENADDRESS, 0);
   RealScreen = malloc(64010);
-  InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE);
+  InternalScreen = (unsigned char*)MyMalloc(SCREENHOEHE*SCREENBREITE)+10;
 
   printf("\nvoid InitParaplus(void): Realscreen und Internalscreen haben erfolgreich Speicher erhalten....");
 
@@ -427,18 +430,13 @@ void Title(void)
 	
   FadeColors1();					/* Titelbild langsam ausblenden */
 
-  // CRAP WE CAN NO LONGER USE FROM BEFORE THE PORT!!!!
-  // for(i=0;i<9;i++) {
-  //    TimerFlag=FALSE;
-  //    while (!TimerFlag);
-  //  }
-
-  ClearGraphMem(RealScreen);
   InitPalette();			/* This function writes into InternalScreen ! */
-  ClearGraphMem(InternalScreen);
-  DisplayRahmen(InternalScreen);
-  SetTypematicRate(TYPEMATIC_FAST);
-  
+
+  // ClearGraphMem(RealScreen);
+  // DisplayRahmen(RealScreen);
+    
+  Load_PCX_Image( RAHMENBILD1_PCX , RealScreen , FALSE );	/* Titelbild laden */
+
   SetTextBorder(USERFENSTERPOSX, USERFENSTERPOSY,
 		USERFENSTERPOSX+USERFENSTERBREITE,
 		USERFENSTERPOSY+USERFENSTERHOEHE,
@@ -448,6 +446,7 @@ void Title(void)
 	
   // *		Auskommentiert zu Testzwecken
   // *
+
   ScrollText(TitleText1, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText(TitleText2, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
   ScrollText(TitleText3, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine);
@@ -459,3 +458,6 @@ void Title(void)
 }
 
 #undef _parainit_c
+
+
+
