@@ -34,7 +34,7 @@
 #define TO_BG_COLOR			63
 
 /* File containing the Takeover-blocks */
-#define TO_BLOCK_FILE		"ne_to_elem.png"
+#define TO_BLOCK_FILE		"to_elem.png"
 
 /* --------------- individual block dimensions --------------- */
 #define NUM_PHASES		5       /* number of color-phases for current "flow" */
