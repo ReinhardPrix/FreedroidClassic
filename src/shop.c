@@ -176,117 +176,123 @@ write some suitable code here...",
 void
 AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode )
 {
-  item* ListPointer = ListToBeFilled;
-  int i;
+    item* ListPointer = ListToBeFilled;
+    int i;
+    
+    //--------------------
+    // At first we clean out the given list.
+    //
+    ListPointer = ListToBeFilled;
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    {
+	ListPointer->type = (-1) ;
+	ListPointer->prefix_code = (-1) ;
+	ListPointer->suffix_code = (-1) ;
+	ListPointer++;
+    }
+    
+    //--------------------
+    // Depending on the character code given, we'll now refill the list
+    // of items to be made available
+    //
+    ListPointer = ListToBeFilled;
+    if ( ShopCharacterCode == PERSON_STONE )
+    {
+	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_SHORT_BOW; ListPointer++;
+	ListPointer->type = ITEM_HUNTERS_BOW; ListPointer++;
+	ListPointer->type = ITEM_EXTERMINATOR_AMMUNITION; ListPointer++;
+	ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
+	ListPointer->type = ITEM_EXTERMINATOR; ListPointer++;
+	ListPointer->type = ITEM_BUCKLER; ListPointer++;
+	ListPointer->type = ITEM_SMALL_SHIELD; ListPointer++;
+	ListPointer->type = ITEM_CLOAK; ListPointer++;
+	ListPointer->type = ITEM_ROBE; ListPointer++;
+	ListPointer->type = ITEM_DAGGER; ListPointer++;
+	ListPointer->type = ITEM_CLUB; ListPointer++;
+	ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;
+	ListPointer->type = ITEM_SCIMITAR; ListPointer++;
+	ListPointer->type = ITEM_STAFF; ListPointer++;
+	ListPointer->type = ITEM_MACE; ListPointer++;
+	ListPointer->type = ITEM_CAP; ListPointer++;
+	ListPointer->type = ITEM_SMALL_HELM; ListPointer++;
+    }
+    else if ( ShopCharacterCode == PERSON_DOC_MOORE )
+    {
+	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+    }
+    else if ( ShopCharacterCode == PERSON_SKIPPY )
+    {
+	ListPointer->type = ITEM_MAP_MAKER_SIMPLE; ListPointer++;
+    }
+    else if ( ShopCharacterCode == PERSON_DUNCAN )
+    {
+	ListPointer->type = ITEM_VMX_GAS_GRENADE; ListPointer++;
+	ListPointer->type = ITEM_EMP_SHOCK_GRENADE; ListPointer++;
+	ListPointer->type = ITEM_PLASMA_GRENADE; ListPointer++;
+    }
+    else if ( ShopCharacterCode == PERSON_EWALD )
+    {
+	ListPointer->type = ITEM_BLUE_ENERGY_DRINK; ListPointer++;
+	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
+	ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
 
-  //--------------------
-  // At first we clean out the given list.
-  //
-  ListPointer = ListToBeFilled;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
-    {
-      ListPointer->type = (-1) ;
-      ListPointer->prefix_code = (-1) ;
-      ListPointer->suffix_code = (-1) ;
-      ListPointer++;
-    }
+	ListPointer->type = ITEM_EATING_FORK; ListPointer++;
+	ListPointer->type = ITEM_EATING_PLATE; ListPointer++;
+	ListPointer->type = ITEM_DRINKING_MUG; ListPointer++;
 
-  //--------------------
-  // Depending on the character code given, we'll now refill the list
-  // of items to be made available
-  //
-  ListPointer = ListToBeFilled;
-  if ( ShopCharacterCode == PERSON_STONE )
-    {
-      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_SHORT_BOW; ListPointer++;
-      ListPointer->type = ITEM_HUNTERS_BOW; ListPointer++;
-      ListPointer->type = ITEM_EXTERMINATOR_AMMUNITION; ListPointer++;
-      ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
-      ListPointer->type = ITEM_EXTERMINATOR; ListPointer++;
-      ListPointer->type = ITEM_BUCKLER; ListPointer++;
-      ListPointer->type = ITEM_SMALL_SHIELD; ListPointer++;
-      ListPointer->type = ITEM_CLOAK; ListPointer++;
-      ListPointer->type = ITEM_ROBE; ListPointer++;
-      ListPointer->type = ITEM_DAGGER; ListPointer++;
-      ListPointer->type = ITEM_CLUB; ListPointer++;
-      ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;
-      ListPointer->type = ITEM_SCIMITAR; ListPointer++;
-      ListPointer->type = ITEM_STAFF; ListPointer++;
-      ListPointer->type = ITEM_MACE; ListPointer++;
-      ListPointer->type = ITEM_CAP; ListPointer++;
-      ListPointer->type = ITEM_SMALL_HELM; ListPointer++;
+	
     }
-  else if ( ShopCharacterCode == PERSON_DOC_MOORE )
+    else if ( ShopCharacterCode == PERSON_SORENSON )
     {
-      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
-      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++;
+	
+	ListPointer->type = ITEM_SPELLBOOK_OF_PLASMA_BOLT; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_ICE_BOLT; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_POISON_BOLT; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_PETRIFICATION; ListPointer++;
+	
+	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_DETECT_ITEMS; ListPointer++;
     }
-  else if ( ShopCharacterCode == PERSON_SKIPPY )
+    else
     {
-      ListPointer->type = ITEM_MAP_MAKER_SIMPLE; ListPointer++;
-    }
-  else if ( ShopCharacterCode == PERSON_DUNCAN )
-    {
-      ListPointer->type = ITEM_VMX_GAS_GRENADE; ListPointer++;
-      ListPointer->type = ITEM_EMP_SHOCK_GRENADE; ListPointer++;
-      ListPointer->type = ITEM_PLASMA_GRENADE; ListPointer++;
-    }
-  else if ( ShopCharacterCode == PERSON_EWALD )
-    {
-      ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
-      ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
-      ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
-      ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
-      ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
-      
-    }
-  else if ( ShopCharacterCode == PERSON_SORENSON )
-    {
-      ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++;
-
-      ListPointer->type = ITEM_SPELLBOOK_OF_PLASMA_BOLT; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_ICE_BOLT; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_POISON_BOLT; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_PETRIFICATION; ListPointer++;
-
-      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE; ListPointer++;
-      ListPointer->type = ITEM_SPELLBOOK_OF_DETECT_ITEMS; ListPointer++;
-    }
-  else
-    {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
 The function has received an unexpected character code.  This is not handled\n\
 currently and therefore initiates immediate termination now...",
-				 PLEASE_INFORM, IS_FATAL );
+				   PLEASE_INFORM, IS_FATAL );
     }
-
-  //--------------------
-  // Now it's time to fill in the correct item properties and set
-  // the right flags, so that we get a 'normal' item.
-  //
-  ListPointer = ListToBeFilled;
-  for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
+    
+    //--------------------
+    // Now it's time to fill in the correct item properties and set
+    // the right flags, so that we get a 'normal' item.
+    //
+    ListPointer = ListToBeFilled;
+    for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
     {
-      if ( ListPointer->type == (-1) ) break;
-      FillInItemProperties( ListPointer , TRUE , 0 );
-      ListPointer -> is_identified = TRUE;
-      ListPointer++;
+	if ( ListPointer->type == (-1) ) break;
+	FillInItemProperties( ListPointer , TRUE , 0 );
+	ListPointer -> is_identified = TRUE;
+	ListPointer++;
     }
-
+    
 }; // void AssembleItemListForTradeCharacter ( .. )
-  
+
 /* ----------------------------------------------------------------------
  * At some points in the game, like when at the shop interface or at the
  * items browser at the console, we wish to show a list of the items 

@@ -201,6 +201,11 @@ exist really (i.e. has a type = (-1) ).",
 		sprintf( linebuf , "Recover Force\n" );
 		strcat( ItemDescText , linebuf );
 		break;
+
+	    case ITEM_BLUE_ENERGY_DRINK:
+		sprintf( linebuf , "Recover Health, Force\nand Running Power" );
+		strcat( ItemDescText , linebuf );
+		break;
 		
 	    case ITEM_RUNNING_POWER_POTION:
 		sprintf( linebuf , "Recover Running Power\n" );

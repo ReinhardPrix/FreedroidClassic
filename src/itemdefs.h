@@ -117,10 +117,10 @@
 
 // This is a special item for a mission....
 #define ITEM_ENERGETIC_HEART 4
-#define ITEM_ULTIMATE_COFFEE_MACHINE 57
 #define ITEM_ULTIMATE_BOOK_OF_FREE_CODE 57
+#define ITEM_ULTIMATE_COFFEE_MACHINE 57
+#define ITEM_BLUE_ENERGY_DRINK 58
 #define ITEM_DIXONS_TOOLBOX 59
-#define ITEM_RED_DILITIUM_CRYSTAL 74
 
 #define ITEM_DROID_PART_1 61
 #define ITEM_DROID_PART_2 62
@@ -132,13 +132,16 @@
 #define ITEM_LASER_AMMUNITION 67
 #define ITEM_EXTERMINATOR_AMMUNITION 68
 
+#define ITEM_RED_DILITIUM_CRYSTAL 74
 #define ITEM_MAP_MAKER_SIMPLE 75
 
 #define ITEM_STRENGTH_PILL 76
 #define ITEM_DEXTERITY_PILL 77
 #define ITEM_MAGIC_PILL 78
 
-#define ITEM_MAP_MAKER_SIMPLE 75
+#define ITEM_EATING_FORK 80
+#define ITEM_EATING_PLATE 81
+#define ITEM_DRINKING_MUG 82
 
 //--------------------
 // And now we put here all the rectangle definitions and that...

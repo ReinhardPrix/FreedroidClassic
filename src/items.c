@@ -1435,6 +1435,13 @@ ApplyItem( item* CurItem )
     // and therefore all we need to do from here on is execute the item effect
     // upon the influencer or his environment.
     //
+    if ( CurItem->type == ITEM_BLUE_ENERGY_DRINK )
+    {
+	Me [ 0 ] . health += 15;
+	Me [ 0 ] . energy += 15;
+	Me [ 0 ] . mana += 15;
+	Me [ 0 ] . running_power += 15;
+    }
     if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
     {
 	Me [ 0 ] . health += 25;
