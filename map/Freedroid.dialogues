@@ -224,7 +224,8 @@ ChangeOption=1 ChangeToValue=1
 
 New Option Nr=1  OptionText=" Is everything alright with the teleporter system?" 
 OptionSample="Tux_DIX_Is_Everything_Alright_0.wav"
-OnCondition="MissionComplete:4" JumpToOption=10 ElseGoto=11
+
+OnCondition="MissionComplete:4" JumpToOption=11 ElseGoto=10
 
 ----------------------------------------------------------------------
 

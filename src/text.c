@@ -82,6 +82,10 @@ typedef struct
 
   char* extra_list[ MAX_EXTRAS_PER_OPTION ];
 
+  char* on_goto_condition;
+  int on_goto_first_target;
+  int on_goto_second_target;
+
   int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
   int change_option_to_value [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];
 }
@@ -89,6 +93,10 @@ dialogue_option, *Dialogue_option;
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 
+/* ----------------------------------------------------------------------
+ * This function should init the chat roster with empty values and thereby
+ * clean out the remnants of the previous chat dialogue.
+ * ---------------------------------------------------------------------- */
 void
 InitChatRosterForNewDialogue( void )
 {
@@ -111,6 +119,10 @@ InitChatRosterForNewDialogue( void )
 	  ChatRoster [ i ] . extra_list [ j ] = "";
 	}
 
+      ChatRoster [ i ] . on_goto_condition = "";
+      ChatRoster [ i ] . on_goto_first_target = (-1);
+      ChatRoster [ i ] . on_goto_second_target = (-1);
+
       for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
 	{
 	  ChatRoster [ i ] . change_option_nr [ j ] = (-1); 
@@ -120,6 +132,14 @@ InitChatRosterForNewDialogue( void )
   
 }; // void InitChatRosterForNewDialogue( void )
 
+/* ----------------------------------------------------------------------
+ * This function should load new chat dialogue information from the 
+ * chat info file 'Freedroid.ruleset' into the chat roster.
+ *
+ * The chat information will be taken from the section with the given
+ * Sequence code in the Freedroid.ruleset file.
+ *
+ * ---------------------------------------------------------------------- */
 void
 LoadChatRosterWithChatSequence ( char* SequenceCode )
 {
@@ -214,6 +234,7 @@ LoadChatRosterWithChatSequence ( char* SequenceCode )
       ChatRoster[ OptionIndex ] . option_sample_file_name = 
 	ReadAndMallocStringFromData ( SectionPointer , "OptionSample=\"" , "\"" ) ;
       DebugPrintf( 0 , "\nOptionSample found : \"%s\"." , ChatRoster[ OptionIndex ] . option_sample_file_name );
+
 
       //--------------------
       // Now we can start to add all given Sample and Subtitle combinations
@@ -371,6 +392,29 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	  ExtraPointer ++;
 	}
 
+
+      //--------------------
+      // Next thing we do will be to look whether there is maybe a on-goto-command
+      // included in this option section.  If so, we'll read it out.
+      //
+      if ( CountStringOccurences ( SectionPointer , "OnCondition" ) ) 
+	{
+	  DebugPrintf( 0 , "\nWe've found an ON-GOTO-CONDITION IN THIS OPTION!" );
+	  ChatRoster[ OptionIndex ] . on_goto_condition = 
+	    ReadAndMallocStringFromData ( SectionPointer , "OnCondition=\"" , "\"" ) ;
+	  DebugPrintf( 0 , "\nOnCondition text found : \"%s\"." , ChatRoster[ OptionIndex ] . on_goto_condition );
+	  ReadValueFromString( SectionPointer , "JumpToOption=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . on_goto_first_target ) , TempEndPointer );
+	  ReadValueFromString( SectionPointer , "ElseGoto=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . on_goto_second_target ) , TempEndPointer );
+	  DebugPrintf( 0 , "\nOnCondition jump targets: TRUE--> %d FALSE-->%d." , 
+		       ChatRoster[ OptionIndex ] . on_goto_first_target ,
+		       ChatRoster[ OptionIndex ] . on_goto_second_target  );
+	}
+      else
+	{
+	  DebugPrintf( 0 , "\nThere seems to be NO ON-GOTO-CONDITION AT ALL IN THIS OPTION." );
+	}
 
       //--------------------
       // Now that the whole section has been read out into the ChatRoster, we can
@@ -548,9 +592,21 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
   PlayOnceNeededSoundSample( SampleFilename , TRUE );
 }; // void GiveSubtitleNSample( char* SubtitleText , char* SampleFilename )
 
+/* ----------------------------------------------------------------------
+ * Chat options may contain some extra commands, that specify things that
+ * the engine is supposed to do, like open a shop interface, drop some
+ * extra item to the inventory, remove an item from inventory, assign a
+ * mission, mark a mission as solved and such things.
+ *
+ * This function is supposed to decode such extra commands and then to
+ * execute the desired effect as well.
+ *
+ * ---------------------------------------------------------------------- */
 void
 ExecuteChatExtra ( char* ExtraCommandString )
 {
+  int TempValue;
+
   if ( ! strcmp ( ExtraCommandString , "Buy_Basic_Items" ) )
     {
       Buy_Basic_Items( FALSE , FALSE );
@@ -570,6 +626,20 @@ ExecuteChatExtra ( char* ExtraCommandString )
   else if ( ! strcmp ( ExtraCommandString , "Buy_Magical_Items" ) )
     {
       Buy_Basic_Items( FALSE , TRUE );      
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "ExecuteActionWithLabel:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked execution of action with label: %s. Doing it... " ,
+		   ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) );
+      ExecuteActionWithLabel ( ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) , 0 ) ;
+    }
+  else if ( CountStringOccurences ( ExtraCommandString , "AssignMission:" ) )
+    {
+      DebugPrintf( 0 , "\nExtra invoked assigning of mission. --> have to decode... " );
+      ReadValueFromString( ExtraCommandString , "AssignMission:" , "%d" , 
+			   &TempValue , ExtraCommandString + strlen ( "ExecuteActionWithLabel:" ) + 2 );
+      DebugPrintf( 0 , "\n...decoding...Mission to assign is: %d." , TempValue );
+      AssignMission ( TempValue );
     }
   else 
     {
@@ -684,6 +754,56 @@ Freedroid will terminate now to draw attention to the problem...\n\
 
 }; // void PrepareMultipleChoiceDialog ( int Enum )
 
+/* ----------------------------------------------------------------------
+ * It is possible to specify a conditional goto command from the chat
+ * information file 'Freedroid.dialogues'.  But in order to execute this
+ * conditional jump, we need to know whether a statment given as pure text
+ * string is true or not.  This function is intended to find out whether
+ * it is true or not.
+ * ---------------------------------------------------------------------- */
+int
+TextConditionIsTrue ( char* ConditionString )
+{
+  int TempValue;
+
+  if ( CountStringOccurences ( ConditionString , "MissionComplete" ) )
+    {
+      DebugPrintf ( 0 , "\nCondition String identified as question for mission complete." );
+      ReadValueFromString( ConditionString , ":", "%d" , 
+			   &TempValue , ConditionString + strlen ( ConditionString ) );
+      DebugPrintf ( 0 , "\nCondition String referred to mission number: %d." , TempValue );
+
+      if ( Me [ 0 ] . AllMissions [ TempValue ] . MissionIsComplete )
+	return ( TRUE );
+      else
+	return ( FALSE );
+    }
+
+  fprintf (stderr, "\n\
+----------------------------------------------------------------------\n\
+Freedroid has encountered a problem:\n\
+There were was a Condition string (most likely used for an on-goto-command\n\
+in the Freedroid.dialogues file, that contained a seemingly bogus condition.\n\
+\n\
+Freedroid was unable to determine the type of the condition.\n\
+The errorneous string was: %s.\n\
+\n\
+Please inform the Freedroid dev team about the problem, best by sending\n\
+e-mail to freedroid-discussion@lists.sourceforge.net\n\
+\n\
+Thanks a lot for reporting the issue.\n\
+Freedroid will terminate now to draw attention to the problem...\n\
+----------------------------------------------------------------------\n" ,
+	   ConditionString );
+  Terminate ( ERR );
+
+  return ( TRUE );
+}; // int TextConditionIsTrue ( char* ConditionString )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
 void
 DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
 {
@@ -731,6 +851,32 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , int Enum )
       //
       PlayOnceNeededSoundSample( ChatRoster [ MenuSelection ] . option_sample_file_name , TRUE );
       
+      //--------------------
+      // Maybe there was an ON-GOTO-CONDITION specified for this option.
+      // Then of course we have to jump to the new location!!!
+      //
+      if ( strlen ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+	{
+	  DebugPrintf( 0 , "\nON-GOTO-CONDITION ENCOUNTERED... CHECKING... " );
+	  if ( TextConditionIsTrue ( ChatRoster [ MenuSelection ] . on_goto_condition ) )
+	    {
+	      DebugPrintf( 0 , "...SEEMS TRUE... CONTINUING AT OPTION: %d. " , 
+			   ChatRoster [ MenuSelection ] . on_goto_first_target );
+	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_first_target ;
+	    }
+	  else
+	    {
+	      DebugPrintf( 0 , "...SEEMS FALSE... CONTINUING AT OPTION: %d. " , 
+			   ChatRoster [ MenuSelection ] . on_goto_second_target );
+	      MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
+	    }
+	}
+
+      //--------------------
+      // Now that any eventual jump has been done, we can proceed to execute
+      // the rest of the reply that has been set up for this (the now maybe modified)
+      // dialog option.
+      //
       for ( i = 0 ; i < MAX_REPLIES_PER_OPTION ; i ++ )
 	{
 	  //--------------------
@@ -1182,6 +1328,54 @@ ChatWithFriendlyDroid( int Enum )
       //--------------------
       // Now we do the dialog with DIX...
       //
+      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
+
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
+	}
+      else
+	{
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+
+	  if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
+	       ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
+	    {
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
+
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
+	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	    }
+	}
+
+      //--------------------
+      // We clean out the chat roster from any previous use
+      //
+      InitChatRosterForNewDialogue(  );
+
+      //--------------------
+      // Now we load the chat roster with the info from the chat info file
+      //
+      LoadChatRosterWithChatSequence ( "DIX" );
+
+      DoChatFromChatRosterData( 0 , PERSON_DIX , Enum );
+
+      //--------------------
+      // Since there won't be anyone else to talk to when already having
+      // talked to the STO, we can safely return here.
+      //
+      return; 
+
+
       PrepareMultipleChoiceDialog( Enum );
 
       DialogMenuTexts [ 0 ] = " Hi!  I'm new here. " ;
