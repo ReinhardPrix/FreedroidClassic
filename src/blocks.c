@@ -393,6 +393,8 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 5 ;i++;
   PrefixToFilename [ i ] = "614" ;
   ModelMultiplier  [ i ] = 5 ;i++;
+  PrefixToFilename [ i ] = "883" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "999" ;
   ModelMultiplier  [ i ] = 5 ;i++;
 

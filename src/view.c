@@ -1121,6 +1121,22 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   //
   if ( phase != DROID_PHASES )
     {
+      
+      //--------------------
+      // Maybe we don't have an enemy here that would really stick to the 
+      // exact size of a block but be somewhat bigger or smaller instead.
+      // In this case, we'll just adapt the given target rectangle a little
+      // bit, cause this rectangle assumes exactly the same size as a map 
+      // block and has the origin shifted accordingly.
+      //
+      if ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w != Block_Width )
+	{
+	  TargetRectangle.x += Block_Width / 2 - ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w ) / 2 ;
+	  TargetRectangle.y += Block_Height / 2 - ( EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h ) / 2 ;
+	  TargetRectangle.w = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> w;
+	  TargetRectangle.h = EnemyRotationSurfacePointer[ RotationModel ] [ RotationIndex ] -> h;
+	}
+      
       if ( AllEnemys[Enum].paralysation_duration_left != 0 ) 
 	{
 	  SDL_BlitSurface( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] , NULL , Screen, &TargetRectangle);
