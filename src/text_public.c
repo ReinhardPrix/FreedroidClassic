@@ -220,8 +220,18 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
       // really load the current position of each dialog box, some information
       // that will only be needed in the Dialog Editor anyway.
       //
-      ChatRoster [ OptionIndex ] . position_x = ( 2 + ( OptionIndex % 10 ) ) * 30 ;
-      ChatRoster [ OptionIndex ] . position_y = ( 2 + ( OptionIndex / 10 ) ) * 30 ;
+      if ( strstr ( SectionPointer , "PositionX=" ) != NULL )
+	{
+	  ReadValueFromString( SectionPointer , "PositionX=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . position_x ) , TempEndPointer );
+	  ReadValueFromString( SectionPointer , "PositionY=" , "%d" , 
+			       & ( ChatRoster[ OptionIndex ] . position_y ) , TempEndPointer );
+	}
+      else
+	{
+	  ChatRoster [ OptionIndex ] . position_x = ( 2 + ( OptionIndex % 10 ) ) * 30 ;
+	  ChatRoster [ OptionIndex ] . position_y = ( 2 + ( OptionIndex / 10 ) ) * 30 ;
+	}
 
       //--------------------
       // Now we can start to add all given Sample and Subtitle combinations
