@@ -1029,7 +1029,7 @@ Item name="Standard Shield"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="shield"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="standard_shield"
 Item can be bought in shop="yes"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=25
@@ -1646,11 +1646,11 @@ Item description text="Used by select fighter this helmet is very hard to penetr
 
 // Item No. 56
 ** Start of new item specification subsection **
-Item name="Medium Shield"
+Item name="Large Shield"
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="shield"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="large_shield"
 Item can be bought in shop="yes"
 Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=45
@@ -1663,7 +1663,7 @@ Picture number=44
 Rotation model number=0
 Sound number=7
 Base list price=450
-Item description text="A powerful shield in the medium size, not as compact as a small shield but also not as protective as a large one."
+Item description text="A powerful shield in large size."
 ** End of new item specification subsection **
 
 // Item No. 57
