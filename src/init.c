@@ -1562,6 +1562,8 @@ PrepareStartOfNewCharacter ( void )
 
   InitInfluencerPasswordsAndClearances( 0 );
 
+  clear_out_intermediate_points ( 0 ) ;
+
   for ( j = 0 ; j < MAX_COOKIES ; j ++ )
     {
       strcpy ( Me [ 0 ] . cookie_list [ j ] , "" ) ;
