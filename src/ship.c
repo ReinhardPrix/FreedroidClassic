@@ -47,6 +47,9 @@
 
 int NoKeyPressed (void);
 
+// EXTERN SDL_Surface *console_pic;
+SDL_Surface *console_pic = NULL ;
+
 
 /*-----------------------------------------------------------------
  * This function does all the work when we enter a lift
@@ -501,6 +504,20 @@ EnterKonsole (void)
   int finished = FALSE;
   int menu_pos = 0;
   int key;
+  char* fpath;
+
+  //--------------------
+  // Console picture need not be rendered fast or something.  This
+  // really has time, so we load it as a surface and do not take the
+  // elements apart (they dont have typical block format either)
+  //
+  if ( console_pic == NULL )
+    {
+      fpath = find_file ( NE_CONSOLE_PIC_FILE , GRAPHICS_DIR , FALSE );
+      console_pic = IMG_Load ( fpath ); 
+    }
+
+  //--------------------
   // Prevent distortion of framerate by the delay coming from 
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();

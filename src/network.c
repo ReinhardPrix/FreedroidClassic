@@ -350,7 +350,7 @@ Sorry...\n\
     }
   else
     {
-      DebugPrintf( 0 , "\n--------------------\nInitialisation of SDL_net subsystem successful...\n--------------------\n" );
+      DebugPrintf( 0 , "\nSDL Net initialisation.\n" );
     }
 
   //--------------------
@@ -380,7 +380,7 @@ Sorry...\n\
     }
   else
     {
-      DebugPrintf ( 0 , "\nSET OF CLIENT SOCKETS ESTABLISHED SUCCESSFULLY!!!\n" );
+      DebugPrintf ( 0 , "\nSet of client sockets established successfully.\n" );
     }
 
   //--------------------
@@ -398,7 +398,7 @@ Sorry...\n\
     }
   else
     {
-      DebugPrintf ( 0 , "\nSET OF THE ONE SERVER SOCKETS ESTABLISHED SUCCESSFULLY!!!\n" );
+      DebugPrintf ( 0 , "\nSet of the one server sockets established successfully.\n" );
     }
 
 

@@ -248,7 +248,6 @@ EXTERN color transp_rgb;             /* RGB of transparent color */
 EXTERN int vid_bpp; 			/* bits per pixel */
 EXTERN Uint32 transp_key;            /* key of transparent color */
 EXTERN SDL_Surface *static_blocks;          /* here we collect all non-resizable blocks */
-EXTERN SDL_Surface *console_pic;
 EXTERN SDL_Surface *ship_off_pic;    	/* Side-view of ship: lights off */
 EXTERN SDL_Surface *ship_on_pic;	/* Side-view of ship: lights on */
 EXTERN SDL_Surface *banner_pic;

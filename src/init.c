@@ -283,7 +283,20 @@ Get_Item_Data ( char* DataPointer )
   // in advance.  We count already, though it's not yet dynamic memory that is used.
   //
   Number_Of_Item_Types = CountStringOccurences ( DataPointer , NEW_ITEM_TYPE_BEGIN_STRING ) ;
-  DebugPrintf ( 0 , "\nWe have counted %d different item types in the game data file." , Number_Of_Item_Types );
+  if ( Number_Of_Item_Types < ALL_ITEMS )
+    {
+      DebugPrintf ( 1 , "\nWe have counted %d different item types in the game data file.\n" , Number_Of_Item_Types );
+    }
+  else
+    {
+      DebugPrintf ( 1 , "\n----------------------------------------------------------------------\n
+Freedroid has encountered a problem:  There seem to be more item definitions in freedroid.ruleset\n\
+than the maximum allowance for item types in the ALL_ITEMS constant.\n\
+Please correct the constant, recompile and restart freedroid or simply inform the developers about\n\
+the problem, as usual best by sending email to freedroid-discussion@lists.sourceforge.net.\n\
+We have counted %d different item types in the game data file.\n\
+----------------------------------------------------------------------\n" , Number_Of_Item_Types );
+    }
 
   //--------------------
   // Now we start to read the values for each bullet type:
@@ -1966,7 +1979,8 @@ InitFreedroid ( void )
   Reset_GameConfig_To_Default_Values ();
 
   //Load user config file if it exists...
-  LoadSettings ();
+  // LoadSettings ();
+  LoadGameConfig ();
 
   Copy_Rect (Full_User_Rect, User_Rect);
 

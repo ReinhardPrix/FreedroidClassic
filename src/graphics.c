@@ -883,7 +883,7 @@ ReInitPictures (void)
     }
 
   SDL_FreeSurface ( banner_pic );
-  SDL_FreeSurface ( console_pic );
+  // SDL_FreeSurface ( console_pic );
   SDL_FreeSurface ( static_blocks );
 
   return (InitPictures());
@@ -956,7 +956,7 @@ LoadThemeConfigurationFile(void)
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
 
-  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile(void):  using file name %s to load config.  Commencing...\n " 
+  DebugPrintf ( 0 , "\nvoid LoadThemeConfigurationFile: Data will be taken from file %s.  Commencing...\n " 
 		, fpath );
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
@@ -1165,7 +1165,7 @@ InitPictures (void)
 
   ShowStartupPercentage ( 20 ) ; 
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load droids." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load droids." );
 
   Load_Influencer_Surfaces();
 
@@ -1187,13 +1187,13 @@ InitPictures (void)
 
   ShowStartupPercentage ( 65 ) ; 
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load blast image file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
   Load_Blast_Surfaces();
 
   ShowStartupPercentage ( 70 ) ; 
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load items image file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load items image file." );
 
   Load_Item_Surfaces();
 
@@ -1203,16 +1203,16 @@ InitPictures (void)
 
   Load_Skill_Level_Button_Surfaces( );
 
-  DebugPrintf( 2 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load skill icon image file." );
 
   Load_SkillIcon_Surfaces();
 
   ShowStartupPercentage ( 80 ) ; 
 
-  DebugPrintf( 0 , "\nvoid InitPictures(void): preparing to load blast image file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load blast image file." );
 
-  DebugPrintf( 0 , "\nvoid InitPictures(void): preparing to load bullet file." );
-  DebugPrintf( 0 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): preparing to load bullet file." );
+  DebugPrintf( 1 , "\nvoid InitPictures(void): Number_Of_Bullet_Types : %d." , Number_Of_Bullet_Types );
 
   Load_Bullet_Surfaces();
 
@@ -1228,11 +1228,15 @@ InitPictures (void)
 
   ShowStartupPercentage ( 88 ) ; 
 
-  // console picture need not be rendered fast or something.  This
+  /*
+  //--------------------
+  // Console picture need not be rendered fast or something.  This
   // really has time, so we load it as a surface and do not take the
   // elements apart (they dont have typical block format either)
+  //
   fpath = find_file (NE_CONSOLE_PIC_FILE, GRAPHICS_DIR, FALSE);
   console_pic = IMG_Load (fpath); 
+  */
 
   ShowStartupPercentage ( 90 ) ; 
 

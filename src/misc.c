@@ -79,6 +79,9 @@ Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
 
+char *homedir = NULL;
+char ConfigDir[255]="\0";
+
 /* ----------------------------------------------------------------------
  * This function does something similar to memmem.  Indeed, it would be
  * best perhaps if it did exactly the same as memmem, but since we do not
@@ -921,99 +924,6 @@ Teleport (int LNum, int X, int Y, int PlayerNum )
 }; // void Teleport( ... ) 
 
 /* ----------------------------------------------------------------------
- * This function saves GameConfig struct in '.freedroid.config' the user's home
- * directory.
- * ---------------------------------------------------------------------- */
-void
-SaveSettings()
-{
-  FILE *SettingsFile;
-  char *SettingsHeaderString;
-  char *homedir;
-  char filename[1000];
-
-  if ( (homedir = getenv("HOME")) == NULL )
-    {
-      DebugPrintf ( 0 , "ERROR saving settings: Environment does not contain HOME variable... \n\
-I need to know that for saving. Abort.\n");
-      Terminate( ERR );
-      return;
-    }
-
-  //Create a filename
-  sprintf( filename , "%s/%s", homedir, ".freedroid.config" );
-
-  //Try to open file
-  if( ( SettingsFile = fopen(filename, "w")) == NULL) {
-    printf("\n\nError opening save game file for writing...\n\nTerminating...\n\n");
-    Terminate(ERR);
-    return;
-  }
-
-  SettingsHeaderString="\n\
-----------------------------------------------------------------------\n\
- *\n\
- *   Copyright (c) 1994, 2002 Johannes Prix\n\
- *   Copyright (c) 1994, 2002 Reinhard Prix\n\
- *\n\
- *\n\
- *  This file is part of Freedroid\n\
- *\n\
- *  Freedroid is free software; you can redistribute it and/or modify\n\
- *  it under the terms of the GNU General Public License as published by\n\
- *  the Free Software Foundation; either version 2 of the License, or\n\
- *  (at your option) any later version.\n\
- *\n\
- *  Freedroid is distributed in the hope that it will be useful,\n\
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
- *  GNU General Public License for more details.\n\
- *\n\
- *  You should have received a copy of the GNU General Public License\n\
- *  along with Freedroid; see the file COPYING. If not, write to the \n\
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
- *  MA  02111-1307  USA\n\
- *\n\
-----------------------------------------------------------------------\n\
-\n\
-This file contains user game settings. \n\
-If you have questions concerning Freedroid, please send mail to:\n\
-\n\
-freedroid-discussion@lists.sourceforge.net\n\
-\n";
-
-  fwrite (SettingsHeaderString, strlen( SettingsHeaderString), sizeof(char), SettingsFile);
-  fwrite ( SETTINGS_STRUCTURE_RAW_DATA_STRING , strlen( SETTINGS_STRUCTURE_RAW_DATA_STRING ),
-    sizeof(char), SettingsFile );
-
-  //--------------------
-  // We put the current version number of freedroid into the 
-  // version number string.  This will be usefull so that later
-  // versions of freedroid can identify old config files and decide
-  // not to use them in some cases.
-  //
-  strcpy ( GameConfig.freedroid_version_string , VERSION );
-  
-  //--------------------
-  // Now the we write the actual data
-  //
-  fwrite ( &(GameConfig) , sizeof( configuration_for_freedroid ) , sizeof( char ) , SettingsFile );
-
-  fwrite ( END_OF_SETTINGS_DATA_STRING , strlen( END_OF_SETTINGS_DATA_STRING ),
-	   sizeof(char), SettingsFile );
-
-  if( fclose( SettingsFile ) == EOF)
-    {
-      DebugPrintf( 0 , "\n\nClosing of settings file failed in SaveSettings...\n\nTerminating\n\n");
-      Terminate(ERR);
-      return;
-    }
-
-  DebugPrintf( 0 , "\nSuccessfully saved settings file (.freedroid.config) in home directory.\n");
-
-};
-
-/* ----------------------------------------------------------------------
  * I'd like to use the function strnlen in LoadSettings, but this would
  * be a gnu extension. so I have to write this function myselt in order
  * to keep the code completely portable.
@@ -1030,68 +940,66 @@ mystrnlen ( char* MyString , int MyMaxlen )
   return MyMaxlen;
 }; // int mystrnlen ( char* MyString , int MyMaxlen )
 
-/* ----------------------------------------------------------------------
- * This function loads GameConfig struct in .freedroid.config the user's home
- * directory.
- * ---------------------------------------------------------------------- */
-void
-LoadSettings()
+/*----------------------------------------------------------------------
+ * LoadGameConfig(): load saved options from config-file
+ *
+ * this should be the first of all load/save functions called
+ * as here we read the $HOME-dir and create the config-subdir if neccessary
+ *
+ *----------------------------------------------------------------------*/
+int
+LoadGameConfig (void)
 {
-  FILE *SettingsFile;
-  char *homedir;
-  char *SettingsData;
-  char filename[1000];
+  char fname[255];
+  FILE *config;
+  
+  struct stat statbuf;
 
-  unsigned char* SettingsRawDataPointer;
-
-  // get home-directory to load from
+  // first we need the user's homedir for loading/saving stuff
   if ( (homedir = getenv("HOME")) == NULL )
-  {
-      DebugPrintf ( 0, "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-ERROR loading settings: Environment does not contain HOME variable... \n\
-I need to know that for loading.\n\
-Loading of your settings will be cancelled now.\n\
-No need to panic!  Default settings will be used instead.\n\
-----------------------------------------------------------------------\n");
-      return;
-  }
+    DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...\n\
+Cannot Load or Save settings.\n");
 
+  sprintf (ConfigDir, "%s/.freedroid_rpg", homedir);
+  
+  if (stat(ConfigDir, &statbuf) == -1) 
+    {
+      DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+You seem not to have the directory %s in your home directory.\n\
+This directory is used by freedroid to store saved games and your personal settings.\n\
+So I'll try to create it now...\n\
+----------------------------------------------------------------------\n", ConfigDir);
+      if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+	{
+	  DebugPrintf ( 0 , "\n----------------------------------------------------------------------\n\
+WARNING: Failed to create config-dir: %s. Giving up...\n\
+You settings will not be loaded but the default values will be used instead...\n\
+----------------------------------------------------------------------\n", ConfigDir);
+	  return (ERR);
+	}
+      else
+	{
+	  // --------------------
+	  // Since we've just created the config dir, there CANT be any useful
+	  // config information in there yet.  So we can do nothing sensible but return here.
+	  //
+	  DebugPrintf ( 1 , "ok\n" );
+	  return (OK); 
+	}
+    }
+
+  sprintf (fname, "%s/config", ConfigDir);
+  if( (config = fopen (fname, "r")) == NULL)
+    {
+      DebugPrintf (0, "WARNING: failed to open config-file: %s\n");
+      return (ERR);
+    }
+  
   //--------------------
-  // First, we must determine the savedgame data file name
-  //
-  sprintf (filename, "%s/%s", homedir, ".freedroid.config");
-
-
-
-  if ((SettingsFile = fopen ( filename , "r")) == NULL)
-  {
-    DebugPrintf ( 0 , "\n\
-----------------------------------------------------------------------\n\
-Freedroid has encountered a problem:\n\
-Settings file cannot be opened, whatever the reason.\n\
-Loading of your settings will be cancelled now.\n\
-No need to panic!  Default settings will be used instead.\n\
-----------------------------------------------------------------------\n");
-    return;
-  }
-  fclose (SettingsFile);
-
-  //--------------------
-  // Now we can read the whole savegame data into memory with one big flush
-  //
-  SettingsData = ReadAndMallocAndTerminateFile( filename , END_OF_SETTINGS_DATA_STRING ) ;
-
-  //----------------------------------------------------------------------------
-  // We assume, that our target strings will be found, so we give 300000 as the search area
-  // length, since we do not know it exactly
-  //
-  SettingsRawDataPointer = MyMemmem( SettingsData , 300000 , SETTINGS_STRUCTURE_RAW_DATA_STRING ,
-				       strlen ( SETTINGS_STRUCTURE_RAW_DATA_STRING ) );
-
-  SettingsRawDataPointer += strlen ( SETTINGS_STRUCTURE_RAW_DATA_STRING ) ;
-  memcpy( &GameConfig, SettingsRawDataPointer , sizeof ( configuration_for_freedroid ) );
+  // Now read the actual data
+  // ok, this is neither very portable nor very flexible, we just want that working...
+  fread ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+  fclose (config);
 
   //--------------------
   // Now we do some extra security check:  Maybe the old settings file
@@ -1109,30 +1017,68 @@ No need to panic!  Default settings will be used instead.\n\
       DebugPrintf ( 0 , "\n\
 ----------------------------------------------------------------------\n\
 Freedroid has encountered a problem:\n\
-Settings file found in (a subdirectory of) your home directory does not\n\
+Settings file %s does not\n\
 seem to be from the same version a this installation of freedroid.\n\
 This is perfectly normal if you have just upgraded your version of\n\
 freedroid.  But the loading of your settings will be cancelled now,\n\
 cause the format of the settings file is no longer supported.  \n\
-N need to panic!  The default settings will be used instead and a new\n\
+No need to panic.  The default settings will be used instead and a new\n\
 settings file will be generated.\n\
 \n\
 However, if the problem continues, please inform the freedroid developers\n\
 about it, as always, best send e-mail to freedroid-discussion@lists.sourceforge.net.\n\
-----------------------------------------------------------------------\n");
+----------------------------------------------------------------------\n" , fname );
       Reset_GameConfig_To_Default_Values (  );
-      return;
+      return (ERR);
     };
 
-  // --------------------
-  // Structure's theme_subpath is a pointer - it might point somewhere strange!
-  // I will have to load and save this separately...but for now just set it to default
-  // GameConfig.Theme_SubPath = "lanzz_theme/";
-  strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
+  //--------------------
+  // We may print out that config was loaded successfully...
+  // This might stay in here.
+  //
+  DebugPrintf ( 0 , "\nSuccessfully loaded and enforced your personal configuration file %s.\n\n" , fname );
 
-  DebugPrintf ( 0 , "\nSuccessfully loaded settings file (.freedroid.config) in home directory\n");
+  return (OK);
 
-};
+}; // int LoadGameConfig ( void )
+    
+/*----------------------------------------------------------------------
+ * SaveGameConfig: do just that
+ *
+ *----------------------------------------------------------------------*/
+int
+SaveGameConfig (void)
+{
+  char fname[255];
+  FILE *config;
+  
+  if ( ConfigDir[0] == '\0')
+    return (ERR);
+  
+  sprintf (fname, "%s/config", ConfigDir);
+  if( (config = fopen (fname, "w")) == NULL)
+    {
+      DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
+      return (ERR);
+    }
+  
+  //--------------------
+  // We put the current version number of freedroid into the 
+  // version number string.  This will be usefull so that later
+  // versions of freedroid can identify old config files and decide
+  // not to use them in some cases.
+  //
+  strcpy ( GameConfig.freedroid_version_string , VERSION );
+  
+  //--------------------
+  // Now write the actual data
+  fwrite ( &(GameConfig), sizeof (configuration_for_freedroid), sizeof(char), config);
+  fclose (config);
+
+  return (OK);
+  
+}; // int SaveGameConfig ( void )
+
 
 /* ----------------------------------------------------------------------
  * This function is used for terminating freedroid.  It will close
@@ -1145,7 +1091,8 @@ Terminate (int ExitCode)
   printf("\n----------------------------------------------------------------------");
   printf("\nTermination of Freedroid initiated...");
 
-  SaveSettings();
+  // SaveSettings();
+  SaveGameConfig();
 
   if ( ServerMode )
     {
