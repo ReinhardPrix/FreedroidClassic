@@ -1370,9 +1370,12 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   //--------------------
   // Now that the angle the robot is facing is determined, we just need to
   // translate this angle into an index within the image series, i.e. into a 'phase'
-  // of rotation.
+  // of rotation. 
   //
-  RotationIndex = ( AllEnemys [ Enum ] . current_angle * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
+  // For this, several 'rounding' issues have to be taken into account!
+  // But now it has optimal performance.
+  //
+  RotationIndex = ( ( AllEnemys [ Enum ] . current_angle + 360.0 + 360 / ( 2 * ROTATION_ANGLES_PER_ROTATION_MODEL ) ) * ROTATION_ANGLES_PER_ROTATION_MODEL / 360 ) ;
   while ( RotationIndex < 0  ) RotationIndex += ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   while ( RotationIndex >= ROTATION_ANGLES_PER_ROTATION_MODEL ) RotationIndex -= ROTATION_ANGLES_PER_ROTATION_MODEL ; // just to make sure... a modulo ROTATION_ANGLES_PER_ROTATION_MODEL operation can't hurt
   // DebugPrintf ( 0 , "\nCurrent angle: %f Current RotationIndex: %d. " , angle, RotationIndex );

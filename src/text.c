@@ -1380,22 +1380,77 @@ void
 DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 {
   int TurningDone = FALSE;
-  float MaximumTurningTime = 2.1 ; 
-  float MinimalTurningTime = 0.5 ;
+  float AngleInBetween;
+  float WaitBeforeTurningTime = 0.5 ;
+  float WaitAfterTurningTime = 0.9 ;
   int TurningStartTime;
   float OldAngle;
   float RightAngle;
+  float TurningDirection;
 
-#define TURN_SPEED 120.0
+#define TURN_SPEED 90.0
+
+  Activate_Conservative_Frame_Computation();
 
   //--------------------
-  // At first we take the current time, so that we know how long
-  // we're already in this function...
+  // At first do some waiting before the turning around starts...
   //
-  Activate_Conservative_Frame_Computation();
-  TurningStartTime = SDL_GetTicks();
-  
-  RightAngle = 180.0 - ( atan2 ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ,  Me [ 0 ] . pos . x - ChatDroid -> pos . x ) * 180.0 / M_PI + 90 );
+  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
+  while ( !TurningDone )
+    {
+      StartTakingTimeForFPSCalculation();       
+
+      AssembleCombatPicture ( 0 ); 
+      SDL_Flip ( Screen );
+      
+      if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitBeforeTurningTime )
+	TurningDone = TRUE;
+      
+      ComputeFPSForThisFrame();
+    }
+
+  //--------------------
+  // Now we find out what the final target direction of facing should
+  // be.
+  //
+  // For this we use the atan2, which gives angles from -pi to +pi.
+  // 
+  // Attention must be paid, since 'y' in our coordinates ascends when
+  // moving down and descends when moving 'up' on the scren.  So that
+  // one sign must be corrected, so that everything is right again.
+  //
+  RightAngle = ( atan2 ( - ( Me [ 0 ] . pos . y - ChatDroid -> pos . y ) ,  
+			 + ( Me [ 0 ] . pos . x - ChatDroid -> pos . x ) ) * 180.0 / M_PI ) ;
+  //
+  // Another thing there is, that must also be corrected:  '0' begins
+  // with facing 'down' in the current rotation models.  Therefore angle
+  // 0 corresponds to that.  We need to shift again...
+  //
+  RightAngle += 90 ;
+
+  //--------------------
+  // Now it's time do determine which direction to move, i.e. if to 
+  // turn to the left or to turn to the right...  For this purpose
+  // we convert the current angle, which is between 270 and -90 degrees
+  // to one between -180 and +180 degrees...
+  //
+  if ( RightAngle > 180.0 ) RightAngle -= 360.0 ; 
+
+  // DebugPrintf ( 0 , "\nRightAngle: %f." , RightAngle );
+  // DebugPrintf ( 0 , "\nCurrent angle: %f." , ChatDroid -> current_angle );
+
+  //--------------------
+  // Having done these preparations, it's now easy to determine the right
+  // direction of rotation...
+  //
+  AngleInBetween = RightAngle - ChatDroid -> current_angle ;
+  if ( AngleInBetween > 180 ) AngleInBetween -= 360;
+  if ( AngleInBetween <= -180 ) AngleInBetween += 360;
+
+  if ( AngleInBetween > 0 )
+    TurningDirection = +1 ; 
+  else 
+    TurningDirection = -1 ; 
 
   //--------------------
   // Now we turn and show the image until both chat partners are
@@ -1403,27 +1458,48 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
   // since the Tux may still turn around to somewhere else all the 
   // while, if the chose so
   //
+  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
   while ( !TurningDone )
     {
       StartTakingTimeForFPSCalculation();       
 
       OldAngle = ChatDroid -> current_angle;
 
-      if ( ( RightAngle - ChatDroid -> current_angle ) > 0 )
-	ChatDroid -> current_angle = OldAngle + Frame_Time() * TURN_SPEED ;
-      else
-	ChatDroid -> current_angle = OldAngle - Frame_Time() * TURN_SPEED ;
+      ChatDroid -> current_angle = OldAngle + TurningDirection * Frame_Time() * TURN_SPEED ;
 
       AssembleCombatPicture ( 0 ); 
       SDL_Flip ( Screen );
 
-      if ( ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MaximumTurningTime ) ||
-	   ( fabsf ( RightAngle - ChatDroid -> current_angle ) < 10.0 ) )
-	{
-	  if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * MinimalTurningTime )
-	    TurningDone = TRUE;
-	}
+      //--------------------
+      // In case of positive turning direction, we wait, till our angle is greater
+      // than the right angle.
+      // Otherwise we wait till our angle is lower than the right angle.
+      //
+      AngleInBetween = RightAngle - ChatDroid -> current_angle ;
+      if ( AngleInBetween > 180 ) AngleInBetween -= 360;
+      if ( AngleInBetween <= -180 ) AngleInBetween += 360;
+      
+      if ( ( TurningDirection > 0 ) && ( AngleInBetween < 0 ) ) TurningDone = TRUE;
+      if ( ( TurningDirection < 0 ) && ( AngleInBetween > 0 ) ) TurningDone = TRUE;
 
+      ComputeFPSForThisFrame();
+    }
+
+  //--------------------
+  // Now that turning around is basically done, we still wait a few frames
+  // until we start the dialog...
+  //
+  TurningStartTime = SDL_GetTicks();  TurningDone = FALSE ;
+  while ( !TurningDone )
+    {
+      StartTakingTimeForFPSCalculation();       
+
+      AssembleCombatPicture ( 0 ); 
+      SDL_Flip ( Screen );
+      
+      if ( ( SDL_GetTicks() - TurningStartTime ) >= 1000.0 * WaitAfterTurningTime )
+	TurningDone = TRUE;
+      
       ComputeFPSForThisFrame();
     }
 
