@@ -597,9 +597,37 @@ MoveItem( item* SourceItem , item* DestItem )
  * eliminates the item after that, if it's an item that gets used up.
  * ---------------------------------------------------------------------- */
 void
+Quick_ApplyItem( int ItemKey )
+{
+  int FoundItemNr;
+
+  DebugPrintf( 0 , "\nvoid Quick_ApplyItem( ... ): function call confirmed.");
+  
+  //--------------------
+  // At first we find out which item occupies the given position, and 
+  // we return immediately of course, if there is nothing at all at that
+  // given location.
+  //
+  FoundItemNr = GetInventoryItemAt ( ItemKey -1 , INVENTORY_GRID_HEIGHT -1 );
+  if ( FoundItemNr == (-1) ) return;
+
+  //--------------------
+  // Now that we have found the discusses item, we can just apply
+  // it...
+  //
+
+  ApplyItem ( & ( Me.Inventory[ FoundItemNr ] ) );
+
+}; // void Quick_ApplyItem( item* CurItem )
+
+/* ----------------------------------------------------------------------
+ * This function applies a given item (to the influencer) and maybe 
+ * eliminates the item after that, if it's an item that gets used up.
+ * ---------------------------------------------------------------------- */
+void
 ApplyItem( item* CurItem )
 {
-  DebugPrintf( 0 , "\nvoid ApplyItemFromInventory( int ItemNum ): function call confirmed.");
+  DebugPrintf( 0 , "\nvoid ApplyItem( ... ): function call confirmed.");
 
   // If the inventory slot is not at all filled, we need not do anything more...
   if ( CurItem->type == (-1) ) return;
