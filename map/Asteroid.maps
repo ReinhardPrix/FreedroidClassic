@@ -8864,7 +8864,7 @@ ob_type=1 ob_x=18.00 ob_y=88.50 ob_na=-1
 ob_type=1 ob_x=29.00 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=34.50 ob_y=89.00 ob_na=-1 
 ob_type=2 ob_x=35.50 ob_y=89.00 ob_na=-1 
-ob_type=21 ob_x=36.50 ob_y=88.50 ob_na=-1 
+ob_type=22 ob_x=36.50 ob_y=88.50 ob_na=-1 
 ob_type=2 ob_x=38.50 ob_y=89.00 ob_na=-1 
 ob_type=1 ob_x=84.00 ob_y=88.50 ob_na=-1 
 ob_type=1 ob_x=85.00 ob_y=88.50 ob_na=-1 
@@ -8941,6 +8941,16 @@ label.pos.x=77 label.pos.y=13 label.label_name="Level8Lurker4StartGameSquare"
 label.pos.x=78 label.pos.y=56 label.label_name="Level8Stalker1StartGameSquare"
 label.pos.x=74 label.pos.y=52 label.label_name="Level8Stalker2StartGameSquare"
 label.pos.x=78 label.pos.y=48 label.label_name="Level8Stalker3StartGameSquare"
+label.pos.x=24 label.pos.y=42 label.label_name="Lev8Start123Nr3"
+label.pos.x=26 label.pos.y=40 label.label_name="Lev8Start123Nr4"
+label.pos.x=36 label.pos.y=72 label.label_name="Lev8Start123Nr5"
+label.pos.x=38 label.pos.y=70 label.label_name="Lev8Start123Nr6"
+label.pos.x=29 label.pos.y=71 label.label_name="Lev8Start123Nr7"
+label.pos.x=27 label.pos.y=73 label.label_name="Lev8Start123Nr8"
+label.pos.x=55 label.pos.y=50 label.label_name="Lev8Start123Nr9"
+label.pos.x=53 label.pos.y=52 label.label_name="Lev8Start123Nr10"
+label.pos.x=44 label.pos.y=39 label.label_name="Lev8Start123Nr11"
+label.pos.x=47 label.pos.y=41 label.label_name="Lev8Start123Nr12"
 End of pure map label information for this level
 Start of pure obstacle label information for this level
 End of pure obstacle label information for this level
@@ -9046,26 +9056,26 @@ Nr.= 75 x=  31 y=  55	 connections:   28  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 76 x=  32 y=  58	 connections:   30  29  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 77 x=  34 y=  56	 connections:   29  30  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 78 x=  30 y=  58	 connections:   28  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 79 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 80 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 81 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 82 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 83 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 84 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 85 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 86 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 87 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 88 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 89 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 90 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 91 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 92 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 93 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 94 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 95 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 96 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 97 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
-Nr.= 98 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 79 x=  24 y=  40	 connections:   82  80  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 80 x=  26 y=  40	 connections:   79  81  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 81 x=  26 y=  42	 connections:   82  80  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 82 x=  24 y=  42	 connections:   79  81  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 83 x=  36 y=  72	 connections:   86  84  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 84 x=  36 y=  70	 connections:   83  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 85 x=  38 y=  70	 connections:   84  86  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 86 x=  38 y=  72	 connections:   83  85  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 87 x=  29 y=  73	 connections:   90  88  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 88 x=  29 y=  71	 connections:   89  87  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 89 x=  27 y=  71	 connections:   90  88  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 90 x=  27 y=  73	 connections:   87  89  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 91 x=  55 y=  50	 connections:   92  94  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 92 x=  53 y=  50	 connections:   93  91  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 93 x=  53 y=  52	 connections:   94  92  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 94 x=  56 y=  53	 connections:   93  91  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 95 x=  44 y=  41	 connections:   96  98  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 96 x=  44 y=  39	 connections:   95  97  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 97 x=  47 y=  39	 connections:   98  96  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
+Nr.= 98 x=  47 y=  41	 connections:   97  95  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 Nr.= 99 x=   0 y=   0	 connections:   -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1  -1
 end_of_level
 
