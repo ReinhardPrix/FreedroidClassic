@@ -2411,12 +2411,6 @@ End of pure statement information for this level
 Start of pure codepanel information for this level
 PanelposX=4 PanelposY=10 Secret Code="gnu"
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-BigGraphicsInsertPosX=39 BigGraphicsInsertPosY=36 BigGraphicsInsertType=3 
-BigGraphicsInsertPosX=19 BigGraphicsInsertPosY=33 BigGraphicsInsertType=4 
-BigGraphicsInsertPosX=40 BigGraphicsInsertPosY=35 BigGraphicsInsertType=5 
-BigGraphicsInsertPosX=22 BigGraphicsInsertPosY=59 BigGraphicsInsertType=7 
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=10  X=22.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=12.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=4  X=16.000000  Y=3.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -3485,8 +3479,6 @@ PosX=64 PosY=2 Statement="I think I can see a teleporter in the far distance to 
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=7  X=22.953676  Y=2.274745  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=13  CurDur=8.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=5  X=22.547426  Y=1.852869  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=15  CurDur=13.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -4152,9 +4144,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-BigGraphicsInsertPosX=38 BigGraphicsInsertPosY=9 BigGraphicsInsertType=2 
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=19  X=29.000000  Y=20.000000  AC=3  DoDamage=0  ModifyDamage=0  MaxDur=10  CurDur=7.000000  Gold=9  Multiplicity=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=11  X=23.000000  Y=5.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=20  CurDur=3.000000  Gold=29  Multiplicity=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -4710,8 +4699,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=34  X=8.000000  Y=6.000000  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=20  CurDur=8.000000  Gold=31  Multiplicity=0  PrefixCode=7  SuffixCode=8  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=9  StrToHit=8  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
@@ -5598,8 +5585,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -6323,8 +6308,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -6917,8 +6900,6 @@ PosX=24 PosY=5 Statement=""
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=59  X=38.000000  Y=15.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=0  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
@@ -7678,8 +7659,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -7815,29 +7794,29 @@ beginning_of_map
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   7   7   7   7   6   6   6   6   6   4   4   4   4   6   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   4   4   4   4   4   4   4   4   4   6   4   4   6   7   7   7   7   7   7   7   7   6   6   6   6   6   4   4   4   4   4   4   4   4 
   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   6   4   4   6   6   7   7   9   9   9   7   7   7   7   6   6   6   6   6   4   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   4   4   6   6   7   9   7   8   9   9   8   9   7   7   7   6   6   6   6   6   4   4   4   4   6   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   6   7   7   7   8   9   9   9   9   8   8   8   8   8   6   4   6   6   6   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   6   7   7   7   8   8   9   9   9   9   9   9   9   9   8   7   6   6   6   6   6   4   6   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   6   6   4   4   4 
-  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   6   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   1   4   4   4   4   6   7   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   7   6   7   6   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   4   4   4   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   4   6   4   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   7   7   6   6   6   4   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   2   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   6   4   4   6   6   7   9   8   8   9   9   9   9   9   9   9   9   9   9   9   7   7   6   6   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   1   1   1   1   4   4   4   4   6   4   4   4   4   6   7   7   9   9   8   9   9   9   9   9   9   9   9   9   9   7   7   6   4   4   4   4   4   4 
-  4   4   4   4   4   4   4   4   1   1   1   1   1   1   3   1   1   1   1   1   1   2   1   1   2   1   1   1   1   1   2   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   6   4   4   4   6   6   7   7   9   9   9   8   9   9   9   9   9   9   9   9   7   7   6   6   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   9   7   7   7   9   9   9   9   9   9   9   9   8   9   9   7   6   6   6   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   4   6   6   9   9   7   7   7   7   9   9   9   9   9   8   9   9   7   7   4   6   6   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   6   4   6   6   6   7   7   7   7   7   7   7   7   7   9   9   9   9   7   7   6   6   6   4   4   4   6   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   9   9   7   7   7   7   7   7   7   7   9   9   7   6   6   6   4   4   4   4   6   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   9   8   8   8   7   7   7   7   7   7   7   7   9   7   6   6   4   4   4   4   4   6   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   6   6   6   6   7   8   8   9   9   9   8   9   7   7   7   7   7   7   6   7   6   6   4   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   4   7   9   8   9   9   9   9   9   8   8   7   7   7   6   6   7   7   6   6   6   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   7   7   9   8   9   9   9   9   9   8   8   7   7   6   7   6   7   7   6   6   6   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   7   7   9   8   8   9   9   9   9   7   7   7   9   7   7   6   7   7   6   6   4   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   6   4   6   6   7   7   7   7   6   9   9   7   7   7   6   7   7   9   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   6   7   9   6   7   7   7   9   8   8   7   7   6   4   6   4   4   4   4   4   4   4   4   4 
-  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   6   7   7   7   7   6   6   6   7   8   8   8   9   9   9   6   7   6   4   4   4   6   4   6   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   4   4   6   6   7   9   7   8   9   9   8   9   7   7   7   6   6   6   6   6   4   4   4   4   6   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   6   7   7   7   8   9   9   9   9   8   8   8   8   8   6   4   6   6   6   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   6   7   7   7   8   8   9   9   9   9   9   9   9   9   8   7   6   6   6   6   6   4   6   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   6   7   7   8   8   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   6   6   4   4   4 
+  4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   6   7   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   6   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   1   4   4   4   4   6   7   9   8   8   9   9   9   9   9   9   9   9   9   9   9   9   7   6   7   6   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   4   4   4   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   7   7   7   6   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   4   6   4   6   7   9   8   9   9   9   9   9   9   9   9   9   9   9   9   9   7   7   6   6   6   4   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   2   1   1   2   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   1   1   1   1   1   1   1   1   4   4   6   4   4   6   6   7   9   8   8   9   9   9   9   9   9   9   9   9   9   9   7   7   6   6   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   1   1   1   1   4   4   4   4   6   4   4   4   4   6   7   7   9   9   8   9   9   9   9   9   9   9   9   9   9   7   7   6   4   4   4   4   4   4 
+  4   4   4   4   4   4   4   4   1   1   1   1   1   1   3   1   1   1   1   1   1   2   1   1   2   1   1   1   1   1   2   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   6   4   4   4   6   6   7   7   9   9   9   8   9   9   9   9   9   9   9   9   7   7   6   6   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   6   4   6   9   7   7   7   9   9   9   9   9   9   9   9   8   9   9   7   6   6   6   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   4   6   6   9   9   7   7   7   7   9   9   9   9   9   8   9   9   7   7   4   6   6   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   6   4   6   6   6   7   7   7   7   7   7   7   7   7   9   9   9   9   7   7   6   6   6   4   4   4   6   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   9   9   7   7   7   7   7   7   7   7   9   9   7   6   6   6   4   4   4   4   6   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   6   6   7   9   8   8   8   7   7   7   7   7   7   7   7   9   7   6   6   4   4   4   4   4   6   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   6   6   6   6   7   8   8   9   9   9   8   9   7   7   7   7   7   7   6   7   6   6   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   4   7   9   8   9   9   9   9   9   8   8   7   7   7   6   6   7   7   6   6   6   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   7   7   9   8   9   9   9   9   9   8   8   7   7   6   7   6   7   7   6   6   6   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   7   7   9   8   8   9   9   9   9   7   7   7   9   7   7   6   7   7   6   6   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   6   4   6   6   7   7   7   7   6   9   9   7   7   7   6   7   7   9   8   7   7   7   6   6   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   6   7   9   6   7   7   7   9   8   8   7   7   6   4   6   4   4   4   4   4   4   4   4   4 
+  1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   6   4   6   6   7   7   7   7   6   6   6   7   8   8   8   9   9   9   6   7   6   4   4   4   6   4   6   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   4   4   4   4   4   4   4   4   4   4   4   6   6   6   6   6   6   6   6   6   6   7   9   9   8   8   9   8   9   9   7   7   6   4   6   6   4   6   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   4   6   6   7   7   7   7   7   4   4   6   4   4   4   4   4   4   4   4   4   4   6   4   6   6   6   6   6   6   6   7   9   8   8   7   9   6   7   7   6   4   6   4   4   4   4   4   4   4   4 
   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   4   4   4   4   4   4   4   4   4   4   4   6   7   7   7   7   7   7   7   7   7   6   6   6   4   4   4   4   6   4   4   4   4   6   4   4   4   6   6   6   7   7   7   7   6   6   7   7   7   6   4   6   4   4   4   4   4   4   4   4   4 
@@ -8052,7 +8031,7 @@ ob_type=1 ob_x=60.00 ob_y=13.50
 ob_type=11 ob_x=29.00 ob_y=14.50 
 ob_type=1 ob_x=35.00 ob_y=14.50 
 ob_type=6 ob_x=43.50 ob_y=15.00 
-ob_type=6 ob_x=44.50 ob_y=15.00 
+ob_type=10 ob_x=44.50 ob_y=15.00 
 ob_type=6 ob_x=45.50 ob_y=15.00 
 ob_type=1 ob_x=47.00 ob_y=14.50 
 ob_type=2 ob_x=46.50 ob_y=15.00 
@@ -8075,7 +8054,6 @@ ob_type=2 ob_x=16.50 ob_y=16.00
 ob_type=2 ob_x=17.50 ob_y=16.00 
 ob_type=2 ob_x=18.50 ob_y=16.00 
 ob_type=2 ob_x=19.50 ob_y=16.00 
-ob_type=1 ob_x=20.00 ob_y=15.50 
 ob_type=2 ob_x=20.50 ob_y=16.00 
 ob_type=2 ob_x=21.50 ob_y=16.00 
 ob_type=2 ob_x=22.50 ob_y=16.00 
@@ -8096,7 +8074,6 @@ ob_type=1 ob_x=35.00 ob_y=15.50
 ob_type=2 ob_x=34.50 ob_y=16.00 
 ob_type=2 ob_x=40.50 ob_y=16.00 
 ob_type=2 ob_x=41.50 ob_y=16.00 
-ob_type=1 ob_x=42.00 ob_y=15.50 
 ob_type=1 ob_x=43.00 ob_y=15.50 
 ob_type=2 ob_x=42.50 ob_y=16.00 
 ob_type=1 ob_x=47.00 ob_y=15.50 
@@ -8341,7 +8318,6 @@ ob_type=2 ob_x=9.50 ob_y=44.00
 ob_type=1 ob_x=1.00 ob_y=44.50 
 ob_type=1 ob_x=9.00 ob_y=44.50 
 ob_type=2 ob_x=8.50 ob_y=45.00 
-ob_type=2 ob_x=0.50 ob_y=46.00 
 ob_type=2 ob_x=1.50 ob_y=46.00 
 ob_type=2 ob_x=2.50 ob_y=46.00 
 ob_type=2 ob_x=3.50 ob_y=46.00 
@@ -8779,6 +8755,8 @@ ob_type=1 ob_x=84.00 ob_y=89.50
 ob_type=1 ob_x=85.00 ob_y=89.50 
 ob_type=1 ob_x=86.00 ob_y=89.50 
 ob_type=42 ob_x=20.50 ob_y=80.50 
+ob_type=1 ob_x=0.99 ob_y=45.45 
+ob_type=2 ob_x=0.51 ob_y=45.99 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -8811,8 +8789,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=12  X=44.000000  Y=52.000000  AC=0  DoDamage=8  ModifyDamage=8  MaxDur=16  CurDur=8.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
@@ -9860,8 +9836,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=74  X=39.000000  Y=35.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=74  X=36.000000  Y=36.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -10551,8 +10525,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -11705,8 +11677,6 @@ PosX=47 PosY=44 Statement=""
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -12309,8 +12279,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -13184,8 +13152,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -13939,8 +13905,6 @@ PosX=23 PosY=5 Statement="The doorplate reads 'D. Koenig'."
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -14517,8 +14481,6 @@ Start of pure codepanel information for this level
 PanelposX=4 PanelposY=8 Secret Code="hello"
 PanelposX=4 PanelposY=6 Secret Code="abracadabra"
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=3  X=1.966180  Y=4.942550  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 New item: type=1  X=3.000000  Y=1.000000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=0  CurDur=0.000000  Gold=0  Multiplicity=0  PrefixCode=0  SuffixCode=0  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
@@ -15108,8 +15070,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 New item: type=19  X=83.000000  Y=2.000000  AC=5  DoDamage=0  ModifyDamage=0  MaxDur=16  CurDur=10.000000  Gold=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrForce=0  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0 
 End of pure items information for this level
@@ -15617,8 +15577,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -16023,8 +15981,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -16340,8 +16296,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -16959,8 +16913,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -18395,8 +18347,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -19310,8 +19260,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -19816,8 +19764,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -20513,8 +20459,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -20919,8 +20863,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -21236,8 +21178,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -21744,8 +21684,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -22212,8 +22150,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -22530,8 +22466,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
@@ -22848,8 +22782,6 @@ Start of pure statement information for this level
 End of pure statement information for this level
 Start of pure codepanel information for this level
 End of pure codepanel information for this level
-Start of big graphics insert information for this level
-End of big graphics insert information for this level
 Start of pure items information for this level
 End of pure items information for this level
 Start of pure chest item information for this level
