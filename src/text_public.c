@@ -1,4 +1,26 @@
 
+/* ----------------------------------------------------------------------
+ * This function does the rotation of a given vector by a given angle.
+ * The vector is a vector.
+ * The angle given is in DEGREE MEASURE, i.e. 0-360 or so, maybe more or
+ * less than that, but you get what I mean...
+ * ---------------------------------------------------------------------- */
+void
+RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
+{
+  moderately_finepoint new_vect;
+  float rad_angle;
+
+  rad_angle = rot_angle * ( M_PI / 180.0 ) ; 
+  
+  DebugPrintf( 2 , "\n RAD_ANGLE : %f " , rad_angle );
+  new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
+  new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
+  vector->x = new_vect.x;
+  vector->y = new_vect.y;
+
+}; // void RotateVectorByAngle ( ... )
+
 
 /* ----------------------------------------------------------------------
  * This function should init the chat roster with empty values and thereby

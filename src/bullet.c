@@ -40,24 +40,6 @@
 #define DRUIDHITDIST2		(0.3+MORE)*(Druid_Radius_Y+MORE)
 
 /* ----------------------------------------------------------------------
- * This function does the rotation of a given vector by a given angle
- * ---------------------------------------------------------------------- */
-void
-RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle )
-{
-  moderately_finepoint new_vect;
-  float rad_angle;
-
-  rad_angle = rot_angle * ( M_PI / 180.0 ) ; // / 180 );
-  
-  DebugPrintf( 2 , "\n RAD_ANGLE : %f " , rad_angle );
-  new_vect.x =  sin( rad_angle ) * vector->y + cos( rad_angle ) * vector->x;
-  new_vect.y =  cos( rad_angle ) * vector->y - sin( rad_angle ) * vector->x;
-  vector->x = new_vect.x;
-  vector->y = new_vect.y;
-}; // void RotateVectorByAngle ( ... )
-
-/* ----------------------------------------------------------------------
  * This function moves all the bullets according to their speeds and the
  * current frame rate of course.
  * ---------------------------------------------------------------------- */
