@@ -652,7 +652,7 @@ enum
 #define MAX_TUX_DIRECTIONS      16
 #define BULLET_DIRECTIONS       16
 
-#define WAIT_AFTER_KILLED	1.5  // time to wait and still display pictures after the destruction of 
+#define WAIT_AFTER_KILLED	3.0  // time to wait and still display pictures after the destruction of 
                                  // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_COLLISION		2.5 // after a little collision with Tux or another enemy, hold position for a while
                                     // this variable describes the amount of time in SECONDS 

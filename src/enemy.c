@@ -2087,6 +2087,7 @@ update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoin
     int j;
     int our_level = this_robot -> pos . z ;
     float best_dist, our_dist;
+    float xdist, ydist;
     
     //--------------------
     // By default, we set the target of this bot to the Tux himself
@@ -2098,7 +2099,12 @@ update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoin
     this_robot -> attack_target_type = ATTACK_TARGET_IS_PLAYER ;
     this_robot -> attack_target_index = TargetPlayerNum ;
     
+    //--------------------
+    // This function is time-critical, so we work with squares in the
+    // following and avoid computation of roots entirely
+    //
     best_dist = vect_len ( *vect_to_target );
+    best_dist = best_dist * best_dist ;
     
     //--------------------
     // But maybe there is a friend of the Tux also close.  Then maybe we
@@ -2112,10 +2118,12 @@ update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoin
 	if ( AllEnemys [ j ] . Status == OUT ) continue ;
 	if ( ! AllEnemys [ j ] . is_friendly ) continue ;
 	
-	our_dist = sqrt ( powf ( this_robot -> pos . x - AllEnemys [ j ] . pos . x , 2 ) +
-			  powf ( this_robot -> pos . y - AllEnemys [ j ] . pos . y , 2 )   );
+	xdist = this_robot -> pos . x - AllEnemys [ j ] . pos . x ;
+	ydist = this_robot -> pos . y - AllEnemys [ j ] . pos . y ;
+
+	our_dist = xdist * xdist + ydist * ydist ;
 	
-	if ( our_dist > 5.0 ) continue ;
+	if ( our_dist > 5.0 * 5.0 ) continue ;
 	
 	if ( our_dist < best_dist )
 	{
