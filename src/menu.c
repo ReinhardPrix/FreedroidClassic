@@ -48,7 +48,8 @@ EXTERN void Level_Editor(void);
 EXTERN char Previous_Mission_Name[1000];
 
 #define FIRST_MENU_ITEM_POS_X (2*Block_Width)
-#define FIRST_MENU_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+#define FIRST_MENU_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
+
 
 int
 DoMenuSelection( char* MenuTexts[10] )
@@ -449,7 +450,7 @@ void
 MissionSelectMenu (void)
 {
 #define FIRST_MIS_SELECT_ITEM_POS_X (0.0*Block_Width)
-#define FIRST_MIS_SELECT_ITEM_POS_Y (USERFENSTERPOSY + FontHeight(Menu_BFont))
+#define FIRST_MIS_SELECT_ITEM_POS_Y (BANNER_HEIGHT + FontHeight(Menu_BFont))
 enum
   { 
     CLASSIC_PARADROID_MISSION_POSITION=1, 
@@ -718,8 +719,7 @@ enum
     SET_SOUND_FX_VOLUME, 
     SET_GAMMA_CORRECTION, 
     SET_FULLSCREEN_FLAG, 
-    CW_WIDTH,
-    CW_HEIGHT,
+    CW_SIZE,
     LEAVE_OPTIONS_MENU };
 
   // This is not some Debug Menu but an optically impressive 
@@ -756,9 +756,8 @@ enum
       PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+3*FontHeight(Menu_BFont), 
 		       "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
       PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont), 
-		       "Combat Window Width: %s", User_Rect.x ? "CLASSIC" : "FULL" );
-      PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont), 
-		       "Combat Window Height: %s", (User_Rect.y - BANNER_HEIGHT ) ? "CLASSIC" : "FULL" );
+		       "Combat Window Size: %s", classic_user_rect ? "CLASSIC" : "FULL" );
+
       //PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+4*FontHeight(Menu_BFont),
       //"Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
       //PrintStringFont (Screen , Menu_BFont, OPTIONS_MENU_ITEM_POS_X , FIRST_MENU_ITEM_POS_Y+5*FontHeight(Menu_BFont),
@@ -843,38 +842,24 @@ enum
 	      fullscreen_on = !fullscreen_on;
 	      break;
 
-	    case CW_WIDTH:
+	    case CW_SIZE:
 	      while (EnterPressed() || SpacePressed() );
-	      if (User_Rect.x == 0) 
+	      
+	      if (classic_user_rect)
 		{
-		  User_Rect.x=User_Rect.x;
-		  User_Rect.w=USERFENSTERBREITE;
-		  ClearGraphMem();
-		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( Screen );
+		  classic_user_rect = FALSE;
+		  Copy_Rect (Full_User_Rect, User_Rect);
 		}
 	      else
 		{
-		  User_Rect.x=0;
-		  User_Rect.w=640;
+		  classic_user_rect = TRUE;
+		  Copy_Rect (Classic_User_Rect, User_Rect);
 		}
-	      break;
 
-	    case CW_HEIGHT:
-	      while (EnterPressed() || SpacePressed() );
-	      if ( User_Rect.y == BANNER_HEIGHT ) 
-		{
-		  User_Rect.y=USERFENSTERPOSY;
-		  User_Rect.h=USERFENSTERHOEHE;
-		  ClearGraphMem();
-		  DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
-		  SDL_Flip( Screen );
-		}
-	      else
-		{
-		  User_Rect.y = BANNER_HEIGHT;
-		  User_Rect.h = 480 - BANNER_HEIGHT;
-		}
+	      ClearGraphMem();
+	      DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
+	      SDL_Flip( Screen );
+	      
 	      break;
 
 	    case LEAVE_OPTIONS_MENU:
@@ -1306,8 +1291,6 @@ void
 Show_Mission_Details ( int MissionNumber )
 {
   int Weiter = 0;
-  // int i;
-  // SDL_Rect* Mission_Window_Pointer=&User_Rect;
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
 

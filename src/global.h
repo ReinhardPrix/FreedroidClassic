@@ -36,11 +36,6 @@
 #else
 #define EXTERN extern
 
-EXTERN SDL_Rect User_Rect;
-EXTERN const SDL_Rect Full_Screen_Rect;
-EXTERN const SDL_Rect Menu_Rect;
-
-
 EXTERN char EndTitleText1[];
 EXTERN char EndTitleText2[];
 EXTERN char TitleText1[];
@@ -80,6 +75,15 @@ EXTERN Druidspec Druidmap;
 EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 #endif
+
+EXTERN SDL_Rect User_Rect;
+EXTERN SDL_Rect Full_Screen_Rect;
+EXTERN SDL_Rect Classic_User_Rect;
+EXTERN SDL_Rect Full_User_Rect;
+EXTERN SDL_Rect Console_Rect;
+
+EXTERN const SDL_Rect Menu_Rect;
+
 
 EXTERN int Number_Of_Droid_Types;
 EXTERN int InitBars;
@@ -121,7 +125,7 @@ EXTERN int fullscreen_on;	/* toggle for use of fullscreen vs. X11-window */
 EXTERN int show_all_droids;     /* display enemys regardless of IsVisible() */
 EXTERN int stop_influencer;     /* for bullet debugging: stop where u are */
 EXTERN int mouse_control;       /* allow for mouse control */
-
+EXTERN int classic_user_rect;   /* use the User-Rect dimensions of the original game? */
 #undef EXTERN
 #ifdef _misc_c
 #define EXTERN
@@ -175,8 +179,6 @@ EXTERN int SkipAFewFrames;
 #else
 #define EXTERN extern
 #endif
-EXTERN int User_Rect_Center_x;
-EXTERN int User_Rect_Center_y;
 EXTERN int Number_Of_Item_Types;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   /* the graphics display */
