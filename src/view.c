@@ -627,8 +627,8 @@ There was an obstacle type given, that exceeds the number of\n\
 	    //
 	    if ( obstacle_map [ our_obstacle -> type ] . transparent == TRANSPARENCY_FOR_WALLS ) 
 	    {
-		if ( ( our_obstacle -> pos . x > Me [ 0 ] . pos . x - 0.5 ) &&
-		     ( our_obstacle -> pos . y > Me [ 0 ] . pos . y - 0.5 ) &&
+		if ( ( our_obstacle -> pos . x > Me [ 0 ] . pos . x - 1.0 ) &&
+		     ( our_obstacle -> pos . y > Me [ 0 ] . pos . y - 1.0 ) &&
 		     ( our_obstacle -> pos . x < 
 		       Me [ 0 ] . pos . x + 1.5 ) &&
 		     ( our_obstacle -> pos . y < 

@@ -3198,19 +3198,19 @@ init_obstacle_data( void )
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . filename = "iso_thick_wall_0006.png" ;
 
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_N ] . filename = "iso_thick_wall_0007.png" ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . filename = "iso_thick_wall_0008.png" ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_parm_1 = 1.1 ;
-  obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_parm_2 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . filename = "iso_thick_wall_0009.png" ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . filename = "iso_thick_wall_0010.png" ;
 

@@ -958,13 +958,18 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
 	glEnable ( GL_BLEND ) ;
 	glDisable( GL_ALPHA_TEST );  
 	// glBlendFunc( GL_SRC_ALPHA , GL_DST_ALPHA);
+	glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
     }
 
-    //
-    // glEnable( GL_ALPHA_TEST );  
-    // glAlphaFunc ( GL_GREATER , 0.5 ) ;
-    
-    // glDisable(GL_BLEND);
+/*
+    else
+    {
+	glDisable(GL_BLEND);
+	glEnable( GL_ALPHA_TEST );  
+	glAlphaFunc ( GL_GREATER , 0.5 ) ;
+    }
+*/
+  
     // glDisable( GL_ALPHA_TEST );  
   
     //--------------------
