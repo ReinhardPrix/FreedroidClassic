@@ -1293,6 +1293,16 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle )
   RotationModel = Druidmap [ AllEnemys [ Enum ] . type ] . individual_shape_nr ;
   
   //--------------------
+  // A sanity check for roation model to use can never hurt...
+  //
+  if ( ( RotationModel < 0 ) || ( RotationModel >= ENEMY_ROTATION_MODELS_AVAILABLE ) )
+    {
+      GiveStandardErrorMessage ( "PutIndividuallyShapedDroidBody(...)" , "\
+There was a rotation model type given, that exceeds the number of rotation models allowed and loaded in Freedroid.",
+				     PLEASE_INFORM, IS_FATAL );
+    }
+
+  //--------------------
   // First we check if the robot is still alive.  If it isn't, 
   // then we can use the explosion dust from the classic ball-shaped
   // version.

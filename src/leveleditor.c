@@ -2013,15 +2013,18 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
   if (KP_PLUS_Pressed()) 
     {
       EditLevel->map[BlockY][BlockX]=V_WALL;
+      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_V_WALL;
     }
   if (KP0Pressed()) 
     {
       EditLevel->map[BlockY][BlockX]=H_WALL;
+      if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_H_WALL;
     }
   if (KP1Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_L;
       else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LD;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LD;
       else EditLevel->map[BlockY][BlockX]=CORNER_LD;
     }
   if (KP2Pressed()) 
@@ -2032,14 +2035,17 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_D;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_D;
-      else if ( Alt_Was_Pressed() ) 
+      else if ( LeftAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_D;
+      else if ( RightAltWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_D;
       else EditLevel->map[BlockY][BlockX]=T_D;
     }
   if (KP3Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_U;
       else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RD;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RD;
       else EditLevel->map[BlockY][BlockX]=CORNER_RD;
     }
   if (KP4Pressed()) 
@@ -2050,8 +2056,10 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_L;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_L;
-      else if ( Alt_Was_Pressed() ) 
+      else if ( LeftAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_R;
+      else if ( RightAltWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_R;
       else EditLevel->map[BlockY][BlockX]=T_L;
     }
   if (KP5Pressed()) 
@@ -2060,24 +2068,29 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	EditLevel->map[BlockY][BlockX]=VOID;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET;
+      else if ( RightAltWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=CAVE_FLOOR;
       else EditLevel->map[BlockY][BlockX]=KREUZ;
     }
   if (KP6Pressed()) 
     {
-      if ( Shift_Was_Pressed() )
+      if ( LeftShiftWasPressed() )
 	EditLevel->map[BlockY][BlockX]=CONSOLE_R;
       else if ( LeftCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_R;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_R;
-      else if ( Alt_Was_Pressed() ) 
+      else if ( LeftAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_L;
+      else if ( RightAltWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_L;
       else EditLevel->map[BlockY][BlockX]=T_R;
     }
   if (KP7Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_D;
       else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_LU;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_LU;
       else EditLevel->map[BlockY][BlockX]=CORNER_LU;
     }
   if ( KP8Pressed() ) 
@@ -2088,14 +2101,17 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
 	EditLevel->map[BlockY][BlockX]=CODEPANEL_U;
       else if ( RightCtrlWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=FLOOR_CARPET_U;
-      else if ( Alt_Was_Pressed() ) 
+      else if ( LeftAltWasPressed() ) 
 	EditLevel->map[BlockY][BlockX]=CONVEY_U;
+      else if ( RightAltWasPressed() ) 
+	EditLevel->map[BlockY][BlockX]=FLOOR_CAVE_U;
       else EditLevel->map[BlockY][BlockX]=T_U;
     }
   if (KP9Pressed()) 
     {
       if ( Shift_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=AUTOGUN_R;
       else if ( Ctrl_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=ENHANCER_RU;
+      else if ( Alt_Was_Pressed() ) EditLevel->map[BlockY][BlockX]=CAVE_CORNER_RU;
       else EditLevel->map[BlockY][BlockX]=CORNER_RU;
     }
   if (APressed())

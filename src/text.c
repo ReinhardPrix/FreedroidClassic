@@ -1120,16 +1120,17 @@ ResolveDialogSectionToChatFlagsIndex ( Enemy ChatDroid )
 {
 
   if ( strcmp ( ChatDroid -> dialog_section_name , "Chandra" ) == 0 ) return PERSON_CHA ;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "SOR" ) == 0 ) return PERSON_SOR;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "SOR" ) == 0 ) return PERSON_SORENSON;
   if ( strcmp ( ChatDroid -> dialog_section_name , "614" ) == 0 ) return PERSON_614;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "STO" ) == 0 ) return PERSON_STO;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "PEN" ) == 0 ) return PERSON_PEN;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "DIX" ) == 0 ) return PERSON_DIX;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "STO" ) == 0 ) return PERSON_STONE;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "PEN" ) == 0 ) return PERSON_PENDRAGON;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "DIX" ) == 0 ) return PERSON_DIXON;
   if ( strcmp ( ChatDroid -> dialog_section_name , "RMS" ) == 0 ) return PERSON_RMS;
   if ( strcmp ( ChatDroid -> dialog_section_name , "MER" ) == 0 ) return PERSON_MER;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Francis" ) == 0 ) return PERSON_FRA;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERN;
-  if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BEN;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Francis" ) == 0 ) return PERSON_FRANCIS;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Ernie" ) == 0 ) return PERSON_ERNIE;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Bruce" ) == 0 ) return PERSON_BRUCE;
+  if ( strcmp ( ChatDroid -> dialog_section_name , "Benjamin" ) == 0 ) return PERSON_BENJAMIN;
   if ( strcmp ( ChatDroid -> dialog_section_name , "HEA" ) == 0 ) return PERSON_HEA;
 
   GiveStandardErrorMessage ( "ResolveDialogSectionToChatFlagsIndex(...)" , "\
@@ -1189,30 +1190,30 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   //
   if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
     {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 1 ; 
       
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 2 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 3 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 4 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 6 ] = FALSE ; // we allow to ask naively...
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = FALSE ; // we allow to ask naively...
     }
   else
     {
-      Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
+      Me [ 0 ] . Chat_Flags [ PERSON_DIXON ] [ 5 ] = 0 ; 
       
       if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
 	   ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
 	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
 	  
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 1 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 2 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 3 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 4 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 5 ] = FALSE ; // we allow to ask naively...
+	  Me [ 0 ] . Chat_Flags [ PERSON_DIXON ]  [ 6 ] = FALSE ; // we allow to ask naively...
 	}
     }
   
@@ -1227,122 +1228,6 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
   
   LoadChatRosterWithChatSequence ( ChatDroid -> dialog_section_name );
   DoChatFromChatRosterData( 0 , ChatFlagsIndex , ChatDroid );
-
-  return ;
-
-
-
-  if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "CHA" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "CHA" );
-      DoChatFromChatRosterData( 0 , PERSON_CHA , ChatDroid );
-    } // end of conversation with Chandra.
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "SOR" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "SOR" );
-      DoChatFromChatRosterData( 0 , PERSON_SOR , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "614" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "614" );
-      DoChatFromChatRosterData( 0 , PERSON_614 , ChatDroid );
-    } // 614 character dialog
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "STO" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "STO" );
-      DoChatFromChatRosterData( 0 , PERSON_STO , ChatDroid );
-    } // STO character dialog
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "PEN" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "PEN" );
-      DoChatFromChatRosterData( 0 , PERSON_PEN , ChatDroid );
-    } // PEN character dialog
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "DIX" ) == 0 )
-    {
-      //--------------------
-      // Now we do the dialog with DIX...
-      //
-      if ( CountItemtypeInInventory( ITEM_DIXONS_TOOLBOX , 0 ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 1 ; 
-
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = FALSE ; // we allow to ask naively...
-	}
-      else
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_DIX ] [ 5 ] = 0 ; 
-
-	  if ( ( Me [ 0 ] . AllMissions [ 4 ] . MissionWasAssigned == TRUE ) &&
-	       ( Me [ 0 ] . AllMissions [ 4 ] . MissionIsComplete == FALSE ) )
-	    {
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 7 ] = TRUE ; // we allow to ask directly for the toolset...
-
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 1 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 2 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 3 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 4 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 5 ] = FALSE ; // we allow to ask naively...
-	      Me [ 0 ] . Chat_Flags [ PERSON_DIX ]  [ 6 ] = FALSE ; // we allow to ask naively...
-	    }
-	}
-
-      LoadChatRosterWithChatSequence ( "DIX" );
-      DoChatFromChatRosterData( 0 , PERSON_DIX , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "RMS" ) == 0 )
-    {
-      if ( ( Me [ 0 ] . AllMissions [ 1 ] . MissionWasAssigned == TRUE ) &&
-	   ( Me [ 0 ] . AllMissions [ 1 ] . MissionIsComplete == FALSE ) )
-	{
-	  Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 3 ] = TRUE ; // we allow to ask directly for the coffee machine...
-	  Me [ 0 ] . Chat_Flags [ PERSON_RMS ]  [ 0 ] = FALSE ; // we disallow to ask about the job naively...
-	}
-
-      LoadChatRosterWithChatSequence ( "RMS" );
-      DoChatFromChatRosterData( 0 , PERSON_RMS , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "MER" ) == 0 )
-    {
-
-      LoadChatRosterWithChatSequence ( "MER" );
-      DoChatFromChatRosterData( 0 , PERSON_MER , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "FRA" ) == 0 )
-    {
-
-      LoadChatRosterWithChatSequence ( "FRA" );
-      DoChatFromChatRosterData( 0 , PERSON_FRA , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "ERN" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "ERN" );
-      DoChatFromChatRosterData( 0 , PERSON_ERN , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "BEN" ) == 0 )
-    {
-      LoadChatRosterWithChatSequence ( "Benjamin" );
-      DoChatFromChatRosterData( 0 , PERSON_ERN , ChatDroid );
-    }
-  else if ( strcmp ( Druidmap[ ChatDroid -> type ].druidname , "HEA" ) == 0 )
-    {
-      HealerMenu( );
-    }
-  else
-    {
-      fprintf( stderr, "\n\nDruidmap[ ChatDroid -> type ].druidname: %s. \n" , Druidmap[ ChatDroid -> type ].druidname );
-      GiveStandardErrorMessage ( "ChatWithFriendlyDroid(...)" , "\
-There was a dialogue with a friendly droid or person supposed to be initiated.\n\
-But the character name of the person in question could not be handled by the\n\
-Freedroid RPG dialogue function.\n\
-This indicates that you have maybe reached a part of the Freedroid RPG story\n\
-that is not yet implemented or some other bug in Freedroid RPG.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
 
 }; // void ChatWithFriendlyDroid( int Enum );
 

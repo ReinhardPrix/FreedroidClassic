@@ -493,6 +493,10 @@ Load_Enemy_Surfaces( void )
   ModelMultiplier  [ i ] = 1 ;i++;
   PrefixToFilename [ i ] = "proffa" ;
   ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "red_guard" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
+  PrefixToFilename [ i ] = "brown_worker" ;
+  ModelMultiplier  [ i ] = 1 ;i++;
 
   fpath = find_file ( BALL_SHAPED_DROIDS_FILE , GRAPHICS_DIR, TRUE);
 

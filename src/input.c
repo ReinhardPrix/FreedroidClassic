@@ -52,10 +52,14 @@ int CurrentlyMouseWheelDownPressed=0;
 int MouseWheelUpMovesRecorded=0;
 int MouseWheelDownMovesRecorded=0;
 int ShiftWasPressedInAddition=FALSE;
+int LeftShiftWasPressedInAddition=FALSE;
+int RightShiftWasPressedInAddition=FALSE;
 int CtrlWasPressedInAddition=FALSE;
 int LeftCtrlWasPressedInAddition=FALSE;
 int RightCtrlWasPressedInAddition=FALSE;
 int AltWasPressedInAddition=FALSE;
+int LeftAltWasPressedInAddition=FALSE;
+int RightAltWasPressedInAddition=FALSE;
 int CurrentlyEnterPressed=0;
 int CurrentlySpacePressed=0;
 int CurrentlyLeftPressed=0;
@@ -754,6 +758,18 @@ Shift_Was_Pressed(void)
 };
 
 int
+RightShiftWasPressed(void)
+{
+  return (RightShiftWasPressedInAddition);  
+};
+
+int
+LeftShiftWasPressed(void)
+{
+  return (LeftShiftWasPressedInAddition);  
+};
+
+int
 Shift_Is_Pressed(void)
 {
   keyboard_update ();
@@ -788,6 +804,18 @@ Alt_Was_Pressed(void)
   return (AltWasPressedInAddition);  
 }
 
+int
+LeftAltWasPressed(void)
+{
+  return (LeftAltWasPressedInAddition);  
+}
+
+int
+RightAltWasPressed(void)
+{
+  return (RightAltWasPressedInAddition);  
+}
+
 int 
 keyboard_update(void)
 {
@@ -814,6 +842,14 @@ keyboard_update(void)
 	    ShiftWasPressedInAddition=TRUE;
 	  else ShiftWasPressedInAddition=FALSE;
 
+	  if ( event.key.keysym.mod & (KMOD_LSHIFT) )
+	    LeftShiftWasPressedInAddition=TRUE;
+	  else LeftShiftWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & (KMOD_RSHIFT) )
+	    RightShiftWasPressedInAddition=TRUE;
+	  else RightShiftWasPressedInAddition=FALSE;
+
 	  if ( event.key.keysym.mod & (KMOD_LCTRL | KMOD_RCTRL) )
 	    {
 	      CtrlWasPressedInAddition=TRUE;
@@ -828,6 +864,14 @@ keyboard_update(void)
 	  if ( event.key.keysym.mod & (KMOD_LALT | KMOD_RALT) )
 	    AltWasPressedInAddition=TRUE;
 	  else AltWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & ( KMOD_LALT ) )
+	    LeftAltWasPressedInAddition=TRUE;
+	  else LeftAltWasPressedInAddition=FALSE;
+
+	  if ( event.key.keysym.mod & ( KMOD_RALT ) )
+	    RightAltWasPressedInAddition=TRUE;
+	  else RightAltWasPressedInAddition=FALSE;
 
 	  /* Check the SDLKey values */
 	  switch( event.key.keysym.sym )
