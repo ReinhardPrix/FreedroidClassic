@@ -1826,7 +1826,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=250
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -1866,7 +1866,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=225
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -1906,7 +1906,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=225
 Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -1946,7 +1946,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=100
 Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3386,7 +3386,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=400
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3426,7 +3426,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=450
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3466,7 +3466,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=450
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3506,7 +3506,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=450
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3546,7 +3546,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=600
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3586,7 +3586,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=600
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3626,7 +3626,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=600
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3666,7 +3666,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=1000
+Base list price=200
 Item description text="An incredible healing spell, in some cases the only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -3706,7 +3706,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.wav"
-Base list price=800
+Base list price=225
 Item description text="This manual allows to learn the identify spell."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
