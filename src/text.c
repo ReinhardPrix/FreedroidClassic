@@ -1955,11 +1955,23 @@ DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *cl
 void
 SetNewBigScreenMessage( char* ScreenMessageText )
 {
-  strcpy ( Me [ 0 ] . BigScreenMessage [ Me [ 0 ] . BigScreenMessageIndex ] , ScreenMessageText );
-  Me [ 0 ] . BigScreenMessageDuration [ Me [ 0 ] . BigScreenMessageIndex ] = 0 ;
-  Me [ 0 ] . BigScreenMessageIndex ++ ;
-  if ( Me [ 0 ] . BigScreenMessageIndex >= GameConfig . number_of_big_screen_messages )
-    Me [ 0 ] . BigScreenMessageIndex = 0 ;
+    int i;
+
+    //--------------------
+    // Instead of inserting the next big screen message at some fixed cursor position
+    // we will now just move the other big screen messages down and insert the new
+    // big screen message at the very top position of the row.
+    //
+    for ( i = 1 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
+    {
+	strcpy ( Me [ 0 ] . BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES - i ] ,
+		 Me [ 0 ] . BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES - i - 1 ] );
+	Me [ 0 ] . BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES - i ] = 
+	    Me [ 0 ] . BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES - i - 1 ] ;
+    }
+    strcpy ( Me [ 0 ] . BigScreenMessage [ 0 ] , ScreenMessageText );
+    Me [ 0 ] . BigScreenMessageDuration [ 0 ] = 0 ;
+
 }; // void SetNewBigScreenMessage( char* ScreenMessageText )
 
 /* ----------------------------------------------------------------------
@@ -1969,22 +1981,25 @@ SetNewBigScreenMessage( char* ScreenMessageText )
 void
 DisplayBigScreenMessage( void )
 {
-  int i;
-
-  for ( i = 0 ; i < MAX_BIG_SCREEN_MESSAGES ; i ++ )
+    int i;
+    int next_screen_message_position = 30 ;
+    
+    for ( i = 0 ; i < GameConfig . number_of_big_screen_messages ; i ++ )
     {
-      if ( Me [ 0 ] . BigScreenMessageDuration [ i ] < GameConfig . delay_for_big_screen_messages )
+	if ( Me [ 0 ] . BigScreenMessageDuration [ i ] < GameConfig . delay_for_big_screen_messages )
 	{
-	  SDL_SetClipRect ( Screen , NULL );
-	  CenteredPutStringFont ( Screen , Menu_Filled_BFont , 100 + i * FontHeight ( Menu_Filled_BFont ) , 
-				  Me [ 0 ] . BigScreenMessage [ i ]  );
-	  if ( !GameConfig.Inventory_Visible &&
-	       !GameConfig.SkillScreen_Visible &&
-	       !GameConfig.CharacterScreen_Visible )
-	    Me [ 0 ] . BigScreenMessageDuration [ i ]  += Frame_Time();
+	    SDL_SetClipRect ( Screen , NULL );
+	    CenteredPutStringFont ( Screen , Menu_Filled_BFont , next_screen_message_position , 
+				    Me [ 0 ] . BigScreenMessage [ i ]  );
+	    if ( !GameConfig.Inventory_Visible &&
+		 !GameConfig.SkillScreen_Visible &&
+		 !GameConfig.CharacterScreen_Visible )
+		Me [ 0 ] . BigScreenMessageDuration [ i ]  += Frame_Time();
+
+	    next_screen_message_position += FontHeight ( Menu_Filled_BFont ) ;
 	}
     }
-
+    
 }; // void DisplayBigScreenMessage( void )
 
 /*-----------------------------------------------------------------
