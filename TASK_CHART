@@ -11,15 +11,26 @@ jp
 
 The list of things I'm going to work on next:
 
-(?) Correct the stiffness of the keyboard handling in the Level Editor
 (?) Add instructions for using the Level editor in Freedroid perhaps on the home page
 
-1. Extend the Level Editor to show waypoint connections
-2. Extend the Level Editor to allow for resizing of decks
-3. Extend the Level Editor to allow for changing of color
-4. Extend the Level Editor to allow for changing of deck map
-5. Extend the Level Editor to automatically connect new waypoints to
-   visible other waypoints.
+-2. Split the home page up into an internal manual html file and a leveleditor manual html file
+
+-1. Write doku on how to control the game
+
+0. Extend the level Editor
+   DONE Extend the Level Editor to show waypoint connections
+   b. Extend the Level Editor to allow for resizing of decks
+   c. Extend the Level Editor to allow for changing of color
+   d. Extend the Level Editor to allow for changing of deck map
+   DONE Extend the Level Editor to connect new waypoints to other waypoints 
+   f. Allow to change the level name
+   g. Write doku for the usage of the level editor
+
+1. Introduce "Mission" files consisting of:
+   a. Mission target specification: KILLALL, REACH_POS, KILL_TYPE
+   b. Briefing and EndTitle text
+   c. "Ship" to be loaded
+   d. Next mission file
 
 5. Write a new ship/area for testing purposes: "The mining community"
    2.a One deck at least.
@@ -34,17 +45,14 @@ The list of things I'm going to work on next:
 
 (?) Try to introduce an external file for game constants so that mods can be
     made without looking into the code.
-
-(?) Try to introduce an external file for robot description so that mods can be
-    made without looking into the code.
-
-(?)  write dokumentation about the new format for levels and maps.
+    a. Blast radius
+    b. Bullet damage
 
 (?)  LATER: Read more about SDL_net &&  Add networking support
 
 (?) Reactivate "Color Rotation" of Bulletcolor, but WITHOUT using the palette for
-   this.  This will be good to for later, if someone designs new and better animated
-   bullets with multiple pictures in EACH direction.
+    this.  This will be good to for later, if someone designs new and better animated
+    bullets with multiple pictures in EACH direction.
 
 rp
 --
