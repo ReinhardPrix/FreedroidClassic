@@ -132,6 +132,7 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   char linebuf[1000];
   char font_switchto_red [ 2 ] = { 1 , 0 };
   char font_switchto_blue [ 2 ] = { 2 , 0 };
+  char font_switchto_neon [ 2 ] = { 3 , 0 };
 
   
   // --------------------
@@ -142,6 +143,10 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
   if ( ( CurItem->suffix_code != (-1) ) || ( CurItem->prefix_code != (-1) ) )
     {
       strcat ( ItemDescText , font_switchto_blue );
+    }
+  else
+    {
+      strcat ( ItemDescText , font_switchto_neon );
     }
 
   if ( CurItem->type == ITEM_MONEY ) sprintf( ItemDescText , "%d " , CurItem->gold_amount );
@@ -263,15 +268,35 @@ GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
       // if ( !ForShop ) 
       strcat ( ItemDescText , "\n" );
       strcat ( ItemDescText , font_switchto_red );
+
       if ( SuffixList[ CurItem->suffix_code ].bonus_to_str )
-	sprintf( linebuf , "+%d to Power\n" , SuffixList[ CurItem->suffix_code ].bonus_to_str );
+	{
+	  if ( ForShop ) strcat( ItemDescText , "             " );
+	  sprintf( linebuf , "+%d to Power\n" , SuffixList[ CurItem->suffix_code ].bonus_to_str );
+	  strcat( ItemDescText , linebuf );
+	}
+
       if ( SuffixList[ CurItem->suffix_code ].bonus_to_dex )
-	sprintf( linebuf , "+%d to Power Distribution\n" , SuffixList[ CurItem->suffix_code ].bonus_to_dex );
+	{
+	  if ( ForShop ) strcat( ItemDescText , "             " );
+	  sprintf( linebuf , "+%d to Power Distribution\n" , SuffixList[ CurItem->suffix_code ].bonus_to_dex );
+	  strcat( ItemDescText , linebuf );
+	}
+
       if ( SuffixList[ CurItem->suffix_code ].bonus_to_mag )
-	sprintf( linebuf , "+%d to Force\n" , SuffixList[ CurItem->suffix_code ].bonus_to_mag );
+	{
+	  if ( ForShop ) strcat( ItemDescText , "             " );
+	  sprintf( linebuf , "+%d to Force\n" , SuffixList[ CurItem->suffix_code ].bonus_to_mag );
+	  strcat( ItemDescText , linebuf );
+	}
+
       if ( SuffixList[ CurItem->suffix_code ].bonus_to_vit )
-	sprintf( linebuf , "+%d to Vitality\n" , SuffixList[ CurItem->suffix_code ].bonus_to_vit );
-      strcat( ItemDescText , linebuf );
+	{
+	  if ( ForShop ) strcat( ItemDescText , "             " );
+	  sprintf( linebuf , "+%d to Vitality\n" , SuffixList[ CurItem->suffix_code ].bonus_to_vit );
+	  strcat( ItemDescText , linebuf );
+	}
+
     }
   
 

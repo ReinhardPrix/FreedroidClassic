@@ -226,6 +226,12 @@ LoadGame( void )
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): function call confirmed....");
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint LoadGame( void ): determining file name....");
 
+  //--------------------
+  // Maybe someone just lost in the game and has then pressed the load
+  // button.  Then a new game is loaded and the game-over status has
+  // to be restored as well of course.
+  //
+  GameOver = FALSE; 
 
   //--------------------
   // Before we decode the details of the old game, we load the map

@@ -301,7 +301,13 @@ UpdateAllCharacterStats ( void )
     {
       Me.exp_level ++ ;
       Me.PointsToDistribute += 5;
+
+      //--------------------
+      // When a droid reaches a new experience level, all health and 
+      // force are restored to full this one time
+      //
       Me.energy = Druidmap [ Me.type ].maxenergy ;
+      Me.mana = Druidmap [ Me.type ].maxmana ;
     }
 
   //--------------------

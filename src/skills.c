@@ -99,15 +99,24 @@ SDL_Rect SkillScreenRect;
 void
 ForceExplosionCircle ( finepoint ExpCenter )
 {
-  StartBlast ( ExpCenter.x + 1 , ExpCenter.y , DRUIDBLAST );
-  StartBlast ( ExpCenter.x - 1 , ExpCenter.y , DRUIDBLAST );
-  StartBlast ( ExpCenter.x     , ExpCenter.y - 1 , DRUIDBLAST );
-  StartBlast ( ExpCenter.x     , ExpCenter.y + 1 , DRUIDBLAST );
+  if ( Me.mana >= 3 )
+    {
+      Me.mana -= 3;
+      StartBlast ( ExpCenter.x + 1 , ExpCenter.y , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 1 , ExpCenter.y , DRUIDBLAST );
+      StartBlast ( ExpCenter.x     , ExpCenter.y - 1 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x     , ExpCenter.y + 1 , DRUIDBLAST );
 
-  StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
-  StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
-  StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
-  StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , DRUIDBLAST );
+    }
+  else
+    {
+      Me.TextVisibleTime = 0;
+      Me.TextToBeDisplayed = "Not enough force left within me.";
+    }
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
@@ -119,14 +128,22 @@ ForceExplosionRay ( finepoint ExpCenter , point TargetVector )
   int i ;
   moderately_finepoint step;
 
-  step.x = ( TargetVector.x * 0.25 ) / Block_Width;
-  step.y = ( TargetVector.y * 0.25 ) / Block_Height;
-
-  for ( i = 1 ; i < 5 ; i ++ )
+  if ( Me.mana >= 5 )
     {
-      StartBlast ( ExpCenter.x + i * step.x , ExpCenter.y + i * step.y , DRUIDBLAST );
-    }
+      Me.mana -= 5;
+      step.x = ( TargetVector.x * 0.25 ) / Block_Width;
+      step.y = ( TargetVector.y * 0.25 ) / Block_Height;
 
+      for ( i = 1 ; i < 5 ; i ++ )
+	{
+	  StartBlast ( ExpCenter.x + i * step.x , ExpCenter.y + i * step.y , DRUIDBLAST );
+	}
+    }
+  else
+    {
+      Me.TextVisibleTime = 0;
+      Me.TextToBeDisplayed = "Not enough force left within me.";
+    }
 }; // void ForceExplosionCircle ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
@@ -140,6 +157,11 @@ ForceToEnergyConversion ( void )
     {
       Me.mana   -= 10;
       Me.energy += 10;
+    }
+  else
+    {
+      Me.TextVisibleTime = 0;
+      Me.TextToBeDisplayed = "Not enough force left within me.";
     }
 
 }; // void ForceExplosionCircle ( finepoint ExpCenter )

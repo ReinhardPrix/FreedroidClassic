@@ -1,4 +1,3 @@
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -23,11 +22,9 @@
  *  MA  02111-1307  USA
  *
  */
-
 /* ----------------------------------------------------------------------
  * Desc: the main program
  * ---------------------------------------------------------------------- */
-
 /*
  * This file has been checked for remains of german comments in the code
  * I you still find some, please let me know.
@@ -51,12 +48,10 @@ float LastRefreshSound = 2;
 
 void UpdateCountersForThisFrame (void);
 
-/*-----------------------------------------------------------------
- * @Desc: the heart of the Game 
- *
- * @Ret: void
- *
- *-----------------------------------------------------------------*/
+/* -----------------------------------------------------------------
+ * This function is the heart of the game.  It contains the main
+ * game loop.
+ * ----------------------------------------------------------------- */
 int
 main (int argc, char *const argv[])
 {

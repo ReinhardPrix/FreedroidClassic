@@ -41,13 +41,20 @@
 #define ITEM_TAKE_DIST (1.2)
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function calculates the price of a given item, taking into account
+ * the items base list price and also the items given modifier, like
+ * prefix and suffix, modifying the price greatly of course.
  * ---------------------------------------------------------------------- */
 long
 CalculateItemPrice ( item* BuyItem )
 {
-  return ( ItemMap [ BuyItem->type ].base_list_price );
+  float PrefixMultiplier = 1;
+  float SuffixMultiplier = 1;
+
+  if ( BuyItem -> suffix_code != (-1) )
+    SuffixMultiplier = SuffixList[ BuyItem->suffix_code ].price_factor;
+
+  return ( ItemMap [ BuyItem->type ].base_list_price * SuffixMultiplier * PrefixMultiplier );
 }; // long CalculateItemPrice ( item* BuyItem )
 
 /* ----------------------------------------------------------------------
