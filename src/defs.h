@@ -37,7 +37,7 @@
 
 #define RESET 0x01
 #define UPDATE 0x02
-#define DROID_ROTATION_TIME 2.5
+#define DROID_ROTATION_TIME 3.0
 
 
 #define UserCenter_x (User_Rect.x + User_Rect.w/2)

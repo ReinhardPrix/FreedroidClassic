@@ -705,7 +705,7 @@ InitPictures (void)
 	    {
 	      strcpy( fname, Druidmap[i].druidname );
 	      strcat( fname , ".png" );
-	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, IGNORE);
+	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
 	    }
 
 	  packed_portraits[i] = load_raw_pic (fpath);

@@ -561,7 +561,7 @@ GreatDruidShow (void)
   page = 0;
 
   show_droid_info (droidtype, page, 0);
-  show_droid_portrait (Cons_Droid_Rect, droidtype, 1.0, UPDATE);
+  show_droid_portrait (Cons_Droid_Rect, droidtype, 0.0, UPDATE|RESET);
 
   SpacePressedR();
   MouseLeftPressedR();
@@ -809,7 +809,11 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
     }
 
   if (flags & RESET)
-    SDL_BlitSurface (ne_screen, &dst, background, NULL);
+    {
+      SDL_BlitSurface (ne_screen, &dst, background, NULL);
+      frame_num  = 0;
+      last_frame_time = SDL_GetTicks ();
+    }
 
   if ( (droid_type != last_droid_type) || (droid_pics == NULL))
     { // we need to unpack the droid-pics into our local storage
@@ -826,7 +830,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
+	  //eh non  SDL_SetColorKey (tmp, SDL_SRCCOLORKEY|SDL_RLEACCEL, TransparentPixel);
 	  droid_pics = SDL_DisplayFormat (tmp);
 	} // else assume it's png ;)
       else
@@ -850,17 +854,13 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
   frame_duration = SDL_GetTicks() - last_frame_time;
 
-  if (frame_duration >= 1000.0*cycle_time/num_frames)
+  if (cycle_time && (frame_duration >  1000.0*cycle_time/num_frames) )
     { 
       need_new_frame = TRUE;
-      last_frame_time += frame_duration;
       frame_num ++;
     }
 
   if (frame_num >= num_frames)
-    frame_num = 0;
-
-  if (cycle_time == 0.0)
     frame_num = 0;
 
   if ( (flags & (RESET|UPDATE)) || need_new_frame)
@@ -871,6 +871,9 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
       SDL_UpdateRects (ne_screen, 1, &dst);
+
+      last_frame_time = SDL_GetTicks();
+
     }
 
      
