@@ -222,7 +222,7 @@ enum
 #define SKILL_SCREEN_BACKGROUND_FILE "backgrounds/SkillScreen.png" 
 #define INVENTORY_SCREEN_BACKGROUND_FILE "backgrounds/inventory.png"
 #define INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentPlate.png"
-
+#define LEVEL_EDITOR_BANNER_FILE "backgrounds/LevelEditorBanner.png"
 
 #define NEW_MISSION             "ReturnOfTux.mission"
 
@@ -423,7 +423,7 @@ enum _non_player_characters
 #define MAX_MAP_INSERTS         6
 #define MAX_MAP_INSERTS_PER_LEVEL 20
 
-#define MAX_MOUSE_PRESS_BUTTONS 58
+#define MAX_MOUSE_PRESS_BUTTONS 60
 enum
   { 
     CHA_BUTTON, 
@@ -468,10 +468,14 @@ enum
     ITEM_BROWSER_LEFT_BUTTON,
     ITEM_BROWSER_RIGHT_BUTTON,
     ITEM_BROWSER_EXIT_BUTTON,
+
     LEFT_SHOP_BUTTON,
     RIGHT_SHOP_BUTTON,
     LEFT_TUX_SHOP_BUTTON,
     RIGHT_TUX_SHOP_BUTTON,
+    LEFT_LEVEL_EDITOR_BUTTON,
+    RIGHT_LEVEL_EDITOR_BUTTON,
+
     BUY_BUTTON,
     BUY_10_BUTTON,
     BUY_100_BUTTON,

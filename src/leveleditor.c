@@ -42,10 +42,14 @@ Level CreateNewMapLevel( void );
 void SetLevelInterfaces ( void );
 
 EXTERN char Previous_Mission_Name[1000];
+EXTERN SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ];
 
 char VanishingMessage[10000]="Hello";
 float VanishingMessageDisplayTime = 0;
 int OriginWaypoint = (-1);
+SDL_Rect EditorBannerRect;
+int FirstBlock = 0 ;
+int Highlight = 3 ;
 
 enum
   {
@@ -92,6 +96,124 @@ enum
     DUMMY_NO_REACTION2,
     BACK_TO_LE_MAIN_MENU
   };
+
+/* ----------------------------------------------------------------------
+ * This function shall determine, whether a given left mouse click was in 
+ * given rect or not.
+ * ---------------------------------------------------------------------- */
+int
+ClickWasInRect ( SDL_Rect TargetRect )
+{
+  if ( GetMousePos_x ( ) + 16 > TargetRect.x + TargetRect.w ) return FALSE;
+  if ( GetMousePos_x ( ) + 16 < TargetRect.x ) return FALSE;
+  if ( GetMousePos_y ( ) + 16 > TargetRect.y + TargetRect.h ) return FALSE;
+  if ( GetMousePos_y ( ) + 16 < TargetRect.y ) return FALSE;
+
+  return ( TRUE );
+}; // int ClickWasInRect ( SDL_Rect TargetRect )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+int 
+ClickWasInEditorBannerRect( void )
+{
+  return ( ClickWasInRect ( EditorBannerRect ) );
+}; // int ClickWasInEditorBannerRect( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+HandleBannerMouseClick( void )
+{
+  SDL_Rect TargetRect;
+  int i;
+
+  if ( CursorIsOnButton ( LEFT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+    {
+      if ( FirstBlock > 3 ) FirstBlock-= 4;
+      DebugPrintf ( 0 , "\nBlocks should be scrolling now, if apprpirate..." );
+    }
+  if ( CursorIsOnButton ( RIGHT_LEVEL_EDITOR_BUTTON , GetMousePos_x ( ) + 16 , GetMousePos_y ( ) + 16 ) )
+    {
+      if ( FirstBlock < NUM_MAP_BLOCKS -4 ) FirstBlock+= 4;
+      DebugPrintf ( 0 , "\nBlocks should be scrolling now, if apprpirate..." );
+    }
+
+  for ( i = 0 ; i < 9 ; i ++ ) 
+    {
+      TargetRect.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i; 
+      TargetRect.y = INITIAL_BLOCK_HEIGHT/3;
+      TargetRect.w = INITIAL_BLOCK_WIDTH;
+      TargetRect.h = INITIAL_BLOCK_HEIGHT;
+      if ( ClickWasInRect ( TargetRect ) )
+	{
+	  Highlight = FirstBlock + i;
+	}; 
+    }
+
+}; // void HandleBannerMouseClick( void )
+
+/* ----------------------------------------------------------------------
+ *
+ *
+ * ---------------------------------------------------------------------- */
+void
+ShowLevelEditorTopMenu( int Highlight )
+{
+  int i;
+  SDL_Rect TargetRectangle;
+  int MapBrick = FirstBlock;
+  Level DisplayLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+  static SDL_Surface *LevelEditorTopBanner = NULL;
+  SDL_Surface *tmp = NULL;
+  char* fpath;
+
+  if ( LevelEditorTopBanner == NULL )
+    {
+      fpath = find_file ( LEVEL_EDITOR_BANNER_FILE , GRAPHICS_DIR, FALSE);
+      tmp = IMG_Load( fpath );
+      LevelEditorTopBanner = SDL_DisplayFormat ( tmp );
+      SDL_FreeSurface ( tmp );
+
+      EditorBannerRect.x = 0;
+      EditorBannerRect.y = 0; 
+      EditorBannerRect.w = LevelEditorTopBanner -> w;
+      EditorBannerRect.h = LevelEditorTopBanner -> h;
+    }
+  
+  SDL_BlitSurface ( LevelEditorTopBanner , NULL , Screen , &EditorBannerRect );
+
+  for ( i = 0 ; i < 9 ; i ++ )
+    {
+      TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
+      TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
+
+      if ( INITIAL_BLOCK_WIDTH == Block_Width )
+	{
+	  SDL_BlitSurface( MapBlockSurfacePointer[ DisplayLevel->color ][MapBrick] , NULL ,
+			   Screen, &TargetRectangle);
+	}
+      else
+	{
+	  SDL_BlitSurface( BackupMapBlockSurfacePointer[ DisplayLevel->color ][ MapBrick ] , NULL ,
+			   Screen, &TargetRectangle);
+	}
+
+      if ( MapBrick == Highlight ) 
+	HighlightRectangle ( Screen , TargetRectangle );
+
+      if ( MapBrick < NUM_MAP_BLOCKS -1 ) MapBrick ++ ;
+    }
+
+  ShowGenericButtonFromList ( LEFT_LEVEL_EDITOR_BUTTON ) ;
+  ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON ) ;
+  
+
+}; // void ShowLevelEditorTopMenu( void )
 
 /* ----------------------------------------------------------------------
  * When new lines are inserted into the map, the map inserts south of this
@@ -2666,6 +2788,8 @@ LevelEditor(void)
 	      DisplayText ( VanishingMessage ,  1 , 5 * FontHeight ( GetCurrentFont () ) , NULL );
 	    }
 
+	  ShowLevelEditorTopMenu( Highlight );
+
 	  //--------------------
 	  // Now that everything is blitted and printed, we may update the screen again...
 	  //
@@ -2828,27 +2952,38 @@ LevelEditor(void)
 	  HandleMapTileEditingKeys ( EditLevel , BlockX , BlockY );
 
 	  //--------------------
-	  // Maybe a mouse click has occured.  Then it might be best to interpret this
-	  // simply as bigger move command, which might indeed be much handier than 
-	  // using only keyboard cursor keys to move around on the map.
+	  // First we find out which map square the player MIGHT wish us to operate on
+	  // via a POTENTIAL mouse click
 	  //
+	  TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
+	  TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
+		  
 	  if ( axis_is_active && !LeftMousePressedPreviousFrame )
 	    {
-	      //--------------------
-	      // First we find out which map square the player wishes us to operate on
-	      // 
-	      TargetSquare.x = rintf ( Me [ 0 ] . pos . x + (float)( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( (float)INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ) ;
-	      TargetSquare.y = rintf ( Me [ 0 ] . pos . y + (float)( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( (float)INITIAL_BLOCK_HEIGHT * CurrentCombatScaleFactor ) ) ;
+	      if ( ClickWasInEditorBannerRect() )
+		HandleBannerMouseClick();
+	      else
+		{
+		  //--------------------
+		  // Maybe a left mouse click has in the map area.  Then it might be best to interpret this
+		  // simply as bigger move command, which might indeed be much handier than 
+		  // using only keyboard cursor keys to move around on the map.
+		  //
+		  Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+		  if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
+		    Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
+		  if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
+		  
+		  Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
+		  if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
+		    Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
+		  if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+		}
+	    }
 
-	      Me [ 0 ] . pos . x += ( GetMousePos_x ( ) + 16 - ( SCREEN_WIDTH / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
-	      if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-2 )
-		Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-2 ;
-	      if ( Me [ 0 ] . pos . x <= 2 ) Me [ 0 ] . pos . x = 2;
-	      
-	      Me [ 0 ] . pos . y += ( GetMousePos_y ( ) + 16 - ( SCREEN_HEIGHT / 2 ) ) / ( INITIAL_BLOCK_WIDTH * CurrentCombatScaleFactor ) ;
-	      if ( Me [ 0 ] . pos . y >= curShip.AllLevels[Me[0].pos.z]->ylen-2 )
-		Me [ 0 ] . pos . y = curShip.AllLevels[Me[0].pos.z]->ylen-2 ;
-	      if ( Me [ 0 ] . pos . y <= 2 ) Me [ 0 ] . pos . y = 2;
+	  if ( MouseRightPressed() )
+	    {
+	      EditLevel->map[ TargetSquare . y ] [ TargetSquare . x ] = Highlight ;	      
 	    }
 
 	  if (QPressed())

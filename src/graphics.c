@@ -86,6 +86,7 @@ static const char *arrow[] = {
   "0,0"
 };
 
+SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
 
 /* ----------------------------------------------------------------------
  * This function was taken directly from the example in the SDL docu.
@@ -977,7 +978,7 @@ SetCombatScaleTo(float ResizeFactor)
 {
   int i, j;
   SDL_Surface *tmp;
-  static SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
+  // static SDL_Surface *BackupMapBlockSurfacePointer[ NUM_COLORS ][ NUM_MAP_BLOCKS ] = { { NULL , NULL } , { NULL , NULL } } ; 
 
   // just to be sure, reset the size of the graphics
   // ReInitPictures();

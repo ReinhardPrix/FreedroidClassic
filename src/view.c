@@ -601,7 +601,6 @@ ShowPureMapBlocksAroundTux ( int mask )
 	  if ((MapBrick = GetMapBrick( DisplayLevel, col , line )) != INVISIBLE_BRICK)
 	    {
 	      
-
 	      TargetRectangle.x = UserCenter_x 
 		+ ( -Me[0].pos.x+col-0.5 )*Block_Width;
 	      TargetRectangle.y = UserCenter_y
