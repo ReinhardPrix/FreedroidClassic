@@ -873,46 +873,16 @@ void ShowRobotPicture(int PosX,int PosY, int Number, unsigned char* Screen){
  * $Author$
  *
  * $Log$
- * Revision 1.5  1993/08/01 00:48:26  prix
- * Mon May 31 16:51:40 1993: rewritten GetInternFenster in C !
- * Mon May 31 17:11:14 1993: rewritten PutInfluence() in C
- * Mon May 31 17:20:05 1993: PutBullet rewritten in C !
- * Mon May 31 17:24:37 1993: rewritten PutBlast in C
- * Mon May 31 17:55:00 1993: PutInternFenster rewritten in C !!!
- * Mon May 31 19:57:37 1993: TRANSPARENTCOLOR in PutInfluence beruecksichtigen !
- * Mon May 31 20:00:06 1993: char pointers unsigned
- * Tue Jun 01 08:34:08 1993: Bullets ausserhalb des USERFENSTERS nicht darstellen
- * Tue Jun 01 08:37:40 1993: anzeige der Energie
- * Tue Jun 01 08:43:27 1993: Blast ausserhalb des USERFENSTERs nicht mehr anzeigen
- * Tue Jun 01 09:21:58 1993: added func MergeBlockToWindow: adds visible Block to a 'window'
- * Tue Jun 01 09:33:49 1993: ShowPosition wird mit SHOWSTATS define eingeschaltet
- * Tue Jun 01 13:46:40 1993: PutInfluence: erweitert fuer animierte roboter
- * Fri Jul 23 10:43:03 1993: Optionale Positionsausgabe in Koordinatzen eingefuehrt
- * Sat Jul 24 08:08:50 1993: RedrawInfluenceNumber als very alpha eingefuehrt
- * Sat Jul 24 11:30:34 1993: mehrere Digits werden geschrieben
- * Sat Jul 24 11:42:22 1993: die Schrift an die Richtige Position stellen
- * Sat Jul 24 13:54:07 1993: PutEnemy eingefuehrt
- * Sat Jul 24 14:27:44 1993: EnemyAusgabe in GetInternFenster includiert
- * Sat Jul 24 14:36:03 1993: Feindzusammenstellen hinzugefuegt
- * Sat Jul 24 15:02:55 1993: jetzt sollte Putenemy einen sichtbaren Effekt haben
- * Sat Jul 24 15:07:08 1993: Sicherheit gengen Offsetueberlauf eingefuehrt
- * Sat Jul 24 15:19:37 1993: Feinzusammenstellen bis auf DrawDigit reaktiviert
- * Sat Jul 24 15:34:30 1993: Putenemy ohne einschraenkende Kommentare aktiv
- * Sat Jul 24 15:57:23 1993: MergeBlockToWindow wird nicht mehr verwendet
- * Sat Jul 24 16:07:48 1993: Korrekturen an der Zusammenstellung eines Feindes
- * Sat Jul 24 16:24:08 1993: Phasen bei Feinden werden jetzt beruecksichtigt
- * Sat Jul 24 16:31:08 1993: Phase vollstaendig beruecksichtigen
- * Sat Jul 24 16:42:37 1993: Enemys nicht anzeigen wenn der Abstand zu gross ist
- * Sun Jul 25 08:10:13 1993: mehr points statt zwei Zahlen werden fuer enemys verwendet
- * Sun Jul 25 13:18:09 1993: Bereichsueberschreitungscheck fuer PutEnemy eingefuehrt
- * Sun Jul 25 15:34:46 1993: abgeschossene werden nicht angezeigt
- * Mon Jul 26 08:46:13 1993: debugswitch eingefuehrt
- * Sun Mar 26 00:49:49 2000: Blasts die OUT sind nicht anzeigen
- * Fri Jul 30 07:59:05 1993: Influence wird nicht angezeigt wenn er explodiert
- * Sat Jul 31 07:38:11 1993: Ferben aendern sich abhaengig vom Me.status
- * Sat Jul 31 07:55:07 1993: keine Structs mehr im assembler-teil
- * Sat Jul 31 18:04:28 1993: ES GIBT KEINE phases-VARIABLE ! mehr
- * Sat Jul 31 18:56:13 1993: NO MORE ENEMYMAXONLEVEL
+ * Revision 1.6  1993/09/22 14:27:14  prix
+ * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
+ * Sun Aug 01 10:37:50 1993: Verschiebungen der Offsets, um 001 ins Zentrum zu bekommen
+ * Sun Aug 01 11:51:18 1993: written general PutObject function
+ * Sun Aug 01 12:03:26 1993: FeindZusammenstellen liefert Pointer auf Feind-Picture !
+ * Sun Aug 01 12:23:41 1993: Written all Put* Functions new: using PutObject
+ * Mon Aug 02 09:18:48 1993: RotateBulletColor hinzugefuegt
+ * Mon Aug 02 10:00:44 1993: farben genauer an c-64 angenaehert
+ * Tue Aug 10 14:28:55 1993: BulletCollision check in MergeBlockToWindow()
+ * Tue Aug 24 11:31:04 1993: call to IsVisible()
  *
  * Revision 1.6  1993/09/22  14:27:14  prix
  * Sat Jul 31 21:20:14 1993: Koordinatenverschiebung bei ungerader INTERNHOEHE
