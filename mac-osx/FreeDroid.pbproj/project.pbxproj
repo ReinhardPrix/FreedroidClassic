@@ -1,0 +1,998 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 38;
+	objects = {
+		080E96DCFE201CFB7F000001 = {
+			fileRef = 29B97318FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		080E96DDFE201D6D7F000001 = {
+			children = (
+			);
+			isa = PBXGroup;
+			name = Classes;
+			refType = 4;
+		};
+		089C165CFE840E0CC02AAC07 = {
+			children = (
+				089C165DFE840E0CC02AAC07,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			refType = 4;
+		};
+		089C165DFE840E0CC02AAC07 = {
+			fileEncoding = 10;
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/InfoPlist.strings;
+			refType = 4;
+		};
+		089C165EFE840E0CC02AAC07 = {
+			fileRef = 089C165CFE840E0CC02AAC07;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//080
+//081
+//082
+//083
+//084
+//100
+//101
+//102
+//103
+//104
+		1058C7A0FEA54F0111CA2CBB = {
+			children = (
+				1058C7A1FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = "Linked Frameworks";
+			refType = 4;
+		};
+		1058C7A1FEA54F0111CA2CBB = {
+			isa = PBXFrameworkReference;
+			name = Cocoa.framework;
+			path = /System/Library/Frameworks/Cocoa.framework;
+			refType = 0;
+		};
+		1058C7A2FEA54F0111CA2CBB = {
+			children = (
+				29B97325FDCFA39411CA2CEA,
+				29B97324FDCFA39411CA2CEA,
+				827EB62C04325A7E00785F71,
+				827EB62D04325A7E00785F71,
+				827EB62E04325A7E00785F71,
+			);
+			isa = PBXGroup;
+			name = "Other Frameworks";
+			refType = 4;
+		};
+		1058C7A3FEA54F0111CA2CBB = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//100
+//101
+//102
+//103
+//104
+//170
+//171
+//172
+//173
+//174
+		17587328FF379C6511CA2CBB = {
+			isa = PBXApplicationReference;
+			path = FreeDroid.app;
+			refType = 3;
+		};
+//170
+//171
+//172
+//173
+//174
+//190
+//191
+//192
+//193
+//194
+		19C28FACFE9D520D11CA2CBB = {
+			children = (
+				17587328FF379C6511CA2CBB,
+			);
+			isa = PBXGroup;
+			name = Products;
+			refType = 4;
+		};
+//190
+//191
+//192
+//193
+//194
+//290
+//291
+//292
+//293
+//294
+		29B97313FDCFA39411CA2CEA = {
+			buildStyles = (
+				4A9504CCFFE6A4B311CA0CBA,
+				4A9504CDFFE6A4B311CA0CBA,
+			);
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = 29B97314FDCFA39411CA2CEA;
+			projectDirPath = "";
+			targets = (
+				29B97326FDCFA39411CA2CEA,
+			);
+		};
+		29B97314FDCFA39411CA2CEA = {
+			children = (
+				080E96DDFE201D6D7F000001,
+				29B97315FDCFA39411CA2CEA,
+				29B97317FDCFA39411CA2CEA,
+				29B97323FDCFA39411CA2CEA,
+				19C28FACFE9D520D11CA2CBB,
+				82BBAF0C043272A000465D61,
+			);
+			isa = PBXGroup;
+			name = FreeDroid;
+			path = "";
+			refType = 4;
+		};
+		29B97315FDCFA39411CA2CEA = {
+			children = (
+				824E616A0432592300E329D9,
+				32CA4F630368D1EE00C91783,
+				824E61640432590C00E329D9,
+				824E61650432590C00E329D9,
+				824E61660432590C00E329D9,
+				827EB63204325CDF00785F71,
+				827EB63404325E1D00785F71,
+				827EB63504325E1D00785F71,
+			);
+			isa = PBXGroup;
+			name = "Other Sources";
+			path = "";
+			refType = 4;
+		};
+		29B97317FDCFA39411CA2CEA = {
+			children = (
+				8220547E044F1E4200DBCE7F,
+				822054CB044F1E4200DBCE7F,
+				822054D4044F1E4200DBCE7F,
+				29B97318FDCFA39411CA2CEA,
+				089C165CFE840E0CC02AAC07,
+			);
+			isa = PBXGroup;
+			name = Resources;
+			path = "";
+			refType = 4;
+		};
+		29B97318FDCFA39411CA2CEA = {
+			children = (
+				29B97319FDCFA39411CA2CEA,
+			);
+			isa = PBXVariantGroup;
+			name = MainMenu.nib;
+			path = "";
+			refType = 4;
+		};
+		29B97319FDCFA39411CA2CEA = {
+			isa = PBXFileReference;
+			name = English;
+			path = English.lproj/MainMenu.nib;
+			refType = 4;
+		};
+		29B97323FDCFA39411CA2CEA = {
+			children = (
+				1058C7A0FEA54F0111CA2CBB,
+				1058C7A2FEA54F0111CA2CBB,
+			);
+			isa = PBXGroup;
+			name = Frameworks;
+			path = "";
+			refType = 4;
+		};
+		29B97324FDCFA39411CA2CEA = {
+			isa = PBXFrameworkReference;
+			name = AppKit.framework;
+			path = /System/Library/Frameworks/AppKit.framework;
+			refType = 0;
+		};
+		29B97325FDCFA39411CA2CEA = {
+			isa = PBXFrameworkReference;
+			name = Foundation.framework;
+			path = /System/Library/Frameworks/Foundation.framework;
+			refType = 0;
+		};
+		29B97326FDCFA39411CA2CEA = {
+			buildPhases = (
+				29B97327FDCFA39411CA2CEA,
+				29B97328FDCFA39411CA2CEA,
+				29B9732BFDCFA39411CA2CEA,
+				29B9732DFDCFA39411CA2CEA,
+			);
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "\"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL_image.framework/Versions/A/Headers\" \"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL.framework/Versions/A/Headers\" \"$(LOCAL_LIBRARY_DIR)/Frameworks/SDL_mixer.framework/Versions/A/Headers\"";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "";
+				OPTIMIZATION_CFLAGS = "-O2";
+				OTHER_CFLAGS = "-DMACOSX -DHAVE_LIBSDL_MIXER";
+				OTHER_LDFLAGS = "";
+				PRECOMPILE_PREFIX_HEADER = YES;
+				PREFIX_HEADER = FreeDroid_Prefix.h;
+				PRODUCT_NAME = FreeDroid;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = app;
+			};
+			dependencies = (
+			);
+			isa = PBXApplicationTarget;
+			name = FreeDroid;
+			productInstallPath = "$(HOME)/Applications";
+			productName = FreeDroid;
+			productReference = 17587328FF379C6511CA2CBB;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>FreeDroid</string>
+	<key>CFBundleIconFile</key>
+	<string>icon</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+</dict>
+</plist>
+";
+		};
+		29B97327FDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				32CA4F650368D2AA00C91783,
+				824E61680432590C00E329D9,
+				824E618A0432596A00E329D9,
+				824E618C0432596A00E329D9,
+				824E618E0432596A00E329D9,
+				824E61960432596A00E329D9,
+				824E61970432596A00E329D9,
+				824E619A0432596A00E329D9,
+				824E619C0432596A00E329D9,
+				824E619F0432596A00E329D9,
+				824E61A00432596A00E329D9,
+				824E61A20432596A00E329D9,
+				824E61A40432596A00E329D9,
+				824E61A50432596A00E329D9,
+				827EB63304325CDF00785F71,
+				827EB63604325E1D00785F71,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B97328FDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				080E96DCFE201CFB7F000001,
+				089C165EFE840E0CC02AAC07,
+				82BBAF0D043272A000465D61,
+				8220552F044F1E4200DBCE7F,
+				82205530044F1E4200DBCE7F,
+				82205531044F1E4200DBCE7F,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B9732BFDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				824E61670432590C00E329D9,
+				824E61690432590C00E329D9,
+				824E61890432596A00E329D9,
+				824E618B0432596A00E329D9,
+				824E618D0432596A00E329D9,
+				824E618F0432596A00E329D9,
+				824E61900432596A00E329D9,
+				824E61910432596A00E329D9,
+				824E61920432596A00E329D9,
+				824E61930432596A00E329D9,
+				824E61940432596A00E329D9,
+				824E61950432596A00E329D9,
+				824E61980432596A00E329D9,
+				824E61990432596A00E329D9,
+				824E619B0432596A00E329D9,
+				824E619D0432596A00E329D9,
+				824E619E0432596A00E329D9,
+				824E61A10432596A00E329D9,
+				824E61A30432596A00E329D9,
+				824E61A60432596A00E329D9,
+				827EB63704325E1D00785F71,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29B9732DFDCFA39411CA2CEA = {
+			buildActionMask = 2147483647;
+			files = (
+				1058C7A3FEA54F0111CA2CBB,
+				827EB62F04325A7E00785F71,
+				827EB63004325A7E00785F71,
+				827EB63104325A7E00785F71,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+//290
+//291
+//292
+//293
+//294
+//320
+//321
+//322
+//323
+//324
+		32CA4F630368D1EE00C91783 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = FreeDroid_Prefix.h;
+			refType = 2;
+		};
+		32CA4F650368D2AA00C91783 = {
+			fileRef = 32CA4F630368D1EE00C91783;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+//320
+//321
+//322
+//323
+//324
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+		4A9504CCFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				OPTIMIZATION_CFLAGS = "-O0";
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		4A9504CDFFE6A4B311CA0CBA = {
+			buildRules = (
+			);
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+//4A0
+//4A1
+//4A2
+//4A3
+//4A4
+//820
+//821
+//822
+//823
+//824
+		8220547E044F1E4200DBCE7F = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = graphics;
+			path = ../graphics;
+			refType = 2;
+		};
+		822054CB044F1E4200DBCE7F = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = map;
+			path = ../map;
+			refType = 2;
+		};
+		822054D4044F1E4200DBCE7F = {
+			includeInIndex = 1;
+			isa = PBXFolderReference;
+			name = sound;
+			path = ../sound;
+			refType = 2;
+		};
+		8220552F044F1E4200DBCE7F = {
+			fileRef = 8220547E044F1E4200DBCE7F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		82205530044F1E4200DBCE7F = {
+			fileRef = 822054CB044F1E4200DBCE7F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		82205531044F1E4200DBCE7F = {
+			fileRef = 822054D4044F1E4200DBCE7F;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61640432590C00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = getopt.c;
+			refType = 2;
+		};
+		824E61650432590C00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = getopt.h;
+			refType = 2;
+		};
+		824E61660432590C00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = getopt1.c;
+			refType = 2;
+		};
+		824E61670432590C00E329D9 = {
+			fileRef = 824E61640432590C00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61680432590C00E329D9 = {
+			fileRef = 824E61650432590C00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61690432590C00E329D9 = {
+			fileRef = 824E61660432590C00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E616A0432592300E329D9 = {
+			children = (
+				824E616B0432596A00E329D9,
+				824E616C0432596A00E329D9,
+				824E616D0432596A00E329D9,
+				824E616E0432596A00E329D9,
+				824E616F0432596A00E329D9,
+				824E61700432596A00E329D9,
+				824E61710432596A00E329D9,
+				824E61720432596A00E329D9,
+				824E61730432596A00E329D9,
+				824E61740432596A00E329D9,
+				824E61750432596A00E329D9,
+				824E61760432596A00E329D9,
+				824E61770432596A00E329D9,
+				824E61780432596A00E329D9,
+				824E61790432596A00E329D9,
+				824E617A0432596A00E329D9,
+				824E617B0432596A00E329D9,
+				824E617C0432596A00E329D9,
+				824E617D0432596A00E329D9,
+				824E617E0432596A00E329D9,
+				824E617F0432596A00E329D9,
+				824E61800432596A00E329D9,
+				824E61810432596A00E329D9,
+				824E61820432596A00E329D9,
+				824E61830432596A00E329D9,
+				824E61840432596A00E329D9,
+				824E61850432596A00E329D9,
+				824E61860432596A00E329D9,
+				824E61870432596A00E329D9,
+				824E61880432596A00E329D9,
+			);
+			isa = PBXGroup;
+			name = "Freedroid Files";
+			refType = 4;
+		};
+		824E616B0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BFont.c;
+			path = ../src/BFont.c;
+			refType = 2;
+		};
+		824E616C0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = BFont.h;
+			path = ../src/BFont.h;
+			refType = 2;
+		};
+		824E616D0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = bullet.c;
+			path = ../src/bullet.c;
+			refType = 2;
+		};
+		824E616E0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = defs.h;
+			path = ../src/defs.h;
+			refType = 2;
+		};
+		824E616F0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = enemy.c;
+			path = ../src/enemy.c;
+			refType = 2;
+		};
+		824E61700432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = global.h;
+			path = ../src/global.h;
+			refType = 2;
+		};
+		824E61710432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = graphics.c;
+			path = ../src/graphics.c;
+			refType = 2;
+		};
+		824E61720432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = highscore.c;
+			path = ../src/highscore.c;
+			refType = 2;
+		};
+		824E61730432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = influ.c;
+			path = ../src/influ.c;
+			refType = 2;
+		};
+		824E61740432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = init.c;
+			path = ../src/init.c;
+			refType = 2;
+		};
+		824E61750432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = input.c;
+			path = ../src/input.c;
+			refType = 2;
+		};
+		824E61760432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = main.c;
+			path = ../src/main.c;
+			refType = 2;
+		};
+		824E61770432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = map.c;
+			path = ../src/map.c;
+			refType = 2;
+		};
+		824E61780432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = map.h;
+			path = ../src/map.h;
+			refType = 2;
+		};
+		824E61790432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = maped.h;
+			path = ../src/maped.h;
+			refType = 2;
+		};
+		824E617A0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = menu.c;
+			path = ../src/menu.c;
+			refType = 2;
+		};
+		824E617B0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = misc.c;
+			path = ../src/misc.c;
+			refType = 2;
+		};
+		824E617C0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = proto.h;
+			path = ../src/proto.h;
+			refType = 2;
+		};
+		824E617D0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SDL_rotozoom.c;
+			path = ../src/SDL_rotozoom.c;
+			refType = 2;
+		};
+		824E617E0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = SDL_rotozoom.h;
+			path = ../src/SDL_rotozoom.h;
+			refType = 2;
+		};
+		824E617F0432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = ship.c;
+			path = ../src/ship.c;
+			refType = 2;
+		};
+		824E61800432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = sound.c;
+			path = ../src/sound.c;
+			refType = 2;
+		};
+		824E61810432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = struct.h;
+			path = ../src/struct.h;
+			refType = 2;
+		};
+		824E61820432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = system.h;
+			path = ../src/system.h;
+			refType = 2;
+		};
+		824E61830432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = takeover.c;
+			path = ../src/takeover.c;
+			refType = 2;
+		};
+		824E61840432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = takeover.h;
+			path = ../src/takeover.h;
+			refType = 2;
+		};
+		824E61850432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = text.c;
+			path = ../src/text.c;
+			refType = 2;
+		};
+		824E61860432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = text.h;
+			path = ../src/text.h;
+			refType = 2;
+		};
+		824E61870432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = vars.h;
+			path = ../src/vars.h;
+			refType = 2;
+		};
+		824E61880432596A00E329D9 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			name = view.c;
+			path = ../src/view.c;
+			refType = 2;
+		};
+		824E61890432596A00E329D9 = {
+			fileRef = 824E616B0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618A0432596A00E329D9 = {
+			fileRef = 824E616C0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618B0432596A00E329D9 = {
+			fileRef = 824E616D0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618C0432596A00E329D9 = {
+			fileRef = 824E616E0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618D0432596A00E329D9 = {
+			fileRef = 824E616F0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618E0432596A00E329D9 = {
+			fileRef = 824E61700432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E618F0432596A00E329D9 = {
+			fileRef = 824E61710432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61900432596A00E329D9 = {
+			fileRef = 824E61720432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61910432596A00E329D9 = {
+			fileRef = 824E61730432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61920432596A00E329D9 = {
+			fileRef = 824E61740432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61930432596A00E329D9 = {
+			fileRef = 824E61750432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61940432596A00E329D9 = {
+			fileRef = 824E61760432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61950432596A00E329D9 = {
+			fileRef = 824E61770432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61960432596A00E329D9 = {
+			fileRef = 824E61780432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61970432596A00E329D9 = {
+			fileRef = 824E61790432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61980432596A00E329D9 = {
+			fileRef = 824E617A0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61990432596A00E329D9 = {
+			fileRef = 824E617B0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619A0432596A00E329D9 = {
+			fileRef = 824E617C0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619B0432596A00E329D9 = {
+			fileRef = 824E617D0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619C0432596A00E329D9 = {
+			fileRef = 824E617E0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619D0432596A00E329D9 = {
+			fileRef = 824E617F0432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619E0432596A00E329D9 = {
+			fileRef = 824E61800432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E619F0432596A00E329D9 = {
+			fileRef = 824E61810432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A00432596A00E329D9 = {
+			fileRef = 824E61820432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A10432596A00E329D9 = {
+			fileRef = 824E61830432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A20432596A00E329D9 = {
+			fileRef = 824E61840432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A30432596A00E329D9 = {
+			fileRef = 824E61850432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A40432596A00E329D9 = {
+			fileRef = 824E61860432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A50432596A00E329D9 = {
+			fileRef = 824E61870432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		824E61A60432596A00E329D9 = {
+			fileRef = 824E61880432596A00E329D9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB62C04325A7E00785F71 = {
+			isa = PBXFrameworkReference;
+			name = SDL_image.framework;
+			path = /Library/Frameworks/SDL_image.framework;
+			refType = 0;
+		};
+		827EB62D04325A7E00785F71 = {
+			isa = PBXFrameworkReference;
+			name = SDL_mixer.framework;
+			path = /Library/Frameworks/SDL_mixer.framework;
+			refType = 0;
+		};
+		827EB62E04325A7E00785F71 = {
+			isa = PBXFrameworkReference;
+			name = SDL.framework;
+			path = /Library/Frameworks/SDL.framework;
+			refType = 0;
+		};
+		827EB62F04325A7E00785F71 = {
+			fileRef = 827EB62C04325A7E00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB63004325A7E00785F71 = {
+			fileRef = 827EB62D04325A7E00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB63104325A7E00785F71 = {
+			fileRef = 827EB62E04325A7E00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB63204325CDF00785F71 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			path = config.h;
+			refType = 4;
+		};
+		827EB63304325CDF00785F71 = {
+			fileRef = 827EB63204325CDF00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB63404325E1D00785F71 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = SDLMain.h;
+			refType = 2;
+		};
+		827EB63504325E1D00785F71 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			path = SDLMain.m;
+			refType = 2;
+		};
+		827EB63604325E1D00785F71 = {
+			fileRef = 827EB63404325E1D00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		827EB63704325E1D00785F71 = {
+			fileRef = 827EB63504325E1D00785F71;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		82BBAF0C043272A000465D61 = {
+			isa = PBXFileReference;
+			path = icon.icns;
+			refType = 4;
+		};
+		82BBAF0D043272A000465D61 = {
+			fileRef = 82BBAF0C043272A000465D61;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA;
+}
