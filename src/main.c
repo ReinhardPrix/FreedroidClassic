@@ -124,8 +124,6 @@ main (int argc, char *const argv[])
 
 	  CheckInfluenceEnemyCollision ();
 
-	  RotateBulletColor ();
-
 	  if (CurLevel->empty == 2)
 	    {
 	      LevelGrauFaerben ();

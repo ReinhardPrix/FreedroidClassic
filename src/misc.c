@@ -509,7 +509,6 @@ Pause (void)
       // usleep(10);
       AnimateInfluence ();
       AnimateRefresh ();
-      RotateBulletColor ();
       AnimateEnemys ();
       DisplayBanner (NULL, NULL, 0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
@@ -533,10 +532,8 @@ Pause (void)
 	}
 
     } /* while (Pause) */
-
   return;
-
-} /* Pause () */
+}; // Pause () 
 
 
 /*@Function============================================================
@@ -782,25 +779,6 @@ MyRandom (int UpperBound)
   dice_val = (int)( tmp * (1.0 * UpperBound + 0.99999) );
   return (dice_val);
 } /* MyRandom () */
-
-
-/*@Function============================================================
-@Desc: This function is used to revers the order of the chars in a
-       given string.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-reverse (char s[])
-{
-  int c, i, j;
-  for (i = 0, j = strlen (s) - 1; i < j; i++, j--)
-    {
-      c = s[i];
-      s[i] = s[j];
-      s[j] = c;
-    }
-}/* void reverse(char s[]) siehe Kernighan&Ritchie! */
 
 
 /*@Function============================================================

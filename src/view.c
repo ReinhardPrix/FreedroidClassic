@@ -686,7 +686,6 @@ PutBullet (int BulletNummer)
   // SDL_Surface *tmp;
   int PhaseOfBullet;
   int i;
-  int diag;
 
   DebugPrintf (2, "\nvoid PutBullet(int BulletNummer): real function call confirmed.\n");
 
@@ -719,11 +718,6 @@ PutBullet (int BulletNummer)
   PhaseOfBullet = PhaseOfBullet % Bulletmap[CurBullet->type].phases ;
 
   // DebugPrintf( 0 , "\nPhaseOfBullet: %d.", PhaseOfBullet );
-
-  TargetRectangle.x = USER_FENSTER_CENTER_X
-    - (Me.pos.x-CurBullet->pos.x)*Block_Width-Block_Width/2;
-  TargetRectangle.y = USER_FENSTER_CENTER_Y
-    - (Me.pos.y-CurBullet->pos.y)*Block_Width-Block_Height/2;
 
 #define ONE_ROTATION_ONLY
 #ifdef ONE_ROTATION_ONLY
@@ -801,43 +795,6 @@ PutBlast (int BlastNummer)
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &TargetRectangle);
 
 }  // void PutBlast(int BlastNummer)
-
-
-/*-----------------------------------------------------------------
-
-WARNING!! OBSOLETE FUNCTION ONLY USED IN TAKEOVER GAME ANY MORE!!
-
- *-----------------------------------------------------------------*/
-int
-PutObject (int x, int y, unsigned char *pic, int check)
-{
-  int Return_Value;
-
-  printf("\nint PutObject(...): real function call confirmed.\n");
-
-  DebugPrintf (2, "\nint PutObject(...): usual end of function reached.\n");
-
-  return (Return_Value);
-} /* PutObject() */
-
-
-/*@Function============================================================
-@Desc: This function was there in the old graphics engine to do rotation
-       of the bullet color, which produced the glowing effect for 
-       bullet pictures.  Now this function could either be rewritten or
-       even better new bullets using more than one color and more than
-       one picture for every frame could be designed.
-
-       But currently this function does absolutely nothing.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-RotateBulletColor (void)
-{
-
-} /* void RotateBulletColor(void) */
-
 
 /*@Function============================================================
 @Desc: 

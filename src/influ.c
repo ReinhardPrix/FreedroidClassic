@@ -215,7 +215,6 @@ MoveInfluence (void)
       if (Me.type != DRUID001)
 	{
 	  Me.type = DRUID001;
-	  // NONSENSE FROM THE OLD ENGINE RedrawInfluenceNumber ();
 	  Me.speed.x = 0;
 	  Me.speed.y = 0;
 	  Me.energy = PreTakeEnergy;

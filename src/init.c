@@ -1323,7 +1323,6 @@ ThouArtDefeated (void)
 
       for (j = 0; j < MAXBULLETS; j++)
 	CheckBulletCollisions (j);
-      RotateBulletColor ();
     }
 
   update_highscores ();
@@ -1332,7 +1331,7 @@ ThouArtDefeated (void)
 
   DebugPrintf (2, "\nvoid ThouArtDefeated(void): Usual end of function reached.");
   DebugPrintf (1, "\n\n DefeatedDone \n\n");
-}				// void ThouArtDefeated(void)
+}; // void ThouArtDefeated(void)
 
 /*@Function============================================================
 @Desc: 

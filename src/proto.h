@@ -95,21 +95,12 @@ EXTERN void CheckBlastCollisions (int num);
 #define EXTERN extern
 #endif
 EXTERN void Fill_Rect (SDL_Rect rect, SDL_Color color);
-EXTERN unsigned char *FeindZusammenstellen (const char *, int);
-// EXTERN void SetColors(int,int,char*);
-EXTERN void RotateBulletColor (void);
-EXTERN void GetView (void);
 EXTERN void ShowPosition (void);
-EXTERN void DisplayView (void);
 EXTERN void Assemble_Combat_Picture (int );
 EXTERN void PutInfluence (int , int );
 EXTERN void PutBullet (int);
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y );
-EXTERN void PutInternFenster (int);
-EXTERN int PutObject (int x, int y, unsigned char *pic, int check);
-EXTERN void DrawDigit (unsigned char *, unsigned char *);
-EXTERN void RedrawInfluenceNumber (void);
 EXTERN void SetUserfenster (int color );
 EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 
@@ -122,13 +113,6 @@ EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 #define EXTERN extern
 #endif
 
-EXTERN void SmallBlock (int, int, int, unsigned char *, int);
-EXTERN void SmallEnemy (int, int, int, unsigned char *, int);
-EXTERN void SmallBlast (int, int, int, int, unsigned char *, int);
-EXTERN void SmallBullet (int, int, int, int, unsigned char *, int);
-
-EXTERN void GetMapBlocks (void);
-
 EXTERN SDL_Rect *ne_get_blocks (char *picfile, int num_blocks,
 				int blocks_per_line, int source_line,
 				int target_line);
@@ -138,13 +122,6 @@ EXTERN SDL_Rect *ne_get_digit_blocks (char *picfile, int num_blocks,
 				int target_line);
 
 EXTERN SDL_Rect *ne_get_rahmen_block (char *picfile);
-
-EXTERN unsigned char *GetBlocks (char *picfile, int line, int num);
-EXTERN int MergeBlockToWindow (register unsigned char *source,
-			       register unsigned char *target,
-			       int WinLineLen, int check);
-
-EXTERN void GetDigits (void);
 
 /* graphics.c */
 #undef EXTERN
@@ -165,15 +142,9 @@ EXTERN int InitPictures (void);
 EXTERN void SetColors (int FirstCol, int PalAnz, char *PalPtr);
 EXTERN void SetPalCol (unsigned int palpos, unsigned char rot,
 		       unsigned char gruen, unsigned char blau);
-EXTERN int InitLevelColorTable (void);
-EXTERN void SetLevelColor (int);
-EXTERN void Load_PCX_Image (char *, unsigned char *, int);
-EXTERN void LadeLBMBild (char *LBMDateiname, unsigned char *Screen,
-			 int LoadPal);
 EXTERN void TransparentLadeLBMBild (char *LBMDateiname, unsigned char *Screen,
 				    int LoadPal);
 EXTERN void Init_Video (void);
-EXTERN void UnfadeLevel (void);
 EXTERN void LadeZeichensatz (char *Zeichensatzname);
 EXTERN void LevelGrauFaerben (void);
 EXTERN void ClearGraphMem ( void );
@@ -231,7 +202,6 @@ EXTERN void MenuItemSelectedSound (void);
 EXTERN void MoveMenuPositionSound (void);
 EXTERN void EnterLiftSound (void);
 EXTERN void LeaveLiftSound (void);
-// EXTERN void FireBulletSound (void);
 EXTERN void Fire_Bullet_Sound (int);
 EXTERN void BounceSound (void);
 EXTERN void DruidBlastSound (void);
@@ -353,9 +323,6 @@ EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN void DebugPrintf (int db_level, char *fmt, ...);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
-EXTERN void reverse (char *);
-EXTERN char *itoa (int, char *, int);
-EXTERN char *ltoa (long, char *, int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void InsertNewMessage (void);
