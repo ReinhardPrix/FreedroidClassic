@@ -34,35 +34,14 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#ifdef __WIN32__
+#include <gdk/gdkcompat.h>
+#endif
 
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-
-#include <getopt.h>
-
-#include <sys/soundcard.h>
-#include <sys/ioctl.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <stdarg.h>
-#include <ctype.h>
-#include <dirent.h>
-
-#include <SDL/SDL.h>
-#include "../src/defs.h"
-#include "../src/struct.h"
-#include "../src/proto.h"
+#include "system.h"
+#include "defs.h"
+#include "struct.h"
+#include "proto.h"
 
 #define MAX_TEXT_ENTRIES_VISIBLE 3
 #define WINDOW_WARNINGS_DEBUG 2
@@ -4011,7 +3990,8 @@ main( int argc, char *argv[] )
   vpaned = gtk_vpaned_new ();
   gtk_box_pack_start (GTK_BOX (vbox), vpaned, TRUE, TRUE, 2);
   gtk_paned_set_handle_size (GTK_PANED (vpaned), 5);
-  gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
+  // rp(30/05/04): deactivated for win32-crosscompiling
+  //  gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
   gtk_widget_show (vpaned);
 
   // Accelerators

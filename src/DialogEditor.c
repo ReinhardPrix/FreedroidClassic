@@ -32,6 +32,10 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef __WIN32__
+#include <gdk/gdkcompat.h>
+#endif
+
 #include "system.h"
 #include "defs.h"
 #include "struct.h"
@@ -3771,7 +3775,8 @@ main( int argc, char *argv[] )
   vpaned = gtk_vpaned_new ();
   gtk_box_pack_start (GTK_BOX (vbox), vpaned, TRUE, TRUE, 2);
   gtk_paned_set_handle_size (GTK_PANED (vpaned), 5);
-  gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
+  // rp(30/05/04): deactivated for win32-crosscompiling
+  //gtk_paned_set_gutter_size (GTK_PANED (vpaned), 7);
   gtk_widget_show (vpaned);
 
   // Accelerators
