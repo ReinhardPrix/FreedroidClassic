@@ -501,6 +501,8 @@ typedef struct
   unsigned char HaveBeenToLevel[ MAX_LEVELS ]; // record of the levels the player has visited yet.
 
   unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
+  unsigned char has_agreed_at_chandra;
+
   // unsigned char Chandra_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
   // unsigned char RMS_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];
   // unsigned char SOR_Chat_Flags[ MAX_ANSWERS_PER_PERSON ];

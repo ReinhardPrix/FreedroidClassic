@@ -1799,9 +1799,12 @@ InitNewMissionList ( char *MissionName )
       for ( j = 0 ; j < MAX_PERSONS ; j ++ )
 	{
 	  Me[0]. Chat_Flags [ j ] [ i ] = 0 ;
+	  Me[0]. Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
 	}
     }
-  Me[0].Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ;
+
+  Me [ 0 ] . Chat_Flags [ PERSON_SOR ] [ 1 ] = 1 ;
+  Me [ 0 ] . has_agreed_at_chandra = FALSE ;
   // RestoreChatVariableToInitialValue( 0 );
 
 

@@ -422,12 +422,13 @@ enum _sounds
 
 #define MAX_PLAYERS             5
 
-#define MAX_PERSONS             4
+#define MAX_PERSONS             5
 enum _non_player_characters
   {
     PERSON_CHA = 0,
     PERSON_SOR,
     PERSON_RMS,
+    PERSON_DIX,
     PERSON_614
   };
 #define MAX_ANSWERS_PER_PERSON 40
