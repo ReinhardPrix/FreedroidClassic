@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------
- *
- * Desc: miscellaeous helpful functions for Freedroid
- *	 
- *----------------------------------------------------------------------*/
-
 /* 
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
@@ -27,6 +21,13 @@
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
  *
+ */
+/* ----------------------------------------------------------------------
+ * This file contains miscellaeous helpful functions for Freedroid.
+ * ---------------------------------------------------------------------- */
+/*
+ * This file has been checked for remains of german comments in the code
+ * I you still find some, please just kill it mercilessly.
  */
 #define _misc_c
 
@@ -73,7 +74,6 @@ Uint32 One_Frame_SDL_Ticks;
 Uint32 Ten_Frame_SDL_Ticks;
 Uint32 Onehundred_Frame_SDL_Ticks;
 int framenr = 0;
-
 
 /* ----------------------------------------------------------------------
  * This function does something similar to memmem.  Indeed, it would be
@@ -123,14 +123,12 @@ MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, s
 }; // void *MyMemmem ( ... );
 
 
-/*
-----------------------------------------------------------------------
-This function looks for a sting begin indicator and takes the string
-from after there up to a sting end indicator and mallocs memory for
-it, copys it there and returns it.
-The original source string specified should in no way be modified.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function looks for a sting begin indicator and takes the string
+ * from after there up to a sting end indicator and mallocs memory for
+ * it, copys it there and returns it.
+ * The original source string specified should in no way be modified.
+ * ---------------------------------------------------------------------- */
 char*
 ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString ) 
 {
@@ -204,15 +202,12 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
       DebugPrintf( 2 , "\nchar* ReadAndMalocStringFromData (...): Successfully identified string : %s." , ReturnString );
     }
   return ( ReturnString );
-};
+}; // char* ReadAndMallocStringFromData ( ... )
 
-
-/*
-----------------------------------------------------------------------
-This function counts the number of occurences of a string in a given
-other string.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function counts the number of occurences of a string in a given
+ * other string.
+ * ---------------------------------------------------------------------- */
 int
 CountStringOccurences ( char* SearchString , char* TargetString ) 
 {
@@ -229,14 +224,12 @@ CountStringOccurences ( char* SearchString , char* TargetString )
   return ( Counter );
 }; // CountStringOccurences ( char* SearchString , char* TargetString ) 
 
-/*
-----------------------------------------------------------------------
-This function read in a file with the specified name, allocated 
-memory for it of course, looks for the file end string and then
-terminates the whole read in file with a 0 character, so that it
-can easily be treated like a common string.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function read in a file with the specified name, allocated 
+ * memory for it of course, looks for the file end string and then
+ * terminates the whole read in file with a 0 character, so that it
+ * can easily be treated like a common string.
+ * ---------------------------------------------------------------------- */
 char* 
 ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
 {
@@ -245,7 +238,6 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
   char *Data;
   char *ReadPointer;
   long MemoryAmount;
-  // char *fpath;
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
 
@@ -360,16 +352,14 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   return ( Data );
 }; // char* ReadAndMallocAndTerminateFile( char* filename) 
 
-/*
-----------------------------------------------------------------------
-This function tries to locate a string in some given data string.
-The data string is assumed to be null terminated.  Otherwise SEGFAULTS
-might happen.
-
-The return value is a pointer to the first instance where the substring
-we are searching is found in the main text.
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function tries to locate a string in some given data string.
+ * The data string is assumed to be null terminated.  Otherwise SEGFAULTS
+ * might happen.
+ * 
+ * The return value is a pointer to the first instance where the substring
+ * we are searching is found in the main text.
+ * ---------------------------------------------------------------------- */
 char* 
 LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
 {
@@ -406,16 +396,12 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   
   return ( temp );
 
-};
+}; // char* LocateStringInData ( ... )
 
-
-/*
-----------------------------------------------------------------------
-This function should analyze a given passage of text, locate an 
-indicator for a value, and read in the value.
-
-----------------------------------------------------------------------
-*/
+/* ----------------------------------------------------------------------
+ * This function should analyze a given passage of text, locate an 
+ * indicator for a value, and read in the value.
+ * ---------------------------------------------------------------------- */
 void
 ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
 {
@@ -433,6 +419,7 @@ ReadValueFromString( char* SearchBeginPointer , char* ValuePreceedText , char* F
   //--------------------
   // Attention!!! 
   // Now we try to read in the value!!!
+  //
   if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
     {
       fprintf(stderr, "\n\
@@ -467,13 +454,12 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
     {
       DebugPrintf( 2 , "\nvoid ReadValueFromString ( .... ) : value read in successfully.");
     }
-  
 
   // Now that we are done, we restore the given SearchArea to former glory
   EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
-};
+}; // void ReadValueFromString( ... )
 
-/*-----------------------------------------------------------------
+/* -----------------------------------------------------------------
  * find a given filename in subdir relative to DATADIR, 
  * using theme subdir if use_theme==TRUE
  *
@@ -484,7 +470,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
  *
  * !! do never try to free the returned string !!
  *
- *-----------------------------------------------------------------*/
+ * ----------------------------------------------------------------- */
 char *
 find_file (char *fname, char *subdir, int use_theme)
 {
@@ -523,20 +509,17 @@ find_file (char *fname, char *subdir, int use_theme)
 	}
     } /* for i */
 
-
   return (File_Path);
 	
-} /* find_file */
+}; // char * find_file ( ... )
 
-/*@Function============================================================
-@Desc: realise Pause-Mode: the game process is halted,
-       while the graphics and animations are not.  This mode 
-       can further be toggled from PAUSE to CHEESE, which is
-       a feature from the original program that should probably
-       allow for better screenshots.
-       
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function realises the Pause-Mode: the game process is halted,
+ * while the graphics and animations are not.  This mode 
+ * can further be toggled from PAUSE to CHEESE, which is
+ * a feature from the original program that should probably
+ * allow for better screenshots.
+ * ---------------------------------------------------------------------- */
 void
 Pause (void)
 {
@@ -578,17 +561,15 @@ Pause (void)
   return;
 }; // Pause () 
 
-
-/*@Function============================================================
-@Desc: This function starts the time-taking process.  Later the results
-       of this function will be used to calculate the current framerate
-
-       Two methods of time-taking are available.  One uses the SDL 
-       ticks.  This seems LESS ACCURATE.  The other one uses the
-       standard ansi c gettimeofday functions and are MORE ACCURATE
-       but less convenient to use.
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function starts the time-taking process.  Later the results
+ * of this function will be used to calculate the current framerate
+ * 
+ * Two methods of time-taking are available.  One uses the SDL 
+ * ticks.  This seems LESS ACCURATE.  The other one uses the
+ * standard ansi c gettimeofday functions and are MORE ACCURATE
+ * but less convenient to use.
+ * ---------------------------------------------------------------------- */
 void 
 StartTakingTimeForFPSCalculation(void)
 {
@@ -622,23 +603,21 @@ StartTakingTimeForFPSCalculation(void)
     }
 #endif
   
-} // void StartTakingTimeForFPSCalculation(void)
+}; // void StartTakingTimeForFPSCalculation(void)
 
-
-/*@Function============================================================
-@Desc: This function computes the framerate that has been experienced
-       in this frame.  It will be used to correctly calibrate all 
-       movements of game objects.
-
-       NOTE:  To query the actual framerate a DIFFERENT function must
-       be used, namely Frame_Time().
-
-       Two methods of time-taking are available.  One uses the SDL 
-       ticks.  This seems LESS ACCURATE.  The other one uses the
-       standard ansi c gettimeofday functions and are MORE ACCURATE
-       but less convenient to use.
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function computes the framerate that has been experienced
+ * in this frame.  It will be used to correctly calibrate all 
+ * movements of game objects.
+ * 
+ * NOTE:  To query the actual framerate a DIFFERENT function must
+ *        be used, namely Frame_Time().
+ *
+ *        Two methods of time-taking are available.  One uses the SDL 
+ *        ticks.  This seems LESS ACCURATE.  The other one uses the
+ *        standard ansi c gettimeofday functions and are MORE ACCURATE
+ *        but less convenient to use.
+ * ---------------------------------------------------------------------- */
 void 
 ComputeFPSForThisFrame(void)
 {
@@ -694,34 +673,29 @@ ComputeFPSForThisFrame(void)
   FPSover100 = 1000000 * 100 / (float) onehundredframedelay;
   
 #endif
-  
-  
-} // void ComputeFPSForThisFrame(void)
 
-/*@Function============================================================
-  @Desc: 
+}; // void ComputeFPSForThisFrame(void)
 
+/* ----------------------------------------------------------------------
+ *
  * This function is the key to independence of the framerate for various game elements.
  * It returns the average time needed to draw one frame.
  * Other functions use this to calculate new positions of moving objects, etc..
  *
-
  * Also there is of course a serious problem when some interuption occurs, like e.g.
  * the options menu is called or the debug menu is called or the console or the elevator
  * is entered or a takeover game takes place.  This might cause HUGE framerates, that could
  * box the influencer out of the ship if used to calculate the new position.
-
+ *
  * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
  * which instructs Rate_To_Be_Returned to return only the overall default framerate since
  * no better substitute exists at this moment.  But on the other hand, this seems to
  * work REALLY well this way.
-
+ *
  * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
  * which can be conveniently called from eveywhere.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+ *
+ * ---------------------------------------------------------------------- */
 float
 Frame_Time (void)
 {
@@ -737,7 +711,7 @@ Frame_Time (void)
 
   return Rate_To_Be_Returned;
 
-} // float Frame_Time(void)
+}; // float Frame_Time ( void )
 
 int
 Get_Average_FPS ( void )
@@ -745,24 +719,21 @@ Get_Average_FPS ( void )
   return ( (int) ( 1.0 / Overall_Average ) );
 }; // int Get_Average_FPS( void )
 
-/*@Function============================================================
-@Desc: 
-
+/* ----------------------------------------------------------------------
+ * 
  * With framerate computation, there is a problem when some interuption occurs, like e.g.
  * the options menu is called or the debug menu is called or the console or the elevator
  * is entered or a takeover game takes place.  This might cause HUGE framerates, that could
  * box the influencer out of the ship if used to calculate the new position.
-
+ *
  * To counter unwanted effects after such events we have the SkipAFewFramerates counter,
  * which instructs Rate_To_Be_Returned to return only the overall default framerate since
  * no better substitute exists at this moment.
-
+ *
  * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
  * which can be conveniently called from eveywhere.
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
+ *
+ * ---------------------------------------------------------------------- */
 void 
 Activate_Conservative_Frame_Computation(void)
 {
@@ -775,16 +746,13 @@ Activate_Conservative_Frame_Computation(void)
   // so we set this variable...
   BannerIsDestroyed=TRUE;
 
-} // void Activate_Conservative_Frame_Computation(void)
+}; // void Activate_Conservative_Frame_Computation(void)
 
-
-/*@Function============================================================
-@Desc: This function is used for debugging purposes.  It writes the
-       given string either into a file, on the screen, or simply does
-       nothing according to currently set debug level.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used for debugging purposes.  It writes the
+ * given string either into a file, on the screen, or simply does
+ * nothing according to currently set debug level.
+ * ---------------------------------------------------------------------- */
 void
 DebugPrintf (int db_level, char *fmt, ...)
 {
@@ -802,14 +770,12 @@ DebugPrintf (int db_level, char *fmt, ...)
     }
 
   va_end (args);
-}
+}; // void DebugPrintf (int db_level, char *fmt, ...)
 
-/*@Function============================================================
-@Desc: This function is used to generate an integer in range of all
-       numbers from 0 to UpperBound.
-
-@Ret:  the generated integer
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used to generate an integer in range of all
+ * numbers from 0 to UpperBound.
+ * ---------------------------------------------------------------------- */
 int
 MyRandom (int UpperBound)
 {
@@ -826,16 +792,16 @@ MyRandom (int UpperBound)
    * roughly the same probablity as the other numbers 
    */
   dice_val = (int)( tmp * (1.0 * UpperBound + 0.99999) );
+
   return (dice_val);
-} /* MyRandom () */
+
+}; // int MyRandom ( int UpperBound ) 
 
 
-/*@Function============================================================
-@Desc: This function is kills all enemy robots on the whole ship.
-       It querys the user once for safety.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is kills all enemy robots on the whole ship.
+ * It querys the user once for safety.
+ * ---------------------------------------------------------------------- */
 void
 Armageddon (void)
 {
@@ -853,14 +819,12 @@ Armageddon (void)
 	AllEnemys[i].energy = 0;
 	AllEnemys[i].Status = OUT;
       }
-} // void Armageddon(void)
+}; // void Armageddon(void)
 
-/*@Function============================================================
-@Desc: This function teleports the influencer to a new position on the
-       ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function teleports the influencer to a new position on the
+ * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
+ * ---------------------------------------------------------------------- */
 void
 Teleport (int LNum, int X, int Y)
 {
@@ -918,37 +882,12 @@ Teleport (int LNum, int X, int Y)
 
   Switch_Background_Music_To( CurLevel->Background_Song_Name );
 
-} /* Teleport() */
+}; // void Teleport( ... ) 
 
-
-/*@Function============================================================
-@Desc: This is a test function for InsertMessage()
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-InsertNewMessage (void)
-{
-  static int counter = 0;
-  char testmessage[100];
-
-  DebugPrintf (2, "\nvoid InsertNewMessage(void): real function call confirmed...");
-
-  counter++;
-  sprintf (testmessage, "Das ist die %d .te Message !!", counter);
-  InsertMessage (testmessage);
-
-  DebugPrintf (2, "\nvoid InsertNewMessage(void): end of function reached...");
-  return;
-}				// void InsertNewMessage(void)
-
-/*@Function============================================================
-@Desc: 	This function is used for terminating freedroid.  It will close
-        the SDL submodules and exit.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function is used for terminating freedroid.  It will close
+ * the SDL submodules and exit.
+ * ---------------------------------------------------------------------- */
 void
 Terminate (int ExitCode)
 {
@@ -968,239 +907,13 @@ Terminate (int ExitCode)
   SDL_Quit();
   exit (ExitCode);
   return;
-}  // void Terminate(int ExitCode)
+}; // void Terminate ( int ExitCode )
 
-
-/*@Function============================================================
-@Desc: This function empties the message queue of messages to be
-       displayed in a moving font on screen.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-KillQueue (void)
-{
-  while (Queue)
-    AdvanceQueue ();
-}
-
-/*@Function============================================================
-@Desc: This functin deletes the currently displayed message and
-       advances to the next message.
-
-@Ret: none
-* $Function----------------------------------------------------------*/
-void
-AdvanceQueue (void)
-{
-  message *tmp;
-
-  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion wurde echt aufgerufen.");
-
-  if (Queue == NULL)
-    return;
-
-  if (Queue->MessageText)
-    free (Queue->MessageText);
-  tmp = Queue;
-
-  Queue = Queue->NextMessage;
-
-  free (tmp);
-
-  DebugPrintf (2, "\nvoid AdvanceQueue(void): Funktion hat ihr natuerliches Ende erfolgreich erreicht....");
-} // void AdvanceQueue(void)
-
-
-/*@Function============================================================
-@Desc: This function should put a message from the queue to the scren.
-       It surely does not work now and it also needs not work now, 
-       since this is a feature not incorporated into the original game
-       from the C64 and therefore has less priority.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
-void
-PutMessages (void)
-{
-  static int MesPos = 0;	// X-position of the message bar 
-  static int Working = FALSE;	// is a message beeing processed? 
-  message *LQueue;		// mobile queue pointer
-  int i;
-
-  if (!PlusExtentionsOn)
-    return;
-
-  DebugPrintf (2, "\nvoid PutMessages(void): Funktion wurde echt aufgerufen.");
-
-  if (!Queue)
-    return;			// nothing to be done
-  if (!Working)
-    ThisMessageTime = 0;	// inactive, but Queue->reset time
-
-  printf ("Time: %d", ThisMessageTime);
-
-// display the current list:
-
-  LQueue = Queue;
-  i = 0;
-  DebugPrintf (2, "\nvoid PutMessages(void): This is the Queue of Messages:\n");
-  while (LQueue != NULL)
-    {
-      if ((LQueue->MessageText) == NULL)
-	{
-	  DebugPrintf (2, "\nvoid PutMessages(void): ERROR: Textpointer is NULL !!!!!!\n");
-	  Terminate(ERR);
-	}
-      printf ("%d. '%s' %d\n", i, LQueue->MessageText,
-	      LQueue->MessageCreated);
-      i++;
-      LQueue = LQueue->NextMessage;
-    }
-  DebugPrintf (2, " NULL reached !\n");
-
-  // if the message is very old, it can be deleted...
-  if (Working && (ThisMessageTime > MaxMessageTime))
-    {
-      AdvanceQueue ();
-      //      CleanMessageLine ();
-      Working = FALSE;		// inactive
-      ThisMessageTime = 0;	// Counter init.
-      return;
-    }
-
-
-  // old message has lived for MinTime, new one is waiting
-  if ((ThisMessageTime > MinMessageTime) && (Queue->NextMessage))
-    {
-      AdvanceQueue ();		/* Queue weiterbewegen */
-      Working = FALSE;		/* inaktiv setzen */
-      ThisMessageTime = 0;	/* counter neu init. */
-      return;
-    }
-
-  // function currenlty inactive and new message waiting --> activate it
-  if ((!Working) && Queue)
-    {
-
-      // if message not yet generated, generate it
-      if (!Queue->MessageCreated)
-	{
-	  CreateMessageBar (Queue->MessageText);
-	  Queue->MessageCreated = TRUE;
-	}
-
-      ThisMessageTime = 0;	/* initialize counter  */
-      //      CleanMessageLine ();	/* delete line */
-      Working = TRUE;		/* activated */
-    }
-
-  // function currently inactive --> move and display
-  if (Working && Queue)
-    {
-
-      MesPos = 10 * ThisMessageTime;	/* move synchronized this time */
-
-      /* don't go beyond the left border!! */
-      if (MesPos > (MESBARBREITE - 2))
-	MesPos = MESBARBREITE - 2;
-
-      for (i = 0; i < MESHOEHE; i++)
-	{
-	  ;
-	}
-    }	/* if aktiv + Message there */
-}	/* Put Messages */
-
-
-/*@Function============================================================
-@Desc: This function prepares the graphics for the next message to
-       be displayed
-
-@Ret: 
-* $Function----------------------------------------------------------*/
-void
-CreateMessageBar (char *MText)
-{
-  char Worktext[42];
-  int i, j;
-
-  DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): real function call confirmed.");
-
-  // check for too long message
-  if (strlen (MText) > 40)
-    {
-      DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): Message hat mehr als 40 Zeichen !.\n");
-      Terminate (ERR);
-    }
-
-  // allocate memory if this hasn't happened yet
-  if (MessageBar == NULL)
-    if ((MessageBar = MyMalloc (MESBAR_MEM)) == NULL)
-      {
-	DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): Bekomme keinen Speicher fuer MessageBar !!\n");
-	Terminate (ERR);
-      }
-
-  // fill in spaces to get 40 chars as message length
-  strcpy (Worktext, MText);
-  while (strlen (Worktext) < 40)
-    strcat (Worktext, " ");
-
-  // display the current message to the internal screen and then cut it out from there
-  for (i = 0; i < 40; i++)
-    {
-      for (j = 0; j < 8; j++)
-	{
-	  memcpy ((MessageBar + i * 8 + j * SCREENLEN),
-		  (Data70Pointer + Worktext[i] * 8 * 8 + j * 8), 8);
-	}
-    }
-
-  DebugPrintf (2, "\nvoid CreateMessageBar(char* MText): end of function reached.");
-} // void CreateMessageBar(char* MText)
-
-/*@Function============================================================
-@Desc: This function insers a new message for the user to be 
-       displayed into the message queue
-
-@Ret: 
-@Int:
-* $Function----------------------------------------------------------*/
-void
-InsertMessage (char *MText)
-{
-  message *LQueue = Queue;
-
-  DebugPrintf (2, "\nvoid InsertMessage(char* MText): real function call confirmed...");
-
-  if (LQueue)
-    {
-      // move to the next free position in the message queue
-      while (LQueue->NextMessage != NULL)
-	LQueue = LQueue->NextMessage;
-      LQueue->NextMessage = MyMalloc (sizeof (message) + 1);
-      LQueue = LQueue->NextMessage;
-    }
-  else
-    {
-      Queue = MyMalloc (sizeof (message) + 1);
-      LQueue = Queue;
-    }
-
-  LQueue->MessageText = MyMalloc (MAX_MESSAGE_LEN + 1);
-  strcpy (LQueue->MessageText, MText);
-  LQueue->NextMessage = NULL;
-  LQueue->MessageCreated = FALSE;
-} // void InsertMessage(char* MText)
-
-/*@Function============================================================
-@Desc: This function works a malloc, except that it also checks for
-       success and terminates in case of "out of memory", so we dont
-       need to do this always in the code.
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function works a malloc, except that it also checks for
+ * success and terminates in case of "out of memory", so we dont
+ * need to do this always in the code.
+ * ---------------------------------------------------------------------- */
 void *
 MyMalloc (long Mamount)
 {
@@ -1213,11 +926,15 @@ MyMalloc (long Mamount)
     }
 
   return Mptr;
-}				// void* MyMalloc(long Mamount)
+}; // void* MyMalloc ( long Mamount )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * Since numbers are not so very telling and can easily get confusing
+ * we do not use numbers to reference the action from a trigger but 
+ * rather we use labels already in the mission file.  However internally
+ * the game needs numbers as a pointer or index in a list and therefore
+ * this functions was added to go from a label to the corresponding 
+ * number entry.
  * ---------------------------------------------------------------------- */
 int
 GiveNumberToThisActionLabel ( char* ActionLabel )
@@ -1266,24 +983,18 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   return ( i );
 }; // int GiveNumberToThisActionLabel ( char* ActionLabel )
 
-
-
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * This function executes an action with a label.
+ * ---------------------------------------------------------------------- */
 void 
 ExecuteActionWithLabel ( char* ActionLabel )
 {
   ExecuteEvent( GiveNumberToThisActionLabel ( ActionLabel ) );
 }; // void ExecuteActionWithLabel ( char* ActionLabel )
 
-/*@Function============================================================
-@Desc: 
-
-@Ret: 
-* $Function----------------------------------------------------------*/
+/* ----------------------------------------------------------------------
+ * 
+ * ---------------------------------------------------------------------- */
 void 
 ExecuteEvent ( int EventNumber )
 {
@@ -1345,7 +1056,7 @@ ExecuteEvent ( int EventNumber )
  * In addition, statements are started, if the influencer is at the 
  * right location for them.
  *
- * $Function----------------------------------------------------------*/
+ * ---------------------------------------------------------------------- */
 void 
 CheckForTriggeredEventsAndStatements ( void )
 {
@@ -1406,46 +1117,5 @@ CheckForTriggeredEventsAndStatements ( void )
     }
 
 }; // CheckForTriggeredEventsAndStatements (void )
-
-/* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-int 
-InstallItem( int InventoryIndex )
-{
-  //--------------------
-  // We need not do anything and return an ERROR if the item does not
-  // exist at all or if the item cannot be installed in influencer
-  //
-  if ( Me.Inventory[ InventoryIndex ].type == (-1) ) return ( ERR ) ;
-  if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].item_can_be_installed_in_influ == FALSE ) return ( ERR ) ;
-  
-  //--------------------
-  // Now we know that the item exists and that it is of a type, that can
-  // be installed in the influencer too, so we install it in the influencer
-  //
-
-  // Now we see if this item invokes a change of laser in the influence device
-  // if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation != (-1) ) 
-  // {
-  // Druidmap[ DRUID001 ].gun = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Laser_Type_After_Installation;
-  // }
-
-  // Now we see if this item invokes a change of drive type in the influence device
-  // if ( ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Drive_Type_After_Installation != (-1) ) 
-  // {
-  // Druidmap[ DRUID001 ].drive = ItemMap[ Me.Inventory[ InventoryIndex ].type ].New_Drive_Type_After_Installation;
-  // }
-
-  //--------------------
-  // Now that the item has been installed in influs system, it can be deleted from
-  // inventory
-  //
-  Me.Inventory[ InventoryIndex ].type = (-1);
-
-  return ( OK );
-
-};  // void InstallItem( int IventoryIndex )
 
 #undef _misc_c
