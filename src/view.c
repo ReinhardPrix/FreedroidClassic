@@ -1267,6 +1267,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
   int i;
   int enemy_under_cursor = -1;
   int barrel_under_cursor = -1;
+  int chest_under_cursor = -1;
 
   //--------------------
   // We memorize which 'enemy' is currently under the mouse target, so that we
@@ -1274,6 +1275,7 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
   //
   enemy_under_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
   barrel_under_cursor = smashable_barred_below_mouse_cursor ( 0 ) ;
+  chest_under_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
 
   //--------------------
   // Now it's time to blit all the elements from the list...
@@ -1292,7 +1294,8 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 		blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
 	      else
 		{
-		  if ( blitting_list [ i ] . code_number == barrel_under_cursor ) 
+		  if ( ( blitting_list [ i ] . code_number == barrel_under_cursor )  ||
+		       ( blitting_list [ i ] . code_number == chest_under_cursor ) )
 		    blit_one_obstacle_highlighted ( (obstacle*)  blitting_list [ i ] . element_pointer );
 		  else
 		    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
