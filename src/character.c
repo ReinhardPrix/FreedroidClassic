@@ -275,20 +275,16 @@ DisplayButtons( void )
     static int WasPressed;
 
     //--------------------
-    // Now we can draw either the plus button or the 'cha' button, depending
-    // on whether there are points to distribute or not
+    // When the Tux has some extra skill points, that can be distributed
+    // to some character stats or saved for later training with some trainer
+    // character in the city, we mark the character screen toggle button as
+    // red to indicate the available points.
     //
     if ( Me[0].points_to_distribute > 0 )
     {
 	// blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
 	ShowGenericButtonFromList ( CHA_SCREEN_TOGGLE_BUTTON_RED );
     }
-    else
-    {
-	// blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
-    }
-    // blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
-    // blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
     
     if ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
@@ -296,7 +292,7 @@ DisplayButtons( void )
 	if ( axis_is_active && !WasPressed )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
-	    DebugPrintf ( -2 , "\nClick inside inventory button registered..." );
+	    DebugPrintf ( 2 , "\nClick inside inventory button registered..." );
 	}
     }
     else if ( MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -305,7 +301,7 @@ DisplayButtons( void )
 	if ( axis_is_active && !WasPressed )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
-	    DebugPrintf ( -2 , "\nClick inside character button registered..." );
+	    DebugPrintf ( 2 , "\nClick inside character button registered..." );
 	}
     }
     else if ( MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -314,7 +310,7 @@ DisplayButtons( void )
 	if ( axis_is_active && !WasPressed )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
-	    DebugPrintf ( -2 , "\nClick inside skills button registered..." );
+	    DebugPrintf ( 2 , "\nClick inside skills button registered..." );
 	}
     }
     else if ( MouseCursorIsOnButton( LOG_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -322,9 +318,8 @@ DisplayButtons( void )
 	ShowGenericButtonFromList ( LOG_SCREEN_TOGGLE_BUTTON_YELLOW );
 	if ( axis_is_active && !WasPressed )
 	{
-	    // toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
+	    DebugPrintf ( 2 , "\nClick inside questlog button registered..." );
 	    quest_browser_interface ( );
-	    DebugPrintf ( -2 , "\nClick inside questlog button registered..." );
 	}
     }
     

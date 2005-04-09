@@ -184,9 +184,31 @@ ShowStartupPercentage ( int Percentage )
     
     SDL_SetClipRect( Screen , NULL );
     
-    PrintString ( Screen , ( 200 + 80 ) * GameConfig . screen_width / 640 , 
-		  ( 200 + 4 ) * GameConfig . screen_height / 480 , "%d%%", Percentage ) ;
-    
+    switch ( GameConfig . screen_width )
+    {
+	case 640:
+	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 , 
+			  ( 205 ) * GameConfig . screen_height / 480 , "%d%%", Percentage ) ;
+	    break;
+	case 800:
+	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 5 , 
+			  ( 205 ) * GameConfig . screen_height / 480 + 4 , "%d%%", Percentage ) ;
+	    break;
+	case 1024:
+	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 8 , 
+			  ( 205 ) * GameConfig . screen_height / 480 + 7 , "%d%%", Percentage ) ;
+	    break;
+	default:
+	    GiveStandardErrorMessage ( __FUNCTION__  , "\
+The resolution found is none of\n\
+     0 = 640 x 480 (default with SDL)\n\
+     1 = 800 x 600 (default with OpenGL)\n\
+     2 = 1024 x 748 \n\
+This means a severe bug...",
+						       PLEASE_INFORM , IS_FATAL );
+	    break;
+    }
+
     our_SDL_update_rect_wrapper ( Screen , 200 , 200 , 200 , 30  ) ;
     
     DebugPrintf ( 1 , "\nNow at percentage: %d." , Percentage );
@@ -1152,7 +1174,7 @@ void
 ParseCommandLine (int argc, char *const argv[])
 {
     int c;
-    int resolution_code = 0 ;
+    int resolution_code = 1 ;
 
     static struct option long_options[] = {
 	{"version",     0, 0,  'v'},
@@ -1173,8 +1195,8 @@ ParseCommandLine (int argc, char *const argv[])
     //--------------------
     // We set the screen resolution to some default values.
     //
-    GameConfig . screen_width = 640 ;
-    GameConfig . screen_height = 480 ;
+    GameConfig . screen_width = 800 ;
+    GameConfig . screen_height = 600 ;
     command_line_override_for_screen_resolution = FALSE ;
 
     while ( 1 )
@@ -1234,8 +1256,8 @@ ParseCommandLine (int argc, char *const argv[])
 	    case 'r':
 		if (!optarg) 
 		{
-		    GameConfig . screen_width = 640; 
-		    GameConfig . screen_height = 480 ;
+		    GameConfig . screen_width = 800; 
+		    GameConfig . screen_height = 600 ;
 		}
 		else
 		{
@@ -1266,8 +1288,8 @@ ParseCommandLine (int argc, char *const argv[])
 The resolution identifier given is not a valid resolution code.\n\
 Please enter one of the options 0, 1 or 2 as the resolution code.\n\
 These codes correspond to the following resolutions available:\n\
-     0 = 640 x 480 (default)\n\
-     1 = 800 x 600 \n\
+     0 = 640 x 480 (default with SDL)\n\
+     1 = 800 x 600 (default with OpenGL)\n\
      2 = 1024 x 748 \n\
 Anything else will not be accepted right now, but you can send in\n\
 your suggestion to the FreedroidRPG dev team to enable new resolutions.",

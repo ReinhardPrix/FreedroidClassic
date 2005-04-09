@@ -1812,6 +1812,31 @@ SaveGameConfig (void)
     int current_width;
     int current_height;
 
+    //--------------------
+    // Maybe the Terminate function was invoked BEFORE the startup process
+    // was complete at all (like e.g. some illegal command line parameter).
+    // Then the config dir is not initialized.  We catch this case and return
+    // control to the operating system immediately if that happens...
+    //
+    if ( our_config_dir == NULL )
+    {
+	printf("It seems that the game couldn't start up at all... therefore we need not save any config information.\n\n");
+	SDL_Quit();
+#if __WIN32__
+	if ( ExitCode == ERR )
+	{
+	    system ( "notepad stderr.txt" );
+	    system ( "notepad stdout.txt" );
+	}
+#endif
+	exit ( ERR );
+    }
+
+    //--------------------
+    // Now we know, that the config dir has been initialized already.
+    // That indicates, that the game did start up already.
+    // Therefore we can do the normal save config stuff...
+    //
     if ( our_config_dir [ 0 ] == '\0' )
 	return (ERR);
     
