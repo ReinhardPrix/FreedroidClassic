@@ -1784,6 +1784,8 @@ InitFreedroid ( void )
 #endif
     struct stat statbuf;
 
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
+
     //--------------------
     // We want DisplayChar to produce visible results by default...
     //
@@ -1858,7 +1860,6 @@ InitFreedroid ( void )
     // That will cause the memory to be allocated later...
     //
     Bulletmap = NULL;  
-    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 
     //--------------------
     // We set these dummy values, so that when the title plays (and banner and
