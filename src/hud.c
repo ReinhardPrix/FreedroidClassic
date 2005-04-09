@@ -968,8 +968,6 @@ blit_running_power_bars ( void )
 
 }; // void blit_running_power_bars ( void )
 
-
-
 /* ----------------------------------------------------------------------
  * Basically there are currently two methods of displaying the current
  * energy and mana of the Tux.  One method is to use the energy-o-meter,

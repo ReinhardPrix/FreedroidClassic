@@ -65,10 +65,10 @@ extern SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, i
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 40 , - 60 ,  38 ,  40 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 50 , - 104 ,  38 ,  47 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { - 80 , - 46 ,  38 ,  45 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 307 , 480-45 ,  45 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 261 , 480-45 ,  45 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 352 , 480-45 ,  45 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 307 , 480-45 ,  45 ,  14 } , FALSE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE , FALSE } ,

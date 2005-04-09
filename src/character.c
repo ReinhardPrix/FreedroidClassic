@@ -280,26 +280,29 @@ DisplayButtons( void )
     //
     if ( Me[0].points_to_distribute > 0 )
     {
-	blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
+	// blit_special_background ( MOUSE_BUTTON_PLUS_BACKGROUND_PICTURE_CODE );
     }
     else
     {
-	blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
+	// blit_special_background ( MOUSE_BUTTON_CHA_BACKGROUND_PICTURE_CODE );
     }
-    blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
-    blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
+    // blit_special_background ( MOUSE_BUTTON_INV_BACKGROUND_PICTURE_CODE );
+    // blit_special_background ( MOUSE_BUTTON_SKI_BACKGROUND_PICTURE_CODE );
     
     if ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
 	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
+	DebugPrintf ( -2 , "\nClick inside inventory button registered..." );
     }
     else if ( MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
 	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
+	DebugPrintf ( -2 , "\nClick inside character button registered..." );
     }
     else if ( MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
     {
 	toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
+	DebugPrintf ( -2 , "\nClick inside skills button registered..." );
     }
     
     WasPressed = axis_is_active;

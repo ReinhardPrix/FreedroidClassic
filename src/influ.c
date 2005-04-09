@@ -2171,8 +2171,8 @@ adapt_global_mode_for_player ( int player_num )
     // At first we check if maybe the player is scrolling the game
     // message window.
     //
-    SDL_Rect upper_rect = { ( 65 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - (70 * GameConfig . screen_height) / 480 , 500 , (70/2) } ;
-    SDL_Rect lower_rect = { ( 65 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - ( (70/2) * GameConfig . screen_height) / 480 , 500 , (70/2) } ;
+    SDL_Rect upper_rect = { ( 98 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - (102 * GameConfig . screen_height) / 480 , 444 * GameConfig . screen_width / 640 , (48/2)*GameConfig.screen_height / 480 } ;
+    SDL_Rect lower_rect = { ( 98 * GameConfig . screen_width ) / 640 , GameConfig . screen_height - (102 * GameConfig . screen_height) / 480 + (48/2)*GameConfig.screen_height/480, 444 * GameConfig . screen_width / 640 , (48/2)*GameConfig.screen_height / 480 } ;
     if ( MouseCursorIsInRect ( &upper_rect , GetMousePos_x() , GetMousePos_y() ) )
     {
 	global_ingame_mode = GLOBAL_INGAME_MODE_SCROLL_UP ;
