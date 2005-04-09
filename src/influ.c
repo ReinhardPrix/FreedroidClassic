@@ -3000,9 +3000,9 @@ ButtonPressWasNotMeantAsFire( player_num )
   // not interpret this as a common in-game movement or firing command.
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
-       ( MouseCursorIsOnButton( INV_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
-	 MouseCursorIsOnButton( SKI_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
-	 MouseCursorIsOnButton( CHA_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ) )
+       ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	 MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	 MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;
