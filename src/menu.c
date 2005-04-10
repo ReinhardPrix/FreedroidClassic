@@ -1738,7 +1738,7 @@ You are using SDL instead of OpenGL\n\
 for graphics ouput right now.\n\
 \n\
 Other screen resolutions than 640x480\n\
-are currently now supported with SDL.\n\
+are currently not supported with SDL.\n\
 \n\
 You might want to restart the game using\n\
 OpenGL instead.  Then you can change the\n\
