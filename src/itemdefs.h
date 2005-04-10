@@ -158,8 +158,8 @@
 #define INVENTORY_RECT_Y 264
 #define INVENTORY_RECT_X 15
 
-#define CURRENT_SKILL_RECT_X 16
-#define CURRENT_SKILL_RECT_Y (GameConfig . screen_height - 16 - 64)
+#define CURRENT_SKILL_RECT_X (32 * GameConfig . screen_width / 640)
+#define CURRENT_SKILL_RECT_Y (GameConfig . screen_height - (80 * GameConfig . screen_height / 480))
 #define CURRENT_SKILL_RECT_W 64
 #define CURRENT_SKILL_RECT_H 64
 
