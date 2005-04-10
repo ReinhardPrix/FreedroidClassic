@@ -657,9 +657,9 @@ create_and_blit_droid_description ( int enemy_num )
 
 
 /* ----------------------------------------------------------------------
- * This function displays the status bars for mana and energy in some 
- * corner of the screen.  The dimensions and location of the bar are
- * specified in items.h
+ * This function displays the icon of the current readied skill 
+ * The dimensions and location of the picture are
+ * specified in itemdefs.h
  * ---------------------------------------------------------------------- */
 void 
 ShowCurrentSkill( void )
