@@ -480,6 +480,12 @@ This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
+  //Now scale the skill icon (ahuillet's attempt)
+  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha ( Whole_Image );
+  SDL_FreeSurface ( Whole_Image );
+
+  Whole_Image = zoomSurface( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , ((float)GameConfig . screen_width)/640.0 * CURRENT_SKILL_RECT_W_RATIO , ((float)GameConfig . screen_height)/480.0 * CURRENT_SKILL_RECT_H_RATIO, TRUE );	
+  SDL_FreeSurface ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface );
   SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
 
   SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , 0 , 0 ); 
@@ -3092,6 +3098,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_CHAIR ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_CHAIR ] . filename = "iso_chairs_0009.png";
   obstacle_map [ ISO_N_CHAIR ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_N_CHAIR ] . obstacle_short_name = "" ;
+  obstacle_map [ ISO_N_CHAIR ] . obstacle_long_description = "" ;
   obstacle_map [ ISO_E_CHAIR ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_E_CHAIR ] . block_area_parm_1 = 0.4 ;
   obstacle_map [ ISO_E_CHAIR ] . block_area_parm_2 = 0.4 ;
