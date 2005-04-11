@@ -668,7 +668,7 @@ ShowCurrentSkill( void )
     static int Mouse_Button_Pressed_Previous_Frame = FALSE;
     
     if ( Me [ 0 ] . status == BRIEFING ) return;
-    if ( GameConfig . Inventory_Visible ) return;
+    if ( GameConfig . Inventory_Visible && GameConfig . screen_width == 640 ) return;
     if ( GameConfig . SkillScreen_Visible && GameConfig . skill_explanation_screen_visible ) return;
 
     Target_Rect.x = CURRENT_SKILL_RECT_X + (CURRENT_SKILL_RECT_W * GameConfig . screen_width / 640 - CURRENT_SKILL_RECT_W) / 2;
@@ -927,7 +927,7 @@ blit_running_power_bars ( void )
 	infinite_running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 255 , 80 );
     }
     
-    if ( GameConfig . Inventory_Visible ) 
+    if ( GameConfig . Inventory_Visible  && GameConfig . screen_width == 640 ) 
     {
 	return ;
     }
@@ -1623,7 +1623,9 @@ DisplayBanner ( void )
 
     SDL_SetClipRect( Screen , NULL ); 
 
-    if ( ( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible ) )
+    //-------------------
+    //In 640x480, we mustn't display the bars because they overlap the Char or Skill screen
+    if ( GameConfig . screen_width != 640 || (( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible )) )
 	ShowCurrentHealthAndForceLevel ( );
     
     ShowCurrentTextWindow ( );
