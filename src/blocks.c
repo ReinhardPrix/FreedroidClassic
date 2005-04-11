@@ -484,14 +484,8 @@ This error indicates some installation problem with freedroid.",
   SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha ( Whole_Image );
   SDL_FreeSurface ( Whole_Image );
 
-  Whole_Image = zoomSurface( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , ((float)GameConfig . screen_width)/640.0 * CURRENT_SKILL_RECT_W_RATIO , ((float)GameConfig . screen_height)/480.0 * CURRENT_SKILL_RECT_H_RATIO, TRUE );	
-  SDL_FreeSurface ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface );
-  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha( Whole_Image ); 
-
   SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , 0 , 0 ); 
   SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
-
-  SDL_FreeSurface( Whole_Image );
 
   if ( use_open_gl )
     make_texture_out_of_surface ( & ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface ) ) ;
