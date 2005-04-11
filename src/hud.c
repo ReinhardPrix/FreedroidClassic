@@ -671,10 +671,10 @@ ShowCurrentSkill( void )
     if ( GameConfig . Inventory_Visible ) return;
     if ( GameConfig . SkillScreen_Visible && GameConfig . skill_explanation_screen_visible ) return;
 
-    Target_Rect.x = CURRENT_SKILL_RECT_X ;
-    Target_Rect.y = CURRENT_SKILL_RECT_Y ;
-    Target_Rect.w = CURRENT_SKILL_RECT_W ;
-    Target_Rect.h = CURRENT_SKILL_RECT_H ;
+    Target_Rect.x = CURRENT_SKILL_RECT_X;
+    Target_Rect.y = CURRENT_SKILL_RECT_Y;
+    Target_Rect.w = CURRENT_SKILL_RECT_W_RATIO * GameConfig . screen_width / 640;
+    Target_Rect.h = CURRENT_SKILL_RECT_H_RATIO * GameConfig . screen_height / 480;
     
     LoadOneSkillSurfaceIfNotYetLoaded ( Me [ 0 ] . readied_skill );
 
