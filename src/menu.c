@@ -2597,7 +2597,7 @@ Connect_To_Existing_Server_Menu (void)
  * the sorting function that seems appropriate for our little program.
  * ---------------------------------------------------------------------- */
 int
-filename_filter_func ( struct dirent *unused )
+filename_filter_func ( const struct dirent *unused )
 {
     if ( strstr ( unused->d_name , "savegame" ) != NULL )
     {
@@ -2611,7 +2611,7 @@ filename_filter_func ( struct dirent *unused )
     // to make compilers happy...
     return ( 0 );
     
-}; // static int filename_filter_func (struct dirent *unused)
+}; // static int filename_filter_func (const struct dirent *unused)
 
 /* ----------------------------------------------------------------------
  * This is the function available from the freedroid startup menu, that
