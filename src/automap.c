@@ -334,7 +334,7 @@ show_automap_data_sdl ( void )
   // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
   for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
   {
-      if ( AllEnemys [ i ] . Status  == OUT ) continue;
+      if ( AllEnemys [ i ] . Status  == INFOUT ) continue;
       if ( AllEnemys [ i ] . type == (-1) ) continue;
       if ( AllEnemys [ i ] . pos . z != automap_level -> levelnum ) continue;
 
@@ -374,7 +374,7 @@ show_automap_data_sdl ( void )
 	      // on this level...
 	      //
 	      if ( Me [ i ] . pos . z != Me [ 0 ] . pos . z ) continue;
-	      if ( Me [ i ] . status == OUT  ) continue;
+	      if ( Me [ i ] . status == INFOUT  ) continue;
 
 	      PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . x + x , AUTOMAP_SQUARE_SIZE * Me [ i ] . pos . y + y , FriendColor );
 	    }

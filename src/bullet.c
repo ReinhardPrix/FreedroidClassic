@@ -138,9 +138,9 @@ MoveBullets (void)
   for ( CurBullet = AllBullets, i = 0; i < MAXBULLETS; CurBullet++, i++)
     {
       //--------------------
-      // We need not move any bullets, that are OUT already...
+      // We need not move any bullets, that are INFOUT already...
       //
-      if ( CurBullet -> type == OUT )
+      if ( CurBullet -> type == INFOUT )
 	continue;
       if ( CurBullet -> time_to_hide_still > 0 )
 	continue;
@@ -166,7 +166,7 @@ while the Tux still had some energy in him.  Very suspicios!!",
       //           pointer any more at this point.  So we check AGAIN for 'OUT'
       //           bullets, before we proceed with the safety out-of-map checks...
       //
-      if ( CurBullet -> type == OUT )
+      if ( CurBullet -> type == INFOUT )
 	continue;
 
       //--------------------
@@ -252,7 +252,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   // Now that the memory has been freed again, we can finally delete this bullet entry.
   // Hope, that this does not give us a SEGFAULT, but it should not do so.
   //
-  CurBullet->type = OUT;
+  CurBullet->type = INFOUT;
   CurBullet->time_in_seconds = 0;
   CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
@@ -288,7 +288,7 @@ StartBlast ( float x, float y, int level , int type)
     
     // find out the position of the next free blast
     for (i = 0; i < MAXBLASTS; i++)
-	if (AllBlasts[i].type == OUT)
+	if (AllBlasts[i].type == INFOUT)
 	    break;
     
     // didn't fine any --> then take the first one
@@ -327,7 +327,7 @@ animate_blasts (void)
   Level BlastLevel;
 
   for (i = 0; i < MAXBLASTS; i++, CurBlast++)
-    if (CurBlast->type != OUT)
+    if (CurBlast->type != INFOUT)
       {
 	
 	//--------------------
@@ -386,8 +386,8 @@ However, it should NOT cause any serious trouble for Freedroid.",
 void
 DeleteBlast (int BlastNum)
 {
-  AllBlasts[ BlastNum ].phase = OUT;
-  AllBlasts[ BlastNum ].type = OUT;
+  AllBlasts[ BlastNum ].phase = INFOUT;
+  AllBlasts[ BlastNum ].type = INFOUT;
 }; // void DeleteBlast( int BlastNum )
 
 /* ----------------------------------------------------------------------
@@ -467,7 +467,7 @@ MoveActiveSpells (void)
 	    //
 	    for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j ++ )
 	    {
-		if ( AllEnemys [ j ] . Status == OUT ) continue;
+		if ( AllEnemys [ j ] . Status == INFOUT ) continue;
 		if ( AllEnemys [ j ] . pos . z != Me [ 0 ] . pos . z ) continue;
 		
 		DistanceFromCenter = sqrt ( ( AllActiveSpells [ i ] . spell_center . x - AllEnemys [ j ] . pos . x ) *
@@ -624,7 +624,7 @@ handle_flash_effects ( bullet* CurBullet )
     {
 	CurBullet->time_in_frames = 0;
 	CurBullet->time_in_seconds = 0;
-	CurBullet->type = OUT;
+	CurBullet->type = INFOUT;
 	CurBullet->mine = FALSE;
 	return;
     }
@@ -791,7 +791,7 @@ check_bullet_player_collisions ( bullet* CurBullet , int num )
       // Of course only active players and players on the same level
       // may be checked!
       //
-      if ( Me [ player_num ] . status == OUT ) continue;
+      if ( Me [ player_num ] . status == INFOUT ) continue;
       if ( Me [ player_num ] . pos . z != CurBullet -> pos . z ) continue;
       
       //--------------------
@@ -856,7 +856,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
     for ( i = 0; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
 	ThisRobot ++ ;
-	if ( ThisRobot -> Status == OUT || ThisRobot -> pos . z != level)
+	if ( ThisRobot -> Status == INFOUT || ThisRobot -> pos . z != level)
 	    continue;
 	
 	xdist = CurBullet->pos.x - ThisRobot -> pos . x;
@@ -973,7 +973,7 @@ check_bullet_bullet_collisions ( bullet* CurBullet , int num )
   for (i = 0; i < MAXBULLETS; i++)
     {
       if (i == num) continue;  // never check for collision with youself.. ;)
-      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
+      if (AllBullets[i].type == INFOUT) continue; // never check for collisions with dead bullets.. 
       if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
       
       if ( fabsf(AllBullets[i].pos.x-CurBullet->pos.x) > BULLET_BULLET_COLLISION_DIST ) continue;
@@ -982,8 +982,8 @@ check_bullet_bullet_collisions ( bullet* CurBullet , int num )
       // both will be deleted and replaced by blasts..
       DebugPrintf ( 1 , "\nBullet-Bullet-Collision detected..." );
       
-      //CurBullet->type=OUT;
-      //AllBullets[num].type=OUT;
+      //CurBullet->type = INFOUT;
+      //AllBullets[num].type = INFOUT;
       
       if ( CurBullet->reflect_other_bullets )
 	{
@@ -1030,9 +1030,9 @@ CheckBulletCollisions (int num)
 
     switch ( CurBullet -> type )
     {
-	case OUT:
+	case INFOUT:
 	    // --------------------
-	    // Never do any collision checking if the bullet is OUT already...
+	    // Never do any collision checking if the bullet is INFOUT already...
 	    return;
 	    break;
 	    
@@ -1082,7 +1082,7 @@ CheckBlastCollisions (int num)
     //
     for (i = 0; i < MAXBULLETS; i++)
     {
-	if (AllBullets[i].type == OUT)
+	if (AllBullets[i].type == INFOUT)
 	    continue;
 	if (CurBlast->phase > 4)
 	    break;
@@ -1109,7 +1109,7 @@ CheckBlastCollisions (int num)
     // for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
     for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {
-	if ((AllEnemys[i].Status == OUT)
+	if ((AllEnemys[i].Status == INFOUT)
 	    || (AllEnemys[i].pos.z != level))
 	    continue;
 	
@@ -1127,7 +1127,7 @@ CheckBlastCollisions (int num)
     // Now we check, if perhaps the influencer has stepped into the area
     // of effect of this one blast.  Then he'll get burnt ;)
     // 
-    if ( (Me[0].status != OUT) && 
+    if ( (Me[0].status != INFOUT) && 
 	 ( fabsf (Me[0].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
 	 ( fabsf (Me[0].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
     {

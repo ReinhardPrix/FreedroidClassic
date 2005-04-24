@@ -315,7 +315,7 @@ PermanentHealRobots (void)
   // for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
   for (i = 0; i < MAX_ENEMYS_ON_SHIP; i++)
     {
-      if ( AllEnemys [ i ] . Status == OUT)
+      if ( AllEnemys [ i ] . Status == INFOUT)
 	continue;
       if ( AllEnemys [ i ] . energy < Druidmap [ AllEnemys [ i ] . type ] . maxenergy )
 	AllEnemys[i].energy += Druidmap[AllEnemys [ i ] . type ] . lose_health * HEAL_INTERVAL ;
@@ -340,7 +340,7 @@ ClearEnemys ( void )
 	our_bot -> type = -1;
 	our_bot -> pos . z = our_bot -> virt_pos . z = our_bot -> energy = 0;
 	our_bot -> nextwaypoint = our_bot -> lastwaypoint = 0;
-	our_bot -> Status = OUT;
+	our_bot -> Status = INFOUT;
 	our_bot -> pure_wait = 0;
 	our_bot -> frozen = 0;
 	our_bot -> poison_duration_left = 0;
@@ -416,7 +416,7 @@ ShuffleEnemys ( int LevelNum )
     nth_enemy = 0;
     for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
     {
-	if ( ( AllEnemys [ i ] . Status == OUT ) || ( AllEnemys [ i ] . pos . z != LevelNum ) )
+	if ( ( AllEnemys [ i ] . Status == INFOUT ) || ( AllEnemys [ i ] . pos . z != LevelNum ) )
 	    continue;		// dont handle dead enemys or on other level 
 	
 	AllEnemys [ i ] . persuing_given_course = FALSE; // since position is now completely mixed up,
@@ -614,7 +614,7 @@ CheckIfWayIsFreeOfDroidsWithTuxchecking ( float x1 , float y1 , float x2 , float
 	{
 	    this_enemy = & ( AllEnemys [ j ] ) ;
 	    if ( this_enemy -> pos.z != OurLevel ) continue;
-	    if ( this_enemy -> Status == OUT ) continue;
+	    if ( this_enemy -> Status == INFOUT ) continue;
 	    if ( this_enemy -> energy <= 0 ) continue;
 	    if ( this_enemy -> pure_wait > 0 ) continue;
 	    if ( this_enemy == ExceptedRobot ) continue;
@@ -706,7 +706,7 @@ CheckIfWayIsFreeOfDroidsWithoutTuxchecking ( float x1 , float y1 , float x2 , fl
 	{
 	    this_enemy = & ( AllEnemys [ j ] ) ;
 	    if ( this_enemy -> pos.z != OurLevel ) continue;
-	    if ( this_enemy -> Status == OUT ) continue;
+	    if ( this_enemy -> Status == INFOUT ) continue;
 	    if ( this_enemy -> energy <= 0 ) continue;
 	    if ( this_enemy -> pure_wait > 0 ) continue;
 	    if ( this_enemy == ExceptedRobot ) continue;
@@ -774,9 +774,9 @@ RawEnemyApproachPosition ( Enemy ThisRobot , finepoint next_target_spot )
 	ThisRobot -> animation_type = WALK_ANIMATION ;
 	ThisRobot -> animation_phase = 0.0 ;
 
-	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
+	if ( ( ThisRobot -> Status == INFOUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
 	{
-	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
+	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot... " , __FUNCTION__ );
 	}
     }
     
@@ -1242,7 +1242,7 @@ IsActiveLevel ( int levelnum )
     //
     for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
-	if ( Me [ PlayerNum ] . status == OUT ) continue;
+	if ( Me [ PlayerNum ] . status == INFOUT ) continue;
 	if ( Me [ PlayerNum ] . pos . z == levelnum ) return TRUE;
     }
     
@@ -1352,7 +1352,7 @@ in Freedroid RPG.\n\
 The offending bot will be deleted silently.",
 				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	ThisRobot -> type = (-1) ;
-	ThisRobot -> Status = (OUT) ;
+	ThisRobot -> Status = (INFOUT) ;
 	
 	//--------------------
 	// This droid must not be blitted!!
@@ -1409,7 +1409,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 
     }
     
-    ThisRobot -> Status = OUT;
+    ThisRobot -> Status = INFOUT;
     
     //--------------------
     // The dead enemy will now explode and drop treasure, provided that 
@@ -1600,7 +1600,7 @@ MoveEnemys ( void )
 	
 	//--------------------
 	// ignore dead robots as well...
-	if ( ThisRobot -> Status == OUT ) continue;
+	if ( ThisRobot -> Status == INFOUT ) continue;
 	
 	//--------------------
 	// Now check if the robot is still alive if the robot just got killed, 
@@ -1697,7 +1697,7 @@ find_free_bullet_index ( void )
 
     for ( j = 0 ; j < MAXBULLETS ; j ++ )
     {
-	if ( AllBullets [ j ] . type == OUT )
+	if ( AllBullets [ j ] . type == INFOUT )
 	{
 	    return ( j ) ;
 	    break;
@@ -1866,7 +1866,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; 
 		  j < MAX_ENEMYS_ON_SHIP ; j ++ , target_robot ++ )
 	    {
-		if ( target_robot -> Status == OUT ) continue ;
+		if ( target_robot -> Status == INFOUT ) continue ;
 		if ( target_robot -> pos . z != ThisRobot -> pos . z ) continue;
 		if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
 		if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
@@ -2010,7 +2010,7 @@ ClosestVisiblePlayer ( Enemy ThisRobot )
       //--------------------
       // A dead or deactivated player can never be the closest player.
       //
-      if ( Me [ PlayerNum ] . status == OUT ) continue;
+      if ( Me [ PlayerNum ] . status == INFOUT ) continue;
 
       //--------------------
       // Now we compute the distance and see if this robot is closer than
@@ -2049,7 +2049,7 @@ ClosestOtherEnemyDroid ( Enemy ThisRobot )
       //--------------------
       // A dead or deactivated colleague can never be the closest enemy
       //
-      if ( AllEnemys [ i ] . Status == OUT ) continue;
+      if ( AllEnemys [ i ] . Status == INFOUT ) continue;
 
       //--------------------
       // A colleague on a different level can never be the closest enemy
@@ -2123,7 +2123,7 @@ EnemyOfTuxCloseToThisRobot ( Enemy ThisRobot , moderately_finepoint* vect_to_tar
 
   for ( j = 0 ; j < MAX_ENEMYS_ON_SHIP ; j++ )
     {
-      if ( AllEnemys[ j ].Status == OUT ) continue;
+      if ( AllEnemys[ j ].Status == INFOUT ) continue;
       if ( AllEnemys[ j ].is_friendly ) continue;
       if ( AllEnemys[ j ].pos.z != ThisRobot->pos.z ) continue;
       if ( DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , 
@@ -2171,7 +2171,7 @@ update_vector_to_shot_target_for_friend ( enemy* ThisRobot , moderately_finepoin
     for ( j  = first_index_of_bot_on_level [ ThisRobot -> pos . z ] ; 
 	  j <= last_index_of_bot_on_level [ ThisRobot -> pos . z ] ; j++ )
     {
-	if ( AllEnemys [ j ] . Status == OUT ) continue;
+	if ( AllEnemys [ j ] . Status == INFOUT ) continue;
 	if ( AllEnemys [ j ] . is_friendly ) continue;
 	if ( AllEnemys [ j ] . pos.z != ThisRobot->pos.z ) continue;
 	/*
@@ -2261,7 +2261,7 @@ update_vector_to_shot_target_for_enemy ( enemy* this_robot , moderately_finepoin
 	  j <=  last_index_of_bot_on_level [ our_level ] ; j ++ )
     {
 	if ( AllEnemys [ j ] . pos . z != our_level ) continue ;
-	if ( AllEnemys [ j ] . Status == OUT ) continue ;
+	if ( AllEnemys [ j ] . Status == INFOUT ) continue ;
 	if ( ! AllEnemys [ j ] . is_friendly ) continue ;
 	
 	xdist = this_robot -> pos . x - AllEnemys [ j ] . pos . x ;
@@ -2389,7 +2389,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     {
 	if ( MyRandom ( 100 ) > 20 )
 	{
-	    // DebugPrintf ( 1 , "\nDROPPING MOVE OUT from failed random check." );
+	    // DebugPrintf ( 1 , "\nDROPPING MOVE INFOUT from failed random check." );
 	    return;
 	}
 	DirectionSign = (-3) ;
@@ -2888,7 +2888,7 @@ ProcessAttackStateMachine ( int enemynum )
     // if ( ! IsActiveLevel ( ThisRobot -> pos . z ) ) return;
     
     // ignore dead robots as well...
-    // if ( ThisRobot -> Status == OUT ) return;
+    // if ( ThisRobot -> Status == INFOUT ) return;
     
     // ignore paralyzed robots as well...
     if ( ThisRobot -> paralysation_duration_left != 0 ) return;
@@ -3287,7 +3287,7 @@ ProcessAttackStateMachine ( int enemynum )
     // If the closes alive player is not alive at all, that's a sign
     // that there is nothing to attack any more, but just return.
     //
-    if ( Me [ TargetPlayer ] . status == OUT ) return;
+    if ( Me [ TargetPlayer ] . status == INFOUT ) return;
     
     //--------------------
     // If the closest alive player is not visible at all, then there is
@@ -3372,7 +3372,7 @@ CheckEnemyEnemyCollision ( int enemynum )
     for ( i = first_index_of_bot_on_level [ OurBot -> pos . z ] ; i <= last_index_of_bot_on_level [ OurBot -> pos . z ] ; i++)
     {
 	// check only collisions of LIVING enemys on this level
-	if ( AllEnemys [ i ] . Status == OUT )
+	if ( AllEnemys [ i ] . Status == INFOUT )
 	    continue;
 	if ( AllEnemys [ i ] . pos . z != OurBot -> pos . z )
 	    continue;
@@ -3454,9 +3454,9 @@ start_gethit_animation_if_applicable ( enemy* ThisRobot )
     //
     if ( ( last_gethit_animation_image [ ThisRobot -> type ] - first_gethit_animation_image [ ThisRobot -> type ] > 0 ) )
     {
-	if ( ( ThisRobot -> Status == OUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
+	if ( ( ThisRobot -> Status == INFOUT ) || ( ThisRobot -> animation_type == DEATH_ANIMATION ) )
 	{
-	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot... " , __FUNCTION__ );
+	    DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot... " , __FUNCTION__ );
 	}
 	ThisRobot -> animation_phase = ((float)first_gethit_animation_image [ ThisRobot -> type ]) + 0.1 ;
 	ThisRobot -> animation_type = GETHIT_ANIMATION;
@@ -3525,9 +3525,9 @@ AnimateEnemys (void)
 			// DebugPrintf ( -1000 , "\nSwitching to 'stand' now..." );
 		    }
 
-		    if ( our_enemy -> Status == OUT )
+		    if ( our_enemy -> Status == INFOUT )
 		    {
-			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in WALK phase ... " , __FUNCTION__ );
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot in WALK phase ... " , __FUNCTION__ );
 		    }
 
 		    break;
@@ -3541,9 +3541,9 @@ AnimateEnemys (void)
 			our_enemy -> animation_type = WALK_ANIMATION;
 		    }
 
-		    if ( our_enemy -> Status == OUT )
+		    if ( our_enemy -> Status == INFOUT )
 		    {
-			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in ATTACK phase... " , __FUNCTION__ );
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot in ATTACK phase... " , __FUNCTION__ );
 		    }
 
 		    break;
@@ -3557,9 +3557,9 @@ AnimateEnemys (void)
 			our_enemy -> animation_type = WALK_ANIMATION;
 		    }
 
-		    if ( our_enemy -> Status == OUT )
+		    if ( our_enemy -> Status == INFOUT )
 		    {
-			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in GETHIT phase ... " , __FUNCTION__ );
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot in GETHIT phase ... " , __FUNCTION__ );
 		    }
 
 		    break;
@@ -3583,9 +3583,9 @@ AnimateEnemys (void)
 			our_enemy -> animation_type = STAND_ANIMATION;
 		    }
 
-		    if ( our_enemy -> Status == OUT )
+		    if ( our_enemy -> Status == INFOUT )
 		    {
-			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for OUT bot in STAND phase... " , __FUNCTION__ );
+			DebugPrintf ( -4 , "\n%s(): WARNING: animation phase reset for INFOUT bot in STAND phase... " , __FUNCTION__ );
 		    }
 
 		    break;
@@ -3601,7 +3601,7 @@ That means:  Something is going *terribly* wrong!" ,
 	}
 	
 	
-	if ( our_enemy -> Status == OUT)
+	if ( our_enemy -> Status == INFOUT)
 	{
 	    our_enemy -> phase = DROID_PHASES ;
 	    continue;

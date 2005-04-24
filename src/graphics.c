@@ -2241,7 +2241,7 @@ swap_red_and_blue_for_open_gl ( SDL_Surface* FullView )
     {
 	for ( y = 0 ; y < FullView -> h ; y ++ )
 	{
-	    // pixel = GetPixel ( FullView , x , y ) ;
+	    // pixel = FdGetPixel ( FullView , x , y ) ;
 	    pixel = SDL_MapRGBA ( FullView -> format , 
 				  GetBlueComponent ( FullView, x , y ) , 
 				  GetGreenComponent ( FullView, x , y ) , 

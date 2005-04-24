@@ -1689,7 +1689,7 @@ PrepareStartOfNewCharacter ( void )
     for ( PlayerNum = 1 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ )
     {
 	// memcpy ( & ( Me [ PlayerNum ] ) , & ( Me [ 0 ] ) , sizeof ( Me [ 0 ] ) );
-	Me [ PlayerNum ] . status = OUT ;
+	Me [ PlayerNum ] . status = INFOUT ;
     }
     
     Me [ 0 ] . mouse_move_target . x = ( -1 ) ;
@@ -2040,7 +2040,7 @@ ThouArtDefeated (void)
     int now;
 
     DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
-    Me [ 0 ] . status = OUT ;
+    Me [ 0 ] . status = INFOUT ;
     append_new_game_message ( "Game over.\n" );
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;
@@ -2143,7 +2143,7 @@ ThouHastWon (void)
     int now;
 
     DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
-    Me [ 0 ] . status = OUT ;
+    Me [ 0 ] . status = INFOUT ;
     append_new_game_message ( "Game won.\n" );
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;

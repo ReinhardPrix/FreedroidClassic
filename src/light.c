@@ -186,7 +186,7 @@ WARNING!  End of light sources array reached!",
     for ( i = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
 	  i <  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
     {
-	if ( AllEnemys [ i ] . Status == OUT ) continue;
+	if ( AllEnemys [ i ] . Status == INFOUT ) continue;
 
 	if ( Me [ 0 ] . pos . z != AllEnemys [ i ] . pos . z ) continue ;
 	if ( fabsf ( Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x ) >= 12 ) continue ;

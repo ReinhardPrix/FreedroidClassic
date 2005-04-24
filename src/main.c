@@ -225,7 +225,7 @@ update_timeouts_for_bots_on_level ( int level_num , float latest_frame_time )
     {
 	this_bot = & ( AllEnemys [ i ] );
 	
-	if ( this_bot -> Status == OUT ) continue;
+	if ( this_bot -> Status == INFOUT ) continue;
 	
 	if ( this_bot -> pos . z != level_num ) continue ;
 

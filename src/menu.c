@@ -1168,7 +1168,7 @@ Cheatmenu (void)
 					 AllEnemys [ i ] . type ) ;
 			}
 			if ( AllEnemys[i].Status == MOBILE ) printf_SDL (Screen, -1, -1, "MOB" );
-			else if ( AllEnemys[i].Status == OUT ) printf_SDL (Screen, -1, -1, "OUT" );
+			else if ( AllEnemys[i].Status == INFOUT ) printf_SDL (Screen, -1, -1, "OUT" );
 			else printf_SDL (Screen, -1, -1, "ERROR-UNKNOWN" );
 			if ( AllEnemys[i].is_friendly ) printf_SDL (Screen, -1, -1, " YES" );
 			else printf_SDL (Screen, -1, -1, "  NO" );

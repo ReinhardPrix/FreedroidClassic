@@ -132,7 +132,7 @@ EXTERN void enemy_spray_blood ( Enemy CurEnemy ) ;
 #define EXTERN extern
 #endif
 EXTERN void update_virtual_position ( gps* target_pos , gps* source_pos , int level_num );
-EXTERN void FillRect (SDL_Rect rect, SDL_Color color);
+EXTERN void FdFillRect (SDL_Rect rect, SDL_Color color);
 EXTERN void ShowPosition (void);
 EXTERN void DisplayItemImageAtMouseCursor( int ItemImageCode );
 EXTERN void AssembleCombatPicture (int );
@@ -827,7 +827,7 @@ EXTERN int IsActive (int color, int row);
 #else
 #define EXTERN extern
 #endif
-EXTERN Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
+EXTERN Uint32 FdGetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 EXTERN void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 
 //--------------------

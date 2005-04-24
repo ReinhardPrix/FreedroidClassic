@@ -32,7 +32,7 @@ InitFont (BFont_Info * Font)
   Font->h = Font->Surface->h;
 
   i = '!';
-  // sentry = GetPixel ( Font -> Surface, 0, 0);
+  // sentry = FdGetPixel ( Font -> Surface, 0, 0);
   sentry = SDL_MapRGB(Font->Surface->format, 255, 0, 255); 
 
   if (Font->Surface == NULL)
@@ -45,13 +45,13 @@ InitFont (BFont_Info * Font)
   x = 0;
   while (x < (Font->Surface->w - 1))
     {
-      if (GetPixel (Font->Surface, x, 0) != sentry)
+      if (FdGetPixel (Font->Surface, x, 0) != sentry)
 	{
 	  Font->Chars[i].x = x;
 	  Font->Chars[i].y = 1;
 	  Font->Chars[i].h = Font->Surface->h;
 	  for (;
-	       GetPixel (Font->Surface, x, 0) != sentry
+	       FdGetPixel (Font->Surface, x, 0) != sentry
 	       && x < (Font->Surface->w); ++x);
 	  Font->Chars[i].w = (x - Font->Chars[i].x);
 
@@ -210,7 +210,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 	  if (SDL_MUSTLOCK (Font->Surface))
 	    SDL_LockSurface (Font->Surface);
 
-	  color_key = GetPixel (surface, 0, surface->h - 1);
+	  color_key = FdGetPixel (surface, 0, surface->h - 1);
 
 	  //	  printf ("looking...\n");
 	  for (x = 0; x < Font->Surface->w; x++)
@@ -218,7 +218,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 	      for (y = 0; y < Font->Surface->h; y++)
 		{
 		  old_r = old_g = old_b = 0;
-		  pixel = GetPixel (Font->Surface, x, y);
+		  pixel = FdGetPixel (Font->Surface, x, y);
 
 		  if (pixel != color_key)
 		    {
@@ -829,7 +829,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
  *
  * ---------------------------------------------------------------------- */
 Uint32
-GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+FdGetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
 
   Uint8 *bits;
@@ -841,22 +841,22 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   //
   if (X < 0)
     {
-      DebugPrintf ( 1 , "x too small in GetPixel!" );
+      DebugPrintf ( 1 , "x too small in FdGetPixel!" );
       return -1;
     }
   if (X >= Surface->w)
     {
-      DebugPrintf ( 1 , "x too big in GetPixel!" );
+      DebugPrintf ( 1 , "x too big in FdGetPixel!" );
       return -1;
     }
   if (Y < 0)
     {
-      DebugPrintf ( 1 , "y too small in GetPixel!" );
+      DebugPrintf ( 1 , "y too small in FdGetPixel!" );
       return -1;
     }
   if (Y >= Surface->h)
     {
-      DebugPrintf ( 1 , "y too big in GetPixel!" );
+      DebugPrintf ( 1 , "y too big in FdGetPixel!" );
       return -1;
     }
 

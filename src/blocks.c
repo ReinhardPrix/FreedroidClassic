@@ -545,7 +545,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
       for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
 	{
 
-	  new_test_color = GetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_color = FdGetPixel ( our_iso_image . surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
@@ -582,7 +582,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
       for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
 	{
 
-	  new_test_color = GetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_color = FdGetPixel ( our_iso_image . surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
@@ -659,7 +659,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
       for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
 	{
 
-	  new_test_alpha = GetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_alpha = FdGetPixel ( our_iso_image . surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_alpha == SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha != SDL_ALPHA_TRANSPARENT ) ) ||
@@ -3285,7 +3285,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_BATHTUB ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_H_BATHTUB ] . filename = "iso_bathroom_furniture_0000.png" ;
   obstacle_map [ ISO_H_BATHTUB ] . obstacle_short_name = "Bath tub";
-  obstacle_map [ ISO_H_BATHTUB ] . obstacle_long_description = "A picture of what comfort is.";
+  obstacle_map [ ISO_H_BATHTUB ] . obstacle_long_description = "An idea of what comfort is";
   obstacle_map [ ISO_V_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_V_BATHTUB ] . block_area_parm_2 = 1.0 ;
@@ -3293,7 +3293,7 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_BATHTUB ] . filename = "iso_bathroom_furniture_0001.png" ;
   obstacle_map [ ISO_V_BATHTUB ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_V_BATHTUB ] . obstacle_short_name = "Bath tub";
-  obstacle_map [ ISO_V_BATHTUB ] . obstacle_long_description = "A picture of what comfort is.";
+  obstacle_map [ ISO_V_BATHTUB ] . obstacle_long_description = "Taking a bath is not your current quest - what a pity !";
   
   obstacle_map [ ISO_3_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_3_BATHTUB ] . block_area_parm_1 = 1.0 ;
@@ -3301,13 +3301,17 @@ init_obstacle_data( void )
   obstacle_map [ ISO_3_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_3_BATHTUB ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_3_BATHTUB ] . filename = "iso_bathroom_furniture_0002.png" ;
+  obstacle_map [ ISO_3_BATHTUB ] . obstacle_short_name = "Bath tub";
+  obstacle_map [ ISO_3_BATHTUB ] . obstacle_long_description = "Taking a bath is not your current quest - what a pity !";
+  
   obstacle_map [ ISO_4_BATHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_4_BATHTUB ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_4_BATHTUB ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_4_BATHTUB ] . is_smashable = TRUE ;
   obstacle_map [ ISO_4_BATHTUB ] . filename = "iso_bathroom_furniture_0003.png" ;
   obstacle_map [ ISO_4_BATHTUB ] . block_vision_too = FALSE ;
-  
+  obstacle_map [ ISO_4_BATHTUB ] . obstacle_short_name = "Bath tub";
+  obstacle_map [ ISO_4_BATHTUB ] . obstacle_long_description = "Taking a bath is not your current quest - what a pity !";  
 
   obstacle_map [ ISO_H_WASHTUB ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_H_WASHTUB ] . block_area_parm_1 = 0.5 ;

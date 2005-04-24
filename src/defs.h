@@ -811,7 +811,7 @@ enum _explosions
 //
 enum _status
 {
-    OUT=-30,
+    INFOUT=-30,
     MOBILE,
     TRANSFERMODE,
     WEAPON,
@@ -940,7 +940,7 @@ enum
     H_SHUT_DOOR=18,  H_HALF_DOOR1, H_HALF_DOOR2, H_HALF_DOOR3, H_OPEN_DOOR,
     CONSOLE_L=23,  CONSOLE_R,    CONSOLE_U,    CONSOLE_D,
     V_SHUT_DOOR=27,  V_HALF_DOOR1, V_HALF_DOOR2, V_HALF_DOOR3, V_OPEN_DOOR,
-    LIFT=32,       VOID,         
+    LIFT=32,       FDVOID,         
     REFRESH1,     REFRESH2,     REFRESH3,    REFRESH4,
     TELE_1=38,     TELE_2,       TELE_3,       TELE_4,       INVISIBLE_BRICK,
     LOCKED_H_SHUT_DOOR=43,         LOCKED_V_SHUT_DOOR,

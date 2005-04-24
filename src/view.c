@@ -66,7 +66,7 @@ int previously_used_motion_class = -4 ; // something we'll never really use...
 
 extern int level_editor_mouse_move_mode;
 
-void FlashWindow (SDL_Color Flashcolor);
+void FdFlashWindow (SDL_Color Flashcolor);
 void RecFlashFill (int LX, int LY, int Color, unsigned char *Parameter_Screen,
 		   int SBreite);
 int Cent (int);
@@ -426,7 +426,7 @@ ShowCombatScreenTexts ( int mask )
 	    for ( k = 0 ; k < MAX_ENEMYS_ON_SHIP ; k ++ )
 	    {
 		if ( ( AllEnemys [ k ] . pos . z == Me [ 0 ] . pos . z ) &&
-		     ( AllEnemys [ k ] . Status != OUT ) &&
+		     ( AllEnemys [ k ] . Status != INFOUT ) &&
 		     ( AllEnemys [ k ] . energy > 0 ) &&
 		     ( ! AllEnemys [ k ] . is_friendly ) )
 		    remaining_bots ++ ;
@@ -1146,7 +1146,7 @@ insert_enemies_into_blitting_list ( void )
 	    // if ( ThisRobot -> pos . z != Me [ 0 ] . pos . z )
 	    // DebugPrintf ( -4 , "\n%s(): (possibly) inserting truly virtual bot..." , __FUNCTION__ );
 
-	    if ( ( ThisRobot -> Status == OUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
+	    if ( ( ThisRobot -> Status == INFOUT ) && ( ! Druidmap [ ThisRobot -> type ] . use_image_archive_file ) ) 
 	    {
 		// DebugPrintf ( -4 , "\n%s():  enemy blitting suppressed because of status and no animation..." , __FUNCTION__ );
 		// continue;
@@ -1184,7 +1184,7 @@ insert_bullets_into_blitting_list ( void )
 
   for ( i = 0 ; i < MAXBULLETS ; i ++ )
     {
-      if ( AllBullets [ i ] . type != OUT )
+      if ( AllBullets [ i ] . type != INFOUT )
 	insert_one_bullet_into_blitting_list ( i );
     }
       
@@ -1201,7 +1201,7 @@ insert_blasts_into_blitting_list ( void )
     
     for ( i = 0 ; i < MAXBLASTS ; i ++ )
     {
-	if ( AllBlasts [ i ] . type != OUT )
+	if ( AllBlasts [ i ] . type != INFOUT )
 	    insert_one_blast_into_blitting_list ( i );
     }
     
@@ -3255,7 +3255,7 @@ blit_tux ( int x , int y , int player_num )
 	// tux is out, so we'll query for that first, as well as for the case
 	// of other players that are not on this level.
 	//
-	if ( Me [ player_num ] . status == OUT ) return;
+	if ( Me [ player_num ] . status == INFOUT ) return;
 	if ( Me [ player_num ] . pos . z != Me [ 0 ] . pos . z ) return;
 	
 	UpperLeftBlitCorner.x = UserCenter_x - 32 ;
@@ -3455,7 +3455,7 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
     //--------------------
     // If the enemy is dead already, there's nothing to do here...
     //
-    if ( AllEnemys [ Enum ] . Status == OUT ) return;
+    if ( AllEnemys [ Enum ] . Status == INFOUT ) return;
     if ( AllEnemys [ Enum ] . energy <= 0 ) return;
     
     //--------------------
@@ -3795,7 +3795,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    // First we catch the case of dead bots, then we can separate the
 		    // right color filter type, provided that the droid is still alive...
 		    //
-		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status ==  OUT ) )
+		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status ==  INFOUT ) )
 		    {
 			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
@@ -3886,7 +3886,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    // availabe for that case).  In the other cases, we use the prepared color-
 		    // filtered stuff...
 		    // 
-		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status == OUT ) )
+		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status == INFOUT ) )
 		    {
 			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
@@ -4004,7 +4004,7 @@ There was a droid type on this level, that does not really exist.",
     // Only if this robot is not dead, we consider printing the comments
     // this robot might have to make on the current situation.
     //
-    if ( AllEnemys [ Enum ] . Status != OUT) PrintCommentOfThisEnemy ( Enum );
+    if ( AllEnemys [ Enum ] . Status != INFOUT) PrintCommentOfThisEnemy ( Enum );
     
 }; // void PutEnemy(int Enum , int x , int y) 
 
@@ -4035,12 +4035,12 @@ PutBullet ( int bullet_index , int mask )
 	// deletion after some time is done in CheckBulletCollisions.)
 	if ( ( CurBullet -> time_in_frames % 2 ) == 1)
 	{
-	    FlashWindow ( flashcolor1 );
+	    FdFlashWindow ( flashcolor1 );
 	    return;
 	}
 	if ( ( CurBullet -> time_in_frames % 2 ) == 0)
 	{
-	    FlashWindow ( flashcolor2 );
+	    FdFlashWindow ( flashcolor2 );
 	    return;
 	}
     } // if type == FLASH
@@ -4414,7 +4414,7 @@ PutBlast (int Blast_number)
     Blast CurBlast = &AllBlasts[Blast_number];
     
     // If the blast is already long dead, we need not do anything else here
-    if ( CurBlast -> type == OUT )
+    if ( CurBlast -> type == INFOUT )
 	return;
     
     // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
@@ -4436,9 +4436,9 @@ exist at all.",
  * the only parameter to the function.
  * ---------------------------------------------------------------------- */
 void
-FlashWindow (SDL_Color Flashcolor)
+FdFlashWindow (SDL_Color Flashcolor)
 {
-    FillRect( User_Rect, Flashcolor);
+    FdFillRect( User_Rect, Flashcolor);
 }; // void FlashWindow(int Flashcolor)
 
 
@@ -4446,7 +4446,7 @@ FlashWindow (SDL_Color Flashcolor)
  * Fill given rectangle with given RBG color
  * ----------------------------------------------------------------- */
 void
-FillRect (SDL_Rect rect, SDL_Color color)
+FdFillRect (SDL_Rect rect, SDL_Color color)
 {
     Uint32 pixcolor;
     SDL_Rect tmp;

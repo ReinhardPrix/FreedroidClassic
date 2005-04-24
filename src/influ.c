@@ -963,7 +963,7 @@ CheckIfCharacterIsStillOk ( int player_num )
     //
     if ( Me [ player_num ] . energy <= 0 )
     {
-	Me [ player_num ] . status = OUT;
+	Me [ player_num ] . status = INFOUT;
 	
 	if ( !ServerMode ) ThouArtDefeated ();
 
@@ -1030,7 +1030,7 @@ UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
     // to move toward it any more.  The use can request a new move
     // if that should be done.
     //
-    if ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . Status == OUT ) ||
+    if ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . Status == INFOUT ) ||
 	 ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z != 
 	   Me [ player_num ] . pos . z ) ||
 	 ( Me [ player_num ] . mouse_move_target . z == ( -1 ) ) )
@@ -1255,7 +1255,7 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   //--------------------
   // Now we can make the actual move, AND WE DO SO REGARDLESS
   // OF ANY BLOCKING BY OBSTACLES, SINCE THE POSSIBILITY OF GOING
-  // THROUGH WALLS HAS BEEN RULES OUT BY THE PATHFINDING FUNCTION
+  // THROUGH WALLS HAS BEEN RULES INFOUT BY THE PATHFINDING FUNCTION
   // ANYWAY.
   //
   Me [ player_num ] . pos . x += planned_step_x;
@@ -1366,7 +1366,7 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
     //--------------------
     // We do not move any players, who's statuses are 'OUT'.
     //
-    if ( Me [ player_num ] . status == OUT ) return ( FALSE ) ;
+    if ( Me [ player_num ] . status == INFOUT ) return ( FALSE ) ;
     
     //--------------------
     // Now for a change, we try to implement some movement code,
@@ -2414,7 +2414,7 @@ NoInfluBulletOnWay (void)
 
   for (i = 0; i < MAXBULLETS; i++)
     {
-      if ((AllBullets[i].type != OUT) && (AllBullets[i].mine))
+      if ((AllBullets[i].type != INFOUT) && (AllBullets[i].mine))
 	return FALSE;
     }
 
@@ -2517,7 +2517,7 @@ start_tux_death_explosions (void)
     int i;
     int counter;
     
-    Me[0].status = OUT;
+    Me[0].status = INFOUT;
     
     DebugPrintf ( 1, "\n%s(): Real function call confirmed." , __FUNCTION__ );
     
@@ -2527,7 +2527,7 @@ start_tux_death_explosions (void)
 	
 	// find a free blast
 	counter = 0;
-	while (AllBlasts[counter++].type != OUT);
+	while (AllBlasts[counter++].type != INFOUT);
 	counter -= 1;
 	if (counter >= MAXBLASTS)
 	{
@@ -2573,7 +2573,7 @@ check_tux_enemy_collision (void)
 	    continue;
 	if ( AllEnemys[i].type == ( -1 ) )
 	    continue;
-	if ( AllEnemys[i].Status == OUT )
+	if ( AllEnemys[i].Status == INFOUT )
 	    continue;
 	
 	//--------------------
@@ -2687,7 +2687,7 @@ GetLivingDroidBelowMouseCursor ( int player_num )
     {
 	this_bot = & ( AllEnemys [ i ] );
 	
-	if ( this_bot -> Status == OUT)
+	if ( this_bot -> Status == INFOUT)
 	    continue;
 	if ( this_bot -> pos . z != Me [ player_num ] . pos . z )
 	    continue;
@@ -3191,7 +3191,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	// for ( i = 0 ; i < Number_Of_Droids_On_Ship ; i ++ )
 	for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
 	{
-	    if ( AllEnemys [ i ] . Status == OUT ) continue;
+	    if ( AllEnemys [ i ] . Status == INFOUT ) continue;
 	    if ( AllEnemys [ i ] . pos . z != Me [ player_num ] . pos . z ) continue;
 	    if ( fabsf ( AllEnemys [ i ] . pos . x - Weapon_Target_Vector.x ) > 0.5 ) continue;
 	    if ( fabsf ( AllEnemys [ i ] . pos . y - Weapon_Target_Vector.y ) > 0.5 ) continue;

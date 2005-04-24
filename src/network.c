@@ -1732,7 +1732,7 @@ SendBulletUpdateEngramToClient ( int PlayerNum )
 	  //--------------------
 	  // We also ignore the deactivated enemys on level 0
 	  //
-	  if ( ( AllEnemys [ EnemyIndex ] . pos . z == 0 ) && ( AllEnemys [ EnemyIndex ] . Status == OUT ) )
+	  if ( ( AllEnemys [ EnemyIndex ] . pos . z == 0 ) && ( AllEnemys [ EnemyIndex ] . Status == INFOUT ) )
 	    continue;
 
 	  FillDataIntoEnemyEngram ( WriteIndex , EnemyIndex );
@@ -1799,7 +1799,7 @@ SendEnemyUpdateEngramToClient ( int PlayerNum )
 	  //--------------------
 	  // We also ignore the deactivated enemys on level 0
 	  //
-	  if ( ( AllEnemys [ EnemyIndex ] . pos . z == 0 ) && ( AllEnemys [ EnemyIndex ] . Status == OUT ) )
+	  if ( ( AllEnemys [ EnemyIndex ] . pos . z == 0 ) && ( AllEnemys [ EnemyIndex ] . Status == INFOUT ) )
 	    continue;
 
 	  FillDataIntoEnemyEngram ( WriteIndex , EnemyIndex );

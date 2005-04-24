@@ -1124,7 +1124,7 @@ ActSpecialField ( int PlayerNum )
     // We don't do anything for this player, if it's an
     // inactive player.
     //
-    if ( Me [ PlayerNum ] . status == OUT ) return;
+    if ( Me [ PlayerNum ] . status == INFOUT ) return;
     
     //--------------------
     // If the player is on the one special teleporter square, that gets
@@ -2857,7 +2857,7 @@ file you use.",
 
       for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
 	{
-	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == OUT ) break;
+	  if ( AllEnemys[ FreeAllEnemysPosition ].Status == INFOUT ) break;
 	}
       if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
@@ -3070,7 +3070,7 @@ game data file with all droid type specifications.",
     {
 	for ( FreeAllEnemysPosition=0 ; FreeAllEnemysPosition < MAX_ENEMYS_ON_SHIP ; FreeAllEnemysPosition++ )
 	{
-	    if ( AllEnemys [ FreeAllEnemysPosition ] . Status == OUT ) break;
+	    if ( AllEnemys [ FreeAllEnemysPosition ] . Status == INFOUT ) break;
 	}
 	if ( FreeAllEnemysPosition == MAX_ENEMYS_ON_SHIP )
 	{
@@ -3138,7 +3138,7 @@ MoveLevelDoors ( int PlayerNum )
   //
   if ( PlayerNum == MAX_PLAYERS -1 ) LevelDoorsNotMovedTime=0;
 
-  if ( Me [ PlayerNum ] . status == OUT ) return;
+  if ( Me [ PlayerNum ] . status == INFOUT ) return;
 
   // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , DoorLevel -> levelnum , Me [ PlayerNum ] . pos . z );
 
@@ -3261,7 +3261,7 @@ Error:  Doors pointing not to door obstacles found.",
 	      //--------------------
 	      // ignore druids that are dead or on other levels 
 	      //
-	      if ( ( AllEnemys[j].Status == OUT ) ||
+	      if ( ( AllEnemys[j].Status == INFOUT ) ||
 		   ( AllEnemys[j].pos.z  != DoorLevel->levelnum ) )
 		continue;
 
@@ -3355,7 +3355,7 @@ WorkLevelGuns ( int PlayerNum )
   //
   if ( PlayerNum == MAX_PLAYERS -1 ) LevelGunsNotFiredTime = 0 ;
 
-  if ( Me [ PlayerNum ] . status == OUT ) return;
+  if ( Me [ PlayerNum ] . status == INFOUT ) return;
 
   // DebugPrintf ( 0 , "\nMoving Doors for Player %d on level %d . != %d " , PlayerNum , GunLevel -> levelnum , Me [ PlayerNum ] . pos . z );
 
@@ -3389,7 +3389,7 @@ WorkLevelGuns ( int PlayerNum )
       //
       for (j = 0; j < (MAXBULLETS); j++)
 	{
-	  if (AllBullets[j].type == OUT)
+	  if (AllBullets[j].type == INFOUT )
 	    {
 	      CurBullet = &AllBullets[j];
 	      break;

@@ -1570,7 +1570,7 @@ This indicates an error in the map system of Freedroid.",
 	//
 	for (i = 0; i < MAXBLASTS; i++)
 	{
-	    AllBlasts[i].type = OUT;
+	    AllBlasts[i].type = INFOUT;
 	}
 	for (i = 0; i < MAXBULLETS; i++)
 	{
@@ -1823,11 +1823,11 @@ SaveGameConfig (void)
 	printf("It seems that the game couldn't start up at all... therefore we need not save any config information.\n\n");
 	SDL_Quit();
 #if __WIN32__
-	if ( ExitCode == ERR )
-	{
+/*ExitCode undeclared says mingw32	if ( ExitCode == ERR )
+	{*/
 	    system ( "notepad stderr.txt" );
 	    system ( "notepad stdout.txt" );
-	}
+	/*}*/
 #endif
 	exit ( ERR );
     }

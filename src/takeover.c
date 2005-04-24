@@ -946,7 +946,7 @@ ShowPlayground ( void )
     blit_tux ( xoffs + DruidStart [ YourColor ] . x ,
 	       yoffs + DruidStart [ YourColor ] . y + 30 , 0 );
 
-    if ( AllEnemys [ DroidNum ] . Status != OUT )
+    if ( AllEnemys [ DroidNum ] . Status != INFOUT )
 	PutEnemy (DroidNum, xoffs + DruidStart[!YourColor].x,
 		  yoffs + DruidStart[!YourColor].y , FALSE , FALSE );
     

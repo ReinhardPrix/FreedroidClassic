@@ -565,7 +565,7 @@ CheckIfMissionIsComplete (void)
 	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		     ( AllEnemys[Robot_Counter].Status != INFOUT ) && 
 		     ( AllEnemys[Robot_Counter] . marker == Me [ 0 ] . AllMissions [ mis_num ] . KillOne ) )
 		{
 		    DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of the marked droids is still alive...");
@@ -622,7 +622,7 @@ CheckIfMissionIsComplete (void)
 	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		     ( AllEnemys[Robot_Counter].Status != INFOUT ) && 
 		     ( Druidmap[AllEnemys[Robot_Counter].type].class == Me[0].AllMissions[ mis_num ].KillClass ) ) 
 		{
 		    DebugPrintf ( MIS_COMPLETE_DEBUG , "\nOne of that class is still alive: Nr=%d Lev=%d X=%f Y=%f." , 
@@ -642,7 +642,7 @@ CheckIfMissionIsComplete (void)
 	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		     ( AllEnemys[Robot_Counter].Status != INFOUT ) && 
 		     ( ! AllEnemys[Robot_Counter]. is_friendly ) && 
 		     ( AllEnemys[Robot_Counter] . pos . z == Me[0].AllMissions[ mis_num ].must_clear_first_level ) ) 
 		{
@@ -663,7 +663,7 @@ CheckIfMissionIsComplete (void)
 	    for ( Robot_Counter=0 ; Robot_Counter < MAX_ENEMYS_ON_SHIP ; Robot_Counter++ )
 	    {
 		if ( ( AllEnemys[Robot_Counter].energy > 0 ) && 
-		     ( AllEnemys[Robot_Counter].Status != OUT ) && 
+		     ( AllEnemys[Robot_Counter].Status != INFOUT ) && 
 		     ( ! AllEnemys[Robot_Counter]. is_friendly ) && 
 		     ( AllEnemys[Robot_Counter] . pos . z == Me[0].AllMissions[ mis_num ].must_clear_second_level ) ) 
 		{

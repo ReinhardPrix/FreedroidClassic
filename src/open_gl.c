@@ -415,8 +415,8 @@ flip_image_horizontally ( SDL_Surface* tmp1 )
     {
 	for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
 	{
-	    temp = GetPixel ( tmp1 , x , y ) ;
-	    PutPixel ( tmp1 , x , y , GetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+	    temp = FdGetPixel ( tmp1 , x , y ) ;
+	    PutPixel ( tmp1 , x , y , FdGetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
 	    PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
 	}
     }
