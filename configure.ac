@@ -92,6 +92,12 @@ you need the SDL_mixer library (version >= 1.2.1) if you want sound!
 (see see http://www.libsdl.org/)
 --> compiling without sound support]))
 
+AC_CHECK_LIB([ogg], [oggpack_read],, AC_MSG_WARN([
+--------------------------------------------------
+libogg not found!
+You need the Ogg libs installed if you want
+Freedroid to be able to play Ogg files (e.g. the Intro theme)
+--------------------------------------------------]))
 
 AC_CHECK_LIB([vorbis], [vorbis_block_init],, AC_MSG_WARN([
 --------------------------------------------------
