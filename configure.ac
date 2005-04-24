@@ -149,7 +149,7 @@ AC_HEADER_TIME
 # Checks for library functions.
 ##AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok ])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok alphasort scandir])
 
 ## Check gtk libs
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([

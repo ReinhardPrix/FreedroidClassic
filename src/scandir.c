@@ -18,7 +18,7 @@
 */
 #include "config.h"
 
-#if ! HAVE_DIRENT_H
+#if ! HAVE_SCANDIR
 
 #include "scandir.h"
 
@@ -98,6 +98,10 @@ scandir (dir, namelist, select, cmp)
   return i;
 }
 
+#endif /* ! HAVE_SCANDIR */
+
+#if ! HAVE_ALPHASORT
+
 int
 alphasort (const void *a, const void *b)
 {
@@ -106,4 +110,4 @@ alphasort (const void *a, const void *b)
 }
 
 
-#endif /* ! HAVE_DIRENT_H */
+#endif /* ! HAVE_ALPHASORT */
