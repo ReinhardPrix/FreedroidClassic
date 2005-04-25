@@ -1598,7 +1598,7 @@ Change of screen resolution will\n\
 take effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thanks you.\n");
+Thank you.\n");
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1612,7 +1612,7 @@ Change of screen resolution will\n\
 take effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thanks you.\n");
+Thank you.\n");
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1626,7 +1626,7 @@ Change of screen resolution will take\n\
 effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thanks you.\n");
+Thank you.\n");
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1744,7 +1744,7 @@ You might want to restart the game using\n\
 OpenGL instead.  Then you can change the\n\
 screen resolution using this menu option.\n\
 \n\
-Thanks you.\n");
+Thank you.\n");
 		    SetCurrentFont ( Menu_BFont );
 		}
 		else
