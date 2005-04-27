@@ -445,8 +445,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     ThisItem->multiplicity = 1;
     
     //--------------------
-    // We now have to set a duration, as well a maximum duration
-    // as well as a current duration, the later of which will be
+    // We now have to set a duration : a maximum duration
+    // and a current duration. The latter is
     // a fraction of the maximum duration.
     //
     if ( ItemMap [ ThisItem->type ] . base_item_duration != (-1) )
@@ -707,7 +707,7 @@ Couldn't find another array entry to drop another item.",
 }; // void DropChestItemAt( int ItemType , int x , int y , int prefix , int suffix , int TreasureChestRange )
 
 /* ----------------------------------------------------------------------
- *
+ * This function checks whether a given item can be equipped.
  *
  * ---------------------------------------------------------------------- */
 int
@@ -1670,8 +1670,8 @@ Quick_ApplyItem( int ItemKey )
 }; // void Quick_ApplyItem( item* CurItem )
 
 /* ----------------------------------------------------------------------
- *
- *
+ * This function returns the spellcasting skill level that is required
+ * to cast a given spell.
  * ---------------------------------------------------------------------- */
 int
 required_spellcasting_skill_for_item ( int item_type )
@@ -1974,13 +1974,23 @@ ApplyItem( item* CurItem )
     }	
     else if ( CurItem->type == ITEM_SCRIPT_OF_TELEPORT_HOME )
     {
-	Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
-	Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
-	Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
-	// Play_Spell_ForceToEnergy_Sound( );
-	teleport_arrival_sound ( );
-	ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-	Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
+	if( (! Me [ 0 ] . teleport_anchor . x) && (! Me [ 0 ] . teleport_anchor . y)) //if there is no anchor, teleport home
+	{
+		Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x;
+		Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y;
+		Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z;
+		teleport_arrival_sound ( );
+		ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+		Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
+	}
+	else //we must teleport back to the anchor
+	{
+                teleport_arrival_sound  ( );
+		Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x + 0.5 , Me [ 0 ] . teleport_anchor . y + 0.5 , 0 , FALSE , TRUE ) ;
+		Me [ 0 ] . teleport_anchor.x = 0;
+		Me [ 0 ] . teleport_anchor.y = 0;
+	}
+		
     }
     else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {

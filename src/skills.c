@@ -287,16 +287,24 @@ TeleportHome ( void )
     {
 	Me[0].mana -= SpellCost;
 	
-	Me[0].teleport_anchor.x = Me [ 0 ] . pos . x;
-	Me[0].teleport_anchor.y = Me [ 0 ] . pos . y;
-	Me[0].teleport_anchor.z = Me [ 0 ] . pos . z;
 	
-	// Play_Spell_ForceToEnergy_Sound( );
-	teleport_arrival_sound ( );
-	
-	ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-	Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
-	
+
+	if( (! Me [ 0 ] . teleport_anchor . x) && (! Me [ 0 ] . teleport_anchor . y)) //if there is no anchor, teleport home
+        {
+                Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x;
+                Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y;
+                Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z;
+                teleport_arrival_sound ( );
+                ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+                Teleport ( HomeSpot.level , HomeSpot.x + 0.5 , HomeSpot.y + 0.5 , 0 , FALSE , TRUE ) ;
+        }
+        else //we must teleport back to the anchor
+        {
+                teleport_arrival_sound  ( );
+                Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x + 0.5 , Me [ 0 ] . teleport_anchor . y + 0.5 , 0 , FALSE , TRUE ) ;
+                Me [ 0 ] . teleport_anchor.x = 0;
+                Me [ 0 ] . teleport_anchor.y = 0;
+        }
     }
     else
     {

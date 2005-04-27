@@ -1590,9 +1590,9 @@ PrepareStartOfNewCharacter ( void )
     Me [ 0 ] . pos . y = StartPosition . y ;
     Me [ 0 ] . pos . z = StartPosition . level ;
     
-    Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x ;
-    Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y ;
-    Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z ;
+    Me [ 0 ] . teleport_anchor . x = 0 ; //no anchor at the beginning
+    Me [ 0 ] . teleport_anchor . y = 0 ;
+    Me [ 0 ] . teleport_anchor . z = 0 ;
     
     DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , StartingLevel, StartingXPos, StartingYPos );
     
