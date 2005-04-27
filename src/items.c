@@ -3964,6 +3964,26 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 				   PLEASE_INFORM, IS_FATAL );
     }
     
+    //--------------------
+    // Maybe the item in question is something, that would best be placed inside
+    // the quick inventory.  If that is so, we try to put it there first.  If that
+    // isn't possible, it can still be placed somewhere outside of the quick 
+    // inventory later.
+    //
+    if ( ( ItemMap [ ItemPointer -> type ] . inv_image . inv_size . x == 1 ) &&
+	 ( ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y == 1 ) &&
+	 ( ItemMap [ ItemPointer -> type ] . item_can_be_applied_in_combat ) )
+    {
+	DebugPrintf ( 2 , "\n\nTrying to place this item inside of the quick inventory first...");
+	Inv_Loc . y = InventorySize . y - 1 ;
+	for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
+	{
+	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
+	}
+    }
+
+
+    //--------------------
     // find enough free squares in the inventory to fit
     for ( Inv_Loc.y = 0; Inv_Loc.y < InventorySize.y - ItemMap [ ItemPointer -> type ] . inv_image . inv_size . y + 1 ; Inv_Loc.y ++ )
     {
