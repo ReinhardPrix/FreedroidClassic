@@ -2155,13 +2155,13 @@ adapt_global_mode_for_player ( int player_num )
     int our_enemy_index ;
 
     //--------------------
-    // If the cursor is not in the user rectangle, then the mode must
-    // be reset to normal.
+    // If the cursor is not in the user rectangle, i.e. the cursor is on one
+    // of the skill/character/inventory screens, othen the mode must
+    // be reset to normal (except for identify operations on the inventory
+    // screen)
     //
-    // Also if the cursor is inside the skill rectangle or the skill
-    // explanation screen, it only seems just to do that.
-    //
-    if ( !MouseCursorIsInRect ( &User_Rect , GetMousePos_x() , GetMousePos_y() ) )
+    if ( ( !MouseCursorIsInRect ( &User_Rect , GetMousePos_x() , GetMousePos_y() ) ) &&
+	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
 	global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	return;
@@ -2199,7 +2199,7 @@ adapt_global_mode_for_player ( int player_num )
     {
 	//--------------------
 	// Now we need to find the obstacle under the current mouse
-	// corsor.  If there isn't any obstacle under it, then the global
+	// cursor.  If there isn't any obstacle under it, then the global
 	// mode can be (more or less) reset.
 	//
 	obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
@@ -2215,7 +2215,6 @@ adapt_global_mode_for_player ( int player_num )
 
     if ( ( RightPressed ( ) && ( ! right_pressed_previous_frame) ) || MouseWheelDownPressed ( ) )
     {
-
 	//--------------------
 	// Now we cut down on the available major modes for the game,
 	// until those are implemented properly.
@@ -2246,7 +2245,6 @@ adapt_global_mode_for_player ( int player_num )
 
     if ( ( LeftPressed ( ) && ( ! left_pressed_previous_frame ) ) || MouseWheelUpPressed ( ) )
     {
-
 	//--------------------
 	// Now we cut down on the available major modes for the game,
 	// until those are implemented properly.
@@ -2270,7 +2268,6 @@ adapt_global_mode_for_player ( int player_num )
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
 	else
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
-	
     }
 
     right_pressed_previous_frame =  RightPressed ( ) ;
