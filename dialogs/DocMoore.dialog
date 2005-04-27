@@ -166,7 +166,7 @@ OptionSample="DocMoore/Tux_can_you_fix.wav"
 PositionX=155  PositionY=274  
 Subtitle="Sure, as the only doctor of this slowly growing community, I'm responsible for everyones health."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However, self-inflicted damage might be exemted from this rule in some cases..."
+Subtitle="However, self-inflicted damage might be exempted from this rule in some cases..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="There, it's done.  You're completely fixed.  You can go."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
