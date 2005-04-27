@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -44,10 +43,6 @@ OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=68  PositionY=275  
 Subtitle="Hello!  I'm Duncan!  I make grenades.  Want some?  Not for free of course!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Since you are new, you might need some map making device?  I got some for sale!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I make them, you must know.  Only the finest quality of course."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
@@ -71,7 +66,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 Subtitle="Hey man, if you're trying to get something off-price, sorry, not with me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="My prices are the best in all of the colony.  I know that.  Just take it or leave it."
+Subtitle="My prices are the best in all of the colony.  I know that. Just take it or leave it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Apart from that, none of my customers have ever complained about skin iritations so far."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
