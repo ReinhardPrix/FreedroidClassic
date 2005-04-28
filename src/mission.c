@@ -249,10 +249,7 @@ There was an illegal mission number received.",
 		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
 	    strcat ( complete_mission_display_text , temp_text );	    
-	    if ( mission_diary_texts [ mis_num ] [ mission_diary_index ] )
-	    	strcat ( complete_mission_display_text , mission_diary_texts [ mis_num ] [ mission_diary_index ] );	    
-	    else
-		strcat ( complete_mission_display_text , "Sorry : no mission diary text for this quest (yet)" );
+	    strcat ( complete_mission_display_text , mission_diary_texts [ mis_num ] [ mission_diary_index ] );	    
 	    strcat ( complete_mission_display_text , "\n" );
 	}
     }
@@ -831,6 +828,38 @@ There was a mission number received that is outside the range of allowed values.
 }; // void AssignMission( int MissNum );
 
 /* ----------------------------------------------------------------------
+ * At the start of every new game, the mission info (i.e. which missions
+ * are already assigned, completed, failed, available and such) should
+ * be reset to default state, so that no zombie mission entries can appear. 
+ * ---------------------------------------------------------------------- */
+void
+clear_tux_mission_info ( int player_num )
+{
+    int MissionTargetIndex;
+    int diary_entry_nr;
+
+    //--------------------
+    // At first we clear out all existing mission entries, so that no 'zombies' remain
+    // when the game is restarted and (perhaps less) new missions are loaded.
+    //
+    for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
+    {
+	Me [ player_num ] . AllMissions [ MissionTargetIndex ] . MissionExistsAtAll = FALSE;
+	Me [ player_num ] . AllMissions [ MissionTargetIndex ] . MissionIsComplete = FALSE;
+	Me [ player_num ] . AllMissions [ MissionTargetIndex ] . MissionWasFailed = FALSE;
+	Me [ player_num ] . AllMissions [ MissionTargetIndex ] . MissionWasAssigned = FALSE;
+
+	for ( diary_entry_nr = 0 ; diary_entry_nr < MAX_MISSION_DESCRIPTION_TEXTS ; diary_entry_nr ++ )
+	{
+	    mission_diary_texts [ MissionTargetIndex ] [ diary_entry_nr ] = "" ;
+	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_visible [ diary_entry_nr ] = FALSE ;
+	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_time [ diary_entry_nr ] = 0 ;
+	}
+    }
+
+}; // void clear_tux_mission_info ( int player_num )
+
+/* ----------------------------------------------------------------------
  * This function reads the mission specifications from the mission file
  * which is assumed to be loaded into memory already.
  * ---------------------------------------------------------------------- */
@@ -882,17 +911,10 @@ GetQuestList ( char* QuestListFilename )
     fpath = find_file ( QuestListFilename , MAP_DIR , FALSE );
     MissionTargetPointer = 
 	ReadAndMallocAndTerminateFile( fpath , "*** END OF QUEST LIST *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
-    
-    //--------------------
-    // At first we clear out all existing mission entries, so that no 'zombies' remain
-    // when the game is restarted and (perhaps less) new missions are loaded.
-    //
+
     for ( MissionTargetIndex = 0 ; MissionTargetIndex < MAX_MISSIONS_IN_GAME ; MissionTargetIndex ++ )
     {
-	Me[0].AllMissions[ MissionTargetIndex ].MissionExistsAtAll = FALSE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionIsComplete = FALSE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionWasFailed = FALSE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
+	Me [ 0 ] . AllMissions [ MissionTargetIndex ] . MissionExistsAtAll = FALSE;
     }
     
     MissionTargetIndex = 0;
@@ -907,10 +929,7 @@ GetQuestList ( char* QuestListFilename )
 	InnerPreservedLetter = * EndOfMissionTargetPointer;
 	* EndOfMissionTargetPointer = 0 ;
 	
-	Me[0].AllMissions[ MissionTargetIndex ].MissionExistsAtAll = TRUE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionIsComplete = FALSE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionWasFailed = FALSE;
-	Me[0].AllMissions[ MissionTargetIndex ].MissionWasAssigned = FALSE;
+	Me [ 0 ] . AllMissions [ MissionTargetIndex ] . MissionExistsAtAll = TRUE;
 	
 	// Me[0].AllMissions[ MissionTargetIndex ].MissionName = 
 	// ReadAndMallocStringFromData ( MissionTargetPointer , MISSION_TARGET_NAME_INITIALIZER , "\"" ) ;
@@ -1031,8 +1050,8 @@ GetQuestList ( char* QuestListFilename )
 	for ( diary_entry_nr = 0 ; diary_entry_nr < MAX_MISSION_DESCRIPTION_TEXTS ; diary_entry_nr ++ )
 	{
 	    mission_diary_texts [ MissionTargetIndex ] [ diary_entry_nr ] = "" ;
-	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_visible [ diary_entry_nr ] = FALSE ;
-	    Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_time [ diary_entry_nr ] = 0 ;
+	    // Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_visible [ diary_entry_nr ] = FALSE ;
+	    // Me [ 0 ] . AllMissions [ MissionTargetIndex ] . mission_description_time [ diary_entry_nr ] = 0 ;
 	}
 	next_diary_entry_pointer = MissionTargetPointer;
 	number_of_diary_entries = 0;
@@ -1040,6 +1059,8 @@ GetQuestList ( char* QuestListFilename )
 	{    
 	    mission_diary_texts [ MissionTargetIndex ] [ number_of_diary_entries ] = 
 		ReadAndMallocStringFromData ( next_diary_entry_pointer , MISSION_DIARY_ENTRY_STRING , "\"" ) ;
+	    DebugPrintf ( -4 , "\n\nFound new mission_diary_text (%d,%d): %s.\n\n" ,
+			  MissionTargetIndex , number_of_diary_entries , mission_diary_texts [ MissionTargetIndex ] [ number_of_diary_entries ] );
 	    number_of_diary_entries ++;
 	    next_diary_entry_pointer ++;
 	}

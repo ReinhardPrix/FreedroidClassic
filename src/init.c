@@ -1605,6 +1605,7 @@ PrepareStartOfNewCharacter ( void )
     // Now we read in the mission targets for this mission
     // Several different targets may be specified simultaneously
     //
+    clear_tux_mission_info ( 0 );
     GetQuestList ( "QuestList" );
     
     SwitchBackgroundMusicTo ( curShip.AllLevels [ Me [ 0 ] . pos . z ] -> Background_Song_Name );

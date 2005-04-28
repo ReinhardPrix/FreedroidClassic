@@ -526,7 +526,7 @@ LoadGame( void )
     global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
     
     ShowSaveLoadGameProgressMeter( 0 , FALSE )  ;
-    
+ 
     //--------------------
     // First we load the full ship information, same as with the level editor
     
