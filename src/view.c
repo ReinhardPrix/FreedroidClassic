@@ -531,6 +531,53 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 
 
 /* ----------------------------------------------------------------------
+ * More for debugging purposes than for real gameplay, we add some 
+ * function to illustrate the collision rectangle of a certain obstacle
+ * on the floor via a bright ugly distorted rectangular shape.
+ * ---------------------------------------------------------------------- */
+void 
+blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
+{
+    int x1, x2, x3, x4, y1, y2, y3, y4 ;
+
+    //--------------------
+    // If there is no collision rectangle to draw, we are done
+    //
+    if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_NONE )
+	return;
+
+    //--------------------
+    // Now we draw the collision rectangle.  We use the same parameters
+    // of the obstacle spec, that are also used for the collision checks.
+    //
+    x1 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , TRUE );
+    y1 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , FALSE );
+    x2 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , TRUE );
+    y2 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , FALSE );
+    x3 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , TRUE );
+    y3 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , FALSE );
+    x4 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , TRUE );
+    y4 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , FALSE );
+    blit_quad ( x1, y1, x2, y2, x3, y3, x4, y4, 0x00FEEAA );
+}; // void blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
+
+/* ----------------------------------------------------------------------
  * This function should blit an obstacle, that is given via it's address
  * in the parameter
  * ---------------------------------------------------------------------- */
@@ -559,7 +606,10 @@ There was an obstacle type given, that exceeds the number of\n\
 	 ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
 	 ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
 	return;
-    
+
+    // blit_obstacle_collision_rectangle ( our_obstacle );
+
+
     //--------------------
     // We blit the obstacle in question, but if we're in the level editor and this
     // obstacle has been marked, we apply a color filter to it.  Otherwise we blit
@@ -662,6 +712,8 @@ There was an obstacle type given, that exceeds the number of\n\
 					     our_obstacle -> pos . x , our_obstacle -> pos . y );
 	}
     }
+
+
 }; // blit_one_obstacle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
@@ -1322,6 +1374,12 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 	    }
 
 	    //--------------------
+	    // If the obstacle in question does have a collision rectangle, then we
+	    // draw that on the floor now.
+	    //
+	    blit_obstacle_collision_rectangle ( our_obstacle );
+
+	    //--------------------
 	    // If the obstacle isn't otherwise a preput obstacle, we're done here and can 
 	    // move on to the next list element
 	    //
@@ -1894,6 +1952,12 @@ AssembleCombatPicture ( int mask )
 	blit_our_own_mouse_cursor ();
 	blit_mouse_cursor_corona ();
     }
+
+    // blit_quad ( 50 , 70 , 110, 75 , 31, 301, 440 , 312 , 0x00FEEAA );
+    blit_quad ( 50       , 70 , 
+		50       , 70 + 30 , 
+		50 + 110*2 , 70 + 30*2 , 
+		50 + 110 , 70 , 0x00FEEAA );
     
     //--------------------
     // At this point we are done with the drawing procedure

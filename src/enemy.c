@@ -2928,6 +2928,40 @@ enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 }; // void enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
+ * Here we check to see, if it makes sense for an enemy (or friendly) bot
+ * to switch to stop and eye tux state now.  If that is the case, the
+ * switch will also be done here.
+ * ---------------------------------------------------------------------- */
+void
+check_if_switching_to_stopandeyetuxmode_makes_sense ( enemy* ThisRobot )
+{
+    //--------------------
+    // If the Tux isn't directly on it's way to the Tux, it might just
+    // switch to take a closer look at the Tux.  But this will again
+    // be different for hostile bots and for non-hostile bots...
+    //
+    if ( ! ThisRobot -> will_rush_tux )
+    {
+	//--------------------
+	// It only makes sense to switch to eyeing Tux state, if that state
+	// isn't activated already.
+	//
+	if ( ! ( ThisRobot -> combat_state == STOP_AND_EYE_TUX ) )
+	{
+	    if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
+		 ( ! ThisRobot -> is_friendly ) )
+	    {
+		if ( droid_can_walk_this_line ( Me [ 0 ] . pos . z , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , ThisRobot -> pos . x , ThisRobot -> pos . y ) )
+		{
+		    ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
+		    ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
+		}
+	    }
+	}
+    }
+}; // void check_if_switching_to_stopandeyetuxmode_makes_sense ( enemy* ThisRobot )
+
+/* ----------------------------------------------------------------------
  * This function sometimes fires a bullet from enemy number enemynum 
  * directly into the direction of the influencer, but of course only if 
  * the odds are good i.e. requirements are met.
@@ -3066,21 +3100,8 @@ ProcessAttackStateMachine ( int enemynum )
 	    }
 	}
 	
-	//--------------------
-	// If the Tux isn't directly on it's way to the Tux, it might just
-	// switch to take a closer look at the Tux.  But this will again
-	// be different for hostile bots and for non-hostile bots...
-	//
-	if ( ! ThisRobot -> will_rush_tux )
-	{
-	    if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
-		 ( ! ThisRobot -> is_friendly ) )
-	    {
-		ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-		ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
-	    }
-	}
-	
+	check_if_switching_to_stopandeyetuxmode_makes_sense ( ThisRobot );
+
 	return; 
     }
     else if ( ThisRobot -> combat_state == WAYPOINTLESS_WANDERING )
@@ -3119,21 +3140,8 @@ ProcessAttackStateMachine ( int enemynum )
 	    }
 	}
 	
-	//--------------------
-	// If the Tux isn't directly on it's way to the Tux, it might just
-	// switch to take a closer look at the Tux.  But this will again
-	// be different for hostile bots and for non-hostile bots...
-	//
-	if ( ! ThisRobot -> will_rush_tux )
-	{
-	    if ( ( ThisRobot -> is_friendly && DistanceToTux( ThisRobot ) < IS_FRIENDLY_EYE_DISTANCE ) ||
-		 ( ! ThisRobot -> is_friendly ) )
-	    {
-		ThisRobot -> combat_state = STOP_AND_EYE_TUX ;
-		ThisRobot -> state_timeout = Druidmap [ ThisRobot -> type ] . time_spent_eyeing_tux ;
-	    }
-	}
-	
+	check_if_switching_to_stopandeyetuxmode_makes_sense ( ThisRobot );
+
 	return; 
     }
     else if ( ThisRobot -> combat_state == TURN_THOWARDS_NEXT_WAYPOINT )

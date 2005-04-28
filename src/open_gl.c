@@ -186,8 +186,13 @@ our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w,
 }; // void our_SDL_update_rect_wrapper ( SDL_Surface *screen, Sint32 x, Sint32 y, Sint32 w, Sint32 h ) 
 
 /* ----------------------------------------------------------------------
+ * This function will draw a rectangle to the screen.  It will use either
+ * OpenGL or SDL for graphics output, depending on output method currently
+ * set for the game.
  *
- *
+ * Note:  Rectangles in this sense have to be parallel to the screen
+ *        coordinates.  Other rectangles can be drawn with the function
+ *        blit_quad below (which only works with OpenGL output method).
  * ---------------------------------------------------------------------- */
 int 
 our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
@@ -237,6 +242,45 @@ our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
   return ( SDL_FillRect ( dst, dstrect, color) ) ;
 
 }; // int our_SDL_fill_rect_wrapper (SDL_Surface *dst, SDL_Rect *dstrect, Uint32 color)
+
+
+/* ----------------------------------------------------------------------
+ * This function will draw quads, that are not nescessarily parallel to 
+ * the screen coordinates to the screen.  It will currently only do 
+ * something in OpenGL output method.
+ * ---------------------------------------------------------------------- */
+int 
+blit_quad ( int x1 , int y1 , int x2, int y2, int x3, int y3, int x4 , int y4 , Uint32 color )
+{
+#ifdef HAVE_LIBGL
+  Uint8 r , g , b , a ;
+#endif
+
+  if ( use_open_gl )
+    {
+#ifdef HAVE_LIBGL
+	glDisable( GL_TEXTURE_2D );
+	glDisable(GL_DEPTH_TEST);
+	glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+	glDisable( GL_ALPHA_TEST );  
+	glEnable(GL_BLEND);
+	glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+	
+	SDL_GetRGBA( color, Screen -> format , &r, &g, &b, &a);
+	glRasterPos2i ( 0 , 0 ); 
+	glColor4ub( r , g , b , a );
+	glBegin(GL_QUADS);
+	glVertex2i( x1 , y1 );
+	glVertex2i( x2 , y2 );
+	glVertex2i( x3 , y3 );
+	glVertex2i( x4 , y4 );
+	glEnd( );
+	return ( 0 );
+#endif
+    }
+
+  return ( 0 );
+}; // int blit_quad ( int x1 , int y1 , int x2, int y2, int x3, int y3, int x4 , int y4 , Uint32 color )
 
 
 /* ----------------------------------------------------------------------
