@@ -1107,8 +1107,8 @@ Cheatmenu (void)
 	printf_SDL (Screen, -1, -1, " x. Cheatkeys : %s",
 		    GameConfig . enable_cheatkeys ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
-	printf_SDL (Screen, -1, -1, " f. Freeze on this positon: %s",
-		    stop_influencer ? "ON\n" : "OFF\n");
+	printf_SDL (Screen, -1, -1, " f. xray_vision_for_tux: %s",
+		    xray_vision_for_tux ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " q. RESUME game\n");
 
 	//--------------------
@@ -1119,9 +1119,9 @@ Cheatmenu (void)
 	switch ( getchar_raw ( ) )
 	{
 	    case 'f':
-		stop_influencer = !stop_influencer;
+		xray_vision_for_tux = !xray_vision_for_tux;
 		break;
-		
+
 	    case 'a': // armageddon: kills all robots on ship...
 		can_continue = 1;
 		Armageddon ();

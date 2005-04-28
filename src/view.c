@@ -3968,7 +3968,7 @@ PutEnemy ( int Enum , int x , int y , int mask , int highlight )
     // the screen or not.  Since there are many things to consider, we
     // got a special function for this job.
     //
-    if ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) return;
+    if ( ( ! ThisEnemyNeedsToBeBlitted ( Enum , x , y ) ) && ( !xray_vision_for_tux ) ) return;
     
     //--------------------
     // We check for incorrect droid types, which sometimes might occor, especially after

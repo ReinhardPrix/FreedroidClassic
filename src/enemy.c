@@ -66,10 +66,10 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
     {
 	if ( ThisLevel -> AllWaypoints [ i ] . x <= 0 ) continue;
 	
-	NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) *
-			     ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x ) +
-			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) *
-			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y ) ) ;
+	NewDistance = sqrt ( ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x + 0.5 ) *
+			     ( ThisRobot -> pos . x - ThisLevel -> AllWaypoints [ i ] . x + 0.5 ) +
+			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y + 0.5 ) *
+			     ( ThisRobot -> pos . y - ThisLevel -> AllWaypoints [ i ] . y + 0.5 ) ) ;
 	
 	if ( NewDistance <= BestDistance )
 	{
@@ -81,11 +81,12 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
     //--------------------
     // Now we have found a global minimum.  So we 'teleport' there.
     //
-    ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x ;
-    ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y ;
+    ThisRobot -> pos . x = ThisLevel -> AllWaypoints [ BestWaypoint ] . x + 0.5 ;
+    ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y + 0.5 ;
     ThisRobot -> nextwaypoint = BestWaypoint ;
     ThisRobot -> lastwaypoint = BestWaypoint ;
-    DebugPrintf ( -2 , "\nFinal teleport target poisition: %f/%f on level %d." ,
+    DebugPrintf ( -2 , "\nFinal teleport target: Wp no. %d poisition: %f/%f on level %d." ,
+		  BestWaypoint,
 		  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . z );
 }; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
 
@@ -237,6 +238,7 @@ SetDirectCourseToConsole( int EnemyNum )
 
 		  AllEnemys[ EnemyNum ].PrivatePathway[0].x = i;
 		  AllEnemys[ EnemyNum ].PrivatePathway[0].y = j;
+		  DebugPrintf( -4 , "\nSetDirectCourseToConsole: PrivatePathway has been updated." );
 
 		  return TRUE;
 
@@ -1094,9 +1096,8 @@ droid_can_walk_this_line ( int level_num , float x1, float y1 , float x2 , float
  * this function sets up randomly chosen targets for the droid.
  * ---------------------------------------------------------------------- */
 void 
-select_new_waypointless_random_walk_target ( int EnemyNum )
+select_new_waypointless_random_walk_target ( enemy* ThisRobot )
 {
-    enemy* ThisRobot = & ( AllEnemys [ EnemyNum ] ) ;
     int i ;
     moderately_finepoint target_candidate;
     int success = FALSE ;
@@ -1111,7 +1112,6 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
     // 
     if ( ThisRobot -> follow_tux )
     {
-
 	target_candidate . x = ThisRobot -> pos . x ;
 	target_candidate . y = ThisRobot -> pos . y ;
 
@@ -1145,11 +1145,11 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 	    ThisRobot -> persuing_given_course = TRUE ;
 	    ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = target_candidate . y ;
+	    // DebugPrintf( -4 , "\nselect_new_waypointless_random_walk_target: PrivatePathway has been updated." );
+	    // DebugPrintf( -4 , "\nit is now: %f/%f." , ThisRobot -> PrivatePathway [ 0 ] . x , ThisRobot -> PrivatePathway [ 0 ] . y );
 	    success = TRUE ;
 	    // break;
 	}
-	
-
     }
     else
     {
@@ -1168,6 +1168,8 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 		ThisRobot -> persuing_given_course = TRUE ;
 		ThisRobot -> PrivatePathway [ 0 ] . x = target_candidate . x ;
 		ThisRobot -> PrivatePathway [ 0 ] . y = target_candidate . y ;
+		// DebugPrintf( -4 , "\nselect_new_waypointless_random_walk_target: PrivatePathway has been updated." );
+		// DebugPrintf( -4 , "\nit is now: %f/%f." , ThisRobot -> PrivatePathway [ 0 ] . x , ThisRobot -> PrivatePathway [ 0 ] . y );
 		success = TRUE ;
 		break;
 	    }
@@ -1185,7 +1187,7 @@ select_new_waypointless_random_walk_target ( int EnemyNum )
 	// DebugPrintf ( -4 , "\n%s():  A new waypoint has been set." , __FUNCTION__ );
     }
     
-}; // void select_new_waypointless_random_walk_target ( int EnemyNum )
+}; // void select_new_waypointless_random_walk_target ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
  * This function moves one robot in an advanced way, that hasn't been
@@ -2410,6 +2412,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     ThisRobot -> persuing_given_course = TRUE;
     ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
     ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
+    DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
+
     
     //--------------------
     // Now we determine a probably better fighting position (not too far away
@@ -2509,6 +2513,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	{
 	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
+	    // DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
 	    break;
 	}
     }
@@ -2557,6 +2562,7 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	{
 	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;
+	    // DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
 	}
 	
     }
@@ -2814,10 +2820,21 @@ map developer, please fix the problem and commit it to cvs.  Thanks a lot!" ,
 	    // sensible.  We teleport the robot back to the nearest waypoint.  From there, it
 	    // might find a suitable way on it's own again.
 	    //	    
-	    DebugPrintf ( -2 , "\n\nFound robot, that seems really stuck on position: %f/%f/%d." ,
+	    DebugPrintf ( -2 , "\n\nFound robot that seems really stuck on position: %f/%f/%d." ,
 			  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos.z );
 	    DebugPrintf ( -2 , "\nMore details on this robot:  Type=%d. has_greeted_influencer=%d." ,
 			  ThisRobot -> type , ThisRobot -> has_greeted_influencer );
+	    DebugPrintf ( -2 , "\nPrivate Pathway[0]: %f/%f." , 
+			  ThisRobot -> PrivatePathway [ 0 ] . x ,
+			  ThisRobot -> PrivatePathway [ 0 ] . y );
+	    DebugPrintf ( -2 , "\nPrivate Pathway[1]: %f/%f." , 
+			  ThisRobot -> PrivatePathway [ 1 ] . x ,
+			  ThisRobot -> PrivatePathway [ 1 ] . y );
+	    DebugPrintf ( -2 , "\nClosestVisiblePlayer: %d." , 
+			  ClosestVisiblePlayer ( ThisRobot ) );
+	    DebugPrintf ( -2 , "\nnextwaypoint: %d." , 
+			  ThisRobot -> nextwaypoint );
+
 	    enemy_say_current_state_on_screen ( ThisRobot ); // safety:  init the TextToBeDisplayed 
 	    DebugPrintf ( -2 , "\nnextwaypoint=%d. lastwaypoint=%d. combat_%s. Status=%d." ,
 			  ThisRobot -> nextwaypoint , ThisRobot -> lastwaypoint , 
@@ -2828,6 +2845,7 @@ WARNING!  EMERGENCY FALLBACK ENABLED --> Teleporting back to closest waypoint." 
 				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	    ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
 	    TeleportToClosestWaypoint ( ThisRobot );
+	    select_new_waypointless_random_walk_target ( ThisRobot );
 	    return;
 	}
 	ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
@@ -2849,6 +2867,9 @@ WARNING!  EMERGENCY FALLBACK ENABLED --> Teleporting back to closest waypoint." 
 void
 enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 {
+    int player_num;
+    int bot_num;
+
     if ( ThisRobot -> AdvancedCommand == 1 ) ThisRobot -> combat_state = RELENTLESS_FIRE_TO_GIVEN_POSITION ;
     if ( ThisRobot->AdvancedCommand == 2 ) 
     {
@@ -2864,6 +2885,50 @@ enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 	    ThisRobot -> will_rush_tux = FALSE ;
 	}
     }
+
+    //--------------------
+    // If a bot is making an attack run, but then suddenly, he has lost
+    // all eye contact with the target, the bot should return to waypointless
+    // wandering.  (otherwise the "combat movement" could lead to strange behaviour,
+    // including running repeatedly against walls and such...)
+    //
+    if ( ( ThisRobot -> combat_state == MAKE_ATTACK_RUN ) &&
+	 ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_PLAYER ) )
+    {
+	player_num = ThisRobot -> attack_target_index ;
+
+	if ( ! DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . pos . z ) )
+	{
+	    //--------------------
+	    // Ok.  We'll break this off...
+	    //
+	    ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+	    select_new_waypointless_random_walk_target ( ThisRobot );
+	    DebugPrintf ( -4 , "\n(Hostile) Bot lost contact to player it was attacking... returning to normal operation." );
+	}
+    }	    
+
+    //--------------------
+    // Same as above should be done for hostile bots, that were attacking 
+    // friendly bots:  If they loose contact, they should return to normal
+    // operation.
+    //
+    if ( ( ThisRobot -> combat_state == MAKE_ATTACK_RUN ) &&
+	 ( ThisRobot -> attack_target_type == ATTACK_TARGET_IS_ENEMY ) )
+    {
+	bot_num = ThisRobot -> attack_target_index ;
+
+	if ( ! DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , AllEnemys [ bot_num ] . pos . x , AllEnemys [ bot_num ] . pos . y , AllEnemys [ bot_num ] . pos . z ) )
+	{
+	    //--------------------
+	    // Ok.  We'll break this off...
+	    //
+	    ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
+	    select_new_waypointless_random_walk_target ( ThisRobot );
+	    DebugPrintf ( -4 , "\n(Hostile) Bot lost contact to friendly bot it was attacking... returning to normal operation." );
+	}
+    }	    
+
 }; // void enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 
 /* ----------------------------------------------------------------------
@@ -2952,6 +3017,8 @@ ProcessAttackStateMachine ( int enemynum )
 	    ThisRobot -> persuing_given_course = TRUE ;
 	    ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
+	    DebugPrintf( -4 , "\nProcessAttackStateMachine: PrivatePathway has been updated." );
+
 	    
 	    if ( sqrt ( ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) +
 			( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) * ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) ) < 1 )
@@ -2967,7 +3034,7 @@ ProcessAttackStateMachine ( int enemynum )
 	return;
     }
     
-    else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )
+    else if ( ThisRobot -> combat_state == MOVE_ALONG_RANDOM_WAYPOINTS )	      
     {
 	MoveThisRobotThowardsHisCurrentTarget( enemynum );
 	if ( remaining_distance_to_current_walk_target ( ThisRobot ) < 0.1 ) 
@@ -3025,7 +3092,7 @@ ProcessAttackStateMachine ( int enemynum )
 	MoveThisRobotThowardsHisCurrentTarget( enemynum );
 	if ( remaining_distance_to_current_walk_target ( ThisRobot ) < 0.1 ) 
 	{
-	    select_new_waypointless_random_walk_target ( enemynum );
+	    select_new_waypointless_random_walk_target ( ThisRobot );
 	    ThisRobot -> combat_state = TURN_THOWARDS_WAYPOINTLESS_SPOT ;
 	    return;
 	}
@@ -3385,7 +3452,7 @@ CheckEnemyEnemyCollision ( int enemynum )
 	//
 	ListEnemy = & ( AllEnemys[ i ] );
 	
-	/* get distance between enemy i and enemynum */
+	// get distance between enemy i and enemynum 
 	xdist = check_x - ListEnemy->pos.x;
 	ydist = check_y - ListEnemy->pos.y;
 	
@@ -3394,7 +3461,6 @@ CheckEnemyEnemyCollision ( int enemynum )
 	// Is there a Collision?
 	if ( dist2 <= 2*DRUIDRADIUSXY )
 	{
-	    
 	    // am I waiting already?  If so, keep waiting... 
 	    if ( OurBot->pure_wait)
 	    {
