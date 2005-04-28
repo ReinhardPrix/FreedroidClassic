@@ -4318,6 +4318,12 @@ show_level_editor_tooltips ( void )
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
 	    show_button_tooltip ( "Use this button to toggle these annoying help windows on and off." );
     }
+    else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
+	    show_button_tooltip ( "Use this button to toggle the visible collision rectangles on and off." );
+    }
     else
     {
 	time_spent_on_some_button = 0 ;
@@ -4809,6 +4815,11 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	{
 	    GameConfig . show_tooltips = ! GameConfig . show_tooltips ;
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+		  MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    draw_collision_rectangles = ! draw_collision_rectangles;
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    proceed_now=!proceed_now;
@@ -4964,6 +4975,11 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     }
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF );
+
+    if ( draw_collision_rectangles ) 
+	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON );
+    else
+	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON_OFF );
 
 }; // void level_editor_blit_mouse_buttons ( Level EditLevel )
 

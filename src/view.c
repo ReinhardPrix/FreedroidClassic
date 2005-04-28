@@ -541,6 +541,12 @@ blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
     int x1, x2, x3, x4, y1, y2, y3, y4 ;
 
     //--------------------
+    // If collision rectangles are turned off, then we need not do 
+    // anything more here...
+    //
+    if ( ! draw_collision_rectangles ) return;
+
+    //--------------------
     // If there is no collision rectangle to draw, we are done
     //
     if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_NONE )
@@ -1953,12 +1959,6 @@ AssembleCombatPicture ( int mask )
 	blit_mouse_cursor_corona ();
     }
 
-    // blit_quad ( 50 , 70 , 110, 75 , 31, 301, 440 , 312 , 0x00FEEAA );
-    blit_quad ( 50       , 70 , 
-		50       , 70 + 30 , 
-		50 + 110*2 , 70 + 30*2 , 
-		50 + 110 , 70 , 0x00FEEAA );
-    
     //--------------------
     // At this point we are done with the drawing procedure
     // and all that remains to be done is updating the screen.

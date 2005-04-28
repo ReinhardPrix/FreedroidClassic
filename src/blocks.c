@@ -2696,11 +2696,11 @@ init_obstacle_data( void )
     //--------------------
     // These are the normal pillars, that appear here and there in the game.
     //
-    obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_1 = 0.9 ;
-    obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_2 = 0.9 ;
+    obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_BLOCK_1 ] . block_area_parm_2 = 1.05 ;
     obstacle_map [ ISO_BLOCK_1 ] . block_vision_too = FALSE ;
-    obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_1 = 0.9 ;
-    obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_2 = 0.9 ;
+    obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_BLOCK_2 ] . block_area_parm_2 = 1.05 ;
     obstacle_map [ ISO_BLOCK_2 ] . block_vision_too = FALSE ;
     
 

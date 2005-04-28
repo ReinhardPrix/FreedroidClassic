@@ -131,6 +131,7 @@ EXTERN int fullscreen_on;	// toggle for use of fullscreen vs. X11-window
 EXTERN int show_all_droids;     // display enemys regardless of IsVisible() 
 EXTERN int stop_influencer;     // for bullet debugging: stop where u are 
 EXTERN int xray_vision_for_tux; // to better debug bot movements from behind walls...
+EXTERN int draw_collision_rectangles; // to better debug collision rectangles
 EXTERN int mouse_control;       // allow for mouse control 
 EXTERN int classic_user_rect;   // use the User-Rect dimensions of the original game? 
 #undef EXTERN

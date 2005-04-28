@@ -111,6 +111,7 @@ better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
     GameOver = FALSE;
     QuitProgram = FALSE;
     xray_vision_for_tux = FALSE ;
+    draw_collision_rectangles = FALSE ;
 
     /*
      *  Parse command line and set global switches 
