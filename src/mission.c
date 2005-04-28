@@ -249,7 +249,10 @@ There was an illegal mission number received.",
 		      get_hours_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) , 
 		      get_minutes_of_game_duration ( Me [ 0 ] . AllMissions [ mis_num ] . mission_description_time [ mission_diary_index ] ) ) ;
 	    strcat ( complete_mission_display_text , temp_text );	    
-	    strcat ( complete_mission_display_text , mission_diary_texts [ mis_num ] [ mission_diary_index ] );	    
+	    if ( mission_diary_texts [ mis_num ] [ mission_diary_index ] )
+	    	strcat ( complete_mission_display_text , mission_diary_texts [ mis_num ] [ mission_diary_index ] );	    
+	    else
+		strcat ( complete_mission_display_text , "Sorry : no mission diary text for this quest (yet)" );
 	    strcat ( complete_mission_display_text , "\n" );
 	}
     }
