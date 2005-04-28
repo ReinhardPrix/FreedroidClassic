@@ -2412,8 +2412,6 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     ThisRobot -> persuing_given_course = TRUE;
     ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x ;
     ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y ;
-    DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
-
     
     //--------------------
     // Now we determine a probably better fighting position (not too far away
@@ -2513,7 +2511,6 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	{
 	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
-	    // DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
 	    break;
 	}
     }
@@ -2562,7 +2559,6 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	{
 	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + StepVector.x;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + StepVector.y;
-	    // DebugPrintf( -4 , "\nMoveInCloserForOrAwayFromMeleeCombat: PrivatePathway has been updated." );
 	}
 	
     }
@@ -2897,7 +2893,7 @@ enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
     {
 	player_num = ThisRobot -> attack_target_index ;
 
-	if ( ! DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Me [ player_num ] . pos . z ) )
+	if ( ! droid_can_walk_this_line ( Me [ player_num ] . pos . z , ThisRobot -> pos . x , ThisRobot -> pos . y , Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ) )
 	{
 	    //--------------------
 	    // Ok.  We'll break this off...
@@ -2918,7 +2914,7 @@ enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
     {
 	bot_num = ThisRobot -> attack_target_index ;
 
-	if ( ! DirectLineWalkable ( ThisRobot -> pos . x , ThisRobot -> pos . y , AllEnemys [ bot_num ] . pos . x , AllEnemys [ bot_num ] . pos . y , AllEnemys [ bot_num ] . pos . z ) )
+	if ( ! droid_can_walk_this_line ( AllEnemys [ bot_num ] . pos . z , ThisRobot -> pos . x , ThisRobot -> pos . y , AllEnemys [ bot_num ] . pos . x , AllEnemys [ bot_num ] . pos . y ) )
 	{
 	    //--------------------
 	    // Ok.  We'll break this off...
@@ -3421,7 +3417,7 @@ CheckEnemyEnemyCollision ( int enemynum )
     enemy* ListEnemy;
     enemy* OurBot= & ( AllEnemys[ enemynum ] );
     
-    // return ( FALSE );
+    return ( FALSE );
     
     //--------------------
     // Enemys persuing a specific course may pass through other enerys
