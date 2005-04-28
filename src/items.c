@@ -967,7 +967,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     switch ( MyRandom ( TreasureChestRange ) )
     {
 	case 0:
-	    switch ( MyRandom ( 16 ) )
+	    switch ( MyRandom ( 18 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRACKS ;
@@ -978,19 +978,13 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
+		case 3:
 		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 3:
-		    drop_item_type = ITEM_SMALL_MANA_POTION ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 4:
-		    drop_item_type = ITEM_BUCKLER ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 5:
-		    drop_item_type = ITEM_SHORT_SWORD ;
+		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 6:
@@ -1034,6 +1028,14 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 16:
+		    drop_item_type = ITEM_BUCKLER ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 17:
+		    drop_item_type = ITEM_SHORT_SWORD ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 18:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1041,7 +1043,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 1:
-	    switch ( MyRandom ( 15 ) )
+	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_WHEELS ;
@@ -1052,19 +1054,13 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
+		case 3:
 		    drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 3:
-		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 4:
-		    drop_item_type = ITEM_SMALL_SHIELD ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 5:
-		    drop_item_type = ITEM_SCIMITAR ;
+		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 6:
@@ -1104,6 +1100,14 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 15:
+		    drop_item_type = ITEM_SMALL_SHIELD ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 16:
+		    drop_item_type = ITEM_SCIMITAR ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 17:
 		default:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1111,7 +1115,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 2:
-	    switch ( MyRandom ( 17 ) )
+	    switch ( MyRandom ( 19 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRIPEDAL ;
@@ -1122,19 +1126,13 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
+		case 3:
 		    drop_item_type = ITEM_FULL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 3:
-		    drop_item_type = ITEM_FULL_MANA_POTION ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 4:
-		    drop_item_type = ITEM_SMALL_SHIELD ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 5:
-		    drop_item_type = ITEM_SABER ;
+		    drop_item_type = ITEM_FULL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 6:
@@ -1182,6 +1180,14 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 17:
+		    drop_item_type = ITEM_SMALL_SHIELD ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 18:
+		    drop_item_type = ITEM_SABER ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 19:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1189,7 +1195,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 3:
-	    switch ( MyRandom ( 15 ) )
+	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_COMPOSITE_BOW ;
@@ -1200,19 +1206,13 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
+		case 3:
 		    drop_item_type = ITEM_FULL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 3:
-		    drop_item_type = ITEM_FULL_MANA_POTION ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 4:
-		    drop_item_type = ITEM_SMALL_SHIELD ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 5:
-		    drop_item_type = ITEM_FALCHION ;
+		    drop_item_type = ITEM_FULL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 6:
@@ -1251,11 +1251,15 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		    // case 15:
-		    // drop_item_type = ITEM_RED_GUARD_LIGHT_ARMOUR ;
-		    // drop_item_multiplicity =  1 ;
-		    // break;
 		case 15:
+		    drop_item_type = ITEM_SMALL_SHIELD ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 16:
+		    drop_item_type = ITEM_FALCHION ;
+		    drop_item_multiplicity =  1 ;
+		    break;
+		case 17:
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1318,12 +1322,6 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 			    break;
 		    }
 		    break;
-
-		    // case 4:
-		    // drop_item_type = ITEM_RED_GUARD_HEAVY_ARMOUR ;
-		    // drop_item_multiplicity =  1 ;
-		    // break;
-
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
