@@ -155,8 +155,12 @@
 //--------------------
 // And now we put here all the rectangle definitions and that...
 //
-#define INVENTORY_RECT_Y 264
-#define INVENTORY_RECT_X 15
+// the inventory rect is the rectangle inside the inventory screen,
+// where all the items "in the backpack" including the quick inventory
+// are displayed.  it's relative to the top left corner, as always.
+//
+#define INVENTORY_RECT_Y 260
+#define INVENTORY_RECT_X 8
 
 #define CURRENT_SKILL_RECT_X 32
 #define CURRENT_SKILL_RECT_Y (GameConfig . screen_height - 80 * GameConfig . screen_height / 480)

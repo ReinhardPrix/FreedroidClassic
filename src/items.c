@@ -2293,11 +2293,11 @@ MouseCursorIsInInventoryGrid( int x , int y )
     CurPos.x = x ;
     CurPos.y = y ;
     
-    if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INVENTORY_SUBSQUARE_WIDTH ) )
+    if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INV_SUBSQUARE_WIDTH ) )
     {
 	DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
 	if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
-	     ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INVENTORY_SUBSQUARE_WIDTH * INVENTORY_GRID_HEIGHT ) )
+	     ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INV_SUBSQUARE_HEIGHT * INVENTORY_GRID_HEIGHT ) )
 	{
 	    DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
 	    return( TRUE );
@@ -2313,7 +2313,7 @@ MouseCursorIsInInventoryGrid( int x , int y )
 int
 GetInventorySquare_x( int x )
 {
-    return ( ( x - INVENTORY_RECT_X ) / INVENTORY_SUBSQUARE_WIDTH );
+    return ( ( x - INVENTORY_RECT_X ) / INV_SUBSQUARE_WIDTH );
 }; // int GetInventorySquare_x( x )
 
 /* ----------------------------------------------------------------------
@@ -2323,7 +2323,7 @@ GetInventorySquare_x( int x )
 int
 GetInventorySquare_y( int y )
 {
-    return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / INVENTORY_SUBSQUARE_WIDTH );
+    return ( ( y - (User_Rect.y + INVENTORY_RECT_Y ) ) / INV_SUBSQUARE_HEIGHT );
 }; // int GetInventorySquare_y( y )
 
 /* ----------------------------------------------------------------------
