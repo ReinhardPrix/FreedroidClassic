@@ -1,4 +1,4 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix
@@ -121,7 +121,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Isn't there some doctor in town who could cure you."
+New Option Nr=6  OptionText="Isn't there some doctor in town who could cure you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=147  
 Subtitle="Sure, the doc could help.  But he won't.  I've threatened him, but he won't."
@@ -144,7 +144,7 @@ Subtitle="Man, if you could do that, I'd give you everything.  I still got some 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Also I could vote for you if you seek to join the guard of the town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just get me some cure, and I'll be forever greatful!"
+Subtitle="Just get me some cure, and I'll be forever grateful!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
