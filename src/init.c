@@ -1729,7 +1729,7 @@ ResetGameConfigToDefaultValues ( void )
     // private user Freedroid config file.  But for now
     // this code is good enough...
     //
-    GameConfig . Current_BG_Music_Volume=1.0;
+    GameConfig . Current_BG_Music_Volume=0.5;
     GameConfig . Current_Sound_FX_Volume=0.5;
     GameConfig . current_gamma_correction = 1.00 ;
     GameConfig . WantedTextVisibleTime = 3;
