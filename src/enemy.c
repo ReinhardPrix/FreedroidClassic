@@ -85,7 +85,7 @@ TeleportToClosestWaypoint ( Enemy ThisRobot )
     ThisRobot -> pos . y = ThisLevel -> AllWaypoints [ BestWaypoint ] . y + 0.5 ;
     ThisRobot -> nextwaypoint = BestWaypoint ;
     ThisRobot -> lastwaypoint = BestWaypoint ;
-    DebugPrintf ( -2 , "\nFinal teleport target: Wp no. %d poisition: %f/%f on level %d." ,
+    DebugPrintf ( 1 , "\nFinal teleport target: Wp no. %d poisition: %f/%f on level %d." ,
 		  BestWaypoint,
 		  ThisRobot -> pos . x , ThisRobot -> pos . y , ThisRobot -> pos . z );
 }; // void TeleportToClosestWaypoint ( Enemy ThisRobot )
@@ -2798,9 +2798,9 @@ enemy_handle_stuck_in_walls ( enemy* ThisRobot )
 		    GiveStandardErrorMessage ( __FUNCTION__  , "\
 There was a bot in MOVE_ALONG_RANDOM_WAYPOINTS or TURN_THOWARDS_NEXT_WAYPOINT \n\
 state, that was found to be inside a wall.  This might indicate, that the wapoints\n\
-on the position mentioned above are badly positioned.  If you are a FreedroidRPG\n\
-map developer, please fix the problem and commit it to cvs.  Thanks a lot!" ,
-					       PLEASE_INFORM, IS_WARNING_ONLY );
+on the position mentioned above are badly positioned or that something like combat\n\
+or collisions have pushed the bot into some kind of wall or obstacle.  \n" ,
+					       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 		    ThisRobot -> bot_stuck_in_wall_at_previous_check = TRUE ; 
 		    return;
 		    break;
@@ -2900,7 +2900,7 @@ enemy_handle_trivial_state_switches_and_adv_commands ( enemy* ThisRobot )
 	    //
 	    ThisRobot -> combat_state = WAYPOINTLESS_WANDERING ;
 	    select_new_waypointless_random_walk_target ( ThisRobot );
-	    DebugPrintf ( -4 , "\n(Hostile) Bot lost contact to player it was attacking... returning to normal operation." );
+	    DebugPrintf ( 1 , "\nNOTE: void enemy_handle_trivial_state_switches_and_adv_commands(...):  (Hostile) Bot lost contact to player it was attacking... returning to normal operation." );
 	}
     }	    
 
@@ -3047,7 +3047,7 @@ ProcessAttackStateMachine ( int enemynum )
 	    ThisRobot -> persuing_given_course = TRUE ;
 	    ThisRobot -> PrivatePathway [ 0 ] . x = Me [ 0 ] . pos . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = Me [ 0 ] . pos . y ;
-	    DebugPrintf( -4 , "\nProcessAttackStateMachine: PrivatePathway has been updated." );
+	    DebugPrintf( 1 , "\nProcessAttackStateMachine: PrivatePathway has been updated." );
 
 	    
 	    if ( sqrt ( ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) * ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) +

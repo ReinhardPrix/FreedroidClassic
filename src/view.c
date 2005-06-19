@@ -371,8 +371,7 @@ ShowCombatScreenTexts ( int mask )
 	    
 	}
       
-	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 1,
 			 "FPS: %d " , FPS_Displayed );
 	
 	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
@@ -382,8 +381,7 @@ ShowCombatScreenTexts ( int mask )
     
     if ( GameConfig.Draw_Energy )
     {
-	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
-			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 1 + 1 * FontHeight( FPS_Display_BFont ), 
 			 "Energy: %d " , (int) (Me[0].energy) );
 	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 	// User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
@@ -392,8 +390,8 @@ ShowCombatScreenTexts ( int mask )
     
     if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
-	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+1.0*User_Rect.w/3 , 
-			 User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
+	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
+			 1 + 2 * FontHeight( FPS_Display_BFont ), 
 			 "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
     }
     

@@ -1059,7 +1059,7 @@ GetQuestList ( char* QuestListFilename )
 	{    
 	    mission_diary_texts [ MissionTargetIndex ] [ number_of_diary_entries ] = 
 		ReadAndMallocStringFromData ( next_diary_entry_pointer , MISSION_DIARY_ENTRY_STRING , "\"" ) ;
-	    DebugPrintf ( -4 , "\n\nFound new mission_diary_text (%d,%d): %s.\n\n" ,
+	    DebugPrintf ( 1 , "\n\nFound new mission_diary_text (%d,%d): %s.\n\n" ,
 			  MissionTargetIndex , number_of_diary_entries , mission_diary_texts [ MissionTargetIndex ] [ number_of_diary_entries ] );
 	    number_of_diary_entries ++;
 	    next_diary_entry_pointer ++;

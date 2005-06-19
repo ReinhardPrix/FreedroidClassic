@@ -2807,7 +2807,7 @@ eliminate_dead_obstacle_descriptions ( Level target_level )
 	{
 	    if ( target_level -> obstacle_list [ i ] . description_index == desc_index )
 	    {
-		DebugPrintf ( -4 , "\nThis descriptions seems to be in use still." );
+		DebugPrintf ( 1 , "\nvoid eliminate_dead_obstacle_descriptions(...):  This descriptions seems to be in use still." );
 		is_in_use = TRUE ;
 		break;
 	    }
@@ -2815,7 +2815,7 @@ eliminate_dead_obstacle_descriptions ( Level target_level )
 	
 	if ( is_in_use ) continue;
 	target_level -> obstacle_description_list [ desc_index ] = NULL ;
-	DebugPrintf ( -4 , "\nNOTE:  dead description found.  Eliminated." );
+	DebugPrintf ( 1 , "\nNOTE: void eliminate_dead_obstacle_descriptions(...):  dead description found.  Eliminated." );
     }
 	
 }; // void eliminate_dead_obstacle_descriptions ( Level target_level )
@@ -2859,7 +2859,7 @@ duplicate_all_obstacles_in_area ( Level source_level ,
 	    give_new_name_to_obstacle ( 
 		target_level , new_obstacle , 
 		source_level -> obstacle_name_list [ source_level -> obstacle_list [ i ] . name_index ] );
-	    DebugPrintf ( -1 , "\nNOTE:  obstacle name was exported:  %s." ,
+	    DebugPrintf ( 1 , "\nNOTE: void duplicate_all_obstacles_in_area(...):  obstacle name was exported:  %s." ,
 			  source_level -> obstacle_name_list [ source_level -> obstacle_list [ i ] . name_index ] );
 	}
 
@@ -4551,7 +4551,7 @@ give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle , char* pre
 	{
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 The label just entered did already exist on this map!  Deleting old entry in favour of the new one!",
-				       PLEASE_INFORM , IS_WARNING_ONLY );
+				       NO_NEED_TO_INFORM , IS_WARNING_ONLY );
 	    EditLevel -> obstacle_name_list [ free_index ] = NULL ;
 	    our_obstacle -> name_index = check_double ;
 	    break;

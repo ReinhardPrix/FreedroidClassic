@@ -2679,12 +2679,12 @@ I need to know that for saving. Abort.\n");
     {
 	for (cnt = 0; cnt < n; ++cnt) 
 	{
-	    puts ( eps[cnt]->d_name );
+	    // puts ( eps[cnt]->d_name );
 	    DisplayText ( eps[cnt]->d_name , 50 , 150 + cnt * 40 , NULL , TEXT_STRETCH );
 	    if ( cnt < MAX_SAVED_CHARACTERS_ON_DISK ) 
 	    {
 		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
-		DebugPrintf ( -1 , "\nAnother load game name found: %s.\n" , MenuTexts [ cnt ] );
+		DebugPrintf ( 1 , "\nNOTE:  int Load_Existing_Hero_Menu(void):  Another load game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
 	
