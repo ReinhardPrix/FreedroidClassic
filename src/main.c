@@ -248,6 +248,11 @@ update_timeouts_for_bots_on_level ( int level_num , float latest_frame_time )
 	    this_bot -> poison_duration_left -= latest_frame_time ;
 	    if ( this_bot -> poison_duration_left < 0 ) this_bot -> poison_duration_left = 0 ;
 	    this_bot -> energy -= latest_frame_time * this_bot -> poison_damage_per_sec ;
+	    if ( this_bot -> energy < 1 )
+	    {
+		this_bot -> energy = 1;
+		this_bot -> poison_duration_left = 0;
+	    }
 	}
 	
 	if ( this_bot -> paralysation_duration_left > 0 ) 
