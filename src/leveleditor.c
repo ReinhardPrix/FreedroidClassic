@@ -4298,19 +4298,19 @@ show_level_editor_tooltips ( void )
 	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_ENEMIES_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	    show_button_tooltip ( "Use this button to toggle between enemies dispalyed in level editor or enemies hidden in level editor." );
+	    show_button_tooltip ( "Use this button to toggle between enemies displayed in level editor or enemies hidden in level editor." );
     }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_OBSTACLES_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	    show_button_tooltip ( "Use this button to toggle between obstacles dispalyed in level editor or obstacles hidden in level editor." );
+	    show_button_tooltip ( "Use this button to toggle between obstacles displayed in level editor or obstacles hidden in level editor." );
     }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TUX_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	if ( time_spent_on_some_button > TICKS_UNTIL_TOOLTIP )
-	    show_button_tooltip ( "Use this button to toggle between Tux dispalyed in level editor or Tux hidden in level editor." );
+	    show_button_tooltip ( "Use this button to toggle between Tux displayed in level editor or Tux hidden in level editor." );
     }
     else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	      MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_TOOLTIPS_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
