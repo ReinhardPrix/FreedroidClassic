@@ -1798,6 +1798,14 @@ output.",
 				   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
     }
 
+    //--------------------
+    // In OpenGL, there is no need for the reduced menu display (which is
+    // based on restoring a saved "screenshot", which isn't working so well
+    // in OpenGL anyway) so we don't even allow for reduced menus in this
+    // mode.
+    //
+    if ( use_open_gl ) GameConfig . menu_mode = MENU_MODE_DEFAULT;
+
     return (OK);
     
 }; // int LoadGameConfig ( void )

@@ -2010,6 +2010,13 @@ PerformanceTweaksOptionsMenu (void)
 		    GameConfig . menu_mode = MENU_MODE_DOUBLE;
 		else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
 		    GameConfig . menu_mode = MENU_MODE_FAST;
+		//--------------------
+		// In OpenGL, there is no need for the reduced menu display (which is
+		// based on restoring a saved "screenshot", which isn't working so well
+		// in OpenGL anyway) so we don't even allow for reduced menus in this
+		// mode.
+		//
+		if ( use_open_gl ) GameConfig . menu_mode = MENU_MODE_DEFAULT;
 		break;
 		
 	    case SHOW_QUICK_INVENTORY_MODE:
