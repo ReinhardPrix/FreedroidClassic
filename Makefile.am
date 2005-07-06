@@ -15,7 +15,8 @@ SUBDIRS =  src $(extradirs)
 man_MANS = freedroidRPG.6
 
 freedroid_data = map graphics sound dialogs
-EXTRA_DIST = $(man_MANS) $(freedroid_data)
+
+EXTRA_DIST = m4 $(man_MANS) $(freedroid_data)
 
 dist-hook:
 	find $(distdir) -name CVS                 | xargs rm -rf
