@@ -1792,7 +1792,14 @@ InitFreedroid ( void )
     // We want DisplayChar to produce visible results by default...
     //
     display_char_disabled = FALSE ;
-    
+
+    //--------------------
+    // We mention the version of FreedroidRPG, so that debug reports
+    // are easier to assign to the different versions of the game.
+    //
+    DebugPrintf ( -4 , "\nHello, this is FreedroidRPG, version %s." , VERSION );
+		  
+
     //--------------------
     // WARNING!  We're using a GNU extension of standard (ANSI?) C here.  That
     //           means the following 'feenableexcept' might not be completely

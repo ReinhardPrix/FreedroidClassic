@@ -2031,6 +2031,7 @@ SaveShip(char *filename)
     //
     if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
     {
+	fprintf( stderr , "\nShip file filename: %s\n" , filename );
 	GiveStandardErrorMessage ( __FUNCTION__  , "Error opening ship file." ,
 				   PLEASE_INFORM, IS_FATAL );
 	return ERR;
