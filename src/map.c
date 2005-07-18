@@ -2408,7 +2408,7 @@ DecodeLoadedLeveldata ( char *data )
     
     /* read MapData */
     for (i = 0; i < loadlevel->ylen; i++)
-	if ( ( (char*)loadlevel -> map[i] = strtok ( NULL, "\n") ) == NULL)
+	if ( ( loadlevel -> map[i] = (void *)strtok ( NULL, "\n") ) == NULL)
 	    return NULL;
     
     /* Get Waypoints */
