@@ -1549,9 +1549,9 @@ display_current_game_message_window ( void )
     // { 65 , 410 , 500 , 70 }       
     
     Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . y = ( ( 380 + 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . y = ( ( 380 + 8 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . h = ( 70 * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . h = ( 60 * GameConfig . screen_height ) / 480 ;
 
     //--------------------
     // First we need to know where to begin with our little display.
@@ -1592,9 +1592,9 @@ display_current_game_message_window ( void )
     SDL_SetClipRect( Screen, NULL );
     // { 65 , 410 , 500 , 70 }       
     Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . y = ( ( 380 + 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . y = ( ( 380 + 8 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
-    Subtitle_Window . h = ( ( 70 - 10 - 10 ) * GameConfig . screen_height ) / 480 ;
+    Subtitle_Window . h = ( 40 * GameConfig . screen_height ) / 480 ;
     SetCurrentFont ( Message_BFont );
     DisplayText ( game_message_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window , our_stretch_factor );
 
