@@ -284,7 +284,7 @@ void
 print_trace ( int signum )
 {
 
-#if (!defined __WIN32__) && (!defined __APPLE_CC__)
+#if (!defined __WIN32__) && (!defined __APPLE_CC__) && (defined HAVE_BACKTRACE)
 
     // fprintf ( stderr , "print_trace:  Now attempting backtrace from within the code!\n" );
     // fprintf ( stderr , "print_trace:  Allowing a maximum of %d function calls on the stack!\n" , MAX_CALLS_IN_BACKTRACE );

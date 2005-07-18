@@ -41,8 +41,6 @@ case "$target" in
 	;;
 
 	*bsd*)
-	## BSD needs -lexecinfo for backtrace() routines
-	LDFLAGS="$LDFLAGS -lexecinfo"
 	bsd=true
 	;;
 
@@ -112,6 +110,14 @@ You need the Vorbis libs installed if you want
 Freedroid to be able to play Ogg files (e.g. the Intro theme)
 --------------------------------------------------]))
 
+if test x$bsd = xtrue; then
+	AC_CHECK_LIB([execinfo], [backtrace],, AC_MSG_WARN([
+--------------------------------------------------
+libexecinfo not found!
+Backtraces can't be generated on BSD systems if libexecinfo is not present
+--------------------------------------------------]))
+fi
+
 dnl , [ -logg -lvorbisenc -lvorbisfile  ]
 
 dnl Don't Check for getopt_long 
@@ -155,7 +161,7 @@ AC_HEADER_TIME
 # Checks for library functions.
 ##AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok alphasort scandir])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok alphasort scandir backtrace])
 
 ## Check gtk libs
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
