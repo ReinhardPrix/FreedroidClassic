@@ -45,6 +45,7 @@
 #include "system.h"
 #include "defs.h"
 #include "struct.h"
+#include "getopt.h"
 
 #define MAX_TEXT_ENTRIES_VISIBLE 7
 #define WINDOW_WARNINGS_DEBUG 2
