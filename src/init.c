@@ -58,8 +58,8 @@ void Get_Bullet_Data ( char* DataPointer );
  * section about 'Arithmethic', subsection on floating point control
  * functions.
  * ---------------------------------------------------------------------- */
-#if defined __APPLE_CC__
-/* turn off these function-call on OS X, where there are not present */
+#if ! defined __gnu_linux__
+/* turn off these functions where they are not present */
 int feenableexcept (int excepts) { return 0;}
 int fedisableexcept (int TheExceptionFlags ) { return 0; }
 #else
@@ -2018,10 +2018,7 @@ I will not be able to load or save games or configurations\n\
      * Initialise random-number generator in order to make 
      * level-start etc really different at each program start
      */
-#ifndef USE_SDL_FRAMERATE
-    gettimeofday(&timestamp, NULL);
-    srand((unsigned int) timestamp.tv_sec); /* yes, we convert long->int here! */
-#endif
+    srand(time(NULL));
     
     MinMessageTime = 55;
     MaxMessageTime = 850;
