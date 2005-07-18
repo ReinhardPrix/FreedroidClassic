@@ -1043,10 +1043,11 @@ Pause ( void )
 	    Me[0].status = PAUSE;       /* return to normal PAUSE */
 	} 
 	
-	if ( SpacePressed() || PPressed() )
+	if ( SpacePressed() || PPressed() || EscapePressed() )
 	{
 	    Pause = FALSE;
-	    while ( SpacePressed() || PPressed() );  /* wait for release */
+	    while ( SpacePressed() || PPressed() );  /* wait for release, but not for escape, so that it brings the menu just after the game has come out of 
+																		Pause mode */
 	}
 	
 	//--------------------
