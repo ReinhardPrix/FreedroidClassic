@@ -864,7 +864,7 @@ hmmm... this does not seem like a pre-padded OpenGL-prepared surface.  Breaking 
  * if the errors are really severe.
  * ---------------------------------------------------------------------- */
 void
-open_gl_check_error_status ( char* name_of_calling_function  )
+open_gl_check_error_status ( const char* name_of_calling_function  )
 {
 
     // return;
