@@ -40,6 +40,12 @@ case "$target" in
 	macosx=true
 	;;
 
+	*bsd*)
+	## BSD needs -lexecinfo for backtrace() routines
+	LDFLAGS="$LDFLAGS -lexecinfo"
+	bsd=true
+	;;
+
 	*)
 	CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoid expansion of $pkgdatadir !
 	LDFLAGS="$LDFLAGS -rdynamic"
