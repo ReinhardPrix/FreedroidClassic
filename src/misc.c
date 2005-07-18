@@ -1017,15 +1017,18 @@ Pause ( void )
     
     Me [ 0 ] . status = PAUSE;
     AssembleCombatPicture ( DO_SCREEN_UPDATE | USE_OWN_MOUSE_CURSOR );
+    append_new_game_message ( "Pausing game..." );
+    while ( PPressed () )
+	SDL_Delay (1); /* Wait for the pause key to be released */
 
     while ( Pause )
     {
-	SetNewBigScreenMessage( " Pause " );
 	animate_tux ( 0 );
 	AnimateCyclingMapTiles ();
 	DisplayBanner ( );
 	AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR );
-	CenteredPutStringFont ( Screen , Message_BFont , 200 , "G A M E    P A U S E D" ) ;
+/*	CenteredPutStringFont ( Screen , Message_BFont , 200 , "G A M E     P A U S E D" ) ;*/
+	CenteredPutStringFont ( Screen , Menu_BFont , 200 , "GAME PAUSED" ) ;
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( CPressed ( ) )
@@ -1040,10 +1043,10 @@ Pause ( void )
 	    Me[0].status = PAUSE;       /* return to normal PAUSE */
 	} 
 	
-	if ( SpacePressed() )
+	if ( SpacePressed() || PPressed() )
 	{
 	    Pause = FALSE;
-	    while ( SpacePressed() );  /* wait for release */
+	    while ( SpacePressed() || PPressed() );  /* wait for release */
 	}
 	
 	//--------------------
@@ -1054,7 +1057,7 @@ Pause ( void )
 	
     } // while (Pause) 
 
-    SetNewBigScreenMessage( "" );
+    append_new_game_message ( "Game resumed." );
     return;
 
 }; // void Pause ( void ) 
