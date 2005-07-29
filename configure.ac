@@ -54,7 +54,8 @@ esac
 dnl Commandline options
 
 AC_ARG_ENABLE(editors, [  --disable-editors       Do not build the GTK editors [[default=auto]]], build_editors="$enableval", build_editors=yes)
-AC_ARG_ENABLE(opengl, [  --disable-opengl        Do not build the OpenGL support (not recommended!) [[default=no]]], want_gl="$enableval", want_gl=yes)
+AC_ARG_ENABLE(opengl, [  --disable-opengl        Do not build the OpenGL support (not recommended!) [[default=auto]]], want_gl="$enableval", want_gl=yes)
+AC_ARG_ENABLE(backtrace, [  --disable-backtrace     Do not use backtrace() to generate nice bug reports [[default=use it]]], want_backtrace="$enableval", want_backtrace=yes)
 
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
@@ -176,7 +177,11 @@ AC_HEADER_TIME
 # Checks for library functions.
 ##AC_FUNC_MALLOC
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok alphasort scandir backtrace])
+AC_CHECK_FUNCS([alarm getcwd gettimeofday memset sqrt strstr strtok alphasort scandir])
+
+if test x$want_backtrace = xyes; then
+   AC_CHECK_FUNCS([backtrace])
+fi
 
 ## Check gtk libs
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
