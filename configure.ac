@@ -51,6 +51,11 @@ case "$target" in
 	;;
 esac
 
+dnl Commandline options
+
+AC_ARG_ENABLE(editors, [  --disable-editors       Do not build the GTK editors (default=auto)], build_editors="$enableval", build_editors=yes)
+
+
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
 
@@ -177,8 +182,11 @@ AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
 AM_CONDITIONAL(NONLINUX, test x$macosx = xtrue -o x$win32 = xtrue)
 
-dnl send a signal to automake wether gtk was found or not
+dnl send a signal to automake whether gtk was found or not
 AM_CONDITIONAL(FOUND_GTK, test x$found_gtk = xtrue)
+
+dnl send a signal to automake about whether to compile the editors or not
+AM_CONDITIONAL(BUILD_EDITORS, test x$build_editors = xyes -a x$found_gtk = xtrue)
 
 AC_CONFIG_FILES([Makefile src/Makefile croppy/Makefile win32/Makefile])
 
