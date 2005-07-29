@@ -53,8 +53,8 @@ esac
 
 dnl Commandline options
 
-AC_ARG_ENABLE(editors, [  --disable-editors       Do not build the GTK editors (default=auto)], build_editors="$enableval", build_editors=yes)
-
+AC_ARG_ENABLE(editors, [  --disable-editors       Do not build the GTK editors [[default=auto]]], build_editors="$enableval", build_editors=yes)
+AC_ARG_ENABLE(opengl, [  --disable-opengl        Do not build the OpenGL support (not recommended!) [[default=no]]], want_gl="$enableval", want_gl=yes)
 
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
@@ -146,12 +146,22 @@ WARNING: openGL libraries/headers could not be found.
 ----------------------------------------------------------------------
 ])
 else
-   AC_MSG_RESULT(yes)
-   dnl for backwards compatibility with our previous check, define
-   dnl the corresponding config.h-define
-   AC_DEFINE(HAVE_LIBGL,1, [Define to 1 if openGL libs were found])
-   LIBS="$LIBS $GL_LIBS"
-   CFLAGS="$CFLAGS $GL_CFLAGS"
+   if test x$want_gl = xyes; then
+	   AC_MSG_RESULT(yes)
+	   dnl for backwards compatibility with our previous check, define
+	   dnl the corresponding config.h-define
+	   AC_DEFINE(HAVE_LIBGL,1, [Define to 1 if openGL libs were found])
+	   LIBS="$LIBS $GL_LIBS"
+	   CFLAGS="$CFLAGS $GL_CFLAGS"
+   else
+	   AC_MSG_RESULT(disabled by request)
+	   AC_MSG_WARN([ openGL disabled, but the libraries were found!
+----------------------------------------------------------------------
+The gaming experience would be much better with openGL rendering.
+It is recommended to use openGL.
+----------------------------------------------------------------------
+])
+   fi
 fi
 
 # Checks for header files.
