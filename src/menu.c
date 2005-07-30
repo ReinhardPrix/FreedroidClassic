@@ -614,6 +614,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
     {
 	MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window , TEXT_STRETCH );
+	/*fprintf(stderr, "Option numéro %i requiert %i lignes\n", i, MenuOptionLineRequirement[i]);*/
     }
     
     //--------------------
@@ -1725,14 +1726,14 @@ Graphics_Options_Menu (void)
 		
 	    case SET_FULLSCREEN_FLAG:
 		while ( EnterPressed( ) || SpacePressed( ) );
-		#ifndef mingw32
+		#ifndef __WIN32__
 		SDL_WM_ToggleFullScreen ( Screen );
 		fullscreen_on = !fullscreen_on;
 		#else
 		GiveMouseAlertWindow("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
 There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n");
-		break;
 		#endif
+		break;
 		
 	    case CHANGE_SCREEN_RESOLUTION:
 		while ( EnterPressed() || SpacePressed() );
