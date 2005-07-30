@@ -4787,7 +4787,7 @@ ShowInventoryScreen( void )
 	{
 	    for ( j = 0 ; j < ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . inv_size . x ; j++ )
 	    {
-		TargetRect.x = INVENTORY_RECT_X + INV_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
+		TargetRect.x = INVENTORY_RECT_X - 1 + INV_SUBSQUARE_WIDTH * ( Me[0].Inventory[ SlotNum ].inventory_position.x + j );
 		TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + INV_SUBSQUARE_HEIGHT * ( Me[0].Inventory[ SlotNum ].inventory_position.y + i );
 		TargetRect.w = INV_SUBSQUARE_WIDTH ;
 		TargetRect.h = INV_SUBSQUARE_HEIGHT ;
@@ -4798,7 +4798,7 @@ ShowInventoryScreen( void )
 	    }
 	}
 	
-	TargetRect.x = INVENTORY_RECT_X + INV_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.x;
+	TargetRect.x = INVENTORY_RECT_X - 1 + INV_SUBSQUARE_WIDTH * Me[0].Inventory[ SlotNum ].inventory_position.x;
 	TargetRect.y = User_Rect.y + INVENTORY_RECT_Y + INV_SUBSQUARE_HEIGHT * Me[0].Inventory[ SlotNum ].inventory_position.y;
 	
 	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
