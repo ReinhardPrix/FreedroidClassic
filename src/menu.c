@@ -1729,17 +1729,8 @@ Graphics_Options_Menu (void)
 		SDL_WM_ToggleFullScreen ( Screen );
 		fullscreen_on = !fullscreen_on;
 		#else
-		GiveMouseAlertWindow ( "\n\
-Unfortunately, fullscreen cannot be\n\
-toggled at runtime under Windows.\n\
-We apologise for this.\n\
-\n\
-There are good Linux distributions out there,\n\ 
-please check them out.\n\ 
-\n\
-Or you can launch the game with the -w option.\n\
-\n\
-Thank you.\n");
+		GiveMouseAlertWindow("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
+There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n");
 		break;
 		#endif
 		
