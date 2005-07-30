@@ -533,6 +533,14 @@ MoveActiveSpells (void)
 			    default:
 				break;
 			}
+			if ( AllEnemys [ j ] . energy < 0 )  
+                                {
+				int reward = Druidmap [ AllEnemys[j].type ] . experience_reward;
+                                Me [ 0 ] . Experience += reward;
+		                sprintf ( game_message_text , "For defeating your enemy %s, you receive %d experience.",
+                		          Druidmap [ AllEnemys [ j ] . type ] . druidname , reward );
+		                append_new_game_message ( game_message_text );
+				}
 			AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		    }
 		    else
