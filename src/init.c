@@ -60,8 +60,8 @@ void Get_Bullet_Data ( char* DataPointer );
  * ---------------------------------------------------------------------- */
 #if ! defined __gnu_linux__
 /* turn off these functions where they are not present */
-int feenableexcept (int excepts) { return 0;}
-int fedisableexcept (int TheExceptionFlags ) { return 0; }
+#define feenableexcept(X) {}
+#define fedisableexcept(X) {}
 #else
 extern int feenableexcept (int excepts);
 extern int fedisableexcept (int TheExceptionFlags );
