@@ -860,6 +860,11 @@ blit_experience_countdown_bars ( void )
     static Uint32 un_experience_countdown_rect_color = 0 ;
     int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
     int exp_achieved = Me [ 0 ] . Experience - Me [ 0 ] . ExpRequired_previously ;
+    
+    if ( GameConfig . Inventory_Visible  && GameConfig . screen_width == 640 )
+    {
+        return ;
+    }
 
     //--------------------
     // At game startup, it might be that an uninitialized Tux (with 0 in the
@@ -1026,10 +1031,13 @@ ShowCurrentHealthAndForceLevel( void )
     //
     if ( ServerMode ) return;
 
-    if ( GameConfig . use_bars_instead_of_energy_o_meter )
-	blit_energy_and_mana_bars();
-    else
-	blit_energy_o_meter();
+    if ( GameConfig . screen_width != 640 || (( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible )) )
+	{
+	if ( GameConfig . use_bars_instead_of_energy_o_meter )
+		blit_energy_and_mana_bars();
+	else
+		blit_energy_o_meter();
+	}
 
     blit_running_power_bars ( );
     
@@ -1623,10 +1631,7 @@ DisplayBanner ( void )
 
     SDL_SetClipRect( Screen , NULL ); 
 
-    //-------------------
-    //In 640x480, we mustn't display the bars because they overlap the Char or Skill screen
-    if ( GameConfig . screen_width != 640 || (( ! GameConfig.CharacterScreen_Visible ) && ( ! GameConfig.SkillScreen_Visible )) )
-	ShowCurrentHealthAndForceLevel ( );
+    ShowCurrentHealthAndForceLevel ( );
     
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );

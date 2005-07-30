@@ -2824,7 +2824,7 @@ ShowQuickInventory ( void )
     // active skill screen of course.  That would be irritating.
     // This does not apply to high resolutions though.
 
-    if ( GameConfig . screen_width == 640 && (( GameConfig.SkillScreen_Visible ) || ( GameConfig.CharacterScreen_Visible )) ) return;
+    if ( GameConfig . screen_width == 640 && (( GameConfig.SkillScreen_Visible ) || ( GameConfig.CharacterScreen_Visible ) || ( GameConfig.Inventory_Visible ) )) return;
     
     //--------------------
     // Now we can blit all the objects in the quick inventory, but of course only
