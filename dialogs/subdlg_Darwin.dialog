@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -49,7 +48,7 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=270  PositionY=290  
+PositionX=267  PositionY=283  
 ChangeOption=0 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
 ChangeOption=7 ChangeToValue=1
@@ -61,10 +60,41 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=478  PositionY=77  
+Subtitle="But you already know how to extract these parts from dead droids !"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Remember that it's not always possible to extract a part of a droid, because it tends to get hurt when the droid dies."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=484  PositionY=188  
+ChangeOption=2 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=492  PositionY=252  
+ChangeOption=3 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=15
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=4  OptionText="Extract Plasma Transistor (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=424  PositionY=396  
-OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=11
+ChangeOption=4 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract4:" JumpToOption=1 ElseGoto=22
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -72,7 +102,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="Extract Superconductors (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=428  PositionY=317  
-OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=14
+ChangeOption=5 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract3:" JumpToOption=1 ElseGoto=9
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -80,15 +111,17 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="Extract Antimatter Matter Converters (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=421  PositionY=251  
-OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=15
+ChangeOption=6 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract2:" JumpToOption=1 ElseGoto=3
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=7  OptionText="Extract Entropy Inverters (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=418  PositionY=188  
-OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=16
+PositionX=408  PositionY=189  
+ChangeOption=7 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract1:" JumpToOption=1 ElseGoto=2
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -96,14 +129,24 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText="Extract Tachyon Condensators (costs 1 training point, 50 bucks)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=430  PositionY=474  
-OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=17
+ChangeOption=8 ChangeToValue=0
+OnCondition="CookieIsPlanted:5:" JumpToOption=1 ElseGoto=23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=492  PositionY=318  
+ChangeOption=9 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=14
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=556  PositionY=57  
+PositionX=595  PositionY=93  
 Subtitle="You don't have enough bucks on you!  Come back when you have the money."
 ReplySample="Darwin/DAR_Money2.wav"
 ChangeOption=10 ChangeToValue=0
@@ -128,9 +171,11 @@ Subtitle="Just take a look at this sketch.  You'll see how to extract the parts 
 ReplySample="Darwin/DAR_Sketch2.wav"
 Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
 ReplySample="Darwin/DAR_Cantfail2.wav"
+ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="IncreaseExtractPlasmaTransistorSkill"
+DoSomethingExtra="PlantCookie:know_extract4:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -191,6 +236,7 @@ ReplySample="Darwin/DAR_Cantfail2.wav"
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="IncreaseExtractSuperconductorSkill"
+DoSomethingExtra="PlantCookie:know_extract3:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -208,6 +254,7 @@ ChangeOption=19 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="IncreaseExtractConverterSkill"
+DoSomethingExtra="PlantCookie:know_extract2:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -225,6 +272,7 @@ ChangeOption=20 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="IncreaseExtractInverterSkill"
+DoSomethingExtra="PlantCookie:know_extract1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -241,6 +289,25 @@ ReplySample="Darwin/DAR_Cantfail2.wav"
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="IncreaseExtractCondensatorSkill"
+DoSomethingExtra="PlantCookie:know_extract5:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=494  PositionY=394  
+ChangeOption=22 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=11
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=494  PositionY=457  
+ChangeOption=23 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=10 ElseGoto=17
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -248,6 +315,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText="BACK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=419  PositionY=116  
+ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
