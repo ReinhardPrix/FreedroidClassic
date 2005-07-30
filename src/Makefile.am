@@ -7,6 +7,13 @@ endif
 ## compile Dialog-editor if gtk-libs were found
 if BUILD_EDITORS
 extra_prg = DialogEditor ItemEditor
+if WIN32
+INCLUDES        = -I/usr/include/glib-1.2 -I/usr/lib/glib/include
+LDADD           = -lgtk -lgdk
+else
+LDADD           = @GTK_LIBS@
+INCLUDES        = @GTK_CFLAGS@
+endif
 else
 extra_prg = 
 endif
@@ -27,12 +34,3 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 
 DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
-
-
-if WIN32
-INCLUDES	= -I/usr/include/glib-1.2 -I/usr/lib/glib/include
-LDADD           = -lgtk -lgdk
-else
-LDADD           = @GTK_LIBS@
-INCLUDES        = @GTK_CFLAGS@
-endif
