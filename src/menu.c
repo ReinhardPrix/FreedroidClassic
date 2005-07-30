@@ -1725,12 +1725,26 @@ Graphics_Options_Menu (void)
 		
 	    case SET_FULLSCREEN_FLAG:
 		while ( EnterPressed( ) || SpacePressed( ) );
+		#ifndef mingw32
 		SDL_WM_ToggleFullScreen ( Screen );
 		fullscreen_on = !fullscreen_on;
+		#else
+		GiveMouseAlertWindow ( "\n\
+Unfortunately, fullscreen cannot be\n\
+toggled at runtime under Windows.\n\
+We apologise for this.\n\
+\n\
+There are good Linux distributions out there,\n\ 
+please check them out.\n\ 
+\n\
+Or you can launch the game with the -w option.\n\
+\n\
+Thank you.\n");
 		break;
+		#endif
 		
 	    case CHANGE_SCREEN_RESOLUTION:
-		while (EnterPressed() || SpacePressed() );
+		while ( EnterPressed() || SpacePressed() );
 		if ( ! use_open_gl )
 		{
 		    GiveMouseAlertWindow ( "\n\
