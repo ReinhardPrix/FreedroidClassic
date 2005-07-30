@@ -69,10 +69,6 @@ CFLAGS="$CFLAGS $SDL_CFLAGS"
 LIBS="$LIBS $SDL_LIBS"
 
 
-AC_CHECK_LIB([SDL], [SDL_Init],, 
-	AC_MSG_ERROR([SDL library needed for FreedroidRPG!
-see http://www.libsdl.org/]))
-
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,
 	AC_MSG_ERROR([libjpeg needed to run FreedroidRPG!
