@@ -1272,31 +1272,31 @@ DropEnemyTreasure ( Enemy ThisRobot )
     //
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
     {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors )
+	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors && ( MyRandom ( 10 ) == 1 ) )
 	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
     {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors )
+	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors && ( ! MyRandom ( 10 ) == 1 )  )
 	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
     {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters )
+	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters && ( ! MyRandom ( 10 ) == 1 )  )
 	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
     {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters )
+	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters && ( ! MyRandom ( 10 ) == 1 )  )
 	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
     if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ) 
     {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators )
+	if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators && ( ! MyRandom ( 10 ) == 1 )  )
 	    DropItemAt( ITEM_DROID_PART_5 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
     }
@@ -1812,6 +1812,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
     NewBullet->fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
     NewBullet->owner_pos = & ( ThisRobot->pos );
+//    NewBullet->owner = ThisRobot -> type;
     NewBullet->ignore_wall_collisions = 
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
     memset( NewBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
