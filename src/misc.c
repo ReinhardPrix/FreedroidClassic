@@ -1524,6 +1524,18 @@ Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int wi
 	//
 	Activate_Conservative_Frame_Computation();
 
+        //--------------------
+        // If the level we're coming out from is the one where the homespot is, the teleport anchor has to be removed,
+        // because it means that the player decided not to teleport back to the previous location
+	location HomeSpot;
+	ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
+        if ( Me [ PlayerNum ] . pos . z == HomeSpot . level)
+		{
+	        Me [ 0 ] . teleport_anchor.x = 0;
+                Me [ 0 ] . teleport_anchor.y = 0;
+		}
+
+
 	//--------------------
 	// I think this is for the unlikely case of misordered levels in 
 	// the ship file used for this game?!
@@ -1612,7 +1624,7 @@ This indicates an error in the map system of Freedroid.",
 	//
 	clear_automap_texture_completely (  );
 	insert_old_map_info_into_texture (  );
-
+	
     }
     else
     {
