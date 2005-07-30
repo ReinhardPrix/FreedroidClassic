@@ -496,8 +496,8 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractPlasmaTransistorSkill" ) )
     {
 	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] ++; 
-	SetNewBigScreenMessage( "Extraction of plasma" );
 	SetNewBigScreenMessage( "transistors learned!" );
+	SetNewBigScreenMessage( "Extraction of plasma" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractSuperconductorSkill" ) )
     {
@@ -507,8 +507,8 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractConverterSkill" ) )
     {
 	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] ++; 
-	SetNewBigScreenMessage( "Extraction of antimatter-matter" );
 	SetNewBigScreenMessage( "converters learned!" );
+	SetNewBigScreenMessage( "Extraction of antimatter-matter" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractInverterSkill" ) )
     {
@@ -518,8 +518,8 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractCondensatorSkill" ) )
     {
 	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ++; 
-	SetNewBigScreenMessage( "Extraction of tachyon " );
 	SetNewBigScreenMessage( "condensators learned!" );
+	SetNewBigScreenMessage( "Extraction of tachyon " );
     }
     else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
     {
