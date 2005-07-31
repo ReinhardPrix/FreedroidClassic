@@ -1283,16 +1283,16 @@ prepare_text_window_content ( char* ItemDescText )
 	index_of_chest_below_mouse_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
 	if ( index_of_chest_below_mouse_cursor != (-1) )
 	{
-	    strcpy ( ItemDescText , "  C  H  E  S  T  ! ! ! " ); 
+	    strcpy ( ItemDescText , "  C  H  E  S  T    ! " ); 
 	    // index_of_chest_below_mouse_cursor
 	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 80 ;
+		TRUE ) + 70 ;
 	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y  ,
-		FALSE ) - 30 ;
+		FALSE ) - 20 ;
 	}
 	
 	//--------------------
@@ -1311,11 +1311,11 @@ prepare_text_window_content ( char* ItemDescText )
 	    {
 		case ISO_BARREL_1:
 		case ISO_BARREL_2:
-		    strcpy ( ItemDescText , "  B  A  R  R  E  L  ! ! ! " ); 
+		    strcpy ( ItemDescText , "  B  A  R  R  E  L    ! " ); 
 		    break;
 		case ISO_BARREL_3:
 		case ISO_BARREL_4:
-		    strcpy ( ItemDescText , "  C  R  A  T  E  ! ! ! " ); 
+		    strcpy ( ItemDescText , "  C  R  A  T  E    ! " ); 
 		    break;
 		default:
 		    fprintf ( stderr , "\nobs_type: %d." , obs_type );
@@ -1327,11 +1327,11 @@ A barrel was detected, but the barrel type was not valid.",
 	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 80 ;
+		TRUE ) + 70 ;
 	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
-		FALSE ) - 30 ;
+		FALSE ) - 20 ;
 	}
 	
 	//--------------------
