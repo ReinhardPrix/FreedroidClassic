@@ -468,27 +468,9 @@ Warning.  Received empty or nearly empty string!",
     
     stored_height = GivenRectangle.h ;
     GivenRectangle.h = 32000 ;
-    DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle , text_stretch );
+    TextLinesNeeded = DisplayText ( GivenText , GivenRectangle.x , GivenRectangle.y , &GivenRectangle , text_stretch );
     GivenRectangle.h = stored_height ;
-    
-    //--------------------
-    // Now we estimate how many lines that must have meant...
-    //
-    for ( i = 0 ; 1 ; i ++ ) // this is infinite until break!
-    {
-	if ( MyCursorY <= TestPosition ) 
-	{
-	    break;
-	}
-	TestPosition += FontHeight ( GetCurrentFont() ) * text_stretch;
-    }
-    TextLinesNeeded = i + 1 ;
-    
-    // TextLinesNeeded = ( MyCursorY - GivenRectangle . y + 1 ) / ( FontHeight ( GetCurrentFont() ) * text_stretch ) ;
-    // TextLinesNeeded ++ ;
-    DebugPrintf ( 1 , "\nGetNumberOfTextLinesNeeded(...):  lines needed = %d." , TextLinesNeeded );
-    
-    
+
     //--------------------
     // Now that we have found our solution, we can restore everything back to normal
     //
@@ -602,35 +584,6 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     }
     NumberOfOptionsGiven = i ;
     
-    //--------------------
-    // At first we find out how many lines, i.e. what height each of the menu
-    // options should have...  Based on that we can then determine the right
-    // line distances and the right highlight-rectangle-size for each menu option.
-    //
-    for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i++ )
-    {
-	MenuOptionLineRequirement [ i ] = 1 ;
-    }
-    for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
-    {
-	MenuOptionLineRequirement [ i ] = GetNumberOfTextLinesNeeded ( MenuTexts [ i ] , Choice_Window , TEXT_STRETCH );
-	/*fprintf(stderr, "Option numéro %i requiert %i lignes\n", i, MenuOptionLineRequirement[i]);*/
-    }
-    
-    //--------------------
-    // Now that we have a new choice window, we should automatically compute the right
-    // positions for the various chat alternatives.
-    //
-    for ( i = 0 ; i < NumberOfOptionsGiven ; i++ )
-    {
-	MenuPosX[ i ]  = Choice_Window . x ;
-	MenuPosY[ i ]  = Choice_Window . y ;
-	// + i * Choice_Window .h / NumberOfOptionsGiven ;
-	for ( j = 0 ; j < i ; j ++ )
-	{
-	    MenuPosY[ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
-	}
-    }
     
     //--------------------
     // We need to prepare the background for the menu, so that
@@ -676,42 +629,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  else SetCurrentFont ( (BFont_Info*) MenuFont );
 	  h = FontHeight ( GetCurrentFont() );
 	  
-	  //--------------------
-	  // Now that we have a new choice window, we should automatically compute the right
-	  // positions for the various chat options, that the player can click on.
-	  //
-	  // BUT THIS TIME WE WILL TAKE INTO ACCOUNT THE GIVEN OPTION OFFSET!!!
-	  //
-	  for ( i = OptionOffset ; i < NumberOfOptionsGiven ; i++ )
-	  {
-	      MenuPosX[ i ]  = Choice_Window . x ;
-	      MenuPosY[ i ]  = Choice_Window . y ;
-	      // + i * Choice_Window .h / NumberOfOptionsGiven ;
-	      for ( j = OptionOffset ; j < i ; j ++ )
-	      {
-		  MenuPosY [ i ] += MenuOptionLineRequirement [ j ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
-	      }
-	  }
-	  
-	  //--------------------
-	  // We highlight the currently selected option with a highlighting rectangle
-	  //
-	  // (and we add some security against 'empty' chat selection menus causing
-	  // some segfaults rather easily...)
-	  //
-	  DebugPrintf ( 1 , "\n%s(): menu_position_to_remember: %d." , __FUNCTION__ , menu_position_to_remember );
-	  DebugPrintf ( 1 , "\n%s(): FirstItem: %d." , __FUNCTION__ , FirstItem );
-	  if ( menu_position_to_remember <= 0 ) 
-	      menu_position_to_remember = 1 ;
-	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
-	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
-	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
-	  if ( HighlightRect . w > 550 * GameConfig . screen_width / 640 ) HighlightRect . w = 550 * GameConfig . screen_width / 640 ;
-	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
-	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
-	  HighlightRectangle ( Screen , HighlightRect );
-	  
-	  //--------------------
+  	  //--------------------
 	  // We blit to the screen all the options that are not empty and that still fit
 	  // onto the screen
 	  //
@@ -731,7 +649,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      //--------------------
 	      // If there is not enough room any more, we quit blitting...
 	      //
-	      if ( ( MaxLinesInMenuRectangle - SpaceUsedSoFar ) < MenuOptionLineRequirement [ i ] ) 
+	      if ( SpaceUsedSoFar  > MaxLinesInMenuRectangle * FontHeight ( GetCurrentFont () ) ) 
 	      {
 		  BreakOffCauseAllDisplayed = FALSE ;
 		  BreakOffCauseNoRoom = TRUE ;
@@ -742,9 +660,31 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	      //--------------------
 	      // Now that we know, that there is enough room, we can blit the next menu option.
 	      //
-	      DisplayText ( MenuTexts [ i ] , MenuPosX [ i ] , MenuPosY [ i ] , &Choice_Window , TEXT_STRETCH );
-	      SpaceUsedSoFar += MenuOptionLineRequirement [ i ] ;
+	      MenuPosX [ i ] = Choice_Window.x;
+	      MenuPosY [ i ] = Choice_Window.y + SpaceUsedSoFar;
+	      MenuOptionLineRequirement [ i ]  = DisplayText ( MenuTexts [ i ] , Choice_Window.x , Choice_Window.y + SpaceUsedSoFar , &Choice_Window , TEXT_STRETCH );
+	      SpaceUsedSoFar += MenuOptionLineRequirement [ i ] * ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH );
 	  }
+
+
+	  //--------------------
+	  // We highlight the currently selected option with a highlighting rectangle
+	  //
+	  // (and we add some security against 'empty' chat selection menus causing
+	  // some segfaults rather easily...)
+	  //
+	  DebugPrintf ( 1 , "\n%s(): menu_position_to_remember: %d." , __FUNCTION__ , menu_position_to_remember );
+	  DebugPrintf ( 1 , "\n%s(): FirstItem: %d." , __FUNCTION__ , FirstItem );
+	  if ( menu_position_to_remember <= 0 ) 
+	      menu_position_to_remember = 1 ;
+	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
+	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
+	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
+	  if ( HighlightRect . w > 550 * GameConfig . screen_width / 640 ) HighlightRect . w = 550 * GameConfig . screen_width / 640 ;
+	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
+	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
+	  HighlightRectangle ( Screen , HighlightRect );
+	  
 	  
 	  if ( BreakOffCauseNoRoom ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_DOWN_BUTTON );
 	  if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
