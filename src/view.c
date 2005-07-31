@@ -3535,20 +3535,27 @@ PutEnemyEnergyBar ( int Enum , SDL_Rect TargetRectangle )
     if ( use_open_gl ) {
 	
 #ifdef HAVE_LIBGL
-	// draw cool bars here
-	x = TargetRectangle . x ;
-	y = TargetRectangle . y ;
-	w = TargetRectangle . w ;
-	h = TargetRectangle . h ;
+	float PercentageDone = 0;
+	int barnum = 0;
+	for ( ; Percentage > 0; Percentage -= PercentageDone, barnum ++)
+		{
+		if ( Percentage >= 1 ) PercentageDone = 1;
+		else PercentageDone = Percentage;
+		// draw cool bars here
+		x = TargetRectangle . x ;
+		y = TargetRectangle . y - 10 * barnum;
+		w = TargetRectangle . w ;
+		h = TargetRectangle . h ;
 	
-	if ( AllEnemys [ Enum ] . is_friendly ) 
-	    c1.g = 255;
-	else
-	    c1.r = 255;
+		if ( AllEnemys [ Enum ] . is_friendly ) 
+		    c1.g = 255;
+		else
+		    c1.r = 255;
 	
-	// tweak as needed, this alters the transparency
-	c1.a = 140 ;
-	drawIsoEnergyBar( Z_DIR, x,y,1, 5,5,w,Percentage ,&c1, &c2 ) ;
+		// tweak as needed, this alters the transparency
+		c1.a = 140 ;
+		drawIsoEnergyBar( Z_DIR, x, y, 1, 5, 5, w, PercentageDone, &c1, &c2 ) ;
+		}
 	
 #endif
 	
