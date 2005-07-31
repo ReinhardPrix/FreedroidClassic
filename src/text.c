@@ -602,7 +602,7 @@ DisplayBigScreenMessage( void )
  *
  *     NOTE2: this function _does not_ update the screen
  *
- * @Ret: TRUE  if some characters where written inside the clip rectangle
+ * @Ret: number of lines written if some characters where written inside the clip rectangle
  *       FALSE if not (used by ScrollText to know if Text has been scrolled
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
@@ -612,7 +612,7 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
     char *tmp;	// mobile pointer to the current position in the string to be printed
     SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
     SDL_Rect store_clip;
-    
+    short int line_nb = 1;
     //--------------------
     // We position the internal text cursor on the right spot for
     // the first character to be printed.
@@ -650,13 +650,13 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
     // The running text pointer must be initialized.
     //
     tmp = (char*) Text;  // this is no longer a 'const' char*, but only a char*
-    
     while ( *tmp && ( MyCursorY < clip -> y + clip -> h ) )
     {
 	if ( *tmp == '\n' )
 	{
 	    MyCursorX = clip->x;
 	    MyCursorY += FontHeight ( GetCurrentFont() ) * text_stretch ;
+	    line_nb ++;
 	}
 	else
 	    DisplayChar (*tmp);
@@ -664,7 +664,10 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	tmp++;
 	
 	if (clip)
-	    ImprovedCheckLineBreak( tmp , clip , text_stretch );   // dont write over right border 
+	    if(ImprovedCheckLineBreak( tmp , clip , text_stretch ) == 1)   // dont write over right border 
+		{
+		line_nb++;
+		}
 	
     }
     
@@ -678,7 +681,7 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	 ( ( MyCursorY < clip -> y ) || ( starty > clip -> y + clip -> h ) ) )
 	return FALSE;  // no text was written inside clip 
     else
-	return TRUE; 
+	return line_nb; 
     
 }; // int DisplayText(...)
 
@@ -741,8 +744,9 @@ files of Freedroid.",
  * rp: added argument clip, which contains the text-window we're writing in
  *     (formerly known as "TextBorder")
  *
+ * ah: added return value : 1 if carriage return was done, FALSE otherwise
  * ---------------------------------------------------------------------- */
-void
+int
 ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch )
 {
     int i;
@@ -761,14 +765,14 @@ ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch
 		{
 		    MyCursorX = clip->x;
 		    MyCursorY += FontHeight ( GetCurrentFont() ) * text_stretch ;
-		    return;
+		    return 1;
 		}
 	    }
 	    else 
-		return;
+		return FALSE;
 	}
     }
-}; // void ImprovedCheckLineBreak(void)
+}; // int ImprovedCheckLineBreak(void)
 
 /* -----------------------------------------------------------------
  * This function reads a string of "MaxLen" from User-input, and 
