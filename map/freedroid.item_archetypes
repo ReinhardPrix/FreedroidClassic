@@ -2506,7 +2506,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="plasma_transistor/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=10
+Base list price=100
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2546,7 +2546,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="superconducting_relay_unit/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=10
+Base list price=100
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2586,7 +2586,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="antimatter_matter_converter/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=10
+Base list price=100
 Item description text="This is an standard part within many robot types."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2626,7 +2626,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="entropy_inverter/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=10
+Base list price=100
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -2666,7 +2666,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="tachyon_converter/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=10
+Base list price=100
 Item description text="This is an standard part within many robots types."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
