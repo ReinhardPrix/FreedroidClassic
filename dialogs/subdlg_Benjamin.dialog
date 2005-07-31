@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -45,24 +44,6 @@ PositionX=291  PositionY=253
 ChangeOption=99 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
-ChangeOption=4 ChangeToValue=1
-ChangeOption=3 ChangeToValue=1
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=3  OptionText=" Dexterity +1 (costs 1 training point)"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=488  PositionY=386  
-OnCondition="PointsToDistributeAtLeast:1" JumpToOption=7 ElseGoto=8
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=4  OptionText=" Dexterity +5 (costs 5 training points)"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=482  PositionY=295  
-OnCondition="PointsToDistributeAtLeast:5" JumpToOption=9 ElseGoto=8
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -93,18 +74,6 @@ PositionX=670  PositionY=278
 Subtitle="You don't have enough experience.  Come back when you got more experience."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=633  PositionY=379  
-Subtitle="You are a quick learner.  Your dexterity already has improved a lot."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=9 ChangeToValue=0
-DoSomethingExtra="SubtractPointsToDistribute:5"
-DoSomethingExtra="AddBaseDexterity:5"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
