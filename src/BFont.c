@@ -100,7 +100,7 @@ InitFont (BFont_Info * Font)
  * Load the font and stores it in the BFont_Info structure 
  * ---------------------------------------------------------------------- */
 BFont_Info *
-LoadFont (char *filename)
+LoadFont (const char *filename)
 {
   int x;
   BFont_Info *Font = NULL;
