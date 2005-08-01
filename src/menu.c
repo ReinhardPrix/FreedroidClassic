@@ -684,7 +684,8 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
 	  HighlightRectangle ( Screen , HighlightRect );
-	  
+	  // Display again the highlighted line
+	  DisplayText ( MenuTexts [ menu_position_to_remember -1 ] , MenuPosX [ menu_position_to_remember - 1 ], MenuPosY [ menu_position_to_remember - 1 ] , &Choice_Window , TEXT_STRETCH);	  
 	  
 	  if ( BreakOffCauseNoRoom ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_DOWN_BUTTON );
 	  if ( OptionOffset ) ShowGenericButtonFromList ( SCROLL_DIALOG_MENU_UP_BUTTON );
