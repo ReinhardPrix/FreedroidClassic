@@ -1302,37 +1302,13 @@ TryToIdentifyItem( item* IdentifyItem )
 	return;
     }
     
-    while ( 1 )
-    {
-	GiveItemDescription( linebuf , IdentifyItem , TRUE );
-	strcat ( linebuf , "\n\n    Are you sure you want this item identified?" );
-	MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-	// MenuPosition = DoMenuSelection( " Are you sure you want this item identified? " , MenuTexts , 1 , NULL , NULL );
-	switch (MenuPosition) 
-	{
-	    case (-1):
-		return;
-		break;
-	    case ANSWER_YES:
-		while (EnterPressed() || SpacePressed() );
-		Me[0].Gold -= 100 ;
-		IdentifyItem -> is_identified = TRUE ;
-		PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
-		
-		MenuTexts[0]=" BACK ";
-		MenuTexts[1]="";
-		GiveItemDescription( linebuf , IdentifyItem , TRUE );
-		strcat ( linebuf , "\n\n " );
-		MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-		
-		return;
-		break;
-	    case ANSWER_NO:
-		while (EnterPressed() || SpacePressed() );
-		return;
-		break;
-	}
-    }
+/** As lynx pointed out on irc, it's useless to ask for confirmation, since the user actually requested identification. */
+	while (EnterPressed() || SpacePressed() );
+	Me[0].Gold -= 100 ;
+	IdentifyItem -> is_identified = TRUE ;
+	PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
+
+    return;
 }; // void TryToIdentifyItem( item* IdentifyItem )
 
 /* ----------------------------------------------------------------------
