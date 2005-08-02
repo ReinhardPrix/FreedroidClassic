@@ -968,6 +968,25 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     write_full_item_name_into_string ( ShowItem , TextChunk ) ;
     sprintf( InfoText, "Item: %s \nClass: %s\n" , TextChunk , ClassString );
     
+    if ( ( ShowItem->suffix_code != (-1) ) || ( ShowItem->prefix_code != (-1) ) )
+    	{
+        if ( ShowItem->is_identified == TRUE )
+            {
+	    GiveItemDescription( TextChunk, ShowItem, TRUE );
+            // Now clean up TextChunk to get only information about the special abilities of the object
+	    char * tmp = strstr(TextChunk, "             +");
+	    if(tmp) //In case something would go wrong...
+		{
+		tmp = strstr(tmp, " +");
+		strcpy(TextChunk, tmp);
+		}
+	    strcat( InfoText, "Specials:");
+	    strcat( InfoText, font_switchto_red);
+	    strcat( InfoText, TextChunk);
+	    strcat( InfoText, "\n");
+	    strcat( InfoText, font_switchto_neon);
+	    }
+        }
     
     if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
     {
@@ -1030,7 +1049,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	repairPrice = calculate_item_repair_price ( ShowItem );
     sprintf( TextChunk, "Repair cost: %ld\n", repairPrice );
     strcat ( InfoText , TextChunk );
-    
+  
     //--------------------
     // If the item is a weapon, then we print out some weapon stats...
     //
