@@ -3392,43 +3392,63 @@ init_obstacle_data( void )
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_H ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_THICK_WALL_H ] . filename = "iso_thick_wall_0001.png" ;
+  obstacle_map [ ISO_THICK_WALL_H ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_H ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_V ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_THICK_WALL_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_V ] . filename = "iso_thick_wall_0002.png" ;
+  obstacle_map [ ISO_THICK_WALL_V ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_V ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . filename = "iso_thick_wall_0003.png" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . filename = "iso_thick_wall_0004.png" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . filename = "iso_thick_wall_0005.png" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . filename = "iso_thick_wall_0006.png" ;
-
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_N ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_N ] . filename = "iso_thick_wall_0007.png" ;
+  obstacle_map [ ISO_THICK_WALL_T_N ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_T_N ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_E ] . filename = "iso_thick_wall_0008.png" ;
+  obstacle_map [ ISO_THICK_WALL_T_E ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_T_E ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_S ] . filename = "iso_thick_wall_0009.png" ;
+  obstacle_map [ ISO_THICK_WALL_T_S ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_T_S ] . obstacle_long_description = "This is just a pink wall."
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_THICK_WALL_T_W ] . block_area_parm_2 = 1.1 ;
-  obstacle_map [ ISO_THICK_WALL_T_W ] . filename = "iso_thick_wall_0010.png" ;
+  obstacle_map [ ISO_THICK_WALL_T_W ] . filename = "iso_thick_wall_0010.png" ;  
+  obstacle_map [ ISO_THICK_WALL_T_W ] . obstacle_short_name = "Colony wall" ;
+  obstacle_map [ ISO_THICK_WALL_T_W ] . obstacle_long_description = "This is just a pink wall."
+
 
   // restaurant stuff
   
@@ -3473,10 +3493,13 @@ init_obstacle_data( void )
   obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . filename = "iso_restaurant_furniture_0010.png" ;
   
-  
+  for ( int i = ISO_RESTAURANT_SHELVES_1; i <= ISO_RESTAURANT_SHELVES_10, i ++ )
+	{
+  	obstacle_map [ i ] . obstacle_short_name = "Restaurant shelves" ;
+	obstacle_map [ i ] . obstacle_long_description = "This is but standard restaurant furniture." ;
+	}
 
-  
-  
+    
   
   obstacle_map [ ISO_CAVE_WALL_END_W ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_END_W ] . block_area_parm_1 = 1.0 ;
