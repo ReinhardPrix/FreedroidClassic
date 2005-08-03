@@ -25,21 +25,16 @@ dist-hook:
 	find $(distdir) -name ".#*"               | xargs rm -f
 
 install-data-local:
-	echo "Installing the data-files ..."
+	@echo "Installing the data-files ..."
 	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
-	cp -pr $(srcdir)/$(freedroid_data) $(DESTDIR)$(pkgdatadir)/
-	echo "... and cleaning CVS and blender-sources etc:"
-	find $(DESTDIR)$(pkgdatadir) -name CVS         | xargs rm -rf
-	find $(DESTDIR)$(pkgdatadir) -name "*.blend"   | xargs rm -f
-	find $(DESTDIR)$(pkgdatadir) -name "Makefile*" | xargs rm -f
-	find $(DESTDIR)$(pkgdatadir) -name "*~"        | xargs rm -f
-	find $(DESTDIR)$(pkgdatadir) -name ".#*"       | xargs rm -f
-	echo "..done."
+	find $(srcdir)/$(freedroid_data) -type d ! -name "*.blend" -and ! -path "*CVS*" -and ! -name "Makefile*" -and ! -name "*~" -and ! -name ".#*" -exec echo $(DESTDIR)$(pkgdatadir)/{} \; | xargs $(mkinstalldirs)
+	find $(srcdir)/$(freedroid_data) -type f ! -name "*.blend" -and ! -path "*CVS*" -and ! -name "Makefile*" -and ! -name "*~" -and ! -name ".#*" -exec cp -p {} $(DESTDIR)$(pkgdatadir)/{} \; #for files
+	@echo "..done."
 
 uninstall-local:
-	echo "Removing data-files ..."
+	@echo "Removing data-files ..."
 	rm -rf $(DESTDIR)$(pkgdatadir)
-	echo "...done."
+	@echo "...done."
 
 
 
