@@ -688,6 +688,19 @@ update_tux_armour_class ( int PlayerNum )
     {
 	Me [ PlayerNum ] . AC += Me [ PlayerNum ] . special_item . ac_bonus;
     }
+    if ( Me [ PlayerNum ] . aux1_item.type != (-1) )
+    {
+        Me [ PlayerNum ] . AC += Me [ PlayerNum ] . aux1_item . ac_bonus;
+    }
+    if ( Me [ PlayerNum ] . aux2_item.type != (-1) )
+    {
+        Me [ PlayerNum ] . AC += Me [ PlayerNum ] . aux2_item . ac_bonus;
+    }
+    if ( Me [ PlayerNum ] . drive_item.type != (-1) )
+    {
+        Me [ PlayerNum ] . AC += Me [ PlayerNum ] . drive_item . ac_bonus;
+    }
+
 }; // void update_tux_armour_class ( int PlayerNum )
 
 
