@@ -2690,7 +2690,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 66
 ** Start of new item specification subsection **
-Item name="3 mm Plasma Ammunition"
+Item name="Plasma Weapon Ammunition"
 Position_X=40
 Position_Y=392
 Item can be applied in combat="no"
@@ -2707,7 +2707,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="ammo_plasma_bullet/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1
-Item description text="This is the most common ammunition for modern plasma weapons."
+Item description text="Plasma crystal load. This is the most common way of loading a plasma weapon."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
@@ -2730,7 +2730,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 67
 ** Start of new item specification subsection **
-Item name="4 MW Laser Weapon Ammunition"
+Item name="Laser Weapon Ammunition"
 Position_X=39
 Position_Y=289
 Item can be applied in combat="no"
@@ -2747,7 +2747,7 @@ Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="ammo_laser_crystal/inv_image.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=2
-Item description text="This is standard ammunition for most modern laser rifles."
+Item description text="Energy crystal load for laser rifles. Each round fired consumes a load within the crystal."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: speed of bullets=0.000000
