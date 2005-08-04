@@ -46,7 +46,7 @@ dist-win32: src/freedroidRPG.exe
 	mkdir -p $(win_dir)
 	cp -r graphics map sound dialogs $(win_dir)
 	cp src/freedroidRPG.exe $(win_dir)
-	find src -name "*Editor.exe" -exec cp {} $(win_dir)
+	find src -name "*Editor.exe" -exec cp {} $(win_dir) \;
 	nroff -man freedroidRPG.6 > freedroidRPG-man
 	for i in $(win_txts); do \
 	   cp $$i $(win_dir)/$$i.txt; \
