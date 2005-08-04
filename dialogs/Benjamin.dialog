@@ -69,8 +69,6 @@ OptionSample="Tux_SOR_What_Can_You_0.wav"
 PositionX=196  PositionY=249  
 Subtitle="Sure I can.  Let's say 100 bucks each lesson, ok?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And as a bonus, I can show you how to enhance your dexterity.  And that's completely free.  But you can do it on your own as well."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
