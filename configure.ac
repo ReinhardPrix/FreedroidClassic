@@ -41,6 +41,9 @@ case "$target" in
 	;;
 
 	*bsd*)
+	CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoidexpansion of $pkgdatadir ! 
+	LDFLAGS="$LDFLAGS -rdynamic"
+	SYS_GL_LIB=GL
 	bsd=true
 	;;
 
