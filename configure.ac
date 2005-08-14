@@ -36,6 +36,7 @@ case "$target" in
 
 	*darwin*)
 	## Darwin has single-precision math-functions in here
+	CFLAGS="$CFLAGS  -DFD_DATADIR='\"\$(pkgdatadir)\"'"   #avoidexpansion of $pkgdatadir ! 
 	LDFLAGS="$LDFLAGS -lmx"
 	macosx=true
 	;;
