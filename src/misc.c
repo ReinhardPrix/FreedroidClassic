@@ -1276,6 +1276,10 @@ Activate_Conservative_Frame_Computation(void)
 int
 MyRandom (int UpperBound)
 {
+  
+  if ( ! UpperBound )
+	return 0;
+
   float tmp;
   int PureRandom;
   int dice_val;    /* the result in [0, UpperBound] */

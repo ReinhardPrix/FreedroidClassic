@@ -88,7 +88,7 @@ main (int argc, char * argv[])
     //
 #ifdef __WIN32__
     fprintf ( stderr , "\n\
-Hello!  This window contains the DEBUG OUTPUT of FreedroidRPG\n\
+Hello!  This window contains the DEBUG OUTPUT of FreedroidRPG.\n\
 \n\
 Normally you would not see this message or this window, but apparently\n\
 FreedroidRPG has terminated because of an error of some sort.\n\
@@ -98,7 +98,7 @@ debug output (or at least the lower end of the debug output) to the\n\
 FreedroidRPG developers could help them to track down the problem.\n\
 \n\
 Well, it's no guarantee that we can solve any bug, but it's certainly\n\
-better than nothing.  Thanks anyway for you interest in FreedroidRPG.\n\
+better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 \n\n\n\
 --start of real debug log--\n\n" );
 #endif
@@ -395,6 +395,23 @@ UpdateCountersForThisFrame ( int player_num )
 	    Me [ player_num ] . running_must_rest = FALSE ;
     }
     
+
+    //-------------------
+    // Mana and health recover over time
+    if ( Me [ player_num ] . energy < Me [ player_num ] . maxenergy )
+    {
+	Me [ player_num ] . energy += Me [ player_num ] . health_recovery_rate * latest_frame_time;
+        if ( Me [ player_num ] . energy > Me [ player_num ] . maxenergy )
+	    Me [ player_num ] . energy = Me [ player_num ] . maxenergy;
+    }
+
+    if ( Me [ player_num ] . mana < Me [ player_num ] . maxmana )
+    {
+	Me [ player_num ] . mana += Me [ player_num ] . mana_recovery_rate * latest_frame_time;
+        if ( Me [ player_num ] . mana > Me [ player_num ] . maxmana )
+	    Me [ player_num ] . mana = Me [ player_num ] . maxmana;
+    }
+
 
     if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
     if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;

@@ -79,6 +79,8 @@ typedef struct
   int bonus_to_mag;
   int bonus_to_life;
   int bonus_to_force;
+  float bonus_to_health_recovery;
+  float bonus_to_mana_recovery;
   int bonus_to_tohit;
   int bonus_to_all_attributes;
   int bonus_to_ac_or_damage; // this is a percentage

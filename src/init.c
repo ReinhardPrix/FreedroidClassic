@@ -1491,6 +1491,8 @@ InitHarmlessTuxStatusVariables( int player_num )
     Me [ player_num ] . maxenergy = 10 ;
     Me [ player_num ] . mana = 5 ;
     Me [ player_num ] . maxmana = 10 ;
+    Me [ player_num ] . health_recovery_rate = 0.2;
+    Me [ player_num ] . mana_recovery_rate = 0.2;
     Me [ player_num ] . status = MOBILE;
     Me [ player_num ] . phase = 0;
     Me [ player_num ] . MissionTimeElapsed=0;

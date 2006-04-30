@@ -474,6 +474,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     ThisItem -> bonus_to_all_attributes = 0;
     
     ThisItem -> bonus_to_life = 0;
+    ThisItem -> bonus_to_health_recovery = 0;
+    ThisItem -> bonus_to_mana_recovery = 0;
     ThisItem -> bonus_to_force = 0;
     ThisItem -> bonus_to_tohit = 0;
     ThisItem -> bonus_to_ac_or_damage = 0;
@@ -501,8 +503,12 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	
 	ThisItem->bonus_to_life += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_life +
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_life ) ;
+	ThisItem->bonus_to_health_recovery += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_health_recovery;
+//	    + MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_health_recovery ) ;
 	ThisItem->bonus_to_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
+	ThisItem->bonus_to_mana_recovery += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mana_recovery;
+//	    + MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mana_recovery ) ;
 	
 	ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
@@ -533,8 +539,12 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	
 	ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
+	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_health_recovery ) ;
 	ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
+	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery +
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mana_recovery ) ;
 	
 	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
@@ -2588,7 +2598,7 @@ DropHeldItemToSlot ( item* SlotItem )
 /* ----------------------------------------------------------------------
  * This function looks for a free inventory index.  Since there are more
  * inventory indices than squares in the inventory grid, the function 
- * should always be able to find a free invenotry index.  If not, this is
+ * should always be able to find a free inventory index.  If not, this is
  * considered a severe program error, which will cause immediate 
  * termination of FreeDroid.
  * ---------------------------------------------------------------------- */

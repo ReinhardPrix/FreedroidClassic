@@ -1728,9 +1728,17 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   strcat( LevelMem , ITEM_BONUS_TO_LIFE_STRING );
   sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_life );
   strcat( LevelMem , linebuf );
+
+  strcat( LevelMem , ITEM_BONUS_TO_HEALTH_RECOVERY_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_health_recovery );
+  strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_BONUS_TO_FORCE_STRING );
   sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_force );
+  strcat( LevelMem , linebuf );
+
+  strcat( LevelMem , ITEM_BONUS_TO_MANA_RECOVERY_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->bonus_to_mana_recovery );
   strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
@@ -2196,8 +2204,12 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
   // Now we read in the boni for the secondary stats
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_LIFE_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_life ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_HEALTH_RECOVERY_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_health_recovery ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_force ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MANA_RECOVERY_STRING , "%d" , 
+		       &( TargetItem -> bonus_to_mana_recovery ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_tohit ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 

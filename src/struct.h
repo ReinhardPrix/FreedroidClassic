@@ -376,6 +376,11 @@ typedef struct
     int modifier_to_bonus_to_life;
     int base_bonus_to_force;
     int modifier_to_bonus_to_force;
+
+    float base_bonus_to_health_recovery;
+    float modifier_to_bonus_to_health_recovery;
+    float base_bonus_to_mana_recovery;
+    float modifier_to_bonus_to_mana_recovery;
     
     int base_bonus_to_tohit;
     int modifier_to_bonus_to_tohit;
@@ -482,6 +487,8 @@ typedef struct
     int bonus_to_mag;
     int bonus_to_life;
     int bonus_to_force;
+    float bonus_to_health_recovery;
+    float bonus_to_mana_recovery;
     int bonus_to_tohit;
     int bonus_to_all_attributes;
     int bonus_to_ac_or_damage;       // this is a percentage
@@ -594,6 +601,9 @@ typedef struct
     float running_power;
     int running_must_rest;
     int running_power_bonus;
+
+    float health_recovery_rate; //points of health recovered each second
+    float mana_recovery_rate; //mana points recovered each second
     
     Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
     Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
