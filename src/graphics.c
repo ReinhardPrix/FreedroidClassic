@@ -542,7 +542,7 @@ rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect )
 /* ----------------------------------------------------------------------
  * In the shop interface, when an item was selected that could be grouped
  * together in inventory, we showed three mouse buttons to either buy 1,
- * buy 10 or buy100 or the similar thing for selling items.
+ * buy 10 or buy 100 or the similar thing for selling items.
  * But now Bastian has proposed a new number selector design with a scale
  * and a small knob to set the right number of items you wish to have and
  * also with small buttons left and right for some fine tuning. 
@@ -551,15 +551,17 @@ rip_rectangle_from_alpha_image ( SDL_Surface* our_surface , SDL_Rect our_rect )
  * with the user until he presses 'OK' on the scale screen.
  * ---------------------------------------------------------------------- */
 int
-do_graphical_number_selection_in_range ( int lower_range , int upper_range )
+do_graphical_number_selection_in_range ( int lower_range , int upper_range, int default_value )
 {
     static SDL_Surface* SelectionKnob = NULL ;
     int ok_button_was_pressed = FALSE;
     int left_mouse_pressed_previous_frame = FALSE;
     int current_value ;
-    int knob_offset_x = 0 ;
     int knob_start_x = 200 ;
     int knob_end_x = 390 ;
+    if(!(upper_range - lower_range))
+	return upper_range;
+    int knob_offset_x = default_value * (knob_end_x - knob_start_x) / (upper_range - lower_range);
     int knob_is_grabbed = FALSE ;
     char number_text[1000];
     static SDL_Rect knob_target_rect;

@@ -805,16 +805,16 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 			// otherwise we give the range of selection according to amount in chest/player inventory.
 			//
 			if ( ShowChestButtons == 1 )
-			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
 			else
-			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) ) ;
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) , 1) ;
 		    }
 		    else
 		    {
 
 			if ( ( ShowChestButtons == 1 ) && ( ShowPointerList [ ItemIndex ] -> multiplicity > 1 ) )
 			{
-			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity, ShowPointerList [ ItemIndex ] -> multiplicity ) ;
 			}
 			else
 			    ShopOrder -> number_selected = 1;
@@ -833,7 +833,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    if ( ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . item_group_together_in_inventory ) &&
 			 ( TuxItemsList [ TuxItemIndex ] -> multiplicity > 1 ) )
 		    {
-			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , TuxItemsList [ TuxItemIndex ] -> multiplicity );
+			ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , TuxItemsList [ TuxItemIndex ] -> multiplicity , TuxItemsList [ TuxItemIndex ] -> multiplicity );
 		    }
 		    else
 			ShopOrder -> number_selected = 1;
@@ -976,7 +976,7 @@ The MENU CODE was unable to properly resolve a mouse button press.",
 
 /* ----------------------------------------------------------------------
  * There are numerous functions in shops where you have to select one out
- * of may pieces of equippment.  Therefore a function is provided, that 
+ * of many pieces of equipment.  Therefore a function is provided, that 
  * should be able to perform this selection process with the user and also
  * check for unwanted events, like non-present items selected and that.
  *
@@ -1220,9 +1220,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 }; // int DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEMS_IN_INVENTORY ] )
 
 /* ----------------------------------------------------------------------
- * This function tries to buy the item given as parameter.  Currently
- * is just drops the item to the floor under the influencer and will
- * reduce influencers money.
+ * This function repairs the item given as parameter.
  * ---------------------------------------------------------------------- */
 void 
 TryToRepairItem( item* RepairItem )
@@ -1312,9 +1310,7 @@ TryToIdentifyItem( item* IdentifyItem )
 }; // void TryToIdentifyItem( item* IdentifyItem )
 
 /* ----------------------------------------------------------------------
- * This function tries to buy the item given as parameter.  Currently
- * is just drops the item to the floor under the influencer and will
- * reduce influencers money.
+ * This function tries to sell the item given as parameter.
  * ---------------------------------------------------------------------- */
 void 
 TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
