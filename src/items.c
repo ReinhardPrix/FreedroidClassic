@@ -539,12 +539,12 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	
 	ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
-	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery +
-	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_health_recovery ) ;
+	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery;// +
+//	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_health_recovery ) ;
 	ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
-	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery +
-	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mana_recovery ) ;
+	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery;// +
+//	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mana_recovery ) ;
 	
 	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
@@ -2994,7 +2994,7 @@ handle_player_identification_command( int player_num )
 
 /* ----------------------------------------------------------------------
  * This function display the inventory screen and also checks for mouse
- * actions in the invenotry screen.
+ * actions in the inventory screen.
  * ---------------------------------------------------------------------- */
 void 
 ManageInventoryScreen ( void )
@@ -3328,8 +3328,8 @@ ManageInventoryScreen ( void )
     // Now the OTHER CASE:  If the user now no longer presses the mouse button and it WAS pressed before,
     // the the user has 'released' the item directly under the mouse button
     //
-    if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
-	//if ( ( !axis_is_active ) && ( MouseButtonPressedPreviousFrame ) )
+    if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) ) //RELEASE ITEM AFTER A SECOND CLICK (OTHER BEHAVIOR)
+//  if ( ( !axis_is_active ) && ( MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
     {
 	//--------------------
 	// In case the user didn't hold anything in his hand, then nothing

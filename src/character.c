@@ -430,6 +430,7 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 	Me [ 0 ] . maxmana   += BonusItem -> bonus_to_force ;
 	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
 	Me [ 0 ] . health_recovery_rate += BonusItem -> bonus_to_health_recovery ; 
+	DebugPrintf(1, "HP recovers %f\n", Me[0].health_recovery_rate);
 	Me [ 0 ] . mana_recovery_rate += BonusItem -> bonus_to_mana_recovery ; 
 	Me [ 0 ] . Vitality  += BonusItem -> bonus_to_vit ;
 	
@@ -584,6 +585,11 @@ update_secondary_stats_from_primary_stats ( int PlayerNum )
 	( Me [ PlayerNum ] . Vitality ) +
 	Me [ PlayerNum ] . running_power_bonus ;
 
+
+    //--------------------
+    // base regeneration speed set to 0.2 points per second
+    Me [ PlayerNum ] . health_recovery_rate = 0.2;
+    Me [ PlayerNum ] . mana_recovery_rate = 0.2;
 }; // void update_secondary_stats_from_primary_stats ( int PlayerNum )
 
 /* ----------------------------------------------------------------------

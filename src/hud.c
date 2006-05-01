@@ -466,7 +466,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_health_recovery > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%f health points recovered per second" , CurItem->bonus_to_health_recovery );
+		sprintf( linebuf , "%0.1f health points recovered per second" , CurItem->bonus_to_health_recovery );
 		strcat( ItemDescText , linebuf );
 	    }
 
@@ -475,7 +475,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_mana_recovery > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%f mana points recovered per second" , CurItem->bonus_to_mana_recovery );
+		sprintf( linebuf , "%0.1f mana points recovered per second" , CurItem->bonus_to_mana_recovery );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
