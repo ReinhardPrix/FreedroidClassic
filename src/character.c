@@ -776,8 +776,10 @@ UpdateAllCharacterStats ( int PlayerNum )
 	
 	
     //--------------------
-    // Check player's health
+    // Check player's health and mana
     if ( Me [ PlayerNum ] . energy > Me [ PlayerNum ] . maxenergy ) Me [ PlayerNum ] . energy = Me [ PlayerNum ] . maxenergy;
+    if ( Me [ PlayerNum ] . mana > Me [ PlayerNum ] . maxmana ) Me [ PlayerNum ] . mana = Me [ 0 ] . maxmana ;
+
 
     //--------------------
     // Now that the defence stat is computed, we can compute the chance, that
