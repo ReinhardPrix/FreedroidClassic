@@ -48,7 +48,7 @@
 //
 #define UPPER_BANNER_TEXT_RECT_X (GameConfig . screen_width/4)
 #define UPPER_BANNER_TEXT_RECT_Y 1
-#define UPPER_BANNER_TEXT_RECT_W (GameConfig . screen_width/2)
+#define UPPER_BANNER_TEXT_RECT_W (GameConfig . screen_width/3)
 #define UPPER_BANNER_TEXT_RECT_H 130
 #define LOWER_BANNER_TEXT_RECT_X UPPER_BANNER_TEXT_RECT_X
 #define LOWER_BANNER_TEXT_RECT_Y ( GameConfig . screen_height - UPPER_BANNER_TEXT_RECT_Y - UPPER_BANNER_TEXT_RECT_H )
@@ -1301,7 +1301,7 @@ prepare_text_window_content ( char* ItemDescText )
 	index_of_chest_below_mouse_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
 	if ( index_of_chest_below_mouse_cursor != (-1) )
 	{
-	    strcpy ( ItemDescText , "  C  H  E  S  T    ! " ); 
+	    strcpy ( ItemDescText , " C H E S T " ); 
 	    // index_of_chest_below_mouse_cursor
 	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
@@ -1329,11 +1329,11 @@ prepare_text_window_content ( char* ItemDescText )
 	    {
 		case ISO_BARREL_1:
 		case ISO_BARREL_2:
-		    strcpy ( ItemDescText , "  B  A  R  R  E  L    ! " ); 
+		    strcpy ( ItemDescText , " B A R R E L " ); 
 		    break;
 		case ISO_BARREL_3:
 		case ISO_BARREL_4:
-		    strcpy ( ItemDescText , "  C  R  A  T  E    ! " ); 
+		    strcpy ( ItemDescText , " C R A T E " ); 
 		    break;
 		default:
 		    fprintf ( stderr , "\nobs_type: %d." , obs_type );
