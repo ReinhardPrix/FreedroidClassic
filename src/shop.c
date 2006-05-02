@@ -1660,7 +1660,6 @@ InitTradeWithCharacter( int CharacterCode )
 	
 	ItemSelected = GreatShopInterface ( NumberOfItemsInShop , BuyPointerList , 
 					    NumberOfItemsInTuxRow , TuxItemsList , & ( ShopOrder ) , FALSE );
-	
 	switch ( ShopOrder . shop_command )
 	{
 	    case BUY_1_ITEM:

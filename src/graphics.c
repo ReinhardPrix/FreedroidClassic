@@ -557,8 +557,8 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
     int ok_button_was_pressed = FALSE;
     int left_mouse_pressed_previous_frame = FALSE;
     int current_value ;
-    int knob_start_x = 200 ;
-    int knob_end_x = 390 ;
+    int knob_start_x = UNIVERSAL_COORD_W(200);
+    int knob_end_x = UNIVERSAL_COORD_W(390);
     if(!(upper_range - lower_range))
 	return upper_range;
     int knob_offset_x = default_value * (knob_end_x - knob_start_x) / (upper_range - lower_range);
@@ -570,7 +570,7 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
     
     if ( upper_range >= 1 ) current_value = 1 ; 
     else 
-    {
+    { //I'm sorry but how does the message relate to the if ?!?!! 
 	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
 ERROR LOADING BACKGROUND IMAGE FILE!",
@@ -614,10 +614,10 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	blit_special_background ( NUMBER_SELECTOR_BACKGROUND_CODE );
 	ShowGenericButtonFromList ( NUMBER_SELECTOR_OK_BUTTON );
 	knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
-	knob_target_rect . y = 260 - knob_target_rect . h / 2 ;
+	knob_target_rect . y = UNIVERSAL_COORD_H(260) - knob_target_rect . h / 2 ;
 	our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
 	sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
-	PutStringFont( Screen , FPS_Display_BFont , 320 , 190 , number_text );
+	PutStringFont( Screen , FPS_Display_BFont , UNIVERSAL_COORD_W(320) , UNIVERSAL_COORD_H(190) , number_text );
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
