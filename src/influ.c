@@ -464,7 +464,7 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
     // Maybe the player requested an attack before the reload/retract
     // phase is completed.  In that case, we don't attack.
     //
-    if ( Me [ 0 ] . firewait > 0 ) 
+    if ( Me [ 0 ] . busy_time > 0 ) 
     {
 	//--------------------
 	// When wanting to attack (even in case currently in reload 
@@ -2871,10 +2871,11 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
     
     //--------------------
     // Now we can set up recharging time for the Tux...
-    // The recharging time is now modified by the ranged weapon skill
-    //
-    Me [ player_num ] . firewait = ItemMap[ weapon_item_type ].item_gun_recharging_time;
-    Me [ player_num ] . firewait *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
+    // The firewait time is now modified by the ranged weapon skill
+    // 
+    Me [ player_num ] . busy_time = ItemMap[ weapon_item_type ].item_gun_recharging_time;
+    Me [ player_num ] . busy_time *= RangedRechargeMultiplierTable [ Me [ player_num ] . ranged_weapon_skill ] ;
+    Me [ player_num ] . busy_type = WEAPON_FIREWAIT;
     
     //--------------------
     // Use the map location to
@@ -3271,13 +3272,14 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	// isn't required in our case here.
 	//
 	if ( Me [ player_num ] . weapon_item . type != ( -1 ) )
-	    Me [ player_num ] . firewait = ItemMap [ Me [ player_num ] . weapon_item.type ] . item_gun_recharging_time;
+	    Me [ player_num ] . busy_time = ItemMap [ Me [ player_num ] . weapon_item.type ] . item_gun_recharging_time;
 	else
-	    Me [ player_num ] . firewait = 0.5;
+	    Me [ player_num ] . busy_time = 0.5;
 	
 	// Now we modify for melee weapon skill...
-	Me [ player_num ] . firewait *= 
+	Me [ player_num ] . busy_time *= 
 	    MeleeRechargeMultiplierTable [ Me [ player_num ] . melee_weapon_skill ] ;
+	Me [ player_num ] . busy_type = WEAPON_FIREWAIT;
 
 	if ( melee_weapon_hit_something ) play_melee_weapon_hit_something_sound();
 	else play_melee_weapon_missed_sound();

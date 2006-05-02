@@ -416,11 +416,14 @@ UpdateCountersForThisFrame ( int player_num )
     if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
     if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
     
-    if ( Me [ player_num ] . firewait > 0 )
+    if ( Me [ player_num ] . busy_time > 0 )
     {
-	Me [ player_num ] . firewait -= latest_frame_time ;
-	if ( Me [ player_num ] . firewait < 0 ) Me [ player_num ] . firewait = 0 ;
+	Me [ player_num ] . busy_time -= latest_frame_time ;
+	if ( Me [ player_num ] . busy_time < 0 ) Me [ player_num ] . busy_time = 0 ;
     }
+    if ( Me [ player_num ] . busy_time == 0)
+	Me [ player_num ] . busy_type = NONE;
+
     // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
     
     //--------------------

@@ -834,6 +834,13 @@ enum _status
     MENU
 };
 
+enum _busytype
+{
+    NONE=0,
+    DRINKING_POTION=1,
+    WEAPON_FIREWAIT,
+    WEAPON_RELOAD
+};
 //--------------------
 // The possible edito modes for the level editor
 //

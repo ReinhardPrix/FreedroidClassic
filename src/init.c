@@ -1637,7 +1637,8 @@ PrepareStartOfNewCharacter ( void )
     Me [ 0 ] . mana = Me [ 0 ] . maxmana;
     Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
     Me [ 0 ] . health = Me [ 0 ] . energy;
-    Me [ 0 ] . firewait = 0 ;
+    Me [ 0 ] . busy_time = 0 ;
+    Me [ 0 ] . busy_type = NONE ;
     
     Me [ 0 ] . TextVisibleTime = 0;
     Me [ 0 ] . readied_skill = 0;

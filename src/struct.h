@@ -608,7 +608,8 @@ typedef struct
     Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
     Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
     
-    double firewait;		// time remaining, until the weapon is ready to fire again...
+    double busy_time;		// time remaining, until the weapon is ready to fire again...
+    int busy_type; 		// reason why tux is busy (enum)
     double phase;			// the current phase of animation 
     float angle ;
     float walk_cycle_phase;       // 
@@ -728,7 +729,8 @@ typedef struct
     double health;		
     double energy;		
     double mana;                  
-    double firewait;		
+    double busy_time;		
+    int busy_type;
     double phase;			
     float weapon_swing_time;	
     float MissionTimeElapsed;

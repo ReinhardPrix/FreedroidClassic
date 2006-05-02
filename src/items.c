@@ -1901,48 +1901,68 @@ ApplyItem( item* CurItem )
 	Me [ 0 ] . energy += 15;
 	Me [ 0 ] . mana += 15;
 	Me [ 0 ] . running_power += 15;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     if ( CurItem->type == ITEM_SMALL_HEALTH_POTION )
     {
 	Me [ 0 ] . health += 25;
 	Me [ 0 ] . energy += 25;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
+	Me [ 0 ] . busy_time = 1;
     }
     else if ( CurItem->type == ITEM_MEDIUM_HEALTH_POTION )
     {
 	Me [ 0 ] . health += 50;
 	Me [ 0 ] . energy += 50;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_FULL_HEALTH_POTION )
     {
 	Me[0].health += Me[0].maxenergy;
 	Me[0].energy += Me[0].maxenergy;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
     {
 	Me[0].mana += 25;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_MEDIUM_MANA_POTION )
     {
 	Me[0].mana += 50;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_FULL_MANA_POTION )
     {
 	Me[0].mana += Me[0].maxmana;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_RUNNING_POWER_POTION )
     {
 	Me [ 0 ] . running_power = Me [ 0 ] . max_running_power;
 	Me [ 0 ] . running_must_rest = FALSE ;
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_TEMP_STRENGTH_POTION )
     {
 	Me [ 0 ] . current_power_bonus = 30 ;
 	Me [ 0 ] . power_bonus_end_date = Me [ 0 ] . current_game_date + 2.0 * 60 ; 
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_TEMP_DEXTERITY_POTION )
     {
 	Me [ 0 ] . current_dexterity_bonus = 30 ;
 	Me [ 0 ] . dexterity_bonus_end_date = Me [ 0 ] . current_game_date + 2.0 * 60 ; 
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_MAP_MAKER_SIMPLE )
     {
