@@ -1661,8 +1661,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="club/inv_image.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=3
+inventory_size_x=2
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=50
 Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal&but then again they didnt have the extra laser edge to depend on. "
@@ -3215,8 +3215,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="map_maker/inv_image.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=2
+inventory_size_x=2
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
 Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings.  Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user.  Still, the collected map data will be split up by the device into several sectors for convenient viewing."
