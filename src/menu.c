@@ -3120,7 +3120,7 @@ If you would like to contribute something or give some feedback concerning the g
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n\
-Or, if you prefer that, you might pop into our IRC channel.  The channel is #freedroid on irc.freenode.net and everyone's invited.  Bring your friends and coke, beer for Basse.\n\
+Or, if you prefer that, you might pop into our IRC channel.  The channel is #freedroid on irc.freenode.net and everyone's invited.  Bring your friends and coke, beer for Basse and Arthur.\n\
 \n\
 Thank you,\n\
 \n\
