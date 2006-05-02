@@ -1972,6 +1972,13 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	    ReadAndMallocStringFromData ( ItemPointer , ITEM_DROP_SOUND_FILE_NAME , "\"" ) ;
 	// DebugPrintf ( 0 , "\nName of item %d is: '%s'." , ItemIndex , ItemMap [ ItemIndex ] . item_name );
 	
+	// Now we read the size of the item in the inventory. 0 equals "figure out automatically".
+	ReadValueFromString( ItemPointer ,  "inventory_size_x=" , "%d" , 
+			     &ItemMap [ ItemIndex ] . inv_image . inv_size . x , EndOfItemData );
+	ReadValueFromString( ItemPointer ,  "inventory_size_y=" , "%d" , 
+			     &ItemMap [ ItemIndex ] . inv_image . inv_size . y , EndOfItemData );
+
+
 	// Now we read in the base list price for this item
 	ReadValueFromString( ItemPointer ,  "Base list price=" , "%d" , 
 			     &ItemMap[ItemIndex].base_list_price , EndOfItemData );

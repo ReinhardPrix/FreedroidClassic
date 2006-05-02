@@ -117,10 +117,10 @@ Load_Blast_Surfaces( void )
 void
 load_item_surfaces_for_item_type ( int item_type )
 {
-  SDL_Surface* tmp_surf;
+  SDL_Surface* original_img;
+  SDL_Surface* tmp_surf2 = NULL;
   char *fpath;
   char our_filename [ 2000 ] ;
-  float RescaleFactor;
   
   //--------------------
   // First we load the inventory image.
@@ -128,25 +128,29 @@ load_item_surfaces_for_item_type ( int item_type )
   sprintf ( our_filename , "items/%s" , ItemMap [ item_type ] . item_inv_file_name );
 
   fpath = find_file ( our_filename , GRAPHICS_DIR , FALSE );
-  tmp_surf = NULL ;
-  tmp_surf = IMG_Load( fpath ); 
-  if ( tmp_surf == NULL )
+  original_img = NULL ;
+  original_img = IMG_Load( fpath ); 
+  if ( original_img == NULL )
     {
       DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
 Inventory image specified above was not found!  That is fatal!",
 				 PLEASE_INFORM, IS_FATAL );
     }
-  ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf ); 
-  SDL_FreeSurface ( tmp_surf );
-  if ( use_open_gl ) flip_image_horizontally ( ItemMap [ item_type ] . inv_image . Surface );
+
+  if ( use_open_gl ) flip_image_horizontally ( original_img );
   
   //--------------------
   // Now we try to guess the inventory image tile sizes (in the 
   // inventory screen) from the pixel size of the inventory image
   // loaded.
   //
-  if ( ItemMap [ item_type ] . inv_image . Surface -> w % 32 )
+  // (AH)This approach is not perfect due to resolution considerations. Scaling may or may not be done.  We keep it by default, except
+  // if the size is already set.
+
+if( ! ItemMap [ item_type ] . inv_image . inv_size . x )
+  {
+  if ( original_img -> w % 32 )
     {
       DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -157,9 +161,13 @@ number of inventory screen tiles with the item!  Fatal!",
     }
   else
     {
-      ItemMap [ item_type ] . inv_image . inv_size . x = ItemMap [ item_type ] . inv_image . Surface -> w / 32 ;
+      ItemMap [ item_type ] . inv_image . inv_size . x = original_img -> w / 32 ;
     }
-  if ( ItemMap [ item_type ] . inv_image . Surface -> h % 32 )
+  }
+
+if( ! ItemMap [ item_type ] . inv_image . inv_size . y )
+  {
+  if ( original_img -> h % 32 )
     {
       DebugPrintf ( -1000 , "\nitem_type=%d. fpath: %s." , item_type , fpath );
       GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -170,28 +178,41 @@ number of inventory screen tiles with the item!  Fatal!",
     }
   else
     {
-      ItemMap [ item_type ] . inv_image . inv_size . y = ItemMap [ item_type ] . inv_image . Surface -> h / 32 ;
+      ItemMap [ item_type ] . inv_image . inv_size . y = original_img -> h / 32 ;
     }
+  }
+
+  // Does the image need scaling ? (currently only one items needs it, but as I'd like to raise the standard sizes from 32x32 to at least 64x64,
+  // this code makes sense)
+  int target_x = ItemMap [ item_type ] . inv_image . inv_size . x * 32; 
+  int target_y = ItemMap [ item_type ] . inv_image . inv_size . y * 32;
+  float factor_x = (float)target_x / (float)original_img -> w;
+  float factor_y = (float)target_y / (float)original_img -> h;
+  tmp_surf2 = zoomSurface ( original_img , factor_x , factor_y , FALSE );
+  ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf2 ); 
+  SDL_FreeSurface ( tmp_surf2 );
 
   //--------------------
   // For the shop, we need versions of each image, where the image is scaled so
   // that it takes up a whole 64x64 shop display square.  So we prepare scaled
   // versions here and now...
-  //
-  if ( ( ItemMap [ item_type ] . inv_image . inv_size . x == 1 ) &&
-       ( ItemMap [ item_type ] . inv_image . inv_size . y == 1 ) )
-    RescaleFactor = 2.0 ;
-  else if ( ItemMap [ item_type ] . inv_image . inv_size . y == 3 ) 
-    RescaleFactor = 2.0 / 3.0 ;
-  else if ( ItemMap [ item_type ] . inv_image . inv_size . y == 4 ) 
-    RescaleFactor = 1.0 / 2.0 ;
-  else RescaleFactor = 1.0;
 
-  RescaleFactor *= ((float)GameConfig . screen_width) / 640.0 ;
-
-  tmp_surf = zoomSurface ( ItemMap [ item_type ] . inv_image . Surface , RescaleFactor , RescaleFactor , FALSE );
-  ItemMap [ item_type ] . inv_image . scaled_surface_for_shop = our_SDL_display_format_wrapperAlpha ( tmp_surf ) ;
-  SDL_FreeSurface ( tmp_surf );
+  if(original_img -> w >= original_img -> h)
+    {
+    target_x = 64; 
+    target_y = original_img -> h * 64.0 / (float)original_img -> w; //keep the scaling ratio !
+    }
+  if(original_img -> h > original_img -> w) 
+    {
+    target_y = 64;
+    target_x = original_img -> w * 64.0 / (float)original_img -> h;
+    }
+  factor_x = ((float)GameConfig . screen_width / 640.0) * ((float)target_x / (float)original_img -> w);
+  factor_y = ((float)GameConfig . screen_height / 480.0) * ((float)target_y / (float)original_img -> h);
+  tmp_surf2 = zoomSurface ( original_img , factor_x , factor_y , FALSE );
+  ItemMap [ item_type ] . inv_image . scaled_surface_for_shop = our_SDL_display_format_wrapperAlpha ( tmp_surf2 ) ;
+  SDL_FreeSurface ( original_img );
+  SDL_FreeSurface ( tmp_surf2 );
 
 }; // void load_item_surfaces_for_item_type ( int item_type )
 
