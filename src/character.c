@@ -430,7 +430,6 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 	Me [ 0 ] . maxmana   += BonusItem -> bonus_to_force ;
 	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
 	Me [ 0 ] . health_recovery_rate += BonusItem -> bonus_to_health_recovery ; 
-	DebugPrintf(1, "HP recovers %f\n", Me[0].health_recovery_rate);
 	Me [ 0 ] . mana_recovery_rate += BonusItem -> bonus_to_mana_recovery ; 
 	Me [ 0 ] . Vitality  += BonusItem -> bonus_to_vit ;
 	
@@ -774,6 +773,11 @@ UpdateAllCharacterStats ( int PlayerNum )
     // disruptor bots don't become completely useless...
     //
     if ( Me [ PlayerNum ] . resist_disruptor > 85 ) Me [ PlayerNum ] . resist_disruptor = 85 ;
+	
+	
+    //--------------------
+    // Check player's health
+    if ( Me [ PlayerNum ] . energy > Me [ PlayerNum ] . maxenergy ) Me [ PlayerNum ] . energy = Me [ PlayerNum ] . maxenergy;
 
     //--------------------
     // Now that the defence stat is computed, we can compute the chance, that
