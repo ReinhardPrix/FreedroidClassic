@@ -27,6 +27,8 @@ if test x$have_x = xyes; then
 	CFLAGS="$CFLAGS $X_CFLAGS"
 fi
 
+CFLAGS="$CFLAGS -Wall -Wno-unused"
+
 case "$target" in
 	*-*-cygwin* | *-*-mingw32*)
 	CFLAGS="$CFLAGS  -DFD_DATADIR='\".\"'"

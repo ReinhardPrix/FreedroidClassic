@@ -1326,7 +1326,7 @@ void
 blit_preput_objects_according_to_blitting_list ( int mask )
 {
     int i;
-    obstacle* our_obstacle;
+    obstacle* our_obstacle = NULL;
 
     for ( i = 0 ; i < MAX_ELEMENTS_IN_BLITTING_LIST ; i ++ )
     {

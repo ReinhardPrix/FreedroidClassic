@@ -248,7 +248,7 @@ This indicates some corruption in the data file in question.",
       // Now we allocate memory and copy the string...
       // delete_one_dialog_option() doesn't free empty strings so don't
       // malloc those.
-      if ( StringLength = EndOfStringPointer - SearchPointer )
+      if ( ( StringLength = (EndOfStringPointer - SearchPointer) ) )
 	{
 	  ReturnString = MyMalloc ( StringLength + 1 );
 	  strncpy ( ReturnString , SearchPointer , StringLength );

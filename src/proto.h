@@ -312,6 +312,7 @@ EXTERN void classic_show_mission_list ( void );
 EXTERN void quest_browser_interface ( void );
 EXTERN void AssignMission( int MissNum );
 EXTERN void GetQuestList ( char* QuestListFilename ) ;
+EXTERN void clear_tux_mission_info ( int player_num ) ;
 EXTERN void CheckIfMissionIsComplete ( void );
 EXTERN void quest_browser_enable_new_diary_entry ( int mis_num , int mis_diary_entry_num , int player_num );
 

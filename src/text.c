@@ -772,6 +772,7 @@ ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch
 		return FALSE;
 	}
     }
+return 0;
 }; // int ImprovedCheckLineBreak(void)
 
 /* -----------------------------------------------------------------
