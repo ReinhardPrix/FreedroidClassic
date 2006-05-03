@@ -260,8 +260,8 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     
     ItemImageCode = AlarmItem -> type ;
     
-    TargetRect . x = 60 * Position ;
-    TargetRect . y = GameConfig . screen_height - 80 ;
+    TargetRect . x = GameConfig . screen_width - 64 * Position ;
+    TargetRect . y = 50 ;
     
     if ( AlarmItem->current_duration < 5 )
     {
