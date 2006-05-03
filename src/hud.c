@@ -322,7 +322,7 @@ exist really (i.e. has a type = (-1) ).",
 		break;
 
 	    case ITEM_BLUE_ENERGY_DRINK:
-		sprintf( linebuf , "Recover Health, Force\nand Running Power" );
+		sprintf( linebuf , "Recover Health, Force\nand Running Power\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		
