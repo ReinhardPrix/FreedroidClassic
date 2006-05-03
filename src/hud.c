@@ -714,6 +714,44 @@ ShowCurrentSkill( void )
 }; // void ShowCurrentSkill ( void )
 
 /* ----------------------------------------------------------------------
+ * This function displays the icon of the current readied weapon, 
+ * and the state of the charger
+ * The dimensions and location of the picture are
+ * specified in itemdefs.h
+ * ---------------------------------------------------------------------- */
+void 
+ShowCurrentWeapon( void )
+{
+    SDL_Rect Target_Rect;
+    static int Mouse_Button_Pressed_Previous_Frame = FALSE;
+    char current_ammo[10];
+    if ( Me [ 0 ] . status == BRIEFING ) return;
+    if ( GameConfig . Inventory_Visible && GameConfig . screen_width == 640 ) return;
+    if ( Me [ 0 ] . weapon_item . type == -1 ) return;
+
+    Target_Rect.x = CURRENT_WEAPON_RECT_X + (CURRENT_WEAPON_RECT_W * GameConfig . screen_width / 640 - CURRENT_WEAPON_RECT_W) / 2;
+    Target_Rect.y = CURRENT_WEAPON_RECT_Y + (CURRENT_WEAPON_RECT_H * GameConfig . screen_height / 480 - CURRENT_WEAPON_RECT_H) / 2;
+    Target_Rect.w = CURRENT_WEAPON_RECT_W;
+    Target_Rect.h = CURRENT_WEAPON_RECT_H;
+    
+    our_SDL_blit_surface_wrapper ( ItemMap [ Me[0].weapon_item . type ] . inv_image . Surface , NULL , Screen , &Target_Rect );
+    
+    Mouse_Button_Pressed_Previous_Frame = axis_is_active;
+	
+    //now we create and blit the ammo count
+    if ( ItemMap[ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change != 0 )
+	return; //Melee weapons don't have ammunition [yet]
+
+    if (Me [ 0 ] . busy_type == WEAPON_RELOAD)
+	sprintf(current_ammo, "reloading");
+    else if (! Me [ 0 ] . weapon_item . ammo_clip )
+	sprintf(current_ammo, "  %sEMPTY", font_switchto_red );
+	else sprintf(current_ammo, " %d / %d", Me [ 0 ] . weapon_item . ammo_clip, ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size);
+    PutStringFont( Screen , FPS_Display_BFont , Target_Rect.x , Target_Rect.y + 50 , current_ammo );
+
+}; // void ShowCurrentWeapon ( void )
+
+/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -1659,6 +1697,7 @@ DisplayBanner ( void )
     
     ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
+    ShowCurrentWeapon ( );
 
     //--------------------
     // We display the name of the current level and the current time inside

@@ -164,9 +164,13 @@
 
 #define CURRENT_SKILL_RECT_X (GameConfig . screen_width) * (1.0 - 92.0 / 640.0)
 #define CURRENT_SKILL_RECT_Y (GameConfig . screen_height - 80 * GameConfig . screen_height / 480)
-//the scaling ratio
 #define CURRENT_SKILL_RECT_W 64
 #define CURRENT_SKILL_RECT_H 64
+
+#define CURRENT_WEAPON_RECT_X 32
+#define CURRENT_WEAPON_RECT_Y (GameConfig . screen_height - 80 * GameConfig . screen_height / 480)
+#define CURRENT_WEAPON_RECT_W 64
+#define CURRENT_WEAPON_RECT_H 64
 
 #define WHOLE_HEALTH_RECT_Y (480-90)
 #define WHOLE_HEALTH_RECT_W 12
