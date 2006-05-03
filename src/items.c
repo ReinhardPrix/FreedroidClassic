@@ -443,7 +443,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	ThisItem -> gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
     }
     ThisItem->multiplicity = 1;
-    
+    ThisItem->ammo_clip = 0;
     //--------------------
     // We now have to set a duration : a maximum duration
     // and a current duration. The latter is
@@ -2200,7 +2200,7 @@ CountItemtypeInInventory( int Itemtype , int PlayerNum )
     
     for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
-	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) NumberOfItemsFound++;
+	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) NumberOfItemsFound += Me [ PlayerNum ] . Inventory [ i ] . multiplicity;
     }
     return NumberOfItemsFound;
 

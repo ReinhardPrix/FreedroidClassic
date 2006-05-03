@@ -171,7 +171,7 @@ decode_floor_tiles_of_this_level (Level Lev)
 	// we need to convert it into real map information with proper struct...
 	// Finally the proper struct can then replace the old map pointer.
 	//
-	Buffer = MyMalloc( sizeof ( map_tile ) * ( xdim + 10 ) );
+	Buffer = MyMalloc( ( xdim + 10 ) * sizeof (map_tile));
 	for ( col = 0 ; col < xdim  ; col ++ )
 	{
 	    sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
@@ -1688,6 +1688,10 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
   sprintf( linebuf , "%d " , ItemToWriteOut->gold_amount );
   strcat( LevelMem , linebuf );
+
+  strcat( LevelMem , ITEM_AMMO_CLIP_STRING );
+  sprintf( linebuf , "%d " , ItemToWriteOut->ammo_clip );
+  strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_MULTIPLICITY_STRING );
   sprintf( linebuf , "%d " , ItemToWriteOut->multiplicity );
@@ -2184,6 +2188,8 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
 		       &( TargetItem -> current_duration ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
 		       &( TargetItem -> gold_amount ) , ItemsSectionEnd );
+  ReadValueFromString( ItemPointer , ITEM_AMMO_CLIP_STRING , "%d" , 
+		       &( TargetItem -> ammo_clip ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_MULTIPLICITY_STRING , "%d" , 
 		       &( TargetItem -> multiplicity ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_PREFIX_CODE_STRING , "%d" , 

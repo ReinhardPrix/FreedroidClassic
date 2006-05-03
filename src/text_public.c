@@ -1871,6 +1871,10 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	    // Now we read in the image type that should be generated for this bullet
 	    ReadValueFromString( ItemPointer ,  "Item as gun: bullet_lifetime=" , "%lf" , 
 				 &ItemMap[ItemIndex].item_gun_bullet_lifetime , EndOfItemData );
+
+	    // Now we read in the image type that should be generated for this bullet
+	    ReadValueFromString( ItemPointer ,  "Item as gun: ammo clip size=" , "%d" , 
+				 &ItemMap[ItemIndex].item_gun_ammo_clip_size , EndOfItemData );
 	    
 	    //--------------------
 	    // Some guns require some ammunition.  This will be read in and

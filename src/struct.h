@@ -437,6 +437,7 @@ typedef struct
     int    item_gun_bullet_pass_through_explosions; // can this 'bullet' reflect other bullets
     int    item_gun_bullet_pass_through_hit_bodies; // does this bullet go through hit bodies (e.g. like a laser sword)
     int    item_gun_bullet_ignore_wall_collisions; // can this bullet pass through walls and map barriers?
+    int    item_gun_ammo_clip_size; //max. number of bullets in the charger
     
     // the following values have only relevance in case of a melee weapon
     double item_gun_angle_change;	// how fast to do a melee weapon swing
@@ -501,6 +502,7 @@ typedef struct
     int damage_modifier;             // how much additional damage can add to the base damage
     int gold_amount;                 // how much cyberbucks are there, IN CASE OF CYBERBUCKS
     int multiplicity;
+    int ammo_clip; 		// how much bullets in the clip, IN CASE OF WEAPON
     point inventory_position;
 } item, *Item;
 
@@ -667,7 +669,7 @@ typedef struct
     int ranged_weapon_skill;
     int spellcasting_skill;
     int hacking_skill;
-    
+
     //--------------------
     // The inventory slots.  Some items are residing in general inventory,
     // other items might be equiped in some of the corresponding slots of

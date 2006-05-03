@@ -491,18 +491,21 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
     {
 	if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition )
 	{
-	    if ( ! CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 
-					      0 ) )
+	    if ( Me [ 0 ] . weapon_item . ammo_clip > 0 )
 	    {
-		No_Ammo_Sound( );
-		
-		//--------------------
-		// So no ammunition... We should say so and return...
-		//
-		return ;
-	    }
-	    else
-		DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
+	      Me [ 0 ] . weapon_item . ammo_clip--;
+            }
+	    else 
+	    {
+	      No_Ammo_Sound( );
+
+            //--------------------
+            // So no ammunition... We should say so and reload...
+            //
+	      TuxReloadWeapon();
+              return ;
+
+            }
 	}
     }
     
@@ -3293,8 +3296,36 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
     else Fire_Bullet_Sound ( LASER_SWORD_1 );
     
     FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 , target_location ) ;
-    
 }; // void PerformTuxAttackRaw ( int player_num ) ;
+
+
+
+/* ----------------------------------------------------------------------
+ * Reload the ammo clip
+ *
+ *
+ * ---------------------------------------------------------------------- */
+
+void TuxReloadWeapon()
+{
+int count = CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
+if(count > ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size )
+    count =  ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size;
+if(!count)
+        {
+        No_Ammo_Sound( );
+        No_Ammo_Sound( );
+	return;
+        }
+int i;
+for(i = 0; i < count; i++)
+	DeleteOneInventoryItemsOfType( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
+Me [ 0 ] . weapon_item . ammo_clip += count;
+Me [ 0 ] . busy_time = count *  3.0/30.0;
+Me [ 0 ] . busy_time *= RangedRechargeMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
+Me [ 0 ] . busy_type = WEAPON_RELOAD;
+}
+
 
 /* ----------------------------------------------------------------------
  *

@@ -82,6 +82,7 @@ EXTERN int closed_chest_below_mouse_cursor ( int player_num ) ;
 EXTERN int smashable_barrel_below_mouse_cursor ( int player_num ) ;
 EXTERN void tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting ) ;
 EXTERN void PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting ) ;
+EXTERN void TuxReloadWeapon ( void ) ;
 EXTERN void correct_tux_position_according_to_jump_thresholds ( int player_num );
 EXTERN int isignf (float);
 EXTERN void InitInfluPositionHistory( int player_num );

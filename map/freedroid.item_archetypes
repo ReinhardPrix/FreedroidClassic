@@ -86,6 +86,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -128,6 +129,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -170,6 +172,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -212,6 +215,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -254,6 +258,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -296,6 +301,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -338,6 +344,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -380,6 +387,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -422,6 +430,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -464,6 +473,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -506,6 +516,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -548,6 +559,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -590,6 +602,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -632,6 +645,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
+Item as gun: ammo clip size=15
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -674,6 +688,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -716,6 +731,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -758,6 +774,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -800,6 +817,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
+Item as gun: ammo clip size=15
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -842,6 +860,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -884,6 +903,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -926,6 +946,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -968,6 +989,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1010,6 +1032,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1052,6 +1075,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="plasma_ammunition"
+Item as gun: ammo clip size=30
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1094,6 +1118,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1136,6 +1161,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1178,6 +1204,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1220,6 +1247,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1262,6 +1290,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1304,6 +1333,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1346,6 +1376,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1388,6 +1419,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1430,6 +1462,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1472,6 +1505,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1514,6 +1548,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1556,6 +1591,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1598,6 +1634,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1640,6 +1677,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1682,6 +1720,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1724,6 +1763,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1766,6 +1806,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1808,6 +1849,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1850,6 +1892,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1892,6 +1935,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1934,6 +1978,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -1976,6 +2021,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2018,6 +2064,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2060,6 +2107,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2102,6 +2150,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2144,6 +2193,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2186,6 +2236,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2228,6 +2279,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2270,6 +2322,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2312,6 +2365,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2354,6 +2408,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2396,6 +2451,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2438,6 +2494,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2480,6 +2537,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2522,6 +2580,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2564,6 +2623,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2606,6 +2666,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
+Item as gun: ammo clip size=15
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2648,6 +2709,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2690,6 +2752,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2732,6 +2795,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2774,6 +2838,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2816,6 +2881,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2858,6 +2924,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2900,6 +2967,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2942,6 +3010,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2984,6 +3053,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3026,6 +3096,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3068,6 +3139,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3110,6 +3182,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3152,6 +3225,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3194,6 +3268,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3236,6 +3311,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3278,6 +3354,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3320,6 +3397,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3362,6 +3440,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3404,6 +3483,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3446,6 +3526,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3488,6 +3569,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3530,6 +3612,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3572,6 +3655,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3614,6 +3698,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3656,6 +3741,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3698,6 +3784,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3740,6 +3827,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3782,6 +3870,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3824,6 +3913,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3866,6 +3956,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3908,6 +3999,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3950,6 +4042,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -3992,6 +4085,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4034,6 +4128,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4076,6 +4171,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4118,6 +4214,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4160,6 +4257,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4202,6 +4300,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4244,6 +4343,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4286,6 +4386,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4328,6 +4429,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4370,6 +4472,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4412,6 +4515,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4454,6 +4558,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4496,6 +4601,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4538,6 +4644,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4580,6 +4687,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4622,6 +4730,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4664,6 +4773,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4706,6 +4816,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4748,6 +4859,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4790,6 +4902,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4832,6 +4945,7 @@ Item as gun: reflect other bullets="yes"
 Item as gun: pass through explosions="yes"
 Item as gun: pass through hit bodies="yes"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -4874,6 +4988,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="none"
+Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **

@@ -60,6 +60,7 @@
 #define ITEM_MAX_DURATION_STRING " MaxDur="
 #define ITEM_CUR_DURATION_STRING " CurDur="
 #define ITEM_GOLD_AMOUNT_STRING " Gold="
+#define ITEM_AMMO_CLIP_STRING " Ammoclip="
 #define ITEM_MULTIPLICITY_STRING " Multiplicity="
 #define ITEM_PREFIX_CODE_STRING " PrefixCode="
 #define ITEM_SUFFIX_CODE_STRING " SuffixCode="
