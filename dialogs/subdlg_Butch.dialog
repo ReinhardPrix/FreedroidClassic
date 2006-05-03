@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -106,7 +105,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=552  PositionY=271  
 Subtitle="Ok.  I've unlocked the door to the master arena now.  But take care, this will not be so easy any more. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="In fact, you should know that we've got a 711 battle bot in there.  It's deadly disruptor flashes cannot be evaded.  "
+Subtitle="In fact, you should know that we've got a 711 battle bot in there.  Its deadly disruptor flashes cannot be evaded.  "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You should make sure you've got proper anti-disruptor devices on you or just kill it fast enough.  Good luck!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -151,7 +150,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="NOVICE_NOT_YET_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=383  
-Subtitle="I'm sorry but town regulations forbit access to the master arena unless you've completed the novice arena first."
+Subtitle="I'm sorry but town regulations forbid access to the master arena unless you've completed the novice arena first."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This regulation is there for your own safely, so that no newbie accidentially signs up for the master arena."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
