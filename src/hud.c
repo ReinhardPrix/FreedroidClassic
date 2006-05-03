@@ -187,6 +187,12 @@ exist really (i.e. has a type = (-1) ).",
 	    sprintf( linebuf , "Dam: %d-%d " , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
 	strcat( ItemDescText , linebuf );
     }
+
+    if ( ItemMap [ CurItem->type ] . item_gun_ammo_clip_size )
+    {
+	sprintf( linebuf , "Ammo : %d of %d\n", CurItem->ammo_clip,  ItemMap [ CurItem->type ] . item_gun_ammo_clip_size);
+	strcat( ItemDescText , linebuf );
+    }
     
     //--------------------
     // If this item has a multiplicity, we print it out
