@@ -1158,6 +1158,7 @@ Usage: freedroid [-v|--version] \n\
                  [-m|--mapcheck] \n\
                  [-j|--sensitivity]\n\
                  [-d|--debug=LEVEL]\n\
+		 [-r|--resolution=CODE]\n\
 \n\
 Please report bugs either by entering them into the bug-tracking\n\
 system on our sourceforge-website via this link:\n\n\
