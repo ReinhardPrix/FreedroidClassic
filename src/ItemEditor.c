@@ -93,6 +93,8 @@ GtkWidget *item_gun_recharging_time_entry;
 GtkObject *item_gun_recharging_time_adjustment;
 GtkWidget *item_gun_speed_entry;
 GtkObject *item_gun_speed_adjustment;
+GtkWidget *item_gun_ammo_clip_size_entry;
+GtkObject *item_gun_ammo_clip_size_adjustment;
 
 GtkWidget *item_drive_maxspeed_entry;
 GtkObject *item_drive_maxspeed_adjustment;
@@ -860,6 +862,7 @@ edit_interface_ok_button_pressed ( GtkWidget *w, int *item_index_pointer )
   ItemMap [ item_index ] . item_gun_damage_modifier = (int) GTK_ADJUSTMENT ( item_gun_damage_modifier_adjustment ) -> value ;
   ItemMap [ item_index ] . item_gun_recharging_time = (double) GTK_ADJUSTMENT ( item_gun_recharging_time_adjustment ) -> value ;
   ItemMap [ item_index ] . item_gun_speed = (double) GTK_ADJUSTMENT ( item_gun_speed_adjustment ) -> value ;
+  ItemMap [ item_index ] . item_gun_ammo_clip_size = (int) GTK_ADJUSTMENT ( item_gun_ammo_clip_size_adjustment ) -> value ;
 
   //--------------------
   // Now we read out the click buttons from the second page of the item
@@ -1739,6 +1742,7 @@ gui_edit_dialog_set_up_second_page ( GtkWidget *notebook1 , int item_index )
   GtkWidget *base_item_gun_damage_hbox;
   GtkWidget *item_gun_damage_modifier_hbox;
   GtkWidget *item_gun_recharging_time_hbox;
+  GtkWidget *item_gun_ammo_clip_size_hbox;
   GtkWidget *item_gun_speed_hbox;
   GtkWidget *ammo_type_hbox;
   GtkWidget *hscale;
@@ -1910,6 +1914,42 @@ gui_edit_dialog_set_up_second_page ( GtkWidget *notebook1 , int item_index )
   gtk_widget_show (hscale);
 
   gtk_adjustment_set_value ( GTK_ADJUSTMENT ( item_gun_speed_adjustment ) , (gfloat) ItemMap [ item_index ] . item_gun_speed );
+
+  //----------------------------------------------------------------------
+  //----------------------------------------------------------------------
+  //--------------------
+  // Now we print out the item_gun_ammo_clip_size requirement...
+  //
+  //--------------------
+  // Now the h-box for each reply-sample reply-subtitle combination...
+  //
+  item_gun_ammo_clip_size_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_ref ( item_gun_ammo_clip_size_hbox );
+  gtk_object_set_data_full ( GTK_OBJECT ( window ) , "item_gun_ammo_clip_size_hbox" , item_gun_ammo_clip_size_hbox , (GtkDestroyNotify) gtk_widget_unref );
+  gtk_widget_show ( item_gun_ammo_clip_size_hbox );
+  gtk_container_add ( GTK_CONTAINER ( vbox2 ), item_gun_ammo_clip_size_hbox );
+
+  //--------------------
+  // We add the text to the left of the item_gun_speed requirement scale...
+  //
+  label = gtk_label_new ("Charger capacity for this item:");
+  gtk_widget_ref (label);
+  gtk_object_set_data_full (GTK_OBJECT (window), "label", label, (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (label);
+  gtk_box_pack_start ( GTK_BOX ( item_gun_ammo_clip_size_hbox ), label , FALSE, FALSE, 0);
+
+  // Reuse the same adjustment 
+  item_gun_ammo_clip_size_adjustment = gtk_adjustment_new ( 0.1, 0, 100, 1, 1, 1);
+  hscale = gtk_hscale_new ( GTK_ADJUSTMENT (item_gun_ammo_clip_size_adjustment) );
+  gtk_widget_set_usize ( GTK_WIDGET ( hscale ) , 200 , 30 );
+  gtk_range_set_update_policy ( GTK_RANGE ( hscale ) , GTK_UPDATE_CONTINUOUS );
+  gtk_scale_set_digits ( GTK_SCALE ( hscale ) , 0 );
+  gtk_scale_set_value_pos ( GTK_SCALE ( hscale ) , GTK_POS_TOP);
+  gtk_scale_set_draw_value ( GTK_SCALE ( hscale ) , TRUE);
+  gtk_box_pack_start ( GTK_BOX ( item_gun_ammo_clip_size_hbox ) , hscale, TRUE, TRUE, 0);
+  gtk_widget_show (hscale);
+
+  gtk_adjustment_set_value ( GTK_ADJUSTMENT ( item_gun_ammo_clip_size_adjustment ) , (gint) ItemMap [ item_index ] . item_gun_ammo_clip_size );
 
 
   //----------------------------------------------------------------------
