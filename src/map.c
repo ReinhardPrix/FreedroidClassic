@@ -2939,7 +2939,7 @@ the dialog section name for one special force droid/character.",
 
       ShortDescription = 
 	ReadAndMallocStringFromData ( SearchPointer , "ShortLabel=\"" , "\"" ) ;
-      if ( strlen ( DialogSection ) >= MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING )
+      if ( strlen ( ShortDescription ) >= MAX_LENGTH_OF_SHORT_DESCRIPTION_STRING )
 	{
 	  GiveStandardErrorMessage ( __FUNCTION__  , "\
 The short description specification string for a bot was too large.\n\
