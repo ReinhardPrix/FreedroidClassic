@@ -453,6 +453,12 @@ check_for_new_experience_level_reached ( int PlayerNum )
 {
     int BaseExpRequired = 400;
 
+    if ( Me [ PlayerNum ] . exp_level >= 24 )
+	{
+	SetNewBigScreenMessage( "Max level reached!");
+	return;
+	}
+
     Me [ PlayerNum ] . ExpRequired = 
 	BaseExpRequired * ( exp ( ( Me [ PlayerNum ] . exp_level - 1 ) * log ( 2 ) ) ) ;
     

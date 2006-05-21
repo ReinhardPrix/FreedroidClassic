@@ -642,10 +642,10 @@ typedef struct
     int freezing_melee_targets; // does this Tux freeze melee targets upon hit?
     int double_ranged_damage;   // does this Tux do double ranged weapon damage?
     
-    long Experience; // character Experience = 'spare droid elements found'
+    unsigned long Experience; // character Experience = 'spare droid elements found'
     int exp_level;       // which 'experience level' is the influencer currenly at?
-    long ExpRequired;    // how much experience required for the next level?
-    long ExpRequired_previously;    // how was required for the previous level?
+    unsigned long ExpRequired;    // how much experience required for the next level?
+    unsigned long ExpRequired_previously;    // how was required for the previous level?
     
     long Gold;
     char character_name[ MAX_CHARACTER_NAME_LENGTH ];
