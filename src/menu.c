@@ -1715,7 +1715,7 @@ Thank you.\n");
 		if ( LeftPressed() ) 
 		{
 		    while (LeftPressed());
-		    if ( GameConfig . automap_display_scale >= 1.9 ) ;
+		    if ( GameConfig . automap_display_scale >= 1.9 )
 		    GameConfig . automap_display_scale -= 1.0 ;
 		}
 		
