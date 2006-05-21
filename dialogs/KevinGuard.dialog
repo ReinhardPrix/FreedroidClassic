@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -42,8 +41,6 @@ This is Kevin's Guard
 
 
 
-
-
 END OF AUTORS NOTES
 
 
@@ -51,51 +48,279 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=266  PositionY=276  
-Subtitle="What are you doing here?"
-ReplySample="Sorry_No_Voice_Sample_ey_0.wav"
+PositionX=58  PositionY=427  
 ChangeOption=0 ChangeToValue=0
-ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="Hi, I'm new here"
+New Option Nr=1  OptionText="I must talk to your master."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=382  PositionY=357  
-Subtitle="Hello, I'm one of Kevin's Bots"
-ReplySample=""
+PositionX=269  PositionY=239  
+Subtitle="STATE YOUR REASON."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+ChangeOption=6 ChangeToValue=1
+ChangeOption=3 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
+ChangeOption=17 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText="Don't shoot! I come in peace."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=269  PositionY=368  
+Subtitle="STATE THE PURPOSE OF YOUR PRESENCE HERE."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
+ChangeOption=8 ChangeToValue=0
+ChangeOption=17 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Who is this Kevin?"
+New Option Nr=3  OptionText="Umm... I saw this building as I was walking by, and I decided to take a look inside."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=517  PositionY=388  
-Subtitle="A very good hacker for a start"
-ReplySample=""
+PositionX=373  PositionY=239  
+Subtitle="YOUR REASON IS CURIOSITY. MASTER KEVIN LIKES CURIOUS PEOPLE."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="YOU MAY PASS."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
+ChangeOption=1 ChangeToValue=0
+ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="I want to meet with him."
+New Option Nr=4  OptionText="Thank you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=651  PositionY=382  
-Subtitle="Ok, I've unlocked the door for you"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=801  PositionY=238  
 ChangeOption=4 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="ExecuteActionWithLabel:unlock_kevins_door"
+DoSomethingExtra="PlantCookie:kevin_door_open:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be off then"
-OptionSample="Tux_Goodbye_0.wav"
-PositionX=462  PositionY=221  
+New Option Nr=5  OptionText="His life is in grave danger. "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=168  PositionY=109  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText="The people from the city want me to have a word with him."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=270  PositionY=110  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="I have some very valuable information... Your master might be interested in it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=340  PositionY=109  
+Subtitle="MASTER KEVIN WILL BE PLEASED. YOU MAY PASS."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="DOOR OPENING SEQUENCE INITIATED."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+ChangeOption=4 ChangeToValue=1
+ChangeOption=6 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
+ChangeOption=99 ChangeToValue=0
+ChangeOption=12 ChangeToValue=0
+ChangeOption=13 ChangeToValue=0
+ChangeOption=14 ChangeToValue=0
+ChangeOption=18 ChangeToValue=0
+ChangeOption=19 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="Step aside, you stupid tin can!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=269  PositionY=515  
+Subtitle="YOU SHALL NOT PASS. ACTIVATING DISINTERGRATOR BEAM IN TEN SECONDS."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="NINE."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="EIGHT."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0
+ChangeOption=9 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText="Wait, that's not what I meant !"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=581  PositionY=335  
+Subtitle="SEVEN."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="SIX."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=10 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText="I am not afraid of you."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=572  PositionY=467  
+Subtitle="SEVEN."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="SIX."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=9 ChangeToValue=0
+ChangeOption=11 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText="Wait, that's not what I meant !"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=700  PositionY=516  
+Subtitle="FIVE."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="FOUR."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=11 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText="The enemies are approaching from every side!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=168  PositionY=39  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=12 ChangeToValue=0
+ChangeOption=13 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="We are surrounded, they will attack any second now!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=99  PositionY=38  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=13 ChangeToValue=0
+ChangeOption=14 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="Are you listening to me?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=100  PositionY=108  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=14 ChangeToValue=0
+ChangeOption=18 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="It's me."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=876  PositionY=69  
+Subtitle="IDENTITY CONFIRMED. YOU MAY PASS."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+ChangeOption=15 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=59  PositionY=361  
+ChangeOption=16 ChangeToValue=0
+OnCondition="CookieIsPlanted:kevin_door_open:" JumpToOption=15 ElseGoto=20
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="I do not have to tell you anything, bot."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=169  PositionY=239  
+Subtitle="ENGAGING AGRESSION CIRCUITS. LEAVE OR YOU SHALL BE DISINTEGRATED IN TEN SECONDS."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="NINE."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="EIGHT."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=17 ChangeToValue=0
+ChangeOption=9 ChangeToValue=1
+ChangeOption=10 ChangeToValue=1
+ChangeOption=1 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="I think I just found an error in your programming."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=36  PositionY=107  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=18 ChangeToValue=0
+ChangeOption=19 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="Thought so."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=35  PositionY=39  
+Subtitle="ERROR: REASON INVALID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=164  PositionY=383  
+Subtitle="INTRUDER, LOWER YOUR WEAPONS AND IDENTIFY YOURSELF OR FACE IMMEDIATE TERMINATION"
+ReplySample=""
+ChangeOption=20 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
+ChangeOption=8 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="I'll be going."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=700  PositionY=70  
+Subtitle="EOT acknowledged. Connection closed."
+ReplySample=""
+Subtitle="Goodbye !"
+ReplySample=""
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
