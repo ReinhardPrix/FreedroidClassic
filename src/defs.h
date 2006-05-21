@@ -767,8 +767,8 @@ enum
 #define ITEM_INVENTORY_IMAGE_FILE_NAME "File or directory name for inventory image=\""
 #define ITEM_DROP_SOUND_FILE_NAME "Item uses drop sound with filename=\""
 
-#define UNIVERSAL_COORD_W(W) (int)(W * (float)((float)(GameConfig . screen_width) / 640.0))
-#define UNIVERSAL_COORD_H(H) (int)(H * (float)((float)(GameConfig . screen_height) / 480.0))
+#define UNIVERSAL_COORD_W(W) (int)((float)W * ((float)(GameConfig . screen_width) / 640.0))
+#define UNIVERSAL_COORD_H(H) (int)((float)H * ((float)(GameConfig . screen_height) / 480.0))
 
 
 //--------------------

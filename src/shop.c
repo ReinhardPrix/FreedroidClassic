@@ -798,7 +798,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    ShopOrder -> item_selected = ItemIndex ;
 		    ShopOrder -> shop_command = BUY_1_ITEM ;
 		    if ( ( ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . item_group_together_in_inventory ) &&
-			 ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price > 1 ) )
+			 ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price >= 1 ) )
 		    {
 			//--------------------
 			// If this is a shops buy menu, then we calculate what the Tux could afford here,
@@ -807,7 +807,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 			if ( ShowChestButtons == 1 )
 			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ShowPointerList [ ItemIndex ] -> multiplicity , ShowPointerList [ ItemIndex ] -> multiplicity ) ;
 			else
-			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , ( Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price ) , 1) ;
+			    ShopOrder -> number_selected = do_graphical_number_selection_in_range ( 0 , Me [ 0 ] . Gold / ItemMap [ ShowPointerList [ ItemIndex ] -> type ] . base_list_price , 1) ;
 		    }
 		    else
 		    {

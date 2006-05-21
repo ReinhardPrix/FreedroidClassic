@@ -556,27 +556,16 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
     static SDL_Surface* SelectionKnob = NULL ;
     int ok_button_was_pressed = FALSE;
     int left_mouse_pressed_previous_frame = FALSE;
-    int current_value ;
     int knob_start_x = UNIVERSAL_COORD_W(200);
     int knob_end_x = UNIVERSAL_COORD_W(390);
     if(!(upper_range - lower_range))
 	return upper_range;
-    int knob_offset_x = default_value * (knob_end_x - knob_start_x) / (upper_range - lower_range);
+    int knob_offset_x = ceilf ( (float)(default_value * (knob_end_x - knob_start_x)) / (float)(upper_range - lower_range));
     int knob_is_grabbed = FALSE ;
     char number_text[1000];
     static SDL_Rect knob_target_rect;
 
     DebugPrintf ( 1 , "\n%s(): graphical number selection invoked." , __FUNCTION__ );
-    
-    if ( upper_range >= 1 ) current_value = 1 ; 
-    else 
-    { //I'm sorry but how does the message relate to the if ?!?!! 
-	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-ERROR LOADING BACKGROUND IMAGE FILE!",
-				   PLEASE_INFORM, IS_FATAL );
-	current_value = 0 ;
-    }
     
     // MakeGridOnScreen ( NULL );
     
@@ -641,11 +630,17 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 		ok_button_was_pressed = TRUE ;
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-		if ( knob_offset_x > 0 ) knob_offset_x -- ;
+		if(knob_offset_x > 0)
+			knob_offset_x -= (knob_end_x - knob_start_x) / (upper_range - lower_range);
+
+		//if ( knob_offset_x > 0 ) knob_offset_x -- ;
 	    }
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-		if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
+//		if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
+		if ( knob_offset_x < knob_end_x - knob_start_x )
+			knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
+
 	    }
 	    
 	}
