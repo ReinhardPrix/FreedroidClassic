@@ -547,6 +547,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     {
 	MenuPosX [ i ] = 260 ; 
 	MenuPosY [ i ] =  90 + i * ITEM_DIST ; 
+	MenuOptionLineRequirement [ i ] = 0;
     }
     
     //--------------------
