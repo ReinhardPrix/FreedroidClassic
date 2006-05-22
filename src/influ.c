@@ -4259,25 +4259,32 @@ AnalyzePlayersMouseClick ( int player_num )
     switch ( global_ingame_mode )
     {
 	case GLOBAL_INGAME_MODE_SCROLL_UP:
-	    game_message_protocol_scroll_override_from_user -- ;
-	    //--------------------
-	    // To stop any movement, we wait for the release of the 
-	    // mouse button.
-	    //
-	    while ( SpacePressed() );
-	    Activate_Conservative_Frame_Computation();
+	    if(no_left_button_press_in_previous_analyze_mouse_click)
+		    {
+		    game_message_protocol_scroll_override_from_user -- ;
+		    //--------------------
+		    // To stop any movement, we wait for the release of the 
+		    // mouse button.
+		    //
+		    while ( SpacePressed() );
+		    Activate_Conservative_Frame_Computation();
+		    }
 
 	    break;
+
 	case GLOBAL_INGAME_MODE_SCROLL_DOWN:
-	    game_message_protocol_scroll_override_from_user ++ ;
-	    //--------------------
-	    // To stop any movement, we wait for the release of the 
-	    // mouse button.
-	    //
-	    while ( SpacePressed() );
-	    Activate_Conservative_Frame_Computation();
-
+	    if(no_left_button_press_in_previous_analyze_mouse_click)
+		{
+    	        game_message_protocol_scroll_override_from_user ++ ;
+	        //--------------------
+                // To stop any movement, we wait for the release of the 
+	        // mouse button.
+                //
+	        while ( SpacePressed() );
+	        Activate_Conservative_Frame_Computation();
+		}
 	    break;
+
 	case GLOBAL_INGAME_MODE_IDENTIFY:
 	    handle_player_identification_command( 0 );
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
