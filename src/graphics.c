@@ -630,17 +630,22 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 		ok_button_was_pressed = TRUE ;
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-		if(knob_offset_x > 0)
+		if(knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range)))
+			{
 			knob_offset_x -= (knob_end_x - knob_start_x) / (upper_range - lower_range);
-
-		//if ( knob_offset_x > 0 ) knob_offset_x -- ;
+			}
+		if(knob_offset_x > 0)
+			knob_offset_x --;
 	    }
+
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-//		if ( knob_offset_x < knob_end_x - knob_start_x ) knob_offset_x ++ ;
 		if ( knob_offset_x < knob_end_x - knob_start_x )
-			knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
-
+			{
+			if(((knob_end_x - knob_start_x) / (upper_range - lower_range)) > 0)
+				knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
+			else knob_offset_x ++;
+			}
 	    }
 	    
 	}
