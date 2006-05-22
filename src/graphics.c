@@ -640,12 +640,12 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-		if ( knob_offset_x < knob_end_x - knob_start_x )
+		if ( knob_end_x - knob_start_x - knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range)))
 			{
-			if(((knob_end_x - knob_start_x) / (upper_range - lower_range)) > 0)
-				knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
-			else knob_offset_x ++;
+			knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
 			}
+		if ( knob_offset_x < knob_end_x - knob_start_x )
+			knob_offset_x ++;
 	    }
 	    
 	}
