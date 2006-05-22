@@ -4266,7 +4266,7 @@ AnalyzePlayersMouseClick ( int player_num )
 		    // To stop any movement, we wait for the release of the 
 		    // mouse button.
 		    //
-		    while ( SpacePressed() );
+		//    while ( SpacePressed() );
 		    Activate_Conservative_Frame_Computation();
 		    }
 
@@ -4280,7 +4280,7 @@ AnalyzePlayersMouseClick ( int player_num )
                 // To stop any movement, we wait for the release of the 
 	        // mouse button.
                 //
-	        while ( SpacePressed() );
+	      //  while ( SpacePressed() );
 	        Activate_Conservative_Frame_Computation();
 		}
 	    break;
