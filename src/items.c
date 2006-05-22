@@ -2288,16 +2288,39 @@ Tux invenrtory.  Something must have gone awry...",
 int 
 MouseCursorIsInUserRect( int x , int y )
 {
-    if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
-    if ( x < User_Rect.x ) return ( FALSE );
-    if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
     if ( y < User_Rect.y ) return ( FALSE );
-    return ( TRUE );
+    if ( y > User_Rect.y + User_Rect.h ) return ( FALSE );
+
+    if ((! GameConfig.Inventory_Visible)  && (! GameConfig.CharacterScreen_Visible) && (! GameConfig.SkillScreen_Visible))
+    	{
+	if ( x > User_Rect.x + User_Rect.w ) return ( FALSE );
+	if ( x < User_Rect.x ) return ( FALSE );
+	return ( TRUE );
+	}
+    if ( GameConfig.Inventory_Visible )
+	{
+	if ( ! MouseCursorIsInInvRect(x, y) )
+		return TRUE;
+	else return FALSE;
+	}
+    if ( GameConfig.CharacterScreen_Visible )
+	{
+	if ( ! MouseCursorIsInChaRect(x, y) )
+		return TRUE;
+	else return FALSE;
+	}
+    if ( GameConfig.SkillScreen_Visible )
+	{
+	if ( ! MouseCursorIsInSkiRect(x, y) )
+		return TRUE;
+	else return FALSE;
+	}
+return TRUE;
 }; // int MouseCursorIsInUserRect( int x , int y )
 
 /* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the user
- * i.e. combat rectangle or not.
+ * This function checks if a given screen position lies within the inventory
+ * rectangle or not.
  * ---------------------------------------------------------------------- */
 int 
 MouseCursorIsInInvRect( int x , int y )
@@ -2308,6 +2331,35 @@ MouseCursorIsInInvRect( int x , int y )
     if ( y < InventoryRect.y ) return ( FALSE );
     return ( TRUE );
 }; // int MouseCursorIsInInvRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the character
+ * rectangle or not.
+ * ---------------------------------------------------------------------- */
+int 
+MouseCursorIsInChaRect( int x , int y )
+{
+    if ( x > CharacterRect.x + CharacterRect.w ) return ( FALSE );
+    if ( x < CharacterRect.x ) return ( FALSE );
+    if ( y > CharacterRect.y + CharacterRect.h ) return ( FALSE );
+    if ( y < CharacterRect.y ) return ( FALSE );
+    return ( TRUE );
+}; // int MouseCursorIsInChaRect( int x , int y )
+
+/* ----------------------------------------------------------------------
+ * This function checks if a given screen position lies within the skill
+ * rectangle or not.
+ * ---------------------------------------------------------------------- */
+int 
+MouseCursorIsInSkiRect( int x , int y )
+{
+    if ( x > SkillScreenRect.x + SkillScreenRect.w ) return ( FALSE );
+    if ( x < SkillScreenRect.x ) return ( FALSE );
+    if ( y > SkillScreenRect.y + SkillScreenRect.h ) return ( FALSE );
+    if ( y < SkillScreenRect.y ) return ( FALSE );
+    return ( TRUE );
+}; // int MouseCursorIsInSkiRect( int x , int y )
+
 
 /* ----------------------------------------------------------------------
  * This function checks if a given screen position lies within the grid

@@ -438,6 +438,8 @@ EXTERN int ItemUsageRequirementsMet( item* UseItem , int MakeSound );
 EXTERN int MouseCursorIsInInventoryGrid( int x , int y );
 EXTERN int MouseCursorIsInUserRect( int x , int y );
 EXTERN int MouseCursorIsInInvRect( int x , int y );
+EXTERN int MouseCursorIsInChaRect( int x , int y );
+EXTERN int MouseCursorIsInSkiRect( int x , int y );
 EXTERN int GetHeldItemCode ( void );
 EXTERN int GetInventorySquare_x( int x );
 EXTERN int GetInventorySquare_y( int x );

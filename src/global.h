@@ -205,6 +205,7 @@ EXTERN int global_ingame_mode ;
 #endif
 EXTERN iso_image light_radius_chunk[ NUMBER_OF_SHADOW_IMAGES ];
 EXTERN SDL_Rect InventoryRect;
+EXTERN SDL_Rect SkillScreenRect;
 EXTERN SDL_Rect CharacterRect;
 #ifdef HAVE_LIBGL
 EXTERN GLuint *automap_texture;  // this is to store an open_gl texture...

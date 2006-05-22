@@ -1937,13 +1937,13 @@ AssembleCombatPicture ( int mask )
     
     if ( GameConfig.Inventory_Visible ) 
     {
-	User_Rect.x = GameConfig . screen_width/2;
-	User_Rect.w = GameConfig . screen_width/2;
+	User_Rect.x = 320;
+	User_Rect.w = GameConfig . screen_width - 320;
     }
     else if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ) 
     {
-	User_Rect.x = 0; // GameConfig . screen_width/2;
-	User_Rect.w = GameConfig . screen_width/2;
+	User_Rect.x = 0;
+	User_Rect.w = GameConfig . screen_width - 320; 
     }
     else
     {
@@ -4663,13 +4663,13 @@ ShowInventoryScreen( void )
     int i , j ;
     
     //--------------------
-    // We define the right side of the user screen as the rectangle
+    // We define the left side of the user screen as the rectangle
     // for our inventory screen.
     //
     InventoryRect.x = 0;
     InventoryRect.y = User_Rect.y;
-    InventoryRect.w = GameConfig . screen_width/2;
-    InventoryRect.h = User_Rect.h;
+    InventoryRect.w = 320;
+    InventoryRect.h = 480;
     
     //--------------------
     // At this point we know, that the inventory screen is desired and must be
