@@ -2336,7 +2336,7 @@ Get_New_Character_Name ( void )
     InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
     if ( ! skip_initial_menus )
-	Temp = GetString ( 20 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
+	Temp = GetString ( 12 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
      Please enter a name\n\
      for the new hero: \n\
      (ESCAPE to cancel.)\n\n\
