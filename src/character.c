@@ -431,7 +431,6 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
 	Me [ 0 ] . health_recovery_rate += BonusItem -> bonus_to_health_recovery ; 
 	Me [ 0 ] . mana_recovery_rate += BonusItem -> bonus_to_mana_recovery ; 
-	Me [ 0 ] . Vitality  += BonusItem -> bonus_to_vit ;
 	
 	Me [ 0 ] . resist_disruptor   += BonusItem -> bonus_to_resist_disruptor ;
 	Me [ 0 ] . resist_fire        += BonusItem -> bonus_to_resist_fire ;
