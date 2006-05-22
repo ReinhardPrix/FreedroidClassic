@@ -2989,8 +2989,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="ammo_exterminator_sphere/inv_image.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=1
+inventory_size_x=1
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5
 Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
