@@ -190,6 +190,10 @@ ShowStartupPercentage ( int Percentage )
 	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 , 
 			  ( 205 ) * GameConfig . screen_height / 480 , "%d%%", Percentage ) ;
 	    break;
+	case 720: 
+	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 3, 
+			  ( 205 ) * GameConfig . screen_height / 480 + 2, "%d%%", Percentage ) ;
+	    break;
 	case 800:
 	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 5 , 
 			  ( 205 ) * GameConfig . screen_height / 480 + 4 , "%d%%", Percentage ) ;
@@ -204,6 +208,8 @@ The resolution found is none of\n\
      0 = 640 x 480 (default with SDL)\n\
      1 = 800 x 600 (default with OpenGL)\n\
      2 = 1024 x 748 \n\
+     3 = 720 x 480 (NTSC) \n\
+     4 = 720 x 576 (PAL) \n\
 This means a severe bug...",
 						       PLEASE_INFORM , IS_FATAL );
 	    break;
@@ -1283,6 +1289,19 @@ ParseCommandLine (int argc, char *const argv[])
 			    GameConfig . screen_height = 768 ;
 			    DebugPrintf ( 1 , "\n%s(): Command line argument -r 2 recognized." , __FUNCTION__ );
 			    break;
+			case 3:
+	                    command_line_override_for_screen_resolution = TRUE ;
+                            GameConfig . screen_width = 720 ;
+                            GameConfig . screen_height = 480 ;
+                            DebugPrintf ( 1 , "\n%s(): Command line argument -r 3 recognized." , __FUNCTION__ );
+                            break;
+			case 4:
+                            command_line_override_for_screen_resolution = TRUE ;
+                            GameConfig . screen_width = 720 ;
+                            GameConfig . screen_height = 576 ;
+                            DebugPrintf ( 1 , "\n%s(): Command line argument -r 4 recognized." , __FUNCTION__ );
+                            break;
+
 			default:
 			    fprintf( stderr, "\nresolution code received: %d" , resolution_code );
 			    GiveStandardErrorMessage ( __FUNCTION__  , "\
