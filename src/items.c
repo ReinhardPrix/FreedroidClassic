@@ -444,6 +444,8 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     }
     ThisItem->multiplicity = 1;
     ThisItem->ammo_clip = 0;
+    if( ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size )
+	ThisItem->ammo_clip = MyRandom(ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size);
     //--------------------
     // We now have to set a duration : a maximum duration
     // and a current duration. The latter is
