@@ -1005,34 +1005,64 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	sprintf( TextChunk, "Indestructible\n" );
     strcat ( InfoText , TextChunk );
     
-    strcat ( InfoText , "Attributes required: " );
+    if ( ! ItemMap [ ShowItem->type ] . item_can_be_applied_in_combat )
+	{
+	strcat ( InfoText , "Attributes required: " );
     
-    if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
+	if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
 	 ( ItemMap [ ShowItem->type ] . item_require_dexterity == (-1) ) &&
 	 ( ItemMap [ ShowItem->type ] . item_require_magic == (-1) ) )
-    {
-	strcat ( InfoText , "NONE\n" );
-    }
-    else
-    {
-	if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
-	{
-	    sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
-	    strcat ( InfoText , TextChunk );
+	    {
+	    strcat ( InfoText , "NONE\n" );
+	    }
+	else
+	    {
+	    if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
+		{
+	        sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
+	        strcat ( InfoText , TextChunk );
+		}
+	    if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
+		{
+	        sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
+	        strcat ( InfoText , TextChunk );
+		}
+            if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
+		{
+	        sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
+                strcat ( InfoText , TextChunk );
+         	}
+	    strcat ( InfoText , "\n" );
+	    }
 	}
-	if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
-	{
-	    sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
-	    strcat ( InfoText , TextChunk );
+    else {
+	    switch ( ShowItem -> type )
+	        {
+	            case ITEM_SPELLBOOK_OF_HEALING:
+	            case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
+	            case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
+	            case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	            case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
+        	    case ITEM_SPELLBOOK_OF_IDENTIFY:
+	            case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
+	            case ITEM_SPELLBOOK_OF_ICE_BOLT:
+	            case ITEM_SPELLBOOK_OF_POISON_BOLT:
+	            case ITEM_SPELLBOOK_OF_PETRIFICATION:
+	            case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
+	            case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
+	            case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+
+	                sprintf( TextChunk , "Spellcasting skill: %s\n " ,
+	                         AllSkillTexts [ required_spellcasting_skill_for_item ( ShowItem -> type ) ] );
+	                strcat( InfoText , TextChunk );
+	                sprintf( TextChunk , "Magic: %d\n " ,
+	                         required_magic_stat_for_next_level_and_item ( ShowItem -> type ) );
+	                strcat( InfoText , TextChunk );
+	                break;
+                default:
+                	break;
+        	}
 	}
-	if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
-	{
-	    sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
-	    strcat ( InfoText , TextChunk );
-	}
-	strcat ( InfoText , "\n" );
-    }
-    
     //--------------------
     // Now we give some pricing information, the base list price for the item,
     // the repair price and the sell value
