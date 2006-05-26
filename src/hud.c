@@ -745,9 +745,9 @@ ShowCurrentWeapon( void )
     if (Me [ 0 ] . busy_type == WEAPON_RELOAD)
 	sprintf(current_ammo, "reloading");
     else if (! Me [ 0 ] . weapon_item . ammo_clip )
-	sprintf(current_ammo, "  %sEMPTY", font_switchto_red );
-	else sprintf(current_ammo, " %d / %d", Me [ 0 ] . weapon_item . ammo_clip, ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size);
-    PutStringFont( Screen , FPS_Display_BFont , Target_Rect.x , Target_Rect.y + 50 , current_ammo );
+	sprintf(current_ammo, " %sEMPTY", font_switchto_red );
+	else sprintf(current_ammo, "%2d / %2d", Me [ 0 ] . weapon_item . ammo_clip, ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size);
+    PutStringFont( Screen ,  FPS_Display_BFont , Target_Rect.x , Target_Rect.y + 50 , current_ammo );
 
 }; // void ShowCurrentWeapon ( void )
 

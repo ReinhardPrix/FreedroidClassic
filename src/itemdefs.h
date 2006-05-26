@@ -167,7 +167,7 @@
 #define CURRENT_SKILL_RECT_W 64
 #define CURRENT_SKILL_RECT_H 64
 
-#define CURRENT_WEAPON_RECT_X 32
+#define CURRENT_WEAPON_RECT_X 34
 #define CURRENT_WEAPON_RECT_Y (GameConfig . screen_height - 80 * GameConfig . screen_height / 480)
 #define CURRENT_WEAPON_RECT_W 64
 #define CURRENT_WEAPON_RECT_H 64
