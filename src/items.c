@@ -3473,9 +3473,24 @@ ManageInventoryScreen ( void )
 			    //
 			    if ( Me [ 0 ] . weapon_item . type == (-1) )
 			    {
-				Item_Held_In_Hand = ( -1 );
-				DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
-				MakeHeldFloorItemOutOf( & ( Me [ 0 ] . shield_item ) ) ;
+				//first of all check requirements again but without the shield
+				//virtually remove the shield, compute requirements, if everything's okay, proceed
+				//otherwise we'll drop the shield into inventory in order to show the player why req. are not met
+				EXTERN void update_all_primary_stats(int);
+                                int shield_item_type = Me [ 0 ] . shield_item . type;
+				Me [ 0 ] . shield_item . type = (-1);
+				update_all_primary_stats(0);
+				if ( HeldItemUsageRequirementsMet(  ) )
+					{
+					Me [ 0 ] . shield_item . type = shield_item_type; 
+					Item_Held_In_Hand = ( -1 );
+					MakeHeldFloorItemOutOf( & ( Me [ 0 ] . shield_item ) ) ;
+					DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
+					}
+				else    {
+					append_new_game_message("Two-handed weapon requirements not met: shield bonus doesn't count.");
+                                        Me [ 0 ] . shield_item . type = shield_item_type;
+					}
 			    }
 			    else
 			    {
@@ -3572,16 +3587,33 @@ ManageInventoryScreen ( void )
 		    }
 		    else
 		    {
-			Item_Held_In_Hand = ( -1 );
-			DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
-			
+
 			//--------------------
 			// A shield, when equipped, will push out any 2-handed weapon currently
 			// equipped from it's weapon slot...
 			//
 			if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 			{
-			    MakeHeldFloorItemOutOf ( & ( Me [ 0 ] . weapon_item ) ) ;
+                            EXTERN void update_all_primary_stats(int);
+                            int weapon_item_type = Me [ 0 ] . weapon_item . type;
+                            Me [ 0 ] . weapon_item . type = (-1);
+	                    update_all_primary_stats(0);
+		            if ( HeldItemUsageRequirementsMet(  ) )
+			   	{
+				Me [ 0 ] . weapon_item . type = weapon_item_type; 
+				Item_Held_In_Hand = ( -1 );
+				MakeHeldFloorItemOutOf( & ( Me [ 0 ] . weapon_item ) ) ;
+				DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
+				}
+			    else    {
+				append_new_game_message("Shield requirements not met: two-handed weapon bonus doesn't count.");
+                                Me [ 0 ] . weapon_item . type = weapon_item_type;
+				}
+			}
+			else 
+			{
+			Item_Held_In_Hand = ( -1 );
+			DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
 			}
 		    }
 		}
@@ -3915,6 +3947,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     int InvPos;
     point Inv_Loc = { -1 , -1 } ;
     int TargetItemIndex;
+    int foundplace = 0;
     
     //--------------------
     // In case we found an item on the floor, we remove it from the floor
