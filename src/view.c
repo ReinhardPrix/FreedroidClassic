@@ -4481,18 +4481,17 @@ void
 PutBlast (int Blast_number)
 {
     Blast CurBlast = &AllBlasts[Blast_number];
-	int phase = (int)floorf(CurBlast->phase);
-	if(phase >= 20)
-	        {
-	                GiveStandardErrorMessage ( __FUNCTION__  , "\
-	the phase of a blast is incorrect - this is a bug tied to gcc4, but fdRPG can handle it.",
-                                   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-	        return;
-	        }
     
     // If the blast is already long dead, we need not do anything else here
     if ( CurBlast -> type == INFOUT )
 	return;
+
+    int phase = (int)floorf(CurBlast->phase);
+    if(phase >= 20)
+        {
+	DeleteBlast(Blast_number);
+        return;
+        }
     
     // DebugPrintf( 0 , "\nBulletType before calculating phase : %d." , CurBullet->type );
     if ( CurBlast->type >= ALLBLASTTYPES ) 
