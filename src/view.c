@@ -4481,6 +4481,14 @@ void
 PutBlast (int Blast_number)
 {
     Blast CurBlast = &AllBlasts[Blast_number];
+	int phase = (int)floorf(CurBlast->phase);
+	if(phase >= 20)
+	        {
+	                GiveStandardErrorMessage ( __FUNCTION__  , "\
+	the phase of a blast is incorrect - this is a bug tied to gcc4, but fdRPG can handle it.",
+                                   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+	        return;
+	        }
     
     // If the blast is already long dead, we need not do anything else here
     if ( CurBlast -> type == INFOUT )
@@ -4495,7 +4503,7 @@ exist at all.",
 				   PLEASE_INFORM, IS_FATAL );
     };
     
-    blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ (int)floorf(CurBlast->phase) ] , 
+    blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ phase ] , 
 				     CurBlast -> pos . x , CurBlast -> pos . y  );
     
 };  // void PutBlast(int Blast_number)
