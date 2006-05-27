@@ -2051,6 +2051,10 @@ I will not be able to load or save games or configurations\n\
     InitPictures ( ) ;
     
     ShowStartupPercentage ( 100 ) ; 
+
+    if(GameConfig . screen_width == 640)
+	 GiveMouseAlertWindow ( "\nYou are playing in 640x480.\n\nWhile this resolution works correctly and will\ngive you a great gaming experience, its support is\nin the process of being dropped, therefore you will\nwant to consider using 800x600 or 1024x768.\n\nThank you.\n");
+
     
 }; // void InitFreedroid ( void ) 
 
