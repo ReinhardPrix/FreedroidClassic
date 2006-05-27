@@ -3393,7 +3393,7 @@ blit_tux ( int x , int y , int player_num )
     // Maybe the influencer has something to say :)
     // so let him say it..
     //
-    if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.All_Texts_Switch )
+    if ( ( x == (-1) ) && ( Me [ player_num ].TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.Influencer_Refresh_Text )
     {
 	SetCurrentFont( FPS_Display_BFont );
 	DisplayText( Me [ player_num ] . TextToBeDisplayed , UserCenter_x + 21 ,
