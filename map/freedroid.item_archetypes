@@ -645,7 +645,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
-Item as gun: ammo clip size=15
+Item as gun: ammo clip size=2
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -817,7 +817,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
-Item as gun: ammo clip size=15
+Item as gun: ammo clip size=2
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
@@ -2666,7 +2666,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="exterminator_ammunition"
-Item as gun: ammo clip size=15
+Item as gun: ammo clip size=2
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
