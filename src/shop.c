@@ -201,15 +201,8 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_SHORT_BOW; ListPointer++;
-	ListPointer->type = ITEM_HUNTERS_BOW; ListPointer++;
-	ListPointer->type = ITEM_EXTERMINATOR_AMMUNITION; ListPointer++;
-	ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
-	ListPointer->type = ITEM_EXTERMINATOR; ListPointer++;
 	ListPointer->type = ITEM_BUCKLER; ListPointer++;
-	ListPointer->type = ITEM_SMALL_SHIELD; ListPointer++;
 	ListPointer->type = ITEM_ARMOR_SIMPLE_JACKET; ListPointer++;
-	ListPointer->type = ITEM_ARMOR_REINFORCED_JACKET; ListPointer++;
 	ListPointer->type = ITEM_DAGGER; ListPointer++;
 	ListPointer->type = ITEM_CLUB; ListPointer++;
 	ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;
@@ -217,7 +210,6 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_STAFF; ListPointer++;
 	ListPointer->type = ITEM_MACE; ListPointer++;
 	ListPointer->type = ITEM_CAP; ListPointer++;
-	ListPointer->type = ITEM_SMALL_HELM; ListPointer++;
     }
     else if ( ShopCharacterCode == PERSON_DOC_MOORE )
     {
@@ -1663,7 +1655,7 @@ InitTradeWithCharacter( int CharacterCode )
 	switch ( ShopOrder . shop_command )
 	{
 	    case BUY_1_ITEM:
-		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , ShopOrder . number_selected ) ;
+		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , TRUE , ShopOrder . number_selected ) ;
 		break;
 	    case BUY_10_ITEMS:
 		TryToBuyItem( BuyPointerList[ ShopOrder . item_selected ] , FALSE , 10 ) ;
