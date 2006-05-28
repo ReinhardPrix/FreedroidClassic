@@ -630,7 +630,7 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
 Item description text="While this weapon is capable of firing quite powerful shots, beware of the exceptionally long loading times.  (Don't get swarmed by enemies with this weapon unless you got powerful armour!)"
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=3.000000
+Item as gun: recharging time=1.000000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=6
@@ -2651,7 +2651,7 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
 Item description text="This is one of the most powerful ranged weapons in the game."
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=0.350000
+Item as gun: recharging time=0.50000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=80
