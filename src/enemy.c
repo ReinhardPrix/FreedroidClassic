@@ -1827,8 +1827,18 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_pass_through_hit_bodies;
     
     // wait for as long as is usual for this weapon type until making the next shot
-    ThisRobot -> firewait = 
-	ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
+    ThisRobot -> ammo_left --;
+
+    if( ThisRobot -> ammo_left > 0 )
+	{
+	    ThisRobot -> firewait = 
+		ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
+	}
+    else 
+	{
+	ThisRobot -> ammo_left = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_ammo_clip_size ; 
+	ThisRobot -> firewait = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time ;
+	}
     
     
     //--------------------

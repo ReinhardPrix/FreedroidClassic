@@ -3102,6 +3102,7 @@ game data file with all droid type specifications.",
 	AllEnemys [ FreeAllEnemysPosition ] . pos . z = OurLevelNumber;
 	AllEnemys [ FreeAllEnemysPosition ] . Status = MOBILE ; // !OUT;
 	AllEnemys [ FreeAllEnemysPosition ] . on_death_drop_item_code = (-1) ;
+	AllEnemys [ FreeAllEnemysPosition ] . ammo_left = ItemMap [ Druidmap [ AllEnemys [ FreeAllEnemysPosition ] . type ] . weapon_item . type ] . item_gun_ammo_clip_size ;
 	if ( AllEnemys [ FreeAllEnemysPosition ] . is_friendly ) 
 	    AllEnemys [ FreeAllEnemysPosition ] . stick_to_waypoint_system_by_default = TRUE ;
 	else

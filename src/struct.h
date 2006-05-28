@@ -808,6 +808,7 @@ typedef struct
     float paralysation_duration_left;  // is this droid currently paralyzed and for how long will it stay this way?
     double pure_wait;		// time till the droid will start to move again
     double firewait;		// time this robot still takes until it's gun/weapon will be fully reloaded
+    int ammo_left; 		  // ammunition left in the charger
     
     int CompletelyFixed;          // set this flat to make the robot entirely immobile
     int follow_tux;               // does this robot try to follow tux via it's random movements?
