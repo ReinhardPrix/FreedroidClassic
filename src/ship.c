@@ -1098,6 +1098,13 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 		 ItemMap [ ShowItem->type ] . item_gun_recharging_time );
 	strcat ( InfoText , TextChunk );
     }
+
+    if ( ItemMap [ ShowItem->type ] . item_gun_reloading_time > 0 )
+    {
+	sprintf( TextChunk, "Time to reload ammo clip: %3.2f\n" , 
+		 ItemMap [ ShowItem->type ] . item_gun_reloading_time );
+	strcat ( InfoText , TextChunk );
+    }
     
     if ( ShowItem->ac_bonus > 0 )
     {

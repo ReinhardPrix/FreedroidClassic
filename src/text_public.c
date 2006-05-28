@@ -673,6 +673,12 @@ Common factor for all melee weapons damage values: 1.0\n\n\n" ) ;
 	//
 	sprintf ( linebuf , "Item as gun: recharging time=%f\n" , ItemMap [ i ] . item_gun_recharging_time ) ;
 	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
+
+	//--------------------
+	// We write out reloading time....
+	//
+	sprintf ( linebuf , "Item as gun: reloading time=%f\n" , ItemMap [ i ] . item_gun_reloading_time ) ;
+	fwrite ( linebuf , strlen( linebuf ), sizeof ( char ) , SaveGameFile );  
 	
 	//--------------------
 	// We write out bullet speed....
@@ -1863,6 +1869,10 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	    // Now we read in the recharging time this weapon will need
 	    ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
 				 &ItemMap[ItemIndex].item_gun_recharging_time , EndOfItemData );
+
+	    // Now we read in the reloading time this weapon will need
+	    ReadValueFromString( ItemPointer ,  "Item as gun: reloading time=" , "%lf" , 
+				 &ItemMap[ItemIndex].item_gun_reloading_time , EndOfItemData );
 	    
 	    // Now we read in the image type that should be generated for this bullet
 	    ReadValueFromString( ItemPointer ,  "Item as gun: bullet_image_type=" , "%d" , 
@@ -1941,6 +1951,7 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	    ItemMap [ ItemIndex ] . item_gun_bullet_pass_through_explosions = FALSE ;
 	    ItemMap [ ItemIndex ] . item_gun_bullet_pass_through_hit_bodies = FALSE ;
 	    ItemMap [ ItemIndex ] . item_gun_recharging_time = 0 ;
+	    ItemMap [ ItemIndex ] . item_gun_reloading_time = 0 ;
 	    ItemMap [ ItemIndex ] . item_gun_bullet_image_type = 0 ; 
 	    ItemMap [ ItemIndex ] . item_gun_bullet_lifetime = 0 ;
 	    ItemMap [ ItemIndex ] . item_gun_use_ammunition = 0 ;

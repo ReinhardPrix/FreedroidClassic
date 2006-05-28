@@ -427,6 +427,7 @@ typedef struct
     // How good is the item as weapon???
     int    item_gun_is_motion_class;	 // if this is set, then you can't use a shield together with the weapon
     double item_gun_recharging_time;       // time until the next shot can be made, measures in seconds
+    double item_gun_reloading_time;       // time needed to put a new charger
     int    item_gun_bullet_image_type;       // which type of image to use for displaying this bullet
     int    item_gun_oneshotonly;	        // if this is set, there is only 1 shot 
     double item_gun_speed; // how fast should a bullet move straightforward?

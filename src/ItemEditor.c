@@ -91,6 +91,9 @@ GtkWidget *item_gun_damage_modifier_entry;
 GtkObject *item_gun_damage_modifier_adjustment;
 GtkWidget *item_gun_recharging_time_entry;
 GtkObject *item_gun_recharging_time_adjustment;
+GtkWidget *item_gun_reloading_time_entry;
+GtkObject *item_gun_reloading_time_adjustment;
+GtkObject *item_gun_reloading_time_adjustment;
 GtkWidget *item_gun_speed_entry;
 GtkObject *item_gun_speed_adjustment;
 GtkWidget *item_gun_ammo_clip_size_entry;
@@ -860,8 +863,9 @@ edit_interface_ok_button_pressed ( GtkWidget *w, int *item_index_pointer )
   //
   ItemMap [ item_index ] . base_item_gun_damage = (int) GTK_ADJUSTMENT ( base_item_gun_damage_adjustment ) -> value ;
   ItemMap [ item_index ] . item_gun_damage_modifier = (int) GTK_ADJUSTMENT ( item_gun_damage_modifier_adjustment ) -> value ;
+  ItemMap [ item_index ] . item_gun_speed = (double) GTK_ADJUSTMENT ( item_gun_speed_adjustment ) -> value ; 
   ItemMap [ item_index ] . item_gun_recharging_time = (double) GTK_ADJUSTMENT ( item_gun_recharging_time_adjustment ) -> value ;
-  ItemMap [ item_index ] . item_gun_speed = (double) GTK_ADJUSTMENT ( item_gun_speed_adjustment ) -> value ;
+  ItemMap [ item_index ] . item_gun_reloading_time = (double) GTK_ADJUSTMENT ( item_gun_reloading_time_adjustment ) -> value ;
   ItemMap [ item_index ] . item_gun_ammo_clip_size = (int) GTK_ADJUSTMENT ( item_gun_ammo_clip_size_adjustment ) -> value ;
 
   //--------------------
@@ -1742,6 +1746,7 @@ gui_edit_dialog_set_up_second_page ( GtkWidget *notebook1 , int item_index )
   GtkWidget *base_item_gun_damage_hbox;
   GtkWidget *item_gun_damage_modifier_hbox;
   GtkWidget *item_gun_recharging_time_hbox;
+  GtkWidget *item_gun_reloading_time_hbox;
   GtkWidget *item_gun_ammo_clip_size_hbox;
   GtkWidget *item_gun_speed_hbox;
   GtkWidget *ammo_type_hbox;
@@ -1878,6 +1883,33 @@ gui_edit_dialog_set_up_second_page ( GtkWidget *notebook1 , int item_index )
 
   gtk_adjustment_set_value ( GTK_ADJUSTMENT ( item_gun_recharging_time_adjustment ) , (gfloat) ItemMap [ item_index ] . item_gun_recharging_time );
 
+  item_gun_reloading_time_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_widget_ref ( item_gun_reloading_time_hbox );
+  gtk_object_set_data_full ( GTK_OBJECT ( window ) , "item_gun_reloading_time_hbox" , item_gun_reloading_time_hbox , (GtkDestroyNotify) gtk_widget_unref );
+  gtk_widget_show ( item_gun_reloading_time_hbox );
+  gtk_container_add ( GTK_CONTAINER ( vbox2 ), item_gun_reloading_time_hbox );
+
+  //--------------------
+  // We add the text to the left of the item_gun_recharging_time requirement scale...
+  //
+  label = gtk_label_new ("Reloading time (new ammo clip):");
+  gtk_widget_ref (label);
+  gtk_object_set_data_full (GTK_OBJECT (window), "label", label, (GtkDestroyNotify) gtk_widget_unref);
+  gtk_widget_show (label);
+  gtk_box_pack_start ( GTK_BOX ( item_gun_reloading_time_hbox ), label , FALSE, FALSE, 0);
+
+  // Reuse the same adjustment 
+  item_gun_reloading_time_adjustment = gtk_adjustment_new ( 0.1, -1.0, 5.0, 0.001, 0.001 , 0.003 );
+  hscale = gtk_hscale_new ( GTK_ADJUSTMENT ( item_gun_reloading_time_adjustment ) );
+  gtk_widget_set_usize ( GTK_WIDGET ( hscale ) , 200 , 30 );
+  gtk_range_set_update_policy ( GTK_RANGE ( hscale ) , GTK_UPDATE_CONTINUOUS );
+  gtk_scale_set_digits ( GTK_SCALE ( hscale ) , 3 );
+  gtk_scale_set_value_pos ( GTK_SCALE ( hscale ) , GTK_POS_TOP);
+  gtk_scale_set_draw_value ( GTK_SCALE ( hscale ) , TRUE);
+  gtk_box_pack_start ( GTK_BOX ( item_gun_reloading_time_hbox ) , hscale, TRUE, TRUE, 0);
+  gtk_widget_show (hscale);
+
+  gtk_adjustment_set_value ( GTK_ADJUSTMENT ( item_gun_reloading_time_adjustment ) , (gfloat) ItemMap [ item_index ] . item_gun_reloading_time );
 
   //----------------------------------------------------------------------
   //----------------------------------------------------------------------
@@ -3264,6 +3296,9 @@ item_index_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
 
   // time until the next shot can be made, measures in seconds
   ItemMap [ Number_Of_Item_Types ] . item_gun_recharging_time = 0.5 ;       
+
+  // time needed to put a new ammo clip
+  ItemMap [ Number_Of_Item_Types ] . item_gun_reloading_time = 2 ;       
 
   // which type of image to use for displaying this bullet
   ItemMap [ Number_Of_Item_Types ] . item_gun_bullet_image_type = 0 ;       
