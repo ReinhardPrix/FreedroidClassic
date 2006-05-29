@@ -1,4 +1,4 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
  *   Copyright (c) 1994, 2003, 2004 Johannes Prix
@@ -55,7 +55,6 @@ New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=83  PositionY=249  
 ChangeOption=0 ChangeToValue=0
-ChangeOption=4 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
@@ -64,16 +63,27 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="I want a weapon."
+New Option Nr=1  OptionText="I want to become a hacker."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=298  PositionY=117  
-Subtitle="Take this gun.  But use it wisely."
+PositionX=278  PositionY=93  
+Subtitle="Your desire for information amuses me. Your wish shall be granted. I will teach you how to hack."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You must know that hacking is an art. It is easy to chop your enemy to bits with an axe or shred it to atoms with a grenade... But hacking requires skill."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Look at this terminal... I am connected to a remote system... A fool would just launch a thousand attacks, but a skilled intruder would stop and think."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You must know when to hack and when not to hack. You must attack when the enemy is unprepared for you. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now watch... Observe carefully... See how I enter the system... Yes. Watch the connection glowing, burining like a bright star..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="...only to die seconds after, as the system far away collapses under it's own weight... It is done."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="That is all I want to show you for now. Maybe later I will teach you something else."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
-ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
-DoSomethingExtra="GiveItem:13"
+DoSomethingExtra="IncreaseHackingSkill"
 DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -81,12 +91,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=2  OptionText="I don't want any reward.  Just gratitude."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=347  PositionY=218  
+PositionX=436  PositionY=250  
 Subtitle="Of course you can have that.  There, I'm most grateful to you.  That should do I think."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
-ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -95,29 +104,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=3  OptionText="I want money."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=278  PositionY=326  
-Subtitle="Here, take these 400 bucks.  That should be just."
+PositionX=277  PositionY=405  
+Subtitle="Here, take these 250 bucks.  That should be just."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
-ChangeOption=4 ChangeToValue=0
-DoSomethingExtra="AddGold:400"
-DoSomethingExtra="PlantCookie:kevin_reward1_given:"
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=4  OptionText="I want magic."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=203  PositionY=96  
-Subtitle="Here, take this magic pill.  It should help your magic skill develop."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=4 ChangeToValue=0
-ChangeOption=3 ChangeToValue=0
-ChangeOption=2 ChangeToValue=0
-ChangeOption=1 ChangeToValue=0
-DoSomethingExtra="GiveItem:78"
+DoSomethingExtra="AddGold:250"
 DoSomethingExtra="PlantCookie:kevin_reward1_given:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -125,11 +118,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=99  OptionText="[BACK]"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=107  PositionY=403  
+PositionX=83  PositionY=405  
 ChangeOption=99 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
+
 
