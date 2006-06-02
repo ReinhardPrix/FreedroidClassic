@@ -1,8 +1,7 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
  *
  *
  *  This file is part of Freedroid
@@ -45,7 +44,7 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=67  PositionY=238  
+PositionX=202  PositionY=109  
 Subtitle="Hey you!  Linarian!  What do you want here?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
@@ -57,10 +56,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Just taking a look around."
+New Option Nr=1  OptionText=" Just taking a look around."
 OptionSample="Guards/Tux_just_taking_a_look_around.wav"
-PositionX=255  PositionY=99  
-Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
+PositionX=33  PositionY=33  
+Subtitle="Oh, great. Another curious one."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="About a week ago I let in a stranger who also said he was just taking a look around. I never saw him again."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="On that day all our computers went insane, twenty bags of food rations vanished from our storage and one of our bots was stolen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Linarian, I will let you in. Do something stupid, and you aren't coming out. Got it? Good."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -70,10 +75,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="I'd like to get into town."
+New Option Nr=2  OptionText=" I'd like to get into town."
 OptionSample="Guards/Tux_Id_like_to_get_into_town.wav"
-PositionX=260  PositionY=296  
-Subtitle="Ok!  But don't make any trouble!  Or you'll be in trouble!"
+PositionX=32  PositionY=383  
+Subtitle="Funny, exactly the same could be said about all of the crazy bots out there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'll let you in, but be warned: one false move and we all have flightless waterfowl for dinner. I hope I am making myself clear."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -83,10 +90,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="I'm here to assassinate your leader and you won't stop me!"
+New Option Nr=3  OptionText=" I'm here to assassinate your leader and you won't stop me!"
 OptionSample="Guards/Tux_Im_here_to_assassinate.wav"
-PositionX=184  PositionY=196  
-Subtitle="Ok Linarian!  You wanted it that way!  And I don't like Penguins anyway!"
+PositionX=369  PositionY=382  
+Subtitle="Ok, Linarian! You asked for it! I don't like penguins anyway!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Open fire!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -98,12 +107,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be going then."
+New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Guards/Tux_Ill_be_going_then.wav"
-PositionX=395  PositionY=219  
+PositionX=369  PositionY=32  
 Subtitle="Mhmmm."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
