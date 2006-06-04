@@ -108,7 +108,7 @@ DetectItemsSpell ( void )
 
       ClearDetectedItemList( 0 ); // 0 is the playernum
 
-      // FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
+      // FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
       for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
 	{
 	  if ( AutomapLevel->ItemList[i].type != (-1) )
@@ -145,7 +145,7 @@ ParalyzeBoltSpell ( gps BoltSource )
   {
       Me[0].mana -= SpellCost;
       
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
       
       Play_Spell_ForceToEnergy_Sound( );
       
@@ -174,7 +174,7 @@ FireyBoltSpell ( gps BoltSource )
     {
       Me[0].mana -= SpellCost;
 
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -203,7 +203,7 @@ ColdBoltSpell ( gps BoltSource )
     {
       Me[0].mana -= SpellCost;
 
-      FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
@@ -232,8 +232,8 @@ PoisonBoltSpell ( gps BoltSource )
     {
 	Me[0].mana -= SpellCost;
 	
-	//FireTuxRangedWeaponRaw ( 0 , ITEM_COMPOSITE_BOW ) ;
-	FireTuxRangedWeaponRaw ( 0 , ITEM_SHORT_BOW , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+	//FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_RIFLE ) ;
+	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 	
 	Play_Spell_ForceToEnergy_Sound( );
 	

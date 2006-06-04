@@ -986,7 +986,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_SHORT_BOW ;
+		    drop_item_type = ITEM_LASER_PISTOL ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
@@ -1062,7 +1062,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity = 1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_HUNTERS_BOW ;
+		    drop_item_type = ITEM_TWIN_LASER ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
@@ -1134,7 +1134,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_LONG_BOW ;
+		    drop_item_type = ITEM_ADVANCED_SINGLE_LASER ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 2:
@@ -1210,7 +1210,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
-		    drop_item_type = ITEM_COMPOSITE_BOW ;
+		    drop_item_type = ITEM_LASER_RIFLE ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:

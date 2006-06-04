@@ -187,7 +187,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 	    Me [ PlayerNum ] .base_magic = 20;
 	    
 	    Me [ PlayerNum ] .drive_item.type = ITEM_ANTIGRAV_POD;
-	    Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_SHORT_BOW;
+	    Me [ PlayerNum ] .Inventory[ 0 ].type = ITEM_LASER_PISTOL;
 	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.x = 0;
 	    Me [ PlayerNum ] .Inventory[ 0 ].inventory_position.y = 0;
 	    Me [ PlayerNum ] .Inventory[ 1 ].type = ITEM_SMALL_HEALTH_POTION;

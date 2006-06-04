@@ -3352,7 +3352,7 @@ WorkLevelGuns ( int PlayerNum )
   // The variables for the gun.
   //
   int j = 0;
-  int weapon_item_type = ITEM_SHORT_BOW ;
+  int weapon_item_type = ITEM_LASER_PISTOL ;
   Bullet CurBullet = NULL;  // the bullet we're currentl dealing with
   int bullet_image_type = ItemMap[ weapon_item_type ].item_gun_bullet_image_type;   // which gun do we have ? 
   double BulletSpeed = ItemMap[ weapon_item_type ].item_gun_speed;
