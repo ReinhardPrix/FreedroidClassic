@@ -2966,8 +2966,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="ammo_plasma_bullet/inv_image.png"
-inventory_size_y=1
-inventory_size_x=1
+inventory_size_y=2
+inventory_size_x=2
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1
 Item description text="Plasma crystal load. This is the most common way of loading a plasma weapon."
@@ -4732,7 +4732,7 @@ Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=0.600000
+Item as gun: recharging time=6.00000
 Item as gun: reloading time=0.000000
 Item as gun: speed of bullets=0.010000
 Item as gun: angle change of bullets=720.000000
