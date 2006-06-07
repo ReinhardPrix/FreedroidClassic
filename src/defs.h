@@ -645,6 +645,8 @@ enum
     QUEST_BROWSER_ITEM_LONG_BUTTON,
 
     TAKEOVER_HELP_BUTTON,
+	
+    WEAPON_MODE_BUTTON, 
 
     //--------------------
     // Please leave this here as the last entry, since it conveniently and

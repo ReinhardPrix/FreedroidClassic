@@ -259,6 +259,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/takeover_help_button.png"         , { 78 , 23 , 153 ,  38 } , FALSE , FALSE } ,
 
+    // ------------------
+    // This button is for changing the current weapon mode/reloading
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"			    , { CURRENT_WEAPON_RECT_X, 400, CURRENT_WEAPON_RECT_W, CURRENT_WEAPON_RECT_H } , TRUE , FALSE } ,
+
   }; // mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 
 //--------------------

@@ -3003,7 +3003,8 @@ ButtonPressWasNotMeantAsFire( player_num )
   if ( ServerThinksAxisIsActive ( player_num ) && 
        ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	 MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
-	 MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ) )
+	 MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) || 
+	 MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  )) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;
@@ -3308,10 +3309,14 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 
 void TuxReloadWeapon()
 {
-int count = CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 );
-if(count > ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size )
-    count =  ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size;
-if(!count)
+if(ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size == Me [ 0 ] . weapon_item . ammo_clip)
+	return ; //clip full, return without reloading 
+
+int count = CountItemtypeInInventory ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_use_ammunition , 0 ); 
+if(count > ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size - Me [ 0 ] . weapon_item . ammo_clip )
+    count =  ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size - Me [ 0 ] . weapon_item . ammo_clip;
+
+if(!count) //no ammo found, tell the player that he "has it in the baba"
         {
         No_Ammo_Sound( );
         No_Ammo_Sound( );

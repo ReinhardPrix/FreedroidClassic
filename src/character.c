@@ -322,6 +322,13 @@ DisplayButtons( void )
 	    quest_browser_interface ( );
 	}
     }
+    else if ( MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( axis_is_active && !WasPressed )
+	{
+	TuxReloadWeapon ( );
+	}
+    }
     
     WasPressed = axis_is_active;
     
