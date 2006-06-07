@@ -756,6 +756,7 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
 {
     static int IPressed_LastFrame;
     static int CPressed_LastFrame;
+    static int RPressed_LastFrame;
     static int SPressed_LastFrame;
 
     //--------------------
