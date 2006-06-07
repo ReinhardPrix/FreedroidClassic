@@ -806,6 +806,22 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
     {
 	CPressed_LastFrame = FALSE;
     }
+
+    //--------------------
+    // We assign the R key to weapon reloading
+    //
+    if ( RPressed() )
+    {
+	if ( !RPressed_LastFrame ) 
+	{
+	    TuxReloadWeapon();
+	}
+	RPressed_LastFrame = TRUE;
+    }
+    else
+    {
+	RPressed_LastFrame = FALSE;
+    }
     
 }; // void handle_cha_ski_inv_screen_on_off_keys ( void )
 
