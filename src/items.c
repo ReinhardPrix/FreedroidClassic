@@ -979,75 +979,71 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     switch ( MyRandom ( TreasureChestRange ) )
     {
 	case 0:
-	    switch ( MyRandom ( 18 ) )
+	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRACKS ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_LASER_PISTOL ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 2:
-		case 3:
 		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
+		case 3:
 		case 4:
-		case 5:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 6:
+		case 5:
 		    drop_item_type = ITEM_DAGGER ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 7:
+		case 6:
 		    drop_item_type = ITEM_CAP ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 8:
+		case 7:
 		    drop_item_type = ITEM_STAFF ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 9:
+		case 8:
 		    drop_item_type = ITEM_ARMOR_SIMPLE_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 10:
+		case 9:
 		    drop_item_type = ITEM_PLASMA_AMMUNITION ;
 		    drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
 		    break;
-		case 11:
+		case 10:
 		    drop_item_type = ITEM_LASER_AMMUNITION ;
 		    drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
 		    break;
-		case 12:
+		case 11:
 		    drop_item_type = ITEM_CLUB ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 13:
+		case 12:
 		    drop_item_type = ITEM_SHOES ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 14:
+		case 13:
 		    drop_item_type = ITEM_SCRIPT_OF_IDENTIFY ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 15:
+		case 14:
 		    drop_item_type = ITEM_BLUE_ENERGY_DRINK ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 16:
+		case 15:
 		    drop_item_type = ITEM_BUCKLER ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 17:
+		case 16:
 		    drop_item_type = ITEM_SHORT_SWORD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 18:
+		case 17:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1055,71 +1051,67 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 1:
-	    switch ( MyRandom ( 17 ) )
+	    switch ( MyRandom ( 16 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_WHEELS ;
 		    drop_item_multiplicity = 1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_TWIN_LASER ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 2:
-		case 3:
 		    drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
+		case 3:
 		case 4:
-		case 5:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 6:
+		case 5:
 		    drop_item_type = ITEM_SMALL_HELM ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 7:
+		case 6:
 		    drop_item_type = ITEM_ARMOR_REINFORCED_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 8:
+		case 7:
 		    drop_item_type = ITEM_PLASMA_AMMUNITION ;
 		    drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 		    break;
-		case 9:
+		case 8:
 		    drop_item_type = ITEM_LASER_AMMUNITION ;
 		    drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 		    break;
-		case 10:
+		case 9:
 		    drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 		    drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 		    break;
-		case 11:
+		case 10:
 		    drop_item_type = ITEM_MACE ;
 		    drop_item_multiplicity = 1 ;
 		    break;
-		case 12:
+		case 11:
 		    drop_item_type = ITEM_LIGHT_BOOTS ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 13:
+		case 12:
 		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 14:
+		case 13:
 		    drop_item_type = ITEM_SCRIPT_OF_TELEPORT_HOME ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 15:
+		case 14:
 		    drop_item_type = ITEM_SMALL_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 16:
+		case 15:
 		    drop_item_type = ITEM_SCIMITAR ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 17:
+		case 16:
 		default:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1127,79 +1119,75 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 2:
-	    switch ( MyRandom ( 19 ) )
+	    switch ( MyRandom ( 18 ) )
 	    {
 		case 0:
 		    drop_item_type = ITEM_TRIPEDAL ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:
-		    drop_item_type = ITEM_ADVANCED_SINGLE_LASER ;
-		    drop_item_multiplicity =  1 ;
-		    break;
 		case 2:
-		case 3:
 		    drop_item_type = ITEM_FULL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
+		case 3:
 		case 4:
-		case 5:
 		    drop_item_type = ITEM_FULL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 6:
+		case 5:
 		    drop_item_type = ITEM_IRON_HAT ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 7:
+		case 6:
 		    drop_item_type = ITEM_ARMOR_PROTECTIVE_JACKET ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 8:
+		case 7:
 		    drop_item_type = ITEM_STANDARD_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 9:
+		case 8:
 		    drop_item_type = ITEM_PLASMA_AMMUNITION ;
 		    drop_item_multiplicity =  20 + MyRandom ( 9 );
 		    break;
-		case 10:
+		case 9:
 		    drop_item_type = ITEM_LASER_AMMUNITION ;
 		    drop_item_multiplicity =  20 + MyRandom ( 9 ) ;
 		    break;
-		case 11:
+		case 10:
 		    drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 		    drop_item_multiplicity =  20 + MyRandom ( 9 ) ;
 		    break;
-		case 12:
+		case 11:
 		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 13:
+		case 12:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 14:
+		case 13:
 		    drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 15:
+		case 14:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 16:
+		case 15:
 		    drop_item_type = ITEM_BOOTS ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 17:
+		case 16:
 		    drop_item_type = ITEM_SMALL_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 18:
+		case 17:
 		    drop_item_type = ITEM_SABER ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 19:
+		case 18:
 		default:
 		    drop_item_type = ITEM_RUNNING_POWER_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -1207,71 +1195,67 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    } // inner switch
 	    break;
 	case 3:
-	    switch ( MyRandom ( 17 ) )
+	    switch ( MyRandom ( 16 ) )
 	    {
 		case 0:
-		    drop_item_type = ITEM_LASER_RIFLE ;
-		    drop_item_multiplicity =  1 ;
-		    break;
-		case 1:
 		    drop_item_type = ITEM_ANTIGRAV_POD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
+		case 1:
 		case 2:
-		case 3:
 		    drop_item_type = ITEM_FULL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
+		case 3:
 		case 4:
-		case 5:
 		    drop_item_type = ITEM_FULL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 6:
+		case 5:
 		    drop_item_type = ITEM_IRON_HELM ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 7:
+		case 6:
 		    drop_item_type = ITEM_REINFORCED_BOOTS ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 8:
+		case 7:
 		    drop_item_type = ITEM_MEDIUM_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 9:
+		case 8:
 		    drop_item_type = ITEM_PLASMA_AMMUNITION ;
 		    drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 		    break;
-		case 10:
+		case 9:
 		    drop_item_type = ITEM_LASER_AMMUNITION ;
 		    drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 		    break;
-		case 11:
+		case 10:
 		    drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
 		    drop_item_multiplicity = 30 + MyRandom ( 9 ) ;
 		    break;
-		case 12:
+		case 11:
 		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 13:
+		case 12:
 		    drop_item_type = ITEM_SMALL_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 14:
+		case 13:
 		    drop_item_type = ITEM_MEDIUM_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 15:
+		case 14:
 		    drop_item_type = ITEM_SMALL_SHIELD ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 16:
+		case 15:
 		    drop_item_type = ITEM_FALCHION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 17:
+		case 16:
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
@@ -3048,19 +3032,19 @@ handle_player_identification_command( int player_num )
 	    }
 	    else
 	    {
-		if ( Me [ 0 ] . mana >= SpellCost )
-		{
-		    Me [ 0 ] . mana -= SpellCost;
+//		if ( Me [ 0 ] . mana >= SpellCost )
+//		{
+//		    Me [ 0 ] . mana -= SpellCost;
 		    Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
 		    Play_Spell_ForceToEnergy_Sound( );
 		    Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
-		}
-		else
-		{
-		    Me [ 0 ] . TextVisibleTime = 0;
-		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-		    Not_Enough_Mana_Sound(  );
-		}
+//		}
+//		else
+//		{
+//		    Me [ 0 ] . TextVisibleTime = 0;
+//		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
+//		    Not_Enough_Mana_Sound(  );
+//		}
 	    }
 	}
     }
