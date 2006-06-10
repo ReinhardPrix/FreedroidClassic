@@ -51,7 +51,7 @@ jump target west: 10
 use underground lighting: 0
 Name of this level=Town
 Comment of the Influencer on entering this level="This must be the Old Town.
-Name of background song for this level=Bleostrada.ogg
+Name of background song for this level=town.ogg
 beginning_of_map
   4   4   4   4   4   4   4  21  15  15  15  15  23   7   7   7   7   7   7   7  25  37  23   7  34   7   7   7   7   7   9   6   6   6   9   6   6   9   6   9   6  24  16  16  16   7   7   7   7   8   8   7   8   8   8   8   8   8   8   8   8   8   8   8   7   7   7   7   7   7   7  24  20   4  28   4   4   4   4  29   4   4  28   4   4  11   7   7   7   7 
   4   4   4   4   4   4   4   4   4   4   4   4  21  15  23   7   7   7   7  35   7  25  19  23   7   7   7   7   7  24  15  15  15  15  16  15  15  16  15  16  15  20  29   4   4  16  16  16  16   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7   7  24  16  16  16  16  16  20  29   4   4   4   4   4   4   4   4  27   4   4   4  21  15  23  10   6 
