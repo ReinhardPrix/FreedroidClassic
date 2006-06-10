@@ -2497,8 +2497,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     
     StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
 
-    StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
-    StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
+/* What is the point in normalizing ??    StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+    StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;*/
     
     //--------------------
     // Now we have assembled the simplest of ideas:  Try to move directly
