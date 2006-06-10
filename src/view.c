@@ -3632,7 +3632,7 @@ set_rotation_index_for_this_robot ( enemy* ThisRobot )
     }
     else
     {
-	if ( ThisRobot -> last_phase_change >= 0.33 )
+	if ( ThisRobot -> last_phase_change >= 0.8 )
 	{
 	    ThisRobot -> last_phase_change = 0.0 ;
 	    ThisRobot -> previous_phase = RotationIndex ;
