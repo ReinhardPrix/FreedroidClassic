@@ -1,0 +1,119 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *
+ *   Copyright (c) 1994, 2003, 2004 Johannes Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+----------------------------------------------------------------------
+
+This file was generated using the FreedroidRPG dialog editor.
+If you have questions concerning FreedroidRPG, please send mail to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+
+
+You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
+This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
+
+
+
+END OF AUTORS NOTES
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=491  PositionY=265  
+Subtitle="You are Tux, aren't you..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The hero..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Yes, its me."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=491  PositionY=354  
+Subtitle="I thought so. My grandfather used to tell me stories about you. He said you would come here in a time of despair."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And here you are."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I hope your arrival changes the tide of this war..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Tux, if you ever find out who started the Great Assault... KICK THEIR ASS FROM LILY STONE!!!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText=" It's not important who am I."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=491  PositionY=166  
+Subtitle="If you want to remain a stranger, I will respect your wishes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="So be it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=1 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" Ha ha ha, You fell for it! You get nothing from me! Hahahahah!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=583  PositionY=265  
+Subtitle="You... monster..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="No one makes fun of Lily Stone's family store!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Say your prayers, you oversized duck!!!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
+DoSomethingExtra="BreakOffAndBecomeHostile"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="BACK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=394  PositionY=266  
+ChangeOption=99 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
+
