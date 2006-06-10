@@ -3005,7 +3005,7 @@ ProcessAttackStateMachine ( int enemynum )
     // More for debugging purposes, we print out the current state of the
     // robot as his in-game text.
     //
-    // enemy_say_current_state_on_screen ( ThisRobot );
+    enemy_say_current_state_on_screen ( ThisRobot );
 
     //--------------------
     // for debugging purposes, we check whether the current robot is maybe
