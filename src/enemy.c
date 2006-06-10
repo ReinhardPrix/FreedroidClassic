@@ -2497,8 +2497,16 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     
     StepVectorLen = sqrt ( ( StepVector . x ) * ( StepVector . x ) + ( StepVector . y ) * ( StepVector . y ) );
 
-    StepVector . x /= ( DirectionSign * StepVectorLen ) ;
-    StepVector . y /= ( DirectionSign * StepVectorLen ) ;
+    if ( ThisRobot -> attack_target_type != ATTACK_TARGET_IS_PLAYER )
+    {
+	StepVector . x /= ( DirectionSign * 2 * StepVectorLen ) ;
+	StepVector . y /= ( DirectionSign * 2 * StepVectorLen ) ;
+    }
+    else
+    {
+        StepVector . x /= ( DirectionSign * StepVectorLen ) ;
+        StepVector . y /= ( DirectionSign * StepVectorLen ) ;
+    }
     
     //--------------------
     // Now we have assembled the simplest of ideas:  Try to move directly
