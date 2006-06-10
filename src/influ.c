@@ -502,6 +502,7 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
             //--------------------
             // So no ammunition... We should say so and reload...
             //
+	      append_new_game_message("Clip empty, reloading...");
 	      TuxReloadWeapon();
               return ;
 
@@ -3320,6 +3321,7 @@ if(!count) //no ammo found, tell the player that he "has it in the baba"
         {
         No_Ammo_Sound( );
         No_Ammo_Sound( );
+	append_new_game_message("No more ammunition !");
 	return;
         }
 int i;
@@ -3329,6 +3331,7 @@ Me [ 0 ] . weapon_item . ammo_clip += count;
 Me [ 0 ] . busy_time = ItemMap[ Me [ 0 ] . weapon_item . type ].item_gun_reloading_time;
 Me [ 0 ] . busy_time *= RangedRechargeMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
 Me [ 0 ] . busy_type = WEAPON_RELOAD;
+append_new_game_message("Weapon reloaded");
 }
 
 
