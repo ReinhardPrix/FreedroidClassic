@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=478  PositionY=77  
-Subtitle="But you already know how to extract these parts from dead droids !"
+Subtitle="But you already know how to extract these parts from dead droids!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Remember that it's not always possible to extract a part of a droid, because it tends to get hurt when the droid dies."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -130,7 +130,7 @@ New Option Nr=8  OptionText="Extract Tachyon Condensators (costs 1 training poin
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=430  PositionY=474  
 ChangeOption=8 ChangeToValue=0
-OnCondition="CookieIsPlanted:5:" JumpToOption=1 ElseGoto=23
+OnCondition="CookieIsPlanted:know_extract5:" JumpToOption=1 ElseGoto=23
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -147,7 +147,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=595  PositionY=93  
-Subtitle="You don't have enough bucks on you!  Come back when you have the money."
+Subtitle="You don't have enough bucks on you! Come back when you have the money."
 ReplySample="Darwin/DAR_Money2.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -183,9 +183,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=713  PositionY=171  
-Subtitle="You don't have enough experience.  I can't teach you anything more right now."
+Subtitle="You don't have enough experience. I can't teach you anything more right now."
 ReplySample="Darwin/DAR_Exp2.wav"
-Subtitle="First collect more experience.  Then we can go on."
+Subtitle="First collect more experience. Then we can go on."
 ReplySample="Darwin/DAR_Collect_More2.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -229,7 +229,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=690  PositionY=369  
 Subtitle="The ability to extract superconductors is not so complicated."
 ReplySample="Darwin/DAR_Superconduct2.wav"
-Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+Subtitle="Just take a look at this sketch. You'll see how to extract the parts you desire right here."
 ReplySample="Darwin/DAR_Sketch2.wav"
 Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
 ReplySample="Darwin/DAR_Cantfail2.wav"
@@ -246,7 +246,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=682  PositionY=321  
 Subtitle="The ability to extract antimatter-matter converters is not so complicated."
 ReplySample="Darwin/DAR_Matter_Anti2.wav"
-Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+Subtitle="Just take a look at this sketch. You'll see how to extract the parts you desire right here."
 ReplySample="Darwin/DAR_Sketch2.wav"
 Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
 ReplySample="Darwin/DAR_Cantfail2.wav"
@@ -264,7 +264,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=686  PositionY=264  
 Subtitle="The ability to extract entropy inverters is not so complicated."
 ReplySample="Darwin/DAR_Entropy2.wav"
-Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+Subtitle="Just take a look at this sketch. You'll see how to extract the parts you desire right here."
 ReplySample="Darwin/DAR_Sketch2.wav"
 Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
 ReplySample="Darwin/DAR_Cantfail2.wav"
@@ -282,7 +282,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=682  PositionY=469  
 Subtitle="The ability to extract tachyon condensators is not so complicated."
 ReplySample="Darwin/DAR_Tachyon2.wav"
-Subtitle="Just take a look at this sketch.  You'll see how to extract the parts you desire right here."
+Subtitle="Just take a look at this sketch. You'll see how to extract the parts you desire right here."
 ReplySample="Darwin/DAR_Sketch2.wav"
 Subtitle="Now that you know how to do it, you absolutely can't fail at it any more."
 ReplySample="Darwin/DAR_Cantfail2.wav"
