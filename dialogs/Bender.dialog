@@ -40,10 +40,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hello!  I'm new here."
+New Option Nr=0  OptionText=" Hello! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=55  PositionY=267  
-Subtitle=" Hello.  I'm Bender, the dead man of this camp. "
+Subtitle="Hello. I'm Bender, the dead man of this camp."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
@@ -51,12 +51,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" What's wrong?  You look in pretty good shape for a dead man. "
-OptionSample="Tux_Hi_Im_New_0.wav"
+New Option Nr=1  OptionText=" What's wrong? You look in pretty good shape for a dead man."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=133  PositionY=269  
-Subtitle="Sure.  I'm the strongest man within all of the colony.  That's cause I took all the strength pills."
+Subtitle="Yeah. I'm the strongest man within all of the world. That's cause I took ALL of the strength pills."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But yet I might soon be dead.  The doc has warned me, but I didn't listen.  Too bad.  I guess I was stupid."
+Subtitle="But yet I might be dead soon. The doc warned me, but I didn't listen. Damn."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -65,12 +65,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="You took too many strength pills and now you're sick?"
+New Option Nr=2  OptionText=" You took too many strength pills and now you're sick?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=207  PositionY=231  
-Subtitle="No.  The strength pills were fine.  They made me so strong.  The doc confirmed that."
+Subtitle="Nah. The strength pills were fine. They made me strong. The doc said so."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was the brain enlargement pills.  They did me no good."
+Subtitle="It was the brain enlargement pills. They did me no good, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -80,10 +80,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="What did make you so sick?"
+New Option Nr=3  OptionText=" What did make you so sick?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=201  PositionY=327  
-Subtitle="It was the brain enlargement pills.  They did do me no good."
+Subtitle="It was the brain enlargement pills. They did do me no good, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -93,12 +93,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Brain enlargement pills?  Sounds ricidulous!"
+New Option Nr=4  OptionText=" Brain enlargement pills? Sounds ridiculous!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=270  PositionY=198  
-Subtitle="You know, I got those offers everybody gets."
+Subtitle="You know man, I got those offers everybody gets."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="They offer some brain enlargement pills to enhance brain performance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="'Enlarg3 your brain! Bu.y pi11s! Che4p!!11!!!'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And everybody in the camp said I was dumb, which is not true."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -111,24 +113,24 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="But if you aren't dumb, why the brain enlargement pills?"
+New Option Nr=5  OptionText=" But if you aren't dumb, why the brain enlargement pills?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=345  PositionY=250  
-Subtitle="Because they said I was dumb.  So I had to do something about it, right?"
+Subtitle="Because they said I was dumb. So I had to do something about it, eh?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Isn't there some doctor in town who could cure you?"
+New Option Nr=6  OptionText=" Isn't there some doctor in town who could cure you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=147  
-Subtitle="Sure, the doc could help.  But he won't.  I've threatened him, but he won't."
+Subtitle="Yeah, the doc could help. But he won't. I've threatened him, but he won't."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="He's so angry cause I didn't listen.  He warned me of the brain enlargement pill offers."
+Subtitle="He's so angry cause I didn't listen. He warned me of the brain enlargement pill offers."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They can cause some awful forms of cancer.  But I didn't listen.  And now he refuses to help."
+Subtitle="They can cause some awful forms of cancer. But I didn't listen. And now he refuses to help me, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
@@ -137,10 +139,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Maybe I can help you somehow?"
+New Option Nr=7  OptionText=" Maybe I can help you somehow?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=497  PositionY=214  
-Subtitle="Man, if you could do that, I'd give you everything.  I still got some of those strength pills left."
+Subtitle="Man, if you could do that, I'd give you everything. I still got some of those strength pills left."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Also I could vote for you if you seek to join the guard of the town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -154,12 +156,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText="I'm sorry, but it looks like there's nothing I could do for you."
+New Option Nr=8  OptionText=" I'm sorry, but it looks like there's nothing I could do for you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=429  PositionY=129  
-Subtitle="Of course not.  You're not a doctor.  Only the doctor has the right medicine."
+Subtitle="Of course not. You're not a doctor. Only the doctor has the right medicine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But this rat would rather let me die!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'll rip his guts out as soon as I get my hands on him, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
@@ -167,16 +171,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText="I've got your medicine.  With best wishes from the doctor."
+New Option Nr=9  OptionText=" I've got your medicine. With best wishes from the doctor."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=397  PositionY=442  
-Subtitle="Wow, you really did it!  I guess you beat the hell out of him."
+Subtitle="Wow, you really did it! I guess you beat the hell out of him."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="He wouldn't help me even after I pounded him a lot."
+Subtitle="He wouldn't help me even after I pounded him a bit. A big bit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Man, you are the greatest hero!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now take this as a reward.  And you can be sure that I'll vote for you if you seek membership in the guard!"
+Subtitle="Now take this as a reward. And you can be sure that I'll vote for you if you seek membership in the Red Guard!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Thanks man!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -191,50 +195,52 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText="Maybe taking the brain enlargement pills really was a bit stupid."
+New Option Nr=10  OptionText=" Maybe taking the brain enlargement pills really was a bit stupid."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=315  PositionY=327  
-Subtitle="What?  I am not stupid!  Understood?"
+Subtitle="What? I'm not stupid! Understood?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Noone says I'm stupid!  I'm not stupid!"
+Subtitle="No one says I'm stupid! I'm NOT STUPID!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'LL BEAT YOU INTO SPLINTERS!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="BreakOffAndBecomeHostile"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=11  OptionText="Where can I find this doctor?"
+New Option Nr=11  OptionText=" Where can I find this doctor?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=556  PositionY=218  
-Subtitle="He's right inside this building.  I'm waiting here for him."
+Subtitle="He's right inside this building. I'm waiting here for him, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="When he comes out, maybe I can pound him some more.  Maybe then he'll help me at last!"
+Subtitle="When he comes out, maybe I can pound him some more. Maybe then he'll help me at last!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Yes, he'll get a good beating.  That will make him reconsider!  That rat!"
+Subtitle="Yes, he'll get a good beating. That will make him reconsider! That rat!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText="About that medicine that you need..."
+New Option Nr=12  OptionText=" About that medicine that you need..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=394  PositionY=497  
 Subtitle="What have you got?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="What, you have nothing?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Man, what are you doing here?  Get the medicine!  I need it now!"
+Subtitle="Man, what are you doing here? Get the medicine! I need it now!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText="How are you feeling now..."
+New Option Nr=13  OptionText=" How are you feeling now?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=386  PositionY=389  
-Subtitle="Much better.  I'm cured.  Thanks again man!  I'll vote for you if you want into the city guard!  You're my best friend, man!"
+Subtitle="Much better. I'm cured. Thanks again man! I'll vote for you if you want into the city guard! You're a good guy, man!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
