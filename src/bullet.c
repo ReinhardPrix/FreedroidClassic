@@ -768,7 +768,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
 	// As the new rule, the influencer after getting hit, must completely
 	// start anew to recover his weapon from the previous shot
 	//
-	// Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
+	Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
 	// Me [ player_num ] . got_hit_time = 0;
 	
 	// GotHitSound ();
