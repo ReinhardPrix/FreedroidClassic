@@ -744,7 +744,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
     // NEW RULE:  Even when the bullet hits, there's still a chance that
     // the armour will compensate the shot
     //
-    if ( MyRandom( 100 ) < Me [ player_num ] . AC )
+    if ( MyRandom( 100 ) < Me [ player_num ] . lv_1_bot_will_hit_percentage )
     {
 	Me [ player_num ] . TextVisibleTime = 0 ;
 	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
@@ -768,7 +768,8 @@ apply_bullet_damage_to_player ( int player_num , int damage )
 	// As the new rule, the influencer after getting hit, must completely
 	// start anew to recover his weapon from the previous shot
 	//
-	Me [ player_num ] . firewait = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
+        if ( Me [ player_num ] . busy_type == NONE || Me [ player_num ] . busy_type == WEAPON_FIREWAIT)
+		Me [ player_num ] . busy_time = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
 	// Me [ player_num ] . got_hit_time = 0;
 	
 	// GotHitSound ();
