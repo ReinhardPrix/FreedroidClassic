@@ -1876,6 +1876,9 @@ ApplyItem( item* CurItem )
 	return;
     }
 
+    if ( Me [ 0 ] . busy_time > 0 )
+	return; //if the player is busy reloading or anything
+
     //--------------------
     // At this point we know that the item is applicable in combat situation
     // and therefore all we need to do from here on is execute the item effect

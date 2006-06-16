@@ -798,7 +798,7 @@ UpdateAllCharacterStats ( int PlayerNum )
     // a randomly chosen lv. 1 bot will hit the Tux in any given strike...
     //
     Me [ PlayerNum ] . lv_1_bot_will_hit_percentage =
-	( int ) ( exp ( - 0.03 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 ) - 37 ;
+	( int ) ( exp ( - 0.03 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 );
 
 }; // void UpdateAllCharacterStats ( void )
 

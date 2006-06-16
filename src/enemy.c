@@ -1942,7 +1942,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 		    // taking into account position, maybe even bocks with the shield, should
 		    // be implemented here.
 		    //
-		    if ( MyRandom ( 100 ) <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
+		    if ( MyRandom ( 100 ) / Druidmap [ ThisRobot -> type ] . monster_level <= Me [ 0 ] . lv_1_bot_will_hit_percentage )
 		    {
 			//--------------------
 			// If the bot hit, we reduce the energy of the Tux and maybe there
