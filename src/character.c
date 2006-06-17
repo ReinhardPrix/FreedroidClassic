@@ -42,7 +42,7 @@
 //                                      For Warrior  For Sniper  For Hacker
 float Energy_Gain_Per_Vit_Point[]={ -1 ,     2 ,        1.5 ,        1 };
 float Mana_Gain_Per_Magic_Point[]={ -1 ,     2 ,        1.5 ,        2 };
-float AC_Gain_Per_Dex_Point[]={     -1 ,     1 ,         1  ,        1 };
+float AC_Gain_Per_Dex_Point[]={     -1 ,     0.5 ,         0.5  ,       0.5 };
 
 #define RECHARGE_SPEED_PERCENT_PER_DEX_POINT 0
 #define TOHIT_PERCENT_PER_DEX_POINT (0.5)
@@ -798,7 +798,7 @@ UpdateAllCharacterStats ( int PlayerNum )
     // a randomly chosen lv. 1 bot will hit the Tux in any given strike...
     //
     Me [ PlayerNum ] . lv_1_bot_will_hit_percentage =
-	( int ) ( exp ( - 0.015 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 );
+	( int ) ( exp ( - 0.018 * ( (float) Me [ PlayerNum ] . AC ) ) * 100.0 );
 
 }; // void UpdateAllCharacterStats ( void )
 
