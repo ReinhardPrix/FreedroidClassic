@@ -731,7 +731,7 @@ check_bullet_background_collisions ( bullet* CurBullet , int num )
  *
  * ---------------------------------------------------------------------- */
 void
-apply_bullet_damage_to_player ( int player_num , int damage ) 
+apply_bullet_damage_to_player ( int player_num , int damage, int owner ) 
 {
     float real_damage = damage;
     
@@ -744,7 +744,7 @@ apply_bullet_damage_to_player ( int player_num , int damage )
     // NEW RULE:  Even when the bullet hits, there's still a chance that
     // the armour will compensate the shot
     //
-    if ( MyRandom( 200 ) < Me [ player_num ] . lv_1_bot_will_hit_percentage )
+    if ( MyRandom(100) / Druidmap [ AllEnemys [ CurBullet -> owner ] . type ] . monster_level < Me [ player_num ] . lv_1_bot_will_hit_percentage )
     {
 	Me [ player_num ] . TextVisibleTime = 0 ;
 	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
@@ -825,7 +825,7 @@ check_bullet_player_collisions ( bullet* CurBullet , int num )
 		    CurBullet->miss_hit_influencer = HIT ;
 #endif			  
 		    
-		    apply_bullet_damage_to_player ( player_num , CurBullet-> damage ) ;
+		    apply_bullet_damage_to_player ( player_num , CurBullet-> damage, CurBullet->owner ) ;
 		    
 		    DeleteBullet ( num , TRUE ) ; // we want a bullet-explosion
 		    return;  // This bullet was deleted and does not need to be processed any further...
