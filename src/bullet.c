@@ -744,7 +744,7 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
     // NEW RULE:  Even when the bullet hits, there's still a chance that
     // the armour will compensate the shot
     //
-    if ( MyRandom(100) / Druidmap [ AllEnemys [ owner ] . type ] . monster_level < Me [ player_num ] . lv_1_bot_will_hit_percentage )
+    if ( MyRandom(100) / Druidmap [ AllEnemys [ owner ] . type ] . monster_level >= Me [ player_num ] . lv_1_bot_will_hit_percentage )
     {
 	Me [ player_num ] . TextVisibleTime = 0 ;
 	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
