@@ -737,8 +737,8 @@ apply_bullet_damage_to_player ( int player_num , int damage )
     
     UpdateAllCharacterStats( player_num );
     
-    real_damage -= real_damage * (1 - (float)(Me [ player_num ] . AC * 0.0025));
-    if ( real_damage < 1.0 ) real_damage = 1.0 ;
+    //real_damage -= real_damage * (1 - (float)(Me [ player_num ] . AC * 0.0025));
+    //if ( real_damage < 1.0 ) real_damage = 1.0 ;
     
     //--------------------
     // NEW RULE:  Even when the bullet hits, there's still a chance that
