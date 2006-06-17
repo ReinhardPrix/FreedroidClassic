@@ -1794,7 +1794,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     NewBullet->type = guntype;
     
     // Now we set the damage of this bullet to the correct value
-    NewBullet->damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage;
+    NewBullet->damage = ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].base_item_gun_damage + MyRandom( ItemMap[ Druidmap[ ThisRobot->type ].weapon_item.type ].item_gun_damage_modifier);
     
     NewBullet->time_in_seconds = 0;
     NewBullet->time_in_frames = 0;
@@ -1812,7 +1812,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     NewBullet->angle_change_rate = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_angle_change;
     NewBullet->fixed_offset = ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_fixed_offset;
     NewBullet->owner_pos = & ( ThisRobot->pos );
-//    NewBullet->owner = ThisRobot -> type;
+    NewBullet->owner = ThisRobot -> type;
     NewBullet->ignore_wall_collisions = 
 	ItemMap[ Druidmap[ ThisRobot->type].weapon_item.type ].item_gun_bullet_ignore_wall_collisions;
     memset( NewBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
