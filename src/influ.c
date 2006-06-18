@@ -3244,7 +3244,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    // War tux freezes enemys with the appropriate plugin...
 	    AllEnemys[ i ] . frozen += Me [ player_num ] . freezing_melee_targets ; 
 	    
-	    AllEnemys[ i ] . firewait = 
+	    AllEnemys[ i ] . firewait += 
 		1 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	    // 2 * ItemMap [ Druidmap [ AllEnemys [ i ] . type ] . weapon_item.type ] . item_gun_recharging_time ;
 	    

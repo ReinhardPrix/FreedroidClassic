@@ -1831,13 +1831,13 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
     if( ThisRobot -> ammo_left > 0 )
 	{
-	    ThisRobot -> firewait = 
+	    ThisRobot -> firewait += 
 		ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_recharging_time ;
 	}
     else 
 	{
 	ThisRobot -> ammo_left = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_ammo_clip_size ; 
-	ThisRobot -> firewait = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time ;
+	ThisRobot -> firewait += ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time ;
 	}
     
     
@@ -1869,7 +1869,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	// Built-in attacks also don't use the recharge value of the
 	// weapon item.
 	//
-	ThisRobot -> firewait = 1.7 ;
+	ThisRobot -> firewait += 1.7 ;
 	
 	ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
 	

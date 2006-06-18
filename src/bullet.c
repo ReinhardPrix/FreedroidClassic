@@ -541,7 +541,7 @@ MoveActiveSpells (void)
                 		          Druidmap [ AllEnemys [ j ] . type ] . druidname , reward );
 		                append_new_game_message ( game_message_text );
 				}
-			AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
+			AllEnemys [ j ] . firewait += Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		    }
 		    else
 		    {
@@ -930,7 +930,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  // ThisRobot -> firewait =
 		  // 1 * ItemMap [ Druidmap [ ThisRobot -> type ].weapon_item.type ].item_gun_recharging_time ;
 		  
-		  ThisRobot -> firewait = Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit ;
+		  ThisRobot -> firewait += Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit ;
 
 		  start_gethit_animation_if_applicable ( ThisRobot ) ;
 
