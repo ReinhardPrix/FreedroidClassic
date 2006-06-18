@@ -365,6 +365,7 @@ ClearEnemys ( void )
 	our_bot -> persuing_given_course = FALSE;
 	our_bot -> FollowingInflusTail = FALSE;
 	our_bot -> StayHowManySecondsBehind = 5;
+	our_bot -> ammo_left = 0;
 	
 	our_bot -> phase = 0;
 	our_bot -> animation_type = WALK_ANIMATION ;
@@ -1869,7 +1870,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	// Built-in attacks also don't use the recharge value of the
 	// weapon item.
 	//
-	ThisRobot -> firewait += 1.7 ;
+	if(ThisRobot -> firewait < 1.7)
+		ThisRobot -> firewait = 1.7 ;
 	
 	ThisRobot -> current_angle = - ( - 90 + 180 * atan2 ( ydist ,  xdist ) / M_PI );  
 	
