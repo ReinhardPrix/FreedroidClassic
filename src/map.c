@@ -2749,6 +2749,7 @@ ReviveAllDroidsOnShip ( void )
 
       AllEnemys [ i ] . state_timeout = 0 ;
       AllEnemys [ i ] . animation_phase = 0 ;
+      AllEnemys [ i ] . ammo_left = ItemMap [ Druidmap [ AllEnemys[i] . type ] . weapon_item . type ] . item_gun_ammo_clip_size  ;
     }
 
 }; // void ReviveAllDroidsOnShip ( void )
