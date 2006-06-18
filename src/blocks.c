@@ -1776,6 +1776,7 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
+
     PrefixToFilename [ i ] = "476" ; // 9 
     first_walk_animation_image [ i ] = 1 ;
     last_walk_animation_image [ i ] = 1 ;
@@ -1798,6 +1799,7 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
+
     PrefixToFilename [ i ] = "493" ; // 10
     first_walk_animation_image [ i ] = 1 ;
     last_walk_animation_image [ i ] = 1 ;
@@ -1813,7 +1815,7 @@ Load_Enemy_Surfaces( void )
     use_default_gethit_image [ i ] = TRUE ;
     use_default_death_image [ i ] = TRUE ;
     use_default_stand_image [ i ] = TRUE ;
-    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 6 ;
     droid_attack_animation_speed_factor [ i ] = 14 ;
@@ -1821,6 +1823,7 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 18 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++; 
+
     PrefixToFilename [ i ] = "516" ; // 11
     first_walk_animation_image [ i ] = 1 ;
     last_walk_animation_image [ i ] = 1 ;
@@ -1836,7 +1839,7 @@ Load_Enemy_Surfaces( void )
     use_default_gethit_image [ i ] = TRUE ;
     use_default_death_image [ i ] = TRUE ;
     use_default_stand_image [ i ] = TRUE ;
-    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
     droid_attack_animation_speed_factor [ i ] = 5 ;
@@ -1844,6 +1847,7 @@ Load_Enemy_Surfaces( void )
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 5 ;
     ModelMultiplier  [ i ] = 1 ;i++;
+
     PrefixToFilename [ i ] = "571" ; // 12
     //first_walk_animation_image [ i ] = 1 ;
     //last_walk_animation_image [ i ] = 1 ;
