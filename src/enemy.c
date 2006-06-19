@@ -1838,7 +1838,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
     else 
 	{
 	ThisRobot -> ammo_left = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_ammo_clip_size ; 
-	ThisRobot -> firewait += ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time ;
+	if(ThisRobot -> firewait < ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time)
+		ThisRobot -> firewait = ItemMap [ Druidmap [ ThisRobot -> type ] . weapon_item . type ] . item_gun_reloading_time ;
 	}
     
     
