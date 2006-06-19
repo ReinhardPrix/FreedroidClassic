@@ -3,11 +3,11 @@
 ** Start of iso_image offset file **
 
 
-OffsetX=-10
+OffsetX=-61
 
-OffsetY=-23
+OffsetY=-95
 
-GraphicsFileName=./../bullets/iso_bullet_laser_rifle_04_0001.png
+GraphicsFileName=/home/basse/cvs/fd_rpg/graphics/bullets/iso_bullet_laser_rifle_04_0001.png
 
 
 ** End of iso_image offset file **
