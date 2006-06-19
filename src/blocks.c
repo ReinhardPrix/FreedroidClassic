@@ -108,6 +108,13 @@ Load_Blast_Surfaces( void )
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) , TRUE ) ;
     }
 
+  for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
+    {
+      sprintf ( constructed_filename , "blasts/iso_blast_exterminator_%04d.png" , j + 1 );
+      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 2 ] . image [ j ] ) , TRUE ) ;
+    }
+
 }; // void Load_Blast_Surfaces( void )
 
 /* ----------------------------------------------------------------------

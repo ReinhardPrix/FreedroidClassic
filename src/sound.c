@@ -1362,6 +1362,15 @@ DruidBlastSound (void)
 }; // void DruidBlastSound (void)
 
 /* ----------------------------------------------------------------------
+ *
+ * ---------------------------------------------------------------------- */
+void
+ExterminatorBlastSound (void)
+{
+  play_sample_using_WAV_cache( "../effects/Blast_Sound_0.wav" , FALSE , FALSE );
+}; // void ExterminatorBlastSound (void)
+
+/* ----------------------------------------------------------------------
  * 
  *
  * ---------------------------------------------------------------------- */

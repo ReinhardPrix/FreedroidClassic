@@ -1463,6 +1463,7 @@ LoadThemeConfigurationFile(void)
 
   ReadValueFromString( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING , "%d" , 
 		       &Blastmap[1].phases , EndOfThemesBlastData );
+  Blastmap [ 2 ] . phases = Blastmap [ 1 ] . phases;
 
   //--------------------
   // Now we read in the total time amount for each animation
@@ -1475,6 +1476,8 @@ LoadThemeConfigurationFile(void)
 
   ReadValueFromString( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
 		       &Blastmap[1].total_animation_time , EndOfThemesBlastData );
+
+  Blastmap [ 2 ] . total_animation_time = Blastmap [ 1 ] . total_animation_time;
 
   //--------------------
   // Next we read in the number of phases that are to be used for each bullet type

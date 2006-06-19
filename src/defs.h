@@ -709,7 +709,7 @@ enum
                                     // this variable describes the amount of time in SECONDS 
 #define FLASH_DURATION_IN_SECONDS 0.1
 
-#define ALLBLASTTYPES		2	/* number of different exposions */
+#define ALLBLASTTYPES		3	/* number of different exposions */
 
 #define MAXBULLETS		100	/* maximum possible Bullets in the air */
 #define MAXBLASTS		100	/* max. possible Blasts visible */

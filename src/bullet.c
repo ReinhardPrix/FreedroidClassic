@@ -231,7 +231,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
   //
-  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , BULLETBLAST );
+  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , (CurBullet->type == 4) ? OWNBLAST : BULLETBLAST );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
@@ -312,6 +312,8 @@ StartBlast ( float x, float y, int level , int type)
     {
 	DruidBlastSound ();
     }
+    if (type == OWNBLAST)
+	ExterminatorBlastSound();
     
 }; // void StartBlast( ... )
 
@@ -361,7 +363,7 @@ However, it should NOT cause any serious trouble for Freedroid.",
 	// Druid blasts are dangerous, so we check if someone gets
 	// hurt by this particular droid explosion
 	//
-	if (CurBlast->type == DRUIDBLAST) CheckBlastCollisions (i);
+	if (CurBlast->type == DRUIDBLAST || CurBlast->type == OWNBLAST ) CheckBlastCollisions (i);
 
 	//--------------------
 	// And now we advance the phase of the blast according to the
