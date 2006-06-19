@@ -1459,6 +1459,7 @@ ItemDropFromLevelEditor( void )
     if ( ItemMap [ NewItemCode ] . item_group_together_in_inventory )
     {
 	our_multiplicity = do_graphical_number_selection_in_range ( 1 , 100, 1 );
+	if ( our_multiplicity == 0 ) our_multiplicity = 1;
     }
     DropItemAt( NewItemCode , Me [ 0 ] . pos . z , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
 		previous_prefix_selected , previous_suffix_selected , 0 , our_multiplicity );
