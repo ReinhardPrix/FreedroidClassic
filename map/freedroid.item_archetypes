@@ -1015,7 +1015,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 22
 ** Start of new item specification subsection **
-Item name="Single laser"
+Item name="Laser pistol"
 Position_X=586
 Position_Y=155
 Item can be applied in combat="no"
@@ -1040,8 +1040,8 @@ Item as gun: recharging time=0.800000
 Item as gun: reloading time=3.000000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=2
-Item as gun: modifier for damage of bullets=6
+Item as gun: damage of bullets=3
+Item as gun: modifier for damage of bullets=12
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=6
 Item as gun: bullet_lifetime=-1.000000
@@ -1052,14 +1052,14 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
-Item as gun: ammo clip size=30
+Item as gun: ammo clip size=12
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
 
 // Item No. 23
 ** Start of new item specification subsection **
-Item name="Single substandard plasma pistol"
+Item name="Plasma pistol"
 Position_X=551
 Position_Y=93
 Item can be applied in combat="no"
@@ -1080,11 +1080,11 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=40
 Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=0.850000
+Item as gun: recharging time=0.750000
 Item as gun: reloading time=2.000000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=2
+Item as gun: damage of bullets=12
 Item as gun: modifier for damage of bullets=6
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=7
@@ -1096,7 +1096,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="plasma_ammunition"
-Item as gun: ammo clip size=30
+Item as gun: ammo clip size=6
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
