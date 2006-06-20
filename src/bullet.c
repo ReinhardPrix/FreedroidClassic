@@ -231,7 +231,9 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   // cause later, after the bullet is deleted, it will be hard to know
   // the correct location ;)
   //
-  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , (CurBullet->type == 4) ? OWNBLAST : BULLETBLAST );
+  int type = (CurBullet->type == 4) ? OWNBLAST : BULLETBLAST;
+  
+  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , type, (type == OWNBLAST) ? (CurBullet -> damage * 10) : Blast_Damage_Per_Second );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
@@ -275,7 +277,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
  *
  * ---------------------------------------------------------------------- */
 void
-StartBlast ( float x, float y, int level , int type)
+StartBlast ( float x, float y, int level , int type, int dmg)
 {
     int i;
     Blast NewBlast;
@@ -307,13 +309,17 @@ StartBlast ( float x, float y, int level , int type)
     NewBlast->phase = 0;
     
     NewBlast->MessageWasDone = 0;
+    NewBlast->damage_per_second = dmg;
     
     if (type == DRUIDBLAST)
     {
 	DruidBlastSound ();
     }
+
     if (type == OWNBLAST)
+	{
 	ExterminatorBlastSound();
+	}
     
 }; // void StartBlast( ... )
 
@@ -719,7 +725,7 @@ check_bullet_background_collisions ( bullet* CurBullet , int num )
     {
       if ( CurBullet->ignore_wall_collisions )
 	{
-	  StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST );
+	  StartBlast ( CurBullet->pos.x , CurBullet->pos.y , CurBullet->pos.z , BULLETBLAST, 0 );
 	}
       else
 	{
@@ -951,7 +957,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  // be completely deleted of course, with the same small explosion as well
 		  //
 		  if ( CurBullet -> pass_through_hit_bodies )
-		    StartBlast ( CurBullet -> pos.x , CurBullet -> pos.y , CurBullet -> pos.z , BULLETBLAST );
+		    StartBlast ( CurBullet -> pos.x , CurBullet -> pos.y , CurBullet -> pos.z , BULLETBLAST, 0 );
 		  else DeleteBullet( num , TRUE ); // we want a bullet-explosion
 		  
 		  Enemy_Post_Bullethit_Behaviour( i );
@@ -1135,7 +1141,7 @@ CheckBlastCollisions (int num)
 	    //--------------------
 	    // drag energy of enemy 
 	    //
-	    AllEnemys[i].energy -= Blast_Damage_Per_Second * Frame_Time ();
+	    AllEnemys[i].energy -= CurBlast -> damage_per_second * Frame_Time ();
 	}
     }
     
@@ -1147,7 +1153,7 @@ CheckBlastCollisions (int num)
 	 ( fabsf (Me[0].pos.x - CurBlast->pos.x ) < Blast_Radius ) &&
 	 ( fabsf (Me[0].pos.y - CurBlast->pos.y ) < Blast_Radius ) )
     {
-	Me[0].energy -= Blast_Damage_Per_Second * Frame_Time ();
+	Me[0].energy -= CurBlast->damage_per_second * Frame_Time ();
 	
 	// So the influencer got some damage from the hot blast
 	// Now most likely, he then will also say so :)

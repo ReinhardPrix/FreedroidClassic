@@ -323,15 +323,15 @@ ForceExplosionCircle ( gps ExpCenter )
   if ( Me[0].mana >= SpellCost )
     {
       Me[0].mana -= SpellCost;
-      StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x       , ExpCenter.y + 1   , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x       , ExpCenter.y + 1   , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
 
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
+      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
     }
   else
     {
@@ -514,7 +514,7 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 
       for ( i = 1 ; i < 5 ; i ++ )
 	{
-	  StartBlast ( ExpCenter . x + i * step . x , ExpCenter . y + i * step . y , ExpCenter . z , DRUIDBLAST );
+	  StartBlast ( ExpCenter . x + i * step . x , ExpCenter . y + i * step . y , ExpCenter . z , DRUIDBLAST, Blast_Damage_Per_Second );
 	}
     }
   else

@@ -952,6 +952,7 @@ typedef struct
     int type;
     double phase;
     int MessageWasDone;
+    float damage_per_second;
 }
 blast, *Blast;
 

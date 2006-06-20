@@ -1455,7 +1455,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	}
 	else
 	{
-	    StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST );
+	    StartBlast ( ThisRobot->pos.x , ThisRobot->pos.y , ThisRobot->pos.z , DRUIDBLAST, Blast_Damage_Per_Second );
 	}
 	
 	//--------------------

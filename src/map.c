@@ -1009,7 +1009,7 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int p
 	// removed, we may start a blast at this position.  Otherwise we would
 	// run into trouble, see the warning further above.
 	//
-	StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST );
+	StartBlast( blast_start_pos . x , blast_start_pos . y , BoxLevel->levelnum , DRUIDBLAST, Blast_Damage_Per_Second );
 	
     }
 

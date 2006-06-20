@@ -115,7 +115,7 @@ EXTERN void RotateVectorByAngle ( moderately_finepoint* vector , float rot_angle
 EXTERN void AnalyzePlayersMouseClick ( int player_num ) ;
 EXTERN void MoveBullets (void);
 EXTERN void DeleteBullet (int num , int StartBlast );
-EXTERN void StartBlast ( float x , float y , int level , int type );
+EXTERN void StartBlast ( float x , float y , int level , int type, int dmg );
 EXTERN void animate_blasts (void);
 EXTERN void DeleteBlast (int num);
 EXTERN void MoveActiveSpells (void);
