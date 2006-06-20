@@ -109,8 +109,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_small.png"
-inventory_size_y=1
-inventory_size_x=1
+inventory_size_y=0
+inventory_size_x=0
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=20
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
@@ -153,8 +153,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_big.png"
-inventory_size_y=1
-inventory_size_x=1
+inventory_size_y=0
+inventory_size_x=0
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=60
 Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
@@ -601,7 +601,7 @@ Item description text="In the superior class of the laser family, the laser rifl
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
 Item as gun: reloading time=3.000000
-Item as gun: speed of bullets=40.000000
+Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=8
 Item as gun: modifier for damage of bullets=8
@@ -612,7 +612,7 @@ Item as gun: offset for melee weapon=0.000000
 Item as gun: modifier for starting angle=0.000000
 Item as gun: ignore collisions with wall="no"
 Item as gun: reflect other bullets="no"
-Item as gun: pass through explosions="yes"
+Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
 Item as gun: ammo clip size=30
@@ -2174,8 +2174,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_medium.png"
-inventory_size_y=1
-inventory_size_x=1
+inventory_size_y=0
+inventory_size_x=0
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=40
 Item description text="These medium sized containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
@@ -5105,6 +5105,137 @@ Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
 
+// Item No. 115
+** Start of new item specification subsection **
+Item name="139 gun"
+Position_X=551
+Position_Y=93
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="plasma_single"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+File or directory name for inventory image="inventory_image_18.png"
+inventory_size_y=0
+inventory_size_x=0
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Base list price=40
+Item description text="For bot use only."
+----- the following part is only relevant for weapons -----
+Item as gun: recharging time=0.350000
+Item as gun: reloading time=7.000000
+Item as gun: speed of bullets=12.000000
+Item as gun: angle change of bullets=0.000000
+Item as gun: damage of bullets=2
+Item as gun: modifier for damage of bullets=2
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=7
+Item as gun: bullet_lifetime=2.000000
+Item as gun: offset for melee weapon=0.000000
+Item as gun: modifier for starting angle=0.000000
+Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
+Item as gun: required ammunition type="plasma_ammunition"
+Item as gun: ammo clip size=3
+Item as gun: weapon requires both hands="yes"
+----- end of part only relevant for weapons -----
+** End of new item specification subsection **
+
+// Item No. 116
+** Start of new item specification subsection **
+Item name="249 weapon"
+Position_X=586
+Position_Y=155
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="plasma_single"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+File or directory name for inventory image="inventory_image_18.png"
+inventory_size_y=0
+inventory_size_x=0
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Base list price=100
+Item description text="For bot use only"
+----- the following part is only relevant for weapons -----
+Item as gun: recharging time=0.100000
+Item as gun: reloading time=5.000000
+Item as gun: speed of bullets=15.000000
+Item as gun: angle change of bullets=0.000000
+Item as gun: damage of bullets=1
+Item as gun: modifier for damage of bullets=0
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=6
+Item as gun: bullet_lifetime=2.00000
+Item as gun: offset for melee weapon=0.000000
+Item as gun: modifier for starting angle=0.000000
+Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
+Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=15
+Item as gun: weapon requires both hands="yes"
+----- end of part only relevant for weapons -----
+** End of new item specification subsection **
+
+// Item No. 117
+** Start of new item specification subsection **
+Item name="Bot exterminator"
+Position_X=546
+Position_Y=124
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="exterminator_simple"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=20
+Dexterity minimum required to wear/wield this item=45
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+File or directory name for inventory image="exterminator_simple/inv_image.png"
+inventory_size_y=0
+inventory_size_x=0
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Base list price=1001
+Item description text="Bot use only"
+----- the following part is only relevant for weapons -----
+Item as gun: recharging time=1.00000
+Item as gun: reloading time=4.000000
+Item as gun: speed of bullets=35.000000
+Item as gun: angle change of bullets=0.000000
+Item as gun: damage of bullets=9
+Item as gun: modifier for damage of bullets=4
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=4
+Item as gun: bullet_lifetime=-1.000000
+Item as gun: offset for melee weapon=0.000000
+Item as gun: modifier for starting angle=0.000000
+Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
+Item as gun: required ammunition type="exterminator_ammunition"
+Item as gun: ammo clip size=2
+Item as gun: weapon requires both hands="yes"
+----- end of part only relevant for weapons -----
+** End of new item specification subsection **
 
 
 *** End of item data section: ***
