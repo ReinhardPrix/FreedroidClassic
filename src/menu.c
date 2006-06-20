@@ -1341,11 +1341,11 @@ StartupMenu (void)
     // Prevent distortion of framerate by the delay coming from 
     // the time spent in the menu.
     Activate_Conservative_Frame_Computation ( ) ;
-    
     while (!can_continue)
     {
 	SetCurrentFont ( Menu_BFont );
-	
+        SwitchBackgroundMusicTo( MENU_BACKGROUND_MUSIC_SOUND );
+
 	MenuTexts[0]= SINGLE_PLAYER_STRING ;
 	MenuTexts[1]="Multi Player";
 	MenuTexts[2]="Credits";
@@ -2644,7 +2644,7 @@ I need to know that for saving. Abort.\n");
 	    if ( cnt < MAX_SAVED_CHARACTERS_ON_DISK ) 
 	    {
 		MenuTexts[ cnt ] = ReadAndMallocStringFromData ( eps[cnt]->d_name , "" , ".savegame" ) ;
-		DebugPrintf ( 1 , "\nNOTE:  int Load_Existing_Hero_Menu(void):  Another load game name found: %s.\n" , MenuTexts [ cnt ] );
+		//DebugPrintf ( 1 , "\nNOTE:  int Load_Existing_Hero_Menu(void):  Another load game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
 	

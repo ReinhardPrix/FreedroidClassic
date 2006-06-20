@@ -1608,8 +1608,6 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
  * pointer list with the stuff Tux has to sell and the stuff the shop
  * has to offer.
  *
- * NOTE:  THIS CODE IS CURRENTLY NOT IN USE, BECAUSE WE HAVE A GENERAL
- *        SHOP INTERFACE SIMILAR TO THE CHEST INTERFACE FOR THIS PURPOSE.
  *
  * ---------------------------------------------------------------------- */
 void
