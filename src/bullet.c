@@ -233,7 +233,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   //
   int type = (CurBullet->type == 4) ? OWNBLAST : BULLETBLAST;
   
-  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , type, (type == OWNBLAST) ? (CurBullet -> damage * 10) : Blast_Damage_Per_Second );
+  if ( ShallWeStartABlast ) StartBlast ( CurBullet->pos.x, CurBullet->pos.y, CurBullet->pos.z , type, (type == OWNBLAST) ? (CurBullet -> damage * 1) : Blast_Damage_Per_Second );
 
   //--------------------
   // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 

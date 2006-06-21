@@ -224,6 +224,8 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_RED_GUARD_HEAVY_ARMOUR; ListPointer++;
 	ListPointer->type = ITEM_LASER_PISTOL; ListPointer++;
 	ListPointer->type = ITEM_PLASMA_PISTOL; ListPointer++;
+	ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
+	ListPointer->type = ITEM_PLASMA_AMMUNITION; ListPointer++;
 
     }
     else if ( ShopCharacterCode == PERSON_SKIPPY )
