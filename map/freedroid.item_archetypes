@@ -1036,12 +1036,12 @@ Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=100
 Item description text="A basic laser, has good uses in certain situations."
 ----- the following part is only relevant for weapons -----
-Item as gun: recharging time=0.800000
+Item as gun: recharging time=0.900000
 Item as gun: reloading time=3.000000
-Item as gun: speed of bullets=16.000000
+Item as gun: speed of bullets=32.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=3
-Item as gun: modifier for damage of bullets=12
+Item as gun: damage of bullets=6
+Item as gun: modifier for damage of bullets=9
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=6
 Item as gun: bullet_lifetime=-1.000000
@@ -1081,7 +1081,7 @@ Base list price=40
 Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.750000
-Item as gun: reloading time=2.000000
+Item as gun: reloading time=2.500000
 Item as gun: speed of bullets=16.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=12
@@ -5220,7 +5220,7 @@ Item as gun: recharging time=1.00000
 Item as gun: reloading time=4.000000
 Item as gun: speed of bullets=35.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=9
+Item as gun: damage of bullets=4
 Item as gun: modifier for damage of bullets=4
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=4
@@ -5237,6 +5237,49 @@ Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
 
+// Item No. 118
+** Start of new item specification subsection **
+Item name="Advanced Single Laser"
+Position_X=547
+Position_Y=153
+Item can be applied in combat="no"
+Item can be installed in influ="yes"
+Item can be installed in slot with name="weapon"
+Item uses rotation series with prefix="plasma_single"
+Items of this type collect together in inventory="no"
+Strength minimum required to wear/wield this item=-1
+Dexterity minimum required to wear/wield this item=-1
+Magic minimum required to wear/wield this item=-1
+Item as defensive item: base_ac_bonus=0
+Item as defensive item: ac_bonus_modifier=0
+Base item duration=10 plus duration modifier=10
+File or directory name for inventory image="inventory_image_2.png"
+inventory_size_y=0
+inventory_size_x=0
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Base list price=250
+Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
+----- the following part is only relevant for weapons -----
+Item as gun: recharging time=1.200000
+Item as gun: reloading time=1.200000
+Item as gun: speed of bullets=32.000000
+Item as gun: angle change of bullets=0.000000
+Item as gun: damage of bullets=4
+Item as gun: modifier for damage of bullets=4
+Item as gun: one_shot_only=0
+Item as gun: bullet_image_type=1
+Item as gun: bullet_lifetime=-1.000000
+Item as gun: offset for melee weapon=0.000000
+Item as gun: modifier for starting angle=0.000000
+Item as gun: ignore collisions with wall="no"
+Item as gun: reflect other bullets="no"
+Item as gun: pass through explosions="no"
+Item as gun: pass through hit bodies="no"
+Item as gun: required ammunition type="laser_ammunition"
+Item as gun: ammo clip size=30
+Item as gun: weapon requires both hands="yes"
+----- end of part only relevant for weapons -----
+** End of new item specification subsection **
 
 *** End of item data section: ***
 

@@ -404,10 +404,10 @@ Maximum mana of this droid: 30.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 2
 Aggression rate of this droid: 75
-Physical (base) damage an attack of this droid will do: 6.0
+Physical (base) damage an attack of this droid will do: 4.5
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 120
-Monster Level and maximum treasure chest to pick from=3
+Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.25
 Time spent eyeing Tux=0.25
@@ -460,10 +460,10 @@ Maximum mana of this droid: 35.1
 Rate of energyloss under influence control: 2.1
 Weapon type this droid uses: 0
 Aggression rate of this droid: 93
-Physical (base) damage an attack of this droid will do: 8.0
+Physical (base) damage an attack of this droid will do: 7.0
 Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 140
-Monster Level and maximum treasure chest to pick from=3
+Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.5
 Time spent eyeing Tux=2.75
@@ -583,7 +583,7 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Armament of this droid : 1
 Drive item=5
-Weapon item=16
+Weapon item=118
 Shield item=-1
 Armour item=-1
 Aux1 item=-1
