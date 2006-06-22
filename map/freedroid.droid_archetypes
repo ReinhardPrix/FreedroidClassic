@@ -247,7 +247,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 82
 Physical (base) damage an attack of this droid will do: 4.0
 Is this droid immune to disruptor blasts? 0
-Experience_Reward gained for destroying one of this type: 50
+Experience_Reward gained for destroying one of this type: 70
 Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=3.5
@@ -300,7 +300,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 84
 Physical (base) damage an attack of this droid will do: 7.0
 Is this droid immune to disruptor blasts? 0
-Experience_Reward gained for destroying one of this type: 70
+Experience_Reward gained for destroying one of this type: 90
 Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=3.75
@@ -406,7 +406,7 @@ Weapon type this droid uses: 2
 Aggression rate of this droid: 75
 Physical (base) damage an attack of this droid will do: 4.5
 Is this droid immune to disruptor blasts? 0
-Experience_Reward gained for destroying one of this type: 120
+Experience_Reward gained for destroying one of this type: 200
 Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.25
@@ -462,7 +462,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 93
 Physical (base) damage an attack of this droid will do: 7.0
 Is this droid immune to disruptor blasts? 0
-Experience_Reward gained for destroying one of this type: 140
+Experience_Reward gained for destroying one of this type: 250
 Monster Level and maximum treasure chest to pick from=2
 Force how many additional magic items to be dropped=0
 Range of vision of this droid=4.5

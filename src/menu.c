@@ -3041,7 +3041,7 @@ Credits_Menu (void)
                                       Arthur Huillet\n\n\n\
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\n\
-   whatever:\n\n\
+   DIALOGUES AND MINOR TWEAKS:\n\n\
                                       Karol Swietlicki\n\n\n\
    PROFILING AND TESTING:\n\n\
                                       Clint Herron\n\n\n\

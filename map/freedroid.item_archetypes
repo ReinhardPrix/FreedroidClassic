@@ -1033,7 +1033,7 @@ File or directory name for inventory image="inventory_image_18.png"
 inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
-Base list price=100
+Base list price=500
 Item description text="A basic laser, has good uses in certain situations."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.900000
@@ -1077,7 +1077,7 @@ File or directory name for inventory image="inventory_image_18.png"
 inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
-Base list price=40
+Base list price=750
 Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.750000
@@ -2969,7 +2969,7 @@ File or directory name for inventory image="ammo_plasma_bullet/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
-Base list price=1
+Base list price=4
 Item description text="Plasma crystal load. This is the most common way of loading a plasma weapon."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -5174,7 +5174,7 @@ Item description text="For bot use only"
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.100000
 Item as gun: reloading time=5.000000
-Item as gun: speed of bullets=15.000000
+Item as gun: speed of bullets=20.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=1
 Item as gun: modifier for damage of bullets=0
