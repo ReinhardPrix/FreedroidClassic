@@ -3037,25 +3037,24 @@ Credits_Menu (void)
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
                                       Johannes Prix\n\n\
-                                      Reinhard Prix\n\n\n\
-   ADDITIONAL PROGRAMMING:\n\n\
-                                      Simon Newton\n\n\
+                                      Reinhard Prix\n\n\
                                       Arthur Huillet\n\n\n\
-   PROFILING AND TESTING:\n\n\
-                                      Ryan 'simcop2387' Voots\n\n\
-                                      Andrew A. Gill\n\n\
-                                      Zombie Ryushu\n\n\
-                                      Clint Herron\n\n\n\
    ARTWORK:\n\n\
                                       Bastian Salmela\n\n\n\
-   ADDITIONAL ARTWORK:\n\n\
+   whatever:\n\n\
+                                      Karol Swietlicki\n\n\n\
+   PROFILING AND TESTING:\n\n\
+                                      Clint Herron\n\n\n\
+   SOUND EFFECTS:\n\n\
                                       Johannes Prix\n\n\
-                                      Simon Newton\n\n\n\
-   STORY AND CHARACTERS:\n\n\
-                                      Johannes Prix\n\n\n\
-   LEVEL DESIGN:\n\n\
+                                      Chris Hoeppner\n\n\n\
+   VOICES:\n\n\
+                                      Tiina Heinonen\n\n\
+                                      Doris Stubenrauch\n\n\
+                                      Andrew A. Gill\n\n\
                                       Johannes Prix\n\n\
-                                      Simon Newton\n\n\n\
+                                      Mbrola\n\
+                                       text-to-speech-system\n\n\n\
    OGG COMPOSERS:\n\n\
                                       \"The Beginning\"\n\
                                         by 4t thieves\n\
@@ -3071,19 +3070,13 @@ Credits_Menu (void)
                                         of kahvi collective\n\
                                       (www.atl3.com/stud)\n\
                                       (www.kahvi.org)\n\n\n\
-   SOUND EFFECTS:\n\n\
-                                      Johannes Prix\n\n\
-                                      Chris Hoeppner\n\n\n\
-   VOICES:\n\n\
-                                      Tiina Heinonen\n\n\
-                                      Doris Stubenrauch\n\n\
+   VARIOUS OLDER CONTRIBUTIONS (PRE-0.9.13 people):\n\n\
+                                      Ryan 'simcop2387' Voots\n\n\
                                       Andrew A. Gill\n\n\
-                                      Johannes Prix\n\n\
-                                      Mbrola\n\
-                                       text-to-speech-system\n\n\n\
-   .rpm AND .deb PACKAGING:\n\n\
+                                      Zombie Ryushu\n\n\
                                       Ted Cipicchio\n\n\
-                                      The Doctor\n\n\n\n\n";
+                                      The Doctor\n\n\
+                                      Simon Newton\n\n\n\n\n";
     
     User_Rect . x = Full_Screen_Rect . x ;
     User_Rect . y = Full_Screen_Rect . y ;
