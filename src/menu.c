@@ -167,7 +167,9 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     int i;
     static int MenuPosition = 1;
     int NumberOfOptionsGiven;
+    int LongestOption;
     SDL_Rect HighlightRect;
+    SDL_Rect BackgroundRect;
     int first_menu_item_pos_y;
     
     //--------------------
@@ -198,9 +200,13 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     // First thing we do is find out how may options we have
     // been given for the menu
     //
+    LongestOption = 0 ;
     for ( i = 0 ; TRUE ; i ++ )
     {
-	if ( strlen( MenuTexts[ i ] ) == 0 ) break;
+    if ( strlen( MenuTexts[ i ] ) == 0 )
+        break ;
+    else if ( TextWidth( MenuTexts[ i ] ) > LongestOption )
+        LongestOption = TextWidth( MenuTexts[ i ] );
     }
     NumberOfOptionsGiven = i;
     
@@ -216,6 +222,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     print_menu_text ( InitialText , MenuTexts , first_menu_item_pos_y , background_code , MenuFont ) ;
     
     if ( ! use_open_gl ) StoreMenuBackground ( 0 );
+    
+
     
     while ( 1 )
     {
@@ -247,12 +255,22 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	// Depending on what highlight method has been used, we so some highlighting
 	// of the currently selected menu options location on the screen...
 	//
-	HighlightRect.x = ( GameConfig . screen_width - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
+
+    BackgroundRect.x = ( GameConfig . screen_width - LongestOption ) / 2 - 50 ;
+    BackgroundRect.y = first_menu_item_pos_y - 50 ;
+    BackgroundRect.w = LongestOption + 100 ;
+    BackgroundRect.h = ( h * NumberOfOptionsGiven ) + 100 ;
+    ShadowingRectangle ( Screen, BackgroundRect );
+
+    HighlightRect.x = ( GameConfig . screen_width - TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 - h ;
 	HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
 	HighlightRect.w = TextWidth ( MenuTexts [ MenuPosition - 1 ] ) + 2 * h ;
 	HighlightRect.h = h;		    
 	HighlightRectangle ( Screen , HighlightRect );
-	
+
+
+    
+    
 	if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
 	     ( GameConfig . menu_mode == MENU_MODE_DEFAULT ) )
 	{
@@ -1439,7 +1457,8 @@ enum
       MenuTexts[6]="Quit";
       MenuTexts[7]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
+      //MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
+      MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  -1 , Menu_BFont );
 
       switch (MenuPosition) 
 	{

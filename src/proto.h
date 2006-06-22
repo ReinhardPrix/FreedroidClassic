@@ -282,6 +282,7 @@ EXTERN void InitVideo (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN void SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
+EXTERN void ShadowingRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN int do_graphical_number_selection_in_range ( int lower_range , int upper_range, int default_value );
 EXTERN Uint8 GetAlphaComponent ( SDL_Surface* surface , int x , int y );
 EXTERN void swap_red_and_blue_for_open_gl ( SDL_Surface* FullView );
