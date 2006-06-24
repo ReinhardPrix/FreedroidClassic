@@ -37,7 +37,7 @@
 #include "global.h"
 #include "proto.h"
 
-#define BEST_MELEE_DISTANCE (1.0)
+#define BEST_MELEE_DISTANCE (0.8)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
 #define DISTANCE_TOLERANCE (0.00002)
 
