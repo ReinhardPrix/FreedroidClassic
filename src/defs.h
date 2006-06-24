@@ -412,7 +412,7 @@ enum
 #define TAKEOVER_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define CONSOLE_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define CREDITS_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
-#define MENU_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
+#define MENU_BACKGROUND_MUSIC_SOUND "menu.ogg"
 #define SILENCE (NULL)
 enum _sounds
 {
