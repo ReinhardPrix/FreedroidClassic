@@ -154,7 +154,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText="How could the bots attack? What about police and military?"
+New Option Nr=19  OptionText=" How could the bots attack? What about police and military?"
 OptionSample="Francis/Tux_how_could_the.wav"
 PositionX=389  PositionY=185  
 Subtitle="Police and military have been fully automatized for quite some time. Those bots are the worst of all. Each of them killed humans in the thousands."
@@ -166,10 +166,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="Thanks for the help. I'll be going now."
+New Option Nr=99  OptionText=" Thanks for the help. I'll be going now."
 OptionSample="Francis/Tux_thanks_for_the_help.wav"
 PositionX=551  PositionY=367  
-Subtitle="I am glad if I could help you along.  Also you should be careful around here. Best head straight for our town."
+Subtitle="I am glad if I could help you along. Also you should be careful around here. Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The path from this house should lead you directly to it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
