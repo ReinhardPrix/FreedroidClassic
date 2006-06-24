@@ -109,8 +109,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_small.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=1
+inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=20
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
@@ -153,8 +153,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_big.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=1
+inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=60
 Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
@@ -2174,8 +2174,8 @@ Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
 File or directory name for inventory image="health_capsule/inv_image_medium.png"
-inventory_size_y=0
-inventory_size_x=0
+inventory_size_y=1
+inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=40
 Item description text="These medium sized containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
