@@ -78,7 +78,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Improve Hacking Ability (cost 300 cash, 10 ability points)"
+New Option Nr=4  OptionText=" Improve Hacking Ability (cost 300 cash, 10 ability points)"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=195  PositionY=184  
 ChangeOption=4 ChangeToValue=1
@@ -91,7 +91,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=423  PositionY=183  
-Subtitle="Good.  The most important thing about hacking is to understand the nature of the machine you want to hack."
+Subtitle="Good. The most important thing about hacking is to understand the nature of the machine you want to hack."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Once you have figured out what the creators of the system were doing when setting it up, you'll also know how to best hack it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -108,14 +108,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=419  PositionY=330  
-Subtitle="You don't have enough experience.  I can't teach you anything more this way."
+Subtitle="You don't have enough experience. I can't teach you anything more this way."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="[BACK]"
+New Option Nr=99  OptionText=" [BACK]"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=318  PositionY=425  
 ChangeOption=99 ChangeToValue=0

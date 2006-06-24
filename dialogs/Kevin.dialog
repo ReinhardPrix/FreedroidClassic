@@ -64,7 +64,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=768  PositionY=242  
 Subtitle="As I've told you, I cannot teach you anything right now. This is not because I don't want to. I don't have the time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I must see to that the flaky energy stream is distributed such that my research project can continue. "
+Subtitle="I must see to that the flaky energy stream is distributed such that my research project can continue."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you could find a way to get rid of the maintainance bots on the second underground level of this station, it would surely help a lot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -208,7 +208,7 @@ Subtitle="I've managed to obtain secret data on the colony surroundings. But the
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Once we've evaluated the data, we might find a way to secure the colony and ensure our survival. But it's too early to tell yet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If I only had a suitable cluster. Then we could start data evaluation right away. "
+Subtitle="If I only had a suitable cluster. Then we could start data evaluation right away."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 ChangeOption=16 ChangeToValue=1

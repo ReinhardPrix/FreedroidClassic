@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Have you detected any hostile bot activity?"
 OptionSample="OldTown614Guard/Tux_have_you_detected.wav"
 PositionX=100  PositionY=204  
-Subtitle="No.  The hostiles have not shown up within the last 24 hours."
+Subtitle="No. The hostiles have not shown up within the last 24 hours."
 ReplySample="OldTown614Guard/614_no_the_ms.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -74,7 +74,7 @@ Subtitle="It was mainly used within ships to protect certain areas from intruder
 ReplySample="OldTown614Guard/614_it_is_mainly.wav"
 Subtitle="It is considered an old but reliable device."
 ReplySample="OldTown614Guard/614_it_is_considered.wav"
-Subtitle="So don't worry.  I'm still in pretty good shape."
+Subtitle="So don't worry. I'm still in pretty good shape."
 ReplySample="OldTown614Guard/614_but_dont_worry.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -86,14 +86,14 @@ OptionSample="OldTown614Guard/Tux_what_are_your.wav"
 PositionX=100  PositionY=71  
 Subtitle="My orders are to protect the living beings in this camp from attacks by hostile bots."
 ReplySample="OldTown614Guard/614_my_orders_are.wav"
-Subtitle="This has top priority.  There are no other priorities."
+Subtitle="This has top priority. There are no other priorities."
 ReplySample="OldTown614Guard/614_this_has_top.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Why are you not hostile as all the other bots?"
+New Option Nr=4  OptionText=" Why are you not hostile as all the other bots?"
 OptionSample="OldTown614Guard/Tux_why_are_you.wav"
 PositionX=223  PositionY=270  
 Subtitle="I belong to a an older generation of bots, running a custom-made security guard operating system."
@@ -102,7 +102,7 @@ Subtitle="None of the bots of this generation were affected by the proceedings t
 ReplySample="OldTown614Guard/614_none_of_the.wav"
 Subtitle="Even though discontinued from Nicholson Company long ago, today, some people have picked up the work and are even trying to improve the operating system running on my series."
 ReplySample="OldTown614Guard/614_even_though_discontinued.wav"
-Subtitle="Don't forget to buy products from Nicholson Company.  They are the best."
+Subtitle="Don't forget to buy products from Nicholson Company. They are the best."
 ReplySample="OldTown614Guard/614_dont_forget_to.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -110,7 +110,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="Who is working on that?"
+New Option Nr=5  OptionText=" Who is working on that?"
 OptionSample="OldTown614Guard/Tux_who_is_working.wav"
 PositionX=332  PositionY=264  
 Subtitle="Mostly the RMS and his colleagues."

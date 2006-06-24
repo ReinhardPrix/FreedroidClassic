@@ -38,10 +38,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=61  PositionY=232  
-Subtitle="Hello!  My name is Jasmine.  I'm Kevins girl friend."
+Subtitle="Hello! My name is Jasmine. I'm Kevin's girlfriend."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -49,12 +49,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="How is it going?"
+New Option Nr=1  OptionText=" How is it going?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=228  
-Subtitle="I'm pretty bored right now.  Kevin says he's working on something important."
+Subtitle="I'm pretty bored right now. Kevin says he's working on something important."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="That means he doesn't want to be disturbed right now.  Well, at least that gives me time to keep up with my pedicure."
+Subtitle="That means he doesn't want to be disturbed right now. Well, at least that gives me time to keep up with my pedicure."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -62,10 +62,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="Pedicure?"
+New Option Nr=2  OptionText=" Pedicure?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=215  PositionY=223  
-Subtitle="You know, we humans have those toenails.  They need to be tended to from time to time."
+Subtitle="You know, we humans have those toenails. They need to be tended to from time to time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And I want mine to be particular pretty."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -75,10 +75,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="What do you know about Kevin?"
+New Option Nr=3  OptionText=" What do you know about Kevin?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=311  PositionY=167  
-Subtitle="Oh, he's a wonderful guy.  He's so smart and does all these computer and robot things."
+Subtitle="Oh, he's a wonderful guy. He's so smart and does all these computer and robot things."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="He tried to explain me one day, but I must have snoozed off..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -89,7 +89,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be going then."
+New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Tux_Ill_Be_Back_0.wav"
 PositionX=214  PositionY=344  
 Subtitle="See you later."

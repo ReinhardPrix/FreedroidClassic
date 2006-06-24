@@ -38,10 +38,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hello!  I'm Duncan!  I make grenades.  Want some?  Not for free of course!"
+Subtitle="Hello! I'm Duncan! I make grenades. Want some? Not for free of course!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -50,10 +50,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Show me some of your grenades."
+New Option Nr=1  OptionText=" Show me some of your grenades."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="Grenades are vital for survival round here.  You really should buy some."
+Subtitle="Grenades are vital for survival round here. You really should buy some."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="InitTradeWithCharacter:Duncan"
@@ -61,12 +61,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="I've heard such gas grenades can cause skin iritations.  Is that true?"
+New Option Nr=2  OptionText=" I've heard gas grenades can cause skin iritations. Is that true?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 Subtitle="Hey man, if you're trying to get something off-price, sorry, not with me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="My prices are the best in all of the colony.  I know that. Just take it or leave it."
+Subtitle="My prices are the best in all of the colony. I know that. Just take it or leave it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Apart from that, none of my customers have ever complained about skin iritations so far."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

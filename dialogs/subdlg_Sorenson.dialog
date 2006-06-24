@@ -93,9 +93,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=404  PositionY=363  
-Subtitle="You don't have enough experience.  I can't teach you anything more right now."
+Subtitle="You don't have enough experience. I can't teach you anything more right now."
 ReplySample="SOR_You_Dont_Have_0.wav"
-Subtitle="First collect more experience.  Then we can go on."
+Subtitle="First collect more experience. Then we can go on."
 ReplySample="SOR_First_Collect_More_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -138,9 +138,9 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=539  PositionY=73  
 Subtitle="The ability to cast spells is very complicated, and best transfered directly to you."
 ReplySample="SOR_The_Ability_To_0.wav"
-Subtitle="We'll use magic to transfer the power.  Just a moment... and alright, it's done."
+Subtitle="We'll use magic to transfer the power. Just a moment... and alright, it's done."
 ReplySample="SOR_Just_A_Moment_0.wav"
-Subtitle="Your spellcasting ability has improved a lot.  Come back when you want to learn more."
+Subtitle="Your spellcasting ability has improved a lot. Come back when you want to learn more."
 ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"
@@ -150,7 +150,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="BACK"
+New Option Nr=99  OptionText=" BACK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=318  PositionY=425  
 ChangeOption=99 ChangeToValue=0

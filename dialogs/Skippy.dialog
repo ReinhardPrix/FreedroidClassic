@@ -48,14 +48,14 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=57  PositionY=221  
-Subtitle="Great!  A newcomer!  Welcome!  I'm Skippy!"
+Subtitle="Great! A newcomer! Welcome! I'm Skippy!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Since you are new, you might need some map making device?  I got some for sale!"
+Subtitle="Since you are new, you might need some map making device? I got some for sale!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I make them, you must know.  Only the finest quality of course."
+Subtitle="I make them, you must know. Only the finest quality of course."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Show me some of those map-making devices."
+New Option Nr=1  OptionText=" Show me some of those map-making devices."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=148  PositionY=306  
 Subtitle="Sure! I've got one that will perfectly fit your head."
@@ -76,10 +76,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="How do I activate such a map-making device?"
+New Option Nr=2  OptionText=" How do I activate such a map-making device?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=224  
-Subtitle="Oh, that's so simple.  No need to activate anything at all."
+Subtitle="Oh, that's so simple. No need to activate anything at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Just hold the device close to your head and it will break up into nanotechnological compartments that diffuse into your body."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -87,7 +87,7 @@ Subtitle="They will merge with your visual nerves and transmit any data to your 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The map-making device will automatically collect data from within 7 meters of wherever you're going."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It will be as if you see the data through your eye.  (Use the Tab key to turn on/off background map display)."
+Subtitle="It will be as if you see the data through your eye. (Use the Tab key to turn on/off background map display)."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -95,26 +95,26 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="You said you make those devices yourself?  How can you do that?"
+New Option Nr=3  OptionText=" You said you make those devices yourself? How can you do that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=154  PositionY=150  
-Subtitle="Oh, I've always been a geek.  And I've managed to retrieve some plans from before the Great Assault."
+Subtitle="Oh, I've always been a geek. And I've managed to retrieve some plans from before the Great Assault."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Don't think you could order this from an automated factory any more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The only source of these devices is here.  It's me!"
+Subtitle="The only source of these devices is here. It's me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Nanotechnology?  Isn't that dangerous?"
+New Option Nr=4  OptionText=" Nanotechnology? Isn't that dangerous?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=247  PositionY=299  
-Subtitle="No way, man, I guarantee it.  Don't believe anything you might have heard."
+Subtitle="No way, man, I guarantee it. Don't believe anything you might have heard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is a perfectly safe and tried technology.  No risk at all, really!"
+Subtitle="This is a perfectly safe and tried technology. No risk at all, really!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

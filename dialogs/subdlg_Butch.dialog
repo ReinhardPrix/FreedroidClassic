@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Give me the novice arena."
+New Option Nr=1  OptionText=" Give me the novice arena."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=273  PositionY=123  
 ChangeOption=1 ChangeToValue=0
@@ -79,7 +79,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="GO_THERE_AND_DO_IT"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=482  PositionY=135  
-Subtitle="I've already opened the door for you.  All you need to do is walk in there and crush all four bots."
+Subtitle="I've already opened the door for you. All you need to do is walk in there and crush all four bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -89,9 +89,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="ASSIGN NOVICE ARENA"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=393  PositionY=55  
-Subtitle="Of course.  That, you might even survive."
+Subtitle="Of course. That, you might even survive."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Take the accessway.  I've unlocked the door.  Good luck."
+Subtitle="Take the accessway. I've unlocked the door. Good luck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"
@@ -103,11 +103,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="ASSIGN MASTER ARENA"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=552  PositionY=271  
-Subtitle="Ok.  I've unlocked the door to the master arena now.  But take care, this will not be so easy any more. "
+Subtitle="Ok. I've unlocked the door to the master arena now. But take care, this will not be so easy anymore."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="In fact, you should know that we've got a 711 battle bot in there.  Its deadly disruptor flashes cannot be evaded.  "
+Subtitle="In fact, you should know that we've got a 711 battle bot in there. Its deadly disruptor flashes cannot be evaded."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You should make sure you've got proper anti-disruptor devices on you or just kill it fast enough.  Good luck!"
+Subtitle="You should make sure you've got proper anti-disruptor devices on you or just kill it fast enough. Good luck!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_master_arena_access_door"
@@ -119,9 +119,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="ITS_ALL_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=481  PositionY=215  
-Subtitle="You've already completed the novice arena.  But since you really want to have another go, I'll cause the bots to respawn now.  There, it's done."
+Subtitle="You've already completed the novice arena. But since you really want to have another go, I'll cause the bots to respawn now. There, it's done."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But you also might want to try the master arena now, maybe?  If so, just say so."
+Subtitle="But you also might want to try the master arena now, maybe? If so, just say so."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 DoSomethingExtra="ForceBotRespawnOnLevel:29"
@@ -129,7 +129,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Give me the master arena."
+New Option Nr=7  OptionText=" Give me the master arena."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=250  PositionY=296  
 ChangeOption=7 ChangeToValue=0
@@ -164,9 +164,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="MASTER ALREADY ASSIGNED"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=554  PositionY=339  
-Subtitle="But I've already opend the door.  What are you waiting for?  All you need to do is go down to the master arena and fight the bots."
+Subtitle="But I've already opend the door. What are you waiting for? All you need to do is go down to the master arena and fight the bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But I can understand if you hesitate.  The master arena is by no means an easy task.  Maybe you should practice some more before you go down."
+Subtitle="But I can understand if you hesitate. The master arena is by no means an easy task. Maybe you should practice some more before you go down."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="When you should make sure you've got proper anti-disruptor devices on you or the 711 disruptor flash will kill you in 2 seconds."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -178,7 +178,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText="MASTER IS DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=452  PositionY=370  
-Subtitle="But you've already completed the master arena.  Ok, but I can have the bots respawn for you now, so you can have another go!"
+Subtitle="But you've already completed the master arena. Ok, but I can have the bots respawn for you now, so you can have another go!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But certainly you've earned yourself a reputation as arena master around here now and we respect that."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

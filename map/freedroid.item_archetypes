@@ -5261,11 +5261,11 @@ Base list price=250
 Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.200000
-Item as gun: reloading time=1.200000
+Item as gun: reloading time=2.400000
 Item as gun: speed of bullets=32.000000
 Item as gun: angle change of bullets=0.000000
-Item as gun: damage of bullets=4
-Item as gun: modifier for damage of bullets=4
+Item as gun: damage of bullets=3
+Item as gun: modifier for damage of bullets=3
 Item as gun: one_shot_only=0
 Item as gun: bullet_image_type=1
 Item as gun: bullet_lifetime=-1.000000
@@ -5276,7 +5276,7 @@ Item as gun: reflect other bullets="no"
 Item as gun: pass through explosions="no"
 Item as gun: pass through hit bodies="no"
 Item as gun: required ammunition type="laser_ammunition"
-Item as gun: ammo clip size=30
+Item as gun: ammo clip size=5
 Item as gun: weapon requires both hands="yes"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **

@@ -40,10 +40,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here. "
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Welcome, then!  I'm Richard.  I oversee the computer cluster of our community."
+Subtitle="Welcome, then! I'm Richard. I oversee the computer cluster of our community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="A computer cluster?  What's that?"
+New Option Nr=1  OptionText=" A computer cluster? What's that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
 Subtitle="A cluster is a collection of literally thousands of normal computers into a whole new entity."
@@ -104,12 +104,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="I have a data cube with confidential crucial information on the colony installations "
+New Option Nr=6  OptionText=" I have a data cube with confidential crucial information on the colony installations "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="Interesting.  Let me see this thing.  Wow, the amount of data is incredible.  Maybe we could use our cluster to evaluate the data."
+Subtitle="Interesting. Let me see this thing. Wow, the amount of data is incredible. Maybe we could use our cluster to evaluate the data."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hey, what's that.  The data are already prepared for processing by a cluster like ours.  Wow!  That's good work!"
+Subtitle="Hey, what's that. The data are already prepared for processing by a cluster like ours. Wow! That's good work!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I'll feed it into the cluster right away."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -139,12 +139,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText="Are there any results of the cluster data evaluation yet?"
+New Option Nr=9  OptionText=" Are there any results of the cluster data evaluation yet?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Yes, of course.  Some preliminary results are there and they look most interesting.  I'll have to inform the chief about this."
+Subtitle="Yes, of course. Some preliminary results are there and they look most interesting. I'll have to inform the chief about this."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You'll want to talk with him.  He'll know what to do.  Thanks a lot for your efforts.  This might in fact be crucial information for our survival."
+Subtitle="You'll want to talk with him. He'll know what to do. Thanks a lot for your efforts. This might in fact be crucial information for our survival."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

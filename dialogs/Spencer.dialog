@@ -38,10 +38,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Spencer/Tux_hi_im_new.wav"
 PositionX=63  PositionY=228  
-Subtitle="Hello!  I'm Spencer.  I'm the manager of this town while our chief is not here.  Is there anything I can help you with?"
+Subtitle="Hello! I'm Spencer. I'm the manager of this town while our chief is not here. Is there anything I can help you with?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -50,10 +50,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="I need to get into the citadel."
+New Option Nr=1  OptionText=" I need to get into the citadel."
 OptionSample="Spencer/Tux_i_need_to.wav"
 PositionX=158  PositionY=302  
-Subtitle="Sorry, but the citadel is off limits to you.  Only members of the guard of the old town are permitted to enter."
+Subtitle="Sorry, but the citadel is off limits to you. Only members of the Red Guard of the Old Town are permitted to enter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -61,7 +61,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="What must I do to become a member of the guard."
+New Option Nr=2  OptionText=" What must I do to become a member of the Guard."
 OptionSample="Spencer/Tux_what_must_i.wav"
 PositionX=246  PositionY=365  
 ChangeOption=2 ChangeToValue=0
@@ -71,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="What about some money instead?"
+New Option Nr=3  OptionText=" What about some money instead?"
 OptionSample="Spencer/Tux_what_about_some.wav"
 PositionX=196  PositionY=430  
 Subtitle="For 15 million bucks, no less, hehe."
@@ -84,11 +84,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="ASSIGN WAREHOUSE MISSION"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=293  PositionY=53  
-Subtitle="These are bad times.  The interplanetary travel is made impossible by bot ships, so we need to stick to our local resources."
+Subtitle="These are bad times. The interplanetary travel is made impossible by bot ships, so we need to stick to our local resources."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We've got a list of stuff we'd need from the automated underground storage north of town.  But the bots there are numerous."
+Subtitle="We've got a list of stuff we'd need from the automated underground storage north of town. But the bots there are numerous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And currently I can't spare a single man from the city defenses.  It's a quite difficult situation."
+Subtitle="And currently I can't spare a single man from the city defenses. It's a quite difficult situation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 ChangeOption=4 ChangeToValue=0
@@ -96,14 +96,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="Maybe I could help somehow?"
+New Option Nr=5  OptionText=" Maybe I could help somehow?"
 OptionSample="Spencer/Tux_maybe_i_could.wav"
 PositionX=437  PositionY=53  
 Subtitle="That would be most kind of you, but I doubt that you will be able to clear out the warehouse for us."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But since you are said to be powerful and a former enemy, I'll once more put trust into a stranger."
+Subtitle="But since you are said to be powerful and a former hero, I'll once more put trust into a stranger."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I've unlocked the accessway to the warehouse.  It's to the north of this town, somewhat hidden in the woods northeast."
+Subtitle="I've unlocked the accessway to the warehouse. It's to the north of this town, somewhat hidden in the woods northeast."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I wish you the best of luck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -114,7 +114,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="How is it going?"
+New Option Nr=6  OptionText=" How is it going?"
 OptionSample="Spencer/Tux_how_is_it.wav"
 PositionX=134  PositionY=116  
 ChangeOption=6 ChangeToValue=1
@@ -145,7 +145,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="MISSION_IS_NOT_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=376  PositionY=235  
-Subtitle="Not too good.  It seems that even you could not (yet) help us with the warehouse.  So my problems are all the same still."
+Subtitle="Not too good. It seems that even you could not (yet) help us with the warehouse. So my problems are all the same still."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Maybe later, when you grow more experienced you might be able to help us after all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -157,9 +157,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="DONT_GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=490  PositionY=182  
-Subtitle="Thanks to your previous action, we've been able to organize all the goods we needed right now.  You've really helped us out there."
+Subtitle="Thanks to your previous action, we've been able to organize all the goods we need right now. You've really helped us out there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Rest assured that we will never forget your brave activity for our community down in that warehouse."
+Subtitle="Rest assured that we will never forget your brave activity for our community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -174,7 +174,7 @@ I can hardly believe it, but all the bots are gone!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Take these 500 bucks as a reward.  And be assured that you've earned my deepest respect, Linarian."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our people are transporting the good we need at maximum speed as we speak.  It can't be too long until new bots from ships in the orbit of the planet with beam down to replace the dead bots."
+Subtitle="Our people are transporting the goods as we speak. It can't be too long until new bots from ships in the orbit of the planet will beam down to replace the dead bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="AddGold:500"
@@ -183,7 +183,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText="Have I done enough quests to become a guard member now?"
+New Option Nr=12  OptionText=" Have I done enough quests to become a member now?"
 OptionSample="Spencer/Tux_have_i_done.wav"
 PositionX=368  PositionY=402  
 ChangeOption=12 ChangeToValue=1
@@ -195,7 +195,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
-Subtitle="Dixon told me about the matter with his toolkit.  He seemed pretty impressed by you."
+Subtitle="Dixon told me about the matter with his toolkit. He seemed pretty impressed by you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=17 ElseGoto=17
@@ -206,7 +206,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=501  PositionY=455  
-Subtitle="I think our teleporter service man, Dixon, he's got some problem.  You might want to talk to him."
+Subtitle="I think our teleporter service man, Dixon, he's got some problem. You might want to talk to him."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=17 ElseGoto=17
@@ -217,7 +217,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply.  He seemed very pleased and so was I, heh."
+Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased and so was I, heh."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=18 ElseGoto=18
@@ -228,7 +228,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
-Subtitle="I think you should visit the camp's cook some time.  He's always around here, somewhere to the south."
+Subtitle="I think you should visit the camp's cook some time. He's always around here, somewhere to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=18 ElseGoto=18
@@ -257,7 +257,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=723  PositionY=374  
-Subtitle="From Butch I hear you've become a novice arena master.  Congratulations from me too."
+Subtitle="From Butch I hear you've become a novice arena master. Congratulations from me too."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=21 ElseGoto=21
@@ -268,7 +268,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
-Subtitle="You might want to score some arena victories.  That could also help your reputation a lot."
+Subtitle="You might want to score some arena victories. That could also help your reputation a lot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=21 ElseGoto=21
@@ -288,7 +288,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=22  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=818  PositionY=375  
-Subtitle="Helping Bender along was also a smart move.  But you should be very careful with this one.  He can get mad rather easily.  A bit of a security threat, but we can't be too picky."
+Subtitle="Helping Bender along was also a smart move. But you should be very careful with this one. He can get mad rather easily. A bit of a security threat, but we can't be too picky."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=22 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=24 ElseGoto=24
@@ -319,7 +319,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=25  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=928  PositionY=374  
-Subtitle="But most importantly, I was very much impressed with you when you cleared out the warehouse.  That was a huge deed I will never forget."
+Subtitle="But most importantly, I was very impressed with you when you cleared out the warehouse. That was a huge deed I will never forget."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 OnCondition="PointsToDistributeAtLeast:0" JumpToOption=27 ElseGoto=27
@@ -348,13 +348,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=28  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=473  PositionY=290  
-Subtitle="OK.  Your list of achievements is long enough.  You can join us.  So I hereby declare you a member of the town guard."
+Subtitle="OK. Your list of achievements is long enough. You can join us. So I hereby declare you a member of the Red Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But now that you are in the guard, know this:  There is only one rule for us guards:  We stick together.  We survive together or we die together.  But we'll do it together."
+Subtitle="But now that you are in the Guard, know this: There is only one rule for us guards: We stick together. We survive together or we die together. But we do it together."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And now you might want to inspect the guard house.  Tell Tybalt to open the door for you.  Lukas at the arms counter shall give you your armor."
+Subtitle="And now you might want to inspect the guard house. Tell Tybalt to open the door for you. Lukas at the arms counter shall give you your armor."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I hope you will continue to prove yourself a worthy member of the guard."
+Subtitle="I hope you will prove yourself a worthy member of the Red Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
@@ -377,7 +377,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=30  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
-Subtitle="All in all, not quite so bad.  But you still need to do the one thing or the other.  Then we can talk about it."
+Subtitle="All in all, not quite so bad. But you still need to do the one thing or the other. Then we can talk about it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -387,7 +387,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1095  PositionY=469  
-Subtitle="I can't accept you into the guard like this.  Get going.  There are still many things to do for you."
+Subtitle="I can't accept you into the guard like this. Get going. There are still many things to do for you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -397,7 +397,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=32  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=443  
-Subtitle="But you are a member of the Town Guard already!  Don't be pulling my leg!  As guards must stick together."
+Subtitle="But you are a member of the Town Guard already! Don't be pulling my leg! Guards must stick together."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
@@ -408,9 +408,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=33  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=312  PositionY=321  
-Subtitle="This is not so easy.  At first you must establish a reputation around here.  Ask around, talk to people and build your reputation."
+Subtitle="This is not so easy. At first you must establish a reputation around here. Ask around, talk to people and build your reputation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Once you're a known character around here, we might let you join the ranks of the guard."
+Subtitle="Once you're a known character around here, we might let you join the ranks of the Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=1
 ChangeOption=33 ChangeToValue=0
@@ -444,16 +444,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=37  OptionText="I've heard Richard obtained new information on the colony."
+New Option Nr=37  OptionText=" I've heard Richard obtained new information on the colony."
 OptionSample="Spencer/Tux_ive_heard_richard.wav"
 PositionX=289  PositionY=512  
-Subtitle="Yes, that's right and in fact it might be crucial.  The data on the cube he obtained indicates the existence of a secret experimental facility on this world."
+Subtitle="Yes, that's right and in fact it might be crucial. The data on the cube he obtained indicates the existence of a secret experimental facility in this region."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our findings suggest, that they were testing some new form of disruptor shield, but research was finally discontinued, because of the side effects of the shield."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If the information is true, then the shield interfered with the positioning system of all bots and made them wander off."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now that seems like a gift of heaven.  We'll need to activate the shield, if that is still possible, and save the colony for good."
+Subtitle="Now that seems like a gift sent from heavens. We'll need to activate the shield, if that is still possible, and save the colony for good."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=37 ChangeToValue=0
 ChangeOption=38 ChangeToValue=1
@@ -461,16 +461,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=38  OptionText="I'd like to participate in this operation."
+New Option Nr=38  OptionText=" I'd like to participate in this operation."
 OptionSample="Spencer/Tux_id_like_to.wav"
 PositionX=371  PositionY=529  
-Subtitle="That's most kind of you to volunteer.  So far, I've sent two scouts into the area.  They have found the facility entrance and unlocked the gate."
+Subtitle="That's most kind of you to volunteer. So far, I've sent two scouts into the area. They have found the facility entrance and unlocked the gate."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="That is in fact a good sign, because it shows that the key combinations in the data were correct."
+Subtitle="That is a good sign, because it shows that the key combinations from the data cube were correct."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However, we've lost contact to them shortly after they went inside.  Also they reported heavy bot resistance."
+Subtitle="However, we've lost contact to them shortly after they went inside. They also reported heavy bot resistance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I'd be glad if you could take a look.  But use outmost care.  We can't afford to use another guard."
+Subtitle="I'd be glad if you could take a look. But use outmost care. We can't afford to lose another guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=39 ChangeToValue=1
@@ -479,14 +479,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=39  OptionText="OK.  I'll be careful.  But I'll do it."
+New Option Nr=39  OptionText=" OK. I'll be careful. But I'll do it."
 OptionSample="Spencer/Tux_ok_ill_be.wav"
 PositionX=464  PositionY=510  
-Subtitle="Good.  The base entrance is somewhat hidden in the caves to the northwest.  Best use the north gate out of town, then head west."
+Subtitle="Good. The base entrance is somewhat hidden in the caves to the northwest. Best use the north gate out of town, then head west."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I wish you the best of luck for this operation.  It might be that our survival depends on it.  Don't wait for assistance."
+Subtitle="I wish you the best of luck for this operation. It might be that our survival depends on it. Don't wait for assistance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Try to activate the disruptor shield if you can. The control unit should be somewhere on the lowest level of this installation."
+Subtitle="Try to activate the disruptor shield if you can. The control unit should be somewhere on the lowest level of the installation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=40 ChangeToValue=0
@@ -496,12 +496,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText="I don't feel like doing it now.  I'd rather prepare some more."
+New Option Nr=40  OptionText=" I don't feel like doing it now. I'd rather prepare some more."
 OptionSample="Spencer/Tux_i_dont_feel.wav"
 PositionX=462  PositionY=578  
-Subtitle="Good.  You should be well prepared if you intend to go."
+Subtitle="Good. You should be well prepared if you intend to go."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also there is no need to hurry with this.  After all, the installation is not running away, so best take a slow approach."
+Subtitle="Also there is no need to hurry with this. After all, the installation is not running away, so best take a slow approach."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -517,7 +517,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be going then."
+New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Spencer/Tux_ill_be_going.wav"
 PositionX=250  PositionY=260  
 Subtitle="See you later."

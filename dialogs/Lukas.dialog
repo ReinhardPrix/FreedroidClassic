@@ -38,10 +38,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=144  PositionY=132  
-Subtitle="A newcomer!  Great!  We can always use more people.  Welcome to the red guard!  I'm Lukas.  I'm in charge of our little armoury here."
+Subtitle="A newcomer! Great! We can always use more people. Welcome to the Red Guard! I'm Lukas. I'm in charge of our little armory here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -50,12 +50,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Spencer said, you'd give me an armour."
+New Option Nr=1  OptionText=" Spencer said, you'd give me an armour."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=263  PositionY=137  
-Subtitle="Of course.  As a member of our guard, you're entitled to wear one of our armours.  I can adjust it to fit any measurements, even yours."
+Subtitle="Of course. As a member of our Guard, you're entitled to wear one of our armors. I can adjust it to fit any measurements, even yours."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="There are two kinds or armours, a the heavy red guard robe and a light version of the same thing."
+Subtitle="There are two kinds or armors, a the heavy Red Guard robe and a light version of the same thing."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Now, what will it be?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -65,10 +65,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="What do you do all day here at the armoury?"
+New Option Nr=2  OptionText=" What do you do all day here at the armory?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=267  PositionY=192  
-Subtitle="Oh, there's always something to do.  Don't worry.  I'm pretty occupied keeping the place in order."
+Subtitle="Oh, there's always something to do. Don't worry. I'm pretty occupied keeping the place in order."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

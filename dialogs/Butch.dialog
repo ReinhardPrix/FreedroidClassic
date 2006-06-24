@@ -46,10 +46,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=57  PositionY=350  
-Subtitle="Greetings!  I'm Butch, the arena master.  Did you come here to fight?  That's great!"
+Subtitle="Greetings! I'm Butch, the arena master. Did you come here to fight? That's great!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -59,17 +59,17 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Who fights in the arena?"
+New Option Nr=1  OptionText=" Who fights in the arena?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=233  PositionY=388  
-Subtitle="Everyone who enjoys it.  Using the arena for some good fight is free, but by using it you implicitly state that we have the unristricted and exclusive copyright on all recordings made of the fight."
+Subtitle="Everyone who enjoys it. Using the arena for some good fight is free, but by using it you implicitly state that we have the unristricted and exclusive copyright on all recordings made of the fight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="I would like to fight in the arena."
+New Option Nr=2  OptionText=" I would like to fight in the arena."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=246  PositionY=137  
 Subtitle="That's a good idea, but currently the duelling arena is rented out until next month."
@@ -78,7 +78,7 @@ Subtitle="You can only have a fight against some bots if you would like that."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We have two arena grounds.  One is more for novice fighters, the other one is the master arena."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think I need not explain that further.  Now, which one will it be?"
+Subtitle="I think I need not explain that further. Now, which one will it be?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Butch"
@@ -86,10 +86,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="I'm sorry but I see no arena.  Where is it?"
+New Option Nr=3  OptionText="I'm sorry but I see no arena. Where is it?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=234  PositionY=261  
-Subtitle="Of course you can't see it.  The arena is deep under ground."
+Subtitle="Of course you can't see it. The arena is deep under ground."
 ReplySample="DIX_Great_I_Appreciate_0.wav"
 Subtitle="We had some concerns of citizens that one of the bots might break free at night and kill people."
 ReplySample="DIX_Great_I_Appreciate_0.wav"

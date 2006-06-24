@@ -46,10 +46,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here. "
 OptionSample="Darwin/Tux_hi_im_new.wav"
 PositionX=61  PositionY=253  
-Subtitle="Hello.  Welcome to this place."
+Subtitle="Hello. Welcome to this place."
 ReplySample="Darwin/DAR_Hello2.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="What are you doing here?"
+New Option Nr=1  OptionText=" What are you doing here?"
 OptionSample="Darwin/Tux_what_are_you.wav"
 PositionX=141  PositionY=254  
 Subtitle="What does it look like to you?"
@@ -70,7 +70,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="Can you teach me something about hunting bots?"
+New Option Nr=2  OptionText=" Can you teach me something about hunting bots?"
 OptionSample="Darwin/Tux_can_you_teach.wav"
 PositionX=166  PositionY=395  
 Subtitle="Well, the most important thing about it is that you know how to handle a weapon."
@@ -87,10 +87,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="I would like to learn more about extracting parts."
+New Option Nr=3  OptionText=" I would like to learn more about extracting parts."
 OptionSample="Darwin/Tux_Id_like_to_learn_more.wav"
 PositionX=277  PositionY=393  
-Subtitle="Good.  But that knowledge only comes for a fee."
+Subtitle="Good. But that knowledge only comes for a fee."
 ReplySample="Darwin/DAR_Fee2.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Darwin"
@@ -98,7 +98,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be going then."
+New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Darwin/Tux_ill_be_going.wav"
 PositionX=436  PositionY=116  
 Subtitle="I wish you the best of luck."

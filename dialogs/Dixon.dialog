@@ -36,10 +36,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Dixon/Tux_hi_im_new.wav"
 PositionX=46  PositionY=339  
-Subtitle="Hello and Welcome.  I'm Dixon.  I'm in charge of the teleporter system of this camp."
+Subtitle="Hello and welcome. I'm Dixon. I'm in charge of the teleporter system of this camp."
 ReplySample="Dixon/DIX_hello_and_welcome.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -59,13 +59,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Maybe I can help somehow."
 OptionSample="Dixon/Tux_maybe_i_can.wav"
 PositionX=554  PositionY=297  
-Subtitle="Well, maybe you really could help.  But it would be dangerous to even try."
+Subtitle="Well, maybe you really could help. But it would be dangerous to even try."
 ReplySample="Dixon/DIX_well_maybe_you.wav"
 Subtitle="You would have to go down the maintainance teleporter way and fetch me the toolkit."
 ReplySample="Dixon/DIX_you_would_have.wav"
 Subtitle="I'm pretty sure it is still lying around somewhere down there. But it's dangerous."
 ReplySample="Dixon/DIX_im_pretty_sure.wav"
-Subtitle="Are you sure you really want to try on that?  You better be well prepared."
+Subtitle="Are you sure you really want to try on that? You better be well prepared."
 ReplySample="Dixon/DIX_are_you_sure.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -78,7 +78,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" I'll go give it a try."
 OptionSample="Dixon/Tux_ill_go_give.wav"
 PositionX=653  PositionY=378  
-Subtitle="Great!  I appreciate that.  I'll unlock the northern maintainance access.  Good Luck."
+Subtitle="Great! I appreciate that. I'll unlock the northern maintainance access. Good luck."
 ReplySample="Dixon/DIX_great_i_appreciate.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
@@ -92,7 +92,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" Sorry, this does not really sound like something I could do."
 OptionSample="Dixon/Tux_sorry_this_does.wav"
 PositionX=646  PositionY=298  
-Subtitle="Maybe it's better this way.  No use to have you torn apart by those rogue bots."
+Subtitle="Maybe it's better this way. No use to have you torn apart by those rogue bots."
 ReplySample="Dixon/DIX_maybe_its_better.wav"
 Subtitle="Perhaps later, when you feel more like it, you might want to still give it a try."
 ReplySample="Dixon/DIX_perhaps_later_when.wav"
@@ -106,14 +106,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" I have found your toolset. Here you are. "
+New Option Nr=5  OptionText=" I have found your toolset. Here you are."
 OptionSample="Dixon/Tux_i_have_found.wav"
 PositionX=512  PositionY=39  
-Subtitle="Oh great!  How did you manage to get that?  Well anyway, thanks a lot."
+Subtitle="Oh great! How did you manage to get that? Well anyway, thanks a lot."
 ReplySample="Dixon/DIX_oh_great_how.wav"
 Subtitle="With this I'll be able to fix the damage at the teleporters immediately."
 ReplySample="Dixon/DIX_with_this_ill.wav"
-Subtitle="Here, take these 100 bucks as a reward.  And now be gone, I got to work."
+Subtitle="Here, take these 100 bucks as a reward. And now be gone, I got to work."
 ReplySample="Dixon/DIX_here_take_these.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
@@ -170,11 +170,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=334  PositionY=342  
-Subtitle="On the contrary!  Well, I'm still working on it, but I'm not making much progress."
+Subtitle="On the contrary! Well, I'm still working on it, but I'm not making much progress."
 ReplySample="Dixon/DIX_on_the_contrary.wav"
-Subtitle="It's a pity.  If I only had my old toolkit, I could fix this problem in a minute."
+Subtitle="It's a pity. If I only had my old toolkit, I could fix this problem in a minute."
 ReplySample="Dixon/DIX_its_a_pitty.wav"
-Subtitle="But it's gone.  It all happened down in the maintainance tunnels when I was surprised by some rogue bots."
+Subtitle="But it's gone. It all happened down in the maintainance tunnels when I was surprised by some rogue bots."
 ReplySample="Dixon/DIX_it_all_happend.wav"
 Subtitle="I must have lost it down there and we had to seal the entrance."
 ReplySample="Dixon/DIX_i_must_have.wav"
@@ -192,9 +192,9 @@ Subtitle="Basically the teleporter system is now working again."
 ReplySample="DIX_Basically_The_Teleporter_0.wav"
 Subtitle="But it's still locked since we don't have the calibration data from the other cities."
 ReplySample="DIX_But_Its_Still_0.wav"
-Subtitle="Someone needs to go there and collect them by hand.  But that's not my problem."
+Subtitle="Someone needs to go there and collect them by hand. But that's not my problem."
 ReplySample="DIX_Someone_Needs_To_0.wav"
-Subtitle="The person responsible for this part is Arlas, but he isn't in town right now.  So there's nothing we could do."
+Subtitle="The person responsible for this part is Arlas, but he isn't in town right now. So there's nothing we could do."
 ReplySample="DIX_The_Person_Responsible_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -251,9 +251,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=336  PositionY=258  
-Subtitle="As I've told you before, I'm still missing my toolkit.  It must be somewhere down in the maintainance tunnels."
+Subtitle="As I've told you before, I'm still missing my toolkit. It must be somewhere down in the maintainance tunnels."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="What are you still doing here?  If you want to be helpful, then down waste my time.  Go get my toolkit."
+Subtitle="What are you still doing here?  If you want to be helpful, then down waste my time. Go get my toolkit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

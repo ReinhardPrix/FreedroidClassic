@@ -37,7 +37,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=141  PositionY=133  
 Subtitle="Good day. I am Bruce."
@@ -62,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" You don't talk much, eh?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=214  PositionY=229  
-Subtitle="No, I am just too tired now.  I have been working in the mine for two weeks now."
+Subtitle="No, I am just too tired now. I have been working in the mine for two weeks now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I feel really finished, so maybe it would be better if you came some other day."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -75,11 +75,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Why do you work so hard in the mine?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=302  PositionY=228  
-Subtitle="Because I must!  The Red Guard makes everyone work up to his limits!"
+Subtitle="Because I must! The Red Guard makes everyone work up to his limits!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you do not work for a full work period, you will be in trouble."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But I have no choice.  I do not want to be a soldier again."
+Subtitle="But I have no choice. I do not want to be a soldier again."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
