@@ -4453,7 +4453,7 @@ Position_Y=260
 Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="NONE_AVAILABLE_YET"
+Item uses rotation series with prefix="datacube"
 Items of this type collect together in inventory="yes"
 Strength minimum required to wear/wield this item=-1
 Dexterity minimum required to wear/wield this item=-1
@@ -4461,7 +4461,7 @@ Magic minimum required to wear/wield this item=-1
 Item as defensive item: base_ac_bonus=0
 Item as defensive item: ac_bonus_modifier=0
 Base item duration=-1 plus duration modifier=0
-File or directory name for inventory image="inventory_image_data_cube.png"
+File or directory name for inventory image="datacube/inv_image.png"
 inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
