@@ -197,7 +197,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="BACK"
+New Option Nr=99  OptionText=" BACK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=243  PositionY=378  
 ChangeOption=99 ChangeToValue=0

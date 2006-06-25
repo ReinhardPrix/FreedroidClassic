@@ -319,7 +319,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=700  PositionY=70  
 Subtitle="EOT ACKNOWLEDGED. CONNOCTION CLOSED."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="GOODBYE.
+Subtitle="GOODBYE."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

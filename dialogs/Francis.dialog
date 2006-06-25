@@ -45,7 +45,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=84  PositionY=263  
-Subtitle="Hello Tux!  You seem to be alive and well!  How wonderful!"
+Subtitle="Hello Tux! You seem to be alive and well! How wonderful!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -82,7 +82,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText=" Where can I get a weapon?"
 OptionSample="Francis/Tux_where_can_i.wav"
 PositionX=395  PositionY=395  
-Subtitle="For the start, there should be a weapon in one of the chests around here.  But you might find some among the bots."
+Subtitle="For the start, there should be a weapon in one of the chests around here. But you might find some among the bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I'm afraid most of the stuff is just from some rpg convention that took place here some time ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

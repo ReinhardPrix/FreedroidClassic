@@ -3130,7 +3130,7 @@ FreedroidRPG comes with a separate program for editing and inspecting dialogs.  
 \n\
    VOICE SAMPLES:\n\
 \n\
-The voices for the many characters you can encounter in FreedroidRPG are still only partially done.  So if you can get a microphone somewhere and feel like doing some voice sampling, you're invited to do so.  You need not be a native speaker for this.  Your accent is welcome.\n\
+Currently we are not accepting new speech. All of the dialogues are being rewritten, we will add voice to them later. If you are one of our old voice actors, then please get in touch with the team.\n\
 \n\
 \n\
    CONTACT:\n\n\

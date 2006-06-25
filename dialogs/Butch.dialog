@@ -76,7 +76,7 @@ Subtitle="That's a good idea, but currently the duelling arena is rented out unt
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You can only have a fight against some bots if you would like that."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We have two arena grounds.  One is more for novice fighters, the other one is the master arena."
+Subtitle="We have two arena grounds. One is more for novice fighters, the other one is the master arena."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think I need not explain that further. Now, which one will it be?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -86,7 +86,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="I'm sorry but I see no arena. Where is it?"
+New Option Nr=3  OptionText=" I'm sorry but I see no arena. Where is it?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=234  PositionY=261  
 Subtitle="Of course you can't see it. The arena is deep under ground."
