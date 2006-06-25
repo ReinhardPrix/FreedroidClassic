@@ -498,17 +498,17 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
     
     TuxItemRowRect . x = 55 * GameConfig . screen_width / 640;
     TuxItemRowRect . y = 410 * GameConfig . screen_height / 480 ;
-    //TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
-    TuxItemRowRect . h = 64 ;
-    //TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640  ;
-    TuxItemRowRect . w = 64 ;
+    TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
+//    TuxItemRowRect . h = 64 ;
+    TuxItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640  ;
+//    TuxItemRowRect . w = 64 ;
     
     ShopItemRowRect . x = 55 * GameConfig . screen_width / 640 ;
     ShopItemRowRect . y = 10 * GameConfig . screen_height / 480 ;
-    //ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
-    //ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640 ;
-    ShopItemRowRect . h = 64 ;
-    ShopItemRowRect . w = 64 ;
+    ShopItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
+    ShopItemRowRect . w = INITIAL_BLOCK_WIDTH * SHOP_ROW_LENGTH * GameConfig . screen_width / 640 ;
+//    ShopItemRowRect . h = 64 ;
+//    ShopItemRowRect . w = 64 ;
     
     if ( TuxItemRow == 1 )
     {
