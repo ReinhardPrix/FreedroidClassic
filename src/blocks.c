@@ -3901,8 +3901,65 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BLOOD_7 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
   obstacle_map [ ISO_BLOOD_8 ] . obstacle_short_name = obstacle_map [ ISO_BLOOD_1 ] . obstacle_short_name;
   obstacle_map [ ISO_BLOOD_8 ] . obstacle_long_description = obstacle_map [ ISO_BLOOD_1 ] . obstacle_long_description;
+
+  obstacle_map [ ISO_OIL_STAINS_1 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_1 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_1 ] . filename = "iso_oil_stains_0001.png" ;
+  obstacle_map [ ISO_OIL_STAINS_1 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . filename = "iso_oil_stains_0002.png" ;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . filename = "iso_oil_stains_0003.png" ;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . filename = "iso_oil_stains_0004.png" ;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . filename = "iso_oil_stains_0005.png" ;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . filename = "iso_oil_stains_0006.png" ;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . filename = "iso_oil_stains_0007.png" ;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . needs_pre_put = TRUE ;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . block_area_type = COLLISION_TYPE_NONE ;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . filename = "iso_oil_stains_0008.png" ;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . needs_pre_put = TRUE ;
+  // the eight blood tiles have the same description - normal, right ?
+  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name = "Oil_stains";
+  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description = "Do droids bleed ? These don't.";
+  obstacle_map [ ISO_OIL_STAINS_2 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_2 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_3 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_4 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_5 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_6 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_7 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
+  obstacle_map [ ISO_OIL_STAINS_8 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
   
- 
 
   obstacle_map [ ISO_EXIT_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_EXIT_1 ] . block_area_parm_1 = 1.0 ;

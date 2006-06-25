@@ -79,6 +79,14 @@ remove_blood_obstacles_for_respawning ( int level_num )
 	    case ISO_BLOOD_6:
 	    case ISO_BLOOD_7:
 	    case ISO_BLOOD_8:
+        case ISO_OIL_STAINS_1:
+        case ISO_OIL_STAINS_2:
+        case ISO_OIL_STAINS_3:
+        case ISO_OIL_STAINS_4:
+        case ISO_OIL_STAINS_5:
+        case ISO_OIL_STAINS_6:
+        case ISO_OIL_STAINS_7:
+        case ISO_OIL_STAINS_8:
 		delete_obstacle ( curShip . AllLevels [ level_num ] , 
 				  & ( curShip . AllLevels [ level_num ] -> obstacle_list [ i ] ) ) ;
 		//--------------------

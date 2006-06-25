@@ -612,14 +612,21 @@ enemy_spray_blood ( Enemy CurEnemy )
 {
   moderately_finepoint target_pos = { 1.0 , 0 } ;
 
-  DebugPrintf ( 1 , "\nBlood has been sprayed..." );
+  DebugPrintf ( 1 , "\nBlood has been sprayed...%s", CurEnemy -> type );
 
   RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
 
   target_pos . x += CurEnemy -> virt_pos . x ;
   target_pos . y += CurEnemy -> virt_pos . y ;
 
+  /*
+
+  I try to see how to make the type check (human vs bot) but first just to test i change this globally
+  
   create_new_obstacle_on_level ( curShip . AllLevels [ CurEnemy -> pos . z ] , ISO_BLOOD_1 + MyRandom ( 7 ) , target_pos . x , target_pos . y );
+  */
+  create_new_obstacle_on_level ( curShip . AllLevels [ CurEnemy -> pos . z ] , ISO_OIL_STAINS_1 + MyRandom ( 7 ) , target_pos . x , target_pos . y );
+
   
 }; // void enemy_spray_blood ( Enemy CurEnemy ) 
 
