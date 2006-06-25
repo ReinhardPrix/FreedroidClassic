@@ -170,9 +170,10 @@ Subtitle="However, self-inflicted damage might be exempted from this rule in som
 ReplySample="DocMoore/DocMoore_However_Self_Inflicted.wav"
 Subtitle="There, it's done. You're completely fixed. You can go now."
 ReplySample="DocMoore/DocMoore_There_Its_Done.wav"
-ChangeOption=10 ChangeToValue=1
+ChangeOption=10 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
+ChangeOption=12 ChangeToValue=1
 DoSomethingExtra="CompletelyHealTux"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -194,9 +195,25 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=12  OptionText=" Can you fix me up?"
+OptionSample="DocMoore/Tux_can_you_fix.wav"
+PositionX=155  PositionY=274  
+Subtitle="Sure, as the only doctor of this slowly growing community, I'm responsible for everyones health."
+ReplySample="DocMoore/DocMoore_Sure_As_The_Only_Doctor.wav"
+Subtitle="However, self-inflicted damage might be exempted from this rule in some cases..."
+ReplySample="DocMoore/DocMoore_However_Self_Inflicted.wav"
+Subtitle="There, it's done. You're completely fixed. You can go now."
+ReplySample="DocMoore/DocMoore_There_Its_Done.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
+DoSomethingExtra="CompletelyHealTux"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+----------------------------------------------------------------------
+
 New Option Nr=99  OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=294  PositionY=289  
+PositionX=512  PositionY=290  
 Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
