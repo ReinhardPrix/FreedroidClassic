@@ -3,11 +3,11 @@
 ** Start of iso_image offset file **
 
 
-OffsetX=-13
+OffsetX=-30
 
-OffsetY=-24
+OffsetY=-19
 
-GraphicsFileName=./../items/dixons_toolbox/ingame.png
+GraphicsFileName=ingame.png
 
 
 ** End of iso_image offset file **
