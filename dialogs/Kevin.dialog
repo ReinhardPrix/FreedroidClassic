@@ -41,11 +41,11 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi, I'm new here."
 OptionSample="Kevin/Tux_hi_im_new.wav"
-PositionX=776  PositionY=146  
-Subtitle="Hi, I'm Kevin, a hacker."
+PositionX=841  PositionY=147  
+Subtitle="Hi, I'm Kevin. I'm a computer security expert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
-ChangeOption=3 ChangeToValue=1
+OnCondition="GoldIsLessThan:1" JumpToOption=20 ElseGoto=20
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -62,11 +62,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=768  PositionY=242  
-Subtitle="As I've told you, I cannot teach you anything right now. This is not because I don't want to. I don't have the time."
+Subtitle="As I've told you, I cannot teach you anything right now. I don't have the time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I must see to that the flaky energy stream is distributed such that my research project can continue."
+Subtitle="I must see to that the flaky energy stream is distributed in such a way that my research project can continue."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If you could find a way to get rid of the maintainance bots on the second underground level of this station, it would surely help a lot."
+Subtitle="If you get rid of the maintainance bots on the second underground level of this station, I will find the time to teach you something."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -85,9 +85,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=517  PositionY=147  
-Subtitle="I can increase your hacking skill, but that knowledge comes for a fee."
+Subtitle="I can teach you everything. For 300, up front."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now what will it be?"
+Subtitle="Still interested? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Kevin"
@@ -98,15 +98,17 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=656  PositionY=326  
-Subtitle="I've got some important research project going on. In fact this project might be cruical to the survival of the whole colony."
+Subtitle="Not now, I'm busy."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="So you see the tremendous importance of it. But the project is currently in danger. There are some maintainance bots down at the energy source."
+Subtitle="I've got an important research project going on. In fact this project might be cruical to the survival of the whole colony."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They are trying to 'maintain' machines by rebooting them all the while. This must stop, but I can't leave here."
+Subtitle="There is tremendous importance in it. But the project is in danger. There are some maintainance bots down at the energy source."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I must see that the remaining power is distributed such that the project can continue uninterrupted."
+Subtitle="They are trying to 'maintain' machines by rebooting them all the time. This must stop, but I can't leave this place."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now if you could go down there and see that the power flow gets stabilized, then I'll find the time again to teach you something."
+Subtitle="I must balance the remaining power in such a way that my project can continue uninterrupted."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now, if you go down there and make the power flow stabile, then I'll find the time to teach you something."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=6 ChangeToValue=1
@@ -122,7 +124,9 @@ Subtitle="That's great. You can't miss it. It's not hard to find. Enter my garde
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Best don't bother with the resistance on the first level. You only need to take care of the energy supply. And that's on the SECOND level."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Best make it quick. I'm getting sick of stabilizing the energy distribution already."
+Subtitle="I hope you have a laser pistol or something like that, the bots there will rip you apart if you try to approach them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Best make it quick. I'm already sick of stabilizing the stupid power grid."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
@@ -134,7 +138,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText=" I'm sorry, but I don't think there's anything I could do about that energy supply."
 OptionSample="Kevin/Tux_im_sorry_but.wav"
 PositionX=656  PositionY=410  
-Subtitle="That's too bad. Because I can't leave here to fix it myself. It's important that my research project can continue uninterrupted."
+Subtitle="Too bad. Now get out of my sight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=7 ChangeToValue=0
@@ -181,7 +185,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=233  PositionY=377  
-Subtitle="I've already rewarded you for that. Now go and don't steal any more of my time."
+Subtitle="I've already rewarded you for that. Don't steal my time. I'm busy."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -202,9 +206,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=460  PositionY=398  
-Subtitle="Yes, since the energy supply has been constant, results were much better. I've been able to achive my goal."
+Subtitle="Yes, since the energy supply has been constant, results were much better. I've achieved my goal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I've managed to obtain secret data on the colony surroundings. But the data is so vast, we'll need a big computer cluster to evaluate it properly. "
+Subtitle="I've obtained secret data on the colony surroundings. We'll need a big computer cluster to evaluate it properly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Once we've evaluated the data, we might find a way to secure the colony and ensure our survival. But it's too early to tell yet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -219,15 +223,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=362  PositionY=496  
-Subtitle="That would be great of course. I know that the old town is maintaining a suitable information infrastructure and has a proper cluster running for some time."
+Subtitle="That would be great of course. I know that the old town is maintaining a suitable information infrastructure and has a proper cluster running for some time now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The only problem is, that I can't go back to town. They would probably kill me because of that accident years ago."
+Subtitle="The only problem is, that I can't go back to town. They would probably kill me because of that misunderstanding some time ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And also the cluster is inside of the guard citadel. I hear it's only allowed for members of the guard to enter the complex."
+Subtitle="And also the cluster is inside of the guard citadel. I hear it's only allowed for members of the Red Guard to enter the complex."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But maybe you can arrange that somehow. For me it would be impossible, because of my bad reputation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I'll give you the data cube. Take it to the computer cluster administration people.  They will know what to do. And don't mention me there."
+Subtitle="I'll give you the data cube. Take it to the computer cluster administration people. They will know what to do. And don't mention me there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="GiveItem:100"
@@ -238,7 +242,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=16  OptionText=" Maybe I can help somehow to find a suitable cluster."
 OptionSample="Kevin/Tux_maybe_i_can.wav"
-PositionX=459  PositionY=495  
+PositionX=460  PositionY=496  
 ChangeOption=16 ChangeToValue=0
 OnCondition="MissionAssigned:7" JumpToOption=17 ElseGoto=15
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -247,10 +251,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=550  PositionY=495  
+PositionX=557  PositionY=497  
 Subtitle="You've already agreed to take my data cube to the cluster. I have no great influence of this matter any more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The fate of our colony now rests in your hands. Bring the data cube I gave you to the cluster. Only there can the data be evaluated properly."
+Subtitle="The fate of the colony now rests in your hands. Bring the data cube I gave you to the cluster. Only there the data can be evaluated properly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -274,6 +278,17 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Good work."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" In other words: You are a hacker."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=755  PositionY=148  
+Subtitle="Eh... I guess you could put it that way, yes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
