@@ -1313,6 +1313,19 @@ LoadShip (char *filename)
     //
     for ( i = 0 ; i < curShip.num_levels ; i++ )
     {
+	if(curShip . AllLevels [ i ] != NULL) 
+		{ //we need to free memory! otherwise 10MB leak! 
+		int ydim = curShip . AllLevels [ i ] -> ylen;
+		int row = 0;
+		 for (row = 0; row < ydim  ; row++)
+		    {
+	            free(curShip . AllLevels [ i ] -> map [ row ]);
+	            curShip . AllLevels [ i ] -> map [ row ] = NULL;
+		    }
+		free(curShip . AllLevels [ i ]);
+		curShip . AllLevels[i] = NULL;
+		}
+
 	curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
 	
 	decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
