@@ -29,7 +29,7 @@ If you have questions concerning FreedroidRPG, please send mail to:
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
-
+ b
 
 You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
 This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
@@ -45,18 +45,22 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Michelangelo/Tux_hi_im_new.wav"
-PositionX=49  PositionY=367  
-Subtitle="Hello! I'm Michelangelo. I haven't been for here for long either."
+PositionX=718  PositionY=238  
+Subtitle="Hello. I'm Michelangelo. I haven't been for here for long either."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I wish the bots had just killed me, but I got 'lucky' and ended up in this hellhole."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
+ChangeOption=18 ChangeToValue=1
+ChangeOption=25 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=211  PositionY=324  
+PositionX=170  PositionY=302  
 Subtitle="Not too well. I was going to prepare a great meal, but noticed that my favorite oven is down."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Most likely it's the energy crystal again. I don't get any good energy crystals these days."
@@ -66,14 +70,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
-ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" Why didn't you send someone to get some energy crystals?"
 OptionSample="Michelangelo/Tux_why_didnt_you.wav"
-PositionX=330  PositionY=410  
+PositionX=147  PositionY=381  
 Subtitle="I did. I've asked Jack to get some. He agreed to bring me some from one of the caverns east of town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But he hasn't shown up here since then. That was two days ago."
@@ -85,7 +88,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=3  OptionText=" Maybe I can help somehow?"
 OptionSample="Michelangelo/Tux_maybe_i_can.wav"
-PositionX=262  PositionY=255  
+PositionX=34  PositionY=195  
 Subtitle="Sure! It would be great if you could bring me some red dilitium crystals."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="As far as I know, the caverns to the east of town hold lots of them."
@@ -104,7 +107,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=4  OptionText=" I'll go fetch you some of those crystals."
 OptionSample="Michelangelo/Tux_ill_go_fetch.wav"
-PositionX=354  PositionY=339  
+PositionX=74  PositionY=360  
 Subtitle="Great! And hurry up! Then I can finally dump this old oven beast and use my new one again."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Also I will open the east gate of town for you. That way you won't have to fight your way through the northern areas."
@@ -120,7 +123,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=5  OptionText=" Sorry, no time for that now."
 OptionSample="Michelangelo/Tux_sorry_no_time.wav"
-PositionX=374  PositionY=224  
+PositionX=198  PositionY=164  
 Subtitle="Too bad! I'd have given you lots of delicious food for it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Well, think about it. I'm sure it would pay off for you, very sure."
@@ -128,14 +131,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
-ChangeOption=10 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText=" About those crystals you wanted..."
 OptionSample="Michelangelo/Tux_about_those_energy.wav"
-PositionX=407  PositionY=93  
+PositionX=304  PositionY=204  
 Subtitle="What, you still got no crystals for me? What are you waiting for?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="There should be plenty of them in the cave to the east of town."
@@ -149,7 +151,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=7  OptionText=" I've got some red dilitium crystals for you..."
 OptionSample="Michelangelo/Tux_ive_got_some.wav"
-PositionX=407  PositionY=30  
+PositionX=361  PositionY=88  
 Subtitle="GREAT! Thanks a lot! Now those are some great crystals."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wasn't too hard, was it?"
@@ -166,7 +168,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=8  OptionText=" Now about the reward you promised me..."
 OptionSample="Michelangelo/Tux_now_about_the.wav"
-PositionX=238  PositionY=456  
+PositionX=141  PositionY=485  
 Subtitle="Yes, I know I said I'd give you lots of food. But for that I must cook something first."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Come back later, then maybe I'll have something already. But now leave me alone with my cooking art please."
@@ -186,16 +188,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 New Option Nr=10  OptionText=" How is it going?"
 OptionSample="Michelangelo/Tux_how_is_it.wav"
-PositionX=129  PositionY=363  
+PositionX=634  PositionY=239  
 ChangeOption=10 ChangeToValue=0
-OnCondition="MissionComplete:2" JumpToOption=11 ElseGoto=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=11  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=189  PositionY=410  
+PositionX=113  PositionY=405  
 Subtitle="Thanks to your efforts, I can now cook as normal again."
 ReplySample=""
 Subtitle="But I'm still busy with the preparations. Maybe you could come later when I've got something, ok?"
@@ -209,7 +210,6 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=129  PositionY=183  
-ChangeOption=10 ChangeToValue=1
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -226,7 +226,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=229  PositionY=47  
+PositionX=225  PositionY=87  
 ChangeOption=14 ChangeToValue=0
 OnCondition="HaveItemWithCode:74" JumpToOption=16 ElseGoto=17
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -235,7 +235,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=57  PositionY=38  
+PositionX=55  PositionY=88  
 ChangeOption=15 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -253,7 +253,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=300  PositionY=78  
+PositionX=290  PositionY=305  
 ChangeOption=6 ChangeToValue=1
 ChangeOption=7 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
@@ -264,9 +264,287 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=18  OptionText=" You do not sound happy. What is wrong?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=717  PositionY=319  
+Subtitle="EVERYTHING!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just look at this stupid town!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We are constantly pushed around by our 'saviours' the damn Red Guard. I hope they all die from rat bites as soon as possible and go to the deepest hells to boil in lava forever."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And the bots are keeping us busy by murdering, chopping, slicing, cleaving, rending and wounding us. How wonderful. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The guards gave me a filthy howel to live in. The walls are so thin that every night I am rocked to sleep by the bots communicating with those beeps and modem sounds."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It sounds like they are singing something. Every night they start their song... I cannot sleep thanks to that electric chorus."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Have I mentioned that the only food that we have is some kind of pestilent military ration? The smell alone is making me want to vomit."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=18 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=19 ElseGoto=20
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="NEWLY INSERTED DIALOG OPTION"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=797  PositionY=319  
+Subtitle="The calamitous Red Guard took away all my great culinary creations."
+ReplySample=""
+ChangeOption=19 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="fff"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=634  PositionY=319  
+Subtitle="I cannot! My beautiful macrowave oven is out of power. The wretched Red Guard took away my uranium battery."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I wish I could kill them all with my bare hands. They deserve it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=22 ChangeToValue=1
+ChangeOption=21 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText="Why don't you send someone for the crystals?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=634  PositionY=400  
+Subtitle="I did. I sent my aide for them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Yesterday a guard patrol found a few tiny bits of him and lots of dried blood."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The bots made a bloody mess out of him. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" I can get you some dilithium."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=557  PositionY=319  
+Subtitle="Have you gotten overheated Linarian?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Look, there are dozens of ways you can kill yourself and most hurt less than being killed by a bot."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you want to die just walk into a nuclear reactor or something. So much simpler."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+ChangeOption=23 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" I'll be fine. "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=476  PositionY=318  
+Subtitle="Do you know how the bots act? Some want  to kill you as soon as possible... Others want to do the same, but slowly."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I have seen corpses with nearly all of the fingers ripped out. People with eyes drilled out with some big tool. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I smelled burnt meat and heard the screams of the captives as they were incinerated alive outside the city walls. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The bots know no mercy. They cannot even define it, damn scrap metal fiends."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Feel free to go Linarian, but make sure to be very dead before they start killing you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+ChangeOption=38 ChangeToValue=1
+DoSomethingExtra="AssignMission:2"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Got any food yet?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=1174  PositionY=157  
+Subtitle="I had prepared some delicacies, but the ravenous Red Guard ate it all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="No big loss, I have a second batch in the oven and it will be done soon."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I think the mood it the town will improve once the cooking master Michaelangelo gets to work. Ha!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText="Can I buy some food here?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=799  PositionY=239  
+Subtitle="There is no food here, just the odious millitary rations."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Made fully out of artificial nutrients and  cancirogenic flavors. Even the army hated them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It is better than starving, but some people have already committed suicide because of the repulsive material being the only thing available to eat."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I can give you some, but it is not worthy being called food."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+ChangeOption=26 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" I want some army snacks!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=882  PositionY=239  
+Subtitle="I am supposed to read this out to all newcomers. Here goes:"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Please note that the army meal model #23 you are about to eat is provided 'as is' without warranty of any kind."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="That includes the implied varranty of edibility or fitness for a particular purpose. The entire risk as to the quality of the food is with you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Should the army meal model #23 prove poisonous, you agree to cover the cost of keeping you alive by the colony medical staff or the costs of your cremation in our nuclear reactor."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Well, that is all. Here is the junk that you wanted."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+OnCondition="GoldIsLessThan:1" JumpToOption=27 ElseGoto=27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText="Hmm... Crunchy... That is... Oh... No. Ugh. Help."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=882  PositionY=325  
+Subtitle="Oh yes. You were warned, so don't blame me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+OnCondition="GoldIsLessThan:1" JumpToOption=28 ElseGoto=28
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=28  OptionText="Bleah! That is not food! "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=970  PositionY=325  
+Subtitle="We already know that. There is nothing else to eat here, so I hope you get used to the taste."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=28 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=29  OptionText="I have the dilithium you wanted."
+OptionSample="q"
+PositionX=1129  PositionY=196  
+Subtitle="Really? I thought you are dead, but not only you come back alive, you also bring some power crystals for my trusty oven."
+ReplySample="q"
+Subtitle="I will start cooking at once."
+ReplySample="q"
+Subtitle="Thank you, Linarian. As soon as the real food is ready I will be able to give it away to the hungry people."
+ReplySample="q"
+ChangeOption=29 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:2"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored Michaelangelo's power supply:"
+DoSomethingExtra="AddExperienceBonus:250"
+DoSomethingExtra="OpenQuestDiaryEntry:M2E1:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1216  PositionY=125  
+ChangeOption=30 ChangeToValue=0
+OnCondition="HaveItemWithCode:74" JumpToOption=32 ElseGoto=33
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText=" What was I supposed to do again?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=1128  PositionY=60  
+Subtitle="Get me some red dilithium before the whole stupid colony commits mass suicide because of poor food supply."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Of course our heinous food might do us in far before that. I swear I saw that stuff glow it the dark and try to walk away from my plate a few times."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=32  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1215  PositionY=195  
+ChangeOption=32 ChangeToValue=0
+ChangeOption=29 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=33  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1216  PositionY=60  
+ChangeOption=33 ChangeToValue=0
+ChangeOption=31 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=34  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1061  PositionY=198  
+ChangeOption=34 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=35 ElseGoto=36
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=35  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1129  PositionY=123  
+ChangeOption=35 ChangeToValue=0
+ChangeOption=31 ChangeToValue=0
+ChangeOption=29 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=39 ElseGoto=36
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=36  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1062  PositionY=122  
+ChangeOption=36 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=37  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1062  PositionY=58  
+ChangeOption=37 ChangeToValue=0
+OnCondition="MissionAssigned:2" JumpToOption=36 ElseGoto=35
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=38  OptionText="NEWLY INSERTED DIALOG OPTION"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=476  PositionY=396  
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=39  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1174  PositionY=91  
+ChangeOption=39 ChangeToValue=0
+ChangeOption=24 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Michelangelo/Tux_ill_be_going.wav"
-PositionX=450  PositionY=271  
+PositionX=110  PositionY=246  
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
