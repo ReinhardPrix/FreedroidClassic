@@ -7972,7 +7972,7 @@ ob_type=1 ob_x=35.00 ob_y=24.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 ob_de=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 ob_de=2 
-ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
+ob_type=21 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 ob_de=5 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=27.00 ob_na=-1 ob_de=-1 
@@ -7981,14 +7981,14 @@ ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 ob_de=-1 
-ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
-ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=21 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=21 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=49.42 ob_y=26.58 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=38.87 ob_y=27.27 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 ob_de=3 
-ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
+ob_type=21 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 ob_de=4 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 ob_de=-1 
@@ -8073,8 +8073,6 @@ ob_type=39 ob_x=47.50 ob_y=75.50 ob_na=-1 ob_de=-1
 ob_type=80 ob_x=54.54 ob_y=9.21 ob_na=-1 ob_de=-1 
 ob_type=77 ob_x=54.56 ob_y=9.89 ob_na=-1 ob_de=-1 
 ob_type=81 ob_x=48.41 ob_y=14.71 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=39.48 ob_y=40.64 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=42.59 ob_y=37.84 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=41.16 ob_y=46.72 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=49.49 ob_y=37.54 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=31.68 ob_y=39.47 ob_na=-1 ob_de=-1 
@@ -8082,7 +8080,6 @@ ob_type=113 ob_x=32.16 ob_y=45.78 ob_na=-1 ob_de=-1
 ob_type=113 ob_x=26.80 ob_y=48.84 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=21.87 ob_y=45.41 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=23.22 ob_y=53.14 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=37.83 ob_y=52.23 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=37.94 ob_y=57.09 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=43.86 ob_y=43.04 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=50.17 ob_y=42.19 ob_na=-1 ob_de=-1 
@@ -8096,7 +8093,6 @@ ob_type=113 ob_x=52.40 ob_y=56.81 ob_na=-1 ob_de=-1
 ob_type=113 ob_x=54.59 ob_y=52.20 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=52.60 ob_y=45.10 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=43.91 ob_y=55.48 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=38.81 ob_y=48.82 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=43.71 ob_y=58.71 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=41.24 ob_y=59.85 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=42.47 ob_y=66.25 ob_na=-1 ob_de=-1 
@@ -8131,8 +8127,6 @@ ob_type=113 ob_x=21.72 ob_y=54.52 ob_na=-1 ob_de=-1
 ob_type=114 ob_x=52.18 ob_y=38.25 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=44.87 ob_y=36.71 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=50.42 ob_y=45.33 ob_na=-1 ob_de=-1 
-ob_type=114 ob_x=39.85 ob_y=42.34 ob_na=-1 ob_de=-1 
-ob_type=114 ob_x=40.41 ob_y=38.38 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=33.03 ob_y=42.97 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=28.75 ob_y=45.67 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=23.64 ob_y=44.12 ob_na=-1 ob_de=-1 
@@ -8148,7 +8142,6 @@ ob_type=115 ob_x=23.79 ob_y=50.03 ob_na=-1 ob_de=-1
 ob_type=115 ob_x=33.23 ob_y=41.31 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=52.85 ob_y=39.76 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=44.65 ob_y=35.59 ob_na=-1 ob_de=-1 
-ob_type=115 ob_x=40.81 ob_y=49.74 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=39.68 ob_y=54.02 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=39.59 ob_y=61.50 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=35.18 ob_y=63.00 ob_na=-1 ob_de=-1 
@@ -8229,7 +8222,7 @@ ob_type=158 ob_x=45.65 ob_y=15.12 ob_na=-1 ob_de=-1
 ob_type=158 ob_x=46.65 ob_y=15.10 ob_na=-1 ob_de=-1 
 ob_type=158 ob_x=47.64 ob_y=15.07 ob_na=-1 ob_de=-1 
 ob_type=6 ob_x=43.47 ob_y=20.96 ob_na=-1 ob_de=-1 
-ob_type=10 ob_x=44.51 ob_y=20.92 ob_na=-1 ob_de=-1 
+ob_type=6 ob_x=44.51 ob_y=20.92 ob_na=-1 ob_de=-1 
 ob_type=158 ob_x=47.53 ob_y=18.10 ob_na=-1 ob_de=-1 
 ob_type=158 ob_x=46.54 ob_y=18.11 ob_na=-1 ob_de=-1 
 ob_type=158 ob_x=45.54 ob_y=18.12 ob_na=-1 ob_de=-1 
@@ -8476,7 +8469,7 @@ ob_type=52 ob_x=39.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=88.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=88.50 ob_na=-1 ob_de=-1 
-ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=21 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=86.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=88.50 ob_na=-1 ob_de=-1 
@@ -8525,7 +8518,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8541,8 +8534,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=20 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -9134,6 +9127,58 @@ ob_type=316 ob_x=72.35 ob_y=17.48 ob_na=-1 ob_de=-1
 ob_type=319 ob_x=71.79 ob_y=17.22 ob_na=-1 ob_de=-1 
 ob_type=319 ob_x=73.02 ob_y=17.32 ob_na=-1 ob_de=-1 
 ob_type=318 ob_x=72.85 ob_y=17.41 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=41.04 ob_y=10.79 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=33.52 ob_y=64.62 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=31.64 ob_y=63.94 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=33.52 ob_y=64.58 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=31.81 ob_y=63.57 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=40.10 ob_y=53.37 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=39.84 ob_y=52.57 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=38.24 ob_y=52.71 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=38.72 ob_y=54.17 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=58.38 ob_y=14.87 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=57.49 ob_y=14.80 ob_na=-1 ob_de=-1 
+ob_type=314 ob_x=59.03 ob_y=14.31 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=58.79 ob_y=14.71 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=58.97 ob_y=13.55 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=57.10 ob_y=14.18 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=44.89 ob_y=9.63 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=44.61 ob_y=10.62 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=42.75 ob_y=9.90 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=42.84 ob_y=10.66 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=42.81 ob_y=9.74 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=44.41 ob_y=10.90 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=43.04 ob_y=10.92 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=52.53 ob_y=3.17 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=53.29 ob_y=4.33 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=53.56 ob_y=2.56 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=54.02 ob_y=2.52 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=54.43 ob_y=4.34 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=62.90 ob_y=6.38 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=63.55 ob_y=6.39 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=62.67 ob_y=7.85 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=62.98 ob_y=7.80 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=64.83 ob_y=8.27 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=64.87 ob_y=8.58 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=64.71 ob_y=9.07 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=64.81 ob_y=8.87 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=63.33 ob_y=7.27 ob_na=-1 ob_de=-1 
+ob_type=314 ob_x=64.39 ob_y=6.29 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=63.08 ob_y=7.47 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=63.82 ob_y=6.61 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=64.11 ob_y=8.58 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=64.95 ob_y=8.06 ob_na=-1 ob_de=-1 
+ob_type=314 ob_x=73.83 ob_y=4.76 ob_na=-1 ob_de=-1 
+ob_type=314 ob_x=75.27 ob_y=5.85 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=73.64 ob_y=6.40 ob_na=-1 ob_de=-1 
+ob_type=316 ob_x=74.35 ob_y=6.64 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=74.04 ob_y=4.68 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=74.64 ob_y=4.71 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=74.78 ob_y=4.77 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=74.57 ob_y=4.68 ob_na=-1 ob_de=-1 
+ob_type=132 ob_x=38.00 ob_y=33.60 ob_na=-1 ob_de=-1 
+ob_type=132 ob_x=40.85 ob_y=33.52 ob_na=-1 ob_de=-1 
+ob_type=247 ob_x=38.17 ob_y=33.57 ob_na=-1 ob_de=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9240,8 +9285,6 @@ Start of pure chest item information for this level
 New item: type=92  X=41.500000  Y=17.250000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=81  X=48.750000  Y=27.500000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=82  X=48.750000  Y=27.500000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=113  X=58.750000  Y=14.500000  AC=0  DoDamage=2  ModifyDamage=8  MaxDur=28  CurDur=17.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=37  X=58.750000  Y=14.500000  AC=0  DoDamage=1  ModifyDamage=3  MaxDur=13  CurDur=9.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=67  X=40.250000  Y=28.500000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=13  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=27  X=40.250000  Y=28.500000  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=20.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=48  X=41.500000  Y=17.250000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=2  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
