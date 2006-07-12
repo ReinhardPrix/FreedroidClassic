@@ -588,7 +588,7 @@ typedef struct
     gps pos;		          // current position in the whole ship 
     gps teleport_anchor;            // where from have you last teleported home
     gps mouse_move_target;          // where the tux is going automatically by virtue of mouse move 
-    int mouse_move_target_is_enemy; // which enemy has been targeted (for a melee shot)
+    int current_enemy_target; // which enemy has been targeted (for a melee shot) (DIFFERS FROM ABOVE !)
     int mouse_move_target_combo_action_type; // what extra action has to be done upon arrival?
     int mouse_move_target_combo_action_parameter; // extra data to use for the combo action
     

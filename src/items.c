@@ -3169,7 +3169,7 @@ ManageInventoryScreen ( void )
 		    //--------------------
 		    // We set up the combo_action, so that the barrel can be smashed later...
 		    //
-		    Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ 0 ] . current_enemy_target = ( -1 ) ;
 		    Me [ 0 ] . mouse_move_target_combo_action_type = COMBO_ACTION_PICK_UP_ITEM ;
 		    Me [ 0 ] . mouse_move_target_combo_action_parameter = index_of_item_under_mouse_cursor ;
 		}

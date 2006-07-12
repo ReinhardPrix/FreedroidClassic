@@ -466,20 +466,6 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
     //
     if ( Me [ 0 ] . busy_time > 0 ) 
     {
-	//--------------------
-	// When wanting to attack (even in case currently in reload 
-	// phase) there should not be much movement to the target.
-	// Otherwise (while reloading e.g. laser weapon) the click
-	// will make the Tux go to the target...
-	//
-	Me [ player_num ] . speed . x = 0 ;
-	Me [ player_num ] . speed . y = 0 ;
-
-	Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
-	Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
-	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z; 
-	// Me [ player_num ] . mouse_move_target_is_enemy = -1 ;
-	
 	return; 
     }
     
@@ -660,7 +646,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	// combo-action).
 	//
 	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	     ( Me [ player_num ] . current_enemy_target == (-1) ) )
 	{
 	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 	    Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
@@ -725,7 +711,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	// combo-action).
 	//
 	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	     ( Me [ player_num ] . current_enemy_target == (-1) ) )
 	{
 	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 	    Me [ player_num ] . mouse_move_target . x = old_mouse_move_target . x ;
@@ -791,7 +777,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	// combo-action).
 	//
 	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	     ( Me [ player_num ] . current_enemy_target == (-1) ) )
 	{
 	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 	    Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
@@ -853,7 +839,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 	// combo-action).
 	//
 	if ( ( Me [ player_num ] . mouse_move_target_combo_action_type == NO_COMBO_ACTION_SET ) &&
-	     ( Me [ player_num ] . mouse_move_target_is_enemy == (-1) ) )
+	     ( Me [ player_num ] . current_enemy_target == (-1) ) )
 	{
 	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
 	    Me [ player_num ] . mouse_move_target . y = old_mouse_move_target . y ;
@@ -1028,39 +1014,22 @@ UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
 {
     moderately_finepoint RemainingWay;
     float RemainingWayLength;
-    
     //--------------------
-    // If the mouse move target got destroyed, there's no reason
+    // If the current target got destroyed, there's no reason
     // to move toward it any more.  The use can request a new move
     // if that should be done.
     //
-    if ( ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . Status == INFOUT ) ||
-	 ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z != 
-	   Me [ player_num ] . pos . z ) ||
-	 ( Me [ player_num ] . mouse_move_target . z == ( -1 ) ) )
-    {
-	Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
-	Me [ player_num ] . mouse_move_target . x = ( -1 ) ;
-	Me [ player_num ] . mouse_move_target . y = ( -1 ) ;
-	Me [ player_num ] . mouse_move_target . z = ( -1 ) ;
-
-	DebugPrintf ( 1 , "\n%s(): enemy mouse move target disabled because of OUT/out_of_level." , __FUNCTION__ );
-	return;
-    }
-
-    //--------------------
-    // But now that there is a an enemy selected as mouse move target, the Tux 
-    // use the coordiantes of this enemy (or a position directly in front of it)
-    // as the new mouse move target coordinates.
-    //
-    Me [ player_num ] . mouse_move_target . x = 
-	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . x ;
-    Me [ player_num ] . mouse_move_target . y = 
-	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . y ;
-    Me [ player_num ] . mouse_move_target . z = 
-	AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . pos . z ;
     
-    
+    if ( ( AllEnemys [ Me [ player_num ] . current_enemy_target ] . Status == INFOUT ) ||
+	 ( AllEnemys [ Me [ player_num ] . current_enemy_target ] . pos . z != 
+	   Me [ player_num ] . pos . z ) )
+	    {
+		Me [ player_num ] . current_enemy_target = ( -1 ) ;
+		DebugPrintf ( 1 , "\n%s(): enemy mouse move target disabled because of OUT/out_of_level." , __FUNCTION__ );
+		return;
+	    }
+
+
     //--------------------
     // If we have a ranged weapon in hand, there is no need to approach the
     // enemy in question.  We just try to fire a shot.
@@ -1069,26 +1038,40 @@ UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
     {
 	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )
 	{
-	    if ( ! AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly )
+	    if ( ! AllEnemys [ Me [ player_num ] . current_enemy_target ] . is_friendly )
 		tux_wants_to_attack_now ( player_num , FALSE ) ;
-	    return;
 	}
     }
 
     //--------------------
-    // But with melee weapons, we need to get into a suitable range before we can
-    // do any attacking, so that needs to be done here.
+    // Now if there is a mouse move target, we are not going to move towards the enemy
     //
-    RemainingWay . x = Me [ player_num ] . pos . x - Me [ player_num ] . mouse_move_target . x ;
-    RemainingWay . y = Me [ player_num ] . pos . y - Me [ player_num ] . mouse_move_target . y ;
+    //
+
+    if ( Me [ player_num ] . mouse_move_target . x != (-1) ) 
+	{
+	return;
+	}
+
+    if ( Me [ player_num ] . weapon_item . type != (-1) )
+	if ( ItemMap [ Me [ player_num ] . weapon_item . type ] . item_gun_angle_change == 0 )  
+	{
+	return;
+	}
+
+    RemainingWay . x = Me [ player_num ] . pos . x - AllEnemys [ Me [ player_num ] . current_enemy_target ] . pos . x ;
+    RemainingWay . y = Me [ player_num ] . pos . y - AllEnemys [ Me [ player_num ] . current_enemy_target ] . pos . y ;
     
     RemainingWayLength = sqrtf ( ( RemainingWay . x ) * ( RemainingWay . x ) +
 				 ( RemainingWay . y ) * ( RemainingWay . y ) ) ;
     
-    RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
-	( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
-    RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
-	( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
+    if(RemainingWayLength > 0.05)
+	{
+	    RemainingWay . x = ( RemainingWay . x / RemainingWayLength ) * 
+		( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
+	    RemainingWay . y = ( RemainingWay . y / RemainingWayLength ) * 
+		( RemainingWayLength - ( BEST_MELEE_DISTANCE - 0.1 ) ) ;
+	}
     
     Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x - RemainingWay . x ;
     Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y - RemainingWay . y ;
@@ -1101,13 +1084,11 @@ UpdateMouseMoveTargetAccordingToEnemy ( int player_num )
     // (redundancy will be caught inside that function anyway...)
     //
     set_up_intermediate_course_for_tux ( player_num ) ;
-    
-    if ( ( RemainingWayLength <= BEST_MELEE_DISTANCE * sqrt(2) + 0.01 ) && ( ! AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) )
+    Me [ player_num ] . mouse_move_target . x = -1;
+    if ( ( RemainingWayLength <= BEST_MELEE_DISTANCE * sqrt(2) + 0.01 ) && ( ! AllEnemys [ Me [ player_num ] . current_enemy_target ] . is_friendly ) )
     {
-	
 	tux_wants_to_attack_now ( player_num , FALSE ) ;
     } 
-    
     // DebugPrintf ( 0 , "\nRemaining way: %f %f." , RemainingWay . x , RemainingWay . y );
     
 }; // void UpdateMouseMoveTargetAccoringToEnemy ( int player_num )
@@ -1250,11 +1231,11 @@ MoveTuxAccordingToHisSpeed ( int player_num )
   // Maybe the Tux is just executing a weapon strike.  In this case, there should
   // be no movement at all, so in this case we'll just not go anywhere...
   //
-  if ( Me [ player_num ] . weapon_swing_time > 0 )
+/*  if ( Me [ player_num ] . weapon_swing_time > 0 )
     {
       planned_step_x = 0 ;
       planned_step_y = 0 ;
-    }
+    }*/
 
   //--------------------
   // Now we can make the actual move, AND WE DO SO REGARDLESS
@@ -1887,7 +1868,7 @@ set_up_intermediate_course_for_tux ( int player_num )
     // By default, we clear out any combo action for the target position.
     // The calling function must set the combo action it has in mind.
     //
-    // Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+    // Me [ player_num ] . current_enemy_target = ( -1 ) ;
     Me [ player_num ] . mouse_move_target_combo_action_type = NO_COMBO_ACTION_SET ;
     Me [ player_num ] . mouse_move_target_combo_action_parameter = -1 ;
     
@@ -2030,6 +2011,9 @@ move_tux_thowards_intermediate_point ( int player_num )
     //
     if ( Me [ player_num ] . next_intermediate_point [ 0 ] . x == (-1) )
     {
+	Me [ player_num ] . mouse_move_target . x = -1;
+	Me [ player_num ] . mouse_move_target . y = -1;
+
 	//--------------------
 	// The fact that there is no more intermediate course can mean, that
 	// there never has been any intermediate course or we have now arrived
@@ -2309,7 +2293,7 @@ move_tux ( int player_num )
     // a living droid set as a target, and if yes, we correct the move
     // target to something suiting that new droids position.
     //
-    if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
+    if ( Me [ player_num ] . current_enemy_target != (-1) )
 	UpdateMouseMoveTargetAccordingToEnemy ( player_num );
     
     //--------------------
@@ -2317,27 +2301,6 @@ move_tux ( int player_num )
     // thowards this mouse move target.
     //
     move_tux_thowards_intermediate_point ( player_num );
-    
-    //--------------------
-    // As long as the Tux is still alive, his status will be either
-    // in MOBILE mode or in WEAPON mode or in TRANSFER mode.
-    //
-    if ( Me [ player_num ] . energy >= 0 )
-    {
-	if ( ! ServerThinksSpacePressed ( player_num ) )
-	{
-	    Me [ player_num ] .status = MOBILE;
-	}
-	
-	if ( ( ServerThinksSpacePressed ( player_num ) ) && ( ServerThinksNoDirectionPressed ( player_num ) ) &&
-	     ( Me [ player_num ] .status != WEAPON ) )
-	    Me [ player_num ] . status = TRANSFERMODE ;
-	
-	if ( ( ServerThinksAxisIsActive ( player_num ) ) && 
-	     ( ! ServerThinksNoDirectionPressed ( player_num ) ) &&
-	     ( Me [ player_num ] .status != TRANSFERMODE ) )
-	    Me [ player_num ] .status = WEAPON ;
-    }
     
     //--------------------
     // Perhaps the player has pressed the right mouse button, indicating the use
@@ -2358,8 +2321,7 @@ move_tux ( int player_num )
     // for the new move-to location
     //
     if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
-	 ( ! ServerThinksNoDirectionPressed ( player_num ) ) && 
-	 ( Me [ player_num ] . status == WEAPON ) )
+	 ( ! ServerThinksNoDirectionPressed ( player_num ) ) )
 	AnalyzePlayersMouseClick ( player_num );
     
     if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
@@ -2375,7 +2337,7 @@ move_tux ( int player_num )
 	Me [ player_num ] . mouse_move_target . x = Me [ player_num ] . pos . x ;
 	Me [ player_num ] . mouse_move_target . y = Me [ player_num ] . pos . y ;
 	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	Me [ player_num ] . current_enemy_target = (-1) ;
 	// clear_out_intermediate_points ( player_num );
 	return; 
     }
@@ -2396,7 +2358,6 @@ move_tux ( int player_num )
     ActSpecialField ( player_num ) ;
     
     animate_tux ( player_num ) ;	// move the "phase" of influencers rotation
-    
 }; // void move_tux( int player_num );
 
 /* ----------------------------------------------------------------------
@@ -3074,8 +3035,6 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	Me [ player_num ] . angle = - ( atan2 ( ServerThinksInputAxisY ( player_num ) ,  
 						ServerThinksInputAxisX ( player_num ) ) * 180 / M_PI + 90 );
     }
-    Me [ player_num ] . speed . x = 0 ;
-    Me [ player_num ] . speed . y = 0 ;
 
     if ( !APressed() )
     {
@@ -3099,9 +3058,9 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 
 	//--------------------
 	//
-	if ( Me [ player_num ] . mouse_move_target_is_enemy != (-1) )
+	if ( Me [ player_num ] . current_enemy_target != (-1) )
 	{
-	    droid_under_melee_attack_cursor = Me [ player_num ] . mouse_move_target_is_enemy ;
+	    droid_under_melee_attack_cursor = Me [ player_num ] . current_enemy_target ;
 	    DebugPrintf ( 1 , "\n%s(): using MOUSE MOVE TARGET at X=%d Y=%d for attack direction of tux." , __FUNCTION__ , (int) Me [ player_num ] . mouse_move_target . x , (int) Me [ player_num ] . mouse_move_target . y );
 	}
 	else
@@ -3483,7 +3442,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 		    Me [ player_num ] . mouse_move_target . x += 0.8 ;
 		    set_up_intermediate_course_for_tux ( player_num ) ;
 		    
-		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . current_enemy_target = ( -1 ) ;
 		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
 		    Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
 		    
@@ -3496,7 +3455,7 @@ check_for_chests_to_open ( int player_num , int chest_index )
 		    Me [ player_num ] . mouse_move_target . y += 0.8 ;
 		    set_up_intermediate_course_for_tux ( player_num ) ;
 		    
-		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . current_enemy_target = ( -1 ) ;
 		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_OPEN_CHEST ;
 		    Me [ player_num ] . mouse_move_target_combo_action_parameter = chest_index ;
 		    
@@ -3587,7 +3546,7 @@ check_for_barrels_to_smash ( int player_num , int barrel_index )
 		    //--------------------
 		    // We set up the combo_action, so that the barrel can be smashed later...
 		    //
-		    Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+		    Me [ player_num ] . current_enemy_target = ( -1 ) ;
 		    Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_SMASH_BARREL ;
 		    Me [ player_num ] . mouse_move_target_combo_action_parameter = barrel_index ;
 		    break;
@@ -3676,8 +3635,9 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	Me [ player_num ] . mouse_move_target . y = 
 	    translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) ;
 	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	
-	Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+	extern int CurrentlyShiftPressed;
+	if ( ! CurrentlyShiftPressed )
+		Me [ player_num ] . current_enemy_target = (-1);
 	
 	// clear_out_intermediate_points ( player_num ) ;
 	
@@ -3696,7 +3656,7 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	// We assign the target robot of the coming attack operation.
 	// In case of no robot, we should get (-1), which is also serving us well.
 	//
-	Me [ player_num ] . mouse_move_target_is_enemy = index_of_droid_below_mouse_cursor ;
+	Me [ player_num ] . current_enemy_target = index_of_droid_below_mouse_cursor ;
 	
 	//--------------------
 	// If the click was onto a friendly droid, we initiate talk, no matter if the
@@ -3707,18 +3667,18 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	// to always initiate talk.  This should require a true click.  Therefore we
 	// check if the button has been released just before it came to this check.
 	//
-	if ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] . is_friendly ) 
+	if ( AllEnemys [ Me [ player_num ] . current_enemy_target ] . is_friendly ) 
 	{
 	    
 	    if ( no_left_button_press_in_previous_analyze_mouse_click )
 	    {
-		ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . mouse_move_target_is_enemy ] ) ) ;
+		ChatWithFriendlyDroid ( & ( AllEnemys [ Me [ player_num ] . current_enemy_target ] ) ) ;
 		
 		//--------------------
-		// and then we deactivate this mouse_move_target_is_enemy to prevent
+		// and then we deactivate this current_enemy_target to prevent
 		// immediate recurrence of the very same chat.
 		//
-		Me [ player_num ] . mouse_move_target_is_enemy = (-1) ;
+		Me [ player_num ] . current_enemy_target = (-1) ;
 	    }
 	    
 	    return ;
@@ -3949,7 +3909,7 @@ handle_player_loot_command ( int player_num )
 	    }
 	}
 	
-	Me [ player_num ] . mouse_move_target_is_enemy = ( -1 ) ;
+	Me [ player_num ] . current_enemy_target = ( -1 ) ;
 	Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
 	Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
     }

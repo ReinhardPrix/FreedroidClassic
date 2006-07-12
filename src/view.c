@@ -1994,32 +1994,17 @@ PutMouseMoveCursor ( void )
     SDL_Rect TargetRectangle;
     
     if ( ( Me [ 0 ] . mouse_move_target . x == (-1) ) &&
-	 ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) ) )
+	 ( Me [ 0 ] . current_enemy_target == (-1) ) )
     {
 	return;
     }
     
-    if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
+    if ( Me [ 0 ] . mouse_move_target.x != (-1) )
     {
 	TargetRectangle . x = 
 	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
 	TargetRectangle . y = 
 	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
-    }
-    else
-    {
-	// translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
-	
-	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
-						  AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , TRUE );
-	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . x , 
-						  AllEnemys [ Me [ 0 ] . mouse_move_target_is_enemy ] . pos . y , FALSE );
-    }
-    
-    if ( Me [ 0 ] . mouse_move_target_is_enemy == (-1) )
-    {
 	if ( use_open_gl )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
@@ -2034,8 +2019,17 @@ PutMouseMoveCursor ( void )
 	    our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 0 ] . surface , NULL , Screen , &TargetRectangle);
 	}
     }
-    else
+    
+    if ( Me [ 0 ] . current_enemy_target != (-1) ) 
     {
+	// translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+	
+	TargetRectangle . x = 
+	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y , TRUE );
+	TargetRectangle . y = 
+	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y , FALSE );
 	if ( use_open_gl )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
@@ -2049,6 +2043,7 @@ PutMouseMoveCursor ( void )
 	    TargetRectangle . y -= MouseCursorImageList [ 1 ] . surface -> h / 2 ;
 	    our_SDL_blit_surface_wrapper ( MouseCursorImageList [ 1 ] . surface , NULL , Screen , &TargetRectangle);
 	}
+
     }
     
 }; // void PutMouseMoveCursor ( void )

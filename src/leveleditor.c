@@ -4828,7 +4828,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    Me [ 0 ] . mouse_move_target . x = Me [ 0 ] . pos . x ;
 	    Me [ 0 ] . mouse_move_target . y = Me [ 0 ] . pos . y ;
 	    Me [ 0 ] . mouse_move_target . z = Me [ 0 ] . pos . z ;
-	    Me [ 0 ] . mouse_move_target_is_enemy = ( -1 ) ;
+	    Me [ 0 ] . current_enemy_target = ( -1 ) ;
 	}
 	else
 	{
