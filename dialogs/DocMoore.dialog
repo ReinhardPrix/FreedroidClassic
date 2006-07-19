@@ -42,10 +42,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hello! "
+New Option Nr=0  OptionText=" Hello!"
 OptionSample="DocMoore/Tux_Hello.wav"
 PositionX=61  PositionY=200  
-Subtitle=" Hello. I'm Doc Moore. I'm the medic of this town."
+Subtitle="Hello. I'm Doc Moore. I'm the medic of this town."
 ReplySample="DocMoore/DocMoore_Hi_Im_Doc_Moore.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0

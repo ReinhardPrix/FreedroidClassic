@@ -49,7 +49,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=44  PositionY=157  
-Subtitle="Hello!  I'm Ewald.  I run this bar."
+Subtitle="Hello! I'm Ewald. I run this bar."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
