@@ -1053,8 +1053,8 @@ LoadAndFadeInBackgroundMusic ( void )
 	DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", fpath );
     
     // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ Tune ] , -1 );
-    // MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
-    MOD_Music_Channel = Mix_FadeInMusic ( Loaded_MOD_Files[ 0 ] , -1 , 5000 );
+     MOD_Music_Channel = Mix_PlayMusic ( Loaded_MOD_Files[ 0 ] , -1 );
+//    MOD_Music_Channel = Mix_FadeInMusic ( Loaded_MOD_Files[ 0 ] , -1 ,  );
     
     Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
@@ -1120,7 +1120,7 @@ SwitchBackgroundMusicTo ( char* filename_raw_parameter )
     }
   else
     {
-      Mix_FadeOutMusic( 5000 );
+      Mix_FadeOutMusic( 200 );
       BackgroundMusicStateMachineState = FADING_OUT ;
       
       //--------------------
