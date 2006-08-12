@@ -3943,8 +3943,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_OIL_STAINS_8 ] . filename = "iso_oil_stains_0008.png" ;
   obstacle_map [ ISO_OIL_STAINS_8 ] . needs_pre_put = TRUE ;
   // the eight blood tiles have the same description - normal, right ?
-  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name = "Oil_stains";
-  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description = "Do droids bleed ? These don't.";
+  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name = "Oil stains";
+  obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description = "Do droids bleed? These don't.";
   obstacle_map [ ISO_OIL_STAINS_2 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
   obstacle_map [ ISO_OIL_STAINS_2 ] . obstacle_long_description = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_long_description;
   obstacle_map [ ISO_OIL_STAINS_3 ] . obstacle_short_name = obstacle_map [ ISO_OIL_STAINS_1 ] . obstacle_short_name;
