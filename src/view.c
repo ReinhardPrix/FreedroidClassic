@@ -668,11 +668,6 @@ There was an obstacle type given, that exceeds the number of\n\
     {
 	if ( use_open_gl )
 	{
-	    darkness = 2.0 - 2.0 * ( ( (double) get_light_strength ( our_obstacle -> pos ) ) / ( (double) NUMBER_OF_SHADOW_IMAGES ) ) ;
-	    if ( darkness > 1 ) darkness = 1.0 ;
-	    if ( darkness < 0 ) darkness = 0 ;
-	    darkness = 1.0;
-
 	    //--------------------
 	    // Not in all cases does it make sense to make the walls transparent.
 	    // Only those walls, that are really blocking the Tux from view should
@@ -690,7 +685,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		    blit_open_gl_texture_to_map_position ( 
 			obstacle_map [ our_obstacle -> type ] . image , 
 			our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			darkness , darkness, darkness , FALSE, 
+			1,1,1 , FALSE, 
 			obstacle_map [ our_obstacle -> type ] . transparent ) ;
 		}
 		else
@@ -698,7 +693,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		    blit_open_gl_texture_to_map_position ( 
 			obstacle_map [ our_obstacle -> type ] . image , 
 			our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			darkness , darkness, darkness , FALSE, 
+			1,1,1 , FALSE, 
 			0 ) ;
 		}
 	    }
@@ -707,7 +702,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		blit_open_gl_texture_to_map_position ( 
 		    obstacle_map [ our_obstacle -> type ] . image , 
 		    our_obstacle -> pos . x , our_obstacle -> pos . y , 
-		    darkness , darkness, darkness , FALSE, 
+		    1,1,1 , FALSE, 
 		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
 	    }
 	}

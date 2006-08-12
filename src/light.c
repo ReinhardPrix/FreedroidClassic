@@ -316,7 +316,7 @@ void
 soften_light_distribution ( void )
 {
     int x , y ;
-#define MAX_LIGHT_STEP 1
+#define MAX_LIGHT_STEP 3
 
     //--------------------
     // Now that the light buffer has been set up properly, we can start to
