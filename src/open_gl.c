@@ -1076,7 +1076,7 @@ safely_initialize_our_default_open_gl_parameters ( void )
 void
 blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , 
 				       float our_col , float our_line , 
-				       float r, float g , float b , 
+				       double r, double g , double b , 
 				       int highlight_texture, int blend ) 
 {
 
@@ -1128,14 +1128,13 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
 	glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
     }
 
-/*
-    else
+/*    if(blend == 0)
     {
 	glDisable(GL_BLEND);
 	glEnable( GL_ALPHA_TEST );  
 	glAlphaFunc ( GL_GREATER , 0.5 ) ;
-    }
-*/
+    }*/
+
   
     // glDisable( GL_ALPHA_TEST );  
   
@@ -1156,13 +1155,11 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     // Depending on whether to highlight the object in question, we
     // set a different color for the way the texture is applied.
     //
-    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL );
-    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
-    // glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+    //glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+    //glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
     glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-    glColor3f( r , g , b );
-    
-    
+    glColor3d( r , g , b );
+        
     //--------------------
     // Now we can begin to draw the actual textured rectangle.
     //
@@ -1173,7 +1170,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     
     texture_start_y = 1.0 ;
     texture_end_y = 0.0 ;
-    
+
     glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
     
     glBegin(GL_QUADS);

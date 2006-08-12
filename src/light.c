@@ -277,7 +277,7 @@ calculate_light_strength ( moderately_finepoint target_pos )
 	    //
 	    light_vec_len = sqrt ( xdist * xdist + ydist * ydist );
 
-	    if ( light_vec_len > 0.5 )
+	if ( light_vec_len > 0.5 )
 	    {
 		if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
 		{
@@ -287,8 +287,7 @@ calculate_light_strength ( moderately_finepoint target_pos )
 			continue;
 		}
 	    }
-	    final_darkness = (int) ( light_vec_len * 4.0 ) 
-		- light_source_strengthes [ i ] ;
+	    final_darkness = (int) ( light_vec_len * 4.0 ) - light_source_strengthes [ i ] ;
 	}
     }
     
@@ -317,7 +316,7 @@ void
 soften_light_distribution ( void )
 {
     int x , y ;
-#define MAX_LIGHT_STEP 4
+#define MAX_LIGHT_STEP 1
 
     //--------------------
     // Now that the light buffer has been set up properly, we can start to
@@ -335,7 +334,6 @@ soften_light_distribution ( void )
 		light_strength_buffer [ x + 1 ] [ y + 1 ] = light_strength_buffer [ x ] [ y ] + MAX_LIGHT_STEP ;
 	}
     }
-
     // now the same again, this time from right to left
     for ( x = (64-2) ; x > 1 ; x -- )
     {

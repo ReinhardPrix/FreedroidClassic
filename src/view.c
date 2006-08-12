@@ -589,7 +589,7 @@ void
 blit_one_obstacle ( obstacle* our_obstacle )
 {
     iso_image tmp;
-    float darkness ;
+    double darkness ;
     moderately_finepoint obs_onscreen_position;
 
     if ( ( our_obstacle-> type <= (-1) ) || ( our_obstacle-> type >= NUMBER_OF_OBSTACLE_TYPES ) )
@@ -668,7 +668,7 @@ There was an obstacle type given, that exceeds the number of\n\
     {
 	if ( use_open_gl )
 	{
-	    darkness = 2.0 - 2.0 * ( ( (float) get_light_strength ( our_obstacle -> pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
+	    darkness = 2.0 - 2.0 * ( ( (double) get_light_strength ( our_obstacle -> pos ) ) / ( (double) NUMBER_OF_SHADOW_IMAGES ) ) ;
 	    if ( darkness > 1 ) darkness = 1.0 ;
 	    if ( darkness < 0 ) darkness = 0 ;
 
