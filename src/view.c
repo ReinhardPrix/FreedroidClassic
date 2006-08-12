@@ -671,6 +671,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	    darkness = 2.0 - 2.0 * ( ( (double) get_light_strength ( our_obstacle -> pos ) ) / ( (double) NUMBER_OF_SHADOW_IMAGES ) ) ;
 	    if ( darkness > 1 ) darkness = 1.0 ;
 	    if ( darkness < 0 ) darkness = 0 ;
+	    darkness = 1.0;
 
 	    //--------------------
 	    // Not in all cases does it make sense to make the walls transparent.
@@ -1864,15 +1865,17 @@ AssembleCombatPicture ( int mask )
 
     if ( use_open_gl )
     {
+	blit_nonpreput_objects_according_to_blitting_list ( mask );
 	if ( ( ! GameConfig . skip_light_radius ) &&
 	     ( ! ( mask & SKIP_LIGHT_RADIUS ) ) ) blit_light_radius();
-	blit_nonpreput_objects_according_to_blitting_list ( mask );
+
     }
     else
     {
 	blit_nonpreput_objects_according_to_blitting_list ( mask );
 	if ( ( ! GameConfig . skip_light_radius )  &&
 	     ( ! ( mask & SKIP_LIGHT_RADIUS ) ) ) blit_light_radius();
+
     }
   
     PutMiscellaneousSpellEffects ( );

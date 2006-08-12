@@ -2176,10 +2176,6 @@ blit_open_gl_stretched_texture_light_radius ( void )
     local_iso_image . offset_x = 0 ;    
     local_iso_image . offset_y = 0 ;
 
-    //--------------------
-    // Linear Filtering is slow and maybe not nescessary here, so we
-    // stick to the faster 'nearest' variant.
-    //
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     
