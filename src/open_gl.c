@@ -2188,7 +2188,7 @@ blit_open_gl_stretched_texture_light_radius ( void )
     blit_zoomed_open_gl_texture_to_screen_position ( 
 	& local_iso_image , 
 	0,
-	-75,
+	-25,
 	TRUE ,
 	((float)GameConfig . screen_width) / ((float)LIGHT_RADIUS_STRETCH_TEXTURE_WIDTH) );
 
