@@ -95,6 +95,10 @@ GtkWidget *cond_edit;
 //
 static int currently_marked_dialog_option = (-1);
 
+
+#include <setjmp.h> 
+jmp_buf emerg;
+
 //--------------------
 // This is for the 'meta-tooltips' that pop up if the mouse ever gets
 // over one of the dialog option boxes...
@@ -3887,6 +3891,12 @@ load_command_line_file ( void )
 
 }; // void 
 
+
+void handle_sig(int sign)
+{
+fprintf(stderr, "GOT SIGNAL %i... trying to save dialog\n", sign);
+longjmp(emerg, 2);
+}
 /* ----------------------------------------------------------------------
  * This is the main function of our dialog editor.  But this time it does
  * not contain some 'main game loop' like in FreedroidRPG or Freedroid,
@@ -3976,8 +3986,13 @@ main( int argc, char *argv[] )
   // start to load this file right away.
   //
   load_command_line_file();
-
-
+  signal(SIGSEGV, handle_sig);
+  signal(SIGABRT, handle_sig);
+  if(setjmp(emerg))
+	{
+	save_dialog_roster_to_file("emerg.dialog");
+	exit(1);
+	}
   //--------------------
   // At this point all should be set up.  The editing machine is ready to be
   // used.  All we need to do is start the gtk main loop and let everything
