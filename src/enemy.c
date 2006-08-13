@@ -321,6 +321,9 @@ PermanentHealRobots (void)
 	continue;
       if ( AllEnemys [ i ] . energy < Druidmap [ AllEnemys [ i ] . type ] . maxenergy )
 	AllEnemys[i].energy += floor(Druidmap[AllEnemys [ i ] . type ] . lose_health * HEAL_INTERVAL) ;
+      if ( AllEnemys [ i ] . energy > Druidmap [ AllEnemys [ i ] . type ] . maxenergy )
+	AllEnemys[i].energy = Druidmap [ AllEnemys [ i ] . type ] . maxenergy ;
+      
     }
 
 } // void PermanentHealRobots(void)
