@@ -3991,7 +3991,7 @@ main( int argc, char *argv[] )
   if(setjmp(emerg))
 	{
 	save_dialog_roster_to_file("emerg.dialog");
-	exit(1);
+	_exit(1);
 	}
   //--------------------
   // At this point all should be set up.  The editing machine is ready to be
