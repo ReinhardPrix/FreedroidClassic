@@ -127,7 +127,7 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
     // number of steps for one floor tile, which has been calibrated
     // (hopefully sensibly) above.
     //
-    Steps = LargerDistance * 2 ; 
+    Steps = LargerDistance * 4 ; 
     if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
     
     //--------------------
