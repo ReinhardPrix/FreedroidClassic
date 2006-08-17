@@ -69,8 +69,8 @@ IsLightPassable ( float x , float y , int z )
     // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
     //
     
-    x_tile_start = rintf ( x ) -1         ; y_tile_start = rintf ( y ) -1 ;
-    x_tile_end   = x_tile_start + 1       ; y_tile_end   = y_tile_start + 1 ;
+    x_tile_start = rintf ( x ) -2         ; y_tile_start = rintf ( y ) -2 ;
+    x_tile_end   = x_tile_start + 2      ; y_tile_end   = y_tile_start + 2 ;
     if ( x_tile_start < 0 ) x_tile_start = 0 ; 
     if ( y_tile_start < 0 ) y_tile_start = 0 ; 
     if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
