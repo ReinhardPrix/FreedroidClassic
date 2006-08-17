@@ -70,7 +70,7 @@ IsLightPassable ( float x , float y , int z )
     //
     
     x_tile_start = rintf ( x ) -2         ; y_tile_start = rintf ( y ) -2 ;
-    x_tile_end   = x_tile_start + 2      ; y_tile_end   = y_tile_start + 2 ;
+    x_tile_end   = x_tile_start + 3      ; y_tile_end   = y_tile_start + 3 ;
     if ( x_tile_start < 0 ) x_tile_start = 0 ; 
     if ( y_tile_start < 0 ) y_tile_start = 0 ; 
     if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
