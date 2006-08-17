@@ -6,9 +6,15 @@ import sys
 #        ALL THE BLOODY FUNCTIONS GO HERE.
 ####################################################################
 
-#Recursive, and for now there is no coming back.
-def dumpall(current, home):
+#Recursive, works on simple dialogues for now.
+def dumpall(current, home, count):
+  print ""
+  if count == 0:
+    return
+  count = count - 1
 #Tux speaks first.
+  #print count
+  print '#' + getnodenumber()
   character=''
   while character != "\"" :
     character = file.read(current, 1)  
@@ -20,11 +26,22 @@ def dumpall(current, home):
       break
     firstsay = firstsay + character
   print "Tux:  " + firstsay
+  print "A: ",
                            #Moving forward for now...
   file.readline(current)   # To kill the \n in the what Tux said.
   file.readline(current)   # Reply sound.
   file.readline(current)   # The other dialogue editor's coordinates.
   while True :
+    back = file.tell(current)
+    if file.read(current, 8) != "Subtitle" :
+      file.seek(current, back)
+      print ""
+      nextnode(current)
+      dumpall(current, home, count)
+      return
+    else :
+     file.seek(current, back)
+#    mark = "# ",
     character=''
     while character != "\"" :
       character = file.read(current, 1)  
@@ -39,17 +56,21 @@ def dumpall(current, home):
       firstsay = firstsay + character
     if firstsay == "no" :
       print "\n"
-      dumpall(current, home)
+#      count = count - 1
+      dumpall(current, home, count)
       break
     elif firstsay == "yes" :
       print "\n"
-      dumpall(current, home)
+#      count = count - 1
+      dumpall(current, home, count)
       break
     else :
-      print "A: " + firstsay
+      print firstsay
+  print "",
 
 #Prints the node that I want printed.
 def dumpknown(current, home, desired):
+  print ""
   character=''
   while character != "\"" :
     character = file.read(current, 1)  
@@ -111,6 +132,7 @@ def end():
 
 #Brief look at the nodes.
 def dumpnodes(current):
+  print ""
   while file.read(current,1) != '' :
     file.tell(current)
 
@@ -133,16 +155,22 @@ def dumpnodes(current):
 
 #Get the node number. Broken, I think.
 def getnodenumber():
+  back = file.tell(current)
   character=''
   while character != "=" :
     character = file.read(current, 1)
+    if character == '':
+      break
   character=''
   nodenum=''
   while character != " " :
     character = file.read(current, 1)
     if character == " ":
       break
+    elif character == '':
+      break
     nodenum = nodenum + character
+  file.seek(current, back)
   return nodenum
 
 #Goes to the next node.
@@ -161,7 +189,7 @@ def load(current):
   if current != None:
     file.close(current)
   print "What character?",
-  character = raw_input() + ".dialog"
+  character = "../dialogs/" + raw_input() + ".dialog"
   current = file(character)
   print "Loaded " + character
   return current
@@ -186,6 +214,7 @@ def nodecount(current, home):
   print nodecount,
   print "nodes found."
   file.seek(current, home)
+  return nodecount
 
 #Not used for now.
 def switch(current):
@@ -204,13 +233,17 @@ def switch(current):
 current=None
 desired=None
 home=None
+count=None
 
 while True :
+  
   if current != None :
-    print current,
+    print ""
+    a = str(current)
+    print "f: " + a[12:-33],
   if desired != None :
-    print desired,
-  print ">",
+    print "n:" + desired,
+  print " >>",
   command = raw_input()
   if command == "q":
     end()
@@ -218,16 +251,23 @@ while True :
     desired = None
     current = load(current)
     home = clip(current)
-    nodecount(current, home)
+    count = nodecount(current, home)
     dumpnodes(current)
   elif command == "n":
     desired = gotonode(current, home)
     dumpknown(current, home, desired)
-  elif command == "d":
+  elif command == "p":
     dumpknown(current, home, desired)
+  elif command == "d":
+    gotoknown(current, home, "0")
+    dumpnodes(current)
+    if desired != None:
+      gotoknown(current, home, desired)
   elif command == "dd":
     gotoknown(current, home, "0")
-    dumpall(current, home)
+    dumpall(current, home, count)
+    if desired != None:
+      gotoknown(current, home, desired)
 
 
 
