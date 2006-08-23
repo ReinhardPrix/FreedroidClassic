@@ -48,6 +48,38 @@ moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_strength_buffer [ 64 ] [ 48 ] ;
 
+int
+IsLightPassable ( float x , float y , int z )
+{
+    Level PassLevel = curShip . AllLevels [ z ] ;
+    int x_tile_start, y_tile_start;
+    int x_tile_end, y_tile_end;
+    int x_tile, y_tile;
+    
+    //--------------------
+    // We take a look whether the position given in the parameter is 
+    // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
+    //
+    
+    x_tile_start = rintf ( x ) -2         ; y_tile_start = rintf ( y ) -2 ;
+    x_tile_end   = x_tile_start + 3       ; y_tile_end   = y_tile_start + 3 ;
+    if ( x_tile_start < 0 ) x_tile_start = 0 ; 
+    if ( y_tile_start < 0 ) y_tile_start = 0 ; 
+    if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
+    if ( y_tile_end >= PassLevel -> ylen ) y_tile_end = PassLevel->ylen -1 ; 
+    
+    for ( x_tile = x_tile_start ; x_tile < x_tile_end ; x_tile ++ )
+    {
+	
+	// DebugPrintf ( 0 , " %d " , x_tile );
+	for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
+	{
+	    if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) 
+		return ( FALSE );
+	}
+    }
+    return ( TRUE ) ;
+}
 /* ----------------------------------------------------------------------
  * This function tests, if a Robot can go a direct straigt line from
  * x1 y1 to x2 y2 without hitting a wall or another obstacle.
@@ -83,7 +115,7 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
     // number of steps for one floor tile, which has been calibrated
     // (hopefully sensibly) above.
     //
-    Steps = LargerDistance * 4 ; 
+    Steps = LargerDistance * 3 ; 
     if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
     
     //--------------------
@@ -113,50 +145,14 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
     // We take a look whether the position given in the parameter is 
     // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
     //
+    if(!IsLightPassable(CheckPosition.x, CheckPosition.y, z))
+	return FALSE;
+  	
+    CheckPosition.x += step.x;
+    CheckPosition.y += step.y;
     
-/*    if(step.x > 0)
-		{
-	        x_tile_start = rintf(x);
-		x_tile_end   = x_tile_start + 4;
-		}
-    else
-		{
-		x_tile_start = rintf ( x ) -2;
-		x_tile_end = x_tile_start + 2;
-		}
-    if(step.y > 0)
-		{
-		y_tile_start = rintf(y);
-		y_tile_end = y_tile_start + 4;
-		}
-	else
-		{
-		y_tile_start = rintf(y) - 2;
-		y_tile_end = y_tile_start +2;
-		}*/
-x_tile_start = rintf(x) - 2;
-x_tile_end = x_tile_start + 4;
-y_tile_start = rintf(y) - 2;
-y_tile_end = y_tile_start + 4;
-    if ( x_tile_start < 0 ) x_tile_start = 0 ; 
-    if ( y_tile_start < 0 ) y_tile_start = 0 ; 
-    if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
-    if ( y_tile_end >= PassLevel -> ylen ) y_tile_end = PassLevel->ylen -1 ; 
-    
-    for ( x_tile = x_tile_start ; x_tile < x_tile_end ; x_tile ++ )
-    {
-	
-	// DebugPrintf ( 0 , " %d " , x_tile );
-	for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
-	{
-	    if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) 
-		return ( FALSE );
-	}
-    }
 
-	CheckPosition.x += step.x;
-	CheckPosition.y += step.y;
-    }
+	}
 
     DebugPrintf( 1 , "\n%s(): Connection analysis revealed : FREE!" , __FUNCTION__ );
 
