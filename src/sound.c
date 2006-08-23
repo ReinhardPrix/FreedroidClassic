@@ -216,7 +216,8 @@ PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , int no
 	    simulated_playback_starting_time = SDL_GetTicks() ;
 	    
 	    while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) && 
-		    !EscapePressed() && !SpacePressed() );
+		    !EscapePressed() && !SpacePressed() )
+				SDL_Delay(100);
 	    
 	    if ( EscapePressed() ) while ( EscapePressed() );
 	    if ( SpacePressed() ) while ( SpacePressed() );

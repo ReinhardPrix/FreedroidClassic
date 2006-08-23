@@ -622,7 +622,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     OptionOffset = 0 ;
     while ( 1 )
     {
-	
+    SDL_Delay(10);
 #if __WIN32__
       for ( win32_iterations = 0 ; win32_iterations < 2 ; win32_iterations ++ ) 
       {
