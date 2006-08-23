@@ -151,6 +151,53 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
 	    DebugPrintf( 1 , "\n%s(): Connection analysis revealed : OBSTACLES!! NO WAY!!!" , __FUNCTION__ );
 	    return FALSE;
 	}	
+    int x = CheckPosition . x;
+    int y = CheckPosition . y;
+    Level PassLevel = curShip . AllLevels [ z ] ;
+    int x_tile_start, y_tile_start;
+    int x_tile_end, y_tile_end;
+    int x_tile, y_tile;
+    
+    //--------------------
+    // We take a look whether the position given in the parameter is 
+    // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
+    //
+    
+    if(step.x > 0)
+		{
+	        x_tile_start = rintf(x);
+		x_tile_end   = x_tile_start + 4;
+		}
+    else
+		{
+		x_tile_start = rintf ( x ) -2;
+		x_tile_end = x_tile_start + 2;
+		}
+    if(step.y > 0)
+		{
+		y_tile_start = rintf(y);
+		y_tile_end = y_tile_start + 4;
+		}
+	else
+		{
+		y_tile_start = rintf(y) - 2;
+		y_tile_end = y_tile_start +2;
+		}
+    if ( x_tile_start < 0 ) x_tile_start = 0 ; 
+    if ( y_tile_start < 0 ) y_tile_start = 0 ; 
+    if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
+    if ( y_tile_end >= PassLevel -> ylen ) y_tile_end = PassLevel->ylen -1 ; 
+    
+    for ( x_tile = x_tile_start ; x_tile < x_tile_end ; x_tile ++ )
+    {
+	
+	// DebugPrintf ( 0 , " %d " , x_tile );
+	for ( y_tile = y_tile_start ; y_tile < y_tile_end ; y_tile ++ )
+	{
+	    if ( position_collides_with_obstacles_on_square ( x , y , x_tile , y_tile , PassLevel ) ) 
+		return ( FALSE );
+	}
+    }
 
 	CheckPosition.x += step.x;
 	CheckPosition.y += step.y;
