@@ -10,22 +10,8 @@ import sys
 def end():
   sys.exit()
 
-def error(current):
-  if current != None :
+def error():
     print "  ?",
-  else :
-    print "  ?"
-
-#Goes to the next node.
-def nextnode(current):
-  line = ''
-  while line != "----------------------------------------------------------------------\n" :
-    line = file.readline(current)
-    if line == '' :
-      break
-    elif line == "End of chat dialog for character=\"XXXXX\"\n" :
-      break
-  file.readline(current)
 
 #Loads a file.
 def load(current):
@@ -44,7 +30,20 @@ def clip(current):
   home = file.tell(current) + 1
   return home
 
-#How many nodes do we have here?
+
+#Goes to the next node.
+def nextnode(current):
+  line = ''
+  while line != "----------------------------------------------------------------------\n" :
+    line = file.readline(current)
+    if line == '' :
+      break
+    elif line == "End of chat dialog for character=\"XXXXX\"\n" :
+      break
+  file.readline(current)
+
+
+#How many nodes do we have here? # Do I still need this?
 def nodecount(current, home):
   nodecount = 0
   line2 = "a"
@@ -160,12 +159,6 @@ def whatisit(current) :
       meat =  str(file.readline(current))[14:-2]
 
     elif unknown == "OnCondit" : #Might be a linked node or a goto...
-#      if file.read(current, 30) == "OnCondition=\"GoldIsLessThan:1\"" : #Linked node as I do them... Will fix later.
-#        file.seek(current, back)
-#        what = "linked"
-#        meat = str(file.readline(current))[-3:-1]
-#      else :
-#        file.seek(current, back)
         what = "goto"               #Welcome to hell my friends. This will hurt a bit. This is a goto.
         meat = ['', '', '']
         character=''
@@ -241,11 +234,13 @@ def dumpnode(node):
       else:
         print "    " + subnode[1]
 
-def rebuild(everything):
+
+
+def rawprint(everything):
   print """% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *
- *   Copyright (c) 1994, 2003, 2004, 2005, 2006  Team Freedroid
+ *   Copyright (c) 1994, 2003, 2004, 2005, 2006  FreedroidRPG development team
  *
  *
  *  This file is part of Freedroid
@@ -281,11 +276,11 @@ Beginning of new chat dialog for character="XXXXX" """
 
   for nodo in range(count):
     print ""
-    write(everything[nodo])
+    raw(everything[nodo])
     print "\n----------------------------------------------------------------------"
   print "\n" + 'End of chat dialog for character="XXXXX"' + "\n"
 
-def write(node):
+def raw(node):
   for something in node:
     if something[0] == "tuxtalk" :
       print "New Option Nr=" + something[1][0] + '  OptionText="' + something[1][1] + "\""
@@ -308,6 +303,106 @@ def write(node):
     elif something[0] == "extra" :
       print 'DoSomethingExtra="' + something[1] + '"'
 
+def et(node, pick):
+  count = 0
+  meaty = -1
+  while meaty != pick:
+    if node[count][0] == "tuxtalk":
+      count = count + 1
+      meaty = meaty + 1
+      flag = 1
+    elif node[count][0] == "reply":
+      count = count + 1
+      meaty = meaty + 1
+      flag = 0
+    elif node[count][0] == "startup":
+      error("foo")
+      break
+    else:
+      count = count + 1
+      flag = 0
+  count = count - 1
+  if flag == 0:
+    a = node[count][1]
+  else:
+    a = node[count][1][1]
+  print "\n<< " + a + "\n>>",
+  b = raw_input()
+  if flag == 0:
+    node[count][1] = b
+  else:
+    node[count][1][1] = b
+  print "  !",
+
+def writeall(current, everything):
+  a = str(current)[12:-26]
+  file.close(current)
+  b = open(a, 'w')
+  file.write(b, """% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *
+ *   Copyright (c) 1994, 2003, 2004, 2005, 2006  FreedroidRPG development team
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+""")
+
+  for node in everything:
+    for something in node:
+      if something[0] == "tuxtalk" :
+        file.write(b, "New Option Nr=" + something[1][0] + '  OptionText="' + something[1][1] + "\"\n")
+      elif something[0] == "tuxtalk.s" :
+        file.write(b, "OptionSample=\"" + something[1] + "\"\n")
+      elif something[0] == "reply" :
+        file.write(b, "Subtitle=\"" + something[1] + "\"\n")
+      elif something[0] == "reply.s" :
+        file.write(b, "ReplySample=\"" + something[1] + "\"\n")
+      elif something[0] == "coords" :
+        file.write(b, "PositionX=" + something[1][0] + "  PositionY=" + something[1][1] + "  \n")
+      elif something[0] == "switch" :
+        file.write(b, "ChangeOption=" + something[1][0] + " ChangeToValue=" + something[1][1] + "\n")
+      elif something[0] == "startup" :
+        file.write(b, "AlwaysExecuteThisOptionPriorToDialogStart=\"" + something[1] + "\"\n")
+      elif something[0] == "goto" :
+        file.write(b, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][2] + "\n")
+      elif something[0] == "linked" :
+        file.write(b, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][1] + "\n")
+      elif something[0] == "extra" :
+        file.write(b, 'DoSomethingExtra="' + something[1] + '"' + "\n")
+    file.write(b, "\n----------------------------------------------------------------------\n\n")
+  file.write(b, 'End of chat dialog for character="XXXXX"' + "\n")
+
+  
 
 
 ####################################################################
@@ -320,7 +415,8 @@ home = None
 count = None
 subnode = None
 everything = None
-
+locked = True
+firstrun = True
 
 # current = load(current)
 # home = clip(current)
@@ -328,16 +424,22 @@ everything = None
 # everything = scanall(current, count)
 # rebuild(everything)
 
-
 while True :
-  if current != None :
+ try:
+  if firstrun == True:
+    firstrun = False
+  else:
     print ""
+  if current != None :
     a = str(current)
-    print "f: " + a[12:-26],
+    if locked == True:
+      print "f: " + a[12:-26],
+    else:
+      print "F: " + a[12:-26],
   if node != None :
     print "n:" + str(noda),
   if subnode != None :
-    print "s:" + str(subnode),
+    print "s:" + str(sub),
   print " >>",
   command = raw_input()
   if command == "q":
@@ -352,33 +454,79 @@ while True :
     dumpnodes(everything)
   elif command == "n":
     if everything == None:
-      error(current)
+      error()
     else:
       subnode = None
       print "What node?",
       noda = int(raw_input())
+#        while justone in everything
       node = everything[noda]
       dumpnode(node)
   elif command == "p":
     if node == None:
-      error(current)
+      error()
     else:
       dumpnode(node)
   elif command == "d":
     if everything == None:
-      error(current)
+      error()
     else:
       dumpnodes(everything)
   elif command == "dd":
     if everything == None:
-      error(current)
+      error()
     else:
       for x in everything:
         dumpnode(x)
-#  elif command == "u":
-#    subnode = int(raw_input("What subnode? "))
-#    gosub(current, home, desired, subnode)
-#  elif command == "e":
-#    gosub(current, home, desired, subnode)
+  elif command == "ddd":
+    if everything == None:
+      error()
+    else:
+      rawprint(everything)
+  elif command == "et":   #Edit Text.
+    if node == None:
+      error()
+    else:
+      print "Which subnode?",
+      pick = int(raw_input())
+      et(node, pick)
+  elif command == "es":
+    if node == None:
+      error()
+    else:
+      pass
+  elif command == "ed":
+    if node == None:
+      error()
+    else:
+      pass
+  elif command == "u":
+    pass
+  elif command == "w":
+    if locked == True:
+      error()
+    elif current == None:
+      error()
+    else:
+      writeall(current, everything)
+  elif command == "l":
+    if current == None:
+      error()
+    else:
+      if locked == True:
+        locked = False
+      else:
+        locked = True
   else:
-    error(current)
+    error()
+
+
+
+
+
+
+ except KeyboardInterrupt:
+   print""
+   error()
+ except IOError:
+   error()
