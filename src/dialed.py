@@ -316,7 +316,7 @@ def et(node, pick):
       meaty = meaty + 1
       flag = 0
     elif node[count][0] == "startup":
-      error("foo")
+      error()
       break
     else:
       count = count + 1
@@ -332,7 +332,6 @@ def et(node, pick):
     node[count][1] = b
   else:
     node[count][1][1] = b
-  print "  !",
 
 def writeall(current, everything):
   a = str(current)[12:-26]
@@ -401,7 +400,9 @@ Beginning of new chat dialog for character="XXXXX"
         file.write(b, 'DoSomethingExtra="' + something[1] + '"' + "\n")
     file.write(b, "\n----------------------------------------------------------------------\n\n")
   file.write(b, 'End of chat dialog for character="XXXXX"' + "\n")
-
+  file.close(b)
+  return file(str(current)[14:-26])
+  
   
 
 
@@ -458,9 +459,14 @@ while True :
     else:
       subnode = None
       print "What node?",
+      x = 0
+      justone = []
       noda = int(raw_input())
-#        while justone in everything
-      node = everything[noda]
+      while int(everything[x][0][1][0]) != noda:
+        if everything[x][0][1][0] == noda:
+          break
+        x = x + 1
+      node = everything[x]
       dumpnode(node)
   elif command == "p":
     if node == None:
@@ -508,7 +514,7 @@ while True :
     elif current == None:
       error()
     else:
-      writeall(current, everything)
+      current = writeall(current, everything)
   elif command == "l":
     if current == None:
       error()
@@ -519,11 +525,6 @@ while True :
         locked = True
   else:
     error()
-
-
-
-
-
 
  except KeyboardInterrupt:
    print""
