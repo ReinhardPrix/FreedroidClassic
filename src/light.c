@@ -146,11 +146,6 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
     
     for ( i = 0 ; i < Steps + 1 ; i++ )
     {
-	if ( ! IsLightPassable ( CheckPosition . x , CheckPosition . y , z ) ) 
-	{
-	    DebugPrintf( 1 , "\n%s(): Connection analysis revealed : OBSTACLES!! NO WAY!!!" , __FUNCTION__ );
-	    return FALSE;
-	}	
     int x = CheckPosition . x;
     int y = CheckPosition . y;
     Level PassLevel = curShip . AllLevels [ z ] ;
