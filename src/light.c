@@ -49,7 +49,7 @@ int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_strength_buffer [ 64 ] [ 48 ] ;
 
 int
-IsLightPassable ( float x , float y , int z )
+IsLightPassable ( float x , float y , int z, finepoint step )
 {
     Level PassLevel = curShip . AllLevels [ z ] ;
     int x_tile_start, y_tile_start;
@@ -60,9 +60,16 @@ IsLightPassable ( float x , float y , int z )
     // We take a look whether the position given in the parameter is 
     // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
     //
-    
-    x_tile_start = rintf ( x ) -2         ; y_tile_start = rintf ( y ) -2 ;
-    x_tile_end   = x_tile_start + 3       ; y_tile_end   = y_tile_start + 3 ;
+    if(step.x > 0 && step.y > 0)
+	{
+        x_tile_start = rintf ( x )  -1       ; y_tile_start = rintf ( y ) - 1;
+        x_tile_end   = x_tile_start + 2       ; y_tile_end   = y_tile_start + 2 ;
+	}
+    else
+	{
+	x_tile_start = rintf ( x ) -1         ; y_tile_start = rintf ( y ) -1 ;
+	x_tile_end   = x_tile_start + 2       ; y_tile_end   = y_tile_start + 2 ;
+	}
     if ( x_tile_start < 0 ) x_tile_start = 0 ; 
     if ( y_tile_start < 0 ) y_tile_start = 0 ; 
     if ( x_tile_end >= PassLevel -> xlen ) x_tile_end = PassLevel->xlen -1 ;
@@ -145,7 +152,7 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
     // We take a look whether the position given in the parameter is 
     // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
     //
-    if(!IsLightPassable(CheckPosition.x, CheckPosition.y, z))
+    if(!IsLightPassable(CheckPosition.x, CheckPosition.y, z, step))
 	return FALSE;
   	
     CheckPosition.x += step.x;
