@@ -158,7 +158,6 @@ typedef struct
     int number_of_big_screen_messages ;
     float delay_for_big_screen_messages ;
     int enable_cheatkeys;
-    int transparency ;
     int automap_manual_shift_x ;
     int automap_manual_shift_y ;
     int screen_width;

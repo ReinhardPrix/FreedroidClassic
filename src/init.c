@@ -1786,7 +1786,6 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . number_of_big_screen_messages = 4 ;
     GameConfig . delay_for_big_screen_messages = 6.5 ;
     GameConfig . enable_cheatkeys = FALSE ;
-    GameConfig . transparency = FALSE ;
     GameConfig . automap_manual_shift_x = 0 ;
     GameConfig . automap_manual_shift_y = 0 ;
     GameConfig . automap_display_scale = 2.0 ;
