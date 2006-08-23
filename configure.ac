@@ -60,8 +60,13 @@ esac
 dnl Commandline options
 
 AC_ARG_ENABLE(editors, [  --disable-editors       Do not build the GTK editors [[default=auto]]], build_editors="$enableval", build_editors=yes)
+AC_ARG_ENABLE(profiling, [  --enable-profiling       Compile with profiling code [[default=no]]], use_prof="$enableval", use_prof=no)
 AC_ARG_ENABLE(opengl, [  --disable-opengl        Do not build the OpenGL support (not recommended!) [[default=auto]]], want_gl="$enableval", want_gl=yes)
 AC_ARG_ENABLE(backtrace, [  --disable-backtrace     Do not use backtrace() to generate nice bug reports [[default=use it]]], want_backtrace="$enableval", want_backtrace=yes)
+if test x$use_prof = xyes; then
+	CFLAGS="$CFLAGS -pg"
+fi	
+
 
 dnl Check for SDL
 AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
