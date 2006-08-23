@@ -37,70 +37,86 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 --------------------
 *** START OF PURE SCROLLTEXT DATA ***
    CONTROLS
- (See also the man page of the game and the home page of the project.)
 
  Movement:
 
- The game is best controlled via mouse input:  Left click onto the locations you want to move to.  Holding left button down will keep moving in that direction.  Holding down CTRL key will select running motion.
+ The game is controlled using the mouse:  Left click onto the locations you want to move to.  Hold the button down to keep moving in that direction.  Holding down CTRL key will make you run.
 
+ Attacking:
+
+ Left clicking an enemy will cause Tux to come close to the bot and to start attacking it with the current weapon. If the current weapon is a gun then tux will stand still and shoot the bot.
+ 
  Special functions:
 
- Right click to use special powers, spells and skills.  Left click an enemy to launch an attack or left click a friend to initiate friendly communication.  Use mouse wheel or cursor keys to switch to 'examine' and 'loot' 
- special function.
+ Use the right click to activate special powers, spells and skills.  Use the mouse wheel or cursor keys to switch to 'examine' and 'loot' special functions.
 
- Additional Keys:
+ Other Keys:
 
- I ... Open/Close Inventory Screen
- C ... Open/Close Character Screen
- S ... Open/Close Spells&Skills Screen
- L ... Show Quest Status Log
- P ... Turn on/off Pause Mode
+ I ... Open/Close inventory panel
+ C ... Open/Close character panel
+ S ... Open/Close skills panel
+ L ... Show quest status log
+ P ... Toggle pause mode
  A ... Hold down 'A' to attack and not move
  Tab ... Turn on/off automap display
- LEFT SHIFT ... make item names flash up, so that no items can be
-    missed easily
- CTRL ... Running motion (hold down CTRL-key)
- Escape ... Pops up the main menu
+ LEFT SHIFT ... Make items on the ground visible
+ Escape ... Show the main menu
  F1-F9 Quick-Switch to skill/ability/spells 1-9
- 1-9 ... Quick-Use items from the quick-inventory.  (That's those small items 
- placed on the very bottom of the inventory.)
-
- Space ... Closes all opened screens.
+ 1-9 ... Quick-Use items from the quick-inventory
+ Space ... Close all open panels
  F12 ... Take a screenshot
 
- Spells&Skills:
+ Spells and Skills:
  Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on 
- that one.  To take over a hostile bot, select the takeover/chat skill from 
+ it.  To take over a hostile bot, select the takeover/chat skill from 
  the skills screen (level 1), then click the right mouse button to initiate 
  takeover.
- For the takeover game, you can use the mouse wheel if you have one, 
- otherwise you must use the cursor keys, sorry :(
+ For the takeover game, you can use the mouse wheel or the cursor keys.
 
  Home teleport spell:  Select the skill and right click somewhere to teleport 
- home.  Once home, the northernmost teleporter will take you back to exactly 
- the location where you came from. 
+ to the town. If used in town the skill will send you back to where you were
+ before you used it the last time.
 
  Healing spell:  Select the healing spell from the skills screen and right 
- click somewhere.
+ click anywhere on the screen.
 
- Remote strike spell:  Fires bullets that do exactly the same damage and have 
- exactly the same chance to hit like your character with his currently 
- equipped weapon.
-
- Frost bolt:  Does some cold damage and also has a chance to 'freeze' bots, 
- so that they can move only at a fraction of their normal speed for some 
- time.  They can however still attack at their normal speed.
-
- Poison bolt:  Poisons an enemy (turning green then), delivering some damage 
- over time.  Note that damage duration AND damage effect are cumulative, 
- (i.e. damage done will raise with the square of the poison bolt hits taken).
-
- There are many more skills and spells available in Freedroid.  
- Consult the in-game explanation page from the skills screen for more information.
-
-    Press Fire to Play
+ Attack spells:
+ These come in many varieties which are yours to explore. To use them you usually right click on the
+ enemy you want to target, but there are exceptions to that rule.
 
 
+ If you are stuck and need help, feel free to come to #freedroid on irc.freenode.net and ask for help.
+
+ That is all, have a nice game.
+
+
+    Press any key.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ If you are still looking for the "any" key, then please sell your computer and make sure you do not reproduce.
+ Thank you.
 
 
 
