@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
 import sys
+import readline
+readline.clear_history()
+readline.set_history_length(0)
+
 
 ####################################################################
 #        ALL THE BLOODY FUNCTIONS GO HERE.
@@ -11,7 +15,8 @@ def end():
   sys.exit()
 
 def error():
-    print "  ?",
+  readline.clear_history()
+  print "  ?",
 
 #Loads a file.
 def load(current):
@@ -226,13 +231,13 @@ def dumpnode(node):
   print " #" + node[0][1][0]
   for subnode in node:
     if subnode[0] == "tuxtalk":
-      print " Tux: " + subnode[1][1]
+      print "  Tux: " + subnode[1][1]
     elif subnode[0] == "reply":
       if count == 0:
-        print " A: " + subnode[1]
+        print "  A: " + subnode[1]
         count = count + 1
       else:
-        print "    " + subnode[1]
+        print "     " + subnode[1]
 
 
 
@@ -326,8 +331,13 @@ def et(node, pick):
     a = node[count][1]
   else:
     a = node[count][1][1]
-  print "\n<< " + a + "\n>>",
-  b = raw_input()
+  print "\n<< " + a + "\n",
+  readline.clear_history()
+  readline.set_history_length(0)
+  readline.add_history(a)
+  readline.set_pre_input_hook()
+  b = raw_input(">> ")
+  readline.set_history_length(0)
   if flag == 0:
     node[count][1] = b
   else:
@@ -405,6 +415,54 @@ Beginning of new chat dialog for character="XXXXX"
   
   
 
+def inject(everything):
+  desired = raw_input("New node number? ")
+  for checking in everything:
+    if checking[0][1][0] == desired:
+      error()
+      return everything
+    else:
+      pass
+  readline.clear_history()
+  node = ['','','','','','','']
+  node[0] = ['','']
+  node[0][0] = "tuxtalk"
+  node[0][1] = ['','']
+  node[0][1][0] = desired
+  node[0][1][1] = "<?>"
+  node[1] = ['','']
+  node[1][0] = "tuxtalk.s"
+  node[1][1] = "Sorry_No_Voice_Sample_Yet_0.wav"
+  node[2] = ['','']
+  node[2][0] = "coords"
+  node[2][1] = ['','']
+  node[2][1][0] = "200"
+  node[2][1][1] = "200"
+  node[3] = ['','']
+  node[3][0] = "reply"
+  node[3][1] = "<?>"
+  node[4] = ['','']
+  node[4][0] = "reply.s"
+  node[4][1] = "Sorry_No_Voice_Sample_Yet_0.wav"
+  node[5] = ['','']
+  node[5][0] = "switch"
+  node[5][1] = ['','']
+  node[5][1][0] = desired
+  node[5][1][1] = "0"
+  node[6] = ['','']
+  node[6][0] = "startup"
+  node[6][1] = "no"
+  list.append(everything, node)
+  return everything
+
+def sort(everything, count):
+  pile = []
+  for bit in range(100):
+    for bite in range(count):
+      if int(everything[bite][0][1][0]) == bit :
+        list.append(pile, everything[bite])
+  everything = pile
+  return everything
 
 ####################################################################
 #    HERE STARTS THE PROGRAM.
@@ -418,6 +476,7 @@ subnode = None
 everything = None
 locked = True
 firstrun = True
+prompt = ""
 
 # current = load(current)
 # home = clip(current)
@@ -427,6 +486,8 @@ firstrun = True
 
 while True :
  try:
+  prompt = ""
+  readline.clear_history()
   if firstrun == True:
     firstrun = False
   else:
@@ -434,18 +495,19 @@ while True :
   if current != None :
     a = str(current)
     if locked == True:
-      print "f: " + a[12:-26],
+      prompt = "f: " + a[12:-26] + " "
     else:
-      print "F: " + a[12:-26],
+      prompt = "F: " + a[12:-26] + " "
   if node != None :
-    print "n:" + str(noda),
+    prompt = prompt + "n:" + str(noda) + " "
   if subnode != None :
-    print "s:" + str(sub),
-  print " >>",
-  command = raw_input()
+    prompt = prompt + "s:" + str(sub) + " "
+  prompt = str(prompt) + " >> "
+  command = raw_input(str(prompt))
   if command == "q":
     end()
   elif command == "s":
+    readline.clear_history()
     node = None
     subnode = None
     current = load(current)
@@ -454,14 +516,14 @@ while True :
     everything = scanall(current, count)
     dumpnodes(everything)
   elif command == "n":
+    readline.clear_history()
     if everything == None:
       error()
     else:
       subnode = None
-      print "What node?",
       x = 0
       justone = []
-      noda = int(raw_input())
+      noda = int(raw_input("What node? "))
       while int(everything[x][0][1][0]) != noda:
         if everything[x][0][1][0] == noda:
           break
@@ -469,46 +531,60 @@ while True :
       node = everything[x]
       dumpnode(node)
   elif command == "p":
+    readline.clear_history()
     if node == None:
       error()
     else:
       dumpnode(node)
   elif command == "d":
+    readline.clear_history()
     if everything == None:
       error()
     else:
       dumpnodes(everything)
   elif command == "dd":
+    readline.clear_history()
     if everything == None:
       error()
     else:
       for x in everything:
         dumpnode(x)
   elif command == "ddd":
+    readline.clear_history()
     if everything == None:
       error()
     else:
       rawprint(everything)
   elif command == "et":   #Edit Text.
+    readline.clear_history()
     if node == None:
       error()
     else:
-      print "Which subnode?",
-      pick = int(raw_input())
+      pick = int(raw_input("Which subnode? "))
       et(node, pick)
   elif command == "es":
+    readline.clear_history()
     if node == None:
       error()
     else:
       pass
   elif command == "ed":
+    readline.clear_history()
     if node == None:
       error()
     else:
       pass
-  elif command == "u":
-    pass
+  elif command == "ne":
+    if current == None:
+      error()
+    else:
+      readline.clear_history()
+      everything = inject(everything)
+      count = 0
+      for spam in everything:
+        count = count + 1
   elif command == "w":
+    readline.clear_history()
     if locked == True:
       error()
     elif current == None:
@@ -516,6 +592,7 @@ while True :
     else:
       current = writeall(current, everything)
   elif command == "l":
+    readline.clear_history()
     if current == None:
       error()
     else:
@@ -523,6 +600,13 @@ while True :
         locked = False
       else:
         locked = True
+  elif command == "so":
+    readline.clear_history()
+    if current == None:
+      error()
+    else:
+      everything = sort(everything, count)
+
   else:
     error()
 
