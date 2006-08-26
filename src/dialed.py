@@ -20,11 +20,13 @@ def error():
 
 #Loads a file.
 def load(current):
-  if current != None:
-    file.close(current)
-  print "What character?",
-  character = "../dialogs/" + raw_input() + ".dialog"
-  current = file(character)
+  checkup = None
+  character = "../dialogs/" + raw_input("What character? ") + ".dialog"
+  checkup = file(character)
+  if checkup != None:
+    if current != None:
+      file.close(current)  
+    current = checkup
   return current
 
 #Headers are a pain, I do not need them, so I just scroll past them.
@@ -225,12 +227,37 @@ def dumpnodes(everything):
 #      elif subnode[0] == "reply":
 #        print "A: " + subnode[1]
 
-def dumpnode(node):
+def dumpnoded(node):
   count = 0
+  snn = 0
   print ""
-  print " #" + node[0][1][0]
+  print "       #" + node[0][1][0]
   for subnode in node:
     if subnode[0] == "tuxtalk":
+      print "  " + str(snn),
+      snn = snn + 1
+      print "   Tux: " + subnode[1][1]
+    elif subnode[0] == "reply":
+      if count == 0:
+        print "  " + str(snn),
+        snn = snn + 1
+        print "   A: " + subnode[1]
+        count = count + 1
+      else:
+        print "  " + str(snn),
+        snn = snn + 1
+        print "      " + subnode[1]
+
+
+
+def dumpnode(node):
+  count = 0
+  snn = 0
+  print ""
+  print "  #" + node[0][1][0]
+  for subnode in node:
+    if subnode[0] == "tuxtalk":
+      snn = snn + 1
       print "  Tux: " + subnode[1][1]
     elif subnode[0] == "reply":
       if count == 0:
@@ -241,13 +268,10 @@ def dumpnode(node):
 
 
 
+
 def rawprint(everything):
   print """% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004, 2005, 2006  FreedroidRPG development team
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -264,7 +288,6 @@ def rawprint(everything):
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
 This file was generated using dialed.
@@ -320,9 +343,9 @@ def et(node, pick):
       count = count + 1
       meaty = meaty + 1
       flag = 0
-    elif node[count][0] == "startup":
+    elif node[count][0] == "switch":
       error()
-      break
+      return
     else:
       count = count + 1
       flag = 0
@@ -331,28 +354,23 @@ def et(node, pick):
     a = node[count][1]
   else:
     a = node[count][1][1]
+  print a
   print "\n<< " + a + "\n",
   readline.clear_history()
-  readline.set_history_length(0)
   readline.add_history(a)
-  readline.set_pre_input_hook()
   b = raw_input(">> ")
-  readline.set_history_length(0)
+  readline.clear_history()
   if flag == 0:
     node[count][1] = b
   else:
     node[count][1][1] = b
 
 def writeall(current, everything):
-  a = str(current)[12:-26]
+  c = str(current)[12:-26]
   file.close(current)
-  b = open(a, 'w')
-  file.write(b, """% -*- mode: flyspell; mode: fill -*-
+  d = open(c, 'w')
+  file.write(d, """% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004, 2005, 2006  FreedroidRPG development team
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -369,7 +387,6 @@ def writeall(current, everything):
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
 This file was generated using dialed.
@@ -389,28 +406,28 @@ Beginning of new chat dialog for character="XXXXX"
   for node in everything:
     for something in node:
       if something[0] == "tuxtalk" :
-        file.write(b, "New Option Nr=" + something[1][0] + '  OptionText="' + something[1][1] + "\"\n")
+        file.write(d, "New Option Nr=" + something[1][0] + '  OptionText="' + something[1][1] + "\"\n")
       elif something[0] == "tuxtalk.s" :
-        file.write(b, "OptionSample=\"" + something[1] + "\"\n")
+        file.write(d, "OptionSample=\"" + something[1] + "\"\n")
       elif something[0] == "reply" :
-        file.write(b, "Subtitle=\"" + something[1] + "\"\n")
+        file.write(d, "Subtitle=\"" + something[1] + "\"\n")
       elif something[0] == "reply.s" :
-        file.write(b, "ReplySample=\"" + something[1] + "\"\n")
+        file.write(d, "ReplySample=\"" + something[1] + "\"\n")
       elif something[0] == "coords" :
-        file.write(b, "PositionX=" + something[1][0] + "  PositionY=" + something[1][1] + "  \n")
+        file.write(d, "PositionX=" + something[1][0] + "  PositionY=" + something[1][1] + "  \n")
       elif something[0] == "switch" :
-        file.write(b, "ChangeOption=" + something[1][0] + " ChangeToValue=" + something[1][1] + "\n")
+        file.write(d, "ChangeOption=" + something[1][0] + " ChangeToValue=" + something[1][1] + "\n")
       elif something[0] == "startup" :
-        file.write(b, "AlwaysExecuteThisOptionPriorToDialogStart=\"" + something[1] + "\"\n")
+        file.write(d, "AlwaysExecuteThisOptionPriorToDialogStart=\"" + something[1] + "\"\n")
       elif something[0] == "goto" :
-        file.write(b, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][2] + "\n")
+        file.write(d, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][2] + "\n")
       elif something[0] == "linked" :
-        file.write(b, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][1] + "\n")
+        file.write(d, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][1] + "\n")
       elif something[0] == "extra" :
-        file.write(b, 'DoSomethingExtra="' + something[1] + '"' + "\n")
-    file.write(b, "\n----------------------------------------------------------------------\n\n")
-  file.write(b, 'End of chat dialog for character="XXXXX"' + "\n")
-  file.close(b)
+        file.write(d, 'DoSomethingExtra="' + something[1] + '"' + "\n")
+    file.write(d, "\n----------------------------------------------------------------------\n\n")
+  file.write(d, 'End of chat dialog for character="XXXXX"' + "\n")
+  file.close(d)
   return file(str(current)[14:-26])
   
   
@@ -464,6 +481,65 @@ def sort(everything, count):
   everything = pile
   return everything
 
+def cu(everything, noda):
+  x = 0
+  while int(everything[x][0][1][0]) != noda:
+    x = x + 1
+  spawn = int(raw_input("Which subnode? "))
+  count = 0
+  meaty = -1
+  while meaty != spawn:
+    if everything[x][count][0] == "tuxtalk":
+      count = count + 1
+      meaty = meaty + 1
+      flag = 1
+    elif everything[x][count][0] == "reply":
+      count = count + 1
+      meaty = meaty + 1
+      flag = 0
+    elif everything[x][count][0] == "switch":
+      error()
+      return everything
+    else:
+      count = count + 1
+  if flag == 1:
+    count = count + 3
+  else: count = count + 2
+  list.insert(everything[x], count - 1 , ["reply.s", "Sorry_No_Voice_Sample_Yet_0.wav"])
+  list.insert(everything[x], count - 1 , ["reply", "<?>"])
+  return everything
+
+def uc(everything, noda):
+  x = 0
+  while int(everything[x][0][1][0]) != noda:
+    x = x + 1
+  spawn = int(raw_input("Which subnode? "))
+  if spawn == 0:
+    error()
+    return everything
+  else:
+    count = 0
+    meaty = -1
+    while meaty != spawn:
+      if everything[x][count][0] == "tuxtalk":
+        count = count + 1
+        meaty = meaty + 1
+      elif everything[x][count][0] == "reply":
+        count = count + 1
+        meaty = meaty + 1
+      elif everything[x][count][0] == "switch":
+        error()
+        return everything
+      else:
+        count = count + 1
+    del(everything[x][count - 1])
+    del(everything[x][count - 1])
+    return everything
+
+
+
+
+
 ####################################################################
 #    HERE STARTS THE PROGRAM.
 ####################################################################
@@ -473,10 +549,12 @@ node = None
 home = None
 count = None
 subnode = None
-everything = None
+everything = []
 locked = True
 firstrun = True
 prompt = ""
+previous = []
+backup = None
 
 # current = load(current)
 # home = clip(current)
@@ -486,6 +564,9 @@ prompt = ""
 
 while True :
  try:
+  if previous != everything:
+    backup = previous[:]
+    previous = everything[:]
   prompt = ""
   readline.clear_history()
   if firstrun == True:
@@ -514,6 +595,8 @@ while True :
     home = clip(current)
     count = nodecount(current, home)
     everything = scanall(current, count)
+    backup = everything[:]
+    previous = everything[:]
     dumpnodes(everything)
   elif command == "n":
     readline.clear_history()
@@ -536,6 +619,12 @@ while True :
       error()
     else:
       dumpnode(node)
+  elif command == "pp":
+    readline.clear_history()
+    if node == None:
+      error()
+    else:
+      dumpnoded(node)
   elif command == "d":
     readline.clear_history()
     if everything == None:
@@ -583,6 +672,7 @@ while True :
       count = 0
       for spam in everything:
         count = count + 1
+      everything = sort(everything, count)
   elif command == "w":
     readline.clear_history()
     if locked == True:
@@ -606,12 +696,48 @@ while True :
       error()
     else:
       everything = sort(everything, count)
+  elif command == "mu":
+    readline.clear_history()
+    if node == None:
+      error()
+    else:
+      x = 0
+      while int(everything[x][0][1][0]) != noda:
+        x = x + 1
+      list.remove(everything, everything[x])
+      count = count - 1
+      node = None
+      noda = None
+  elif command == "cu":
+    readline.clear_history()
+    if node == None:
+      error()
+    else:
+      cu(everything, noda)
+  elif command == "uc":
+    readline.clear_history()
+    if node == None:
+      error()
+    else:
+      everything = uc(everything, noda)  
+  elif command == "!":
+    everything = backup
+  elif command == "!!":
+    if current == None:
+      error()
+    else:
+      everything = None
+      file.seek(current, 0)
+      home = clip(current)
+      count = nodecount(current, home)
+      everything = scanall(current, count)
+
 
   else:
     error()
 
- except KeyboardInterrupt:
-   print""
-   error()
+except KeyboardInterrupt:
+  print""
+  error()
  except IOError:
    error()
