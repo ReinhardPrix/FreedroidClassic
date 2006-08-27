@@ -536,6 +536,52 @@ def uc(everything, noda):
     del(everything[x][count - 1])
     return everything
 
+def links(node, everything):
+  no = 0
+  pre = 0
+  n = 0
+
+  for bit in node:
+    if bit[0] == "switch":
+      pre = pre + 1
+  if pre == 1:
+    for bit in node:
+      if bit[0] == "switch":
+        if bit[1][1] == "0":
+          return False
+
+  for bit in node:
+    no = no + 1
+    if bit[0] == "switch":
+      if bit[1][1] == "0":
+        say = "OFF"
+      else:
+        say = "ON "
+      if n == 0:
+        print ""
+        n = 1
+       
+      y = 0
+      while int(everything[y][0][1][0]) != bit[1][0]:
+        if everything[y][0][1][0] == bit[1][0]:
+          break
+        y = y + 1
+      if everything[y] == node:
+        if say == "OFF":
+          firstrun = True
+        else:
+          print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[int(y)][0][1][1]
+
+      else:
+        x = 0
+        while int(everything[x][0][1][0]) != bit[1][0]:
+          if everything[x][0][1][0] == bit[1][0]:
+            break
+          x = x + 1
+        print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[int(x)][0][1][1]
+        firstrun = False
+  return firstrun
+
 
 
 
@@ -564,6 +610,7 @@ backup = None
 
 while True :
  try:
+#  print everything
   if previous != everything:
     backup = previous[:]
     previous = everything[:]
@@ -613,6 +660,7 @@ while True :
         x = x + 1
       node = everything[x]
       dumpnode(node)
+      links(node, everything)
   elif command == "p":
     readline.clear_history()
     if node == None:
@@ -719,7 +767,7 @@ while True :
     if node == None:
       error()
     else:
-      everything = uc(everything, noda)  
+      everything = uc(everything, noda)
   elif command == "!":
     everything = backup
   elif command == "!!":
@@ -731,12 +779,18 @@ while True :
       home = clip(current)
       count = nodecount(current, home)
       everything = scanall(current, count)
+  elif command == "nk":
+    if node == None:
+      error()
+    else:
+      links(node, everything)
+
 
 
   else:
     error()
 
-except KeyboardInterrupt:
+ except KeyboardInterrupt:
   print""
   error()
  except IOError:
