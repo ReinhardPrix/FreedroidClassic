@@ -270,6 +270,7 @@ def dumpnode(node):
 
 
 def rawprint(everything):
+  print ""
   print """% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
  *  This file is part of Freedroid
@@ -306,7 +307,7 @@ Beginning of new chat dialog for character="XXXXX" """
     print ""
     raw(everything[nodo])
     print "\n----------------------------------------------------------------------"
-  print "\n" + 'End of chat dialog for character="XXXXX"' + "\n"
+  print "\n" + 'End of chat dialog for character="XXXXX"'
 
 def raw(node):
   for something in node:
@@ -321,7 +322,7 @@ def raw(node):
     elif something[0] == "coords" :
       print "PositionX=" + something[1][0] + "  PositionY=" + something[1][1] + "  "
     elif something[0] == "switch" :
-      print "ChangeOption=" + something[1][0] + " ChangeToValue=" + something[1][1]
+      print "ChangeOption=" + str(something[1][0]) + " ChangeToValue=" + str(something[1][1])
     elif something[0] == "startup" :
       print "AlwaysExecuteThisOptionPriorToDialogStart=\"" + something[1] + "\""
     elif something[0] == "goto" :
@@ -430,8 +431,6 @@ Beginning of new chat dialog for character="XXXXX"
   file.close(d)
   return file(str(current)[14:-26])
   
-  
-
 def inject(everything):
   desired = raw_input("New node number? ")
   for checking in everything:
@@ -537,6 +536,7 @@ def uc(everything, noda):
     return everything
 
 def links(node, everything):
+  firstrun = False
   no = 0
   pre = 0
   n = 0
@@ -566,11 +566,13 @@ def links(node, everything):
         if everything[y][0][1][0] == bit[1][0]:
           break
         y = y + 1
+       
       if everything[y] == node:
         if say == "OFF":
           firstrun = True
         else:
           print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[int(y)][0][1][1]
+          firstrun = False
 
       else:
         x = 0
@@ -582,6 +584,45 @@ def links(node, everything):
         firstrun = False
   return firstrun
 
+def addlink(node, noda, state):
+  to = int(raw_input("To node? "))
+  for bit in node:
+    if bit[0] == "switch":
+      if int(bit[1][0]) == to:
+        bit[1][1] = str(state)
+        return
+  x = 0
+  for bit in node:
+    x = x + 1
+    if bit[0] == "switch":
+      list.insert(node, x, ["switch", [to,str(state)]])
+      return
+  x = 0
+  for bit in node:
+    x = x + 1
+    if bit[0] == "extra":
+      x = x - 1
+      list.insert(node, x, ["switch", [to,str(state)]])
+      return
+    elif bit[0] == "startup":
+      x = x - 1
+      list.insert(node, x, ["switch", [to,str(state)]])
+      return
+  
+  hcf()
+        
+def killlink(node, everything):
+  to = int(raw_input("To node? "))
+  for bit in node:
+    if bit[0] == "switch":
+      if int(bit[1][0]) == to:
+        list.remove(node, bit)
+        return
+  error()
+
+  
+#  while node[x][0] != "switch":
+#    x = x + 1
 
 
 
@@ -784,14 +825,29 @@ while True :
       error()
     else:
       links(node, everything)
-
-
+  elif command == "on":
+    if node == None:
+      error()
+    else:
+      addlink(node, everything, 1)
+  elif command == "no":
+    if node == None:
+      error()
+    else:
+      addlink(node, everything, 0)
+  elif command == "kn":
+    if node == None:
+      error()
+    else:
+      killlink(node, everything)
 
   else:
     error()
 
  except KeyboardInterrupt:
-  print""
+  print ""
   error()
  except IOError:
+   error()
+ except ValueError:
    error()
