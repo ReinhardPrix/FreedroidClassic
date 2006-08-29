@@ -2,13 +2,34 @@
 
 import sys
 import readline
+import threading
+import thread
+import time
+
 readline.clear_history()
 readline.set_history_length(0)
 
+current = None
+everything = None
 
 ####################################################################
 #        ALL THE BLOODY FUNCTIONS GO HERE.
 ####################################################################
+
+class autosave(threading.Thread):
+  def __init__(self, tofile, what):
+    self.tofile = tofile
+    self.what = what
+    threading.Thread.__init__(self)
+  def run(self):
+    self._running = True
+    tobesavedas = str(self.tofile)[12:-32] + "backup"
+    while self._running:
+      time.sleep(60)
+      self.target = open(tobesavedas, "w")
+      thread.start_new_thread(writeall, (self.target, self.what),)
+  def stop(self):
+    self._running = False
 
 #I use ctrl+d anyway, but that one is for the other people.
 def end():
@@ -480,10 +501,7 @@ def sort(everything, count):
   everything = pile
   return everything
 
-def cu(everything, noda):
-  x = 0
-  while int(everything[x][0][1][0]) != noda:
-    x = x + 1
+def cu(everything, x):
   spawn = int(raw_input("Which subnode? "))
   count = 0
   meaty = -1
@@ -508,10 +526,7 @@ def cu(everything, noda):
   list.insert(everything[x], count - 1 , ["reply", "<?>"])
   return everything
 
-def uc(everything, noda):
-  x = 0
-  while int(everything[x][0][1][0]) != noda:
-    x = x + 1
+def uc(everything, x):
   spawn = int(raw_input("Which subnode? "))
   if spawn == 0:
     error()
@@ -535,7 +550,7 @@ def uc(everything, noda):
     del(everything[x][count - 1])
     return everything
 
-def links(node, everything):
+def links(node, everything, nodeindex):
   firstrun = False
   no = 0
   pre = 0
@@ -560,28 +575,12 @@ def links(node, everything):
       if n == 0:
         print ""
         n = 1
-       
-      y = 0
-      while int(everything[y][0][1][0]) != bit[1][0]:
-        if everything[y][0][1][0] == bit[1][0]:
-          break
-        y = y + 1
-       
-      if everything[y] == node:
-        if say == "OFF":
-          firstrun = True
-        else:
-          print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[int(y)][0][1][1]
-          firstrun = False
-
-      else:
-        x = 0
-        while int(everything[x][0][1][0]) != bit[1][0]:
-          if everything[x][0][1][0] == bit[1][0]:
-            break
-          x = x + 1
-        print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[int(x)][0][1][1]
-        firstrun = False
+      if say == "OFF":
+        if bit[1][0] == node[0][1][0]:
+          continue
+      x = list.index(nodeindex, bit[1][0])
+      print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[x][0][1][1]
+      firstrun = False
   return firstrun
 
 def addlink(node, noda, state):
@@ -620,11 +619,20 @@ def killlink(node, everything):
         return
   error()
 
-  
-#  while node[x][0] != "switch":
-#    x = x + 1
+def gotolist(node, everything):
+  for bit in node:
+    if bit[0] == "goto":
+      print ""
+      print "  IF: " + bit[1][0]
+      print "  T -> " + bit[1][1] + "  " + everything[list.index(nodeindex, bit[1][1])][0][1][1]
+      print "  F -> " + bit[1][2] + "  " + everything[list.index(nodeindex, bit[1][2])][0][1][1]
+      return
 
-
+def makeindex(everything):
+  nodeindex = []
+  for bit in everything:
+    list.append(nodeindex, bit[0][1][0])
+  return nodeindex
 
 
 ####################################################################
@@ -642,12 +650,7 @@ firstrun = True
 prompt = ""
 previous = []
 backup = None
-
-# current = load(current)
-# home = clip(current)
-# count = nodecount(current, home)
-# everything = scanall(current, count)
-# rebuild(everything)
+oncebefore = False
 
 while True :
  try:
@@ -662,6 +665,7 @@ while True :
   else:
     print ""
   if current != None :
+    nodeindex = makeindex(everything)
     a = str(current)
     if locked == True:
       prompt = "f: " + a[12:-26] + " "
@@ -686,22 +690,25 @@ while True :
     backup = everything[:]
     previous = everything[:]
     dumpnodes(everything)
+    nodeindex = makeindex(everything)
+    if oncebefore == True:
+      autosaver.stop()
+    autosaver = autosave(current, everything)
+    autosaver.setDaemon(True)
+    autosaver.setName("autosave")
+    autosaver.start()
+    oncebefore = True
   elif command == "n":
     readline.clear_history()
     if everything == None:
       error()
     else:
-      subnode = None
-      x = 0
-      justone = []
-      noda = int(raw_input("What node? "))
-      while int(everything[x][0][1][0]) != noda:
-        if everything[x][0][1][0] == noda:
-          break
-        x = x + 1
+      noda = raw_input("What node? ")
+      x = list.index(nodeindex, noda)
       node = everything[x]
       dumpnode(node)
-      links(node, everything)
+      links(node, everything, nodeindex)
+      gotolist(node, everything)
   elif command == "p":
     readline.clear_history()
     if node == None:
@@ -790,9 +797,6 @@ while True :
     if node == None:
       error()
     else:
-      x = 0
-      while int(everything[x][0][1][0]) != noda:
-        x = x + 1
       list.remove(everything, everything[x])
       count = count - 1
       node = None
@@ -802,13 +806,13 @@ while True :
     if node == None:
       error()
     else:
-      cu(everything, noda)
+      cu(everything, x)
   elif command == "uc":
     readline.clear_history()
     if node == None:
       error()
     else:
-      everything = uc(everything, noda)
+      everything = uc(everything, x)
   elif command == "!":
     everything = backup
   elif command == "!!":
@@ -824,7 +828,7 @@ while True :
     if node == None:
       error()
     else:
-      links(node, everything)
+      links(node, everything, nodeindex)
   elif command == "on":
     if node == None:
       error()
@@ -840,6 +844,12 @@ while True :
       error()
     else:
       killlink(node, everything)
+  elif command == "go":
+    if node == None:
+      error()
+    else:
+      gotolist(node, everything)
+
 
   else:
     error()
