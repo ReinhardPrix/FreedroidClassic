@@ -6,6 +6,7 @@ import threading
 import thread
 import time
 
+
 readline.clear_history()
 readline.set_history_length(0)
 
@@ -381,7 +382,6 @@ def et(node, pick):
   readline.clear_history()
   readline.add_history(a)
   b = raw_input(">> ")
-  readline.clear_history()
   if flag == 0:
     node[count][1] = b
   else:
@@ -453,6 +453,7 @@ Beginning of new chat dialog for character="XXXXX"
   return file(str(current)[14:-26])
   
 def inject(everything):
+  readline.clear_history()
   desired = raw_input("New node number? ")
   for checking in everything:
     if checking[0][1][0] == desired:
@@ -502,6 +503,7 @@ def sort(everything, count):
   return everything
 
 def cu(everything, x):
+  readline.clear_history()
   spawn = int(raw_input("Which subnode? "))
   count = 0
   meaty = -1
@@ -527,6 +529,7 @@ def cu(everything, x):
   return everything
 
 def uc(everything, x):
+  readline.clear_history()
   spawn = int(raw_input("Which subnode? "))
   if spawn == 0:
     error()
@@ -559,6 +562,7 @@ def links(node, everything, nodeindex):
   for bit in node:
     if bit[0] == "switch":
       pre = pre + 1
+  
   if pre == 1:
     for bit in node:
       if bit[0] == "switch":
@@ -584,10 +588,10 @@ def links(node, everything, nodeindex):
   return firstrun
 
 def addlink(node, noda, state):
-  to = int(raw_input("To node? "))
+  to = str(int(raw_input("To node? ")))
   for bit in node:
     if bit[0] == "switch":
-      if int(bit[1][0]) == to:
+      if str(int(bit[1][0])) == to:
         bit[1][1] = str(state)
         return
   x = 0
@@ -633,6 +637,110 @@ def makeindex(everything):
   for bit in everything:
     list.append(nodeindex, bit[0][1][0])
   return nodeindex
+  
+def killgoto(node):
+  for bit in node:
+    if bit[0] == "goto":
+      list.remove(node, bit)
+
+def newgoto(node):
+  x = 0
+  condition = raw_input("Condition? ")
+  readline.clear_history()
+  truth = str(int(raw_input("On true to? ")))
+  readline.clear_history()
+  lies = str(int(raw_input("On false to? ")))
+  if truth == lies:
+    type = "linked"
+  else:
+    type = "goto"
+  for bit in node:
+    x = x + 1
+    if bit[0] == "goto":
+      print bit[0]
+      list.remove(node, bit)
+      bit = [type, [condition, truth, lies]]
+      print x
+      list.insert(node, x - 1, bit)
+      return
+    elif bit[0] == "linked":
+      print bit[0]
+      list.remove(node, bit)
+      bit = [type, [condition, truth, lies]]
+      print x
+      list.insert(node, x - 1, bit)
+      return
+    elif bit[0] == "extra":
+      list.insert(node, x - 1 , [type, [condition, truth, lies]])
+      return
+    elif bit[0] == "startup":
+      list.insert(node, x - 1 , [type, [condition, truth, lies]])
+      return
+  hcf()
+
+def editgoto(node):
+  x = 0
+  for bit in node:
+    x = x + 1
+    if bit[0] == "goto":
+      readline.add_history(bit[1][0])
+      condition = raw_input("Condition? ")
+      readline.clear_history()
+      truth = raw_input("On true? ")
+      readline.clear_history()
+      lies = raw_input("On false? ")
+      newthing = ["goto", [condition, truth, lies]]
+      list.remove(node, bit)
+      list.insert(node, x - 1, newthing)
+      return
+  error()
+  
+def showextra(node):
+  x = 0
+  for bit in node:
+    if bit[0] == "extra" :
+      print ""
+      for bit in node:
+        if bit[0] == "extra" :
+          print "  " + str(x) + " Do:  " + bit[1]
+          x = x + 1
+      return
+
+def killextra(node):
+  y = 0
+  for bit in node:
+    if bit[0] == "extra":
+      y = 1
+      break
+  if y == 0:
+    error()
+    return
+  victim = int(raw_input("Which extra? "))
+  x = 0
+  for bit in node:
+    if bit[0] == "extra":
+      if x == victim:
+        list.remove(node, bit)
+      x = x + 1
+
+def addextra(node):
+  print ""
+  newextra = raw_input(">> ")
+  x = 0
+  for bit in node:
+    if bit[0] != "startup":
+      x = x + 1
+  list.insert(node, x, ["extra", newextra]) 
+  
+def startup(node, state):
+  list.remove(node, node[-1])
+  list.append(node, ["startup", state])
+  
+def showstartup(node):
+  if node[-1][1] == "yes":
+    print ""
+    print "  Autostarting"
+  
 
 
 ####################################################################
@@ -677,13 +785,14 @@ while True :
     prompt = prompt + "s:" + str(sub) + " "
   prompt = str(prompt) + " >> "
   command = raw_input(str(prompt))
+  readline.clear_history()
   if command == "q":
     end()
   elif command == "s":
-    readline.clear_history()
+    protectme = load(current)
+    current = protectme
     node = None
     subnode = None
-    current = load(current)
     home = clip(current)
     count = nodecount(current, home)
     everything = scanall(current, count)
@@ -699,78 +808,77 @@ while True :
     autosaver.start()
     oncebefore = True
   elif command == "n":
-    readline.clear_history()
     if everything == None:
       error()
     else:
-      noda = raw_input("What node? ")
-      x = list.index(nodeindex, noda)
+      buffering = str(int(raw_input("What node? ")))
+      x = list.index(nodeindex, buffering)
+      noda = str(buffering)
       node = everything[x]
       dumpnode(node)
       links(node, everything, nodeindex)
       gotolist(node, everything)
+      showextra(node)
+      showstartup(node)
   elif command == "p":
-    readline.clear_history()
     if node == None:
       error()
     else:
       dumpnode(node)
   elif command == "pp":
-    readline.clear_history()
     if node == None:
       error()
     else:
       dumpnoded(node)
   elif command == "d":
-    readline.clear_history()
     if everything == None:
       error()
     else:
       dumpnodes(everything)
   elif command == "dd":
-    readline.clear_history()
     if everything == None:
       error()
     else:
       for x in everything:
         dumpnode(x)
   elif command == "ddd":
-    readline.clear_history()
     if everything == None:
       error()
     else:
       rawprint(everything)
   elif command == "et":   #Edit Text.
-    readline.clear_history()
     if node == None:
       error()
     else:
       pick = int(raw_input("Which subnode? "))
       et(node, pick)
-  elif command == "es":
-    readline.clear_history()
+  elif command == "da":
     if node == None:
       error()
     else:
-      pass
-  elif command == "ed":
-    readline.clear_history()
+      links(node, everything, nodeindex)
+      gotolist(node, everything)
+      showextra(node)
+      showstartup(node)
+  elif command == "de":
     if node == None:
       error()
     else:
-      pass
+      dumpnode(node)
+      links(node, everything, nodeindex)
+      gotolist(node, everything)
+      showextra(node)
+      showstartup(node)
   elif command == "ne":
     if current == None:
       error()
     else:
-      readline.clear_history()
       everything = inject(everything)
       count = 0
       for spam in everything:
         count = count + 1
       everything = sort(everything, count)
   elif command == "w":
-    readline.clear_history()
     if locked == True:
       error()
     elif current == None:
@@ -778,7 +886,6 @@ while True :
     else:
       current = writeall(current, everything)
   elif command == "l":
-    readline.clear_history()
     if current == None:
       error()
     else:
@@ -787,13 +894,11 @@ while True :
       else:
         locked = True
   elif command == "so":
-    readline.clear_history()
     if current == None:
       error()
     else:
       everything = sort(everything, count)
   elif command == "mu":
-    readline.clear_history()
     if node == None:
       error()
     else:
@@ -802,13 +907,11 @@ while True :
       node = None
       noda = None
   elif command == "cu":
-    readline.clear_history()
     if node == None:
       error()
     else:
       cu(everything, x)
   elif command == "uc":
-    readline.clear_history()
     if node == None:
       error()
     else:
@@ -849,7 +952,51 @@ while True :
       error()
     else:
       gotolist(node, everything)
-
+  elif command == "og":
+    if node == None:
+      error()
+    else:
+      killgoto(node)
+  elif command == "ng":
+    if node == None:
+      error()
+    else:
+      newgoto(node)
+  elif command == "eg":
+    if node == None:
+      error()
+    else:
+      editgoto(node)
+  elif command == "es":
+    if node == None:
+      error()
+    else:
+      showextra(node)
+  elif command == "ec":
+    if node == None:
+      error()
+    else:
+      killextra(node)
+  elif command == "ce":
+    if node == None:
+      error()
+    else:
+      addextra(node)
+  elif command == "su":
+    if node == None:
+      error()
+    else:
+      startup(node, "yes")
+  elif command == "us":
+    if node == None:
+      error()
+    else:
+      startup(node, "no")
+  elif command == "se":
+    if node == None:
+      error()
+    else:
+      showstartup(node)
 
   else:
     error()
