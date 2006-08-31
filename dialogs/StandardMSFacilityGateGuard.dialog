@@ -44,7 +44,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" What's the matter with this gate?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=151  PositionY=218  
-Subtitle="This is a gate to an automated bot factory we call the 'Hell Fortress'."
+Subtitle="This is a gate to an automated bot factory we call the Hell Fortress."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You must be crazy if you want to get in there. That place is full of bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
