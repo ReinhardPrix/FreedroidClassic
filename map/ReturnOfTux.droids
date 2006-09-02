@@ -351,10 +351,6 @@ Sp**ecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=9 AdvancedCommand=2 Parameter1
 Sp**ecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=9 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Mean Bone Crusher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 Sp**ecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=9 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="JackGuard4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Vile Sniper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardChiefStartGameSquare" RushTux="yes" DialogSectionToUse="MSFacilityGateGuardLeader" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
 SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Vile Sniper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Mean Bone Crusher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Vile Sniper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
@@ -743,6 +739,10 @@ Level=31
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
+
+SpecialForce: Type=GUA X=72 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUA X=74 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUA X=76 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardChiefStartGameSquare" RushTux="yes" DialogSectionToUse="MSFacilityGateGuardLeader" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 
 ** End of this levels droid data **
