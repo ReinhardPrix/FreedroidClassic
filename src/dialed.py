@@ -15,7 +15,7 @@ everything = None
 
 ####################################################################
 #        ALL THE BLOODY FUNCTIONS GO HERE.
-####################################################################
+####################################################################  
 
 class autosave(threading.Thread):
   def __init__(self, tofile, what):
@@ -502,56 +502,52 @@ def sort(everything, count):
   everything = pile
   return everything
 
-def cu(everything, x):
+def cu(node):
   readline.clear_history()
   spawn = int(raw_input("Which subnode? "))
   count = 0
   meaty = -1
   while meaty != spawn:
-    if everything[x][count][0] == "tuxtalk":
+    if node[count][0] == "tuxtalk":
       count = count + 1
       meaty = meaty + 1
       flag = 1
-    elif everything[x][count][0] == "reply":
+    elif node[count][0] == "reply":
       count = count + 1
       meaty = meaty + 1
       flag = 0
-    elif everything[x][count][0] == "switch":
+    elif node[count][0] == "switch":
       error()
-      return everything
     else:
       count = count + 1
   if flag == 1:
     count = count + 3
   else: count = count + 2
-  list.insert(everything[x], count - 1 , ["reply.s", "Sorry_No_Voice_Sample_Yet_0.wav"])
-  list.insert(everything[x], count - 1 , ["reply", "<?>"])
-  return everything
+  list.insert(node, count - 1 , ["reply.s", "Sorry_No_Voice_Sample_Yet_0.wav"])
+  list.insert(node, count - 1 , ["reply", "<?>"])
 
-def uc(everything, x):
+def uc(node):
   readline.clear_history()
   spawn = int(raw_input("Which subnode? "))
   if spawn == 0:
     error()
-    return everything
+    return
   else:
     count = 0
     meaty = -1
     while meaty != spawn:
-      if everything[x][count][0] == "tuxtalk":
+      if node[count][0] == "tuxtalk":
         count = count + 1
         meaty = meaty + 1
-      elif everything[x][count][0] == "reply":
+      elif node[count][0] == "reply":
         count = count + 1
         meaty = meaty + 1
-      elif everything[x][count][0] == "switch":
+      elif node[count][0] == "switch":
         error()
-        return everything
       else:
         count = count + 1
-    del(everything[x][count - 1])
-    del(everything[x][count - 1])
-    return everything
+    del(node[count - 1])
+    del(node[count - 1])
 
 def links(node, everything, nodeindex):
   firstrun = False
@@ -583,7 +579,7 @@ def links(node, everything, nodeindex):
         if bit[1][0] == node[0][1][0]:
           continue
       x = list.index(nodeindex, bit[1][0])
-      print "  " + str(bit[1][0]) + " -> " + say + " Tux: " + everything[x][0][1][1]
+      print "  " + str(bit[1][0]) + " <- " + say + " Tux: " + everything[x][0][1][1]
       firstrun = False
   return firstrun
 
@@ -725,6 +721,32 @@ def killextra(node):
 
 def addextra(node):
   print ""
+  readline.add_history("BreakOffAndBecomeHostile")
+  readline.add_history("IncreaseMeleeWeaponSkill")
+  readline.add_history("IncreaseRangedWeaponSkill")
+  readline.add_history("IncreaseSpellcastingSkill")
+  readline.add_history("IncreaseHackingSkill")
+  readline.add_history("GiveItem:")
+  readline.add_history("ExecuteActionWithLabel:")
+  readline.add_history("PlantCookie:")
+  readline.add_history("InitTradeWithCharacter:")
+  readline.add_history("AssignMission:")
+  readline.add_history("MarkMissionComplete:")
+  readline.add_history("AddExperienceBonus:")
+  readline.add_history("AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:")
+  readline.add_history("AddBaseMagic:")
+  readline.add_history("AddBaseDexterity:")
+  readline.add_history("SubtractPointsToDistribute:")
+  readline.add_history("SubtractGold:")
+  readline.add_history("AddGold:")
+  readline.add_history("DeleteAllInventoryItemsWithCode:")
+  readline.add_history("DeleteAllInventoryItemsOfType:")
+  readline.add_history("ExecuteSubdialog:")
+  readline.add_history("EverybodyBecomesHostile")
+  readline.add_history("MakeTuxTownGuardMember")
+  readline.add_history("ForceBotRespawnOnLevel:")
+  readline.add_history("CompletelyHealTux")
+  readline.add_history("OpenQuestDiaryEntry:")
   newextra = raw_input(">> ")
   x = 0
   for bit in node:
@@ -740,13 +762,104 @@ def showstartup(node):
   if node[-1][1] == "yes":
     print ""
     print "  Autostarting"
+
+def backlinks(node, everything):
+  flag = 0
+  for byte in everything:
+    for bit in byte:
+      if bit[0] == "switch":
+        if bit[1][0] == node[0][1][0]:
+          if byte == node:
+              continue
+          if flag == 0:
+            flag = 1
+            print ""
+          if bit[1][1] == "0":
+            print "  " + byte[0][1][0] + " -> OFF Tux: " + byte[0][1][1]
+          else:
+            print "  " + byte[0][1][0] + " -> ON  Tux: " + byte[0][1][1]
+
+def simain(everything, nodeindex):
+  live = True
+  startlist = getnodesready(everything, nodeindex[:])[:]
+  while live:
+    print ""
+    printactivenodes(startlist, nodeindex)
+    print ""
+    do = raw_input(" ## ")
+    readline.clear_history()
+    if do == "q":
+      return
+    elif do in startlist:
+      startlist = process(everything, do, startlist, nodeindex)[:]
+
+def process(everything, do, startlist, nodeindex):
+  aim = list.index(nodeindex, do)
+  firstsay = 1
+  print ""
+  for ittybit in everything[aim]:
+    if ittybit[0] == "tuxtalk":
+      print "  Tux: " + ittybit[1][1]
+    elif ittybit[0] == "reply":
+      if firstsay == 1:
+        print "  A:",
+        firstsay = 0
+      else:
+        print "    ",
+      print ittybit[1]
+    elif ittybit[0] == "switch":
+      if ittybit[1][1] == "0":
+        if ittybit[1][0] in startlist:
+          list.remove(startlist, ittybit[1][0])
+      else:
+        if ittybit[1][0] not in startlist:
+          list.append(startlist, ittybit[1][0])
+      list.sort(startlist)
+    elif ittybit[0] == "":
+      pass
+  return startlist
+
+def printactivenodes(startlist, nodeindex):
+  for bit in startlist:
+    lookup = list.index(nodeindex, bit)
+    print str(lookup) + " " + bit +  " " + everything[lookup][0][1][1]
+  
+def getnodesready(everything, listing):
+  for node in everything:
+    for subnode in node:
+      if subnode[0] == "switch":
+        if subnode[1][1] == "1":
+          list.remove(listing, subnode[1][0])
+  return listing
+
+
+
+##  gathering = []
+##  notstart = 0
+##  for bite in everything:
+##    if bite[0][1][0] == "0":  
+##      list.append(gathering, "0")    #For each node which is not the first...
+##      continue
+##    notstart = 0
+##    for etib in everything:     # ... we look at every node...
+##      if etib == bite:      # ... which is not the current node...
+##        continue
+##      for bit in etib:      # ... to see if any of the subnodes...
+##        if bit[0] == "switch":
+##          if bit[1][0] == bite[0][1][0]:  # ... link to it.
+##            notstart = 1
+##    if notstart == 0:
+##      list.append(gathering, bite[0][1][0])    # The mess is not efficent, so I have a better idea.
+##  return gathering                             # Have a list of all nodes, and then subtract from them the links.
   
 
+  
 
 ####################################################################
 #    HERE STARTS THE PROGRAM.
 ####################################################################
-#Preparing the needed varialbles.
+#Preparing the needed variables.
+#GLOBAL? EEEK! I never wanted that! I will recode that later, when I feel like it.
 current = None
 node = None
 home = None
@@ -757,15 +870,10 @@ locked = True
 firstrun = True
 prompt = ""
 previous = []
-backup = None
 oncebefore = False
 
 while True :
  try:
-#  print everything
-  if previous != everything:
-    backup = previous[:]
-    previous = everything[:]
   prompt = ""
   readline.clear_history()
   if firstrun == True:
@@ -817,6 +925,7 @@ while True :
       node = everything[x]
       dumpnode(node)
       links(node, everything, nodeindex)
+      backlinks(node, everything)
       gotolist(node, everything)
       showextra(node)
       showstartup(node)
@@ -857,6 +966,7 @@ while True :
       error()
     else:
       links(node, everything, nodeindex)
+      backlinks(node, everything)
       gotolist(node, everything)
       showextra(node)
       showstartup(node)
@@ -866,6 +976,7 @@ while True :
     else:
       dumpnode(node)
       links(node, everything, nodeindex)
+      backlinks(node, everything)
       gotolist(node, everything)
       showextra(node)
       showstartup(node)
@@ -902,7 +1013,7 @@ while True :
     if node == None:
       error()
     else:
-      list.remove(everything, everything[x])
+      list.remove(everything, node)
       count = count - 1
       node = None
       noda = None
@@ -910,14 +1021,12 @@ while True :
     if node == None:
       error()
     else:
-      cu(everything, x)
+      cu(node)
   elif command == "uc":
     if node == None:
       error()
     else:
-      everything = uc(everything, x)
-  elif command == "!":
-    everything = backup
+      uc(node)
   elif command == "!!":
     if current == None:
       error()
@@ -997,6 +1106,16 @@ while True :
       error()
     else:
       showstartup(node)
+  elif command == "la":
+    if node == None:
+      error()
+    else:
+      backlinks(node, everything)
+  elif command == "si":
+    if everything == None:
+      error()
+    else:
+      simain(everything, nodeindex)
 
   else:
     error()
@@ -1006,5 +1125,5 @@ while True :
   error()
  except IOError:
    error()
- except ValueError:
-   error()
+# except ValueError:
+ #  error()
