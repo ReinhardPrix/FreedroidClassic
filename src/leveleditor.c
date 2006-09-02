@@ -206,6 +206,8 @@ int wall_indices [ NUMBER_OF_LEVEL_EDITOR_GROUPS ] [ NUMBER_OF_OBSTACLE_TYPES ] 
 			
 	ISO_RED_FENCE_V,
 	ISO_RED_FENCE_H,
+
+	ISO_TRANSP_FOR_WATER,
 	-1
     } ,
     //--------------------

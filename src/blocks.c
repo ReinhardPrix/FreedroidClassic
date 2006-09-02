@@ -4726,6 +4726,14 @@ init_obstacle_data( void )
   obstacle_map[ ISO_TABLE_GLASS_2 ] . block_vision_too = FALSE ;
   obstacle_map[ ISO_TABLE_GLASS_2 ] . obstacle_short_name = "Glass table";
   obstacle_map[ ISO_TABLE_GLASS_2 ] . obstacle_long_description = "This table is made out of see-through glass.";
+
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . block_area_parm_1 = 1;
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . block_area_parm_2 = 1;
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . filename = "iso_transp_for_water.png";
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . transparent = TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS; 
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . block_vision_too = FALSE ;
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . obstacle_short_name = "Water";
+  obstacle_map[ ISO_TRANSP_FOR_WATER ] . obstacle_long_description = "This water seems dangerous. You will want to avoid going there. ";
     
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
@@ -4750,10 +4758,8 @@ init_obstacle_data( void )
  * for now it will not load 'offset' files, but rather just use hard-coded
  * info...
  *
- * ---------------------------------------------------------------------- */
-void
-load_all_obstacles ( void )
-{
+ * ---------------------------------------------------------------------- */ 
+void load_all_obstacles ( void ) {
     int i;
     char *fpath;
     char ConstructedFileName[2000];
