@@ -3844,6 +3844,20 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_RUBBLE_1 ] . obstacle_long_description = "Well ... it was not very resistant ";
   
 
+  obstacle_map [ ISO_BRICK_WALL_EH ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_EH ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_EH ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_EH ] . filename = "iso_brick_wall_0016.png" ;
+  obstacle_map [ ISO_BRICK_WALL_EH ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_BRICK_WALL_EH ] . result_type_after_smashing_once = ISO_BRICK_WALL_CRACKED_1 ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . filename = "iso_brick_wall_0017.png" ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . is_smashable = FALSE ;
+  obstacle_map [ ISO_BRICK_WALL_EV ] . result_type_after_smashing_once = ISO_BRICK_WALL_CRACKED_2 ;
+
+  
   obstacle_map [ ISO_BLOOD_1 ] . block_area_type = COLLISION_TYPE_NONE ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_BLOOD_1 ] . block_area_parm_2 = 1.0 ;
