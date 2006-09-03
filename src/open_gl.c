@@ -514,14 +514,14 @@ pad_image_for_texture ( SDL_Surface* our_surface )
     {
 	if ( x >= our_surface -> w )
 	    break;
-	x = x * 2 ;
+	x = x << 1 ;
     }
     
     for ( i = 1 ; i < 100 ; i ++ )
     {
 	if ( y >= our_surface -> h )
 	    break;
-	y = y * 2 ;
+	y = y << 1 ;
     }
 
     if ( x < 64 )
@@ -550,13 +550,19 @@ pad_image_for_texture ( SDL_Surface* our_surface )
     dest . h = our_surface -> h ;
     
     target_color = SDL_MapRGBA( tmp_surf -> format, 0, 0, 0, 0 );
-    for ( x = 0 ; x < tmp_surf -> w ; x ++ )
+/*    for ( x = 0 ; x < tmp_surf -> w ; x ++ )
     {
 	for ( y = 0 ; y < tmp_surf -> h ; y ++ )
 	{
 	    PutPixel ( tmp_surf , x , y , target_color ) ;
 	}
-    }
+    }*/
+    SDL_Rect all_tmp_surf;
+    all_tmp_surf . x = 0;
+    all_tmp_surf . y = 0;
+    all_tmp_surf . w = tmp_surf -> w;
+    all_tmp_surf . h = tmp_surf -> h;
+    SDL_FillRect ( tmp_surf, &all_tmp_surf, target_color ) ;
     
     our_SDL_blit_surface_wrapper ( our_surface, NULL , tmp_surf , & dest );
     
