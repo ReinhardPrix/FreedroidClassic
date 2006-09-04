@@ -454,14 +454,35 @@ flip_image_horizontally ( SDL_Surface* tmp1 )
 {
     int x , y ;
     Uint32 temp;
+    int bpp = tmp1->format->BytesPerPixel;
     
     for ( y = 0 ; y < ( tmp1 -> h ) / 2 ; y ++ )
     {
 	for ( x = 0 ; x < (tmp1 -> w ) ; x ++ )
 	{
-	    temp = FdGetPixel ( tmp1 , x , y ) ;
-	    PutPixel ( tmp1 , x , y , FdGetPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
-	    PutPixel ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+	    switch ( bpp ) {
+		case 4:
+				    temp = FdGetPixel32 ( tmp1 , x , y ) ;
+				    PutPixel32 ( tmp1 , x , y , FdGetPixel32 ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+				    PutPixel32 ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+				    break;
+		case 3:
+				    temp = FdGetPixel24 ( tmp1 , x , y ) ;
+				    PutPixel24 ( tmp1 , x , y , FdGetPixel24 ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+				    PutPixel24 ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+				    break;
+		case 2:
+				    temp = FdGetPixel16 ( tmp1 , x , y ) ;
+				    PutPixel16 ( tmp1 , x , y , FdGetPixel16 ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+				    PutPixel16 ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+				    break;
+		case 1:
+				    temp = FdGetPixel8 ( tmp1 , x , y ) ;
+				    PutPixel8 ( tmp1 , x , y , FdGetPixel8 ( tmp1 , x , ( tmp1 -> h - y - 1 ) ) ) ;
+				    PutPixel8 ( tmp1 , x , ( tmp1 -> h - y - 1 ) , temp ) ;
+				    break;
+
+	    };
 	}
     }
 }; // void flip_image_horizontally ( SDL_Surface* tmp1 ) 

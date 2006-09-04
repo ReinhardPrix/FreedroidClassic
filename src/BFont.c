@@ -766,6 +766,58 @@ JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 /*********************************************************************************************************/
 /*********************************************************************************************************/
 
+inline void
+PutPixel32 (SDL_Surface * surface, int x, int y, Uint32 pixel)
+{  
+  Uint8 *p;
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x * 4;
+ 
+  *(Uint32 *) p = pixel;
+ 
+} // void PutPixel ( ... )
+
+
+inline void
+PutPixel24 (SDL_Surface * surface, int x, int y, Uint32 pixel)
+{  
+  Uint8 *p;
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x * 3;
+ 
+      if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+	{
+	  p[0] = (pixel >> 16) & 0xff;
+	  p[1] = (pixel >> 8) & 0xff;
+	  p[2] = pixel & 0xff;
+	}
+      else
+	{
+	  p[0] = pixel & 0xff;
+	  p[1] = (pixel >> 8) & 0xff;
+	  p[2] = (pixel >> 16) & 0xff;
+	}
+ 
+} // void PutPixel ( ... )
+
+inline void
+PutPixel16 (SDL_Surface * surface, int x, int y, Uint32 pixel)
+{  
+  Uint8 *p;
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x * 2;
+ 
+  *(Uint16 *) p = pixel;
+ 
+} // void PutPixel ( ... )
+
+inline void
+PutPixel8 (SDL_Surface * surface, int x, int y, Uint32 pixel)
+{  
+  Uint8 *p;
+  p = (Uint8 *) surface->pixels + y * surface->pitch + x;
+ 
+  *p = pixel;
+ 
+} // void PutPixel ( ... )
+
 void
 PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 {
@@ -828,37 +880,64 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
  * NOTE:  I THINK THE SURFACE MUST BE LOCKED FOR THIS!
  *
  * ---------------------------------------------------------------------- */
+inline Uint32
+FdGetPixel32 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+{
+
+  Uint8 *bits;
+
+  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 4;
+
+  // Get the pixel
+  return *((Uint32 *) Surface->pixels + Y * Surface->pitch / 4 + X);
+}
+
+inline Uint32
+FdGetPixel24 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+{
+
+  Uint8 *bits;
+
+  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 3;
+
+  // Get the pixel
+  Uint8 r, g, b;
+  r = *((bits) + Surface->format->Rshift / 8);
+  g = *((bits) + Surface->format->Gshift / 8);
+  b = *((bits) + Surface->format->Bshift / 8);
+  return SDL_MapRGB (Surface->format, r, g, b);
+}
+
+inline Uint32
+FdGetPixel16 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+{
+
+  Uint8 *bits;
+
+  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 2;
+
+  // Get the pixel
+  return *((Uint16 *) Surface->pixels + Y * Surface->pitch / 2 + X);
+}
+
+inline Uint32
+FdGetPixel8 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
+{
+
+  Uint8 *bits;
+
+  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 2;
+
+  // Get the pixel
+  return *((Uint8 *) Surface->pixels + Y * Surface->pitch + X);
+}
+
 Uint32
 FdGetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
 
   Uint8 *bits;
   Uint32 Bpp;
-
-  //--------------------
-  // First some security checks against segfaulting due to
-  // coordinates out of bounds...
-  //
-  if (X < 0)
-    {
-      DebugPrintf ( 1 , "x too small in FdGetPixel!" );
-      return -1;
-    }
-  if (X >= Surface->w)
-    {
-      DebugPrintf ( 1 , "x too big in FdGetPixel!" );
-      return -1;
-    }
-  if (Y < 0)
-    {
-      DebugPrintf ( 1 , "y too small in FdGetPixel!" );
-      return -1;
-    }
-  if (Y >= Surface->h)
-    {
-      DebugPrintf ( 1 , "y too big in FdGetPixel!" );
-      return -1;
-    }
 
   Bpp = Surface->format->BytesPerPixel;
 
