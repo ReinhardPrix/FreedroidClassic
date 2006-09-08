@@ -6,7 +6,6 @@ import threading
 import thread
 import time
 
-
 readline.clear_history()
 readline.set_history_length(0)
 
@@ -31,6 +30,8 @@ class autosave(threading.Thread):
       thread.start_new_thread(writeall, (self.target, self.what),)
   def stop(self):
     self._running = False
+  def update(self, material):
+    self.what = material[:]
 
 #I use ctrl+d anyway, but that one is for the other people.
 def end():
@@ -59,7 +60,6 @@ def clip(current):
   home = file.tell(current) + 1
   return home
 
-
 #Goes to the next node.
 def nextnode(current):
   line = ''
@@ -70,7 +70,6 @@ def nextnode(current):
     elif line == "End of chat dialog for character=\"XXXXX\"\n" :
       break
   file.readline(current)
-
 
 #How many nodes do we have here? # Do I still need this?
 def nodecount(current, home):
@@ -85,7 +84,6 @@ def nodecount(current, home):
 
 def scanall(current, count):
   everything = doid(current, count)
-#  print everything
   return everything
 
 def doid(current, count):
@@ -161,7 +159,6 @@ def whatisit(current) :
     elif unknown == "New Opti" : #Tux speaking.
       what = "tuxtalk"
       meat=['' , '']
-
       character=''
       while character != "=" :
         character = file.read(current, 1)
@@ -219,21 +216,14 @@ def whatisit(current) :
           meat[2] = meat[2] + character
         if meat[1] == meat[2]:
           what = "linked"
-
     elif unknown == "DoSometh" :
       what = "extra"
       meat =  str(file.readline(current))[18:-2]
-
     else :                    
       print "PAAAANIIIIIIIIC!!!"                    
       hcf()
-
     output = [what, meat]
-#    print output
     return output
-
-  #  else !!!
-
 
 def dumpnodes(everything):
   node = []
@@ -246,8 +236,6 @@ def dumpnodes(everything):
           print "  " + subnode[1][0] + "  Tux: " + subnode[1][1]
         else:
           print "  " + subnode[1][0] + " Tux: " + subnode[1][1]
-#      elif subnode[0] == "reply":
-#        print "A: " + subnode[1]
 
 def dumpnoded(node):
   count = 0
@@ -270,8 +258,6 @@ def dumpnoded(node):
         snn = snn + 1
         print "      " + subnode[1]
 
-
-
 def dumpnode(node):
   count = 0
   snn = 0
@@ -287,9 +273,6 @@ def dumpnode(node):
         count = count + 1
       else:
         print "     " + subnode[1]
-
-
-
 
 def rawprint(everything):
   print ""
@@ -518,6 +501,7 @@ def cu(node):
       flag = 0
     elif node[count][0] == "switch":
       error()
+      return
     else:
       count = count + 1
   if flag == 1:
@@ -544,6 +528,7 @@ def uc(node):
         meaty = meaty + 1
       elif node[count][0] == "switch":
         error()
+        return
       else:
         count = count + 1
     del(node[count - 1])
@@ -554,11 +539,9 @@ def links(node, everything, nodeindex):
   no = 0
   pre = 0
   n = 0
-
   for bit in node:
     if bit[0] == "switch":
       pre = pre + 1
-  
   if pre == 1:
     for bit in node:
       if bit[0] == "switch":
@@ -619,7 +602,7 @@ def killlink(node, everything):
         return
   error()
 
-def gotolist(node, everything):
+def gotolist(node, everything, nodeindex):
   for bit in node:
     if bit[0] == "goto":
       print ""
@@ -627,6 +610,23 @@ def gotolist(node, everything):
       print "  T -> " + bit[1][1] + "  " + everything[list.index(nodeindex, bit[1][1])][0][1][1]
       print "  F -> " + bit[1][2] + "  " + everything[list.index(nodeindex, bit[1][2])][0][1][1]
       return
+
+def linkednode(everything, node, nodeindex):
+  for bit in node:
+    if bit[0] == "linked":
+      print ""
+      print "  -LINKED- "
+      chop = everything[list.index(nodeindex, bit[1][1])]
+      dumpnode(chop)
+      linkednode(everything, chop, nodeindex)
+      return
+
+def cheaplinkednode(everything,node, nodeindex):
+  for bit in node:
+    if bit[0] == "linked":
+      print ""
+      print "  LN -> " +  bit[1][1] + "  Tux: " + everything[list.index(nodeindex, bit[1][1])][0][1][1]
+      return  
 
 def makeindex(everything):
   nodeindex = []
@@ -653,17 +653,13 @@ def newgoto(node):
   for bit in node:
     x = x + 1
     if bit[0] == "goto":
-      print bit[0]
       list.remove(node, bit)
       bit = [type, [condition, truth, lies]]
-      print x
       list.insert(node, x - 1, bit)
       return
     elif bit[0] == "linked":
-      print bit[0]
       list.remove(node, bit)
       bit = [type, [condition, truth, lies]]
-      print x
       list.insert(node, x - 1, bit)
       return
     elif bit[0] == "extra":
@@ -779,27 +775,76 @@ def backlinks(node, everything):
           else:
             print "  " + byte[0][1][0] + " -> ON  Tux: " + byte[0][1][1]
 
-def simain(everything, nodeindex):
-  live = True
-  startlist = getnodesready(everything, nodeindex[:])[:]
-  while live:
-    print ""
-    printactivenodes(startlist, nodeindex)
-    print ""
-    do = raw_input(" ## ")
-    readline.clear_history()
-    if do == "q":
-      return
-    elif do in startlist:
-      startlist = process(everything, do, startlist, nodeindex)[:]
+####################################################################
+#        THE SIM BITS ARE HERE.
+####################################################################
 
-def process(everything, do, startlist, nodeindex):
+def simain(everything, nodeindex):
+  x = -1
+  ranbefore = False
+  running = False
+  invite = " ## "
+  conditionslist = gatherconditions(everything)
+  thosegofirst = startupnodes(everything)
+  startlist = getnodesready(everything, nodeindex[:])[:]
+  while True:
+    if running == False:
+      print ""
+      y = 0
+      for condition in conditionslist:
+        print "  " + str(y) + "  " + condition[0] + " = " + str(condition[1])
+        y = y + 1
+    else:
+      printactivenodes(startlist, nodeindex)
+    print ""
+    command = raw_input(invite)
+    if running == False:
+      if command == "q":
+        return
+      elif command == "go":
+        running = True
+        invite = " #> "
+        if ranbefore == False:
+          for bit in thosegofirst:
+            process(everything, bit, startlist, nodeindex, conditionslist)
+        ranbefore = True
+      elif int(command) in range(y):
+        if conditionslist[int(command)][1] == True:
+          conditionslist[int(command)][1] = False
+        elif conditionslist[int(command)][1] == False:
+          conditionslist[int(command)][1] = True
+      else:
+        error()
+    else:
+      if command == "q":
+        return
+      elif command in startlist:
+        process(everything, command, startlist, nodeindex, conditionslist)
+      elif command == "ha":
+        running = False
+        invite = " ## "
+ 
+def gatherconditions(everything):
+  conditionslist = []
+  for bite in everything:
+    for bit in bite:
+      if bit[0] == "goto":
+        if [bit[1][0], False] not in conditionslist:
+          list.append(conditionslist, [bit[1][0], False])
+  return conditionslist
+
+def process(everything, do, startlist, nodeindex, conditionslist):
   aim = list.index(nodeindex, do)
   firstsay = 1
-  print ""
   for ittybit in everything[aim]:
     if ittybit[0] == "tuxtalk":
-      print "  Tux: " + ittybit[1][1]
+      petition = "  Tux: " + ittybit[1][1]
+    if ittybit[0] == "tuxtalk.s":
+      if ittybit[1] == "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER":
+        pass
+      else:
+        print ""
+        print petition
     elif ittybit[0] == "reply":
       if firstsay == 1:
         print "  A:",
@@ -815,45 +860,51 @@ def process(everything, do, startlist, nodeindex):
         if ittybit[1][0] not in startlist:
           list.append(startlist, ittybit[1][0])
       list.sort(startlist)
-    elif ittybit[0] == "":
-      pass
+    elif ittybit[0] == "linked":
+      print "\n  - LINKED -"
+      process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
+    elif ittybit[0] == "goto":
+      if [ittybit[1][0], False] in conditionslist:
+        process(everything, ittybit[1][2], startlist, nodeindex, conditionslist)
+      elif [ittybit[1][0], True] in conditionslist:
+        process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
   return startlist
 
 def printactivenodes(startlist, nodeindex):
+  print ""
   for bit in startlist:
     lookup = list.index(nodeindex, bit)
-    print str(lookup) + " " + bit +  " " + everything[lookup][0][1][1]
+    print " " + bit +  " " + everything[lookup][0][1][1]
   
 def getnodesready(everything, listing):
-  for node in everything:
-    for subnode in node:
+  for chop in everything:
+    for subnode in chop:
       if subnode[0] == "switch":
         if subnode[1][1] == "1":
-          list.remove(listing, subnode[1][0])
+          if subnode[1][0] in listing:
+            list.remove(listing, subnode[1][0])
+      elif subnode[0] == "goto":
+        if subnode[1][1] in listing:
+          list.remove(listing, subnode[1][1])
+        if subnode[1][2] in listing:
+          list.remove(listing, subnode[1][2])
+      elif subnode[0] == "linked":
+        if subnode[1][1] in listing:
+          list.remove(listing, subnode[1][1])
+      elif subnode[0] == "startup":
+        if subnode[1] == "yes":
+          if chop[0][1][0] in listing:
+            list.remove(listing, chop[0][1][0])
   return listing
 
-
-
-##  gathering = []
-##  notstart = 0
-##  for bite in everything:
-##    if bite[0][1][0] == "0":  
-##      list.append(gathering, "0")    #For each node which is not the first...
-##      continue
-##    notstart = 0
-##    for etib in everything:     # ... we look at every node...
-##      if etib == bite:      # ... which is not the current node...
-##        continue
-##      for bit in etib:      # ... to see if any of the subnodes...
-##        if bit[0] == "switch":
-##          if bit[1][0] == bite[0][1][0]:  # ... link to it.
-##            notstart = 1
-##    if notstart == 0:
-##      list.append(gathering, bite[0][1][0])    # The mess is not efficent, so I have a better idea.
-##  return gathering                             # Have a list of all nodes, and then subtract from them the links.
-  
-
-  
+def startupnodes(everything):
+  earlybirds = []
+  for bite in everything:
+    for bit in bite:
+      if bit[0] == "startup":
+        if bit[1] == "yes":
+          list.append(earlybirds, bite[0][1][0])
+  return earlybirds
 
 ####################################################################
 #    HERE STARTS THE PROGRAM.
@@ -874,6 +925,8 @@ oncebefore = False
 
 while True :
  try:
+  if oncebefore == True:
+    autosaver.update(everything)
   prompt = ""
   readline.clear_history()
   if firstrun == True:
@@ -916,17 +969,21 @@ while True :
     autosaver.start()
     oncebefore = True
   elif command == "n":
-    if everything == None:
+    if current == None:
       error()
     else:
       buffering = str(int(raw_input("What node? ")))
+      if buffering not in nodeindex:
+        error()
+        continue
       x = list.index(nodeindex, buffering)
-      noda = str(buffering)
+      noda = buffering
       node = everything[x]
       dumpnode(node)
+      cheaplinkednode(everything, node, nodeindex)
       links(node, everything, nodeindex)
       backlinks(node, everything)
-      gotolist(node, everything)
+      gotolist(node, everything, nodeindex)
       showextra(node)
       showstartup(node)
   elif command == "p":
@@ -940,18 +997,18 @@ while True :
     else:
       dumpnoded(node)
   elif command == "d":
-    if everything == None:
+    if current == None:
       error()
     else:
       dumpnodes(everything)
   elif command == "dd":
-    if everything == None:
+    if current == None:
       error()
     else:
       for x in everything:
         dumpnode(x)
   elif command == "ddd":
-    if everything == None:
+    if current == None:
       error()
     else:
       rawprint(everything)
@@ -965,9 +1022,10 @@ while True :
     if node == None:
       error()
     else:
+      cheaplinkednode(everything, node, nodeindex)
       links(node, everything, nodeindex)
       backlinks(node, everything)
-      gotolist(node, everything)
+      gotolist(node, everything, nodeindex)
       showextra(node)
       showstartup(node)
   elif command == "de":
@@ -975,9 +1033,10 @@ while True :
       error()
     else:
       dumpnode(node)
+      cheaplinkednode(everything, node, nodeindex)
       links(node, everything, nodeindex)
       backlinks(node, everything)
-      gotolist(node, everything)
+      gotolist(node, everything, nodeindex)
       showextra(node)
       showstartup(node)
   elif command == "ne":
@@ -1060,7 +1119,7 @@ while True :
     if node == None:
       error()
     else:
-      gotolist(node, everything)
+      gotolist(node, everything, nodeindex)
   elif command == "og":
     if node == None:
       error()
@@ -1112,18 +1171,26 @@ while True :
     else:
       backlinks(node, everything)
   elif command == "si":
-    if everything == None:
+    if current == None:
       error()
     else:
       simain(everything, nodeindex)
-
+  elif command == "lo":
+    if node == None:
+      error()
+    else:
+      dumpnode(node)
+      linkednode(everything, node, nodeindex)
   else:
     error()
 
  except KeyboardInterrupt:
-  print ""
-  error()
+   print ""
+   error()
  except IOError:
    error()
-# except ValueError:
- #  error()
+ except ValueError:
+   error()
+ except EOFError:
+   print ""
+   error()
