@@ -360,7 +360,6 @@ def et(node, pick):
     a = node[count][1]
   else:
     a = node[count][1][1]
-  print a
   print "\n<< " + a + "\n",
   readline.clear_history()
   readline.add_history(a)
@@ -775,6 +774,19 @@ def backlinks(node, everything):
           else:
             print "  " + byte[0][1][0] + " -> ON  Tux: " + byte[0][1][1]
 
+def reprirority(everything, node, nodeindex, direction):
+  if direction == "up":
+    if node[0][1][0] == nodeindex[0]:
+      error()
+    else:
+      pass
+  if direction == "down":
+    if node[0][1][0] == nodeindex[-1]:
+      error()
+    else:
+      pass
+  
+
 ####################################################################
 #        THE SIM BITS ARE HERE.
 ####################################################################
@@ -820,9 +832,20 @@ def simain(everything, nodeindex):
         return
       elif command in startlist:
         process(everything, command, startlist, nodeindex, conditionslist)
+        if command == "99":
+          running = False
+          invite = " ## "
       elif command == "ha":
         running = False
         invite = " ## "
+      elif command == "re":
+        ranbefore = False
+        running = False
+        invite = " ## "
+        conditionslist = gatherconditions(everything)
+        thosegofirst = startupnodes(everything)
+        startlist = getnodesready(everything, nodeindex[:])[:]
+
  
 def gatherconditions(everything):
   conditionslist = []
@@ -1181,6 +1204,16 @@ while True :
     else:
       dumpnode(node)
       linkednode(everything, node, nodeindex)
+  elif command == "up":
+    if node == None:
+      error()
+    else:
+      reprirority(everything, node, nodeindex, "up")
+  elif command == "dn":
+    if node == None:
+      error()
+    else:
+      reprirority(everything, node, nodeindex, "down")
   else:
     error()
 
