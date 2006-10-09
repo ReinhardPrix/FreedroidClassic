@@ -260,12 +260,10 @@ def dumpnoded(node):
 
 def dumpnode(node):
   count = 0
-  snn = 0
   print ""
   print "  #" + node[0][1][0]
   for subnode in node:
     if subnode[0] == "tuxtalk":
-      snn = snn + 1
       print "  Tux: " + subnode[1][1]
     elif subnode[0] == "reply":
       if count == 0:
@@ -640,6 +638,14 @@ def killgoto(node):
 
 def newgoto(node):
   x = 0
+  readline.add_history("MissionComplete:")
+  readline.add_history("PointsToDistributeAtLeast")
+  readline.add_history("GoldIsLessThan:")
+  readline.add_history("MeleeSkillLesserThan:")
+  readline.add_history("CookieIsPlante")
+  readline.add_history("MissionAssigned:")
+  readline.add_history("HaveItemWithCode:")
+  readline.add_history("OldTownMissionScoreAtLeast:")
   condition = raw_input("Condition? ")
   readline.clear_history()
   truth = str(int(raw_input("On true to? ")))
@@ -742,6 +748,7 @@ def addextra(node):
   readline.add_history("ForceBotRespawnOnLevel:")
   readline.add_history("CompletelyHealTux")
   readline.add_history("OpenQuestDiaryEntry:")
+  readline.add_history("EndDialog")
   newextra = raw_input(">> ")
   x = 0
   for bit in node:
@@ -774,18 +781,87 @@ def backlinks(node, everything):
           else:
             print "  " + byte[0][1][0] + " -> ON  Tux: " + byte[0][1][1]
 
-def reprirority(everything, node, nodeindex, direction):
+def reprirority(everything, node, nodeindex, count, direction):
+  numthing = 0
+  freezer = ""
+  new = ""
   if direction == "up":
     if node[0][1][0] == nodeindex[0]:
       error()
     else:
-      pass
-  if direction == "down":
+      freezer = (everything[list.index(nodeindex, node[0][1][0]) - 1][0][1][0])[:]
+      everything[list.index(nodeindex, node[0][1][0]) - 1][0][1][0] = (everything[list.index(nodeindex, node[0][1][0])][0][1][0])[:]
+      everything[list.index(nodeindex, node[0][1][0])][0][1][0] = freezer[:]
+      everything = sort(everything, count)
+      rebuild(everything, freezer, everything[list.index(nodeindex, node[0][1][0]) + 1][0][1][0])
+  elif direction == "down":
     if node[0][1][0] == nodeindex[-1]:
       error()
     else:
-      pass
+      freezer = (everything[list.index(nodeindex, node[0][1][0]) + 1][0][1][0])[:]
+      everything[list.index(nodeindex, node[0][1][0]) + 1][0][1][0] = (everything[list.index(nodeindex, node[0][1][0])][0][1][0])[:]
+      everything[list.index(nodeindex, node[0][1][0])][0][1][0] = freezer[:]
+      everything = sort(everything, count)
+      rebuild(everything, freezer, everything[list.index(nodeindex, node[0][1][0]) - 1][0][1][0])
   
+def rebuild(everything, old, new):
+  print old
+  print new
+  for node in everything:
+    for bit in node:
+      if bit[0] == "goto":
+        if bit[1][1] == old:
+          bit[1][1] = new
+        elif bit[1][1] == new:
+          bit[1][1] = old
+        if bit[1][2] == old:
+          bit[1][2] = new
+        elif bit[1][2] == new:
+          bit[1][2] = old
+      if bit[0] == "switch":
+        if bit[1][0] == old:
+          bit[1][0] = new
+        elif bit[1][0] == new:
+          bit[1][0] = old
+      if bit[0] == "linked":
+        if bit[1][1] == old:
+          bit[1][1] = new
+          bit[1][2] = new
+        elif bit[1][1] == new:
+          bit[1][1] = old
+          bit[1][2] = old
+  
+def sound(node):
+  pick = int(raw_input("Which subnode? "))
+  readline.clear_history()
+  meaty = -1
+  for bit in node:
+    if bit[0] == "tuxtalk.s":
+      meaty = meaty + 1
+    elif bit[0] == "reply.s":
+      meaty = meaty + 1
+    if meaty == pick:
+      print "\n<< " + bit[1] + "\n",
+      readline.add_history("Sorry_No_Voice_Sample_Yet_0.wav")
+      readline.add_history("NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER")
+      readline.add_history(bit[1])
+      bit[1] = raw_input(">> ")
+      return
+  error()
+  return
+  
+def dumpsound(node):
+  for bit in node:
+    if bit[0] == "tuxtalk":
+      print ""
+      print "  Tux: " + bit[1][1]
+    elif bit[0] == "tuxtalk.s":
+      print "     --> " + bit[1]
+    elif bit[0] == "reply":
+      print ""
+      print "  " + bit[1]
+    elif bit[0] == "reply.s":
+      print "     --> " + bit[1]
 
 ####################################################################
 #        THE SIM BITS ARE HERE.
@@ -816,10 +892,10 @@ def simain(everything, nodeindex):
       elif command == "go":
         running = True
         invite = " #> "
-        if ranbefore == False:
-          for bit in thosegofirst:
+#        if ranbefore == False:
+        for bit in thosegofirst:
             process(everything, bit, startlist, nodeindex, conditionslist)
-        ranbefore = True
+#        ranbefore = True
       elif int(command) in range(y):
         if conditionslist[int(command)][1] == True:
           conditionslist[int(command)][1] = False
@@ -846,7 +922,6 @@ def simain(everything, nodeindex):
         thosegofirst = startupnodes(everything)
         startlist = getnodesready(everything, nodeindex[:])[:]
 
- 
 def gatherconditions(everything):
   conditionslist = []
   for bite in everything:
@@ -905,7 +980,8 @@ def getnodesready(everything, listing):
       if subnode[0] == "switch":
         if subnode[1][1] == "1":
           if subnode[1][0] in listing:
-            list.remove(listing, subnode[1][0])
+            if subnode[1][0] != chop[0][1][0]:
+              list.remove(listing, subnode[1][0])
       elif subnode[0] == "goto":
         if subnode[1][1] in listing:
           list.remove(listing, subnode[1][1])
@@ -1208,15 +1284,29 @@ while True :
     if node == None:
       error()
     else:
-      reprirority(everything, node, nodeindex, "up")
-  elif command == "dn":
+      reprirority(everything, node, nodeindex, count, "up")
+      noda = node[0][1][0]
+      everything = sort(everything, count)
+  elif command == "lo":
     if node == None:
       error()
     else:
-      reprirority(everything, node, nodeindex, "down")
+      reprirority(everything, node, nodeindex, count, "down")
+      noda = node[0][1][0]
+      everything = sort(everything, count)
+  elif command == "un":
+    if node == None:
+      error()
+    else:
+      sound(node)
+  elif command == "ps":
+    if node == None:
+      error()
+    else:
+      dumpsound(node)
   else:
     error()
-
+  
  except KeyboardInterrupt:
    print ""
    error()
