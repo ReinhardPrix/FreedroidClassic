@@ -419,7 +419,7 @@ GiveSubtitleNSample( char* SubtitleText , char* SampleFilename , enemy* ChatDroi
  * execute the desired effect as well.
  *
  * ---------------------------------------------------------------------- */
-void
+int
 ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 {
     int TempValue;
@@ -730,6 +730,10 @@ ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
     {
 	Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
     }
+    else if ( !strcmp ( ExtraCommandString , "EndDialog" ) )
+    {
+	return ( 1 );
+    }
     else 
     {
 	fprintf( stderr, "\n\nExtraCommandString: %s \n" , ExtraCommandString );
@@ -737,7 +741,8 @@ ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
 ERROR:  UNKNOWN COMMAND STRING GIVEN!",
 				   PLEASE_INFORM, IS_FATAL );
     }
-}; // void ExecuteChatExtra ( char* ExtraCommandString )
+    return ( 0 );
+}; // int ExecuteChatExtra ( char* ExtraCommandString )
 
 /* ----------------------------------------------------------------------
  *
@@ -1091,7 +1096,7 @@ Freedroid was unable to determine the type of said condition.",
  *
  *
  * ---------------------------------------------------------------------- */
-void
+int
 ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 {
     int i;
@@ -1165,13 +1170,13 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
 		      ChatRoster [ MenuSelection ] . extra_list[i] );
 	
-	ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid );
+	if ( ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid ) == 1 ) return ( 1 );
 	
 	//--------------------
 	// Maybe the chat extra has annoyed the chat partner and he is now
-	// suddenly hostile and breaks off the chat.  This is handled here.
 	//
-	if ( ! ChatDroid -> is_friendly ) return ;
+	//
+	if ( ! ChatDroid -> is_friendly ) return(1) ;
 	
 	//--------------------
 	// It can't hurt to have the overall background redrawn after each extra command
@@ -1200,8 +1205,8 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	}
 	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
     }
-    
-}; // void ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
+return (0);    
+}; // int ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 
 
 /* ----------------------------------------------------------------------
@@ -1290,14 +1295,17 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	    MenuSelection = END_ANSWER ;
 	}
 	
-	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
-	
-	if ( ! ChatDroid -> is_friendly ) return ;
-	
-	if ( MenuSelection == END_ANSWER )
+	if (( ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid ) )  ==  1 )
 	{
 	    return;
 	}
+	
+	if ( ! ChatDroid -> is_friendly ) return ;
+	
+//	if ( MenuSelection == END_ANSWER )
+//	{
+//	    return;
+//	}
     }
     
 }; // void DoChatFromChatRosterData( ... )
