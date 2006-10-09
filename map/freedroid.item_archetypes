@@ -69,7 +69,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="Dummy item. If you see this report a bug."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -201,7 +201,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=350
-Item description text="The twin laser is small, but does its job. A somewhat cheap weapon but effective."
+Item description text="The twin laser is small, but does its job. A somewhat cheap but effective weapon."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: reloading time=3.000000
@@ -377,7 +377,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
 Base list price=100
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is a droid part used for locomotion. The wheel drive is slow, but not very complicated and as such easy to construct or repair."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -421,7 +421,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This is a nightmare. Some crazed inventor had a problem with the stability of a bipedial drive. She solved it by adding a third leg to the drive unit. A real mess to maintain and unreliable as hell, but at least it walks."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -465,7 +465,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=300
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="This type of drive is de facto the standard in humanoid machine industry."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -509,7 +509,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The track drive. Good for all types of terrain. Except lava, acid, landmines and the like."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -553,7 +553,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
-Item description text="These boots are similar to the simple boots, but the material used is specially hardend, so that they last longer and also give improved protection."
+Item description text="These boots are similar to the simple shoes, but the material they are made of is hardened for extra protection."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -597,7 +597,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=600
-Item description text="In the superior class of the laser family, the laser rifle is best known for its consistency in tight situations."
+Item description text="This rifle is a high-end laser weapon. There is only one problem with it: Shooting it is too much fun. People often end up with no ammunition in the middle of a battle."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
 Item as gun: reloading time=3.000000
@@ -641,7 +641,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
-Item description text="While this weapon is capable of firing quite powerful shots, beware of the exceptionally long loading times.  (Don't get swarmed by enemies with this weapon unless you got powerful armour!)"
+Item description text="While this weapon is capable of firing really powerful shots, beware of the exceptionally long reloading times. (Don't get swarmed by enemies with this weapon unless you got powerful armor!)"
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.5000000
 Item as gun: reloading time=4.000000
@@ -728,7 +728,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=800
-Item description text="Think of the laser rifle with twice the power, the twin laser has made a name for itself with its high power."
+Item description text="Think of a twin laser with twice the power. Now make it shoot half as often. What you have is the 'Advanced' twin laser."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.400000
 Item as gun: speed of bullets=16.000000
@@ -771,7 +771,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=250
-Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
+Item description text="If you do not mind waiting for a while in the heat of battle, this weapon is for you."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.200000
 Item as gun: speed of bullets=16.000000
@@ -902,7 +902,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=30
-Item description text="This shield is a self made compilation of objects in hand. It has tubes, bolts and parts of metal, slapped together to provide small shielding from enemys. It's very simple and rough.. but some sensors and lights have been added to let the wielder know when the item is getting hits, and how long it is still operational and stuff like that."
+Item description text="This shield is a compilation of various objects which happened to be around. It has tubes, bolts and parts of metal, all slapped together to provide a small bit of protection from enemies. It's very simple and rough, but some sensors and lights have been added to let the wielder know when the item is getting hit, and how long it willl remain operational and other cool stuff like that."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -946,7 +946,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=25
-Item description text="A simple cover for your head. Dont expect to be incognito"
+Item description text="A simple cover for your head. Don't expect to be incognito."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -1034,7 +1034,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=500
-Item description text="A basic laser, has good uses in certain situations."
+Item description text="A basic laser, but it has good uses in certain situations. No warranty of any kind though."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.900000
 Item as gun: reloading time=3.000000
@@ -1078,8 +1078,8 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=750
-Item description text="Not recommended as a primary weapon, although it is consistent with what it does (however ineffective that may be)."
------ the following part is only relevant for weapons -----
+Item description text="The basic plasma gun."
+the following part is only relevant for weapons -----
 Item as gun: recharging time=0.750000
 Item as gun: reloading time=2.500000
 Item as gun: speed of bullets=16.000000
@@ -1122,7 +1122,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=350
-Item description text="In an age of high tech guns and lasers, this modified sword still reigns supreme."
+Item description text="In an age of high tech guns and lasers, this modified sword should never be underestimated."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.450000
 Item as gun: reloading time=0.000000
@@ -1166,7 +1166,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=40
-Item description text="Does a decent job of protection."
+Item description text="Does a decent job of protection. I guess. Maybe. I'm not sure."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -1210,7 +1210,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=450
-Item description text=" This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
+Item description text="This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: reloading time=0.000000
@@ -1254,7 +1254,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=120
-Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
+Item description text="A true to technology modern sword. It can cut through the most resistant objects like a knife can slice through butter. Melted butter."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.600000
 Item as gun: reloading time=0.000000
@@ -1342,7 +1342,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=75
-Item description text="A light garment that is basically more for looks than defense."
+Item description text="One step up from a normal jacket. "
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2618,7 +2618,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
-Item description text="Warning!  These energy dinks contain (among other ingredients) high doses of coffee!  Beware that the average person overdosed as 12g of caffeine.  One of these bottles contains about double that amount."
+Item description text="Warning!  These energy dinks contain (among other ingredients) high doses of caffeine!  Beware that the average person overdosed as 12g of caffeine.  One of these bottles contains about double that amount."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
