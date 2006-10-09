@@ -1,9 +1,5 @@
 % -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,19 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-Insert here any comments...
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -93,6 +86,7 @@ PositionX=399  PositionY=228
 Subtitle="Yes. I would rather not talk about it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
 ChangeOption=8 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -108,9 +102,9 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I served there for a short while, and they even let me use an exterminator. But then after a failed mission, I resigned and never wore a uniform again."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=98 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
 ChangeOption=7 ChangeToValue=1
-ChangeOption=99 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -159,6 +153,7 @@ PositionX=398  PositionY=132
 Subtitle="And I said that I do not want to talk about it. It hurts too much. Please stop asking about it and leave me alone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
+ChangeOption=10 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -174,6 +169,57 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="PlantCookie:bruce_hurt"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" I have some bad memories too. I know how hard it can be to talk about them. Keep your stories to yourself."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Yes. And now I would like to go to sleep. Good night Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=8 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" DID TUX HARM BRUCE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=50 ChangeToValue=0
+OnCondition="CookieIsPlanted:bruce_hurt:" JumpToOption=51 ElseGoto=52
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=51  OptionText=" YES."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=51 ChangeToValue=0
+ChangeOption=98 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=52  OptionText=" NO."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=52 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=98  OptionText=" I'll be going then."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=". . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=98 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -184,9 +230,9 @@ PositionX=215  PositionY=359
 Subtitle="Good. I need sleep."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-
