@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Technical division?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=827  PositionY=97  
-Subtitle="Yes, we are the engineers, the workers and the repairmen of this little fortifed town."
+Subtitle="Yes. We are the engineers, the workers and the repairmen of this little fortifed town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The millitary division hates us because we are made up of people who refuse to fight or are unable to do so for health reasons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -154,10 +154,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=23  OptionText=" I can handle computers very well. I also used to be the leader of a science team and I know a lot about laboratory equipment."
+New Option Nr=23  OptionText=" I can handle computers very well. I also know a lot about laboratory equipment."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=679  PositionY=173  
-Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything? "
+Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything like that? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
 OnCondition="GoldIsLessThan:1" JumpToOption=24 ElseGoto=24
@@ -261,7 +261,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=29 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
-OnCondition="GoldLessThan:1" JumpToOption=32 ElseGoto=32
+OnCondition="GoldIsLessThan:1" JumpToOption=32 ElseGoto=32
+DoSomethingExtra="PlantCookie:singularity_dead"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -278,6 +279,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=29 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
+DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="PlantCookie:singularity_killed"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -304,15 +307,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText=" How did it happen that the bots took your tools away?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="<?>"
+Subtitle="Ah, it is a strange story, I am sure you would not belive me. I will tell you some other time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
-ChangeOption=27 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=32  OptionText="I will go in there first and clean out the place. Then your people can mop up after me and kill the remainder."
+New Option Nr=32  OptionText=" I will go in there first and clean out the place. Then your people can mop up after me and kill the remainder."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Linarian, my people do not carry guns. We are mechanics. You want the military division's help."
@@ -320,7 +322,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Erm... And aren't you being too agressive? Maybe they do not wish us harm..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
-OnCondition="GoldLessThan:1" JumpToOption=33 ElseGoto=33
+OnCondition="GoldIsLessThan:1" JumpToOption=33 ElseGoto=33
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -337,6 +339,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I will talk to Spencer and ask him for a few attack teams. We will take care of the bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
+DoSomethingExtra="PlantCookie:singularity_killed"
+DoSomethingExtra="AssignMission:1"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -352,27 +356,404 @@ Subtitle="I thank you for your help in recovering the autotools."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Here is some money, you deserve it for getting my toolkit back."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit wery well in the millitary division."
+Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit wery well in the millitary division. You should talk to them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am sorry, but I must go now. My duties call."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=34 ChangeToValue=0
+DoSomethingExtra="AddGold:150"
+DoSomethingExtra="MarkMissionComplete:1"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=35  OptionText="<?>"
+New Option Nr=35  OptionText=" I got your toolkit. The bots were not a big problem."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="<?>"
+Subtitle="Good. We sure need the autotools."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our roads need fixing, our power lines need fixing, our walls need fixing... Hell, everything needs fixing in this place."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="With those little gadgets we will be able to automate a lot of those simple repairs saving us a lot of time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Here is some money for your effort. And I am sure you will find this helmet useful too, it saved my life once, and I hope it saves yours one day."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=35 ChangeToValue=0
+ChangeOption=36 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="PlantCookie:singularity_dead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=36  OptionText=" I got your toolkit. You can buy it from me if you want."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT!? "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You got to be kidding me, Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Give me the toolkit and stop fooling around."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=36 ChangeToValue=0
+ChangeOption=37 ChangeToValue=1
 ChangeOption=35 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="Dixon/Tux_see_you_later.wav"
+New Option Nr=37  OptionText=" I was not joking. I am listening to your offers."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, I curse the day on which you have arrived here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="250."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=37 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
+ChangeOption=38 ChangeToValue=1
+DoSomethingExtra="PlantCookie:dixon_angry"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=38  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Here. It is all there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now get out of here. I am a pacifist, but I am willing to make a special exception just for you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Get out of my sight."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=38 ChangeToValue=0
+ChangeOption=41 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=39  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="<?>"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=39 ChangeToValue=0
+ChangeOption=42 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian. Now we part as usual. However should I ever see you after the war is over..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I promise to kill you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now take your money and get out of my face. I do not want to see you here ever again."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="PlantCookie:dixon_very_angry"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" Good joke. I am sure you can do better."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="350. This is all that the technical division has as their cash resources."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=0
+ChangeOption=39 ChangeToValue=1
+ChangeOption=38 ChangeToValue=0
+ChangeOption=42 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=42  OptionText=" Come on, I am sure you can do even better than that... "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="400. We cannot offer anything more."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Please, we really need the autotools."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Without them this city is doomed."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=42 ChangeToValue=0
+ChangeOption=40 ChangeToValue=1
+ChangeOption=39 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=43  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Heh, never better!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="All indicators are in the green, the power and water fill the pipes and even Spencer seems happier that the town is thriving despite all odds."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Thanks to the autotools we can start building instead of just trying to repair the damage."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Once this is sick war is over, I will make sure you get keys to the city Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=43 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=44  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nearly. Only my concience keeps me up at night."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Please leave me alone with my thoughts, I do not want to talk to anyone right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=44 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=45  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="No, I am afraid not."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="While I do not regret sparing the bots in the tunnels, the town suffers for it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It makes me sad to see everything slowly wasting away. The bots are doing more damage than we can repair."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This town has a few weeks left to live. After that we are all dead."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=45 ChangeToValue=0
+DoSomethingExtra="PlantCookie:dixon_one"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=46  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" Ha! Never better!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We are mass producing energy shields, creating more electric energy than we can ever immagine spending and even experimenting with new armor types."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Life is good right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=46 ChangeToValue=0
+ChangeOption=47 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=47  OptionText=" What happened? Last time I asked you said things are not going that well."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" Yes, but now everything is different."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I met someone who decided to join us in the fight against the MS bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You will need a hacked computer. Type in 'ssh 127.0.0.257' as the superuser, and you will see what I mean."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=47 ChangeToValue=0
+ChangeOption=48 ChangeToValue=1
+DoSomethingExtra="PlantCookie:got_singularity"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=48  OptionText=" Why the secrecy and the hushed voice? Cannot you just tell me?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nope. Some things you just have to see with your own eyes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The Library of Alexandria, the Colossus of Rhodes, the Black Island..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And this is just one of those things."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just go and see for yourself. Otherwise you will not belive me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=48 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=60  OptionText=" IS THE TOOLKIT WITH TUX?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=60 ChangeToValue=0
+OnCondition="HaveItemWithCode:59" JumpToOption=61 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=61  OptionText=" WAS TUX A MANIAC KILLER?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=61 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_killed:" JumpToOption=63 ElseGoto=62
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=62  OptionText=" TUX DID NOT KNOW WHAT IS HE DOING."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=62 ChangeToValue=0
+ChangeOption=36 ChangeToValue=1
+ChangeOption=35 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=63  OptionText=" YES, HE SLAUGHTERED THE BOTS FOR ENTERTAINMENT."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=63 ChangeToValue=0
+ChangeOption=34 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=70  OptionText=" IS THE TOOLKIT MISSION DONE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=70 ChangeToValue=0
+OnCondition="MissionComplete:1" JumpToOption=77 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=71  OptionText=" YEAH, AND TUX HAS NO IDEA..."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=71 ChangeToValue=0
+ChangeOption=43 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=72  OptionText=" YEAH, AND TUX WAS A MADMAN."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=72 ChangeToValue=0
+ChangeOption=44 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=73  OptionText=" YEAH, SINGULARITY IS WELL, FIRST TIME"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=73 ChangeToValue=0
+ChangeOption=45 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=74  OptionText=" YEAH, AND THIS IS THE SECOND TIME TUX ASKS. LET THE MAGIC START."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=74 ChangeToValue=0
+ChangeOption=46 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=75  OptionText=" YES, AND IT WENT WITH PEACE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=75 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_one:" JumpToOption=74 ElseGoto=73
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=77  OptionText=" SURE, IT WAS DONE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=77 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_dead:" JumpToOption=78 ElseGoto=75
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=78  OptionText=" DID TUX KNOW WHAT IS HE DOING?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=78 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_killed:" JumpToOption=72 ElseGoto=71
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=80  OptionText=" DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=80 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=81  OptionText=" DID TUX ANGER DIXON?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=81 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_angry:" JumpToOption=82 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=82  OptionText=" HOW MUCH ANGER?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=82 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_very_angry:" JumpToOption=83 ElseGoto=84
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=83  OptionText=" YES, QUITE A LOT. THIS IS THE END FOLKS."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="YOU AGAIN!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="SAID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="GET."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="LOST."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="FUCK MY LIFELONG PACIFISM. I WILL FUCKING KILL YOU NOW!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=83 ChangeToValue=0
+DoSomethingExtra="BreakOffAndBecomeHostile"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=84  OptionText=" JUST A LITTLE BIT."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, please leave. You are no longer welcome here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You have done me wrong and I have no desire to talk to you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=84 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" I must go now."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=173  
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
