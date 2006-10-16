@@ -105,6 +105,7 @@ Subtitle="I wish you the best of luck."
 ReplySample="Darwin/DAR_Luck2.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

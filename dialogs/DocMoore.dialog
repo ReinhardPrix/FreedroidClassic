@@ -209,6 +209,7 @@ ChangeOption=0 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1
 DoSomethingExtra="CompletelyHealTux"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
+
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
@@ -219,6 +220,7 @@ ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="DocMoore/DocMoore_See_You_Later.wav"
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
