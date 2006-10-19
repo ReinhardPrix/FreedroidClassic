@@ -82,7 +82,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=3  OptionText=" What did make you so sick?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=201  PositionY=327  
+PositionX=220  PositionY=323  
 Subtitle="It was the brain enlargement pills. They did do me no good, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
@@ -319,6 +319,7 @@ ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

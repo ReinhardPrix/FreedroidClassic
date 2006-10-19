@@ -297,6 +297,7 @@ New Option Nr=99  OptionText=" I'll be off then."
 OptionSample="Kevin/Tux_ill_be_off.wav"
 PositionX=530  PositionY=241  
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

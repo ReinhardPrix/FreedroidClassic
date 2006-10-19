@@ -1,9 +1,5 @@
 % -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,25 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
- b
 
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
-
-
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -52,7 +39,6 @@ Subtitle="I wish the bots had just killed me, but I got 'lucky' and ended up in 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
-ChangeOption=18 ChangeToValue=1
 ChangeOption=11 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -64,6 +50,8 @@ PositionX=141  PositionY=485
 Subtitle="Yes, I know I said I'd give you lots of food. But for that I must cook something first."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Come back later, then maybe I'll have something already. But now leave me alone with my cooking art please."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I need total focus to unleash the power of cook-fu!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -78,6 +66,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="'Terribly' would be a huge understatement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
+ChangeOption=18 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -193,7 +182,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1174  PositionY=157  
 Subtitle="I had prepared some delicacies, but the ravenous Red Guard ate it all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No big loss, I have a second batch of food cubes in the oven and they will be ready shortly."
+Subtitle="Not a big loss, I have a second batch of food cubes in the oven and they will be ready shortly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think the mood it the town will improve once the cooking master Michelangelo gets to work. Ha!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -437,4 +426,3 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

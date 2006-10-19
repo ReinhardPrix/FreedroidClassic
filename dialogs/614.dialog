@@ -30,15 +30,6 @@ freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
-
-
 END OF AUTORS NOTES
 
 
@@ -126,6 +117,7 @@ PositionX=438  PositionY=268
 Subtitle="See you later!"
 ReplySample="OldTown614Guard/Tux_see_you_later.wav"
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
