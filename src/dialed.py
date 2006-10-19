@@ -868,6 +868,7 @@ def dumpsound(node):
 ####################################################################
 
 def simain(everything, nodeindex):
+  halting = ''
   x = -1
   ranbefore = False
   running = False
@@ -894,7 +895,7 @@ def simain(everything, nodeindex):
         invite = " #> "
 #        if ranbefore == False:
         for bit in thosegofirst:
-            process(everything, bit, startlist, nodeindex, conditionslist)
+            halting = process(everything, bit, startlist, nodeindex, conditionslist)
 #        ranbefore = True
       elif int(command) in range(y):
         if conditionslist[int(command)][1] == True:
@@ -907,8 +908,8 @@ def simain(everything, nodeindex):
       if command == "q":
         return
       elif command in startlist:
-        process(everything, command, startlist, nodeindex, conditionslist)
-        if command == "99":
+        halting = process(everything, command, startlist, nodeindex, conditionslist)[:]
+        if halting == "yes":
           running = False
           invite = " ## "
       elif command == "ha":
@@ -932,6 +933,7 @@ def gatherconditions(everything):
   return conditionslist
 
 def process(everything, do, startlist, nodeindex, conditionslist):
+  halting = "no"
   aim = list.index(nodeindex, do)
   firstsay = 1
   for ittybit in everything[aim]:
@@ -960,13 +962,16 @@ def process(everything, do, startlist, nodeindex, conditionslist):
       list.sort(startlist)
     elif ittybit[0] == "linked":
       print "\n  - LINKED -"
-      process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
+      halting = process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
     elif ittybit[0] == "goto":
       if [ittybit[1][0], False] in conditionslist:
-        process(everything, ittybit[1][2], startlist, nodeindex, conditionslist)
+        halting = process(everything, ittybit[1][2], startlist, nodeindex, conditionslist)
       elif [ittybit[1][0], True] in conditionslist:
-        process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
-  return startlist
+        halting = process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
+    elif ittybit[0] == "extra":
+      if ittybit[1] == "EndDialog":
+        halting = "yes"
+  return halting
 
 def printactivenodes(startlist, nodeindex):
   print ""
