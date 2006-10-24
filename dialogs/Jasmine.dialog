@@ -1,9 +1,5 @@
 % -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,20 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-This is the dialog for Jasmine who is Kevin's girl friend.  The dialog is still fairly incomplete.  Also she doesn't have any particular role
-inside the game yet.  Maybe at some later point there might be some meaning associated with her, maybe even a mission or maybe
-even better yet, some shop interface with magical goodies and hacker tools or the like.
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -96,9 +88,9 @@ Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-
