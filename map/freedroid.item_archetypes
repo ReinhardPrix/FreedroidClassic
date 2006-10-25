@@ -3058,7 +3058,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=5
-Item description text="Exterminators need this kind of ammunition.  It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
+Item description text="Exterminators need this kind of ammunition. It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3278,7 +3278,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=32
-Item description text="Not even the most primitive of civilisations can survive even for the shortest time without a large supply of those close by."
+Item description text="Even the most primitive civilisations cannot survive for long without a large supply of those."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3322,7 +3322,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
-Item description text="These dilitium crystals are used as energy source in many modern electricity or heat based devices.  Energy is extracted from the crystal by making use of the energy contained in the order of the crystal molecules.  This principle has allowed to build devices that while consuming a lot of energy do not need to be connected to a power line."
+Item description text="These dilitium crystals are used as energy source in many modern electricity or heat based devices. Energy is extracted from the crystal by making use of the energy contained in the order of the crystal molecules. This principle has allowed to build devices that consume a lot of energy but do not need to be connected to a power line."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3366,7 +3366,7 @@ inventory_size_y=2
 inventory_size_x=2
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=18
-Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings.  Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user.  Still, the collected map data will be split up by the device into several sectors for convenient viewing."
+Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings. Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user. Still, the collected map data will be split up by the device into several sectors for convenient viewing."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3410,7 +3410,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
-Item description text="These pills permanently raise strength within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
+Item description text="These pills permanently raise strength within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3454,7 +3454,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
-Item description text="These pills permanently raise dexterity within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
+Item description text="These pills permanently raise dexterity within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3498,7 +3498,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=250
-Item description text="These pills permanently raise magic within a character by one point each.  They work on a nano-technological basis.  Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
+Item description text="These pills permanently raise magic within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -3542,7 +3542,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
-Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net.  The galaxy-wide guild of medics has recommended not to respond to these adds at all, while attempts to entirely ban the distribution of those pills was never completely successful."
+Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net. The planet-wide guild of medics has recommended not to respond to these ads at all, while attempts to entirely ban the distribution of those pills were never completely successful."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4202,7 +4202,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=65
-Item description text="These boots are a bit lighter than the normal version, giving of course worse protection but certainly extra comfort for the long-time wearer."
+Item description text="These boots are a bit lighter than the normal version, giving of course worse protection but certainly extra comfort for the wearer."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4290,7 +4290,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=275
-Item description text="These hiking boots are very sophisticated products, combining optimal comfort for the wearer with a good protection from collisions with blunt objects like stones and the like, which of course also makes for a higher price too."
+Item description text="These hiking boots are a very sophisticated product, combining optimal comfort for the wearer with a good protection from collisions with blunt objects like stones, which of course also makes for a higher price."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4422,7 +4422,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=40
-Item description text="This script can invoke stored powers to teleport one person back to the center of the nearest town.  The stored powers are expended in the process and the script becomes useless afterwards.  Note:  Multiple of those may be grouped together in inventory."
+Item description text="This script can invoke stored powers to teleport one person back to the center of the nearest town. The stored powers are expended in the process and the script becomes useless afterwards.  Note:  Multiple of those may be grouped together in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4447,7 +4447,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 100
 ** Start of new item specification subsection **
-Item name="Kevins Data Cube"
+Item name="Kevin's Data Cube"
 Position_X=244
 Position_Y=260
 Item can be applied in combat="no"
@@ -4466,7 +4466,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
-Item description text="This data cube contains confidential government data on the installations around the colony.  Kevin hopes, that when the data is evaluated properly, a way out of the current crisis of the colony might be found.  However, the amount of data is so vast, it can only be evaluated properly using a large cluster of computers.  The red guard complex is said to store a suitable infrastructure for this purpose."
+Item description text="This data cube contains confidential government data on the installations around the colony. Kevin hopes that when the data is evaluated properly a way out of the current crisismight be found. However, the amount of data is so vast, it can only be evaluated properly using a large cluster of computers. The Red Guard base is said to store a suitable infrastructure for this purpose."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4950,7 +4950,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=50
-Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
+Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault. All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time. It comes with it's own power supply and has a supposed duration of 200 years."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -4994,7 +4994,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=450
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text="The bots use this to hover around."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
