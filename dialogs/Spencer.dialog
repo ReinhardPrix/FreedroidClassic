@@ -1,9 +1,5 @@
 % -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,20 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-This character is "SPENCER", one of the most important characters of old town.
-His most important features are, that he can check through for quests done and maybe bring you into the Town Guard.
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -132,8 +124,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText="MISSION_IS_DONE
-"
+New Option Nr=8  OptionText="MISSION_IS_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=375  PositionY=124  
 ChangeOption=8 ChangeToValue=0
@@ -522,10 +513,10 @@ PositionX=250  PositionY=260
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

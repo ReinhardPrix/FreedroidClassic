@@ -1,9 +1,5 @@
 % -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,30 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-
-
-
-You can use this text field to make some notes on ANYTHING.  
-It's purely for the author's reference.  Tahisafsd asdfasdf asdfasdf.
-The game engine will ignore this entry.
-
-
-
-
-
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -70,7 +52,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=148  PositionY=306  
 Subtitle="Sure! I've got one that will perfectly fit your head."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Skippy"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -81,9 +63,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=224  
 Subtitle="Oh, that's so simple. No need to activate anything at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just hold the device close to your head and it will break up into nanotechnological compartments that diffuse into your body."
+Subtitle="Just hold the device close to your head and it will break up into nanotechnological compartments that will enter your body."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They will merge with your visual nerves and transmit any data to your brain using the visual nerves."
+Subtitle="They will merge with your eye transmit any data to your brain using the optical nerves."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The map-making device will automatically collect data from within 7 meters of wherever you're going."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -128,13 +110,10 @@ Subtitle="See you later."
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
-ChangeOption=2 ChangeToValue=1
-ChangeOption=3 ChangeToValue=1
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

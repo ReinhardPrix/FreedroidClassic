@@ -71,8 +71,6 @@ OptionSample="Melfis/Tux_i_need_to.wav"
 PositionX=433  PositionY=242  
 Subtitle="Finally."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
-ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

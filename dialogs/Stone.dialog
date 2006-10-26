@@ -320,7 +320,7 @@ OptionSample="Tux_See_You_Later_0.wav"
 PositionX=447  PositionY=63  
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="STO_Goodbye_Love_0.wav"
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
