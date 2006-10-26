@@ -114,6 +114,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I am sure there are lots more of classes out there, but I know nothing about them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -192,7 +193,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" END"
 OptionSample="Chandra/Tux_i_got_to.wav"
 PositionX=198  PositionY=102  
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
