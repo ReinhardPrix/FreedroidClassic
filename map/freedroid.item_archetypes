@@ -113,7 +113,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=20
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -157,7 +157,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=60
-Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -377,7 +377,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
 Base list price=100
-Item description text="This is a droid part used for locomotion. The wheel drive is slow, but not very complicated and as such easy to construct or repair."
+Item description text="This is a droid part used for locomotion. The wheel drive is slow, but not very complicated and easy to construct or repair."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -641,7 +641,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
-Item description text="While this weapon is capable of firing really powerful shots, beware of the exceptionally long reloading times. (Don't get swarmed by enemies with this weapon unless you got powerful armor!)"
+Item description text="While this weapon is capable of firing really powerful shots, beware of the exceptionally long reloading times. (Don't get swarmed by enemies with this weapon unless you have powerful armor!)"
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.5000000
 Item as gun: reloading time=4.000000
@@ -1210,7 +1210,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=450
-Item description text="This large double-edged broadsword has the ability to shut down the opposing defender with one swift, well placed blow."
+Item description text="This large double-edged broadsword has the ability to shut down the victim with a single well placed blow."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: reloading time=0.000000
@@ -1342,7 +1342,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=75
-Item description text="One step up from a normal jacket. "
+Item description text="One step up from a normal jacket."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -1430,7 +1430,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=300
-Item description text="Tough as nails and able to withstand medium, and some high end blows."
+Item description text="Tough as nails and able to withstand most blows."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -1518,7 +1518,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=250
-Item description text="Better than a buckler, but only a bit more effective."
+Item description text="Better than a buckler, and a lot more effective."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -1606,7 +1606,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=240
-Item description text="This saber is poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
+Item description text="This saber is nearly poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.450000
 Item as gun: reloading time=0.000000
@@ -1738,7 +1738,7 @@ inventory_size_y=3
 inventory_size_x=2
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=50
-Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal&but then again they didnt have the extra laser edge to depend on. "
+Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal, but they didnt have the extra laser edge to depend on."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.650000
 Item as gun: reloading time=0.000000
@@ -2002,7 +2002,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_book_sound.wav"
 Base list price=250
-Item description text="An incredible healing spell, in some cases the only one you will ever need."
+Item description text="An incredible healing spell, probably only one you will ever need."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2486,7 +2486,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=375
-Item description text="Used by select fighter this helmet is very hard to penetrate. Can be counted on for a long amount of time, and if taken care of can be used frequently."
+Item description text="It might look a bit silly, but it will save your life many times"
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2530,7 +2530,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
 Base list price=450
-Item description text="A powerful shield in large size."
+Item description text="A powerful shield."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2599,7 +2599,7 @@ Item as gun: weapon requires both hands="yes"
 
 // Item No. 58
 ** Start of new item specification subsection **
-Item name="Barfs Energy Drink"
+Item name="Barf's Energy Drink"
 Position_X=55
 Position_Y=204
 Item can be applied in combat="yes"
@@ -2618,7 +2618,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="drop_potion_sound.wav"
 Base list price=50
-Item description text="Warning!  These energy dinks contain (among other ingredients) high doses of caffeine!  Beware that the average person overdosed as 12g of caffeine.  One of these bottles contains about double that amount."
+Item description text="Warning! These energy dinks contain high doses of caffeine! The average person drops dead after consuming 12 grams of caffeine. One of these bottles contains over double that amount."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2662,7 +2662,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=150
-Item description text="This is a common teleporter service toolbox.  It's complete and orderly, though a few dents on the outside give prof of frequent use.  'C. Dixon' is carved into the outside with fine print."
+Item description text="This is a teleporter service toolbox. It's complete and orderly, though a few dents on the outside give prof of frequent use. 'C. Dixon' is carved into the outside with fine print."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2706,7 +2706,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
 Base list price=1001
-Item description text="This is one of the most powerful ranged weapons in the game."
+Item description text="This is one of the most powerful ranged weapons out there."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.50000
 Item as gun: reloading time=5.000000
