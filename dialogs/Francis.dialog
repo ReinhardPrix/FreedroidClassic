@@ -89,7 +89,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=116  
 Subtitle="I got shot down and I crashed a few kilometers away from here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Later I learned that the bots started attacking all around the globe. The journalists called it 'The Great Assautl'. The name stuck."
+Subtitle="Later I learned that the bots started attacking all around the globe. The journalists called it 'The Great Assault'. The name stuck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Then the bots started jamming our broadcasts and long distance communication became impossible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -119,7 +119,7 @@ Subtitle="A few of you survived the slaughter and went into hiding and obscurity
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="During that time Linarians became known as helpers and heroes. Of course now most people think it all was just a fairy tale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If the computer is not lying, then your name is Tux, the chief scientist of the Linarian team."
+Subtitle="If the computer is not lying, then your name is Tux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
@@ -275,7 +275,7 @@ Subtitle="I am glad I could help you. You should be careful around here. Best he
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The path from this house should lead you directly to it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
