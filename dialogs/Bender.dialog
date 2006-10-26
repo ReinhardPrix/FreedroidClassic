@@ -318,7 +318,7 @@ Subtitle="See you later!"
 ReplySample="Tux_See_You_Later_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=99 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
