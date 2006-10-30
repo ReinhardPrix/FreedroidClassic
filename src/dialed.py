@@ -1279,7 +1279,7 @@ while True :
       error()
     else:
       simain(everything, nodeindex)
-  elif command == "lo":
+  elif command == "le":
     if node == None:
       error()
     else:
