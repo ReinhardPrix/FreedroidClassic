@@ -121,20 +121,21 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_KEVIN ] = "He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope." ;
 
-    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him. " ;
+    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him." ;
 
+    character_descriptions [ PERSON_614 ] = "There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platfor can be your best friend during combat...";
+
+    character_descriptions [ PERSON_FRANCIS ] = "Francis is not looking so good today. His tattered coat is not looking that much better either. The war is taking it's toll on them both.";
+ ;
     /*
     PERSON_RMS,
     PERSON_STONE,
     PERSON_DIXON,
     PERSON_DUNCAN,
     PERSON_PENDRAGON,
-    PERSON_614,
     PERSON_MER,
-    PERSON_FRANCIS,
     PERSON_ERNIE,
     PERSON_BENJAMIN,
-    PERSON_BENDER,
     PERSON_SPENCER,
     PERSON_BUTCH,
     PERSON_DARWIN,
@@ -154,7 +155,6 @@ init_character_descriptions ( void )
     PERSON_TYBALT,
     PERSON_EWALD,
     PERSON_KEVINS_GUARD,
-    PERSON_KEVIN,
     */
 
 }; // void init_character_descriptions ( void )
