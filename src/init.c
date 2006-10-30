@@ -115,9 +115,13 @@ init_character_descriptions ( void )
 	character_descriptions [ i ] = "WARNING!  THIS CHARACTER DESCRIPTION IS STILL MISSING!  PLEASE INFORM THE DEVELOPERS ABOUT THIS.  SOME SUITABLE DESCRIPTION MUST STILL BE CONTRIBUTED.  ANY SUGGESTION?" ;
     }
 
-    character_descriptions [ PERSON_CHA ] = "You see a man of around 80.  While his appearance seems rather fragile, the vivid eyes indicate a well aware man of still rather quick mind." ;
+    character_descriptions [ PERSON_CHA ] = "You see an old man. While his appearance seems rather fragile, the vivid eyes indicate a well aware man of still rather quick mind." ;
 
-    character_descriptions [ PERSON_SORENSON ] = "You see a girl in her mid-twenties.  The glasses make her look older than she probably is.  You can feel a strange aura of magic emanate from her.  Or is it just her good looks?" ;
+    character_descriptions [ PERSON_SORENSON ] = "You see a female in her mid-twenties. The glasses make her look older than she probably is. You can feel a strange aura of magic emanate from her. Or is it just her good looks?" ;
+
+    character_descriptions [ PERSON_KEVIN ] = "He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope." ;
+
+    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him. " ;
 
     /*
     PERSON_RMS,
@@ -2046,9 +2050,9 @@ I will not be able to load or save games or configurations\n\
     MaxMessageTime = 850;
     
     CurLevel = NULL; // please leave this here BEFORE InitPictures
-    
+  
     InitPictures ( ) ;
-    
+ 
     ShowStartupPercentage ( 100 ) ; 
 
     if(GameConfig . screen_width == 640)
