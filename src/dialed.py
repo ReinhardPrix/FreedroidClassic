@@ -1054,6 +1054,7 @@ while True :
   if command == "q":
     end()
   elif command == "s":
+    locked = True
     protectme = load(current)
     current = protectme
     node = None
@@ -1199,6 +1200,8 @@ while True :
       home = clip(current)
       count = nodecount(current, home)
       everything = scanall(current, count)
+      node = None
+      locked = True
   elif command == "nk":
     if node == None:
       error()
