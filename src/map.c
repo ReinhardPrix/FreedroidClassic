@@ -125,7 +125,7 @@ respawn_level ( int level_num )
     {
 	if ( AllEnemys [ i ] . pos . z != level_num ) continue;
 	if ( AllEnemys [ i ] . type == (-1) ) continue;
-	
+	if ( Druidmap [ AllEnemys [ i ] . type ] . is_human ) continue;
 	//--------------------
 	// So now we've found some bot to respawn.  Let's do it:
 	// new energy
