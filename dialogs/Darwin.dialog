@@ -70,10 +70,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText=" If you keep standing here more bots will come and they will kill you. Go somewhere safe, and set up defense there."
-OptionSample="Darwin/Tux_Id_like_to_learn_more.wav"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=277  PositionY=393  
 ChangeOption=3 ChangeToValue=0
-ChangeOption=4 ChangeToValue=1
+OnCondition="GoldIsLessThan:1" JumpToOption=4 ElseGoto=4
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -100,7 +100,73 @@ Subtitle="Every day since the mess started I come here to fight the bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Today will be no different."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Do not try to stop us. We have our rifles loaded."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" Where can I get some help?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nowhere. This is the end of the world. There is no help."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="There is a city a bit south from here, but if I were you, I would not go there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The Rot Guard is the ruler there, and cruelty is their solution to everything."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Real freedom is dead."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText=" You guys are totally nuts. Get a life."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=7 ChangeToValue=0
+OnCondition="GoldIsLessThan:1" JumpToOption=8 ElseGoto=8
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText=" You guys are total--"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT?! What is it that you want to say?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0
+OnCondition="GoldIsLessThan:1" JumpToOption=9 ElseGoto=9
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText=" Erm... I--"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT!? SPIT IT OUT!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+OnCondition="GoldIsLessThan:" JumpToOption=10 ElseGoto=10
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" Er... You guys are really great and I admire your bravery in the face of certain death."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Donnerwetter, you are a funny one."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I hope that one day we shall meet again, maybe in a better time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Maybe then you will tell us other gut jokes that you know."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Maybe one day..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -108,7 +174,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" I'll be going then."
 OptionSample="Darwin/Tux_ill_be_going.wav"
 PositionX=436  PositionY=116  
-Subtitle="I wish you the best of luck."
+Subtitle="Goodbye and viel gluck."
 ReplySample="Darwin/DAR_Luck2.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
