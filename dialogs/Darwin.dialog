@@ -150,7 +150,7 @@ PositionX=200  PositionY=200
 Subtitle="WHAT!? SPIT IT OUT!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
-OnCondition="GoldIsLessThan:" JumpToOption=10 ElseGoto=10
+OnCondition="GoldIsLessThan:1" JumpToOption=10 ElseGoto=10
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
