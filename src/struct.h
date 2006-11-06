@@ -1071,6 +1071,7 @@ typedef struct
     char* on_goto_condition;
     int on_goto_first_target;
     int on_goto_second_target;
+    int link_target;
     int always_execute_this_option_prior_to_dialog_start;
     
     int change_option_nr [ MAX_DIALOGUE_OPTIONS_IN_ROSTER ];

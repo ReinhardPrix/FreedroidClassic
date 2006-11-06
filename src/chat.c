@@ -436,6 +436,11 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	ChatDroid -> is_friendly = FALSE ;
 	ChatDroid -> combat_state = MAKE_ATTACK_RUN ;
     }
+    else if ( ! strcmp ( ExtraCommandString , "DropDead" ) )
+    {
+	ChatDroid -> energy = 0;
+        return (1);
+    }
     else if ( ! strcmp ( ExtraCommandString , "EverybodyBecomesHostile" ) )
     {
 	DebugPrintf ( -1000 , "\nEverybody SHOULD NOW BE HOSTILE!" );
@@ -1081,6 +1086,15 @@ TextConditionIsTrue ( char* ConditionString )
 	else
 	    return ( FALSE );
     }
+    else if ( CountStringOccurences ( ConditionString , "True" ) )
+    {
+        return ( TRUE );
+    }
+    else if ( CountStringOccurences ( ConditionString , "False" ) )
+    {
+        return ( FALSE );
+    }
+
     
     fprintf( stderr, "\n\nConditionString: %s. \n" , ConditionString );
     GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -1205,6 +1219,12 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	}
 	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
     }
+    if ( ChatRoster [ MenuSelection ] . link_target )
+    {
+        MenuSelection = ChatRoster [ MenuSelection ] . link_target ;
+        ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+    }
+
 return (0);    
 }; // int ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 

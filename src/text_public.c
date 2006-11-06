@@ -1480,6 +1480,10 @@ found in this option of the dialogue, which is fine.", NumberOfOptionChanges );
 	{
 	    DebugPrintf( CHAT_DEBUG_LEVEL , "\nThere seems to be NO ON-GOTO-CONDITION AT ALL IN THIS OPTION." );
 	}
+	if ( CountStringOccurences ( SectionPointer , "LinkedTo:" ) ) 
+	{
+	    ReadValueFromString( SectionPointer , "LinkedTo:" , "%d" ,  & ( ChatRoster[ OptionIndex ] . link_target ) , TempEndPointer );
+	}
 	
 	//--------------------
 	// Next thing we do will be to get the always-on-startup flag status.
