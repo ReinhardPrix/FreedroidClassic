@@ -133,12 +133,12 @@ SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter
 //--------------------
 // This is Spencer 'SPE', the chief of the guard, who won't let Tux into the citadel
 //
-SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Chief of the old town guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="NewSpencer" RushTux="no" DialogSectionToUse="Spencer" ShortLabel="Spencer -- Leader of the Red Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Lukas, the man running the armoury inside the red guard building
 //
-SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="LukasStartGameSquare" RushTux="no" DialogSectionToUse="Lukas" ShortLabel="Lukas -- Head of Armory" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUA X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="LukasStartGameSquare" RushTux="no" DialogSectionToUse="Lukas" ShortLabel="Lukas -- Head of the Armory" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Tybalt, the 'citadel' gate guardian
@@ -240,7 +240,7 @@ Allowed Type of Random Droid for this level: 123
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 249
 
-SpecialForce: Type=883 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="ToolkitBossMonsterStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Rogue Bot Chief" attack_run_only_when_direct_line="no" on_death_drop_item_code=59
+SpecialForce: Type=883 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="ToolkitBossMonsterStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="The Singularity" attack_run_only_when_direct_line="no" on_death_drop_item_code=59
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
@@ -270,67 +270,67 @@ Maximum number of Random Droids=4
 Minimum number of Random Droids=4
 Allowed Type of Random Droid for this level: 821
 
-SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis -- Researcher " attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="FrancisStartGameSquare" RushTux="yes" DialogSectionToUse="Francis" ShortLabel="Francis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 Sp**ecialForce: Type=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="ErnieStartGameSquare" RushTux="yes" DialogSectionToUse="Ernie" ShortLabel="Ernie -- Outer Mine Guard" attack_run_only_when_direct_line="no"
-SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DarwinStartGameSquare" RushTux="no" DialogSectionToUse="Darwin" ShortLabel="Darwin -- Hunter" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MelfisStartGameSquare" RushTux="no" DialogSectionToUse="Melfis" ShortLabel="Melfis -- Hunting Apprentice" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DarwinStartGameSquare" RushTux="no" DialogSectionToUse="Darwin" ShortLabel="Geist -- Hunter" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=GUB X=10 Y=3 Fixed=0 Marker=5 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MelfisStartGameSquare" RushTux="no" DialogSectionToUse="Melfis" ShortLabel="Engel -- Hunter" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 
-SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="The302InFrontOfTheTempleStart" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Temple Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="The302InFrontOfTheTempleStart" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="InTempleBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="InTempleBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=6 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=6 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=6 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=6 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="TempleWayLayBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=40 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr5" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=40 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr6" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=40 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr5" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=40 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr6" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=41 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr7" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=41 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr8" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=41 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr7" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=41 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr8" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=42 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr9" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=42 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr10" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=42 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr9" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=42 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr10" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=43 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr11" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=43 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr12" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=43 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr11" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=43 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr12" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=46 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr13" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=46 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr14" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=46 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr13" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=46 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr14" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=45 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr15" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=45 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr16" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=45 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr15" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=45 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr16" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr17" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr18" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr17" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=47 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr18" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr19" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr20" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr19" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=49 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr20" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr1" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr2" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr1" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Templar" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=48 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr2" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Templar" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr3" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr4" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr3" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Templar" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=50 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start139Nr4" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Templar" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr21" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr22" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr21" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=52 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr22" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr23" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr24" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr23" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=53 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr24" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr25" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr26" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr25" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=54 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr26" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr27" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr28" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr27" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=55 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr28" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr29" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr30" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr29" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=56 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr30" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr31" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr32" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Basic Temple Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr31" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=57 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Lev8Start123Nr32" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Acolyte" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 
@@ -355,14 +355,14 @@ SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=
 SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Mean Bone Crusher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SpecialForce: Type=751 X=38 Y=11 Fixed=0 Marker=11 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="751DestructorBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Vile Sniper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-Sp**ecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-Sp**ecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-Sp**ecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Sp**ecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Sp**ecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+Sp**ecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=21 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=329 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=302 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 Sp**ecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 Sp**ecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
@@ -709,10 +709,10 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Novice Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Novice Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Novice Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Novice Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Missing Semicolon" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Undeclared Varable" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Segmentation Fault" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Buffer Overflow" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 
@@ -727,10 +727,10 @@ Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
 
-SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Master Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=615 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Master Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=629 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Master Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=711 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Master Arena Lurker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=598 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Melissa.I" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=615 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="ILOVEYOU" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=629 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="W32.YourDoom" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=711 X=38 Y=11 Fixed=0 Marker=4 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="CIH.1103" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 
