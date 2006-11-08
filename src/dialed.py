@@ -1,4 +1,6 @@
 #!/usr/bin/python
+# Note: This was my first serious program ever. It is ugly.
+# I will rewrite it soon.
 
 import sys
 import readline
@@ -184,39 +186,52 @@ def whatisit(current) :
       what = "tuxtalk.s"
       meat =  str(file.readline(current))[14:-2]
 
-    elif unknown == "OnCondit" : #Might be a linked node or a goto...
-        what = "goto"               #Welcome to hell my friends. This will hurt a bit. This is a goto.
-        meat = ['', '', '']
-        character=''
-        while character != "\"" :
-          character = file.read(current, 1)
-        character = ''
-        while character != "\"" :
-          character = file.read(current, 1)
-          if character == "\"" :
-            file.read(current, 1)
-            break
-          meat[0] = meat[0] + character
-        character=''
-        while character != "=" :
-          character = file.read(current, 1)
-        while character != " " :
-          character = file.read(current, 1)
-          if character == " " :
-            file.read(current, 1)
-            break
-          meat[1] = meat[1] + character
-        character=''
-        while character != "=" :
-          character = file.read(current, 1)
-        while character != "\n" :
-          character = file.read(current, 1)
-          if character == "\n" :
-            break
-          meat[2] = meat[2] + character
-        if meat[1] == meat[2]:
-          what = "linked"
-    elif unknown == "DoSometh" :
+    elif unknown == "OnCondit" : #Might be a linked node or a goto. Note: Linked nodes in this style are on the way out.
+      what = "goto"               #Welcome to hell my friends. This will hurt a bit. This is a goto.
+      meat = ['', '', '']
+      character=''
+      while character != "\"" :
+        character = file.read(current, 1)
+      character = ''
+      while character != "\"" :
+        character = file.read(current, 1)
+        if character == "\"" :
+          file.read(current, 1)
+          break
+        meat[0] = meat[0] + character
+      character=''
+      while character != "=" :
+        character = file.read(current, 1)
+      while character != " " :
+        character = file.read(current, 1)
+        if character == " " :
+          file.read(current, 1)
+          break
+        meat[1] = meat[1] + character
+      character=''
+      while character != "=" :
+        character = file.read(current, 1)
+      while character != "\n" :
+        character = file.read(current, 1)
+        if character == "\n" :
+          break
+        meat[2] = meat[2] + character
+      if meat[1] == meat[2]:
+        what = "linked"
+    elif unknown == "LinkedTo": # The new style linked node.
+      meat = ['', '', '']
+      character = ''
+      what = "linked"
+      while character != ":":
+        character = file.read(current, 1)
+      while character != "\n":
+        character = file.read(current, 1)
+        if character == "\n":
+          break
+        meat[1] = meat[1] + character
+      meat[0] = "Void"
+      meat[2] = meat[1]
+    elif unknown == "DoSometh":
       what = "extra"
       meat =  str(file.readline(current))[18:-2]
     else :                    
@@ -331,7 +346,7 @@ def raw(node):
     elif something[0] == "goto" :
       print 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][2]
     elif something[0] == "linked" :
-      print 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][1]
+      print 'LinkedTo:' + something[1][1]
     elif something[0] == "extra" :
       print 'DoSomethingExtra="' + something[1] + '"'
 
@@ -424,7 +439,7 @@ Beginning of new chat dialog for character="XXXXX"
       elif something[0] == "goto" :
         file.write(d, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][2] + "\n")
       elif something[0] == "linked" :
-        file.write(d, 'OnCondition="' + something[1][0] + '" JumpToOption=' + something[1][1] + ' ElseGoto=' + something[1][1] + "\n")
+        file.write(d, 'LinkedTo:' + something[1][1] + "\n")
       elif something[0] == "extra" :
         file.write(d, 'DoSomethingExtra="' + something[1] + '"' + "\n")
     file.write(d, "\n----------------------------------------------------------------------\n\n")
@@ -642,10 +657,12 @@ def newgoto(node):
   readline.add_history("PointsToDistributeAtLeast")
   readline.add_history("GoldIsLessThan:")
   readline.add_history("MeleeSkillLesserThan:")
-  readline.add_history("CookieIsPlante")
+  readline.add_history("CookieIsPlanted:")
   readline.add_history("MissionAssigned:")
   readline.add_history("HaveItemWithCode:")
   readline.add_history("OldTownMissionScoreAtLeast:")
+  readline.add_history("False:")
+  readline.add_history("True:")
   condition = raw_input("Condition? ")
   readline.clear_history()
   truth = str(int(raw_input("On true to? ")))
@@ -748,6 +765,7 @@ def addextra(node):
   readline.add_history("ForceBotRespawnOnLevel:")
   readline.add_history("CompletelyHealTux")
   readline.add_history("OpenQuestDiaryEntry:")
+  readline.add_history("DropDead")
   readline.add_history("EndDialog")
   newextra = raw_input(">> ")
   x = 0
