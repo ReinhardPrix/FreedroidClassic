@@ -1146,6 +1146,7 @@ delete_one_dialog_option ( int i , int FirstInitialisation )
     ChatRoster [ i ] . on_goto_condition = "";
     ChatRoster [ i ] . on_goto_first_target = (-1);
     ChatRoster [ i ] . on_goto_second_target = (-1);
+    ChatRoster [ i ] . link_target = (0);
     ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start = FALSE ;
     
     for ( j = 0 ; j < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; j++ )
