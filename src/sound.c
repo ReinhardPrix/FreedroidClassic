@@ -1,5 +1,6 @@
 /* 
  *
+     mod 2006 Arvid Picciani
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
@@ -1426,14 +1427,31 @@ BulletReflectedSound (void)
  *
  *
  * ---------------------------------------------------------------------- */
+
+
+
+
+
+
+void play_sample_using_WAV_cache_v( char*  , int  , int , int  ) ;
+
+//aep: wrapper for the new play_sample_using_WAV_cache_v
+void 
+play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
+	{
+	play_sample_using_WAV_cache_v(SoundSampleFileName , With_Waiting , no_double_catching, 1.0 );
+	}
+
 //----------------------------------------------------------------------
 // This function should play a sound sample, that is NOT needed within
 // the action part of the game but only in menus or dialogs and can 
 // therefore be loaded and dumped on demand while the other sound samples
 // for the action parts of the game will be kept in memory all the time.
 // ----------------------------------------------------------------------
+
+//aep: implements volume now volume must be a double from 0 to 1. thats not my idea! go to JP, kill him!
 void
-play_sample_using_WAV_cache( char* SoundSampleFileName , int With_Waiting , int no_double_catching ) 
+play_sample_using_WAV_cache_v( char* SoundSampleFileName , int With_Waiting , int no_double_catching, double volume ) 
 {
 #ifdef HAVE_LIBSDL_MIXER
   int Newest_Sound_Channel=0;
@@ -1512,7 +1530,7 @@ This should not happen for samples that are supposed to be cached...",
       // for sound effects right now...
       //
       Mix_VolumeChunk( dynamic_WAV_cache [ next_free_position_in_cache ] , 
-		       (int) rintf( GameConfig.Current_Sound_FX_Volume * MIX_MAX_VOLUME ) );
+		       (int) rintf(MIX_MAX_VOLUME * volume * GameConfig.Current_Sound_FX_Volume) );  //aep
 
       //--------------------
       // We note the position of the sound file to be played
@@ -1539,6 +1557,17 @@ ALERT!  Ran out of space in the dynamic wav sample cache!  Cache size too small?
 				     PLEASE_INFORM, IS_FATAL );
 	}
     }
+
+
+
+
+
+
+
+
+
+
+
   
   //--------------------
   // Now we try to play the sound file that has just been successfully
