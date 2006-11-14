@@ -1432,8 +1432,10 @@ BulletReflectedSound (void)
 
 
 
+//aep: explicit decalration
+// void play_sample_using_WAV_cache_v( char*  , int  , int , int  ) ;
 
-void play_sample_using_WAV_cache_v( char*  , int  , int , int  ) ;
+
 
 //aep: wrapper for the new play_sample_using_WAV_cache_v
 void 
