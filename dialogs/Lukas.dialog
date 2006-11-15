@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=144  PositionY=132  
 Subtitle="A newcomer! Great! We can always use more people. Welcome to the Red Guard! I'm Lukas. I'm in charge of our little armory here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,7 +68,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=361  PositionY=133  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

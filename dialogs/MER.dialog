@@ -1,9 +1,5 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2003, 2004 Johannes Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -20,30 +16,22 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-
-This is the 'Richard' (RMS) character.  Currently he's positioned right inside the guardhouse.  
-
-* He is sort of a chief of this liberation movement.  Alas, he doesn't have a mission to assign to the player yet, but instead he'll inform the player, that he's reached the end of the current FreedroidRPG story line.
-* He will also explain some basics about the ideas of the Free Software Movement, of course in very basic terms, since this game is also intended for people never having heard of 'Linux' or Free Software and don't know what 'Programming' is.
-
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=121  PositionY=241  
 Subtitle="Welcome them!  I'm called MER.  My dialog isn't done though."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -53,11 +41,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_Ill_Be_Back_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=523  PositionY=231  
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

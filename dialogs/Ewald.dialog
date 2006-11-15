@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=44  PositionY=157  
 Subtitle="Hey! I'm Ewald. I run this joint. Want something to drink?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -126,7 +126,7 @@ New Option Nr=99  OptionText=" See you later."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=338  PositionY=144  
 Subtitle="Goodbye and remember: My bar is always open."
-ReplySample="Tux_See_You_Later_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

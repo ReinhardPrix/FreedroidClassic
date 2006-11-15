@@ -31,12 +31,12 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=157  PositionY=219  
 Subtitle="Really! I'm not living here either. I'm just on vacation. "
-ReplySample="PEN_Really_Im_Not_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Normally I'm a fighter among the ranks of the rebel army. But now I try to relax."
-ReplySample="PEN_Normally_Im_A_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -44,10 +44,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" Do you also train fighters?"
-OptionSample="Tux_PEN_Do_You_Also_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=265  PositionY=236  
 Subtitle="Well, I don't do that for a living, but I certainly could. But not for free."
-ReplySample="PEN_Well_I_Dont_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -55,18 +55,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText=" Can you bring me in contact with the resistance?"
-OptionSample="Tux_PEN_Can_You_Bring_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=257  PositionY=132  
 Subtitle="I'm not entitled to even talk about that myself. Talk to Chandra."
-ReplySample="PEN_Im_Not_Entitled_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="When he says you can be trusted, I will take you with me when I return to the rebels."
-ReplySample="PEN_When_He_Says_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=261  PositionY=316  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

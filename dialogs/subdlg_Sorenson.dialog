@@ -1,10 +1,5 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -21,20 +16,16 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
@@ -70,7 +61,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText=" Improve spellcasting ability (cost 5 training points, 100 cash) "
-OptionSample="Tux_SOR_I_Want_Learn_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=311  PositionY=146  
 ChangeOption=5 ChangeToValue=0
 OnCondition="GoldIsLessThan:100" JumpToOption=10 ElseGoto=11
@@ -82,7 +73,7 @@ New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=509  PositionY=272  
 Subtitle="The force-capacity of your mind has risen considerably."
-ReplySample="SOR_The_ForceCapacity_Of_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="AddBaseMagic:1"
@@ -94,9 +85,9 @@ New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=404  PositionY=363  
 Subtitle="You don't have enough experience. I can't teach you anything more right now."
-ReplySample="SOR_You_Dont_Have_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="First collect more experience. Then we can go on."
-ReplySample="SOR_First_Collect_More_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -106,7 +97,7 @@ New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=522  PositionY=191  
 Subtitle="The force-capacity of your mind has risen considerably now."
-ReplySample="SOR_The_ForceCapacity_Of_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"
 DoSomethingExtra="AddBaseMagic:5"
@@ -118,7 +109,7 @@ New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=520  PositionY=137  
 Subtitle="You don't haven enough bucks on you!  Come back when you have the money."
-ReplySample="SOR_You_Dont_Money_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -137,11 +128,11 @@ New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=539  PositionY=73  
 Subtitle="The ability to cast spells is very complicated, and best transfered directly to you."
-ReplySample="SOR_The_Ability_To_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We'll use magic to transfer the power. Just a moment... and alright, it's done."
-ReplySample="SOR_Just_A_Moment_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Your spellcasting ability has improved a lot. Come back when you want to learn more."
-ReplySample="SOR_Your_Spellcasting_Ability_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"
 DoSomethingExtra="SubtractGold:100"
@@ -159,4 +150,3 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

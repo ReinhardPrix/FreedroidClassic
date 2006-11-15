@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" Just taking a look around."
-OptionSample="Guards/Tux_just_taking_a_look_around.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=33  PositionY=33  
 Subtitle="Oh, great. Another curious one."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -66,7 +66,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" I'd like to get into town."
-OptionSample="Guards/Tux_Id_like_to_get_into_town.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=32  PositionY=383  
 Subtitle="Funny, exactly the same could be said about all of the crazy bots out there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -81,7 +81,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText=" I'm here to assassinate your leader and you won't stop me!"
-OptionSample="Guards/Tux_Im_here_to_assassinate.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=369  PositionY=382  
 Subtitle="Ok, Linarian! You asked for it! I don't like penguins anyway!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -98,7 +98,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" I'll be going then."
-OptionSample="Guards/Tux_Ill_be_going_then.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=369  PositionY=32  
 Subtitle="Mhmmm."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

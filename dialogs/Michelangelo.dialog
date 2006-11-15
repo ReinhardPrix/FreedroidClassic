@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Michelangelo/Tux_hi_im_new.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=718  PositionY=238  
 Subtitle="Hello. I'm Michelangelo. I haven't been for here for long either."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=8  OptionText=" Now about the reward you promised me..."
-OptionSample="Michelangelo/Tux_now_about_the.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=485  
 Subtitle="Yes, I know I said I'd give you lots of food. But for that I must cook something first."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=10  OptionText=" How is it going?"
-OptionSample="Michelangelo/Tux_how_is_it.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=719  PositionY=160  
 Subtitle="Don't ask."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -222,7 +222,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Well, that is all. Here is the junk that you wanted. Enjoy."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=27 ElseGoto=27
+LinkedTo:27
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -233,7 +233,7 @@ PositionX=882  PositionY=325
 Subtitle="Oh yes. You were warned, so don't blame me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=27 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=28 ElseGoto=28
+LinkedTo:28
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -416,7 +416,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" I'll be going then."
-OptionSample="Michelangelo/Tux_ill_be_going.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=640  PositionY=162  
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

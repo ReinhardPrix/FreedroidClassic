@@ -1,10 +1,5 @@
-
+% -*- mode: flyspell; mode: fill -*-
 ----------------------------------------------------------------------
- *
- *   Copyright (c) 1994, 2002 Johannes Prix
- *   Copyright (c) 1994, 2002 Reinhard Prix
- *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -21,31 +16,22 @@
  *  along with Freedroid; see the file COPYING. If not, write to the 
  *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *  MA  02111-1307  USA
- *
 ----------------------------------------------------------------------
 
-This file was generated using the FreedroidRPG dialog editor.
-If you have questions concerning FreedroidRPG, please send mail to:
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
 
 freedroid-discussion@lists.sourceforge.net
 
 BEGIN OF AUTORS NOTES
 
-You can use this text field to make some notes on anything.  These notes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-
-
-
-
-
-END OF AUTORS NOTES
+END OF AUTORS NOTES 
 
 
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi!  I'm new here. "
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=82  PositionY=125  
 Subtitle="Hello!  I'm Julie.  I'm in charge of the guilds library."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -108,7 +94,7 @@ New Option Nr=99  OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=158  PositionY=301  
 Subtitle="See you later."
-ReplySample="Tux_See_You_Later_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
@@ -118,4 +104,3 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 End of chat dialog for character="XXXXX"
-

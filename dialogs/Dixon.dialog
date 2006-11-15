@@ -31,10 +31,10 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Dixon/Tux_hi_im_new.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=890  PositionY=96  
 Subtitle="Hello and welcome. I'm Dixon, the chief engineer of the Red Guard technical division."
-ReplySample="Dixon/DIX_hello_and_welcome.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=19 ChangeToValue=1
@@ -149,7 +149,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Now, what are your skills? Where do you think you could be the most useful?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=22 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=23 ElseGoto=23
+LinkedTo:23
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -160,7 +160,7 @@ PositionX=679  PositionY=173
 Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything like that? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=24 ElseGoto=24
+LinkedTo:24
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -261,7 +261,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=29 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=32 ElseGoto=32
+LinkedTo:32
 DoSomethingExtra="PlantCookie:singularity_dead"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -322,7 +322,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Erm... And aren't you being too agressive? Maybe they do not wish us harm..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=33 ElseGoto=33
+LinkedTo:33
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

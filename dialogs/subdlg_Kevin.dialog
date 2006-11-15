@@ -44,7 +44,7 @@ New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=329  PositionY=121  
 Subtitle="You don't have enough cash cheapskate. Come back when you can afford to pay me."
-ReplySample=""
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

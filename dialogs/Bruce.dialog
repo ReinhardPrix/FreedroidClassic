@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=133  
 Subtitle="Good day. I am Bruce."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -225,7 +225,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" I'll be going then."
-OptionSample="Tux_Ill_Be_Back_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=215  PositionY=359  
 Subtitle="Good. I need sleep."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

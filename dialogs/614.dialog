@@ -31,10 +31,10 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Who are you? "
-OptionSample="OldTown614Guard/Tux_who_are_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=98  PositionY=280  
 Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicolson company."
-ReplySample="OldTown614Guard/614_i_am_a.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -42,54 +42,54 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" Have you detected any hostile bot activity?"
-OptionSample="OldTown614Guard/Tux_have_you_detected.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=204  
 Subtitle="No. The hostiles have not shown up within the last 24 hours."
-ReplySample="OldTown614Guard/614_no_the_ms.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" What can you tell me about the 614 type? "
-OptionSample="OldTown614Guard/Tux_what_can_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=96  PositionY=134  
 Subtitle="The official manual classifies the 614 as a low security droid."
-ReplySample="OldTown614Guard/614_the_official_manual.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It was mainly used within ships to protect certain areas from intruders."
-ReplySample="OldTown614Guard/614_it_is_mainly.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It is considered an old but reliable device."
-ReplySample="OldTown614Guard/614_it_is_considered.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="So don't worry. I'm still in pretty good shape."
-ReplySample="OldTown614Guard/614_but_dont_worry.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText=" What are your orders?"
-OptionSample="OldTown614Guard/Tux_what_are_your.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=71  
 Subtitle="My orders are to protect the living beings in this camp from attacks by hostile bots."
-ReplySample="OldTown614Guard/614_my_orders_are.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This has top priority. There are no other priorities."
-ReplySample="OldTown614Guard/614_this_has_top.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=4  OptionText=" Why are you not hostile as all the other bots?"
-OptionSample="OldTown614Guard/Tux_why_are_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=223  PositionY=270  
 Subtitle="I belong to a an older generation of bots, running a custom-made security guard operating system."
-ReplySample="OldTown614Guard/614_i_belong_to.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="None of the bots of this generation were affected by the proceedings that led to bots attacking, generally known as the Great Assault."
-ReplySample="OldTown614Guard/614_none_of_the.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Even though discontinued from Nicholson Company long ago, today, some people have picked up the work and are even trying to improve the operating system running on my series."
-ReplySample="OldTown614Guard/614_even_though_discontinued.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Don't forget to buy products from Nicholson Company. They are the best."
-ReplySample="OldTown614Guard/614_dont_forget_to.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -97,10 +97,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText=" Who is working on that?"
-OptionSample="OldTown614Guard/Tux_who_is_working.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=332  PositionY=264  
 Subtitle="Mostly the RMS and his colleagues."
-ReplySample="OldTown614Guard/614_mostly_the_rms.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -110,7 +110,7 @@ New Option Nr=99  OptionText=" See you later."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=438  PositionY=268  
 Subtitle=" Resuming guard program."
-ReplySample="OldTown614Guard/Tux_see_you_later.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

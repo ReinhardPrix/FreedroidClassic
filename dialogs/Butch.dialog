@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=57  PositionY=350  
 Subtitle="Greetings! I'm Butch, the arena master. Did you come here to fight? That's great!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -74,20 +74,20 @@ New Option Nr=3  OptionText=" I'm sorry but I see no arena. Where is it?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=234  PositionY=261  
 Subtitle="Of course you can't see it. The arena is deep under ground."
-ReplySample="DIX_Great_I_Appreciate_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We had some concerns of citizens that one of the bots might break free at night and kill people."
-ReplySample="DIX_Great_I_Appreciate_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We had to find this new arrangement, with a teleporter connection down and back up."
-ReplySample="DIX_Great_I_Appreciate_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Well, maybe that wasn't so bad an idea after all."
-ReplySample="DIX_Great_I_Appreciate_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_See_You_Later_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=380  PositionY=385  
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

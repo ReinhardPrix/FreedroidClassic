@@ -31,10 +31,10 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Tux_Hi_Im_New_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=173  PositionY=239  
 Subtitle="Welcome to this camp! I'm Ms. Stone. I run this shop."
-ReplySample="STO_Welcome_To_This_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
@@ -44,13 +44,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" I would like to trade with you."
-OptionSample="Tux_STO_I_Would_Like_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=276  PositionY=238  
 Subtitle="Good! Here is the selection of items I have for sale."
-ReplySample="STO_Good_Here_Is_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Stone"
-OnCondition="GoldIsLessThan:1" JumpToOption=5 ElseGoto=5
+LinkedTo:5
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -116,7 +116,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=450  PositionY=238  
 ChangeOption=6 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=14 ElseGoto=14
+LinkedTo:14
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -126,7 +126,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=450  PositionY=149  
 ChangeOption=7 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
-OnCondition="GoldIsLessThan:1" JumpToOption=14 ElseGoto=14
+LinkedTo:14
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -135,7 +135,7 @@ New Option Nr=8  OptionText=" If things are so bad right now, why don't you leav
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=277  PositionY=63  
 ChangeOption=8 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=9 ElseGoto=9
+LinkedTo:9
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -223,7 +223,7 @@ Subtitle="I couldn't get myself to look at my finance logs for a while now. I gu
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="PlantCookie:Helping_Stone:"
-OnCondition="GoldIsLessThan:1" JumpToOption=19 ElseGoto=19
+LinkedTo:19
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -316,10 +316,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" See you later."
-OptionSample="Tux_See_You_Later_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=447  PositionY=63  
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
-ReplySample="STO_Goodbye_Love_0.wav"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -77,7 +77,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END "
-OptionSample="Tux_Goodbye_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=351  PositionY=231  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

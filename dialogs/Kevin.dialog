@@ -31,12 +31,12 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi, I'm new here."
-OptionSample="Kevin/Tux_hi_im_new.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=841  PositionY=147  
 Subtitle="Hi, I'm Kevin. I'm a computer security expert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
-OnCondition="GoldIsLessThan:1" JumpToOption=20 ElseGoto=20
+LinkedTo:20
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText=" What can you teach me about hacking?"
-OptionSample="Kevin/Tux_what_can_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=656  PositionY=147  
 ChangeOption=3 ChangeToValue=1
 OnCondition="MissionComplete:6" JumpToOption=4 ElseGoto=1
@@ -109,7 +109,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText=" I'll see after the energy supply now."
-OptionSample="Kevin/Tux_ill_see_after.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=542  PositionY=327  
 Subtitle="That's great. You can't miss it. It's not hard to find. Enter my garden and find the lower station entrance there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -127,7 +127,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=7  OptionText=" I'm sorry, but I don't think there's anything I could do about that energy supply."
-OptionSample="Kevin/Tux_im_sorry_but.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=656  PositionY=410  
 Subtitle="Too bad. Now get out of my sight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -157,7 +157,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=10  OptionText=" How about some reward for securing your energy supply area?"
-OptionSample="Kevin/Tux_how_about_some.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=160  PositionY=237  
 ChangeOption=10 ChangeToValue=0
 OnCondition="CookieIsPlanted:kevin_reward1_given:" JumpToOption=12 ElseGoto=13
@@ -232,7 +232,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=16  OptionText=" Maybe I can help somehow to find a suitable cluster."
-OptionSample="Kevin/Tux_maybe_i_can.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=460  PositionY=496  
 ChangeOption=16 ChangeToValue=0
 OnCondition="MissionAssigned:7" JumpToOption=17 ElseGoto=15
@@ -253,7 +253,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=18  OptionText=" About that project you said you have running..."
-OptionSample="Kevin/Tux_about_that_project.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=386  PositionY=241  
 ChangeOption=18 ChangeToValue=0
 OnCondition="MissionComplete:7" JumpToOption=19 ElseGoto=14
@@ -285,7 +285,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" I'll be off then."
-OptionSample="Kevin/Tux_ill_be_off.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=530  PositionY=241  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

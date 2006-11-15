@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText=" Where am I?"
-OptionSample="Francis/Tux_where_am_i.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=262  
 Subtitle="The locals call the place Temple Wood. We are located not too far away from a mining town where we have made a stand against the damn contraptions."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -269,7 +269,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" Thanks for the help. I'll be going now."
-OptionSample="Francis/Tux_thanks_for_the_help.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=244  PositionY=118  
 Subtitle="I am glad I could help you. You should be careful around here. Best head straight for our town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

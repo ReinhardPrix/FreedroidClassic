@@ -90,7 +90,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText="I'll be going then."
-OptionSample="Tux_Ill_Be_Back_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=407  PositionY=259  
 Subtitle="You better be."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

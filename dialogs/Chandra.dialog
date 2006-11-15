@@ -31,7 +31,7 @@ END OF AUTORS NOTES
 Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
-OptionSample="Chandra/Tux_hi_im_new.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=194  PositionY=162  
 Subtitle="Welcome. I am Chandra, the local sage in this old town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -44,7 +44,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=1  OptionText=" What can you tell me about this place?"
-OptionSample="Chandra/Tux_what_can_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=161  
 Subtitle="This small town existed since before the Great Assault. It once was a moderatly successful mining community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=2  OptionText=" Where can I get better equipment?"
-OptionSample="Chandra/Tux_where_can_i.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=109  PositionY=163  
 Subtitle="The shop is to the east. Ms. Stone always has a good range of equipment there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,7 +68,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=3  OptionText=" So what's so strange about the attack?"
-OptionSample="Chandra/Tux_so_whats_so.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=523  PositionY=162  
 Subtitle="It seems that the bots are not intent on merly killing humans. It has been reported, that they have been transporting away human corpses in automated spaceships."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -84,7 +84,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=4  OptionText=" What do you know about the hostile bots?"
-OptionSample="Chandra/Tux_what_do_you.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=162  
 Subtitle="The phenomenon of hostile bots has occupied my mind for quite some time.  There are some strange irrationalities in this behaviour, that I cannot explain."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -120,7 +120,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=6  OptionText=" I want to leave this place."
-OptionSample="Chandra/Tux_i_want_to.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=251  
 Subtitle="There's only one gate out of this sector. You can leave, if our leader grants you passage. Talk to his manager. He will help you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -131,7 +131,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=7  OptionText=" No, I meant I would like to leave this world."
-OptionSample="Chandra/Tux_no_i_meant.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=335  PositionY=251  
 Subtitle="I don't know a way how you could do that. There are no transports going any more from here. You might have more luck in one of the cities to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -161,7 +161,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=9  OptionText=" Do you think I could join the guard of this town?"
-OptionSample="Chandra/Tux_do_you_think.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=252  
 Subtitle="The Red Guard? Unlikely. You'd have to establish a reputation before and demonstrate that you can fix things."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -191,7 +191,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" END"
-OptionSample="Chandra/Tux_i_got_to.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=198  PositionY=102  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

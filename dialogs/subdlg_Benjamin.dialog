@@ -41,7 +41,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText=" Improve ranged weapon skill (cost 5 training points, 100 cash) "
-OptionSample="Tux_SOR_I_Want_Learn_0.wav"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=477  PositionY=203  
 OnCondition="GoldIsLessThan:100" JumpToOption=10 ElseGoto=11
 AlwaysExecuteThisOptionPriorToDialogStart="no"
