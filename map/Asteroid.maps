@@ -7972,7 +7972,7 @@ ob_type=1 ob_x=35.00 ob_y=24.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 ob_de=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 ob_de=2 
-ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 ob_de=5 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=27.00 ob_na=-1 ob_de=-1 
@@ -7981,14 +7981,14 @@ ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=49.42 ob_y=26.58 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=38.87 ob_y=27.27 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 ob_de=3 
-ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 ob_de=4 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 ob_de=-1 
@@ -8160,7 +8160,6 @@ ob_type=114 ob_x=72.11 ob_y=24.01 ob_na=-1 ob_de=-1
 ob_type=114 ob_x=65.31 ob_y=21.84 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=66.64 ob_y=30.45 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=76.15 ob_y=14.03 ob_na=-1 ob_de=-1 
-ob_type=115 ob_x=73.83 ob_y=56.37 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=72.24 ob_y=49.60 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=72.54 ob_y=69.82 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=74.81 ob_y=61.74 ob_na=-1 ob_de=-1 
@@ -8298,7 +8297,6 @@ ob_type=285 ob_x=38.02 ob_y=20.50 ob_na=-1 ob_de=-1
 ob_type=115 ob_x=80.67 ob_y=45.40 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=82.66 ob_y=52.14 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=79.76 ob_y=61.15 ob_na=-1 ob_de=-1 
-ob_type=115 ob_x=79.34 ob_y=71.51 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=79.86 ob_y=66.14 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=80.09 ob_y=14.27 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=79.50 ob_y=17.65 ob_na=-1 ob_de=-1 
@@ -8440,7 +8438,7 @@ ob_type=52 ob_x=39.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=88.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=88.50 ob_na=-1 ob_de=-1 
-ob_type=25 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=24 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=86.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=88.50 ob_na=-1 ob_de=-1 
@@ -8489,7 +8487,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8505,8 +8503,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=19 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=16 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -8668,7 +8666,6 @@ ob_type=49 ob_x=22.50 ob_y=89.50 ob_na=-1 ob_de=8
 ob_type=320 ob_x=27.50 ob_y=72.10 ob_na=-1 ob_de=-1 
 ob_type=320 ob_x=27.16 ob_y=73.36 ob_na=-1 ob_de=-1 
 ob_type=320 ob_x=25.04 ob_y=71.98 ob_na=-1 ob_de=-1 
-ob_type=316 ob_x=38.49 ob_y=60.20 ob_na=-1 ob_de=-1 
 ob_type=313 ob_x=37.08 ob_y=50.96 ob_na=-1 ob_de=-1 
 ob_type=59 ob_x=6.53 ob_y=64.50 ob_na=-1 ob_de=-1 
 ob_type=59 ob_x=6.53 ob_y=66.47 ob_na=-1 ob_de=-1 
@@ -8762,10 +8759,7 @@ ob_type=113 ob_x=82.73 ob_y=81.53 ob_na=-1 ob_de=-1
 ob_type=113 ob_x=83.13 ob_y=79.73 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=83.98 ob_y=80.05 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=82.71 ob_y=77.26 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=82.44 ob_y=75.87 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=83.15 ob_y=75.94 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=81.42 ob_y=71.90 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=82.75 ob_y=70.82 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=82.41 ob_y=66.93 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=84.56 ob_y=67.90 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=84.94 ob_y=66.80 ob_na=-1 ob_de=-1 
@@ -8785,11 +8779,7 @@ ob_type=115 ob_x=84.78 ob_y=43.27 ob_na=-1 ob_de=-1
 ob_type=115 ob_x=83.42 ob_y=38.58 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=84.39 ob_y=39.15 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=83.71 ob_y=34.47 ob_na=-1 ob_de=-1 
-ob_type=317 ob_x=76.15 ob_y=68.05 ob_na=-1 ob_de=-1 
-ob_type=313 ob_x=76.56 ob_y=68.39 ob_na=-1 ob_de=-1 
 ob_type=313 ob_x=77.31 ob_y=68.13 ob_na=-1 ob_de=-1 
-ob_type=318 ob_x=76.33 ob_y=68.72 ob_na=-1 ob_de=-1 
-ob_type=314 ob_x=76.04 ob_y=68.66 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=85.39 ob_y=70.90 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=85.69 ob_y=72.45 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=84.71 ob_y=72.71 ob_na=-1 ob_de=-1 
@@ -8999,27 +8989,20 @@ ob_type=313 ob_x=38.18 ob_y=62.74 ob_na=-1 ob_de=-1
 ob_type=320 ob_x=38.17 ob_y=64.12 ob_na=-1 ob_de=-1 
 ob_type=315 ob_x=35.61 ob_y=63.22 ob_na=-1 ob_de=-1 
 ob_type=313 ob_x=35.69 ob_y=63.58 ob_na=-1 ob_de=-1 
-ob_type=316 ob_x=35.98 ob_y=62.39 ob_na=-1 ob_de=-1 
-ob_type=318 ob_x=38.32 ob_y=63.57 ob_na=-1 ob_de=-1 
-ob_type=313 ob_x=37.16 ob_y=64.32 ob_na=-1 ob_de=-1 
-ob_type=313 ob_x=37.91 ob_y=64.15 ob_na=-1 ob_de=-1 
-ob_type=319 ob_x=37.26 ob_y=62.33 ob_na=-1 ob_de=-1 
-ob_type=315 ob_x=37.03 ob_y=64.10 ob_na=-1 ob_de=-1 
-ob_type=313 ob_x=36.43 ob_y=64.15 ob_na=-1 ob_de=-1 
-ob_type=317 ob_x=37.49 ob_y=62.67 ob_na=-1 ob_de=-1 
 ob_type=314 ob_x=35.72 ob_y=63.60 ob_na=-1 ob_de=-1 
 ob_type=317 ob_x=40.07 ob_y=59.37 ob_na=-1 ob_de=-1 
-ob_type=314 ob_x=40.76 ob_y=60.04 ob_na=-1 ob_de=-1 
 ob_type=317 ob_x=39.99 ob_y=59.36 ob_na=-1 ob_de=-1 
-ob_type=318 ob_x=39.10 ob_y=61.05 ob_na=-1 ob_de=-1 
 ob_type=314 ob_x=34.89 ob_y=63.14 ob_na=-1 ob_de=-1 
 ob_type=314 ob_x=34.59 ob_y=64.70 ob_na=-1 ob_de=-1 
 ob_type=315 ob_x=35.51 ob_y=63.05 ob_na=-1 ob_de=-1 
 ob_type=313 ob_x=36.27 ob_y=63.67 ob_na=-1 ob_de=-1 
-ob_type=318 ob_x=32.24 ob_y=63.34 ob_na=-1 ob_de=-1 
-ob_type=320 ob_x=31.30 ob_y=63.13 ob_na=-1 ob_de=-1 
-ob_type=318 ob_x=32.28 ob_y=63.37 ob_na=-1 ob_de=-1 
 ob_type=316 ob_x=32.53 ob_y=63.74 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=35.83 ob_y=64.11 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=34.01 ob_y=63.95 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=35.09 ob_y=63.45 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=39.57 ob_y=54.79 ob_na=-1 ob_de=-1 
+ob_type=319 ob_x=38.03 ob_y=62.32 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=39.49 ob_y=62.91 ob_na=-1 ob_de=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9119,6 +9102,9 @@ New item: type=6  X=35.363293  Y=62.329144  AC=0  DoDamage=0  ModifyDamage=0  Ma
 New item: type=66  X=39.418022  Y=60.578568  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=8  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=10  X=39.600452  Y=54.815502  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 New item: type=6  X=40.068634  Y=57.301975  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=33  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
+New item: type=6  X=38.589722  Y=54.596672  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=25  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
+New item: type=34  X=32.557823  Y=63.932072  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=10  CurDur=5.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=5  StrBon=0  StrDex=4  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=0 
+New item: type=6  X=38.990768  Y=62.041576  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=21  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=92  X=41.500000  Y=17.250000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
