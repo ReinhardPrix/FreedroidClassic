@@ -206,6 +206,10 @@ ShowStartupPercentage ( int Percentage )
 	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 8 , 
 			  ( 205 ) * GameConfig . screen_height / 480 + 7 , "%d%%", Percentage ) ;
 	    break;
+	case 1280:
+	    PrintString ( Screen , ( 290 ) * GameConfig . screen_width / 640 + 11 , 
+			  ( 205 ) * GameConfig . screen_height / 480 + 10 , "%d%%", Percentage ) ;
+	    break;
 	default:
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
 The resolution found is none of\n\
@@ -1305,6 +1309,13 @@ ParseCommandLine (int argc, char *const argv[])
                             GameConfig . screen_height = 576 ;
                             DebugPrintf ( 1 , "\n%s(): Command line argument -r 4 recognized." , __FUNCTION__ );
                             break;
+			case 5: 
+                            command_line_override_for_screen_resolution = TRUE ;
+                            GameConfig . screen_width = 1280 ;
+                            GameConfig . screen_height = 800 ;
+                            DebugPrintf ( 1 , "\n%s(): Command line argument -r 4 recognized." , __FUNCTION__ );
+                            break;
+
 
 			default:
 			    fprintf( stderr, "\nresolution code received: %d" , resolution_code );
