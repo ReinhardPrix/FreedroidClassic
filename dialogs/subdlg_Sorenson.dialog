@@ -145,6 +145,7 @@ New Option Nr=99  OptionText=" BACK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=318  PositionY=425  
 ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
