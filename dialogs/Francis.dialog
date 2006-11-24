@@ -44,18 +44,27 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Where am I?"
+New Option Nr=2  OptionText=" Who am I?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=170  PositionY=262  
-Subtitle="The locals call the place Temple Wood. We are located not too far away from a mining town where we have made a stand against the damn contraptions."
+PositionX=83  PositionY=333  
+Subtitle="Oh dear. This is not good. Not good."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I am sorry to dissapoint, but my knowledge of geography is a bit lacking, I have no idea where in the world we are."
+Subtitle="*sigh* Long stasis sleep can cause neurological damage, and impact the memory. Looks like that is what happened here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Most people here have a German accent, so if I had to guess, I would say Europe."
+Subtitle="It will all come back to you in a few hours, but I guess I will make it easier for you if I say what I know."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=8 ChangeToValue=1
-ChangeOption=6 ChangeToValue=0
-ChangeOption=14 ChangeToValue=1
+Subtitle="You are a Linarian, a species not native to this planet. Twenty of you arrived here close to a century ago."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="There was a... misunderstanding of some sort and humans welcomed your expedition with blaster fire. A terrible mistake on our part."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="A few of you survived the slaughter and went into hiding and obscurity."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="During that time Linarians became known as helpers and heroes. Of course now most people think it all was just a fairy tale."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If the computer is not lying, then your name is Tux."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -102,27 +111,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Who am I?"
+New Option Nr=6  OptionText=" Where am I?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=83  PositionY=333  
-Subtitle="Oh dear. This is not good. Not good."
+PositionX=170  PositionY=262  
+Subtitle="The locals call the place Temple Wood. We are located not too far away from a mining town where we have made a stand against the damn contraptions."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="*sigh* Long stasis sleep can cause neurological damage, and impact the memory. Looks like that is what happened here."
+Subtitle="I am sorry to dissapoint, but my knowledge of geography is a bit lacking, I have no idea where in the world we are."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It will all come back to you in a few hours, but I guess I will make it easier for you if I say what I know."
+Subtitle="Most people here have a German accent, so if I had to guess, I would say Europe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You are a Linarian, a species not native to this planet. Twenty of you arrived here close to a century ago."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="There was a... misunderstanding of some sort and humans welcomed your expedition with blaster fire. A terrible mistake on our part."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="A few of you survived the slaughter and went into hiding and obscurity."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="During that time Linarians became known as helpers and heroes. Of course now most people think it all was just a fairy tale."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If the computer is not lying, then your name is Tux."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=0
-ChangeOption=7 ChangeToValue=1
+ChangeOption=8 ChangeToValue=1
+ChangeOption=6 ChangeToValue=0
+ChangeOption=14 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -232,7 +232,7 @@ Subtitle="All of the attacking bots are using a MegaSys operating system, so we 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Not suprisingly the bastards deny everything."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Of course because nearly every single bot is the world runs on that junk, the situation does not look pretty."
+Subtitle="Of course because nearly every single bot in the world runs on that junk, the situation does not look pretty."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
