@@ -710,7 +710,7 @@ Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
 
 SpecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Missing Semicolon" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Undeclared Varable" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Undeclared Variable" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SpecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Segmentation Fault" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SpecialForce: Type=249 X=38 Y=11 Fixed=0 Marker=3 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="NoviceArenaBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Buffer Overflow" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
