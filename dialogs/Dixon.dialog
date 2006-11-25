@@ -755,7 +755,7 @@ New Option Nr=90  OptionText="CHECK FOR SAVING SINGULARITY"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=90 ChangeToValue=0
-OnCondition="CookieIsPlanted:singularity_saved" JumpToOption=75 ElseGoto=80
+OnCondition="CookieIsPlanted:singularity_saved:" JumpToOption=75 ElseGoto=80
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
@@ -764,7 +764,7 @@ New Option Nr=95  OptionText="CHECK IF TALKED ALREADY"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=95 ChangeToValue=0
-OnCondition="CookieIsPlanted:dixon_saved_and_talked" JumpToOption=96 ElseGoto=80
+OnCondition="CookieIsPlanted:dixon_saved_and_talked:" JumpToOption=96 ElseGoto=80
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
