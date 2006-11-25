@@ -30,7 +30,7 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	colodefs.h itemdefs.h defs.h map.h vars.h ship.h takeover.h global.h \
 	proto.h struct.h system.h BFont.h assign_license_string.h \
 	SDL_rotozoom.c SDL_rotozoom.h open_gl.c mission.c chat.c light.c \
-	getopt.c getopt1.c getopt.h scandir.c scandir.h 
+	getopt.c getopt1.c getopt.h scandir.c scandir.h  sound.h sound_effects.c 
 
 DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
