@@ -36,6 +36,7 @@ PositionX=44  PositionY=157
 Subtitle="Hey! I'm Ewald. I run this joint. Want something to drink?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
+ChangeOption=13 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -118,6 +119,89 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText=" Ugh... Ahh... I like it. Give me some more of that."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Uh... Sure..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText=" Ahh... Really smooth. Give me some more of that."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Yeah, I thought you would like it. Here is more."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText=" Hmm... Lots of ice. Give me one more double water, but now without any ice."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="One double water coming up."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" MORE! I want more water!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Erm... Ok... Here, have some of my special, Water Colada."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=11 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText=" I am really thirsty! I want water."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well, you drank all my water, so you cannot have any more. There in none left."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I heard Linarians can drink a lot of water, but seven liters is a lot."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=11 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText=" MORE! MORE! MORE! I WANT MORE WATER. NOW!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Eh... I think you had enough... Maybe you should just go for a walk for now?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You have had everything that I had."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=12 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="And idea where I can find some entertainment here?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well... Erm... No."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="What the bots did not smash, the Red Guard taxed."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Fun is kinda dead right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
