@@ -448,8 +448,7 @@ InitAudio(void)
     int audio_rate = 22050;
     Uint16 audio_format = AUDIO_S16; 
     int audio_channels = 2;
-    //  int audio_buffers = 4096;
-    int audio_buffers = 2048;
+    int audio_buffers = 4096;
     
     DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
     
