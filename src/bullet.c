@@ -765,6 +765,7 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
     {
 	Me [ player_num ] . TextVisibleTime = 0 ;
 	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
+	DamageAllEquipment ( player_num ) ;
 	BulletReflectedSound ( ) ;
     }
     else
@@ -792,10 +793,6 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
 	// GotHitSound ();
 	tux_scream_sound ( );
     }
-    //--------------------
-    // NEW RULE:  All items equipped suffer damage when the influencer gets hit
-    //
-    DamageAllEquipment ( player_num ) ;
 }; // void apply_bullet_damage_to_player ( int player_num , int damage ) 
 
 /* ----------------------------------------------------------------------

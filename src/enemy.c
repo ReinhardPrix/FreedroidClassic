@@ -1962,8 +1962,11 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 		    else
 		    {
 			//--------------------
-			// If the bot missed, we do nothing...
+			// If the bot missed, the armor took the shot. Damage it.
 			//
+		        Me [ 0 ] . TextToBeDisplayed = "Armor, thanks." ;
+			DamageAllEquipment ( 0 ) ;
+
 		    }
 		    break;
 		    
