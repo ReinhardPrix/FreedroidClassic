@@ -2991,7 +2991,7 @@ handle_player_identification_command( int player_num )
     point CurPos;
     int Grabbed_InvPos = (-1) ;
     int SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
-
+    item * GrabbedItem = NULL;
     //--------------------
     // If the inventory sceen isn't open at all, then we can cancel
     // the whole operation right away
@@ -3005,49 +3005,47 @@ handle_player_identification_command( int player_num )
     CurPos . x = GetMousePos_x() ;
     CurPos . y = GetMousePos_y()  ;
     
-    //--------------------
-    // Here we know, that the identify skill is selected, therefore we try to 
-    // repair the item currently under the mouse cursor.
-    //
     if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
     {
 	Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
-	
-	DebugPrintf( 0 , "\nTrying to repair item at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
-	
 	Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	DebugPrintf( 0 , "\nTrying to repair inventory entry no.: %d." , Grabbed_InvPos );
-	
-	if ( Grabbed_InvPos == (-1) )
+	GrabbedItem = & Me [ 0 ] . Inventory [ Grabbed_InvPos ];
+    }
+
+    else
 	{
-	    // Nothing grabbed, so we need not do anything more here..
-	    DebugPrintf( 0 , "\nIdentifying in INVENTORY grid FAILED:  NO ITEM AT THIS POSITION FOUND!" );
+	if ( MouseCursorIsOnButton(WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . weapon_item;
+	if ( MouseCursorIsOnButton(DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . drive_item;
+	if ( MouseCursorIsOnButton(SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . shield_item;
+	if ( MouseCursorIsOnButton(ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . armour_item;
+	if ( MouseCursorIsOnButton(HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . special_item;
+	if ( MouseCursorIsOnButton(AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . aux1_item;
+	if ( MouseCursorIsOnButton(AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
+		GrabbedItem = & Me [ 0 ] . aux2_item;
+
 	}
-	else
+
+    if ( GrabbedItem != NULL )
 	{
-	    if ( Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified == TRUE )
+	    if ( GrabbedItem -> is_identified == TRUE )
 	    {
 		PlayOnceNeededSoundSample ( "../effects/is_already_indentif.wav" , FALSE , FALSE );
 	    }
 	    else
 	    {
-//		if ( Me [ 0 ] . mana >= SpellCost )
-//		{
-//		    Me [ 0 ] . mana -= SpellCost;
-		    Me [ 0 ] . Inventory [ Grabbed_InvPos ] . is_identified = TRUE ;
-		    Play_Spell_ForceToEnergy_Sound( );
-		    Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
-//		}
-//		else
-//		{
-//		    Me [ 0 ] . TextVisibleTime = 0;
-//		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-//		    Not_Enough_Mana_Sound(  );
-//		}
+                GrabbedItem -> is_identified = TRUE ;
+		Play_Spell_ForceToEnergy_Sound( );
+		Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
 	    }
 	}
-    }
+    
 }; // void handle_player_identification_command( int player_num )
 
 /* ----------------------------------------------------------------------
