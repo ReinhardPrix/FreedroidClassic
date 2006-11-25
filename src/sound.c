@@ -36,7 +36,6 @@ void OldMusicHasFinishedFadingOut ( void ){}
 
 	/**music*/
 void LoadAndFadeInBackgroundMusic ( void ) {}
-void OldMusicHasFinishedFadingOut ( void ) {}
 void SwitchBackgroundMusicTo ( char* filename_raw_parameter ){}
 
 	/**sample functions*/
