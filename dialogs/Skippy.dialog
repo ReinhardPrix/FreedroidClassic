@@ -33,13 +33,14 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=57  PositionY=221  
-Subtitle="Great! A newcomer! Welcome! I'm Skippy!"
+Subtitle="Great! A newcomer! Welcome! Welcome! I'm Skippy, and I'm your new best friend!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Since you are new, you might need some map making device? I got some for sale!"
+Subtitle="And as a special favour I'll sell you a mapping device for half-price!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I make them, you must know. Only the finest quality of course."
+Subtitle="What a GREAT offer! You're so lucky!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
@@ -63,13 +64,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=224  
 Subtitle="Oh, that's so simple. No need to activate anything at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just hold the device close to your head and it will break up into nanotechnological compartments that will enter your body."
+Subtitle="Just put that thing on your head, and the nanotechnological bots will enter your body."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They will merge with your eye and transmit any data to your brain using the optical nerves."
+Subtitle="They'll merge with your eyes and transmit data to your brain using the optical nerves. Nice, eh?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The map-making device will automatically collect data from within 7 meters of wherever you're going."
+Subtitle="Everything within 7 meters of you will be displayed on your retinas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It will be as if you see the data through your eye. (Use the Tab key to turn on/off background map display)."
+Subtitle="(Just press tab to see the automap.)"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -77,14 +78,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" You said you make those devices yourself? How can you do that?"
+New Option Nr=3  OptionText=" You said you make those things yourself? How do you do that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=154  PositionY=150  
-Subtitle="Oh, I've always been a geek. And I've managed to retrieve some plans from before the Great Assault."
+Subtitle="Oh, I've always been a geek. And I got blueprints from before the Great Assault."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Don't think you could order this from an automated factory any more."
+Subtitle="You can't order anything from a catalogue anymore."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The only source of these devices is here. It's me!"
+Subtitle="The only source of these gizmos is here. It's me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -96,19 +97,99 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=247  PositionY=299  
 Subtitle="No way, man, I guarantee it. Don't believe anything you might have heard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is a perfectly safe and tried technology. No risk at all, really!"
+Subtitle="This is a perfectly safe and tried technology. No risk at all! Really!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="There is no risk of your head being eaten by a nanotechnological nightmare, or anything funny like that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Trust me! I'm your best friend and I wouldn't lie to you! Never!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=321  PositionY=222  
-Subtitle="See you later."
+New Option Nr=5  OptionText=" I don't trust you."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT? But I'm your best friend! You must trust me!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+ChangeOption=5 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" I still do not trust you. You are selling junk to people."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT? Fine, you can forget about my great deals now! I don't want to trade with you anymore!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'm no longer your best friend. Go away, you dirty hoser!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+DoSomethingExtra="PlantCookie:skippy_angry"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Why are you so friendly?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Because you are my best friend!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I always take good care of my special buddies!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" You are friendly only to sell me your stuff, aren't you?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="No, never! I would never be so shallow!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am friendly because I like you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=90  OptionText="CHECK FOR SKIPPY ANGER"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=90 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=91  OptionText="YEAH, HE IS ANGRY."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="What? You again? I don't want you here, get out."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=91 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=92  OptionText="NO, HE IS NOT ANGRY"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=92 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=321  PositionY=222  
+Subtitle="Yes, we'll meet again, my friend, and I'll have other great deals for you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
