@@ -265,13 +265,19 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     
     if ( AlarmItem->current_duration < 5 )
     {
-	glPixelTransferf(GL_BLUE_SCALE, 0);
-	glPixelTransferf(GL_GREEN_SCALE, 0);
-	glPixelTransferf(GL_RED_SCALE, 1);
+	if(use_open_gl)
+		{
+		glPixelTransferf(GL_BLUE_SCALE, 0);
+		glPixelTransferf(GL_GREEN_SCALE, 0);
+		glPixelTransferf(GL_RED_SCALE, 1);
+		}
 	our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
-	glPixelTransferf(GL_BLUE_SCALE, 1);
-	glPixelTransferf(GL_GREEN_SCALE, 1);
-	glPixelTransferf(GL_RED_SCALE, 1);
+	if(use_open_gl)
+		{
+		glPixelTransferf(GL_BLUE_SCALE, 1);
+		glPixelTransferf(GL_GREEN_SCALE, 1);
+		glPixelTransferf(GL_RED_SCALE, 1);
+		}
 
     }
 }; // void ShowOneItemAlarm( item* AlarmItem )
