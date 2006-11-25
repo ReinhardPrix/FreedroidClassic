@@ -247,10 +247,11 @@ RestoreChatVariableToInitialValue( int PlayerNum )
     // The 'END' options should always be availabe for all dialogs
     // at the beginning.  THIS we know.
     //
-    for ( j = 0 ; j < MAX_PERSONS ; j++ )
+/*    for ( j = 0 ; j < MAX_PERSONS ; j++ )
     {
 	Me [ PlayerNum ] . Chat_Flags [ j ] [ END_ANSWER ] = 1 ;
     }
+*/
     
 }; // void RestoreChatVariableToInitialValue( int PlayerNum )
 
