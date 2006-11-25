@@ -1371,10 +1371,10 @@ DamageItem( item* CurItem )
 	 ( CurItem->max_duration != (-1) ) )
     {
 	if ( ! CurItem->damage ) 
-	    CurItem->current_duration -= 0.001 * MyRandom( 100 ) ;
+	    CurItem->current_duration -= 0.01 * MyRandom( 100 ) ;
 	else
 	{
-	    CurItem->current_duration -= 0.0003 * MyRandom( 100 ) ;
+	    CurItem->current_duration -= 0.003 * MyRandom( 100 ) ;
 	    DebugPrintf ( 1 , "\nDamaged item seems to be a weapon... lower damage done." );
 	}
 	
