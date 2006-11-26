@@ -1571,13 +1571,13 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . link_target ] = 0;
 		}
 
-	for ( i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
+/*	for ( i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
 		{
 		if(Me[0].Chat_Flags[ChatFlagsIndex][i] == 1)
 			fprintf(stderr, "Node %d is active\n", i);
 		else	fprintf(stderr, "Node %d is inactive\n", i);
 
-		}
+		}*/
         ChatCharacterInitialized [ ChatFlagsIndex ]  = 1;
 	}
 
