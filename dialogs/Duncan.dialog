@@ -33,48 +33,209 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hello! I'm Duncan! I make grenades. Want some? Not for free of course!"
+Subtitle="Duncan McNamara, The Red Guard's resident bombmaker, at your service."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
-ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Show me some of your grenades."
+New Option Nr=1  OptionText=" I would like to buy a bomb."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="Grenades are vital for survival round here. You really should buy some."
+Subtitle="Yes. I am sure we can arrange something. Take a look."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
+ChangeOption=1 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
+ChangeOption=7 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Duncan"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" I've heard gas grenades can cause skin iritations. Is that true?"
+New Option Nr=2  OptionText=" I see only grenades. Do you have someting bigger?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Hey man, if you're trying to get something off-price, sorry, not with me."
+Subtitle="My deepest apologies, I do not."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="My prices are the best in all of the colony. I know that. Just take it or leave it."
+Subtitle="The Red Guard prohibits the sales of extremely destructive munitions."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Apart from that, none of my customers have ever complained about skin iritations so far."
+Subtitle="It is not yet the time for the fall of their rule, so I remain loyal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+ChangeOption=6 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
+ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+New Option Nr=3  OptionText=" The fall of the Red Guard? I am going to report that you are preparing a revolution!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="My word against yours. If you wish to try it, please, be my guest."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am not preparing anything. I am just stating what I see as inevitable in the future."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I have taken part in many conflicts and I have seen how govenements collapse."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="As soon as the war is over, the Red Guard will disband."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Of course, I am making the assumption of victory, which is highly unlikely with the current state of affairs."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
+ChangeOption=4 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText=" The fall of the Red Guard? Tell me more about it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="It is not the time to speak of such things yet. Come another day, and we shall talk about it in more detail."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" I want to buy some grenades."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Certainly."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Duncan"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" What kind of grenade is the best?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="You get what you pay for."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText=" How did you get into making explosives?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Twenty years ago there was a conflict."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="A grenade I threw destroyed a being which killed many of... my people."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now I make more to smash the destroyers."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=90  OptionText=" I feel you are... Different."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="That is true. I am not who I seem to be."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But then again, neither are you, so my thoughts are we are even."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=90 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
+ChangeOption=91 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=91  OptionText=" What do you mean? I am Tux and not anyone else."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="And I am Duncan McNamara, the maker of grenades and nothing else."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I believe the topic is thoroughly exhausted now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=92 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+ChangeOption=91 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=92  OptionText=" Tell me who you are. I need to know."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Twenty years ago, the people were kinder to each other."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I suggest you be kind to me as well, and I will be kind to you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="That way I get to keep my secret, and you get to keep yours."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=92 ChangeToValue=0
+ChangeOption=93 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=93  OptionText=" I don't have any secrets."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="And neither don't I."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=93 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=96  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I wish you cold winds."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=96 ChangeToValue=0
+LinkedTo:97
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=97  OptionText=" Huh? How do you know the Linarian farewell? No one around here knows it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I read many books on Linarians. That is all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Nothing more and nothing less."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=97 ChangeToValue=0
+ChangeOption=98 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=98  OptionText=" I wish you cold winds."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" May the ice bring you wisdom."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=98 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
 Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
+ChangeOption=98 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
