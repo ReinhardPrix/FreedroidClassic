@@ -1438,13 +1438,13 @@ InitInfluencerChatFlags( int PlayerNum )
 {
   int i , j;
 
-  for ( i = 0 ; i < MAX_ANSWERS_PER_PERSON ; i ++ ) 
+  for ( i = 0 ; i < MAX_PERSONS ; i ++ ) 
     {
-      for ( j = 0 ; j < MAX_PERSONS ; j ++ )
+      for ( j = 0 ; j < MAX_ANSWERS_PER_PERSON ; j ++ )
 	{
-	  Me[ PlayerNum ] . Chat_Flags [ j ] [ i ] = 0 ;
-	  Me[ PlayerNum ] . Chat_Flags [ j ] [ 0 ] = 1 ; // we always allow to say something in the beginning...
+	  Me[ PlayerNum ] . Chat_Flags [ i ] [ j ] = 0 ;
 	}
+//	  Me[ PlayerNum ] . Chat_Flags [ i ] [ END_ANSWER ] = 1 ;
     }
 
 }; // void InitInfluencerChatFlags( int PlayerNum )

@@ -44,6 +44,7 @@
 #define POP_ROSTER 3 
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
+char ChatCharacterInitialized[ MAX_PERSONS ];
 EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 char* chat_protocol = NULL ;
 
@@ -230,7 +231,7 @@ This should not be possible without a severe bug in FreedroidRPG.",
 void
 RestoreChatVariableToInitialValue( int PlayerNum )
 {
-    int j;
+    int j, i, k;
     
     //--------------------
     // You can always ask the moron 614 bots the same things and they
@@ -243,15 +244,6 @@ RestoreChatVariableToInitialValue( int PlayerNum )
     Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 2 ] = 1 ;
     Me [ PlayerNum ] . Chat_Flags [ PERSON_614 ] [ 3 ] = 1 ;
     
-    //--------------------
-    // The 'END' options should always be availabe for all dialogs
-    // at the beginning.  THIS we know.
-    //
-/*    for ( j = 0 ; j < MAX_PERSONS ; j++ )
-    {
-	Me [ PlayerNum ] . Chat_Flags [ j ] [ END_ANSWER ] = 1 ;
-    }
-*/
     
 }; // void RestoreChatVariableToInitialValue( int PlayerNum )
 
@@ -1549,6 +1541,43 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     strcat ( tmp_filename , ".dialog" );
     fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
     LoadChatRosterWithChatSequence ( fpath );
+
+    if ( ! ChatCharacterInitialized [ ChatFlagsIndex ] )
+	{ // then we must initialize this character
+        int i, j;
+	for (i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
+		{
+		if ( ChatRoster [ i ] . position_x != -1 ) Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ i ] = 1;
+		}
+
+	for (i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
+		{
+		for (j = 0; j < MAX_ANSWERS_PER_PERSON; j ++)
+			{	
+			if( i == (ChatRoster [ i ] . change_option_nr [ j ])) continue;
+			if(ChatRoster [ i ] . change_option_nr [ j ] > 0  &&  ChatRoster [ i ] . change_option_to_value [ j ] == 1)
+				{
+				Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . change_option_nr [ j ] ] = 0;
+				}
+			}
+
+		if ( strlen ( ChatRoster [ i ] . on_goto_condition ) )
+			{
+			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . on_goto_first_target ] = 0;
+			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . on_goto_second_target ] = 0;
+			}
+		}
+
+	for ( i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
+		{
+		if(Me[0].Chat_Flags[ChatFlagsIndex][i] == 1)
+			fprintf(stderr, "Node %d is active\n", i);
+		else	fprintf(stderr, "Node %d is inactive\n", i);
+
+		}
+        ChatCharacterInitialized [ ChatFlagsIndex ]  = 1;
+	}
+
     
     //--------------------
     // Now with the loaded chat data, we can do the real chat now...
