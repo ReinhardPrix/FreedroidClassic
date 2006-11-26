@@ -540,7 +540,6 @@ EXTERN int KP_PLUS_Pressed (void);
 EXTERN int KP_MINUS_Pressed (void);
 EXTERN int KP_MULTIPLY_Pressed (void);
 EXTERN int KP_DIVIDE_Pressed (void);
-EXTERN int KP_ENTER_Pressed (void);
 EXTERN int Number0Pressed (void); EXTERN int Number1Pressed (void); EXTERN int Number2Pressed (void);
 EXTERN int Number3Pressed (void); EXTERN int Number4Pressed (void); EXTERN int Number5Pressed (void);
 EXTERN int Number6Pressed (void); EXTERN int Number7Pressed (void); EXTERN int Number8Pressed (void);

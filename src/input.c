@@ -107,7 +107,6 @@ int CurrentlyKP_PLUS_Pressed=0;
 int CurrentlyKP_MINUS_Pressed=0;
 int CurrentlyKP_MULTIPLY_Pressed=0;
 int CurrentlyKP_DIVIDE_Pressed=0;
-int CurrentlyKP_ENTER_Pressed=0;
 int CurrentlyKP0Pressed=0;
 int CurrentlyKP1Pressed=0;
 int CurrentlyKP2Pressed=0;
@@ -185,7 +184,6 @@ UnsetAllKeys( void )
     CurrentlyKP_MINUS_Pressed=0;
     CurrentlyKP_MULTIPLY_Pressed=0;
     CurrentlyKP_DIVIDE_Pressed=0;
-    CurrentlyKP_ENTER_Pressed=0;
     CurrentlyKP0Pressed=0;
     CurrentlyKP1Pressed=0;
     CurrentlyKP2Pressed=0;
@@ -1160,7 +1158,7 @@ keyboard_update(void)
 			CurrentlyKP_DIVIDE_Pressed=TRUE;
 			break;
 		    case SDLK_KP_ENTER:
-			CurrentlyKP_ENTER_Pressed=TRUE;
+			CurrentlyEnterPressed=TRUE;
 			break;
 		    case SDLK_0:
 			Currently0Pressed=TRUE;
@@ -1429,7 +1427,7 @@ keyboard_update(void)
 			CurrentlyKP_DIVIDE_Pressed=FALSE;
 			break;
 		    case SDLK_KP_ENTER:
-			CurrentlyKP_ENTER_Pressed=FALSE;
+			CurrentlyEnterPressed=FALSE;
 			break;
 		    case SDLK_0:
 			Currently0Pressed=FALSE;
@@ -1911,13 +1909,6 @@ KP_DIVIDE_Pressed (void)
 {
     keyboard_update();
     return CurrentlyKP_DIVIDE_Pressed;
-}
-
-int 
-KP_ENTER_Pressed (void)
-{
-    keyboard_update();
-    return CurrentlyKP_ENTER_Pressed;
 }
 
 int
