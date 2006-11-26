@@ -3365,6 +3365,21 @@ translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int gi
     }
 }; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 
+
+int
+translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x )
+{
+    if ( give_x )
+    {
+    return ( UserCenter_x + rintf ( ( x_map_pos - y_map_pos )  * iso_floor_tile_width / 2  ) + rintf ( ( Me [ 0 ] . pos . y - Me [ 0 ] . pos . x ) * iso_floor_tile_width / 2 ) );
+    }
+  else
+    {
+    return ( UserCenter_y + rintf ( ( x_map_pos + y_map_pos )  * iso_floor_tile_height / 2 ) - rintf( (  Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ));
+    }
+}; // int translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x )
+
+
 /* ----------------------------------------------------------------------
  *
  * 

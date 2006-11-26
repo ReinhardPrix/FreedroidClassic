@@ -95,6 +95,7 @@ EXTERN void animate_tux ( int player_num ) ;
 EXTERN void check_tux_enemy_collision (void);
 EXTERN void start_tux_death_explosions (void);
 EXTERN int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
+EXTERN int translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN float translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) ;
 EXTERN float translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float axis_y , int give_x );
