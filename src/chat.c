@@ -1566,6 +1566,9 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . on_goto_first_target ] = 0;
 			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . on_goto_second_target ] = 0;
 			}
+		
+		if ( ChatRoster [ i ] . link_target ) 
+			Me [ 0 ] . Chat_Flags [ ChatFlagsIndex ] [ ChatRoster [ i ] . link_target ] = 0;
 		}
 
 	for ( i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
