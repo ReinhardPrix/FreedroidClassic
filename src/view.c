@@ -3963,14 +3963,16 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 			darkness = 1.5 - 2.0 * ( ( (float) get_light_strength ( bot_pos ) ) / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) ;
 			if ( darkness > 1 ) darkness = 1.0 ;
 			if ( darkness < 0 ) darkness = 0 ;
-			
-			// blit_open_gl_texture_to_map_position ( 
-			// enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) 0 ] , 
-			// ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 
-			// darkness , darkness , darkness , highlight , FALSE) ;
+			float locx, locy;
+	                float endlocx, endlocy;
+        	        locx = translate_map_point_to_screen_pixel_deviation_tracking( bot_pos . x, bot_pos.y, TRUE);
+	                locy = translate_map_point_to_screen_pixel_deviation_tracking( bot_pos . x, bot_pos.y, FALSE);
+        	        endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
+	                endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
+
 			blit_open_gl_texture_to_map_position ( 
 			    enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
-			    ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 
+			    endlocx , endlocy , 
 			    darkness , darkness , darkness , highlight , FALSE) ;
 		    }
 		}
