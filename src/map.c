@@ -3744,8 +3744,8 @@ IsVisible ( GPS objpos , int PlayerNum )
   // that are too far away to ever be visible and thereby save some checks of
   // longer lines on the map, that wouldn't be nescessary or helpful anyway.
   //
-  if ( ( fabsf ( Me [ PlayerNum ] . pos . x - objpos -> x ) > 6.5 ) ||
-       ( fabsf ( Me [ PlayerNum ] . pos . y - objpos -> y ) > 6.5 ) )
+  if ( ( fabsf ( Me [ PlayerNum ] . pos . x - objpos -> x ) > 9.5 ) ||
+       ( fabsf ( Me [ PlayerNum ] . pos . y - objpos -> y ) > 9.5 ) )
     return ( FALSE );
 
   //--------------------
