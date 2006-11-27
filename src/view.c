@@ -695,19 +695,29 @@ There was an obstacle type given, that exceeds the number of\n\
 		     ( our_obstacle -> pos . y < 
 		       Me [ 0 ] . pos . y + 1.5 ) )
 		{
-		    blit_open_gl_texture_to_map_position ( 
-			obstacle_map [ our_obstacle -> type ] . image , 
-			our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			1,1,1 , FALSE, 
-			obstacle_map [ our_obstacle -> type ] . transparent ) ;
+				float locx, locy;
+		float endlocx, endlocy;
+		locx = translate_map_point_to_screen_pixel_deviation_tracking( our_obstacle -> pos . x, our_obstacle->pos.y, TRUE);
+		locy = translate_map_point_to_screen_pixel_deviation_tracking( our_obstacle -> pos . x, our_obstacle->pos.y, FALSE);
+		endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
+		endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
+		blit_open_gl_texture_to_map_position ( 
+		    obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
+		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
+
 		}
 		else
 		{
-		    blit_open_gl_texture_to_map_position ( 
-			obstacle_map [ our_obstacle -> type ] . image , 
-			our_obstacle -> pos . x , our_obstacle -> pos . y , 
-			1,1,1 , FALSE, 
-			0 ) ;
+		float locx, locy;
+		float endlocx, endlocy;
+		locx = translate_map_point_to_screen_pixel_deviation_tracking( our_obstacle -> pos . x, our_obstacle->pos.y, TRUE);
+		locy = translate_map_point_to_screen_pixel_deviation_tracking( our_obstacle -> pos . x, our_obstacle->pos.y, FALSE);
+		endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
+		endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
+		blit_open_gl_texture_to_map_position ( 
+		    obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
+		    0 ) ;
+
 		}
 	    }
 	    else
