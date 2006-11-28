@@ -1303,6 +1303,49 @@ prepare_text_window_content ( char* ItemDescText )
 	
     } // if nothing is 'held in hand' && inventory-screen visible
     
+
+    if (( CurPos . x > WHOLE_HEALTH_RECT_X * GameConfig . screen_width / 640) && 
+	(CurPos .x * 640 / GameConfig . screen_width < WHOLE_HEALTH_RECT_X + WHOLE_HEALTH_RECT_W) && 
+	(CurPos.y > WHOLE_HEALTH_RECT_Y * GameConfig . screen_height / 480) &&
+	( CurPos.y * 480 / GameConfig . screen_height < WHOLE_HEALTH_RECT_Y + WHOLE_HEALTH_RECT_H))
+	{
+	best_banner_pos_x = ( WHOLE_HEALTH_RECT_X ) * GameConfig . screen_width / 640;
+	best_banner_pos_y = ( WHOLE_HEALTH_RECT_Y - 25 ) * GameConfig . screen_height / 480;
+	sprintf(ItemDescText, "%s%d/%d", Me[0].energy / Me[0].maxenergy <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].energy), (int)rintf(Me[0].maxenergy));
+	}
+
+    if (( CurPos . x > WHOLE_FORCE_RECT_X * GameConfig . screen_width / 640) && 
+	(CurPos .x * 640 / GameConfig . screen_width < WHOLE_FORCE_RECT_X + WHOLE_FORCE_RECT_W) && 
+	(CurPos.y > WHOLE_FORCE_RECT_Y * GameConfig . screen_height / 480) &&
+	( CurPos.y * 480 / GameConfig . screen_height < WHOLE_FORCE_RECT_Y + WHOLE_FORCE_RECT_H))
+	{
+	best_banner_pos_x = ( WHOLE_FORCE_RECT_X ) * GameConfig . screen_width / 640;
+	best_banner_pos_y = ( WHOLE_FORCE_RECT_Y - 25 ) * GameConfig . screen_height / 480;
+	sprintf(ItemDescText, "%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
+	}
+
+    if (( CurPos . x > WHOLE_RUNNING_POWER_RECT_X * GameConfig . screen_width / 640) &&
+        (CurPos .x * 640 / GameConfig . screen_width < WHOLE_RUNNING_POWER_RECT_X + WHOLE_RUNNING_POWER_RECT_W) &&
+        (CurPos.y > WHOLE_RUNNING_POWER_RECT_Y * GameConfig . screen_height / 480) &&
+        ( CurPos.y * 480 / GameConfig . screen_height < WHOLE_RUNNING_POWER_RECT_Y + WHOLE_RUNNING_POWER_RECT_H))
+        {
+        best_banner_pos_x = ( WHOLE_RUNNING_POWER_RECT_X ) * GameConfig . screen_width / 640;
+        best_banner_pos_y = ( WHOLE_RUNNING_POWER_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
+        sprintf(ItemDescText, "%s%d/%d",  Me[0].running_power / Me[0].max_running_power <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].running_power), (int)rintf(Me[0].max_running_power));
+        }     
+
+    if (( CurPos . x > WHOLE_EXPERIENCE_COUNTDOWN_RECT_X * GameConfig . screen_width / 640) &&
+        (CurPos .x * 640 / GameConfig . screen_width < WHOLE_EXPERIENCE_COUNTDOWN_RECT_X + WHOLE_EXPERIENCE_COUNTDOWN_RECT_W) &&
+        (CurPos.y > WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y * GameConfig . screen_height / 480) &&
+        ( CurPos.y * 480 / GameConfig . screen_height < WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y + WHOLE_EXPERIENCE_COUNTDOWN_RECT_H))
+        {
+        best_banner_pos_x = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ) * GameConfig . screen_width / 640;
+        best_banner_pos_y = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
+        sprintf(ItemDescText, "%ld/%ld", Me[0].Experience, Me[0].ExpRequired);
+        }     
+
+
+
     //--------------------
     // If the mouse cursor is within the user rectangle, then we check if
     // either the cursor is over an inventory item or over some other droid
@@ -1459,7 +1502,8 @@ ShowCurrentTextWindow ( void )
 
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
-
+	
+    if ( strlen ( ItemDescText) < 10 ) Banner_Text_Rect . w = 100;
     //--------------------
     // We count the text lines needed for the banner rectangle, just
     // to make sure we don't wast too much space here.
