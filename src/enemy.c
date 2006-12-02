@@ -1465,8 +1465,6 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	// And, not that the enemy is dead, some more blood will be spilled...
 	//
 	enemy_spray_blood ( ThisRobot ) ;
-	enemy_spray_blood ( ThisRobot ) ;
-	enemy_spray_blood ( ThisRobot ) ;
 	
     }
   

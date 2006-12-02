@@ -3171,7 +3171,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    if ( MyRandom ( 100 ) > Me [ player_num ] . to_hit ) continue ; 
 	    
 	    AllEnemys [ i ] . energy -= Me [ player_num ] . base_damage + MyRandom ( Me [ player_num ] . damage_modifier );
-	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
+	    if ( MyRandom( 2 ) != 2 )enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 	    
 	    if ( AllEnemys [ i ] . energy <= 0 )
 	    {
