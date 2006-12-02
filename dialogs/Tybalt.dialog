@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hello! I'm Tybalt! I'm guarding the guardhouse gate. Only authorized personel are permitted."
+Subtitle="Hello. I'm Tybalt. I'm guarding the guardhouse gate. Only authorized personel are permitted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -77,21 +77,97 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
 Subtitle="Sorry pal, but I don't think so. Only authorized personel are permitted and that means members of the Red Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Talk to Spencer, if you have any issues inside. But I cannot let you pass just like that."
+Subtitle="Talk to Spencer if you have any issues inside. I cannot let you pass."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
+ChangeOption=51 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
+New Option Nr=51  OptionText=" I have a lot of money for you."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Fascinating. 1000."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=51 ChangeToValue=0
+ChangeOption=52 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=52  OptionText=" Erm... I don't have that much."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well, I cannot open the door then."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=52 ChangeToValue=0
+ChangeOption=53 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=53  OptionText=" Here you go."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Thank you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=53 ChangeToValue=0
+ChangeOption=54 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=54  OptionText=" Ok, now please open the door for me."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="What door?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=54 ChangeToValue=0
+ChangeOption=55 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=55  OptionText=" The door to the citadel!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="But you are not a member of the Red Guard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You cannot come in."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=55 ChangeToValue=0
+ChangeOption=56 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=56  OptionText=" I paid you!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Really? I don't remember that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=56 ChangeToValue=0
+ChangeOption=57 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=57  OptionText=" I want my money back."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="What money?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=57 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" See you later."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=336  PositionY=301  
-Subtitle="See you later."
+Subtitle="Good riddance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
