@@ -6,7 +6,7 @@ endif
 
 ## compile Dialog-editor if gtk-libs were found
 if BUILD_EDITORS
-extra_prg = DialogEditor ItemEditor
+extra_prg = ItemEditor
 if WIN32
 INCLUDES        = -I/usr/include/glib-1.2 -I/usr/lib/glib/include
 LDADD           = -lgtk -lgdk
@@ -32,5 +32,4 @@ freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c save
 	SDL_rotozoom.c SDL_rotozoom.h open_gl.c mission.c chat.c light.c \
 	getopt.c getopt1.c getopt.h scandir.c scandir.h  sound.h sound_effects.c 
 
-DialogEditor_SOURCES = DialogEditor.c text_public.c DialogEditor.h
 ItemEditor_SOURCES = ItemEditor.c text_public.c ItemEditor.h DialogEditor.h
