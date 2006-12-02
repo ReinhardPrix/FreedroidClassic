@@ -662,7 +662,7 @@ CopyMeToNetworkMe( int PlayerNum )
  * This function prepares a player engram for player number PlayerNum.
  * ---------------------------------------------------------------------- */
 void
-PreparePlayerEngramForPlayer ( PlayerNum ) 
+PreparePlayerEngramForPlayer ( int PlayerNum ) 
 {
   int WriteIndex = 0 ;
   int i;

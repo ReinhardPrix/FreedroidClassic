@@ -2212,7 +2212,7 @@ get_current_phase ( int tux_part_group , int player_num , int motion_class )
  *
  * ---------------------------------------------------------------------- */
 int
-get_motion_class ( player_num ) 
+get_motion_class ( int player_num ) 
 {
     int weapon_type = Me [ player_num ] . weapon_item . type ;
     int motion_class;

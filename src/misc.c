@@ -2354,7 +2354,7 @@ ReadSint16 (void * memory)
 void 
 endian_swap(char * pdata, size_t dsize, size_t nelements)
 {
-  int i, j, indx;
+  unsigned int i, j, indx;
   char tempbyte;
 
   if (dsize <= 1) return;

@@ -2389,10 +2389,10 @@ Get_New_Character_Name ( void )
     // received.  Could be some valuable 20 bytes after all :)
     //
     // Parse Temp for illegal chars
-    int i;
-    for ( i = 0; i < strlen(Temp); i ++)
-	if(!isalnum(Temp[i]) && Temp[i] != '-')
-		Temp[i] = '-';
+    unsigned int i;
+    for ( i = 0 ; i < strlen( Temp ) ; i ++)
+	if( ! isalnum ( Temp[i] ) && Temp [ i ] != '-')
+		Temp [ i ] = '-';
     strcpy ( Me [ 0 ] . character_name , Temp );
     free( Temp );
     

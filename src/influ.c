@@ -975,7 +975,7 @@ CheckIfCharacterIsStillOk ( int player_num )
  * Even the Tux must not leave the map!  A sanity check is done here...
  * ---------------------------------------------------------------------- */
 void
-CheckForTuxOutOfMap ( player_num )
+CheckForTuxOutOfMap ( int player_num )
 {
   Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
 
@@ -2925,7 +2925,7 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
  * or fire command to the Tux.  This function checks for these cases.
  * ---------------------------------------------------------------------- */
 int 
-ButtonPressWasNotMeantAsFire( player_num )
+ButtonPressWasNotMeantAsFire( int player_num )
 {
   //--------------------
   // If the influencer is holding something from the inventory
