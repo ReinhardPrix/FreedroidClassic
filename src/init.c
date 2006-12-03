@@ -123,15 +123,28 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him." ;
 
-    character_descriptions [ PERSON_614 ] = "There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platfor can be your best friend during combat...";
+    character_descriptions [ PERSON_614 ] = "There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platform can be your best friend during combat...";
 
     character_descriptions [ PERSON_FRANCIS ] = "Francis is not looking so good today. His tattered coat is not looking that much better either. The war is taking it's toll on them both.";
+
+    character_descriptions [ PERSON_DUNCAN ] = "What a strange person. He does not seem to really fit into this reality. There is something very eerie about him. And frightening.";
+
+    character_descriptions [ PERSON_BRUCE ] = "This person looks totally defeated. Tattered clothes surround his skeletal form. If there was a fifth raider of the apocalypse, it would be him and his name would be Hard Work.";
+
+    character_descriptions [ PERSON_SKIPPY ] = "It seems that even during the end of the world the species known as 'Salesman' is able to survive. Just his presence makes you want to kill all humans.";
+    
+    character_descriptions [ PERSON_EWALD ] = "We are sorry for this character's graphics. The bartender look is coming soon. Freedroid Dev Team.";
+
+    character_descriptions [ PERSON_STONE ] = "In some places of the world there exists a very interesting saying. 'Tough as nails.' However, in every place where the Stone trader family stays for a while, a new saying emerges. 'Tough as the Stones.'";
+
+    character_descriptions [ PERSON_DIXON ] = "It is very obivous that this is not a normal Red Guard. Most of them do not have oil stains on their armor and smell of alcohol.";
+
+    character_descriptions [ PERSON_KEVINS_GUARD ] = "It looks like a 614. It moves like a 614. It even kills like a 614. Must be a 614 then.";
+
+
  ;
     /*
     PERSON_RMS,
-    PERSON_STONE,
-    PERSON_DIXON,
-    PERSON_DUNCAN,
     PERSON_PENDRAGON,
     PERSON_MER,
     PERSON_ERNIE,
@@ -142,7 +155,6 @@ init_character_descriptions ( void )
     PERSON_DOC_MOORE,
     PERSON_MELFIS,
     PERSON_MICHELANGELO,
-    PERSON_SKIPPY,
     PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
     PERSON_STANDARD_NEW_TOWN_GATE_GUARD,
     PERSON_OLD_TOWN_GATE_GUARD_LEADER,
@@ -150,10 +162,8 @@ init_character_descriptions ( void )
     PERSON_MS_FACILITY_GATE_GUARD_LEADER,
     PERSON_HEA,
     PERSON_STANDARD_BOT_AFTER_TAKEOVER,
-    PERSON_BRUCE,
     PERSON_SUBDIALOG_DUMMY,
     PERSON_TYBALT,
-    PERSON_EWALD,
     PERSON_KEVINS_GUARD,
     */
 
