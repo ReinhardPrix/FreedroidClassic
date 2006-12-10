@@ -1528,10 +1528,18 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , in
     //--------------------
     // Now we can begin to draw the actual textured rectangle.
     //
+    if ( our_floor_iso_image . texture_height == 1024 ) //then the image is 1024x768
+	{
+        image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 1024 ;
+        image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 768 ;
+	}
+    else
+	{
+        image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 640 ;
+        image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 480 ;
+	}
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 640 ;
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 480 ;
     
     if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
