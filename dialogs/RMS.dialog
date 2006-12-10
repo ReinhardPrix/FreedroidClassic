@@ -144,6 +144,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" END "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
