@@ -987,7 +987,7 @@ def process(everything, do, startlist, nodeindex, conditionslist):
       elif [ittybit[1][0], True] in conditionslist:
         halting = process(everything, ittybit[1][1], startlist, nodeindex, conditionslist)
     elif ittybit[0] == "extra":
-      if ittybit[1] == "EndDialog":
+      if ittybit[1] == "EndDialog" or ittybit[1] == "DropDead":
         halting = "yes"
   return halting
 
