@@ -1,3 +1,4 @@
+
 /* 
  *
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
@@ -112,12 +113,12 @@ init_character_descriptions ( void )
 
     for ( i = 0 ; i < MAX_PERSONS ; i ++ )
     {
-	character_descriptions [ i ] = "WARNING!  THIS CHARACTER DESCRIPTION IS STILL MISSING!  PLEASE INFORM THE DEVELOPERS ABOUT THIS.  SOME SUITABLE DESCRIPTION MUST STILL BE CONTRIBUTED.  ANY SUGGESTION?" ;
+	character_descriptions [ i ] = "My name is Bug. Software Bug. Please report me to the developers. Thank you." ;
     }
 
-    character_descriptions [ PERSON_CHA ] = "You see an old man. While his appearance seems rather fragile, the vivid eyes indicate a well aware man of still rather quick mind." ;
+    character_descriptions [ PERSON_CHA ] = "Hmm... This must be the token town sage." ;
 
-    character_descriptions [ PERSON_SORENSON ] = "You see a female in her mid-twenties. The glasses make her look older than she probably is. You can feel a strange aura of magic emanate from her. Or is it just her good looks?" ;
+    character_descriptions [ PERSON_SORENSON ] = "You see a legend. Sorenson Clark. One of the best human programmers that have ever lived. Just like Paganini she is said to have sold her soul to the devil for her skill. Whatever is the truth, her code is like magic, and there is no denying that." ;
 
     character_descriptions [ PERSON_KEVIN ] = "He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope." ;
 
@@ -141,19 +142,24 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_KEVINS_GUARD ] = "It looks like a 614. It moves like a 614. It even kills like a 614. Must be a 614 then.";
 
+    character_descriptions [ PERSON_RMS ] = "He must be the resident scientist. The only thing keeping his body alive is the massive coffee overdose that he takes early in the morning every day. The amount of cafeine that he has in his blood right now would be enough to kill ten humans, but since computer scientists are a different species, he is unharmed.";
+
+    character_descriptions [ PERSON_DARWIN ] = "Something about him makes you think of angels. Except angels are usually sane, do not have an urge to kill everything around them and are much better at singing religious songs.";
+
+    character_descriptions [ PERSON_MELFIS ] = "As you look at him, you cannot really belive he is there. If you turn your back on him he will vanish like a ghost into thin air and you will never see him again.";
+
+    character_descriptions [ PERSON_TYBALT ] = "His IQ is sometimes as high as a dog's. Only sometimes though. He smells like a dog too.";
+
 
  ;
     /*
-    PERSON_RMS,
     PERSON_PENDRAGON,
     PERSON_MER,
     PERSON_ERNIE,
     PERSON_BENJAMIN,
     PERSON_SPENCER,
     PERSON_BUTCH,
-    PERSON_DARWIN,
     PERSON_DOC_MOORE,
-    PERSON_MELFIS,
     PERSON_MICHELANGELO,
     PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
     PERSON_STANDARD_NEW_TOWN_GATE_GUARD,
@@ -163,8 +169,6 @@ init_character_descriptions ( void )
     PERSON_HEA,
     PERSON_STANDARD_BOT_AFTER_TAKEOVER,
     PERSON_SUBDIALOG_DUMMY,
-    PERSON_TYBALT,
-    PERSON_KEVINS_GUARD,
     */
 
 }; // void init_character_descriptions ( void )
