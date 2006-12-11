@@ -237,41 +237,46 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=14  OptionText="DID TUX GET THE MISSION TO SAVE BENDER?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=59  PositionY=421  
 OnCondition="MissionAssigned:0" JumpToOption=15 ElseGoto=16
+ChangeOption=14 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=15  OptionText="DID HE FINISH IT?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=140  PositionY=407  
 OnCondition="MissionComplete:0" JumpToOption=17 ElseGoto=18
+ChangeOption=15 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=16  OptionText="THE GREAT UNKNOWN NODE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=133  PositionY=478  
+ChangeOption=16 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=17  OptionText="BENDER IS SAVED"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=386  
 ChangeOption=13 ChangeToValue=1
+ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=18  OptionText="DOES TUX HAVE THE CURE?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=193  PositionY=453  
 ChangeOption=8 ChangeToValue=0
+ChangeOption=18 ChangeToValue=0
 ChangeOption=7 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -283,19 +288,21 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=19  OptionText="THERE IS NO CURE TO GIVE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=253  PositionY=495  
 ChangeOption=12 ChangeToValue=1
+ChangeOption=19 ChangeToValue=0
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=20  OptionText="YEAH, WE HAVE THE CURE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=252  PositionY=450  
 ChangeOption=9 ChangeToValue=1
+ChangeOption=20 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
