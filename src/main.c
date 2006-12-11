@@ -132,7 +132,7 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 
     while (!QuitProgram)
     {
-	
+	GameOver = TRUE;
 	StartupMenu ( );
 	GameOver = FALSE;
 	

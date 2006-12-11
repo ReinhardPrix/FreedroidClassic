@@ -1341,7 +1341,7 @@ StartupMenu (void)
     enum
 	{ 
 	    SINGLE_PLAYER_POSITION=1, 
-	    MULTI_PLAYER_POSITION,
+	    OPTIONS_POSITION,
 	    CREDITS_POSITION,
 	    CONTRIBUTE_POSITION,
 	    EXIT_FREEDROID_POSITION
@@ -1365,7 +1365,7 @@ StartupMenu (void)
         SwitchBackgroundMusicTo( MENU_BACKGROUND_MUSIC_SOUND );
 
 	MenuTexts[0]= SINGLE_PLAYER_STRING ;
-	MenuTexts[1]="Multi Player";
+	MenuTexts[1]="Options";
 	MenuTexts[2]="Credits";
 	MenuTexts[3]="Contribute";
 	MenuTexts[4]="Exit Freedroid";
@@ -1381,8 +1381,11 @@ StartupMenu (void)
 	    case SINGLE_PLAYER_POSITION:
 		can_continue = Single_Player_Menu ( );
 		break;
-	    case MULTI_PLAYER_POSITION:
+	    /*case MULTI_PLAYER_POSITION:
 		can_continue = Multi_Player_Menu();
+		break;*/
+	    case OPTIONS_POSITION:
+		Options_Menu();
 		break;
 	    case CREDITS_POSITION:
 		Credits_Menu();
@@ -1541,7 +1544,9 @@ Change_Screen_Resolution_Menu ( void )
 	MenuTexts[3]="Back";
 	MenuTexts[4]="";
 	
-	MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
+	if ( GameOver == TRUE ) MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
+					MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	else MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
 					MenuTexts , -1 , -1 , NULL );
 	
 	switch (MenuPosition) 
@@ -1604,7 +1609,7 @@ Thank you.\n");
     }
     
     ClearGraphMem ();
-    DisplayBanner ( ) ;
+    if ( ! GameOver ) DisplayBanner ( ) ;
     
 }; // void Change_Screen_Resolution_Menu ( void )
 
@@ -1658,8 +1663,10 @@ Graphics_Options_Menu (void)
 	MenuTexts[5]="Back";
 	MenuTexts[6]="";
 	
-	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
-	
+        if ( GameOver == TRUE )
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+
 	switch (MenuPosition) 
 	{
 	    
@@ -1752,7 +1759,7 @@ Thank you.\n");
     }
     
     ClearGraphMem ();
-    DisplayBanner ( ) ;
+    if ( GameOver == FALSE ) DisplayBanner ( ) ;
     
 }; // void Graphics_Options_Menu (void)
 
@@ -1803,7 +1810,9 @@ Sound_Options_Menu (void)
 	MenuTexts [ 4 ] = "Back";
 	MenuTexts [ 5 ] = "";
 	
-	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+	if ( GameOver == TRUE ) 
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 	
 	switch (MenuPosition) 
 	{
@@ -1871,7 +1880,7 @@ Sound_Options_Menu (void)
     }
     
     ClearGraphMem ();
-    DisplayBanner ( );
+    if ( GameOver == FALSE ) DisplayBanner ( ) ;
     
 }; // void Sound_Options_Menu (void)
 
@@ -1951,7 +1960,9 @@ PerformanceTweaksOptionsMenu (void)
 	MenuTexts[7]="Back";
 	MenuTexts[8]="";
 	
-	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+        if ( GameOver == TRUE )      
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );      
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL ); 
 	
 	switch (MenuPosition) 
 	{
@@ -2018,7 +2029,7 @@ PerformanceTweaksOptionsMenu (void)
     }
     
     ClearGraphMem ();
-    DisplayBanner ( );
+    if ( GameOver == FALSE ) DisplayBanner ( ) ;
     
 }; // void PerformanceTweaksOptionsMenu (void)
 
@@ -2075,7 +2086,9 @@ On_Screen_Display_Options_Menu (void)
       MenuTexts[6]="Back";
       MenuTexts[7]="";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+        if ( GameOver == TRUE )
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
 
       switch (MenuPosition) 
 	{
@@ -2144,7 +2157,7 @@ On_Screen_Display_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner ( );
+  if ( GameOver == FALSE ) DisplayBanner ( ) ;
 
 }; // On_Screen_Display_Options_Menu
 
@@ -2195,7 +2208,9 @@ Droid_Talk_Options_Menu (void)
       MenuTexts[5]=Options5;
       MenuTexts[6]="Back";
 
-      MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );
+	if ( GameOver == TRUE ) 
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );     
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );     
 
       switch (MenuPosition) 
 	{
@@ -2236,7 +2251,7 @@ Droid_Talk_Options_Menu (void)
     }
 
   ClearGraphMem ();
-  DisplayBanner ( );
+  if ( GameOver == FALSE ) DisplayBanner ( ) ;
 
 }; // Droid_Talk_Options_Menu
 
@@ -2275,7 +2290,9 @@ Options_Menu (void)
     while ( !can_continue )
     {
 	
-	MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
+	if ( GameOver == TRUE ) 
+		MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE, Menu_BFont );
+	else	MenuPosition = DoMenuSelection( "" , MenuTexts , 1 , -1 , Menu_BFont );
 	
 	switch (MenuPosition) 
 	{
@@ -2315,7 +2332,7 @@ Options_Menu (void)
     }
     
     ClearGraphMem ();
-    DisplayBanner ( );
+    if ( GameOver == FALSE ) DisplayBanner ( ) ;
     
 } // Options_Menu
 
