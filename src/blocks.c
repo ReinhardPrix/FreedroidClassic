@@ -3463,20 +3463,20 @@ init_obstacle_data( void )
   obstacle_map [ ISO_W_SOFA ] . block_vision_too = FALSE ;
 
   obstacle_map [ ISO_TREE_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_TREE_1 ] . block_area_parm_1 = 0.4 ;
-  obstacle_map [ ISO_TREE_1 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_TREE_1 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_TREE_1 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TREE_1 ] . obstacle_short_name = "Tree";
   obstacle_map [ ISO_TREE_1 ] . obstacle_long_description = "This tree seems quite normal";
   obstacle_map [ ISO_TREE_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_TREE_2 ] . block_area_parm_1 = 0.4 ;
-  obstacle_map [ ISO_TREE_2 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_2 ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_TREE_2 ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_TREE_2 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TREE_2 ] . obstacle_short_name = "Tree";
   obstacle_map [ ISO_TREE_2 ] . obstacle_long_description = "This is a nice tree";  
   obstacle_map [ ISO_TREE_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 0.4 ;
-  obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 0.4 ;
+  obstacle_map [ ISO_TREE_3 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_TREE_3 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_TREE_3 ] . is_smashable = FALSE ;
   obstacle_map [ ISO_TREE_3 ] . obstacle_short_name = "Tree";
   obstacle_map [ ISO_TREE_3 ] . obstacle_long_description = "No, it definitely doesn't look like a droid";
