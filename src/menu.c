@@ -3122,27 +3122,22 @@ Contribute_Menu (void)
 {
     char* ContributeText = "\n\n\
                        HOW TO CONTRIUBTE\n\n\n\
-FreedroidRPG is entirely free software AND free artwork.\n\
+FreedroidRPG is entirely free software and free artwork.\n\
 It is developed exclusively by volunteers in their leisure time.\n\
 \n\
 FreedroidRPG depends on these contributions to become a better game.  \
-If you would like to contribute something as well, \
+If you would like to contribute something, \
 but are not completely sure how, here's a list of things:\n\
 \n\
 \n\
    TESTING AND BUG REPORTING:\n\
 \n\
-We need people to try out the game and report anything that does not work correctly or seems to be unstable.  This includes minor things, such as spelling mistakes and the like.  The task of testing is growing with the size of FreedroidRPG.  So we need your help.\n\
+We need people to try out the game and report anything that does not work correctly or seems to be unstable. This includes minor things, such as spelling mistakes and the like. The task of testing is growing with the size of FreedroidRPG. We need your help.\n\
 \n\
 \n\
    MAP IMPROVEMENTS:\n\
 \n\
-The world of FreedroidRPG can be enlarged and modified by point-and-click with the level editor integrated into FreedroidRPG.  There is lots of room for improvements and enrichments in the current FreedroidRPG landscape.\n\
-\n\
-\n\
-   MORE STORY AND CHARACTERS:\n\
-\n\
-FreedroidRPG comes with a separate program for editing and inspecting dialogs.  Your help in setting up some new characters and mission would be greatly appreciated.\n\
+We are looking for people who would make maps for us. There is already an editor built into the game. Feel free to try it, and if you like it make sure to get back to us.\n\
 \n\
 \n\
    VOICE SAMPLES:\n\
@@ -3150,12 +3145,17 @@ FreedroidRPG comes with a separate program for editing and inspecting dialogs.  
 Currently we are not accepting new speech. All of the dialogues are being rewritten, we will add voice to them later. If you are one of our old voice actors, then please get in touch with the team.\n\
 \n\
 \n\
+   SOUND EFFECTS:\n\
+\n\
+We sure could use some sound effects. If you want to contribute some to a good cause we will not say no to that. :) \n\
+\n\
+\n\
    CONTACT:\n\n\
-If you would like to contribute something or give some feedback concerning the game, you can easily get in contact with the people currently involved.  Just send e-mail to the following address:\n\
+If you would like to contribute something or give some feedback concerning the game, you can easily get in contact with the developers. Just send an e-mail to the following address:\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n\
-Or, if you prefer that, you might pop into our IRC channel.  The channel is #freedroid on irc.freenode.net and everyone's invited.  Bring your friends and coke, beer for Basse and Arthur.\n\
+Or, if you prefer that, you might want to pop into our IRC channel (#freedroid on irc.freenode.net) Everyone's invited. Bring your friends and coke, beer for Basse and Arthur.\n\
 \n\
 Thank you,\n\
 \n\
