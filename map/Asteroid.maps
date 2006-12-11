@@ -7972,7 +7972,7 @@ ob_type=1 ob_x=35.00 ob_y=24.50 ob_na=-1 ob_de=-1
 ob_type=1 ob_x=35.00 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=34.50 ob_y=26.00 ob_na=-1 ob_de=-1 
 ob_type=56 ob_x=42.50 ob_y=25.50 ob_na=-1 ob_de=2 
-ob_type=22 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=44.50 ob_y=25.50 ob_na=-1 ob_de=-1 
 ob_type=57 ob_x=46.50 ob_y=25.50 ob_na=-1 ob_de=5 
 ob_type=2 ob_x=30.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=31.50 ob_y=27.00 ob_na=-1 ob_de=-1 
@@ -7981,14 +7981,14 @@ ob_type=1 ob_x=34.00 ob_y=26.50 ob_na=-1 ob_de=-1
 ob_type=2 ob_x=33.50 ob_y=27.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=30.00 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=29.50 ob_y=28.00 ob_na=-1 ob_de=-1 
-ob_type=22 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
-ob_type=22 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=42.50 ob_y=27.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=46.50 ob_y=27.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=49.42 ob_y=26.58 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=28.50 ob_na=-1 ob_de=-1 
 ob_type=29 ob_x=38.87 ob_y=27.27 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=55 ob_x=42.50 ob_y=29.50 ob_na=-1 ob_de=3 
-ob_type=22 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=44.50 ob_y=29.50 ob_na=-1 ob_de=-1 
 ob_type=58 ob_x=46.50 ob_y=29.50 ob_na=-1 ob_de=4 
 ob_type=1 ob_x=29.00 ob_y=30.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=29.00 ob_y=31.50 ob_na=-1 ob_de=-1 
@@ -8097,10 +8097,8 @@ ob_type=113 ob_x=42.47 ob_y=66.25 ob_na=-1 ob_de=-1
 ob_type=113 ob_x=42.20 ob_y=72.71 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=42.57 ob_y=76.34 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=37.35 ob_y=75.87 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=37.11 ob_y=61.43 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=33.01 ob_y=63.71 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=30.52 ob_y=66.81 ob_na=-1 ob_de=-1 
-ob_type=113 ob_x=35.87 ob_y=69.46 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=23.76 ob_y=76.12 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=27.91 ob_y=70.28 ob_na=-1 ob_de=-1 
 ob_type=113 ob_x=30.96 ob_y=71.22 ob_na=-1 ob_de=-1 
@@ -8137,13 +8135,12 @@ ob_type=114 ob_x=14.67 ob_y=66.54 ob_na=-1 ob_de=-1
 ob_type=113 ob_x=18.65 ob_y=64.02 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=22.84 ob_y=56.31 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=23.79 ob_y=50.03 ob_na=-1 ob_de=-1 
-ob_type=115 ob_x=33.23 ob_y=41.31 ob_na=-1 ob_de=-1 
+ob_type=115 ob_x=33.23 ob_y=41.31 ob_na=-1 ob_de=12 
 ob_type=115 ob_x=52.85 ob_y=39.76 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=44.65 ob_y=35.59 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=39.68 ob_y=54.02 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=39.59 ob_y=61.50 ob_na=-1 ob_de=-1 
 ob_type=115 ob_x=35.18 ob_y=63.00 ob_na=-1 ob_de=-1 
-ob_type=114 ob_x=36.34 ob_y=65.48 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=43.21 ob_y=62.12 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=46.57 ob_y=57.06 ob_na=-1 ob_de=-1 
 ob_type=114 ob_x=42.70 ob_y=69.43 ob_na=-1 ob_de=-1 
@@ -8436,7 +8433,7 @@ ob_type=52 ob_x=39.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=51 ob_x=40.50 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=51 ob_x=42.50 ob_y=88.50 ob_na=-1 ob_de=-1 
 ob_type=53 ob_x=40.50 ob_y=88.50 ob_na=-1 ob_de=-1 
-ob_type=22 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=25 ob_x=36.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=2 ob_x=38.50 ob_y=86.00 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=89.50 ob_na=-1 ob_de=-1 
 ob_type=1 ob_x=38.00 ob_y=88.50 ob_na=-1 ob_de=-1 
@@ -8485,7 +8482,7 @@ ob_type=117 ob_x=66.50 ob_y=89.50 ob_na=-1 ob_de=-1
 ob_type=117 ob_x=70.50 ob_y=83.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=117 ob_x=70.50 ob_y=85.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=17 ob_x=68.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=68.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=67.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=116 ob_x=69.50 ob_y=86.50 ob_na=-1 ob_de=-1 
@@ -8501,8 +8498,8 @@ ob_type=116 ob_x=75.50 ob_y=86.50 ob_na=-1 ob_de=-1
 ob_type=26 ob_x=76.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=26 ob_x=72.50 ob_y=86.50 ob_na=-1 ob_de=-1 
 ob_type=122 ob_x=74.50 ob_y=86.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
-ob_type=18 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=17 ob_x=72.50 ob_y=84.50 ob_na=-1 ob_de=-1 
+ob_type=17 ob_x=76.50 ob_y=84.50 ob_na=-1 ob_de=-1 
 ob_type=243 ob_x=60.98 ob_y=87.05 ob_na=-1 ob_de=-1 
 ob_type=241 ob_x=60.40 ob_y=83.51 ob_na=-1 ob_de=-1 
 ob_type=247 ob_x=15.87 ob_y=89.84 ob_na=-1 ob_de=-1 
@@ -8994,13 +8991,20 @@ ob_type=314 ob_x=34.89 ob_y=63.14 ob_na=-1 ob_de=-1
 ob_type=314 ob_x=34.59 ob_y=64.70 ob_na=-1 ob_de=-1 
 ob_type=315 ob_x=35.51 ob_y=63.05 ob_na=-1 ob_de=-1 
 ob_type=313 ob_x=36.27 ob_y=63.67 ob_na=-1 ob_de=-1 
-ob_type=316 ob_x=32.53 ob_y=63.74 ob_na=-1 ob_de=-1 
 ob_type=317 ob_x=35.83 ob_y=64.11 ob_na=-1 ob_de=-1 
 ob_type=320 ob_x=34.01 ob_y=63.95 ob_na=-1 ob_de=-1 
 ob_type=320 ob_x=35.09 ob_y=63.45 ob_na=-1 ob_de=-1 
 ob_type=315 ob_x=39.57 ob_y=54.79 ob_na=-1 ob_de=-1 
 ob_type=319 ob_x=38.03 ob_y=62.32 ob_na=-1 ob_de=-1 
 ob_type=315 ob_x=39.49 ob_y=62.91 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=39.80 ob_y=59.24 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=40.04 ob_y=59.32 ob_na=-1 ob_de=-1 
+ob_type=318 ob_x=38.94 ob_y=59.11 ob_na=-1 ob_de=-1 
+ob_type=317 ob_x=39.57 ob_y=57.33 ob_na=-1 ob_de=-1 
+ob_type=320 ob_x=36.33 ob_y=60.30 ob_na=-1 ob_de=-1 
+ob_type=313 ob_x=36.83 ob_y=60.35 ob_na=-1 ob_de=-1 
+ob_type=314 ob_x=35.54 ob_y=64.33 ob_na=-1 ob_de=-1 
+ob_type=315 ob_x=34.20 ob_y=62.92 ob_na=-1 ob_de=-1 
 End of obstacle data
 Start of pure map label information for this level
 label.pos.x=44 label.pos.y=27 label.label_name="NewTuxStartGameSquare"
@@ -9087,22 +9091,13 @@ obstacle_description.index=8 obstacle_description_text="These monitors show scan
 obstacle_description.index=9 obstacle_description_text="Terminal Fields. Warning High RIsk"
 obstacle_description.index=10 obstacle_description_text="Terminal Fields Desc"
 obstacle_description.index=11 obstacle_description_text="Terminal Fields Desc"
+obstacle_description.index=12 obstacle_description_text="This is a test"
 End of pure obstacle description information for this level
 
 Start of pure statement information for this level
 End of pure statement information for this level
 
 Start of pure items information for this level
-New item: type=27  X=38.500568  Y=56.310379  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=20  CurDur=9.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=66  X=37.647896  Y=55.831619  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=9  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=27  X=31.664930  Y=63.512535  AC=0  DoDamage=2  ModifyDamage=5  MaxDur=19  CurDur=12.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=6  X=35.363293  Y=62.329144  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=2  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=66  X=39.418022  Y=60.578568  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=8  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=10  X=39.600452  Y=54.815502  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=6  X=40.068634  Y=57.301975  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=33  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=6  X=38.589722  Y=54.596672  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=25  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
-New item: type=34  X=32.557823  Y=63.932072  AC=0  DoDamage=2  ModifyDamage=4  MaxDur=10  CurDur=5.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=5  StrBon=0  StrDex=4  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=0 
-New item: type=6  X=38.990768  Y=62.041576  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=21  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
 End of pure items information for this level
 Start of pure chest item information for this level
 New item: type=92  X=41.500000  Y=17.250000  AC=0  DoDamage=0  ModifyDamage=0  MaxDur=-1  CurDur=1.000000  Gold=0  Ammoclip=0  Multiplicity=1  PrefixCode=-1  SuffixCode=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdentif=1 
@@ -9126,146 +9121,153 @@ Nr.=  7 x=   6 y=  24 rnd=0	 connections:    3   8
 Nr.=  8 x=   4 y=  23 rnd=0	 connections:    7   1
 Nr.=  9 x=  21 y=  19 rnd=0	 connections:   10
 Nr.= 10 x=  26 y=  19 rnd=0	 connections:   12   9
-Nr.= 11 x=  44 y=  25 rnd=0	 connections:  142 148 147
+Nr.= 11 x=  44 y=  25 rnd=0	 connections:  137 143 142
 Nr.= 12 x=  29 y=  19 rnd=0	 connections:   10
-Nr.= 13 x=  31 y=  57 rnd=0	 connections:   57  54
-Nr.= 14 x=  33 y=  55 rnd=0	 connections:   56  55
-Nr.= 15 x=  34 y=  58 rnd=0	 connections:   56  55
-Nr.= 16 x=  34 y=  30 rnd=0	 connections:   18  17  19
-Nr.= 17 x=  32 y=  31 rnd=0	 connections:   19  16
-Nr.= 18 x=  31 y=  28 rnd=0	 connections:   19  16
-Nr.= 19 x=  30 y=  30 rnd=0	 connections:   17  18  16
-Nr.= 20 x=  55 y=  11 rnd=0	 connections:   23  21  22
-Nr.= 21 x=  53 y=  13 rnd=0	 connections:   20  22  23
-Nr.= 22 x=  55 y=  15 rnd=0	 connections:   21  23  20
-Nr.= 23 x=  57 y=  13 rnd=0	 connections:   22  20  21
-Nr.= 24 x=  57 y=  65 rnd=0	 connections:   25  31  35  30  26
-Nr.= 25 x=  54 y=  63 rnd=0	 connections:   26  35  24
-Nr.= 26 x=  52 y=  66 rnd=0	 connections:   25  35  27  24
-Nr.= 27 x=  53 y=  71 rnd=0	 connections:   35  28  26
-Nr.= 28 x=  56 y=  72 rnd=0	 connections:   35  29  27  33
-Nr.= 29 x=  59 y=  70 rnd=0	 connections:   35  32  28  33
-Nr.= 30 x=  63 y=  67 rnd=0	 connections:   24  35  31  32  34
-Nr.= 31 x=  60 y=  63 rnd=0	 connections:   24  30
-Nr.= 32 x=  62 y=  71 rnd=0	 connections:   30  34  33  29  33
-Nr.= 33 x=  61 y=  74 rnd=0	 connections:   32  29  32  34  28
-Nr.= 34 x=  66 y=  71 rnd=0	 connections:   32  30  33
-Nr.= 35 x=  56 y=  67 rnd=0	 connections:   25  24  26  27  28  29  30
-Nr.= 36 x=  62 y=  19 rnd=0	 connections:   40  37  39
-Nr.= 37 x=  57 y=  23 rnd=0	 connections:   41  40  36
-Nr.= 38 x=  61 y=  27 rnd=0	 connections:   41  40
-Nr.= 39 x=  65 y=  23 rnd=0	 connections:   40  36
-Nr.= 40 x=  61 y=  23 rnd=0	 connections:   37  38  39  36
-Nr.= 41 x=  54 y=  27 rnd=0	 connections:   37  38
-Nr.= 42 x=  77 y=  13 rnd=0	 connections:   43  45  44
-Nr.= 43 x=  79 y=  15 rnd=0	 connections:   50  42  44
-Nr.= 44 x=  77 y=  17 rnd=0	 connections:   50  43  42  45  46  47  48  49
-Nr.= 45 x=  75 y=  15 rnd=0	 connections:   42  46  44
-Nr.= 46 x=  73 y=  17 rnd=0	 connections:   45  47  44
-Nr.= 47 x=  75 y=  19 rnd=0	 connections:   46  48  44
-Nr.= 48 x=  77 y=  21 rnd=0	 connections:   47  49  44
-Nr.= 49 x=  79 y=  19 rnd=0	 connections:   48  50  44
-Nr.= 50 x=  81 y=  17 rnd=0	 connections:   43  49  44
-Nr.= 51 x=  74 y=  52 rnd=0	 connections:  139 137
-Nr.= 52 x=  78 y=  48 rnd=0	 connections:  136 134
-Nr.= 53 x=  78 y=  56 rnd=0	 connections:  140 141
-Nr.= 54 x=  31 y=  55 rnd=0	 connections:   13
-Nr.= 55 x=  32 y=  58 rnd=0	 connections:   15  14
-Nr.= 56 x=  34 y=  56 rnd=0	 connections:   14  15
-Nr.= 57 x=  30 y=  58 rnd=0	 connections:   13
-Nr.= 58 x=  24 y=  40 rnd=0	 connections:   61  59
-Nr.= 59 x=  26 y=  40 rnd=0	 connections:   58  60
-Nr.= 60 x=  26 y=  42 rnd=0	 connections:   61  59
-Nr.= 61 x=  24 y=  42 rnd=0	 connections:   58  60
-Nr.= 62 x=  36 y=  72 rnd=0	 connections:   65  63
-Nr.= 63 x=  36 y=  70 rnd=0	 connections:   62  64
-Nr.= 64 x=  38 y=  70 rnd=0	 connections:   63  65
-Nr.= 65 x=  38 y=  72 rnd=0	 connections:   62  64
-Nr.= 66 x=  29 y=  73 rnd=0	 connections:   69  67
-Nr.= 67 x=  29 y=  71 rnd=0	 connections:   68  66
-Nr.= 68 x=  27 y=  71 rnd=0	 connections:   69  67
-Nr.= 69 x=  27 y=  73 rnd=0	 connections:   66  68
-Nr.= 70 x=  55 y=  50 rnd=0	 connections:   71  73
-Nr.= 71 x=  53 y=  50 rnd=0	 connections:   72  70
-Nr.= 72 x=  53 y=  52 rnd=0	 connections:   73  71
-Nr.= 73 x=  56 y=  53 rnd=0	 connections:   72  70
-Nr.= 74 x=  44 y=  41 rnd=0	 connections:   75  77
-Nr.= 75 x=  44 y=  39 rnd=0	 connections:   74  76
-Nr.= 76 x=  47 y=  39 rnd=0	 connections:   77  75
-Nr.= 77 x=  47 y=  41 rnd=0	 connections:   76  74
-Nr.= 78 x=  38 y=  12 rnd=0	 connections:   81  79
-Nr.= 79 x=  38 y=   7 rnd=0	 connections:   78  80
-Nr.= 80 x=  43 y=   7 rnd=0	 connections:   79  81
-Nr.= 81 x=  43 y=  12 rnd=0	 connections:   78  80
-Nr.= 82 x=  31 y=  72 rnd=0	 connections:   85  83
-Nr.= 83 x=  33 y=  72 rnd=0	 connections:   82  84
-Nr.= 84 x=  33 y=  74 rnd=0	 connections:   85  83
-Nr.= 85 x=  31 y=  74 rnd=0	 connections:   84  82
-Nr.= 86 x=  38 y=  66 rnd=0	 connections:   89  87
-Nr.= 87 x=  38 y=  64 rnd=0	 connections:   88  86
-Nr.= 88 x=  40 y=  64 rnd=0	 connections:   89  87
-Nr.= 89 x=  40 y=  66 rnd=0	 connections:   86  88
-Nr.= 90 x=  41 y=  57 rnd=0	 connections:   91  93
-Nr.= 91 x=  41 y=  55 rnd=0	 connections:   92  90
-Nr.= 92 x=  42 y=  55 rnd=0	 connections:   93  91
-Nr.= 93 x=  43 y=  56 rnd=0	 connections:   92  90
-Nr.= 94 x=  61 y=   5 rnd=0	 connections:   97  95
-Nr.= 95 x=  63 y=   5 rnd=0	 connections:   96  94
-Nr.= 96 x=  63 y=   7 rnd=0	 connections:   97  95  98
-Nr.= 97 x=  61 y=   7 rnd=0	 connections:   94  96
-Nr.= 98 x=  63 y=   9 rnd=0	 connections:  101  96  99
-Nr.= 99 x=  63 y=  11 rnd=0	 connections:   98 100
-Nr.=100 x=  65 y=  11 rnd=0	 connections:   99 101
-Nr.=101 x=  65 y=   9 rnd=0	 connections:   98 100
-Nr.=102 x=  72 y=   7 rnd=0	 connections:  105 103
-Nr.=103 x=  74 y=   7 rnd=0	 connections:  102 104
-Nr.=104 x=  74 y=   9 rnd=0	 connections:  105 103
-Nr.=105 x=  72 y=   9 rnd=0	 connections:  104 102
-Nr.=106 x=  56 y=  37 rnd=0	 connections:  109 107
-Nr.=107 x=  59 y=  37 rnd=0	 connections:  106 108
-Nr.=108 x=  59 y=  39 rnd=0	 connections:  109 107
-Nr.=109 x=  56 y=  39 rnd=0	 connections:  106 108
-Nr.=110 x=  73 y=  70 rnd=0	 connections:  113 111
-Nr.=111 x=  73 y=  68 rnd=0	 connections:  112 110
-Nr.=112 x=  75 y=  68 rnd=0	 connections:  113 111
-Nr.=113 x=  75 y=  70 rnd=0	 connections:  110 112
-Nr.=114 x=  75 y=  66 rnd=0	 connections:  117 115
-Nr.=115 x=  75 y=  64 rnd=0	 connections:  116 114
-Nr.=116 x=  77 y=  64 rnd=0	 connections:  117 115
-Nr.=117 x=  77 y=  66 rnd=0	 connections:  114 116
-Nr.=118 x=  72 y=  67 rnd=0	 connections:  121 119
-Nr.=119 x=  70 y=  67 rnd=0	 connections:  120 118
-Nr.=120 x=  70 y=  65 rnd=0	 connections:  121 119
-Nr.=121 x=  72 y=  65 rnd=0	 connections:  118 120
-Nr.=122 x=  71 y=  63 rnd=0	 connections:  125 123
-Nr.=123 x=  73 y=  63 rnd=0	 connections:  124 122
-Nr.=124 x=  73 y=  61 rnd=0	 connections:  125 123
-Nr.=125 x=  71 y=  61 rnd=0	 connections:  122 124
-Nr.=126 x=  76 y=  60 rnd=0	 connections:  129 127
-Nr.=127 x=  76 y=  58 rnd=0	 connections:  128 126
-Nr.=128 x=  78 y=  58 rnd=0	 connections:  129 127
-Nr.=129 x=  78 y=  60 rnd=0	 connections:  126 128
-Nr.=130 x=   8 y=  49 rnd=0	 connections:  131 132
-Nr.=131 x=   8 y=  51 rnd=0	 connections:  130 133
-Nr.=132 x=  10 y=  49 rnd=0	 connections:  130 133
-Nr.=133 x=  10 y=  51 rnd=0	 connections:  131 132
-Nr.=134 x=  76 y=  48 rnd=0	 connections:  135  52
-Nr.=135 x=  76 y=  46 rnd=0	 connections:  136 134
-Nr.=136 x=  78 y=  46 rnd=0	 connections:   52 135
-Nr.=137 x=  74 y=  50 rnd=0	 connections:  138  51
-Nr.=138 x=  72 y=  50 rnd=0	 connections:  139 137
-Nr.=139 x=  72 y=  52 rnd=0	 connections:   51 138
-Nr.=140 x=  78 y=  54 rnd=0	 connections:   53 141
-Nr.=141 x=  80 y=  54 rnd=0	 connections:  140  53
-Nr.=142 x=  43 y=  22 rnd=0	 connections:  143  11
-Nr.=143 x=  43 y=  18 rnd=0	 connections:  144 146
-Nr.=144 x=  40 y=  17 rnd=0	 connections:  145 146
-Nr.=145 x=  39 y=  20 rnd=0	 connections:  144
-Nr.=146 x=  47 y=  19 rnd=0	 connections:  142 149
-Nr.=147 x=  40 y=  27 rnd=0	 connections:   11 148
-Nr.=148 x=  48 y=  27 rnd=0	 connections:  147  11
-Nr.=149 x=  49 y=  17 rnd=0	 connections:  146 150
-Nr.=150 x=  46 y=  16 rnd=0	 connections:  149
+Nr.= 13 x=  31 y=  57 rnd=0	 connections:  157 151
+Nr.= 14 x=  33 y=  55 rnd=0	 connections:  150 149
+Nr.= 15 x=  34 y=  30 rnd=0	 connections:   17  16  18
+Nr.= 16 x=  32 y=  31 rnd=0	 connections:   18  15
+Nr.= 17 x=  31 y=  28 rnd=0	 connections:   18  15
+Nr.= 18 x=  30 y=  30 rnd=0	 connections:   16  17  15
+Nr.= 19 x=  55 y=  11 rnd=0	 connections:   22  20  21
+Nr.= 20 x=  53 y=  13 rnd=0	 connections:   19  21  22
+Nr.= 21 x=  55 y=  15 rnd=0	 connections:   20  22  19
+Nr.= 22 x=  57 y=  13 rnd=0	 connections:   21  19  20
+Nr.= 23 x=  57 y=  65 rnd=0	 connections:   24  30  34  29  25
+Nr.= 24 x=  54 y=  63 rnd=0	 connections:   25  34  23
+Nr.= 25 x=  52 y=  66 rnd=0	 connections:   24  34  26  23
+Nr.= 26 x=  53 y=  71 rnd=0	 connections:   34  27  25
+Nr.= 27 x=  56 y=  72 rnd=0	 connections:   34  28  26  32
+Nr.= 28 x=  59 y=  70 rnd=0	 connections:   34  31  27  32
+Nr.= 29 x=  63 y=  67 rnd=0	 connections:   23  34  30  31  33
+Nr.= 30 x=  60 y=  63 rnd=0	 connections:   23  29
+Nr.= 31 x=  62 y=  71 rnd=0	 connections:   29  33  32  28  32
+Nr.= 32 x=  61 y=  74 rnd=0	 connections:   31  28  31  33  27
+Nr.= 33 x=  66 y=  71 rnd=0	 connections:   31  29  32
+Nr.= 34 x=  56 y=  67 rnd=0	 connections:   24  23  25  26  27  28  29
+Nr.= 35 x=  62 y=  19 rnd=0	 connections:   39  36  38
+Nr.= 36 x=  57 y=  23 rnd=0	 connections:   40  39  35
+Nr.= 37 x=  61 y=  27 rnd=0	 connections:   40  39
+Nr.= 38 x=  65 y=  23 rnd=0	 connections:   39  35
+Nr.= 39 x=  61 y=  23 rnd=0	 connections:   36  37  38  35
+Nr.= 40 x=  54 y=  27 rnd=0	 connections:   36  37
+Nr.= 41 x=  77 y=  13 rnd=0	 connections:   42  44  43
+Nr.= 42 x=  79 y=  15 rnd=0	 connections:   49  41  43
+Nr.= 43 x=  77 y=  17 rnd=0	 connections:   49  42  41  44  45  46  47  48
+Nr.= 44 x=  75 y=  15 rnd=0	 connections:   41  45  43
+Nr.= 45 x=  73 y=  17 rnd=0	 connections:   44  46  43
+Nr.= 46 x=  75 y=  19 rnd=0	 connections:   45  47  43
+Nr.= 47 x=  77 y=  21 rnd=0	 connections:   46  48  43
+Nr.= 48 x=  79 y=  19 rnd=0	 connections:   47  49  43
+Nr.= 49 x=  81 y=  17 rnd=0	 connections:   42  48  43
+Nr.= 50 x=  74 y=  52 rnd=0	 connections:  134 132
+Nr.= 51 x=  78 y=  48 rnd=0	 connections:  131 129
+Nr.= 52 x=  78 y=  56 rnd=0	 connections:  135 136
+Nr.= 53 x=  24 y=  40 rnd=0	 connections:   56  54
+Nr.= 54 x=  26 y=  40 rnd=0	 connections:   53  55
+Nr.= 55 x=  26 y=  42 rnd=0	 connections:   56  54
+Nr.= 56 x=  24 y=  42 rnd=0	 connections:   53  55
+Nr.= 57 x=  36 y=  72 rnd=0	 connections:   60  58
+Nr.= 58 x=  36 y=  70 rnd=0	 connections:   57  59
+Nr.= 59 x=  38 y=  70 rnd=0	 connections:   58  60
+Nr.= 60 x=  38 y=  72 rnd=0	 connections:   57  59
+Nr.= 61 x=  29 y=  73 rnd=0	 connections:   64  62
+Nr.= 62 x=  29 y=  71 rnd=0	 connections:   63  61
+Nr.= 63 x=  27 y=  71 rnd=0	 connections:   64  62
+Nr.= 64 x=  27 y=  73 rnd=0	 connections:   61  63
+Nr.= 65 x=  55 y=  50 rnd=0	 connections:   66  68
+Nr.= 66 x=  53 y=  50 rnd=0	 connections:   67  65
+Nr.= 67 x=  53 y=  52 rnd=0	 connections:   68  66
+Nr.= 68 x=  56 y=  53 rnd=0	 connections:   67  65
+Nr.= 69 x=  44 y=  41 rnd=0	 connections:   70  72
+Nr.= 70 x=  44 y=  39 rnd=0	 connections:   69  71
+Nr.= 71 x=  47 y=  39 rnd=0	 connections:   72  70
+Nr.= 72 x=  47 y=  41 rnd=0	 connections:   71  69
+Nr.= 73 x=  38 y=  12 rnd=0	 connections:   76  74
+Nr.= 74 x=  38 y=   7 rnd=0	 connections:   73  75
+Nr.= 75 x=  43 y=   7 rnd=0	 connections:   74  76
+Nr.= 76 x=  43 y=  12 rnd=0	 connections:   73  75
+Nr.= 77 x=  31 y=  72 rnd=0	 connections:   80  78
+Nr.= 78 x=  33 y=  72 rnd=0	 connections:   77  79
+Nr.= 79 x=  33 y=  74 rnd=0	 connections:   80  78
+Nr.= 80 x=  31 y=  74 rnd=0	 connections:   79  77
+Nr.= 81 x=  38 y=  66 rnd=0	 connections:   84  82
+Nr.= 82 x=  38 y=  64 rnd=0	 connections:   83  81
+Nr.= 83 x=  40 y=  64 rnd=0	 connections:   84  82
+Nr.= 84 x=  40 y=  66 rnd=0	 connections:   81  83
+Nr.= 85 x=  41 y=  57 rnd=0	 connections:   86  88
+Nr.= 86 x=  41 y=  55 rnd=0	 connections:   87  85
+Nr.= 87 x=  42 y=  55 rnd=0	 connections:   88  86
+Nr.= 88 x=  43 y=  56 rnd=0	 connections:   87  85
+Nr.= 89 x=  61 y=   5 rnd=0	 connections:   92  90
+Nr.= 90 x=  63 y=   5 rnd=0	 connections:   91  89
+Nr.= 91 x=  63 y=   7 rnd=0	 connections:   92  90  93
+Nr.= 92 x=  61 y=   7 rnd=0	 connections:   89  91
+Nr.= 93 x=  63 y=   9 rnd=0	 connections:   96  91  94
+Nr.= 94 x=  63 y=  11 rnd=0	 connections:   93  95
+Nr.= 95 x=  65 y=  11 rnd=0	 connections:   94  96
+Nr.= 96 x=  65 y=   9 rnd=0	 connections:   93  95
+Nr.= 97 x=  72 y=   7 rnd=0	 connections:  100  98
+Nr.= 98 x=  74 y=   7 rnd=0	 connections:   97  99
+Nr.= 99 x=  74 y=   9 rnd=0	 connections:  100  98
+Nr.=100 x=  72 y=   9 rnd=0	 connections:   99  97
+Nr.=101 x=  56 y=  37 rnd=0	 connections:  104 102
+Nr.=102 x=  59 y=  37 rnd=0	 connections:  101 103
+Nr.=103 x=  59 y=  39 rnd=0	 connections:  104 102
+Nr.=104 x=  56 y=  39 rnd=0	 connections:  101 103
+Nr.=105 x=  73 y=  70 rnd=0	 connections:  108 106
+Nr.=106 x=  73 y=  68 rnd=0	 connections:  107 105
+Nr.=107 x=  75 y=  68 rnd=0	 connections:  108 106
+Nr.=108 x=  75 y=  70 rnd=0	 connections:  105 107
+Nr.=109 x=  75 y=  66 rnd=0	 connections:  112 110
+Nr.=110 x=  75 y=  64 rnd=0	 connections:  111 109
+Nr.=111 x=  77 y=  64 rnd=0	 connections:  112 110
+Nr.=112 x=  77 y=  66 rnd=0	 connections:  109 111
+Nr.=113 x=  72 y=  67 rnd=0	 connections:  116 114
+Nr.=114 x=  70 y=  67 rnd=0	 connections:  115 113
+Nr.=115 x=  70 y=  65 rnd=0	 connections:  116 114
+Nr.=116 x=  72 y=  65 rnd=0	 connections:  113 115
+Nr.=117 x=  71 y=  63 rnd=0	 connections:  120 118
+Nr.=118 x=  73 y=  63 rnd=0	 connections:  119 117
+Nr.=119 x=  73 y=  61 rnd=0	 connections:  120 118
+Nr.=120 x=  71 y=  61 rnd=0	 connections:  117 119
+Nr.=121 x=  76 y=  60 rnd=0	 connections:  124 122
+Nr.=122 x=  76 y=  58 rnd=0	 connections:  123 121
+Nr.=123 x=  78 y=  58 rnd=0	 connections:  124 122
+Nr.=124 x=  78 y=  60 rnd=0	 connections:  121 123
+Nr.=125 x=   8 y=  49 rnd=0	 connections:  126 127
+Nr.=126 x=   8 y=  51 rnd=0	 connections:  125 128
+Nr.=127 x=  10 y=  49 rnd=0	 connections:  125 128
+Nr.=128 x=  10 y=  51 rnd=0	 connections:  126 127
+Nr.=129 x=  76 y=  48 rnd=0	 connections:  130  51
+Nr.=130 x=  76 y=  46 rnd=0	 connections:  131 129
+Nr.=131 x=  78 y=  46 rnd=0	 connections:   51 130
+Nr.=132 x=  74 y=  50 rnd=0	 connections:  133  50
+Nr.=133 x=  72 y=  50 rnd=0	 connections:  134 132
+Nr.=134 x=  72 y=  52 rnd=0	 connections:   50 133
+Nr.=135 x=  78 y=  54 rnd=0	 connections:   52 136
+Nr.=136 x=  80 y=  54 rnd=0	 connections:  135  52
+Nr.=137 x=  43 y=  22 rnd=0	 connections:  138  11
+Nr.=138 x=  43 y=  18 rnd=0	 connections:  139 141
+Nr.=139 x=  40 y=  17 rnd=0	 connections:  140 141
+Nr.=140 x=  39 y=  20 rnd=0	 connections:  139
+Nr.=141 x=  47 y=  19 rnd=0	 connections:  137 144
+Nr.=142 x=  40 y=  27 rnd=0	 connections:   11 143
+Nr.=143 x=  48 y=  27 rnd=0	 connections:  142  11
+Nr.=144 x=  49 y=  17 rnd=0	 connections:  141 145
+Nr.=145 x=  46 y=  16 rnd=0	 connections:  144
+Nr.=146 x=  34 y=  53 rnd=0	 connections:  147 150
+Nr.=147 x=  36 y=  54 rnd=0	 connections:  148 146
+Nr.=148 x=  37 y=  57 rnd=0	 connections:  149 147
+Nr.=149 x=  35 y=  57 rnd=0	 connections:   14 148
+Nr.=150 x=  31 y=  53 rnd=0	 connections:  146  14
+Nr.=151 x=  32 y=  58 rnd=0	 connections:   13 152
+Nr.=152 x=  34 y=  60 rnd=0	 connections:  151 153
+Nr.=153 x=  30 y=  61 rnd=0	 connections:  152 154
+Nr.=154 x=  28 y=  58 rnd=0	 connections:  153 155
+Nr.=155 x=  27 y=  56 rnd=0	 connections:  154 156
+Nr.=156 x=  27 y=  54 rnd=0	 connections:  155  13 157
+Nr.=157 x=  31 y=  55 rnd=0	 connections:  156  13
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 9
