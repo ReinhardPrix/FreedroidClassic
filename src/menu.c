@@ -1700,6 +1700,7 @@ Graphics_Options_Menu (void)
 		#else
 		GiveMouseAlertWindow("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
 There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n");
+                SetCurrentFont ( Menu_BFont );
 		#endif
 		break;
 		
