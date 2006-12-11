@@ -3121,7 +3121,7 @@ void
 Contribute_Menu (void)
 {
     char* ContributeText = "\n\n\
-                       HOW TO CONTRIUBTE\n\n\n\
+                       HOW TO CONTRIBUTE\n\n\n\
 FreedroidRPG is entirely free software and free artwork.\n\
 It is developed exclusively by volunteers in their leisure time.\n\
 \n\
