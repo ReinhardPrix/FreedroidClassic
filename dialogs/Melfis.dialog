@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=65  PositionY=241  
-Subtitle="Not now! I must pay attention."
+Subtitle="Verschwinde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,26 +42,43 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" What are you concentrating on?"
+New Option Nr=1  OptionText=" Erm... What do you mean?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=174  PositionY=242  
-Subtitle="I'm trying to learn some bot hunting skills."
+Subtitle="Ich bin der Geist, das stets verineint."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And master Darwin shows me how. And now please leave me alone."
+Subtitle="Und das mit Recht; denn alles, was entsteht,"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ist wert, dass er zugrunde geht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Can't I somehow help you with the hunting?"
+New Option Nr=2  OptionText=" I really do not understand you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=149  
-Subtitle="Well, maybe you could. You could try to get the bots to follow you to this place. We'll wait here."
+Subtitle="Wer sie nich kennte Die Elemente,"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And when the bots are here, we'll fire. It's very dangerous. See to it that you don't get in the line of fire!"
+Subtitle="Ihre Kraft und Eigenschaft,"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ware kein Meister uber die Geister."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" I wish I knew what you are talking about."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Verschwinde."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -69,7 +86,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" I need to go now."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=433  PositionY=242  
-Subtitle="Finally."
+Subtitle=" . . ."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
