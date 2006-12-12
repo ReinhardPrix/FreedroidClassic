@@ -44,20 +44,6 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Now about the reward you promised me..."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=141  PositionY=485  
-Subtitle="Yes, I know I said I'd give you lots of food. But for that I must cook something first."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Come back later, then maybe I'll have something already. But now leave me alone with my cooking art please."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I need total focus to unleash the power of cook-fu!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=8 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
 New Option Nr=10  OptionText=" How is it going?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=719  PositionY=160  
@@ -172,7 +158,6 @@ Subtitle="Feel free to go Linarian, but make sure to be very dead before they st
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=81 ChangeToValue=0
 ChangeOption=82 ChangeToValue=1
-DoSomethingExtra="AssignMission:2"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -267,7 +252,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=30  OptionText="HAVE THE CRYSTALS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1216  PositionY=125  
 ChangeOption=30 ChangeToValue=0
@@ -288,7 +273,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=32  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=32  OptionText="TUX GIVES THE CRYSTALS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1215  PositionY=195  
 ChangeOption=32 ChangeToValue=0
@@ -297,7 +282,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=33  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=33  OptionText="TUX DOES NOT HAVE THE CRYSTALS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1216  PositionY=60  
 ChangeOption=33 ChangeToValue=0
@@ -306,7 +291,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=34  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=34  OptionText="MISSION IS DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1061  PositionY=198  
 ChangeOption=34 ChangeToValue=0
@@ -315,7 +300,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=35  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=35  OptionText="YEAH, MISSION IS DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1129  PositionY=123  
 ChangeOption=35 ChangeToValue=0
@@ -326,7 +311,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=36  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=36  OptionText="DO NOTHING NODE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1062  PositionY=122  
 ChangeOption=36 ChangeToValue=0
@@ -334,7 +319,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=37  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=37  OptionText="TUX STARTED ON THE QUEST"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1062  PositionY=58  
 ChangeOption=37 ChangeToValue=0
@@ -353,12 +338,17 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Good luck. Try not to get yourself killed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=82 ChangeToValue=0
+ChangeOption=40 ChangeToValue=0
+ChangeOption=42 ChangeToValue=0
+ChangeOption=41 ChangeToValue=0
+ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_east_gate_of_town"
+DoSomethingExtra="AssignMission:2"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=39  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=39  OptionText="MISSION IS DONE #2"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1174  PositionY=91  
 ChangeOption=39 ChangeToValue=0
