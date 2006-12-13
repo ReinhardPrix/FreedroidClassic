@@ -195,7 +195,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" And idea where I can find some entertainment here?"
+New Option Nr=13  OptionText=" Any idea where I can find some entertainment here?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Well... Erm... No."
