@@ -260,7 +260,6 @@ PlayATitleFile ( char* Filename )
     char* NextSubsectionStartPointer;
     char* PreparedBriefingText;
     char* TerminationPointer;
-    char* TitlePictureName;
     char* TitleSongName;
     int ThisTextLength;
     
@@ -276,8 +275,6 @@ PlayATitleFile ( char* Filename )
     TitleSongName = ReadAndMallocStringFromData ( TitleFilePointer, "The title song in the sound subdirectory for this mission is : " , "\n" ) ;
     
     SwitchBackgroundMusicTo ( TitleSongName );
-    
-    TitlePictureName = ReadAndMallocStringFromData ( TitleFilePointer, "The title picture in the graphics subdirectory for this mission is : " , "\n" ) ;
     
     SDL_SetClipRect ( Screen, NULL );
     Me[0].status=BRIEFING;
