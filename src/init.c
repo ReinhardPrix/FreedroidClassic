@@ -122,7 +122,7 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_KEVIN ] = "He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope." ;
 
-    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him." ;
+    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him. The armor hides his body" ;
 
     character_descriptions [ PERSON_614 ] = "There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platform can be your best friend during combat...";
 
@@ -150,25 +150,33 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_TYBALT ] = "His IQ is sometimes as high as a dog's. Only sometimes though. He smells like a dog too.";
 
+    character_descriptions [ PERSON_PENDRAGON ] = "He seems to be the chief of the gate guards. Hard to say anything more, the armor hides his body.";
 
- ;
+    character_descriptions [ PERSON_BENJAMIN ] = "Just an another Red Guard. The armor hides his body.";
+
+    character_descriptions [ PERSON_DOC_MOORE ] = "Some people say that every doctor is addicted to drugs. You estimate that right now this one is high on at least four different narcotics. Doc Moore seems very happy indeed...";
+
+    character_descriptions [ PERSON_BUTCH ] = "Yet another Red Guard. You cannot say anything more, the armor hides his body.";
+
+    character_descriptions [ PERSON_SPENCER ] = "He looks taller than most of the Red Guards, but you cannot really say anything more about him, the armor hides his body.";
+
+    character_descriptions [ PERSON_MICHELANGELO ] = "And now you know who is to be blamed for the truly awful food in here. You are in a killing mood. Oh yeah. The cook must die. The cook must die. Ha. Ha. Ha.";
+
+    character_descriptions [ PERSON_SUBDIALOG_DUMMY ] = "This is a major bug. Please report this incident to the developers. Thank you.";
+
+    character_descriptions [ PERSON_STANDARD_BOT_AFTER_TAKEOVER ] = "Blood. Stone. Cog. The Blood has made the Cog from the Stone. Now the Cog is making more Stone from the Blood. I wonder what is the next step of the cycle...";
+    
     /*
-    PERSON_PENDRAGON,
+    Note: Those are not used in the game.
+    Maybe for the best, most are badly written. 
     PERSON_MER,
     PERSON_ERNIE,
-    PERSON_BENJAMIN,
-    PERSON_SPENCER,
-    PERSON_BUTCH,
-    PERSON_DOC_MOORE,
-    PERSON_MICHELANGELO,
     PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
     PERSON_STANDARD_NEW_TOWN_GATE_GUARD,
     PERSON_OLD_TOWN_GATE_GUARD_LEADER,
     PERSON_STANDARD_MS_FACILITY_GATE_GUARD,
     PERSON_MS_FACILITY_GATE_GUARD_LEADER,
     PERSON_HEA,
-    PERSON_STANDARD_BOT_AFTER_TAKEOVER,
-    PERSON_SUBDIALOG_DUMMY,
     */
 
 }; // void init_character_descriptions ( void )
