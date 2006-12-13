@@ -64,15 +64,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Are you selling something other than drinks?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=226  
-Subtitle="Yeah, I have some junk... Want to see?"
+Subtitle="Yeah, I have some junk here... Want to see?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Ewald"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Yes, I could use a drink. What is there to be had?"
+New Option Nr=3  OptionText=" I could use a drink. What is there to be had?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=284  PositionY=309  
 Subtitle="Well... We are a bit short on supplies right now... Erm... AH! I know!"
@@ -93,6 +93,7 @@ PositionX=353  PositionY=209
 Subtitle="Here you go. That one is on the house. And if the water is not enough, just ask me for more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
+ChangeOption=9 ChangeToValue=1
 ChangeOption=6 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -105,6 +106,7 @@ PositionX=445  PositionY=319
 Subtitle="Here you go."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=8 ChangeToValue=1
 ChangeOption=6 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -117,6 +119,7 @@ PositionX=576  PositionY=189
 Subtitle="Eh... Sure, as you wish. Here you go."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
 ChangeOption=5 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -192,7 +195,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText="And idea where I can find some entertainment here?"
+New Option Nr=13  OptionText=" And idea where I can find some entertainment here?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Well... Erm... No."
@@ -200,6 +203,10 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="What the bots did not smash, the Red Guard taxed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Fun is kinda dead right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Well, unless you are in the Red Guard itself, of course. They have those big guns that can destroy a dozen bots with one shot..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Fun, if you ask me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
