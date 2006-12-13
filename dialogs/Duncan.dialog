@@ -96,6 +96,8 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="It is not the time to speak of such things yet. Come another day, and we shall talk about it in more detail."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The Red Guard can have their great laser beams and plasma cannons... But nothing can save them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -185,7 +187,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=93  OptionText=" I don't have any secrets."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="And neither don't I."
+Subtitle="And neither do I."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=93 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
