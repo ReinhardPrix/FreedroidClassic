@@ -112,7 +112,7 @@ Subtitle="Crying, screaming or begging time to rewind itself and give me a secon
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="What I can do is to try to have a good life despite the constant threat from the bots outside the town walls."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And besides, life is not so bad with a robotic leg. The motors inside it can mimic a normal walk very well. Most people do not even  notice something is different about me."
+Subtitle="And besides, life is not so bad with a robotic leg. The motors inside it can mimic a normal walk very well. Most people do not even notice something is different about me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -436,7 +436,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=39  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="<?>"
+Subtitle="I am not happy about this. I suggest you leave the city."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Accidents... Happen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=42 ChangeToValue=0
