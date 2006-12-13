@@ -182,7 +182,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=13  OptionText="DIXON SUCCESSFUL."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
 Subtitle="Dixon told me about the matter with his toolkit. He seemed pretty impressed by you."
@@ -193,7 +193,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=14  OptionText="DIXON NOT DONE YET"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=501  PositionY=455  
 Subtitle="I think our teleporter service man, Dixon, he's got some problem. You might want to talk to him."
@@ -204,7 +204,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
 Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased and so was I, heh."
@@ -215,7 +215,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
 Subtitle="I think you should visit the camp's cook some time. He's always around here, somewhere to the south."
@@ -226,7 +226,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=17  OptionText="IS MICHELANGELO DONE?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=567  PositionY=421  
 ChangeOption=17 ChangeToValue=0
@@ -235,7 +235,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=18  OptionText="IS TUX AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=675  PositionY=419  
 ChangeOption=18 ChangeToValue=0
@@ -244,7 +244,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=19  OptionText="TUX IS AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=723  PositionY=374  
 Subtitle="From Butch I hear you've become a novice arena master. Congratulations from me too."
@@ -255,7 +255,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
 Subtitle="You might want to score some arena victories. That could also help your reputation a lot."
@@ -266,7 +266,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=21  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=21  OptionText="IS BENDER SICK?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=771  PositionY=421  
 ChangeOption=21 ChangeToValue=0
@@ -275,7 +275,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=22  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=22  OptionText="BENDER DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=818  PositionY=375  
 Subtitle="Helping Bender along was also a smart move. But you should be very careful with this one. He can get mad rather easily. A bit of a security threat, but we can't be too picky."
@@ -286,7 +286,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=23  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=23  OptionText="BENDER STILL SICK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=820  PositionY=461  
 Subtitle="As far as I know, Bender is still very sick."
@@ -297,16 +297,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=24  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=24  OptionText="WAREHOUSE MISSION DONE?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=870  PositionY=418  
 ChangeOption=24 ChangeToValue=0
-OnCondition="MissionComplete:5" JumpToOption=25 ElseGoto=26
+OnCondition="MissionComplete:5" JumpToOption=25 ElseGoto=27
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=25  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=25  OptionText="WAREHOUSE DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=928  PositionY=374  
 Subtitle="But most importantly, I was very impressed with you when you cleared out the warehouse. That was a huge deed I will never forget."
@@ -317,16 +317,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=26  OptionText="THIS WILL NOT EVER BE VISIBLE"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=930  PositionY=458  
-ChangeOption=26 ChangeToValue=0
-LinkedTo:27
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=27  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=27  OptionText="THERE IS ENOUGH POINTS TO JOIN RG"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=997  PositionY=416  
 ChangeOption=27 ChangeToValue=0
@@ -335,7 +326,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=28  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=28  OptionText="JOINING TOWN GUARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=473  PositionY=290  
 Subtitle="OK. Your list of achievements is long enough. You can join us. So I hereby declare you a member of the Red Guard."
@@ -355,7 +346,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=29  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=29  OptionText="SOME POINTS? ANYTHING?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1060  PositionY=418  
 ChangeOption=29 ChangeToValue=0
@@ -364,7 +355,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=30  OptionText="STARTS TO LOOK GOOD FOR TUX, BUT NOT YET"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
 Subtitle="All in all, not quite so bad. But you still need to do the one thing or the other. Then we can talk about it."
@@ -374,7 +365,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=31  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=31  OptionText="TUX SUCKS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1095  PositionY=469  
 Subtitle="I can't accept you into the guard like this. Get going. There are still many things to do for you."
@@ -384,7 +375,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=32  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=32  OptionText="STUPID OPTION. IT MUST DIE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=443  
 Subtitle="But you are a member of the Town Guard already! Don't be pulling my leg! Guards must stick together."
@@ -408,7 +399,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=34  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=34  OptionText="GOT THE DATA CUBE?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=160  PositionY=540  
 ChangeOption=34 ChangeToValue=0
@@ -417,7 +408,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=35  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=35  OptionText="GOT IT!"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=219  PositionY=509  
 ChangeOption=35 ChangeToValue=0
@@ -498,7 +489,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=41  OptionText="STARTED THE CUBE MISSION?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=72  PositionY=579  
 ChangeOption=41 ChangeToValue=0
