@@ -180,7 +180,7 @@ New Option Nr=90  OptionText="JASMINE_FIRST_CHECK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=90 ChangeToValue=0
-OnCondition="CookieIsPlanted:jasmine_count1" JumpToOption=91 ElseGoto=99
+OnCondition="CookieIsPlanted:jasmine_count1:" JumpToOption=91 ElseGoto=99
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
@@ -189,7 +189,7 @@ New Option Nr=91  OptionText="JASMINE_CHECK_TWO"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=91 ChangeToValue=0
-OnCondition="CookieIsPlanted:jasmine_count2" JumpToOption=97 ElseGoto=98
+OnCondition="CookieIsPlanted:jasmine_count2:" JumpToOption=97 ElseGoto=98
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
