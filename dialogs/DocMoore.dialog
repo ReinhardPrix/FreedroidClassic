@@ -58,6 +58,7 @@ New Option Nr=2  OptionText=" Doc, I took some of those brain enlargement pills.
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=294  PositionY=143  
 OnCondition="CookieIsPlanted:BrainEnlargementAntidodeGiven:" JumpToOption=5 ElseGoto=4
+ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -121,6 +122,7 @@ New Option Nr=6  OptionText="ON MISSION 0 WAS ASSIGNED..."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=49  PositionY=71  
 OnCondition="MissionAssigned:0" JumpToOption=8 ElseGoto=7
+ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
@@ -128,6 +130,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=7  OptionText="DO NOTHING"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=139  PositionY=35  
+ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -136,6 +139,7 @@ New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=134  PositionY=110  
 ChangeOption=3 ChangeToValue=1
+ChangeOption=8 ChangeToValue=0
 OnCondition="MissionComplete:0" JumpToOption=7 ElseGoto=9
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -145,6 +149,7 @@ New Option Nr=9  OptionText="THIS SHOULD ENABLE..."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=214  PositionY=137  
 ChangeOption=2 ChangeToValue=1
+ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
