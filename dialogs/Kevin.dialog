@@ -284,11 +284,63 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=25  OptionText=" Jasmine just blew up."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Oh. Right."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Well, thanks for telling me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Back to the drawing board, I guess..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+ChangeOption=26 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" I thought you would be more worried about her death."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Why? I have backups from the last friday. No reason to worry at all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It will be a while till I get her together again, but she will be fine."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText="JASMINE SIGSEGV"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=50 ChangeToValue=0
+OnCondition="CookieIsPlanted:jasmine_sigsegv:" JumpToOption=51 ElseGoto=52
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=51  OptionText="JASMINE_BLEW_UP"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=51 ChangeToValue=0
+ChangeOption=25 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=52  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=52 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=99  OptionText=" I'll be off then."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=530  PositionY=241  
 ChangeOption=99 ChangeToValue=1
-DoSomethingExtra="EndDialog"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
