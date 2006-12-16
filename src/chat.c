@@ -1107,6 +1107,7 @@ int
 ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 {
     int i;
+    int enddialog = 0;
 
     //--------------------
     // Now a menu section has been made.  We do the reaction:
@@ -1177,13 +1178,15 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 	DebugPrintf ( CHAT_DEBUG_LEVEL , "\nWARNING!  Starting to invoke extra.  Text is: %s." ,
 		      ChatRoster [ MenuSelection ] . extra_list[i] );
 	
-	if ( ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid ) == 1 ) return ( 1 );
+	if ( ExecuteChatExtra ( ChatRoster [ MenuSelection ] . extra_list[i] , ChatDroid ) == 1 )
+	enddialog = 1;
 	
 	//--------------------
 	// Maybe the chat extra has annoyed the chat partner and he is now
 	//
 	//
-	if ( ! ChatDroid -> is_friendly ) return(1) ;
+	if ( ! ChatDroid -> is_friendly )
+	    enddialog = 1 ;
 	
 	//--------------------
 	// It can't hurt to have the overall background redrawn after each extra command
@@ -1210,15 +1213,16 @@ ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode 
 			 ChatRoster [ MenuSelection ] . on_goto_second_target );
 	    MenuSelection = ChatRoster [ MenuSelection ] . on_goto_second_target ;
 	}
-	ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+	enddialog = ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
     }
-    if ( ChatRoster [ MenuSelection ] . link_target )
+    else if ( ChatRoster [ MenuSelection ] . link_target )
     {
         MenuSelection = ChatRoster [ MenuSelection ] . link_target ;
-        ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
+        enddialog = ProcessThisChatOption ( MenuSelection , PlayerNum , ChatPartnerCode , ChatDroid );
     }
 
-return (0);    
+return (enddialog);  
+  
 }; // int ProcessThisChatOption ( int MenuSelection , int PlayerNum , int ChatPartnerCode , Enemy ChatDroid )
 
 
@@ -1313,7 +1317,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	    return;
 	}
 	
-	if ( ! ChatDroid -> is_friendly ) return ;
+//	if ( ! ChatDroid -> is_friendly ) return ;
 	
 //	if ( MenuSelection == END_ANSWER )
 //	{
