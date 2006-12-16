@@ -42,10 +42,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" I need to get into the citadel."
+New Option Nr=1  OptionText=" I want to join the Red Guard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=158  PositionY=302  
-Subtitle="Sorry, but the citadel is off limits to you. Only members of the Red Guard of the Old Town are permitted to enter."
+Subtitle="Hmm... Really? Well, you cannot join just like that, you know..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You must prove that you would make a good new member."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -53,7 +55,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" What must I do to become a member of the Guard."
+New Option Nr=2  OptionText=" I really want to become a member."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=246  PositionY=365  
 ChangeOption=2 ChangeToValue=0
@@ -386,7 +388,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=33  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=33  OptionText="NOT JOINED YET."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=312  PositionY=321  
 Subtitle="This is not so easy. At first you must establish a reputation around here. Ask around, talk to people and build your reputation."
