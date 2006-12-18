@@ -2507,7 +2507,7 @@ void
 init_obstacle_data( void )
 {
     int i;
-    float standard_wall_thickness = 0.5 ;
+    float standard_wall_thickness = 0.8 ;
     iso_image empty_iso_image = UNLOADED_ISO_IMAGE ;
     
     //--------------------
