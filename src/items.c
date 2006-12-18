@@ -1368,12 +1368,10 @@ DamageItem( item* CurItem )
     if ( ( CurItem->type != (-1) ) &&
 	 ( CurItem->max_duration != (-1) ) )
     {
-	if ( ! CurItem->damage ) 
-	    CurItem->current_duration -= rintf(0.02 * MyRandom( 50 )) ;
-	else
-	                         {
-	    CurItem->current_duration -= rintf(0.02 * MyRandom( 50 )) ;
-	}
+//	if ( ! CurItem->damage ) 
+	    CurItem->current_duration -= rintf(0.0020 * MyRandom( 500 )) ;
+//	else
+//	    CurItem->current_duration -= rintf(0.01 * MyRandom( 100 )) ;
 	
 	//--------------------
 	// If the item has gone over it's threshhold of duration, it finally
@@ -1395,7 +1393,7 @@ void
 DamageAllEquipment( int PlayerNum )
 {
 
-    // DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
+    DamageItem ( & ( Me [ PlayerNum ] . weapon_item  ) );
     DamageItem ( & ( Me [ PlayerNum ] . armour_item  ) );
     DamageItem ( & ( Me [ PlayerNum ] . shield_item  ) );
     DamageItem ( & ( Me [ PlayerNum ] . drive_item   ) );

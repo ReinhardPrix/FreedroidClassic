@@ -3015,7 +3015,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
     //--------------------
     // The weapon was used and therefore looses some of it's durability
     //
-    DamageItem ( & ( Me [ player_num ] . weapon_item  ) );
+//    DamageItem ( & ( Me [ player_num ] . weapon_item  ) );
     
     //--------------------
     // We always start the weapon application cycle, i.e. change of Tux
