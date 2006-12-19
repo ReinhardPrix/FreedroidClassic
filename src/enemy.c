@@ -2342,10 +2342,6 @@ occasionally_update_vector_and_shot_target ( enemy* ThisRobot , moderately_finep
  * to check if a certain step makes sense or not, which is exactly what
  * this function is supposed to do.
  *
- * NOTE:  In order to keep enemies from stepping too close to walls or 
- *        into obstacles we check a bit longer distance than given in
- *        the actual parameter.  That's just to have some slack.
- *
  * ---------------------------------------------------------------------- */
 int
 ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , int enemynum )
@@ -2353,12 +2349,10 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
     float vec_len;
     
     vec_len = vect_len ( StepVector );
-    StepVector . x *= (vec_len + 0.37) / vec_len ;
-    StepVector . y *= (vec_len + 0.37) / vec_len ;
 
     if ( ( IsPassable ( ThisRobot -> pos.x + StepVector.x , 
 			ThisRobot -> pos.y + StepVector.y ,
-			ThisRobot -> pos.z ) ) &&
+			ThisRobot -> pos.z ) ) && 
 	 ( CheckIfWayIsFreeOfDroidsWithTuxchecking ( ThisRobot->pos.x , ThisRobot->pos.y , 
 						     ThisRobot->pos.x + StepVector . x , 
 						     ThisRobot->pos.y + StepVector . y ,
@@ -2404,17 +2398,8 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
     //
     if ( ThisRobot -> animation_type == GETHIT_ANIMATION ) 
 	return;
-    
-    if ( DirectionSign < 0 )
-    {
-	if ( MyRandom ( 100 ) > 20 )
-	{
-	    // DebugPrintf ( 1 , "\nDROPPING MOVE INFOUT from failed random check." );
-	    return;
-	}
-	DirectionSign = (-3) ;
-    }
-
+ 
+    DirectionSign = (DirectionSign < 0 ? (-3) : DirectionSign);   
     //--------------------
     // If the distance is not yet right, we find a new location to move to.  We
     // do this WITHOUT consulting the waypoints, so that the robots become more
@@ -2535,10 +2520,15 @@ MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int Dire
 	//
 	if ( ConsideredMoveIsFeasible ( ThisRobot , RotatedStepVector , enemynum ) )
 	{
+		//fprintf (stderr, "Move to %f, %f from %f, %f feasible\n",  ThisRobot -> pos.x + RotatedStepVector . x, ThisRobot -> pos.y + RotatedStepVector 
+//. y, ThisRobot -> pos.x, ThisRobot -> pos.y);
 	    ThisRobot -> PrivatePathway [ 0 ] . x = ThisRobot -> pos.x + RotatedStepVector . x ;
 	    ThisRobot -> PrivatePathway [ 0 ] . y = ThisRobot -> pos.y + RotatedStepVector . y ;
 	    break;
 	}
+//	else
+//	fprintf (stderr, "Move to %f, %f from %f, %f NOT feasible\n",  RotatedStepVector . x, RotatedStepVector . y, ThisRobot -> pos.x, ThisRobot -> pos.y);
+
     }
     
     //--------------------
