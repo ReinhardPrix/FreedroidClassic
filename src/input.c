@@ -1005,7 +1005,23 @@ ReactToSpecialKeys(void)
     //
     if ( PPressed () )
 	Pause ();
-    
+	 
+     //-------------------- 	 
+     // t key turns on/off transparency mode 	 
+     // 	 
+     if ( TPressed() ) 	 
+     { 	 
+         if ( !TPressed_LastFrame ) 	 
+         { 	 
+	             GameConfig.transparency = ! GameConfig.transparency; 	 
+         } 	 
+  	 
+         TPressed_LastFrame = TRUE; 	 
+     } 	 
+     else 	 
+     { 	 
+         TPressed_LastFrame = FALSE; 	 
+     }    
     
 }; // void ReactToSpecialKeys(void)
 
