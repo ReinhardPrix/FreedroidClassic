@@ -1244,6 +1244,7 @@ TryToRepairItem( item* RepairItem )
 	PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
+        SetCurrentFont ( Menu_BFont );
 	DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
 	return;
     }
@@ -1252,6 +1253,7 @@ TryToRepairItem( item* RepairItem )
     {
 	GiveItemDescription( linebuf , RepairItem , TRUE );
 	strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
+        SetCurrentFont ( Menu_BFont );
 	MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	switch (MenuPosition) 
 	{
