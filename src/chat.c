@@ -44,7 +44,6 @@
 #define POP_ROSTER 3 
 
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
-char ChatCharacterInitialized[ MAX_PERSONS ];
 EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 char* chat_protocol = NULL ;
 
@@ -166,8 +165,7 @@ cookie to be set in FreedroidRPG.",
 	if ( CookieString [ strlen ( CookieString ) - 1 ] == ':' )
 	{
 	    CookieString [ strlen ( CookieString ) - 1 ] = 0 ;
-	    DebugPrintf ( 1 , "\nRemoving trailing ':' character from cookie text..." , 
-			  CookieString [ strlen ( CookieString ) - 1 ] );
+	    DebugPrintf ( 1 , "\nRemoving trailing ':' character from cookie text...");
 	}
     }
     
@@ -1546,7 +1544,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
     LoadChatRosterWithChatSequence ( fpath );
 
-    if ( ! ChatCharacterInitialized [ ChatFlagsIndex ] )
+    if ( ! Me [ 0 ] . chat_character_initialized [ ChatFlagsIndex ] )
 	{ // then we must initialize this character
         int i, j;
 	for (i = 0; i < MAX_ANSWERS_PER_PERSON; i ++)
@@ -1582,7 +1580,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
 		else	fprintf(stderr, "Node %d is inactive\n", i);
 
 		}*/
-        ChatCharacterInitialized [ ChatFlagsIndex ]  = 1;
+        Me [ 0 ] . chat_character_initialized [ ChatFlagsIndex ] = 1;
 	}
 
     

@@ -701,6 +701,7 @@ typedef struct
     char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
     char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
     int is_town_guard_member;
+    char chat_character_initialized [ MAX_PERSONS ]; 
     
     //--------------------
     // THE FOLLOWING ARE INFORMATION, THAT ARE HUGE AND THAT ALSO DO NOT NEED
