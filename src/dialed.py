@@ -54,10 +54,34 @@ def load(current):
     current = checkup
   return current
 
+def batchdo(task):
+  import glob
+  alldialogs = glob.glob("../dialogs/*.dialog")
+  for onedialog in alldialogs:
+    everything = None
+    node = None
+    subnode = None
+    current = open("../dialogs/" + onedialog)
+    home = clip(current)
+    count = nodecount(current, home)
+    everything = scanall(current, count)
+    if task == "!s": #Erases all sounds out there.
+      for node in everything:
+        for subnode in node:
+          if subnode[0] == "reply.s" or subnode[0] == "tuxtalk.s":
+            if subnode[1] != "NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER":
+              subnode[1] = "Sorry_No_Voice_Sample_Yet_0.wav"
+      writeall(current, everything)
+    if task == "dd":
+      print "\n\n------------------------------\n\n  " + onedialog
+      for node in everything:
+        dumpnode(node)
+    
+
 #Headers are a pain, I do not need them, so I just scroll past them.
 def clip(current):
   line = ""
-  while line != "Beginning of new chat dialog for character=\"XXXXX\"\n" :
+  while line != "Beginning of new chat dialog for character=\"XXXXX\"\n":
     line = file.readline(current)
   home = file.tell(current) + 1
   return home
@@ -65,7 +89,7 @@ def clip(current):
 #Goes to the next node.
 def nextnode(current):
   line = ''
-  while line != "----------------------------------------------------------------------\n" :
+  while line != "----------------------------------------------------------------------\n":
     line = file.readline(current)
     if line == '' :
       break
@@ -90,7 +114,7 @@ def scanall(current, count):
 
 def doid(current, count):
   everything = []
-  for number in range(count):   # Replace range with a list of node numbers. Write a bit to gather the node names.
+  for number in range(count):
     node = []
     crude = ['']
     while crude[0] != "startup":
@@ -113,8 +137,7 @@ def whatisit(current) :
       meat = str(file.readline(current))[13:-2]
     elif unknown == "Position" : #Coordinates to maintain backwards compatibility with the GTK editor.
       what = "coords"
-      meat = ["No damn clue for now." , "No damn clue for now."]
-      meat[0] = ''
+      meat = ['' , '']
       character=''
       while character != "=" :
         character = file.read(current, 1)
@@ -140,8 +163,7 @@ def whatisit(current) :
 
     elif unknown == "ChangeOp" :  #Another harder one. 
       what = "switch"
-      meat = ["No damn clue for now." , "No damn clue for now."]
-      meat[0] = ''
+      meat = ['' , '']
       character=''
       while character != "=" :
         character = file.read(current, 1)
@@ -236,6 +258,8 @@ def whatisit(current) :
       meat =  str(file.readline(current))[18:-2]
     else :                    
       print "PAAAANIIIIIIIIC!!!"                    
+      print unknown
+      print current
       hcf()
     output = [what, meat]
     return output
@@ -1330,6 +1354,10 @@ while True :
       error()
     else:
       dumpsound(node)
+  elif command == "*dd":
+    batchdo("dd")
+  elif command == "*!s":
+    batchdo("!s")
   else:
     error()
   
