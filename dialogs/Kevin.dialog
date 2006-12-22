@@ -295,6 +295,7 @@ Subtitle="Back to the drawing board, I guess..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 ChangeOption=26 ChangeToValue=1
+DoSomethingExtra="PlantCookie:kevin_sigtalk"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -315,7 +316,7 @@ New Option Nr=50  OptionText="JASMINE SIGSEGV"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=50 ChangeToValue=0
-OnCondition="CookieIsPlanted:jasmine_sigsegv:" JumpToOption=51 ElseGoto=52
+OnCondition="CookieIsPlanted:jasmine_sigsegv:" JumpToOption=51 ElseGoto=54
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
@@ -325,14 +326,32 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=51 ChangeToValue=0
 ChangeOption=25 ChangeToValue=1
+OnCondition="CookieIsPlanted:kevin_sigtalk:" JumpToOption=53 ElseGoto=52
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=52  OptionText="DO NOTHING NODE"
+New Option Nr=52  OptionText="NOT TALKED ABOUT JASMINE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=52 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=53  OptionText="YES, TALKED BEFORE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=53 ChangeToValue=0
+ChangeOption=25 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=54  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=54 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
