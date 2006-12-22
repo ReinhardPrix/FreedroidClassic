@@ -56,12 +56,13 @@ New Option Nr=2  OptionText=" I want to get into the guardhouse."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 ChangeOption=2 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
 OnCondition="CookieIsPlanted:tux_has_joined_guard:" JumpToOption=3 ElseGoto=4
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=3  OptionText="THE GATE OPENS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=224  PositionY=154  
 Subtitle="Of course. Guard members are always authorized to enter the guardhouse. The gate is open. Enjoy your stay."
@@ -72,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=4  OptionText="YOU SHALL NOT PASS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
 Subtitle="Sorry pal, but I don't think so. Only authorized personel are permitted and that means members of the Red Guard."
@@ -80,72 +81,75 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Talk to Spencer if you have any issues inside. I cannot let you pass."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
-ChangeOption=51 ChangeToValue=1
+LinkedTo:60
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=51  OptionText=" I have a lot of money for you."
+New Option Nr=50  OptionText=" I have a lot of money for you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Fascinating. 1000."
+Subtitle="Fascinating. 100."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=50 ChangeToValue=0
+LinkedTo:51
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=51  OptionText="BRIBERY IS OCCURING"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
 ChangeOption=51 ChangeToValue=0
-ChangeOption=52 ChangeToValue=1
+OnCondition="GoldIsLessThan:100" JumpToOption=53 ElseGoto=52
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=52  OptionText=" Erm... I don't have that much."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=52  OptionText="GOT ENOUGH MONEY!"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Well, I cannot open the door then."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=52 ChangeToValue=0
-ChangeOption=53 ChangeToValue=1
+ChangeOption=55 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=53  OptionText=" Here you go."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=53  OptionText="DAMN, I AM POOR"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Thank you."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=53 ChangeToValue=0
 ChangeOption=54 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=54  OptionText=" Ok, now please open the door for me."
+New Option Nr=54  OptionText=" Erm... I don't have that much."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="What door?"
+Subtitle="Well, I cannot open the door then."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=54 ChangeToValue=0
-ChangeOption=55 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=55  OptionText=" The door to the citadel!"
+New Option Nr=55  OptionText=" Here you go."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="But you are not a member of the Red Guard."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You cannot come in."
+Subtitle="Thank you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=55 ChangeToValue=0
 ChangeOption=56 ChangeToValue=1
+DoSomethingExtra="PlantCookie:tybalt_bribe"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=56  OptionText=" I paid you!"
+New Option Nr=56  OptionText=" Ok, now please open the door for me."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Really? I don't remember that."
+Subtitle="What door?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=56 ChangeToValue=0
 ChangeOption=57 ChangeToValue=1
@@ -153,18 +157,68 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=57  OptionText=" I want my money back."
+New Option Nr=57  OptionText=" The door to the citadel!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="But you are not a member of the Red Guard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You cannot come in."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=57 ChangeToValue=0
+ChangeOption=58 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=58  OptionText=" I paid you!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Really? I don't remember that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=58 ChangeToValue=0
+ChangeOption=59 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=59  OptionText=" I want my money back."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="What money?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=57 ChangeToValue=0
+ChangeOption=59 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=60  OptionText="BRIBED BEFORE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=60 ChangeToValue=0
+OnCondition="CookieIsPlanted:tybalt_bribe:" JumpToOption=61 ElseGoto=62
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=61  OptionText="YEAH, ONCE BEFORE. NOT GONNA DO THAT AGAIN."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=61 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=62  OptionText="NO, NEVER BEFORE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=62 ChangeToValue=0
+ChangeOption=50 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" See you later."
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
 Subtitle="Good riddance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
