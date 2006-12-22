@@ -437,6 +437,7 @@ ChangeOption=41 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 DoSomethingExtra="AddGold:250"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -453,6 +454,7 @@ ChangeOption=42 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 DoSomethingExtra="AddGold:350"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -470,6 +472,8 @@ ChangeOption=40 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:dixon_very_angry"
 DoSomethingExtra="AddGold:400"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
