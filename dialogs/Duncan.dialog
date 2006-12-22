@@ -222,7 +222,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=98  OptionText=" I wish you cold winds."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle=" May the ice bring you wisdom."
+Subtitle="May the ice bring you wisdom."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=98 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
