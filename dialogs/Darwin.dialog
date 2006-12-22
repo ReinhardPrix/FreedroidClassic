@@ -53,6 +53,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="No mercy. We hunt them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
+ChangeOption=13 ChangeToValue=1
 ChangeOption=11 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
