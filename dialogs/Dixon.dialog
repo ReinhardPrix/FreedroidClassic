@@ -137,6 +137,8 @@ ChangeOption=31 ChangeToValue=1
 ChangeOption=26 ChangeToValue=0
 DoSomethingExtra="AssignMission:1"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
+DoSomethingExtra="GiveItem:72"
+DoSomethingExtra="GiveItem:72"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -363,6 +365,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=34 ChangeToValue=0
 DoSomethingExtra="AddGold:150"
 DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -382,6 +385,9 @@ ChangeOption=35 ChangeToValue=0
 ChangeOption=36 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:singularity_dead"
+DoSomethingExtra="AddGold:100"
+DoSomethingExtra="GiveItem:119"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -429,6 +435,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=41 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="AddGold:250"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -443,6 +451,8 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=42 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="AddGold:350"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -459,6 +469,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:dixon_very_angry"
+DoSomethingExtra="AddGold:400"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -585,7 +596,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=60  OptionText=" IS THE TOOLKIT WITH TUX?"
+New Option Nr=60  OptionText="IS THE TOOLKIT WITH TUX?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=60 ChangeToValue=0
@@ -594,7 +605,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=61  OptionText=" WAS TUX A MANIAC KILLER?"
+New Option Nr=61  OptionText="WAS TUX A MANIAC KILLER?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=61 ChangeToValue=0
@@ -711,7 +722,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=82  OptionText=" HOW MUCH ANGER?"
+New Option Nr=82  OptionText="HOW MUCH ANGER?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=82 ChangeToValue=0
@@ -720,7 +731,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=83  OptionText=" YES, QUITE A LOT. THIS IS THE END FOLKS."
+New Option Nr=83  OptionText="YES, QUITE A LOT. THIS IS THE END FOLKS."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 Subtitle="YOU AGAIN!"
@@ -735,13 +746,15 @@ Subtitle="LOST."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="FUCK MY LIFELONG PACIFISM. I WILL FUCKING KILL YOU NOW!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=83 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=84  OptionText=" JUST A LITTLE BIT."
+New Option Nr=84  OptionText="JUST A LITTLE BIT."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 Subtitle="Linarian, please leave. You are no longer welcome here."
