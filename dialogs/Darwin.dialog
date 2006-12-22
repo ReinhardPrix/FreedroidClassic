@@ -35,7 +35,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=253  
 Subtitle="Hello. We are the Fleischer brothers."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I am Geist. He is Engel, but he does not know the language."
+Subtitle="I am Engel. He is Geist, and he does not know the language."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
