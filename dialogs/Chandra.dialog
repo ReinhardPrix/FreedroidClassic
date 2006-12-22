@@ -38,7 +38,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1
-ChangeOption=8 ChangeToValue=1
+ChangeOption=9 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -46,13 +46,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" What can you tell me about this place?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=161  
-Subtitle="This small town existed since before the Great Assault. It once was a moderatly successful mining community."
+Subtitle="This small town existed since before the Great Assault. It used to be a somewhat successful mining community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But now after the Great Assault, the rest of the planet gets bombarded by automated bot ships every now and then, so being down here isn't so bad at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
-ChangeOption=4 ChangeToValue=1
-ChangeOption=9 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
+ChangeOption=10 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -62,6 +62,8 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=109  PositionY=163  
 Subtitle="The shop is to the east. Ms. Stone always has a good range of equipment there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And the Red Guard always has the biggest guns and the best armors, but they do not sell them to the non-members."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -70,35 +72,54 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" So what's so strange about the attack?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=523  PositionY=162  
-Subtitle="It seems that the bots are not intent on merly killing humans. It has been reported, that they have been transporting away human corpses in automated spaceships."
+Subtitle="According to my calculations from the Fermi estimate there are about 7 billion bots active in the region."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is purely irrational and completely incomprehensible to me. There isn't any logic in this."
+Subtitle="Now, I think you will agree with me that the following statement is true: If bots then death to everything alive."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Apart from that, the attack is not full-scale.  There are countless reserves of bots. Yet, they don't attack."
+Subtitle="Now, I make the assumption that you and I are alive."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They seem to be waiting. Only a small fraction is attacking at each time. That's also most strange and irrational."
+Subtitle="Now, if we are not dead, and if bots are killing everything alive..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="... THEN SOMETHING IS NOT LOGICAL!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
+LinkedTo:4
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" What do you know about the hostile bots?"
+New Option Nr=4  OptionText=" Calm down. There must be some logic behind this."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="There is none!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They could just enter the city and massacre everyone."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But they do not do so."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This makes no sense at all!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" What do you know about the hostile bots?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=162  
 Subtitle="The phenomenon of hostile bots has occupied my mind for quite some time.  There are some strange irrationalities in this behaviour, that I cannot explain."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This concerns not only the irrationality of the attack but also the methods and the scale if it all."
+Subtitle="This concerns not only the irrationality of the attack but also the methods and the scale of it all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
-ChangeOption=5 ChangeToValue=1
-ChangeOption=4 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" What types of bots are out there?"
+New Option Nr=6  OptionText=" What types of bots are out there?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=95  
 Subtitle="Hmm... Each kind of a bot has a number consisting out of three digits. The first one is the most significant, the class of a bot."
@@ -109,43 +130,53 @@ Subtitle="The 100s are cleaning bots of old. They are not too troublesome most o
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The 200s are more dangerous. Beware of being attacked by more than one at the same time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="An encounter with a 300 bot can end in your death really quick, so unless you are experienced and lucky it is best to run away."
+Subtitle="An encounter with a 300 type bot is death, so try to avoid it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I am sure there are lots more of classes out there, but I know nothing about them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=5 ChangeToValue=0
-ChangeOption=10 ChangeToValue=1
+ChangeOption=6 ChangeToValue=0
+ChangeOption=13 ChangeToValue=1
+ChangeOption=12 ChangeToValue=1
+ChangeOption=11 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" I want to leave this place."
+New Option Nr=7  OptionText=" I want to leave this place."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=251  
-Subtitle="There's only one gate out of this sector. You can leave, if our leader grants you passage. Talk to his manager. He will help you."
+Subtitle="We all do Linarian, we all do."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=6 ChangeToValue=0
-ChangeOption=7 ChangeToValue=1
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=7  OptionText=" No, I meant I would like to leave this world."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=335  PositionY=251  
-Subtitle="I don't know a way how you could do that. There are no transports going any more from here. You might have more luck in one of the cities to the south."
+Subtitle="The act in question is made impossible by the quasi-infinite bots outside of the city walls."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You cannot live for long out there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
+ChangeOption=8 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" I keep getting beaten up by the bots. What can I do?"
+New Option Nr=8  OptionText=" No, I meant I would like to leave this world."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=335  PositionY=251  
+Subtitle="Simple. Walk outside the city walls, and the bots will send you to the other world within a few minutes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Unless you mean leave the planet, in which case that is impossible."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Most likely all of our cosmodromes have been destroyed in the bot attacks."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText=" I keep getting beaten up by the bots. What can I do?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=194  PositionY=251  
 Subtitle="My advice is to invest in a ranged weapon. While that can create a huge puncture in your wallet, it it better than a huge puncture in you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Currently there is a ban on selling such things, the Red Guard wants to be the only ones with strong weapons."
+Subtitle="Currently there is a ban on selling such things, the Red Guard wants to be the only ones with good weapons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Should you fail to find something decent to shoot with, there are always other options."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -155,12 +186,12 @@ Subtitle="There was a person selling grenades too. Eh... I forgot his name, my m
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Other than that, you are on your own."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=8 ChangeToValue=0
+ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Do you think I could join the guard of this town?"
+New Option Nr=10  OptionText=" Do you think I could join the guardians of this town?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=252  
 Subtitle="The Red Guard? Unlikely. You'd have to establish a reputation before and demonstrate that you can fix things."
@@ -169,12 +200,12 @@ Subtitle="Of course, the Red Guard is not a very popular organization, so if you
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="As the ancients said, 'Boni pastoris est tondere pecus, non deglubere'. A good tax must be a reasonable tax."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=9 ChangeToValue=0
+ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" What bots are in the 100 class?"
+New Option Nr=11  OptionText=" What bots are in the 100 class?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=522  PositionY=95  
 Subtitle="I know of two types. The 123 and the 139."
@@ -185,12 +216,42 @@ Subtitle="If I were you, I would not overestimate them. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nec Hercules contra plures."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=10 ChangeToValue=0
+ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END"
+New Option Nr=12  OptionText=" What bots are in the 200 class?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well, those are a bit tricky."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The 247 is often called the "Screamer"."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It comes close to you and tries to punch you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The 249 is much more dangerous."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Its machine gun has a high rate of fire, and each bullet can damage your equipment."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=12 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText=" What other bots are out there?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well, I have no idea. I have heard only rumors."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I think most of the people who have seen a better bot are now pushing up the daisies."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=13 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" See you later."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=198  PositionY=102  
 ChangeOption=99 ChangeToValue=1
