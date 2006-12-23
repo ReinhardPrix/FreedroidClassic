@@ -205,12 +205,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+New Option Nr=99  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle="See you later!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+Subtitle="See you later."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

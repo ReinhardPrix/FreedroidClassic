@@ -227,7 +227,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" How are you feeling now?"
+New Option Nr=13  OptionText=" How are you doing?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=386  PositionY=389  
 Subtitle="Much better. I'm cured. Thanks again man! I'll vote for you if you want into the city guard! You're a good guy, man!"
@@ -302,18 +302,19 @@ New Option Nr=20  OptionText="YEAH, WE HAVE THE CURE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=252  PositionY=450  
 ChangeOption=9 ChangeToValue=1
+ChangeOption=5 ChangeToValue=0
+ChangeOption=11 ChangeToValue=0
+ChangeOption=10 ChangeToValue=0
 ChangeOption=20 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+New Option Nr=99  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=559  PositionY=295  
-Subtitle="See you later!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+Subtitle="Later, man!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
