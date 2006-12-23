@@ -195,7 +195,7 @@ Subtitle="I will sell the information for a lot of cybergeld."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Interested?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=12 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Darwin"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -216,7 +216,6 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=436  PositionY=116  
 Subtitle="Goodbye and viel gluck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
