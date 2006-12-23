@@ -124,7 +124,6 @@ def doid(current, count):
     nextnode(current)
   return everything
 
-#Behold my mighty engine!
 def whatisit(current) :
     back = file.tell(current)
     unknown = file.read(current, 8)
@@ -1038,9 +1037,10 @@ def getnodesready(everything, listing):
         if subnode[1][1] in listing:
           list.remove(listing, subnode[1][1])
       elif subnode[0] == "startup":
-        if subnode[1] == "yes":
-          if chop[0][1][0] in listing:
-            list.remove(listing, chop[0][1][0])
+        pass
+##        if subnode[1] == "yes":
+##          if chop[0][1][0] in listing:
+##            list.remove(listing, chop[0][1][0])
   return listing
 
 def startupnodes(everything):
@@ -1370,4 +1370,6 @@ while True :
    error()
  except EOFError:
    print ""
+   error()
+ except IndexError:
    error()
