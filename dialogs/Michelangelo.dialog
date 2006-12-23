@@ -157,7 +157,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Feel free to go Linarian, but make sure to be very dead before they start killing you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=81 ChangeToValue=0
+ChangeOption=19 ChangeToValue=0
 ChangeOption=82 ChangeToValue=1
+ChangeOption=40 ChangeToValue=0
+ChangeOption=42 ChangeToValue=0
+ChangeOption=41 ChangeToValue=0
+ChangeOption=70 ChangeToValue=0
+DoSomethingExtra="AssignMission:2"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -228,6 +234,10 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=970  PositionY=325  
 Subtitle="We already know that. There is nothing else to eat here, so I hope you get used to the taste."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="That thing only looks well and has a nice color."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But as you can see, the color cannot be eaten, only the taste counts."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -277,6 +287,7 @@ New Option Nr=32  OptionText="TUX GIVES THE CRYSTALS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1215  PositionY=195  
 ChangeOption=32 ChangeToValue=0
+ChangeOption=82 ChangeToValue=0
 ChangeOption=29 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -338,10 +349,6 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Good luck. Try not to get yourself killed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=82 ChangeToValue=0
-ChangeOption=40 ChangeToValue=0
-ChangeOption=42 ChangeToValue=0
-ChangeOption=41 ChangeToValue=0
-ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_east_gate_of_town"
 DoSomethingExtra="AssignMission:2"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
