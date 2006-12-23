@@ -340,6 +340,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I hope you will prove yourself a worthy member of the Red Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Joined Town Guard!!:"
 DoSomethingExtra="MakeTuxTownGuardMember"
