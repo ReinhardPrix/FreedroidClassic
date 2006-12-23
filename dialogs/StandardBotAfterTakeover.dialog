@@ -76,7 +76,109 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
+New Option Nr=4  OptionText=" ./hcf.py"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Executing: Halt and Catch Fire."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Cooling subsytems disabled."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Warning! Spontaneous oxidization witH emis$ion of light aND heAt detecteddd in THE#main| procesIng unit,"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="SsTeM=#faiPure%^#n 3 S 1()$++"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+LinkedTo:10
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText="DID TUX ANGER DIXON?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=10 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_very_angry:" JumpToOption=11 ElseGoto=18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText="YES, DIXON IS ANGRY."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=11 ChangeToValue=0
+LinkedTo:12
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText="DID TUX HURT BRUCE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=12 ChangeToValue=0
+OnCondition="CookieIsPlanted:bruce_hurt:" JumpToOption=13 ElseGoto=18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="YES, BRUCE IS HURT"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=13 ChangeToValue=0
+LinkedTo:14
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="IS TUX ON THE FINAL MISSION?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=14 ChangeToValue=0
+OnCondition="MissionAssigned:8" JumpToOption=15 ElseGoto=18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="YES, THIS IS THE FINAL MISSION."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=15 ChangeToValue=0
+LinkedTo:16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="IS THIS THE FIRST TIME TUX GETS THE EDGE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=16 ChangeToValue=0
+OnCondition="CookieIsPlanted:tux_has_edge:" JumpToOption=18 ElseGoto=17
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="EVERYTHING IS READY."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="()%#@(% THE BLADE IS YOURS. )##%*&%*!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=17 ChangeToValue=0
+DoSomethingExtra="GiveItem:120"
+DoSomethingExtra="PlantCookie:tux_has_edge"
+DoSomethingExtra="DropDead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="NO."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=18 ChangeToValue=0
+DoSomethingExtra="DropDead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" logout"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=351  PositionY=231  
 ChangeOption=99 ChangeToValue=1
