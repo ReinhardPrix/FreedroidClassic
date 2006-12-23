@@ -282,6 +282,7 @@ ChangeOption=29 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
 DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
 DoSomethingExtra="PlantCookie:singularity_killed"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -343,6 +344,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
 DoSomethingExtra="PlantCookie:singularity_killed"
 DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -563,6 +565,7 @@ Subtitle="Life is good right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=46 ChangeToValue=0
 ChangeOption=47 ChangeToValue=1
+DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:dixon_saved_and_talked"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
