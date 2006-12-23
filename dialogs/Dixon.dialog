@@ -403,7 +403,6 @@ Subtitle="Give me the toolkit and stop fooling around."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=36 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
-ChangeOption=35 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -416,6 +415,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="250."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=37 ChangeToValue=0
+ChangeOption=35 ChangeToValue=0
 ChangeOption=41 ChangeToValue=1
 ChangeOption=38 ChangeToValue=1
 DoSomethingExtra="PlantCookie:dixon_angry"
