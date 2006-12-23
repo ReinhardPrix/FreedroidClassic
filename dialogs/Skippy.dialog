@@ -163,7 +163,8 @@ New Option Nr=90  OptionText="CHECK FOR SKIPPY ANGER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=90 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
+OnCondition="CookieIsPlanted:skippy_angry:" JumpToOption=91 ElseGoto=92
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
@@ -173,7 +174,12 @@ PositionX=200  PositionY=200
 Subtitle="What? You again? I don't want you here, get out."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=91 ChangeToValue=0
-DoSomethingExtra="EndDialog"
+ChangeOption=99 ChangeToValue=0
+ChangeOption=98 ChangeToValue=1
+ChangeOption=21 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -182,6 +188,17 @@ New Option Nr=92  OptionText="NO, HE IS NOT ANGRY"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=92 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=98  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Don't come back. I hate you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=98 ChangeToValue=1
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
