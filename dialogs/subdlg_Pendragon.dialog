@@ -133,7 +133,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" BACK"
+New Option Nr=99  OptionText=" Ok, enough for now."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=191  PositionY=413  
 ChangeOption=99 ChangeToValue=1
