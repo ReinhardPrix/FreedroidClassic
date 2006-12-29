@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # Note: This was my first serious program ever. It is ugly.
-# I will rewrite it soon.
+# A rewrite is in progress.
 
 import sys
 import readline
@@ -35,7 +35,6 @@ class autosave(threading.Thread):
   def update(self, material):
     self.what = material[:]
 
-#I use ctrl+d anyway, but that one is for the other people.
 def end():
   sys.exit()
 
@@ -43,7 +42,6 @@ def error():
   readline.clear_history()
   print "  ?",
 
-#Loads a file.
 def load(current):
   checkup = None
   character = "../dialogs/" + raw_input("What character? ") + ".dialog"
@@ -65,7 +63,7 @@ def batchdo(task):
     home = clip(current)
     count = nodecount(current, home)
     everything = scanall(current, count)
-    if task == "!s": #Erases all sounds out there.
+    if task == "!s":
       for node in everything:
         for subnode in node:
           if subnode[0] == "reply.s" or subnode[0] == "tuxtalk.s":
@@ -78,7 +76,6 @@ def batchdo(task):
         dumpnode(node)
     
 
-#Headers are a pain, I do not need them, so I just scroll past them.
 def clip(current):
   line = ""
   while line != "Beginning of new chat dialog for character=\"XXXXX\"\n":
@@ -86,7 +83,6 @@ def clip(current):
   home = file.tell(current) + 1
   return home
 
-#Goes to the next node.
 def nextnode(current):
   line = ''
   while line != "----------------------------------------------------------------------\n":
@@ -97,7 +93,6 @@ def nextnode(current):
       break
   file.readline(current)
 
-#How many nodes do we have here? # Do I still need this?
 def nodecount(current, home):
   nodecount = 0
   line2 = "a"
@@ -128,13 +123,13 @@ def whatisit(current) :
     back = file.tell(current)
     unknown = file.read(current, 8)
     file.seek(current, back)
-    if unknown == "Subtitle" :  #Reply. We want that.
+    if unknown == "Subtitle" :  
       what = "reply"
       meat = str(file.readline(current))[10:-2]
-    elif unknown == "ReplySam" : #Trivial.
+    elif unknown == "ReplySam" : 
       what = "reply.s"
       meat = str(file.readline(current))[13:-2]
-    elif unknown == "Position" : #Coordinates to maintain backwards compatibility with the GTK editor.
+    elif unknown == "Position" : 
       what = "coords"
       meat = ['' , '']
       character=''
@@ -160,7 +155,7 @@ def whatisit(current) :
         meat[1] = meat[1] + character
       file.readline(current)
 
-    elif unknown == "ChangeOp" :  #Another harder one. 
+    elif unknown == "ChangeOp" :  
       what = "switch"
       meat = ['' , '']
       character=''
@@ -175,11 +170,11 @@ def whatisit(current) :
         meat[0] = meat[0] + character
       meat[1] = file.readline(current)[-2:-1]
 
-    elif unknown == "AlwaysEx" : # The last line.
+    elif unknown == "AlwaysEx" : 
       what = "startup"
       meat = str(file.readline(current))[43:-2]
 
-    elif unknown == "New Opti" : #Tux speaking.
+    elif unknown == "New Opti" : 
       what = "tuxtalk"
       meat=['' , '']
       character=''
@@ -203,12 +198,12 @@ def whatisit(current) :
           break
         meat[1] = meat[1] + character
 
-    elif unknown == "OptionSa" : #Tux voice. Easy.
+    elif unknown == "OptionSa" : 
       what = "tuxtalk.s"
       meat =  str(file.readline(current))[14:-2]
 
-    elif unknown == "OnCondit" : #Might be a linked node or a goto. Note: Linked nodes in this style are on the way out.
-      what = "goto"               #Welcome to hell my friends. This will hurt a bit. This is a goto.
+    elif unknown == "OnCondit" : 
+      what = "goto"              
       meat = ['', '', '']
       character=''
       while character != "\"" :
@@ -239,7 +234,7 @@ def whatisit(current) :
         meat[2] = meat[2] + character
       if meat[1] == meat[2]:
         what = "linked"
-    elif unknown == "LinkedTo": # The new style linked node.
+    elif unknown == "LinkedTo": 
       meat = ['', '', '']
       character = ''
       what = "linked"
@@ -1056,7 +1051,6 @@ def startupnodes(everything):
 #    HERE STARTS THE PROGRAM.
 ####################################################################
 #Preparing the needed variables.
-#GLOBAL? EEEK! I never wanted that! I will recode that later, when I feel like it.
 current = None
 node = None
 home = None
