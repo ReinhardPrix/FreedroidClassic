@@ -694,9 +694,9 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	// has on him.  However we need to take into account the scaling
 	// of the whole screen again for this.
 	//
-	sprintf ( GoldString , "%6d." , (int) Me [ 0 ] . Gold );
-	PutStringFont ( Screen , Menu_BFont, 46 * GameConfig . screen_width / 640 , 
-			113 * GameConfig . screen_height / 480 , GoldString );
+	sprintf ( GoldString , "%6d" , (int) Me [ 0 ] . Gold );
+	PutStringFont ( Screen , FPS_Display_BFont, 40 * GameConfig . screen_width / 640 , 
+			370 * GameConfig . screen_height / 480 , GoldString );
 	
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
