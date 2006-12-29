@@ -1299,6 +1299,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
+        SetCurrentFont ( Menu_BFont );
 	DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
 	return;
     }
@@ -1586,6 +1587,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 	    MenuTexts[1]="";
 	    GiveItemDescription( linebuf , BuyItem , TRUE );
 	    strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
+            SetCurrentFont ( Menu_BFont );
 	    DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	}
 	return;
