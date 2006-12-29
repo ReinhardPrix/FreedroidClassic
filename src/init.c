@@ -1,4 +1,3 @@
-
 /* 
  *
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
@@ -94,6 +93,10 @@ clear_out_arrays_for_fresh_game ( void )
     ClearEnemys ( ) ;
     clear_active_spells ( ) ;
     ClearAutomapData( );
+
+    for ( i = 0 ; i < MAX_PERSONS ; i++)
+	Me [ 0 ] . chat_character_initialized [ i ] = 0;
+
 }; // void clear_out_arrays_for_fresh_game ( void )
 
 /* ---------------------------------------------------------------------- 
