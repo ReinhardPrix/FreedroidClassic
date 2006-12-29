@@ -879,6 +879,10 @@ SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, int smoo
 	    SDL_CreateRGBSurface(SDL_SWSURFACE, dstwidth, dstheight, 32,
 				 rz_src->format->Rmask, rz_src->format->Gmask,
 				 rz_src->format->Bmask, rz_src->format->Amask);
+	if(rz_dst == NULL) {
+        fprintf(stderr, "\nCreateRGBSurface failed: %s	\n", SDL_GetError());
+        	exit(1);
+	    }
     } else {
 	/*
 	 * Target surface is 8bit 

@@ -2728,8 +2728,19 @@ blit_special_background ( int background_code )
     }
     else
     {
+	if ( need_scaling [ background_code ] &&  our_background_rects [ background_code ] . w == 0 && our_backgrounds[background_code] . original_image_width == 1024) //we are using one of the new fullscreen backgrounds
+        	{
+		SDL_Surface * tmp_surf2 = zoomSurface ( our_backgrounds [ background_code ] . surface , 0.625, 0.625 , FALSE );
+		our_background_rects [ background_code ] . w = 640;
+		our_background_rects [ background_code ] . h = 480;
+		SDL_FreeSurface ( our_backgrounds [ background_code ] . surface );
+		our_backgrounds [ background_code ] . surface = tmp_surf2;
+		our_backgrounds[background_code] . original_image_width = 640;
+		our_backgrounds[background_code] . original_image_height = 480;
+		}
 	SDL_SetClipRect( Screen, NULL );
-	our_SDL_blit_surface_wrapper ( our_backgrounds [ background_code ] . surface , NULL , Screen , &( our_background_rects [ background_code ] ) );
+	our_SDL_blit_surface_wrapper ( our_backgrounds [ background_code] . surface , NULL , Screen , &( our_background_rects [ background_code ] ) );
+
     }
   
 }; // void blit_special_background ( int background_code )
