@@ -1108,7 +1108,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     
     if ( ShowItem->ac_bonus > 0 )
     {
-	sprintf ( TextChunk, "Defence bonus: %d\n" , ShowItem->ac_bonus ) ;
+	sprintf ( TextChunk, "Defense bonus: %d\n" , ShowItem->ac_bonus ) ;
 	strcat ( InfoText , TextChunk );
     }
     
