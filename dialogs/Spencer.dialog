@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=63  PositionY=228  
-Subtitle="Hello! I'm Spencer. I'm the manager of this town while our chief is not here. Is there anything I can help you with?"
+Subtitle="I'm Spencer. I'm the leader of the Red Guard. Is there anything I can help you with?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
