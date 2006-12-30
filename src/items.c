@@ -1369,7 +1369,7 @@ DamageItem( item* CurItem )
 	 ( CurItem->max_duration != (-1) ) )
     {
 //	if ( ! CurItem->damage ) 
-	    CurItem->current_duration -= rintf(0.0020 * MyRandom( 500 )) ;
+	    CurItem->current_duration -= rintf(0.01 * MyRandom( 75 )) ;
 //	else
 //	    CurItem->current_duration -= rintf(0.01 * MyRandom( 100 )) ;
 	
