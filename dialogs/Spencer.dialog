@@ -358,7 +358,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText="STARTS TO LOOK GOOD FOR TUX, BUT NOT YET"
+New Option Nr=30  OptionText="TUX IS GETTING THERE, BUT NOT JUST YET..."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
 Subtitle="All in all, not quite so bad. But you still need to do the one thing or the other. Then we can talk about it."
@@ -420,7 +420,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=36  OptionText="DO REALLY NOTHING"
+New Option Nr=36  OptionText="DO NOTHING"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=218  PositionY=640  
 ChangeOption=36 ChangeToValue=0
@@ -433,7 +433,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=289  PositionY=512  
 Subtitle="Yes, that's right and in fact it might be crucial. The data on the cube he obtained indicates the existence of a secret experimental facility in this region."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our findings suggest, that they were testing some new form of disruptor shield, but research was finally discontinued, because of the side effects of the shield."
+Subtitle="Our findings suggest that they were testing some new form of disruptor shield, but research was finally discontinued, because of the side effects of the shield."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If the information is true, then the shield interfered with the positioning system of all bots and made them wander off."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -452,7 +452,7 @@ Subtitle="That's most kind of you to volunteer. So far, I've sent two scouts int
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="That is a good sign, because it shows that the key combinations from the data cube were correct."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However, we've lost contact to them shortly after they went inside. They also reported heavy bot resistance."
+Subtitle="However, we lost contact with them shortly after they went inside. They also reported heavy bot resistance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I'd be glad if you could take a look. But use outmost care. We can't afford to lose another guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
