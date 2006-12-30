@@ -598,11 +598,6 @@ show_automap_data_ogl ( float scale_factor )
     char *fpath;
 
     //--------------------
-    // Of course we only display the automap on demand of the user...
-    //
-    if ( GameConfig . Automap_Visible == FALSE ) return;
-    
-    //--------------------
     // Also if there is no map-maker present in inventory, then we need not
     // do a thing here...
     //
@@ -618,6 +613,11 @@ show_automap_data_ogl ( float scale_factor )
     //
     local_update_of_automap_texture ();
 
+    //--------------------
+    // Of course we only display the automap on demand of the user...
+    //
+    if ( GameConfig . Automap_Visible == FALSE ) return;
+    
     //--------------------
     // Now we blit the current automap texture to the screen.  We use standard
     // texture blitting code for this, so we need to embed the automap texture
