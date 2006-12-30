@@ -168,17 +168,21 @@ init_character_descriptions ( void )
     character_descriptions [ PERSON_SUBDIALOG_DUMMY ] = "This is a major bug. Please report this incident to the developers. Thank you.";
 
     character_descriptions [ PERSON_STANDARD_BOT_AFTER_TAKEOVER ] = "Blood. Stone. Cog. The Blood has made the Cog from the Stone. Now the Cog is making more Stone from the Blood. I wonder what is the next step of the cycle...";
-    
+
+    character_descriptions [ PERSON_STANDARD_OLD_TOWN_GATE_GUARD ] = "The armor hides his body.";
+
+    character_descriptions [ PERSON_OLD_TOWN_GATE_GUARD_LEADER ] = "The armor hides his body.";
+
+    character_descriptions [ PERSON_STANDARD_MS_FACILITY_GATE_GUARD ] = "The armor hides his body.";
+
+    character_descriptions [ PERSON_MS_FACILITY_GATE_GUARD_LEADER ] = "The armor hides his body.";
+
     /*
     Note: Those are not used in the game.
     Maybe for the best, most are badly written. 
     PERSON_MER,
     PERSON_ERNIE,
-    PERSON_STANDARD_OLD_TOWN_GATE_GUARD,
     PERSON_STANDARD_NEW_TOWN_GATE_GUARD,
-    PERSON_OLD_TOWN_GATE_GUARD_LEADER,
-    PERSON_STANDARD_MS_FACILITY_GATE_GUARD,
-    PERSON_MS_FACILITY_GATE_GUARD_LEADER,
     PERSON_HEA,
     */
 
