@@ -3132,34 +3132,32 @@ game data file with all droid type specifications.",
 	
 	strcpy ( AllEnemys[ FreeAllEnemysPosition ] . dialog_section_name , "StandardBotAfterTakeover" );
 	
-	strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
-
-	switch ( AllEnemys[ FreeAllEnemysPosition ] . type ) 
+	switch ( atoi ( Druidmap [ AllEnemys[ FreeAllEnemysPosition ] . type ] . druidname )) 
 		{
-	        case 123: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Acolyte");
-        	case 139: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Templar");
-	        case 247: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Banshee");
-	        case 249: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Chicago");
-	        case 296: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-        	case 302: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Nemesis");
-	        case 329: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Sparkie");
-	        case 420: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 476: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Coward");
-	        case 493: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Spinster");
-        	case 516: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Ghoul");
-	        case 571: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Apollo");
-        	case 598: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 615: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 629: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 711: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "If");
-	        case 742: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 751: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Soviet");
-	        case 821: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 834: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 883: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-	        case 999: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN");
-		}
-	
+                case 123: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Acolyte" ); break;
+                case 139: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Templar" ); break;
+                case 247: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Banshee" ); break;
+                case 249: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Chicago" ); break;
+                case 296: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 302: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Nemesis" ); break;
+                case 329: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Sparkie" ); break;
+                case 420: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 476: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Coward" ); break;
+                case 493: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Spinster" ); break;
+                case 516: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Ghoul" ); break;
+                case 571: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Apollo" ); break;
+                case 598: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 615: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 629: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 711: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "If" ); break;
+                case 742: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 751: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Soviet" ); break;
+                case 821: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 834: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 883: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 999: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                default: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "No Description For This One" );
+		};	
     }  // while (enemy-limit of this level not reached) 
     
     SearchPointer = SectionPointer;
