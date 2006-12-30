@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=636  PositionY=469  
-Subtitle="Done.  Small improvments of dexterity are not so hard to achieve after all."
+Subtitle="Done. Small improvements of dexterity are not so hard to achieve after all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"

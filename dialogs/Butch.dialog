@@ -46,7 +46,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Who fights in the arena?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=233  PositionY=388  
-Subtitle="Everyone who enjoys it. Using the arena for some good fight is free, but by using it you implicitly state that we have the unristricted and exclusive copyright on all recordings made of the fight."
+Subtitle="Everyone who enjoys it. Using the arena for some good fight is free, but by using it you implicitly state that we have the unrestricted and exclusive copyright on all recordings made of the fight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

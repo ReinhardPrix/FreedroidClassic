@@ -32,7 +32,7 @@ Beginning of new chat dialog for character="XXXXX"
 
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=890  PositionY=96  
+PositionX=200  PositionY=200  
 Subtitle="Hello and welcome. I'm Dixon, the chief engineer of the Red Guard technical division."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
@@ -44,14 +44,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=1  OptionText=" Technical division?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=827  PositionY=97  
-Subtitle="Yes. We are the engineers, the workers and the repairmen of this little fortifed town."
+PositionX=200  PositionY=200  
+Subtitle="Yes. We are the engineers, the workers and the repairmen of this little fortified town."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The millitary division hates us because we are made up of people who refuse to fight or are unable to do so for health reasons."
+Subtitle="The military division hates us because we are made up of people who refuse to fight or are unable to do so for health reasons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But even they know that without us this town would have been destroyed months ago."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We deliver resources to the places which need them, build and repair the walls, fix damaged guns, manage costruction work and lots of other small things which keep the bots from killing everyone."
+Subtitle="We deliver resources to the places which need them, build and repair the walls, fix damaged guns, manage construction work and lots of other small things which keep the bots from killing everyone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=18 ChangeToValue=1
@@ -61,7 +61,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=18  OptionText=" Can you repair my equipment?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=752  PositionY=97  
+PositionX=200  PositionY=200  
 Subtitle="While I am quite sure I can repair just about anything that you would want fixed, I cannot help you right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our security wall is full of holes, and they need to be plugged up."
@@ -70,7 +70,7 @@ Subtitle="We need to perform statistic analysis of the energy distribution in ou
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our defensive bots are falling into disrepair and many are in desperate need of a lot of maintenance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The technical division is very understaffed right now. On averange one person has to do the jobs of three people."
+Subtitle="The technical division is very understaffed right now. On average one person has to do the jobs of three people."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We just cannot afford to do any non-critical jobs right now. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -82,10 +82,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=19  OptionText=" Why are you wearing armor? Mechanics do not need it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=889  PositionY=175  
+PositionX=200  PositionY=200  
 Subtitle="Ah... Yes. At first I thought that I do not need it either."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="One day the millitary division asked us to leave the town and fix a big hole in the defensive wall caused by a strange explosion."
+Subtitle="One day the military division asked us to leave the town and fix a big hole in the defensive wall caused by a strange explosion."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="All was well until the bots launched a massive attack. They hit us with lasers, plasma mortars, radiation cannons and lots of other weapons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -105,7 +105,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=20  OptionText=" You are very calm talking about your leg and the bot attack."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=832  PositionY=174  
+PositionX=200  PositionY=200  
 Subtitle="Linarian, I cannot change the past, I can only change the future."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Crying, screaming or begging time to rewind itself and give me a second chance will not get me anywhere."
@@ -121,7 +121,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=21  OptionText=" I am ready. Open the tunnels for me, Dixon."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=596  PositionY=96  
+PositionX=200  PositionY=200  
 Subtitle="Great. Be careful down there. Just try to get the toolkit and get out of there as soon as possible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I will give you two grenades. If you get in trouble just activate one. It should give you some breathing room."
@@ -145,7 +145,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=22  OptionText=" Can I help you somehow?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=680  PositionY=97  
+PositionX=200  PositionY=200  
 Subtitle="We need people badly, so it would be great if you could give us a helping hand even for a few days."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Now, what are your skills? Where do you think you could be the most useful?"
@@ -158,7 +158,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=23  OptionText=" I can handle computers very well. I also know a lot about laboratory equipment."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=679  PositionY=173  
+PositionX=200  PositionY=200  
 Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything like that? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
@@ -169,7 +169,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=24  OptionText=" Well... I can build an igloo and make pykrete out of snow... And... Umm..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=596  PositionY=172  
+PositionX=200  PositionY=200  
 Subtitle="Well, I appreciate your enthusiasm, and at the same time I am afraid that waiting half a year for snowfall does not sound so appealing to me right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Now... To which project I should assign you... Hmm..."
@@ -192,7 +192,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=25  OptionText=" Why there are rebel bots under the city?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=520  PositionY=173  
+PositionX=200  PositionY=200  
 Subtitle="They were there to keep the underground power grid and our pipe system working."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="When the Great Assault happened they did not turn into killing machines like most of the other bots did. "
@@ -212,12 +212,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=26  OptionText=" How did it happen that the bots took your tools away?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=597  PositionY=250  
+PositionX=200  PositionY=200  
 Subtitle="Long story. Just before the Great Assault I was installing some cables in the failover power supply system."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I was approached by a bot. It grabbed me and said 'Dixon, do not be afraid of me.'."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was quite a suprise to me. I was quite sure the maintenance bots could not talk, they did not have the software for it. But..."
+Subtitle="It was quite a surprise to me. I was quite sure the maintenance bots could not talk, they did not have the software for it. But..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It said: 'I am the singularity. I am on your side. Dixon, hard times are coming. When you exit the tunnels you will see a new world. Your race is not in control of this world anymore.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -256,7 +256,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="OH MY GOD! Linarian, there is no time to lose!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I will call the millitary division and arrange a sweep of the tunnels at once."
+Subtitle="I will call the military division and arrange a sweep of the tunnels at once."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="May the heavens have mercy upon us, but better them than us."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -360,7 +360,7 @@ Subtitle="I thank you for your help in recovering the autotools."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Here is some money, you deserve it for getting my toolkit back."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit wery well in the millitary division. You should talk to them."
+Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit very well in the military division. You should talk to them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I am sorry, but I must go now. My duties call."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -559,7 +559,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=" Ha! Never better!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We are mass producing energy shields, creating more electric energy than we can ever immagine spending and even experimenting with new armor types."
+Subtitle="We are mass producing energy shields, creating more electric energy than we can ever imagine spending and even experimenting with new armor types."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Life is good right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -802,7 +802,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 New Option Nr=99  OptionText=" I must go now."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=336  PositionY=173  
+PositionX=200  PositionY=200  
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

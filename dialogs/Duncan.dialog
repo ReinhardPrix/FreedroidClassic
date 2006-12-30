@@ -54,7 +54,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" I see only grenades. Do you have someting bigger?"
+New Option Nr=2  OptionText=" I see only grenades. Do you have something bigger?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 Subtitle="My deepest apologies, I do not."
@@ -79,7 +79,7 @@ Subtitle="My word against yours. If you wish to try it, please, be my guest."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I am not preparing anything. I am just stating what I see as inevitable in the future."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I have taken part in many conflicts and I have seen how govenements collapse."
+Subtitle="I have taken part in many conflicts and I have seen how governments collapse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="As soon as the war is over, the Red Guard will disband."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

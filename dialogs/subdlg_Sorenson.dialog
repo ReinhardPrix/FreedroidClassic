@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
+New Option Nr=0  OptionText="STUPID INITIALIZATION NODE NEEDED FOR THE OLD ENGINE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=64  PositionY=224  
 ChangeOption=3 ChangeToValue=1

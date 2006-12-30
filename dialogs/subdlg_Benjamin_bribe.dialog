@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" How many exterminators does the Red Guard have?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=699  PositionY=182  
-Subtitle="It might come as a suprise to you, but we don't have many. A bit over twenty, last time I checked."
+Subtitle="It might come as a surprise to you, but we don't have many. A bit over twenty, last time I checked."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="However, as you can clearly see, this is more than enough to keep all of the damn bots away."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -146,7 +146,7 @@ Subtitle="When we get low on ammo, we send in a chain gang of criminals and lazy
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="That place was closed down ages ago because of high radiation levels. It's full of good ores from which we make bullets and which power our nuclear reactors."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We get our fission materals and they get their sentence. It was one of the best ideas we have ever had."
+Subtitle="We get our fission materials and they get their sentence. It was one of the best ideas we have ever had."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 DoSomethingExtra="SubtractGold:50"

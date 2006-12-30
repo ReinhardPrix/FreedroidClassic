@@ -99,7 +99,7 @@ Subtitle="They are trying to 'maintain' machines by rebooting them all the time.
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I must balance the remaining power in such a way that my project can continue uninterrupted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now, if you go down there and make the power flow stabile, then I'll find the time to teach you something."
+Subtitle="Now, if you go down there and make the power flow stable, then I'll find the time to teach you something."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=6 ChangeToValue=1

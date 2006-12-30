@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Did you think about somehow gathering the excess heat and using it to strenghten the beam?"
+New Option Nr=3  OptionText=" Did you think about somehow gathering the excess heat and using it to make the beam stronger?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=262  PositionY=176  
 Subtitle="Hmm... There might be something in that idea. I will think about it."
@@ -154,7 +154,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=249  
 Subtitle="Laser is the technology employed in most of our weaponry. It uses a focused light beam to deal damage."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Because the beam is composed out of light, it travells REALLY fast. Also it is not affected by gravity or wind, which makes aiming easier."
+Subtitle="Because the beam is composed out of light, it travels REALLY fast. Also it is not affected by gravity or wind, which makes aiming easier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="However, other than a good training tool for newbies, that design just fails to deliver."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
