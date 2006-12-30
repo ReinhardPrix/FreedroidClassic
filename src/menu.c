@@ -3087,7 +3087,8 @@ Credits_Menu (void)
                                         by stud\n\
                                         of kahvi collective\n\
                                       (www.atl3.com/stud)\n\
-                                      (www.kahvi.org)\n\n\n\
+                                      (www.kahvi.org)\n\n\
+                                        Arvid Picciani\n\n\n\
    VARIOUS OLDER CONTRIBUTIONS (PRE-0.9.13 people):\n\n\
                                       Ryan 'simcop2387' Voots\n\n\
                                       Andrew A. Gill\n\n\
