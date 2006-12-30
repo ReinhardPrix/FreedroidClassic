@@ -80,7 +80,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Why such a nice lady acts so harshly? Cannot we all just get along?"
+New Option Nr=4  OptionText=" Why does such a nice lady acts so harshly? Cannot we all just get along?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="No."

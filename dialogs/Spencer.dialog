@@ -138,7 +138,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="MISSION_IS_NOT_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=376  PositionY=235  
-Subtitle="Not too good. It seems that even you could not (yet) help us with the warehouse. So my problems are all the same still."
+Subtitle="Not too good. Without the supplies from the warehouse we are doomed. So my problems are all the same still."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Maybe later, when you grow more experienced you might be able to help us after all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
