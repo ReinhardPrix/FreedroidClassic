@@ -377,7 +377,22 @@ exist really (i.e. has a type = (-1) ).",
 		sprintf( linebuf , "Permanently aquire/enhance this skill/spell\n" );
 		strcat( ItemDescText , linebuf );
 		break;
-		
+
+	    case ITEM_EMP_SHOCK_GRENADE:
+    		sprintf( linebuf , "Electromagnetic pulse\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+
+	    case ITEM_VMX_GAS_GRENADE:
+		sprintf( linebuf , "Gas attack\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+
+	    case ITEM_PLASMA_GRENADE:
+		sprintf( linebuf , "Huge explosion\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+
 	    default:
 		sprintf( linebuf , "USE UNDESCRIBED YET\n" );
 		strcat( ItemDescText , linebuf );
