@@ -209,7 +209,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased and so was I, heh."
+Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased, and so was I"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:18
@@ -249,7 +249,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText="TUX IS AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=723  PositionY=374  
-Subtitle="From Butch I hear you've become a novice arena master. Congratulations from me too."
+Subtitle="From Butch I hear you've become a novice arena master. Congratulations."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 LinkedTo:21
