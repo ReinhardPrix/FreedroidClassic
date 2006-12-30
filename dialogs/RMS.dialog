@@ -112,7 +112,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" See you later."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
-Subtitle="Take care Linarian."
+Subtitle="Take care, Linarian."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

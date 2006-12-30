@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Who are you? "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=98  PositionY=280  
-Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicolson company."
+Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicholson company."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
