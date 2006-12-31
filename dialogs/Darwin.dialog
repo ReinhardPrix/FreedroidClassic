@@ -80,7 +80,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" If you keep standing here more bots will come and--"
+New Option Nr=4  OptionText=" If you keep standing here more bots will come and --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Sehr gut. Let them come. We are ready."
@@ -135,7 +135,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" You guys are total--"
+New Option Nr=8  OptionText=" You guys are tota --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="WHAT?! What is it that you want to say?"
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Erm... I--"
+New Option Nr=9  OptionText=" Erm... I --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="WHAT!? SPIT IT OUT!"

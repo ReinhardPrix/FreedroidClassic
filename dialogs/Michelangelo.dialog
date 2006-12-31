@@ -68,11 +68,11 @@ Subtitle="We are constantly pushed around by our 'saviours' the damn Red Guard. 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And the bots are keeping us busy by murdering, chopping, slicing, cleaving, rending and wounding us. How wonderful. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The guards gave me a filthy howel to live in. The walls are so thin that every night I am rocked to sleep by the bots communicating with those beeps and modem sounds."
+Subtitle="The guards gave me a filthy hovel to live in. The walls are so thin that every night I am rocked to sleep by the bots communicating with those beeps and modem sounds."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It sounds like they are singing something. Every night they start their song... I cannot sleep thanks to that electric chorus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Have I mentioned that the only food that we have is some kind of pestilent military ration? The smell alone is making me want to vomit."
+Subtitle="Have I mentioned that the only food that we have is some kind of pestilential military ration? The smell alone is making me want to vomit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=18 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -131,9 +131,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=80  OptionText=" I can get you some dilithium."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=557  PositionY=319  
-Subtitle="Have you gotten overheated Linarian?"
+Subtitle="Have you gotten overheated, Linarian?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Look, there are dozens of ways you can kill yourself and most hurt less than being killed by a bot."
+Subtitle="Look, there are dozens of ways you can kill yourself, and most hurt less than being killed by a bot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you want to die just walk into a nuclear reactor or something. So much simpler."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -154,7 +154,7 @@ Subtitle="I smelled burnt meat and heard the screams of the captives as they wer
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The bots know no mercy. They cannot even define it, damn scrap metal fiends."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Feel free to go Linarian, but make sure to be very dead before they start killing you."
+Subtitle="Feel free to go, Linarian, but make sure to be very dead before they start killing you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=81 ChangeToValue=0
 ChangeOption=19 ChangeToValue=0
@@ -187,11 +187,11 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=799  PositionY=239  
 Subtitle="There is no food here, just the odious military rations."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Made fully out of artificial nutrients and cancirogenic flavors. Even the army hated them."
+Subtitle="Made fully out of artificial nutrients and carcinogenic flavors. Even the army hated them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It's better than starving, but some people have already committed suicide because of the repulsive material being the only thing available to eat."
+Subtitle="It's better than starving, but some people have already committed suicide because that repulsive material is the only thing available to eat."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I can give you some, but it's not worthy being called food."
+Subtitle="I can give you some, but it's not worthy of being called food."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1
@@ -371,7 +371,7 @@ Subtitle="You do not know? I thought Linarians were unmatched in their knowledge
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Dilithium is a substance which is usually seen in the form of a small crystal. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It somehow generates and stores amazing amounts of electricity. I do not know the details, I'm a cook, not a quantum scientist."
+Subtitle="It somehow generates and stores amazing amounts of electricity. I do not know the details. I'm a cook, not a quantum scientist."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="A small crystal would power my oven for weeks."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

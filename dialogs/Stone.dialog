@@ -140,7 +140,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" If things are so bad right now, why--"
+New Option Nr=9  OptionText=" If things are so bad right now, why --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=172  PositionY=63  
 Subtitle="I don't want to hear this jabberwocky. "
@@ -184,7 +184,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=79  PositionY=325  
 Subtitle="Thanks to you I have a chance now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ha! Its time to show the world that Lily Stone is not going down without putting up a damn good fight."
+Subtitle="Ha! It's time to show the world that Lily Stone is not going down without putting up a damn good fight."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -301,7 +301,7 @@ Subtitle="Thank you! Thank you! Thank you! Savior!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But this isn't fair with you. The Stones are a family of fair merchants and I intend to uphold that tradition."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I need 4743 bucks to get through the month. I accept only that and not a cent more. Now it's fair. Thank you."
+Subtitle="I need 4,743 bucks to get through the month. I accept only that and not a cent more. Now it's fair. Thank you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You've given me a bit of hope.. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

@@ -39,7 +39,7 @@ Subtitle="So, stranger, welcome here. You might want to talk to Chandra or to Sp
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The city is presently ruled by the Red Guard. We are the police and the soldiers here. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="There is only one law concerning outsiders here: Don't be stupid. Use common sense."
+Subtitle="There is only one law concerning outsiders here: Don't be stupid."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think that is enough of an introduction for now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -54,14 +54,14 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=109  PositionY=138  
 Subtitle="I'm on guard duty right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="There were no attacks for a while now. It is too quiet, I think something big is about to happen."
+Subtitle="There have been no attacks for a while now. It is too quiet, I think something big is about to happen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" I'll be going then."
+New Option Nr=99  OptionText=" I'll be going, then."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=171  PositionY=138  
 Subtitle="Goodbye."

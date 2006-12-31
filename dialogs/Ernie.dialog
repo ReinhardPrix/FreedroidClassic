@@ -70,10 +70,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="I'm here to make an end to your mining buisness."
+New Option Nr=3  OptionText="I'm here to make an end to your mining business."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=103  
-Subtitle="Ok Linarian!  You wanted it that way!  And I don't like Penguins anyway!"
+Subtitle="Ok Linarian!  You wanted it that way!  And I don't like penguins anyway!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0

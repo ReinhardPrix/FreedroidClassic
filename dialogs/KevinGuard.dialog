@@ -138,7 +138,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" Step aside, you stupid tin can!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=515  
-Subtitle="YOU SHALL NOT PASS. ACTIVATING DISINTERGRATOR BEAM IN TEN SECONDS."
+Subtitle="YOU SHALL NOT PASS. ACTIVATING DISINTEGRATOR BEAM IN TEN SECONDS."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NINE."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -204,7 +204,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" We are surrounded, they will attack any second now!"
+New Option Nr=13  OptionText=" We are surrounded! They will attack any second now!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=99  PositionY=38  
 Subtitle="ERROR: REASON INVALID."

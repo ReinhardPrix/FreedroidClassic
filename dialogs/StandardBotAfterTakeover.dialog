@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" ./follow_me.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=107  
-Subtitle="Initiating tacking sequence. Energy on breaks removed. Trying to keep up with Tux position now. Ok. Following Tux."
+Subtitle="Initiating tracking sequence. Energy on breaks removed. Trying to keep up with Tux position now. Ok. Following Tux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="SetFollowTuxProperty"
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" ./move_freely.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=250  
-Subtitle="Removing energy from breaks. Resuming normal patrol operations. Done. Status: Patroling, using script V 1.0.2 (c) gnu.org, 2324"
+Subtitle="Removing energy from breaks. Resuming normal patrol operations. Done. Status: Patrolling, using script V 1.0.2 (c) gnu.org, 2324"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"

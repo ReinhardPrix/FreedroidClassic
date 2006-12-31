@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="Who are you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=64  PositionY=76  
-Subtitle="I am the devision human resources manager of this <insert place here>."
+Subtitle="I am the division human resources manager of this <insert place here>."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="What?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=63  PositionY=184  
-Subtitle="I alter the human elements of this <bussiness> to create a higher moral synergy amongst current paid staff team members."
+Subtitle="I alter the human elements of this <business> to create a higher moral synergy amongst current paid staff team members."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -66,10 +66,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="What is your designation"
+New Option Nr=3  OptionText="What is your designation?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=75  
-Subtitle="My official designation is L5-AA23 of sector TK-421.  But my associates in the immediate spacial area of my designated SAPSASETMPE call me AA23."
+Subtitle="My official designation is L5-AA23 of sector TK-421.  But my associates in the immediate spatial area of my designated SAPSASETMPE call me AA23."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -80,9 +80,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="What about the unpaid staff members?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=185  
-Subtitle="What you mean the team members that aren't management?"
+Subtitle="What do you mean, the team members that aren't management?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I don't have to worry about them, ask someone else about that."
+Subtitle="I don't have to worry about them. Ask someone else about that."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -95,7 +95,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=373  PositionY=72  
 Subtitle="How can you not know what a SAPSASETMPE is?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Must be a case of the mondays."
+Subtitle="Must be a case of the Mondays."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="a SAPSASETMPE is a Stationary Autonomous Privacy, Security And Synergy Enhancing Team Member Productivity Enclosure, of course."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -106,10 +106,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Ok i'm going to ask you this again, who are you?"
+New Option Nr=6  OptionText="Ok I'm going to ask you this again, who are you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=234  PositionY=136  
-Subtitle="I told you already I am L5-AA23 of sector TK-421. I am the regional devision human resources manager of this <insert place here>."
+Subtitle="I told you already I am L5-AA23 of sector TK-421. I am the regional division human resources manager of this <insert place here>."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -117,7 +117,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Isn't that just a fancy way of saying "
+New Option Nr=7  OptionText="Isn't that just a fancy way of saying cubicle?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=374  PositionY=181  
 Subtitle="Well the problem is with the term cubicle is that the SAPSASETMPEs are neither cube shaped or made of ice."
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=99  OptionText="I can't take this anymore."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=100  PositionY=20  
-Subtitle="I would enjoy the gained synergy from networking you at a more convientent temporal frame to your liking."
+Subtitle="I would enjoy the gained synergy from networking you at a more convenient temporal frame to your liking."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -162,7 +162,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" MORE! I want more water!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Erm... Ok... Here, have some of my special, Water Colada."
+Subtitle="Erm... Ok... Here, have some of my special, water colada."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1

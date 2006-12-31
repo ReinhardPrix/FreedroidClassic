@@ -44,7 +44,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="A library?  I thought information was stored only in databases?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=159  PositionY=183  
-Subtitle="Yes, you're right.  And the library is our database.  Look at all those books.  They are merly stylish designed memory modules."
+Subtitle="Yes, you're right.  And the library is our database.  Look at all those books.  They are merely stylish designed memory modules."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="In fact every book in here contains much more information than any book of the ancient times could hold.  So each book is in fact many books."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

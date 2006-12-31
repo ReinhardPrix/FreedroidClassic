@@ -80,7 +80,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Why does such a nice lady acts so harshly? Cannot we all just get along?"
+New Option Nr=4  OptionText=" Why does such a nice lady act so harshly? Cannot we all just get along?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="No."
@@ -152,7 +152,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText=" See you later."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Yeah. Wha-- SIGSEGV."
+Subtitle="Yeah. Wha -- SIGSEGV."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Segmentation fault."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

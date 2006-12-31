@@ -92,7 +92,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=639  PositionY=189  
-Subtitle="Now the most important thing is that you turn the auto-aim on your weapon off, like this."
+Subtitle="Now the most important thing is that you turn off the auto-aim on your weapon, like this."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Otherwise your weapon might 'help' you and shoot somewhere you didn't intend to fire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

@@ -57,7 +57,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=214  PositionY=229  
 Subtitle="No, I am just too tired now. I have been working in the mine for two weeks now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I feel really finished, so maybe it would be better if you came some other day."
+Subtitle="I feel really wiped, so maybe it would be better if you came some other day."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -118,7 +118,7 @@ Subtitle="A direct hit from one of those guns is enough to change most bots into
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Many of the great victories of the Red Guard are thanks to the exterminator."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Of course because of its small clip and terribly long reloading time equally many deaths can be attributed to it."
+Subtitle="Of course because of its small clip and terribly long reloading time, equally many deaths can be attributed to it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

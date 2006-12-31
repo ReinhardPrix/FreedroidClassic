@@ -209,7 +209,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased, and so was I"
+Subtitle="When I was eating, Michelangelo told me about his renewed oven energy supply. He seemed very pleased, and so was I."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:18
@@ -220,7 +220,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
-Subtitle="I think you should visit the camp's cook some time. He's always around here, somewhere to the south."
+Subtitle="I think you should visit the camp's cook sometime. He's always around here, somewhere to the south."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 LinkedTo:18
@@ -319,7 +319,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=27  OptionText="THERE IS ENOUGH POINTS TO JOIN RG"
+New Option Nr=27  OptionText="THERE ARE ENOUGH POINTS TO JOIN RG"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=997  PositionY=416  
 ChangeOption=27 ChangeToValue=0
@@ -358,7 +358,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText="TUX IS GETTING THERE, BUT NOT JUST YET..."
+New Option Nr=30  OptionText="NEARLY THERE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
 Subtitle="All in all, not quite so bad. But you still need to do the one thing or the other. Then we can talk about it."
@@ -431,7 +431,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=37  OptionText=" I've heard Richard obtained new information on the colony."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=289  PositionY=512  
-Subtitle="Yes, that's right and in fact it might be crucial. The data on the cube he obtained indicates the existence of a secret experimental facility in this region."
+Subtitle="Yes, that's right, and in fact it might be crucial. The data on the cube he obtained indicates the existence of a secret experimental facility in this region."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our findings suggest that they were testing some new form of disruptor shield, but research was finally discontinued, because of the side effects of the shield."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

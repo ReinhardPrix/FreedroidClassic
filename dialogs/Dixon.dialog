@@ -66,7 +66,7 @@ Subtitle="While I am quite sure I can repair just about anything that you would 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our security wall is full of holes, and they need to be plugged up."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We need to perform statistic analysis of the energy distribution in our power supply system, there is a leak somewhere and we are losing a lot of megawatts."
+Subtitle="We need to perform statistical analysis of the energy distribution in our power supply system, there is a leak somewhere and we are losing a lot of megawatts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our defensive bots are falling into disrepair and many are in desperate need of a lot of maintenance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -83,7 +83,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText=" Why are you wearing armor? Mechanics do not need it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ah... Yes. At first I thought that I do not need it either."
+Subtitle="Ah... Yes. At first I thought that I did not need it either."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="One day the military division asked us to leave the town and fix a big hole in the defensive wall caused by a strange explosion."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -95,7 +95,7 @@ Subtitle="The hand was not damaged very much, but the leg is a very different st
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Now, while you cannot see it underneath the armor, my right leg runs NetBSD."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now I never leave home without my protective suit. Mostly for protection, but also for aestetic reasons. I am sure you understand."
+Subtitle="Now I never leave home without my protective suit. Mostly for protection, but also for aesthetic reasons. I am sure you understand."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -103,7 +103,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" You are very calm talking about your leg and the bot attack."
+New Option Nr=20  OptionText=" You are very calm, talking about your leg and the bot attack."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Linarian, I cannot change the past, I can only change the future."
@@ -126,7 +126,7 @@ Subtitle="Great. Be careful down there. Just try to get the toolkit and get out 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I will give you two grenades. If you get in trouble just activate one. It should give you some breathing room."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The entrance to the tunnels is a bit to the north. Once you exit this building go in the direction of the town gate. Turn to your right at the first opportunity."
+Subtitle="The entrance to the tunnels is a bit to the north. Once you exit this building, go in the direction of the town gate. Turn to your right at the first opportunity."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It should be a blind alley. In the northern wall there is a door to the maintenance access hatch."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -178,7 +178,7 @@ Subtitle="Ah, I know what you could do for us. We need some autotools to automat
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="It's yellow and round, and my name is engraved on the lid."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The bots under the city took it from me during the great assault, I was lucky, they could have killed me with ease."
+Subtitle="The bots under the city took it from me during the Great Assault, I was lucky, they could have killed me with ease."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you could get it back for us, it would help the city very much."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -190,7 +190,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=25  OptionText=" Why there are rebel bots under the city?"
+New Option Nr=25  OptionText=" Why are there rebel bots under the city?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="They were there to keep the underground power grid and our pipe system working."
@@ -215,15 +215,15 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Long story. Just before the Great Assault I was installing some cables in the failover power supply system."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I was approached by a bot. It grabbed me and said 'Dixon, do not be afraid of me.'."
+Subtitle="I was approached by a bot. It grabbed me and said 'Dixon, do not be afraid of me.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was quite a surprise to me. I was quite sure the maintenance bots could not talk, they did not have the software for it. But..."
+Subtitle="It was quite a surprise to me. I was quite sure the maintenance bots could not talk. They did not have the software for it. But..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It said: 'I am the singularity. I am on your side. Dixon, hard times are coming. When you exit the tunnels you will see a new world. Your race is not in control of this world anymore.'"
+Subtitle="It said: 'I am the singularity. I am on your side. Dixon. Hard times are coming. When you exit the tunnels you will see a new world. Your race is not in control of this world anymore.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I tried to say something, but the bot did not listen. It just continued. 'As we speak the bots are turning against humanity. People are dying. The war has started.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="'I need you toolkit, Dixon. I need it to survive.' it said. 'I need it to survive the time of the rule of metal.'"
+Subtitle="'I need your toolkit, Dixon. I need it to survive,' it said. 'I need it to survive the time of the rule of metal.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="As soon as it released me I ran to the exit as fast as I could. That bot freaked me out and I just wanted to get away and later find it again and fix it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -251,7 +251,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=28  OptionText=" Yes, I think so. The robots must be alive. This is why we need to exterminate them as soon as possible before they kills us all."
+New Option Nr=28  OptionText=" Yes, I think so. The robots must be alive. This is why we need to exterminate them as soon as possible before they kill us all."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="OH MY GOD! Linarian, there is no time to lose!"
@@ -274,7 +274,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="That was not very funny. You scared me. Sheesh."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No one jokes about the bots anymore. We have seen too much death to do that. Is is a serious matter."
+Subtitle="No one jokes about the bots anymore. We have seen too much death to do that. It is a serious matter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The bots are our enemies, executioners, killers. Not even Ewald tells jokes about them anymore."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -293,7 +293,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=". . ."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think I understand. Yes, I do not like violence myself. The bots may have the toolkit, I am sure there must be a second set of autotools kicking around somewhere."
+Subtitle="I think I understand. Yes, I do not like violence, myself. The bots may have the toolkit, I am sure there must be a second set of autotools kicking around somewhere."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="After all, it seems like they need them more than I do."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -310,7 +310,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText=" How did it happen that the bots took your tools away?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ah, it is a strange story, I am sure you would not belive me. I will tell you some other time."
+Subtitle="Ah, it is a strange story, I am sure you would not believe me. I will tell you some other time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -322,7 +322,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Linarian, my people do not carry guns. We are mechanics. You want the military division's help."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Erm... And aren't you being too agressive? Maybe they do not wish us harm..."
+Subtitle="Erm... And aren't you being too aggressive? Maybe they do not wish us harm..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
 LinkedTo:33
@@ -379,7 +379,7 @@ Subtitle="Good. We sure need the autotools."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Our roads need fixing, our power lines need fixing, our walls need fixing... Hell, everything needs fixing in this place."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="With those little gadgets we will be able to automate a lot of those simple repairs saving us a lot of time."
+Subtitle="With those little gadgets we will be able to automate a lot of those simple repairs, saving us a lot of time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Here is some money for your effort. And I am sure you will find this helmet useful too, it saved my life once, and I hope it saves yours one day."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -414,7 +414,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Linarian, I curse the day on which you have arrived here."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="250."
+Subtitle="Two fifty."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=37 ChangeToValue=0
 ChangeOption=35 ChangeToValue=0
@@ -483,7 +483,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=41  OptionText=" Good joke. I am sure you can do better."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="350. This is all that the technical division has as their cash resources."
+Subtitle="Three fifty. This is all that the technical division has as their cash resources."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
 ChangeOption=39 ChangeToValue=1
@@ -496,7 +496,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=42  OptionText=" Come on, I am sure you can do even better than that... "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="400. We cannot offer anything more."
+Subtitle="Four hundred. We cannot offer anything more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Please, we really need the autotools."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -514,7 +514,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Heh, never better!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="All indicators are in the green, the power and water fill the pipes and even Spencer seems happier that the town is thriving despite all odds."
+Subtitle="All indicators are in the green, the power and water fill the pipes and even Spencer seems happier now that the town is thriving despite all odds."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Thanks to the autotools we can start building instead of just trying to repair the damage."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -528,7 +528,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=44  OptionText=" Is everything all right?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Nearly. Only my concience keeps me up at night."
+Subtitle="Nearly. Only my conscience keeps me up at night."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Please leave me alone with my thoughts, I do not want to talk to anyone right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -571,7 +571,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=47  OptionText=" What happened? Last time I asked you said things are not going that well."
+New Option Nr=47  OptionText=" What happened? Last time I asked, you said things are not going that well."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=" Yes, but now everything is different."
@@ -587,7 +587,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=48  OptionText=" Why the secrecy and the hushed voice? Cannot you just tell me?"
+New Option Nr=48  OptionText=" Why the secrecy and the hushed voice? Can't you just tell me?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Nope. Some things you just have to see with your own eyes."
@@ -596,7 +596,7 @@ Subtitle="The Library of Alexandria, the Colossus of Rhodes, the Black Island...
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="And this is just one of those things."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just go and see for yourself. Otherwise you will not belive me."
+Subtitle="Just go and see for yourself. Otherwise you will not believe me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=48 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -738,7 +738,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=83  OptionText="YES, QUITE A LOT. THIS IS THE END FOLKS."
+New Option Nr=83  OptionText="YES, QUITE A LOT. THIS IS THE END, FOLKS."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 Subtitle="YOU AGAIN!"
@@ -782,7 +782,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=95  OptionText="CHECK IF TALKED ALREADY"
+New Option Nr=95  OptionText="CHECK IF DIXON TALKED ALREADY"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=95 ChangeToValue=0

@@ -133,7 +133,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="NOVICE_NOT_YET_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=383  
-Subtitle="I'm sorry but town regulations forbid access to the master arena unless you've completed the novice arena first."
+Subtitle="I'm sorry, but town regulations forbid access to the master arena unless you've completed the novice arena first."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This regulation is there for your own safely, so that no newbie accidentally signs up for the master arena."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

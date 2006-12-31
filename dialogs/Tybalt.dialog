@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hello. I'm Tybalt. I'm guarding the guardhouse gate. Only authorized personel are permitted."
+Subtitle="Hello. I'm Tybalt. I'm guarding the guardhouse gate. Only authorized personnel are permitted."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -76,7 +76,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="YOU SHALL NOT PASS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
-Subtitle="Sorry pal, but I don't think so. Only authorized personel are permitted and that means members of the Red Guard."
+Subtitle="Sorry pal, but I don't think so. Only authorized personnel are permitted and that means members of the Red Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Talk to Spencer if you have any issues inside. I cannot let you pass."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -89,7 +89,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=50  OptionText=" I have a lot of money for you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Fascinating. 100."
+Subtitle="Fascinating. Hundred."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 LinkedTo:51

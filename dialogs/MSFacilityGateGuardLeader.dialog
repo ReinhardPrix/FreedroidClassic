@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="I'd like to to through that gate."
+New Option Nr=2  OptionText="I'd like to go through that gate."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=293  
 Subtitle="You seem not to know that this gate leads to an automated bot factory!"

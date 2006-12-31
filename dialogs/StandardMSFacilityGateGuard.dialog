@@ -48,7 +48,7 @@ Subtitle="This is a gate to an automated bot factory we call the Hell Fortress."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You must be crazy if you want to get in there. That place is full of bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Get out of here. They can attack at any moment!"
+Subtitle="Get out of here. They might attack at any moment!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1

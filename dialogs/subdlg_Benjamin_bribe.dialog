@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=699  PositionY=349  
-Subtitle="Fifty triangles per information."
+Subtitle="Fifty triangles per a bit of information."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="So... What do you exactly want to know?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Well, I am a bit short on cash right now..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=280  PositionY=109  
-Subtitle="Linarian, I thought we had an agreement. Fifty per information. My silence can be only broken with currency, so if you want to know, you have to pay."
+Subtitle="Linarian, I thought we had an agreement. Fifty per infobit. My silence can be only broken with currency, so if you want to know, you have to pay."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This conversation is now over."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -107,7 +107,7 @@ Subtitle="We found a crashed army truck on the Terminal Field. It had six crates
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="We tried, but we could not replicate the technology, only bullets."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="A few got damaged in battle and we failed to recover five after a failed scout mission. We have twenty-two right now."
+Subtitle="A few got damaged in battle, and we failed to recover five after a failed scout mission. We have twenty-two right now."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
