@@ -4617,23 +4617,30 @@ A droid portrait failed to load.",
  * dimensions become apparent to the player immediately.
  * ---------------------------------------------------------------------- */
 void
-draw_inventory_occupied_rectangle ( SDL_Rect TargetRect , int all_stat_requirements_are_met )
+draw_inventory_occupied_rectangle ( SDL_Rect TargetRect , int bgcolor )
 {
 #define RED_INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentRedPlate.png"
 #define BLUE_INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentBluePlate.png"
+#define GREY_INVENTORY_SQUARE_OCCUPIED_FILE "backgrounds/TransparentGreyPlate.png"
+#define REQUIREMENTS_NOT_MET 1
+#define IS_MAGICAL 2
     
     static SDL_Surface *TransparentRedPlateImage = NULL;
     static SDL_Surface *TransparentBluePlateImage = NULL;
+    static SDL_Surface *TransparentGreyPlateImage = NULL;
     SDL_Surface *tmp;
     char *fpath;
     char fname1 [ ] = RED_INVENTORY_SQUARE_OCCUPIED_FILE;
     char fname2 [ ] = BLUE_INVENTORY_SQUARE_OCCUPIED_FILE;
+    char fname3 [ ] = GREY_INVENTORY_SQUARE_OCCUPIED_FILE;
     
     if ( use_open_gl )
     {
-	if ( all_stat_requirements_are_met )
-	    GL_HighlightRectangle ( Screen , TargetRect , 0 , 0 , 255 , 100 );
-	else
+	if ( ! bgcolor )
+	    GL_HighlightRectangle ( Screen , TargetRect , 127 , 127 , 127 , 100 );
+	if ( bgcolor & IS_MAGICAL ) 
+	    GL_HighlightRectangle ( Screen , TargetRect , 0 , 0 , 255, 100 );
+	if ( bgcolor & REQUIREMENTS_NOT_MET )
 	    GL_HighlightRectangle ( Screen , TargetRect , 255 , 0 , 0 , 100 );
     }
     else
@@ -4661,7 +4668,7 @@ The red transparent plate for the inventory could not be loaded.  This is a fata
 	    SDL_FreeSurface ( tmp );
 	    
 	    //--------------------
-	    // Now we load the blue intentory plate
+	    // Now we load the blue inventory plate
 	    //
 	    fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
 	    tmp = our_IMG_load_wrapper( fpath );
@@ -4669,17 +4676,34 @@ The red transparent plate for the inventory could not be loaded.  This is a fata
 	    {
 		fprintf( stderr, "\n\nfname2: '%s'\n" , fname2 );
 		GiveStandardErrorMessage ( __FUNCTION__  , "\
-The red transparent plate for the inventory could not be loaded.  This is a fatal error.",
+The blue transparent plate for the inventory could not be loaded.  This is a fatal error.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }
 	    TransparentBluePlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
 	    SDL_FreeSurface ( tmp );
+
+	    //--------------------
+	    // Now we load the grey inventory plate
+	    //
+	    fpath = find_file ( fname3 , GRAPHICS_DIR, FALSE);
+	    tmp = our_IMG_load_wrapper( fpath );
+	    if ( !tmp )
+	    {
+		fprintf( stderr, "\n\nfname3: '%s'\n" , fname3 );
+		GiveStandardErrorMessage ( __FUNCTION__  , "\
+The grey transparent plate for the inventory could not be loaded.  This is a fatal error.",
+					   PLEASE_INFORM, IS_FATAL );
+	    }
+	    TransparentGreyPlateImage = our_SDL_display_format_wrapperAlpha ( tmp );
+	    SDL_FreeSurface ( tmp );
 	    
 	}
 	
-	if ( all_stat_requirements_are_met )
+	if ( !bgcolor)
+	    our_SDL_blit_surface_wrapper( TransparentGreyPlateImage , NULL , Screen , &TargetRect );
+	if ( bgcolor & IS_MAGICAL )
 	    our_SDL_blit_surface_wrapper( TransparentBluePlateImage , NULL , Screen , &TargetRect );
-	else
+	if ( bgcolor & REQUIREMENTS_NOT_MET ) 
 	    our_SDL_blit_surface_wrapper( TransparentRedPlateImage , NULL , Screen , &TargetRect );
     }
     
@@ -4835,9 +4859,9 @@ ShowInventoryScreen( void )
 		TargetRect.w = INV_SUBSQUARE_WIDTH ;
 		TargetRect.h = INV_SUBSQUARE_HEIGHT ;
 		if ( ItemUsageRequirementsMet ( & ( Me [ 0 ] . Inventory [ SlotNum ] ) , FALSE ) )
-		    draw_inventory_occupied_rectangle ( TargetRect , TRUE );
+		    draw_inventory_occupied_rectangle ( TargetRect , 0 | ( Me [ 0 ] . Inventory [ SlotNum ] . prefix_code == -1 ? 0 : 2) |  ( Me [ 0 ] . Inventory [ SlotNum ] . suffix_code == -1 ? 0 : 2) );
 		else
-		    draw_inventory_occupied_rectangle ( TargetRect , FALSE );
+		    draw_inventory_occupied_rectangle ( TargetRect , 1 );
 	    }
 	}
 	
