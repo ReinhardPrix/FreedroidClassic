@@ -1092,8 +1092,8 @@ ShowCharacterScreen ( int player_num )
 	//--------------------
 	// It might happen that the last str point was just spent.  Then we can
 	// automatically close the character window for convenience of the player.
-	//
-	if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
+	// Update by A.H.: inverted this behavior for convenience of the player
+	// if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
     
     //--------------------
