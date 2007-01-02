@@ -4107,4 +4107,13 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     
 }; // void AddFloorItemDirectlyToInventory( item* ItemPointer )
 
+int item_is_currently_equipped( item* Item )
+{
+    if ( ( & ( Me [ 0 ] .weapon_item ) == Item ) ||  ( & ( Me [ 0 ] .drive_item ) == Item ) || ( & ( Me [ 0 ] .armour_item ) == Item )  
+	|| ( & ( Me [ 0 ] .shield_item ) == Item ) || ( & ( Me [ 0 ] .special_item ) == Item ) || ( & ( Me [ 0 ] .aux1_item ) == Item  ) || ( & ( Me [ 0 ] .aux2_item ) == Item ) )
+	return 1;
+
+return 0;
+}
+
 #undef _items_c

@@ -495,7 +495,29 @@ void
 ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
     SDL_Rect TargetRectangle;
-    
+    static iso_image equipped_icon ;
+    static int first_call = TRUE ;
+    char* fpath;
+
+    if ( first_call )
+    {
+            fpath = find_file ( "mouse_cursor_0003.png" , GRAPHICS_DIR, FALSE );
+            get_iso_image_from_file_and_path ( fpath , & ( equipped_icon ) , FALSE ) ;
+            if ( equipped_icon . surface == NULL )
+            {
+                fprintf ( stderr , "\nFull path used: %s." , fpath );
+                GiveStandardErrorMessage ( __FUNCTION__ , "\
+Error loading flag image.",   
+                                           PLEASE_INFORM, IS_FATAL );
+            }
+            if ( use_open_gl )
+            {
+               make_texture_out_of_surface ( & ( equipped_icon ) ) ;
+            }
+    first_call = FALSE ;
+    }
+   
+
     TuxItemRowRect . x = 55 * GameConfig . screen_width / 640;
     TuxItemRowRect . y = 410 * GameConfig . screen_height / 480 ;
     TuxItemRowRect . h = INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480 ;
@@ -527,7 +549,17 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
     }
     
     our_SDL_blit_surface_wrapper( ItemMap [ ShowItem -> type ] . inv_image . scaled_surface_for_shop , NULL , Screen , &TargetRectangle );
-    
+    if ( item_is_currently_equipped( ShowItem) )
+	{
+	if ( use_open_gl )
+	    {
+            blit_open_gl_texture_to_screen_position ( equipped_icon , TargetRectangle . x , TargetRectangle . y , TRUE );
+    	    }
+        else
+            {
+            blit_iso_image_to_screen_position ( equipped_icon , TargetRectangle . x , TargetRectangle . y );
+            }
+	}
 }; // void ShowRescaledItem ( int position , item* ShowItem )
 
 /* ----------------------------------------------------------------------
@@ -1650,7 +1682,7 @@ InitTradeWithCharacter( int CharacterCode )
     while ( ItemSelected != (-1) )
     {
 	
-	NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( & ( TuxItemsList [ 0 ] ) , FALSE , 0 );
+	NumberOfItemsInTuxRow = AssemblePointerListForItemShow ( & ( TuxItemsList [ 0 ] ) , TRUE , 0 );
 	
 	for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i ++ )
 	{
