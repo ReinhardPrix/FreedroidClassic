@@ -2509,7 +2509,7 @@ DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum )
  * server should perform it too.
  *
  * ---------------------------------------------------------------------- */
-void 
+int
 DropHeldItemToTheFloor ( void )
 {
     item* DropItemPointer;
@@ -2522,7 +2522,7 @@ DropHeldItemToTheFloor ( void )
     if ( DropItemPointer == NULL )
     {
 	DebugPrintf( 0 , "\nvoid DropHeldItemToTheFloor ( void ) : No item in inventory seems to be currently held in hand...");
-	return;
+	return 1;
     } 
     
     x = translate_pixel_to_map_location ( 0 , 
@@ -2531,10 +2531,16 @@ DropHeldItemToTheFloor ( void )
     y = translate_pixel_to_map_location ( 0 , 
 					  ServerThinksInputAxisX ( 0 ) , 
 					  ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-    
-    DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
+
+    if ( DirectLineWalkable ( Me [ 0 ] . pos . x, Me [ 0 ] . pos . y,  x, y,  Me [ 0 ] . pos . z ) )
+	    DropItemToTheFloor ( DropItemPointer , x , y , Me [ 0 ] . pos . z ) ;
+    else  {
+	fprintf(stderr, "Item drop failed because position is invalid.\n");
+	return 1;
+	}
     
     timeout_from_item_drop = 0.4 ;
+    return 0;
     
 }; // void DropHeldItemToTheFloor ( void )
 
@@ -3410,9 +3416,11 @@ ManageInventoryScreen ( void )
 	//
 	if ( MouseCursorIsInUserRect ( CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nItem dropped onto the floor of the combat window!" );
-	    Item_Held_In_Hand = ( -1 );
-	    DropHeldItemToTheFloor( );
+            if ( ! DropHeldItemToTheFloor( ) )
+		{
+                DebugPrintf( 1 , "\nItem dropped onto the floor of the combat window!" );
+	        Item_Held_In_Hand = ( -1 );
+		}
 	}
 	
 	//--------------------

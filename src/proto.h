@@ -447,7 +447,7 @@ EXTERN int GetHeldItemCode ( void );
 EXTERN int GetInventorySquare_x( int x );
 EXTERN int GetInventorySquare_y( int x );
 EXTERN void DropHeldItemToInventory( void );
-EXTERN void DropHeldItemToTheFloor ( void );
+EXTERN int DropHeldItemToTheFloor ( void );
 EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum ) ;
 EXTERN void ShowQuickInventory ( void );
 EXTERN void ManageInventoryScreen ( void );
