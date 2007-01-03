@@ -1691,7 +1691,7 @@ Item as defensive item: ac_bonus_modifier=0
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_28.png"
 inventory_size_y=2
-inventory_size_x=2
+inventory_size_x=1
 Item uses drop sound with filename="drop_sword_sound.wav"
 Base list price=60
 Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
