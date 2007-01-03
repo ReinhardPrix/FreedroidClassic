@@ -553,11 +553,11 @@ Error loading flag image.",
 	{
 	if ( use_open_gl )
 	    {
-            blit_open_gl_texture_to_screen_position ( equipped_icon , TargetRectangle . x , TargetRectangle . y , TRUE );
+            blit_open_gl_texture_to_screen_position ( equipped_icon , TargetRectangle . x + TargetRectangle . w - 24, TargetRectangle . y , TRUE );
     	    }
         else
             {
-            blit_iso_image_to_screen_position ( equipped_icon , TargetRectangle . x , TargetRectangle . y );
+            blit_iso_image_to_screen_position ( equipped_icon , TargetRectangle . x + TargetRectangle . w -  24, TargetRectangle . y );
             }
 	}
 }; // void ShowRescaledItem ( int position , item* ShowItem )
