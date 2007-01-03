@@ -189,15 +189,20 @@ number of inventory screen tiles with the item!  Fatal!",
     }
   }
 
-  // Does the image need scaling ? (currently only one items needs it, but as I'd like to raise the standard sizes from 32x32 to at least 64x64,
+  // Does the image need scaling ? (currently only one item needs it, but as I'd like to raise the standard sizes from 32x32 to at least 64x64,
   // this code makes sense)
   int target_x = ItemMap [ item_type ] . inv_image . inv_size . x * 32; 
   int target_y = ItemMap [ item_type ] . inv_image . inv_size . y * 32;
-  float factor_x = (float)target_x / (float)original_img -> w;
-  float factor_y = (float)target_y / (float)original_img -> h;
-  tmp_surf2 = zoomSurface ( original_img , factor_x , factor_y , FALSE );
-  ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf2 ); 
-  SDL_FreeSurface ( tmp_surf2 );
+  float factor_x, factor_y;
+  if ( ( target_x != original_img -> w ) || ( target_y != original_img -> h) )
+	{
+	  factor_x = (float)target_x / (float)original_img -> w;
+	  factor_y = (float)target_y / (float)original_img -> h;
+	  tmp_surf2 = zoomSurface ( original_img , factor_x , factor_y , FALSE );
+	  ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( tmp_surf2 ); 
+	  SDL_FreeSurface ( tmp_surf2 );
+	}
+  else ItemMap [ item_type ] . inv_image . Surface = our_SDL_display_format_wrapperAlpha ( original_img );
 
   //--------------------
   // For the shop, we need versions of each image, where the image is scaled so
