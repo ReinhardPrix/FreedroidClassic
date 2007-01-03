@@ -1898,7 +1898,7 @@ set_video_mode_for_open_gl ( void )
     // video_flags |= SDL_GL_DOUBLEBUFFER; /* Enable double buffering */
     
     // video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
-    video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
+    //video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
     if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
     if ( vid_info->hw_available )
 	video_flags |= SDL_HWSURFACE;
@@ -2071,12 +2071,6 @@ InitVideo (void)
 	// video_flags = SDL_SWSURFACE | SDL_HWPALETTE ;
 	if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
 	
-	/* 
-	 * currently only the simple 320x200 mode is supported for 
-	 * simplicity, as all our graphics are in this format
-	 * once this is up and running, we'll provide others modes
-	 * as well.
-	 */
 	if( !(Screen = SDL_SetVideoMode ( GameConfig . screen_width, GameConfig . screen_height , 0 , video_flags )) )
 	{
 	    fprintf(stderr, "Couldn't set (2*) 320x240*SCALE_FACTOR video mode: %s\n",
