@@ -1433,6 +1433,8 @@ enum
   int can_continue = 0;
   int MenuPosition=1;
   char* MenuTexts[10];
+  int oldmode = global_ingame_mode;
+  global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL;
 
   Me [ 0 ] . status = MENU;
 
@@ -1505,7 +1507,7 @@ enum
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   Me[0].status=MOBILE;
-
+  global_ingame_mode=oldmode;
   return;
 
 }; // void EscapeMenu( void )
