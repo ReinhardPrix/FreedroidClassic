@@ -933,8 +933,8 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     SDL_SetClipRect ( Screen , NULL );
     
     blit_special_background ( background_code );
-    ShowItemPicture ( 45 * GameConfig . screen_width / 640 , 
-		      190 * GameConfig . screen_height / 480 , ShowItem->type );
+    ShowItemPicture ( 40 * GameConfig . screen_width / 1024 + ((250 * GameConfig . screen_width / 1024) - 132) / 2 , 
+		      185 * GameConfig . screen_height / 768 + ((322 * GameConfig . screen_height / 768) - 180) / 2, ShowItem->type );
     
     //--------------------
     // If that is wanted, we fill out the title header line, announcing the
