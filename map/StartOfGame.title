@@ -55,9 +55,11 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
  I ... Open/Close inventory panel
  C ... Open/Close character panel
  S ... Open/Close skills panel
- L ... Show quest status log
+ Q ... Show quest status log
  P ... Toggle pause mode
  A ... Hold down 'A' to attack and not move
+ R ... Reload your weapon
+ T ... Make walls transparent when Tux approaches
  Tab ... Turn on/off automap display
  LEFT SHIFT ... Make items on the ground visible
  Escape ... Show the main menu
