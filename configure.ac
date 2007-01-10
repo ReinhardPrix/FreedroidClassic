@@ -194,7 +194,7 @@ fi
 AM_PATH_GTK(1.2.0, [ found_gtk=true ], AC_MSG_WARN([
 --------------------------------------------------
 WARNING: You need libgtk-dev >= 1.20 in order to 
-be able to build the DialogEditor and ItemEditor!
+be able to build the ItemEditor!
 
 If you only want to play Freedroid you can ignore this!
 --------------------------------------------------]))
