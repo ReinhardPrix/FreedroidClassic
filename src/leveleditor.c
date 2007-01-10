@@ -5088,6 +5088,13 @@ LevelEditor(void)
     //
     OriginWaypoint = (-1);
     
+    //--------------------
+    // Maybe the cursor has moved into the top bar with the selection tab?
+    // In that case we might want to change the appearance of the mouse 
+    // cursor a bit, like to arrow shape or something, for conveninet selection...
+    //
+    set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
+
     while ( !level_editor_done )
     {
 	proceed_now=FALSE;
@@ -5104,16 +5111,6 @@ LevelEditor(void)
 	    if ( SkipAFewFrames ) SkipAFewFrames--;
 	    StartTakingTimeForFPSCalculation(); 
 	    
-	    //--------------------
-	    // Maybe the cursor has moved into the top bar with the selection tab?
-	    // In that case we might want to change the appearance of the mouse 
-	    // cursor a bit, like to arrow shape or something, for conveninet selection...
-	    //
-	    if ( GetMousePos_y() < 130 )
-		set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
-	    else
-		set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
-
 	    //--------------------
 	    // Also in the Level-Editor, there is no need to go at full framerate...
 	    // We can do with less, cause there are no objects supposed to be 
