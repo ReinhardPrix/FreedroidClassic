@@ -4465,7 +4465,7 @@ File or directory name for inventory image="datacube/inv_image.png"
 inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=50
+Base list price=0
 Item description text="This data cube contains confidential government data on the installations around the colony. Kevin hopes that when the data is evaluated properly a way out of the current crisismight be found. However, the amount of data is so vast, it can only be evaluated properly using a large cluster of computers. The Red Guard base is said to store a suitable infrastructure for this purpose."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
@@ -5345,7 +5345,7 @@ File or directory name for inventory image="inventory_image_28.png"
 inventory_size_y=2
 inventory_size_x=2
 Item uses drop sound with filename="drop_sword_sound.wav"
-Base list price=5000
+Base list price=0
 Item description text="This blade pulses with evil. That power. That energy. Nothing can stop you now."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
