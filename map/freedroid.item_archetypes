@@ -2661,7 +2661,7 @@ File or directory name for inventory image="dixons_toolbox/inv_image.png"
 inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
-Base list price=150
+Base list price=0
 Item description text="This is a teleporter service toolbox. It's complete and orderly, though a few dents on the outside give prof of frequent use. 'C. Dixon' is carved into the outside with fine print."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
