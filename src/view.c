@@ -1389,7 +1389,13 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 		{
 		    if ( obstacle_map [ our_obstacle -> type ] . shadow_image . texture_has_been_created )
 		    {
-			blit_open_gl_texture_to_map_position ( 
+			if ( mask & ZOOM_OUT )
+			    blit_zoomed_open_gl_texture_to_map_position (   
+                            obstacle_map [ our_obstacle -> type ] . shadow_image ,
+                            our_obstacle -> pos . x , our_obstacle -> pos . y ,   
+                            1.0 , 1.0, 1.0 , FALSE, TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS );
+
+			else blit_open_gl_texture_to_map_position ( 
 			    obstacle_map [ our_obstacle -> type ] . shadow_image , 
 			    our_obstacle -> pos . x , our_obstacle -> pos . y , 
 			    1.0 , 1.0, 1.0 , FALSE, TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS );
@@ -1400,7 +1406,9 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 		{
 		    if ( obstacle_map [ our_obstacle -> type ] . shadow_image . surface != NULL )
 		    {
-			blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . shadow_image , 
+			if ( mask & ZOOM_OUT )      blit_zoomed_iso_image_to_map_position ( & (obstacle_map [ our_obstacle -> type ] . shadow_image) ,
+                                                         our_obstacle -> pos . x , our_obstacle -> pos . y );
+			else blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . shadow_image , 
 							 our_obstacle -> pos . x , our_obstacle -> pos . y );
 			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
 		    }
