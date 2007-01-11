@@ -494,7 +494,7 @@ ClickWasOntoItemRowPosition ( int x , int y , int TuxItemRow )
 void
 ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
 {
-    SDL_Rect TargetRectangle;
+    SDL_Rect TargetRectangle = { 0, 0, INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640,  INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480};
     static iso_image equipped_icon ;
     static int first_call = TRUE ;
     char* fpath;
@@ -547,7 +547,6 @@ Error loading flag image.",
 	TargetRectangle . x = ShopItemRowRect . x + position * INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640 ;
 	TargetRectangle . y = TuxItemRow ;
     }
-    
     our_SDL_blit_surface_wrapper( ItemMap [ ShowItem -> type ] . inv_image . scaled_surface_for_shop , NULL , Screen , &TargetRectangle );
     if ( item_is_currently_equipped( ShowItem) )
 	{
