@@ -241,8 +241,8 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	// Maybe we should display some thumbnails with the saved games entries?
 	// But this will only apply for the load_hero and the delete_hero menus...
 	//
-	if ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
-	     ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) )
+	if ( ( ( ! strcmp ( InitialText , LOAD_EXISTING_HERO_STRING ) ) ||
+	     ( ! strcmp ( InitialText , DELETE_EXISTING_HERO_STRING ) ) ) && MenuPosition < NumberOfOptionsGiven )
 	{
 	    //--------------------
 	    // We load the thumbnail, or at least we try to do it...
@@ -2687,9 +2687,13 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 	
+	MenuTexts [ cnt ] = "Back";
+	MenuTexts [ cnt + 1] = "";
+	
 	MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 	
 	if ( MenuPosition == (-1) ) return ( FALSE );
+	if ( MenuPosition == cnt + 1 ) return ( FALSE );
 	else
 	{
 	    // LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
@@ -2803,10 +2807,13 @@ I need to know that for saving. Abort.\n");
 		DebugPrintf ( -1 , "\nAnother delete game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
-	
+        MenuTexts [ cnt ] = "Back";
+        MenuTexts [ cnt + 1] = "";
+
 	MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 	
 	if ( MenuPosition == (-1) ) return ( FALSE );
+        if ( MenuPosition == cnt + 1 ) return ( FALSE );
 	else
 	{
 	    //--------------------
