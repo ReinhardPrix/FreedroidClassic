@@ -1,27 +1,43 @@
-/* part of freedroid.sf.net
-*   2006 Arvid Picciani
-*   Copyright (c) 1994, 2002, 2003 Johannes Prix
-*   Copyright (c) 1994, 2002 Reinhard Prix
-*   GPL
-*/
+/*
+ *
+ *   Copyright (c) 2006 Arvid Picciani
+ *   Copyright (c) 1994, 2002, 2003 Johannes Prix
+ *   Copyright (c) 1994, 2002 Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ *  MA  02111-1307  USA
+ *
+ */
 
+/* ----------------------------------------------------------------------
+ * This file contains sound related functions
+ * ---------------------------------------------------------------------- */
 
-//does someone know whats the point of that?
 #ifndef _sound_c
 #define _sound_c
 #endif
 
 
-
-
 #include "sound.h"
-
-
 
 /** ============================================  DUMMYS  ============================================  */
 /*
 these functions are defined if there is no sound. they do nothing
-also they can be seen as a smal overview
 */
 
 #ifndef HAVE_LIBSDL_MIXER
@@ -48,14 +64,6 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 
 
 #ifdef HAVE_LIBSDL_MIXER
-
-
-
-
-
-
-
-
 
 /** ============================================ GLOBALS ============================================  */
 
@@ -85,11 +93,8 @@ int BackgroundMusicStateMachineState = NOTHING_PLAYING_AT_ALL ;
 char NewMusicTargetFileName[ 5000 ];
 
 
-
 // This variable refers to the next free position inside the WAV file cache.
 static int next_free_position_in_cache = 0 ;
-
-
 
 
 /* some garbage i colected between the function declarations*/
@@ -97,14 +102,6 @@ int i;
 unsigned char *ptr;
 unsigned char v = 128;
 int SampleLaenge;
-
-
-
-
-
-
-
-
 
 
 
@@ -193,8 +190,6 @@ InitAudio( void )
 
 
 
-
-
 void SetBGMusicVolume( float NewVolume )
 	{
 	if ( !sound_on ) return ;
@@ -207,8 +202,6 @@ void SetSoundFXVolume( float NewVolume )
 	if ( !sound_on ) return ;
 	remove_all_samples_from_WAV_cache( ) ;
 	} 
-
-
 
 
 
@@ -265,10 +258,6 @@ void OldMusicHasFinishedFadingOut ( void )
 
 	}
 ; // void OldMusicHasFinishedFadingOut ( void )
-
-
-
-
 
 
 
@@ -405,8 +394,6 @@ void SwitchBackgroundMusicTo ( char* filename_raw_parameter )
 
 
 	}// void SwitchBackgroundMusicTo ( char* filename_raw_parameter )
-
-
 
 
 
