@@ -3151,7 +3151,9 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	DebugPrintf( PERFORM_TUX_ATTACK_RAW_DEBUG , "\n===> Fire Bullet target: x=%f, y=%f. " , Weapon_Target_Vector.x , Weapon_Target_Vector.y ) ;
         if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , Weapon_Target_Vector.x, Weapon_Target_Vector.y, Me [ player_num ] . pos . z))
 		{
-		fprintf(stderr, "No reach\n");
+		/* The target cannot be reached - cancel the attack NOW*/
+		Me [ 0 ] . weapon_swing_time = -1;
+		//fprintf(stderr, "No reach\n");
 		return;
 		}
 	
