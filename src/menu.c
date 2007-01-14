@@ -55,7 +55,7 @@ extern int load_game_command_came_from_inside_running_game;
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
 
-#define SINGLE_PLAYER_STRING "Single Player"
+#define SINGLE_PLAYER_STRING "Play"
 #define LOAD_EXISTING_HERO_STRING "The first 10 characters: "
 #define DELETE_EXISTING_HERO_STRING "Select character to delete: "
 
