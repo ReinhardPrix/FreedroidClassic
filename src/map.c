@@ -3473,7 +3473,7 @@ WorkLevelGuns ( int PlayerNum )
       // the damage value is taken directly from the character stats, and the UpdateAll...stats
       // has to do the right computation and updating of this value.  hehe. very conventient.
       CurBullet->damage = 20 ;
-      CurBullet->mine = FALSE;
+      CurBullet->mine = TRUE; //just to avoid weird things
       CurBullet->owner = -1;
       CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
       CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
