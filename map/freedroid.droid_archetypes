@@ -178,7 +178,7 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
+Notes concerning this droid : simple rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
 
 ** Start of new Robot: ** 
 Droidname: 139
@@ -1494,7 +1494,7 @@ Number of Superconductors=0
 Number of Antimatter-Matter Converters=0
 Number of Entropy Inverters=0
 Number of Tach. Condensators=0
-Greeting Sound number=6
+Greeting Sound number=-1
 Got Hit Sound number=-1
 Death sound file name="none"
 Attack animation sound file name="none"
@@ -1547,7 +1547,7 @@ Number of Superconductors=0
 Number of Antimatter-Matter Converters=0
 Number of Entropy Inverters=0
 Number of Tach. Condensators=0
-Greeting Sound number=6
+Greeting Sound number=-1
 Got Hit Sound number=-1
 Death sound file name="none"
 Attack animation sound file name="none"

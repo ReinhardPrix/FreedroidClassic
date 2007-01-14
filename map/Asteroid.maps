@@ -4687,7 +4687,7 @@ jump target south: -1
 jump target east: -1
 jump target west: -1
 use underground lighting: 1
-Name of this level=Distruption Machine Deck
+Name of this level=Disruption Machine Deck
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=ImperialArmy.ogg
 beginning_of_map

@@ -245,7 +245,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_4.wav"
 Base list price=900
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=""
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -333,7 +333,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_2.wav"
 Base list price=1
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=""
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -990,7 +990,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=""
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2310,7 +2310,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
-Item description text="Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=""
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
@@ -2354,7 +2354,7 @@ inventory_size_y=0
 inventory_size_x=0
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=0
-Item description text="This is an item. Oh yes! This comment can go over multiple lines. Please insert something sensible here."
+Item description text=""
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.000000
 Item as gun: reloading time=0.000000
