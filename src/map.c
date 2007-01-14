@@ -3661,7 +3661,7 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
 int
 IsPassable ( float x , float y , int z )
 {
-    if ( z < 0 ) { fprintf ( stderr, "%s: got a negative z. Probable GCC4 bug.", __FUNCTION__); return; }
+    if ( z < 0 ) { fprintf ( stderr, "%s: got a negative z. Probable GCC4 bug.", __FUNCTION__); return FALSE; }
     Level PassLevel = curShip . AllLevels [ z ] ;
     int x_tile_start, y_tile_start;
     int x_tile_end, y_tile_end;
