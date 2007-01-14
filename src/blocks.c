@@ -2546,7 +2546,7 @@ init_obstacle_data( void )
 	sprintf ( obstacle_map [ i ] . obstacle_short_name , "unnamed_obstacle" );
 
 	obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 1000 ); // that should be sufficient for most long descriptions...
-	sprintf ( obstacle_map [ i ] . obstacle_long_description , "This undescribed obstacle is still waiting for some contribution to its description.....");
+	sprintf ( obstacle_map [ i ] . obstacle_long_description , "This obstacle seems solid.");
 
 
     }
