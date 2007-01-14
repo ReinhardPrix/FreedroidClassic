@@ -3810,17 +3810,15 @@ handle_player_examine_command ( int player_num )
 	{
 	    obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 	    
-	    sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
+	    sprintf ( game_message_text , "Examining %s.  %s" , 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
-		      our_obstacle -> type , 
 		      obstacle_level -> obstacle_description_list [ our_obstacle -> description_index ] ) ;
 	    append_new_game_message ( game_message_text );
 	}
 	else
 	{
-	    sprintf ( game_message_text , "Examining %s. (obs type %d).  %s" , 
+	    sprintf ( game_message_text , "Examining %s.  %s" , 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
-		      our_obstacle -> type , 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
 	    append_new_game_message ( game_message_text );
 	}
@@ -3864,7 +3862,7 @@ handle_player_loot_command ( int player_num )
     final_bot_found = GetLivingDroidBelowMouseCursor ( player_num ) ;
     if ( final_bot_found != (-1) )
     {
-	sprintf( game_message_text , "Sorry, looting characters is not possible.  If you intended to pickpocket the characters, sorry this is not possible in this version of freedroidRPG.  Maybe later later versions of the game might allow usage of that as a skill." ) ;
+	sprintf( game_message_text , "Sorry, looting characters is not possible." ) ;
 	append_new_game_message ( game_message_text );
 	return;
     }
@@ -3881,8 +3879,8 @@ handle_player_loot_command ( int player_num )
 
     if ( obstacle_map [ our_obstacle -> type ] . can_be_looted )
     {
-	sprintf ( game_message_text , "Looting %s (obs type %d)." , 
-		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name , our_obstacle -> type );
+	sprintf ( game_message_text , "Looting %s." , 
+		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name );
 	append_new_game_message ( game_message_text );
 
 	
