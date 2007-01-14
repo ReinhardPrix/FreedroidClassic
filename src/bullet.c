@@ -258,6 +258,7 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
   CurBullet->time_in_seconds = 0;
   CurBullet->time_in_frames = 0;
   CurBullet->mine = FALSE;
+  CurBullet->owner = -15000;
   CurBullet->phase = 0;
   CurBullet->pos.x = 0;
   CurBullet->pos.y = 0;
@@ -648,6 +649,7 @@ handle_flash_effects ( bullet* CurBullet )
 	CurBullet->time_in_seconds = 0;
 	CurBullet->type = INFOUT;
 	CurBullet->mine = FALSE;
+	CurBullet->owner = -15000;
 	return;
     }
     
