@@ -1321,6 +1321,7 @@ Item to be dropped (forced for this bot) is of illegal type!" ,
 	DropItemAt( ThisRobot -> on_death_drop_item_code , ThisRobot -> pos . z , 
 		    ThisRobot -> virt_pos . x , 
 		    ThisRobot -> virt_pos . y , -1 , -1 , 2 , 1 );
+	ThisRobot -> on_death_drop_item_code = -1;
     }  
     
     //--------------------
