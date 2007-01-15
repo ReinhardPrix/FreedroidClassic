@@ -1119,27 +1119,27 @@ select_new_waypointless_random_walk_target ( enemy* ThisRobot )
 	target_candidate . x = ThisRobot -> pos . x ;
 	target_candidate . y = ThisRobot -> pos . y ;
 
-	if ( fabsf ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) > 1.4 )
+	if ( fabsf ( ThisRobot -> virt_pos . x - Me [ 0 ] . pos . x ) > 0.5 )
 	{
 	    if ( ThisRobot -> virt_pos . x > Me [ 0 ] . pos . x )
 	    {
-		target_candidate . x -= 1.0 ;
+		target_candidate . x -= 0.3 ;
 	    }		
 	    else
 	    {
-		target_candidate . x += 1.0 ;
+		target_candidate . x += 0.3 ;
 	    }
 	}
 
-	if ( fabsf ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) > 1.4 )
+	if ( fabsf ( ThisRobot -> virt_pos . y - Me [ 0 ] . pos . y ) > 0.5 )
 	{
 	    if ( ThisRobot -> virt_pos . y > Me [ 0 ] . pos . y )
 	    {
-		target_candidate . y -= 1.0 ;
+		target_candidate . y -= 0.3 ;
 	    }		
 	    else
 	    {
-		target_candidate . y += 1.0 ;
+		target_candidate . y += 0.3 ;
 	    }
 	}
 
