@@ -583,6 +583,9 @@ HandleCurrentlyActivatedSkill( int player_num )
 
 	    index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
 	    if ( index_of_droid_below_mouse_cursor == ( -1 ) ) break;
+	    if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y , GetMousePos_x(), GetMousePos_y(), Me [ player_num ] . pos . z))
+		break;
+
 
 	    if ( AllEnemys [ index_of_droid_below_mouse_cursor ] . is_friendly )
 		ChatWithFriendlyDroid( & ( AllEnemys [ index_of_droid_below_mouse_cursor ] ) );
