@@ -185,16 +185,17 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Maybe taking the brain enlargement pills really was a bit stupid."
+New Option Nr=10  OptionText=" Maybe taking the brain enlargement pills really was stupid."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=315  PositionY=327  
-Subtitle="What? I'm not stupid! Understood?"
+Subtitle="WHAT? Did you just say I'm stupid?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No one says I'm stupid! I'm NOT STUPID!"
+Subtitle="Don't say it, man."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I'LL BEAT YOU TO SPLINTERS!"
+Subtitle="You don't like me angry."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-DoSomethingExtra="BreakOffAndBecomeHostile"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=50 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -305,8 +306,24 @@ ChangeOption=9 ChangeToValue=1
 ChangeOption=5 ChangeToValue=0
 ChangeOption=11 ChangeToValue=0
 ChangeOption=10 ChangeToValue=0
+ChangeOption=50 ChangeToValue=0
 ChangeOption=20 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" Yeah, it was a totally idiotic idea to take those pills."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=315  PositionY=327  
+Subtitle="What? I'm not an idiot! Understood?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="No one says I'm stupid! I'm NOT STUPID!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'LL BEAT YOU TO SPLINTERS!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=50 ChangeToValue=0
+DoSomethingExtra="BreakOffAndBecomeHostile"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
