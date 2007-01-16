@@ -1393,7 +1393,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
     if ( ThisRobot->is_friendly )
     {
 	Activate_Conservative_Frame_Computation();
-	PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
+	//PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
 
 	sprintf ( game_message_text , "Your friend %s has died." ,
 		  Druidmap [ ThisRobot -> type ] . druidname );
@@ -1880,7 +1880,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	
 	if ( ThisRobot -> is_friendly )
 	{
-	    DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
+	    DebugPrintf ( 1 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
 	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; 
 		  j < MAX_ENEMYS_ON_SHIP ; j ++ , target_robot ++ )
 	    {
