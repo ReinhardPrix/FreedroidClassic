@@ -227,7 +227,7 @@ exist really (i.e. has a type = (-1) ).",
     }
     else if ( ItemMap [ CurItem->type ].item_can_be_installed_in_influ )
     {
-	strcat( ItemDescText , " Indestructable" );
+	strcat( ItemDescText , " Indestructible" );
     };
     
     // --------------------
