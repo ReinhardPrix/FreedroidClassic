@@ -67,7 +67,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Umm... I saw this building as I was walking by, and I decided to take a look inside."
+New Option Nr=3  OptionText=" I saw this building as I was walking by, and I decided to take a look inside."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=373  PositionY=239  
 Subtitle="YOUR REASON IS CURIOSITY. MASTER KEVIN LIKES CURIOUS PEOPLE."
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" His life is in grave danger. "
+New Option Nr=5  OptionText=" Umm... His life is in grave danger. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=168  PositionY=109  
 Subtitle="ERROR: REASON INVALID."
@@ -104,7 +104,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" The people from the city want me to have a word with him."
+New Option Nr=6  OptionText=" The people from the uhh... city want me to have a word with him. Yeah, that's it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=270  PositionY=110  
 Subtitle="ERROR: REASON INVALID."
@@ -114,7 +114,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="I have some very valuable information. Your master might be interested in it."
+New Option Nr=7  OptionText=" I have some very valuable information. Your master might be interested in it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=109  
 Subtitle="MASTER KEVIN WILL BE PLEASED. YOU MAY PASS."
@@ -289,7 +289,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=164  PositionY=383  
-Subtitle="INTRUDER, LOWER YOUR WEAPONS AND IDENTIFY YOURSELF OR FACE IMMEDIATE TERMINATION"
+Subtitle="INTRUDER, LOWER YOUR WEAPONS AND IDENTIFY YOURSELF OR FACE IMMEDIATE TERMINATION."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I WILL NOT LET YOU INJURE MY MASTER."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
