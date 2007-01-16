@@ -176,6 +176,7 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 		for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) move_tux ( i );	
 	
 	    HandleInventoryScreen ();
+	    HandleCharacterScreen ( 0 );
 
 	    UpdateAllCharacterStats ( 0 );
 	    

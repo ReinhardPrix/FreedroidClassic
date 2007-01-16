@@ -469,6 +469,7 @@ EXTERN void InitiateNewCharacter ( int player_num , int CharacterClass );
 EXTERN void DisplayButtons( void );
 EXTERN void UpdateAllCharacterStats ( int player_num );
 EXTERN void ShowCharacterScreen ( int player_num );
+EXTERN void HandleCharacterScreen ( int player_num );
 
 // character.c
 #undef EXTERN

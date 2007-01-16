@@ -885,7 +885,6 @@ void
 ShowCharacterScreen ( int player_num )
 {
     char CharText[1000];
-    static int MouseButtonPressedPreviousFrame = FALSE;
     point CurPos;
     
     DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
@@ -1034,6 +1033,22 @@ ShowCharacterScreen ( int player_num )
     // spellcasting, melee combat, ranged weapon combat and repairing things
     //
     show_character_screen_skills ( player_num );
+    if ( Me[0].points_to_distribute > 0 )
+    {
+	ShowGenericButtonFromList ( MORE_STR_BUTTON );
+	ShowGenericButtonFromList ( MORE_DEX_BUTTON );
+	ShowGenericButtonFromList ( MORE_VIT_BUTTON );
+	ShowGenericButtonFromList ( MORE_MAG_BUTTON );
+    }
+}; //ShowCharacterScreen ( int player_num ) 
+
+/* ----------------------------------------------------------------------
+ * This function handles input for the character screen.
+ * ---------------------------------------------------------------------- */
+void
+HandleCharacterScreen ( int player_num )
+{
+    static int MouseButtonPressedPreviousFrame = FALSE;
 
     //--------------------
     // It might be the case, that the character has some points to distribute upon the character
@@ -1042,11 +1057,6 @@ ShowCharacterScreen ( int player_num )
     // Me[0].points_to_distribute = 5;
     if ( Me[0].points_to_distribute > 0 )
     {
-	ShowGenericButtonFromList ( MORE_STR_BUTTON );
-	ShowGenericButtonFromList ( MORE_DEX_BUTTON );
-	ShowGenericButtonFromList ( MORE_VIT_BUTTON );
-	ShowGenericButtonFromList ( MORE_MAG_BUTTON );
-	
 	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
 	{
 	    Me[0].base_strength++;
@@ -1096,13 +1106,6 @@ ShowCharacterScreen ( int player_num )
 	// if ( Me[0].points_to_distribute == 0 ) GameConfig.CharacterScreen_Visible = FALSE;
     }
     
-    //--------------------
-    // Finally, we want the part of the screen we have been editing to become
-    // visible and therefore we must updated it here, since it is currently not
-    // contained within the user rectangle that also gets updated every frame.
-    //
-    // our_SDL_update_rect_wrapper( Screen , CharacterRect.x , CharacterRect.y , CharacterRect.w , CharacterRect.h );
-    
     
     //--------------------
     // We want to know, if the button was pressed the previous frame when we
@@ -1112,6 +1115,6 @@ ShowCharacterScreen ( int player_num )
     //
     MouseButtonPressedPreviousFrame = axis_is_active;
 
-}; // ShowCharacterScreen ( void )
+}; // HandleCharacterScreen ( void )
 
 #undef _character_c
