@@ -257,6 +257,7 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     int ItemImageCode;
     
     if ( AlarmItem->type == ( -1 ) ) return;
+    if ( AlarmItem->max_duration == ( -1 ) ) return;
     
     ItemImageCode = AlarmItem -> type ;
     
