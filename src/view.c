@@ -264,12 +264,15 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     TargetRect . x = GameConfig . screen_width - 64 * Position ;
     TargetRect . y = 10 ;
     
-    if ( AlarmItem->current_duration < 5 )
+    if ( AlarmItem->current_duration <= 5 )
     {
+	if (  AlarmItem->current_duration < 3 )
+	    if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
+
 	if(use_open_gl)
 		{
 		glPixelTransferf(GL_BLUE_SCALE, 0);
-		glPixelTransferf(GL_GREEN_SCALE, 0);
+		glPixelTransferf(GL_GREEN_SCALE, (float)( AlarmItem->current_duration - 1 ) / ( 4 ) );
 		glPixelTransferf(GL_RED_SCALE, 1);
 		}
 	our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
@@ -291,8 +294,6 @@ void
 ShowItemAlarm( void )
 {
 
-    if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
-    
     ShowOneItemAlarm( & Me[0].weapon_item , 1 );
     ShowOneItemAlarm( & Me[0].drive_item , 2 );
     ShowOneItemAlarm( & Me[0].shield_item , 3 );
