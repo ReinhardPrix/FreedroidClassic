@@ -3046,7 +3046,6 @@ handle_player_identification_command( int player_num )
 	    {
                 GrabbedItem -> is_identified = TRUE ;
 		Play_Spell_ForceToEnergy_Sound( );
-		Me [ 0 ] . readied_skill = SPELL_TRANSFERMODE ;
 	    }
 	}
     
