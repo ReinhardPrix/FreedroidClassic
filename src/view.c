@@ -298,6 +298,7 @@ ShowItemAlarm( void )
     ShowOneItemAlarm( & Me[0].drive_item , 2 );
     ShowOneItemAlarm( & Me[0].shield_item , 3 );
     ShowOneItemAlarm( & Me[0].armour_item , 4 );
+    ShowOneItemAlarm( & Me[0].special_item , 5 );
     
 }; // void ShowItemAlarm( void )
 
