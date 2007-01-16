@@ -3052,12 +3052,8 @@ handle_player_identification_command( int player_num )
     
 }; // void handle_player_identification_command( int player_num )
 
-/* ----------------------------------------------------------------------
- * This function display the inventory screen and also checks for mouse
- * actions in the inventory screen.
- * ---------------------------------------------------------------------- */
 void 
-ManageInventoryScreen ( void )
+HandleInventoryScreen ( void )
 {
     static int MouseButtonPressedPreviousFrame = FALSE;
     static int RightPressedPreviousFrame = FALSE;
@@ -3181,12 +3177,6 @@ ManageInventoryScreen ( void )
 	return;
     }
     
-    
-    //--------------------
-    // Next we display all the inventory screen and we also fill in all
-    // the pictures for the items the influencer is currently fitted with.
-    //
-    ShowInventoryScreen();
     
     //--------------------
     // If the user now presses the left mouse button and it was not pressed before,
@@ -3693,24 +3683,6 @@ ManageInventoryScreen ( void )
     
     
     //--------------------
-    // Now that we have filled all the positions in the inventory, we can start to draw the
-    // items the player currently has 'in his hand' via the mouse drag-and-drop
-    // grip feature.
-    //
-    // if ( axis_is_active ) 
-    if ( Item_Held_In_Hand != (-1) )
-    {
-	DisplayItemImageAtMouseCursor( Item_Held_In_Hand );
-    }
-    else
-    {
-	// In case the player does not have anything in his hand, then of course we need to
-	// unset everything as 'not in his hand'.
-	//
-	// printf("\n Mouse button should cause no image now.");
-    }
-    
-    //--------------------
     // Maybe the user is just pressing the RIGHT mouse button inside the inventory recatangle
     // which would mean for us that he is applying the item under the mouse button
     //
@@ -3825,16 +3797,10 @@ ManageInventoryScreen ( void )
 	
     }
     
-    //--------------------
-    // Finally, we want the part of the screen we have been editing to become
-    // visible and therefore we must updated it here, since it is currently not
-    // contained within the user rectangle that also gets updated every frame.
-    //
-    // our_SDL_update_rect_wrapper( Screen , InventoryRect.x , InventoryRect.y , InventoryRect.w , InventoryRect.h );
-    //
     MouseButtonPressedPreviousFrame = axis_is_active;
     RightPressedPreviousFrame = MouseRightPressed ( ) ;
-}; // void ManageInventoryScreen ( void );
+}; // void HandleInventoryScreen ( void );
+
 
 /* ----------------------------------------------------------------------
  *

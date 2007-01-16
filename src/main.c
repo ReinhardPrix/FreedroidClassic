@@ -174,6 +174,8 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 	    
 	    if ( ! ClientMode )
 		for ( i = 0 ; i < MAX_PLAYERS ; i ++ ) move_tux ( i );	
+	
+	    HandleInventoryScreen ();
 
 	    UpdateAllCharacterStats ( 0 );
 	    

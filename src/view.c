@@ -1966,7 +1966,7 @@ AssembleCombatPicture ( int mask )
 	display_current_game_message_window ( ) ;
 	ShowCharacterScreen ( 0 );
 	ShowSkillsScreen ( );
-	ManageInventoryScreen ( );
+	ShowInventoryScreen ( );
 	DisplayButtons( );
 	if ( ! GameOver )
 	    DisplayBanner ( );
@@ -4739,6 +4739,8 @@ ShowInventoryScreen( void )
     InventoryRect.y = User_Rect.y;
     InventoryRect.w = 320;
     InventoryRect.h = 480;
+
+    if ( GameConfig.Inventory_Visible == FALSE ) return;
     
     //--------------------
     // At this point we know, that the inventory screen is desired and must be
@@ -4880,6 +4882,19 @@ ShowInventoryScreen( void )
 	our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . Inventory [ SlotNum ] . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
 	
     }
+
+  if ( Item_Held_In_Hand != (-1) )
+    {
+        DisplayItemImageAtMouseCursor( Item_Held_In_Hand );
+    }
+  else
+    {
+        // In case the player does not have anything in his hand, then of course we need to
+        // unset everything as 'not in his hand'.
+        //
+        // printf("\n Mouse button should cause no image now."); 
+    }
+
 }; // void ShowInventoryScreen( void )
 
 

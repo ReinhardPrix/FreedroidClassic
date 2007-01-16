@@ -450,7 +450,7 @@ EXTERN void DropHeldItemToInventory( void );
 EXTERN int DropHeldItemToTheFloor ( void );
 EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum ) ;
 EXTERN void ShowQuickInventory ( void );
-EXTERN void ManageInventoryScreen ( void );
+EXTERN void HandleInventoryScreen ( void );
 EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
