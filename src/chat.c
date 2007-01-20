@@ -440,6 +440,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	    AllEnemys [ i ] . is_friendly = FALSE ;
 	    AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
 	}
+	SwitchBackgroundMusicTo(BIGFIGHT_BACKGROUND_MUSIC_SOUND);
     }
     else if ( ! strcmp ( ExtraCommandString , "SetCompletelyFixedProperty" ) )
     {
@@ -471,22 +472,22 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseMeleeWeaponSkill" ) )
     {
-	Me [ 0 ] . melee_weapon_skill ++; 
+	ImproveSkill(&Me [ 0 ] . melee_weapon_skill); 
 	SetNewBigScreenMessage( "Melee fighting ability improved!" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseRangedWeaponSkill" ) )
     {
-	Me [ 0 ] . ranged_weapon_skill ++; 
+	ImproveSkill(&Me [ 0 ] . ranged_weapon_skill); 
 	SetNewBigScreenMessage( "Ranged combat ability improved!" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseSpellcastingSkill" ) )
     {
-	Me [ 0 ] . spellcasting_skill ++; 
+	ImproveSkill(&Me [ 0 ] . spellcasting_skill); 
 	SetNewBigScreenMessage( "Spellcasting ability improved!" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseHackingSkill" ) )
     {
-	Me [ 0 ] . hacking_skill ++; 
+	ImproveSkill(&Me [ 0 ] . hacking_skill); 
 	SetNewBigScreenMessage( "Hacking ability improved!" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractPlasmaTransistorSkill" ) )

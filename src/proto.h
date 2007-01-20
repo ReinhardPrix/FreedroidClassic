@@ -498,6 +498,7 @@ EXTERN void ClearDetectedItemList( int player_num );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( int player_num );
 EXTERN void activate_nth_aquired_skill ( int skill_num );
+EXTERN void ImproveSkill(int *skill);
 
 // input.c 
 #undef EXTERN

@@ -93,6 +93,17 @@ ClearDetectedItemList( int PlayerNum )
 }; // void ClearDetectedItemList( int PlayerNum )
 
 /* ----------------------------------------------------------------------
+ * This function improves a generic skill (hack melee ranged magic) by one
+ * 
+ * ---------------------------------------------------------------------- */
+void
+ImproveSkill( int * skill )
+{
+    if ( *skill >= NUMBER_OF_SKILL_LEVELS - 1) return;  
+    (*skill)++;
+}; // void ImproveSkill ( int * skill )
+
+/* ----------------------------------------------------------------------
  * This function detects all items on this level.
  * ---------------------------------------------------------------------- */
 void
