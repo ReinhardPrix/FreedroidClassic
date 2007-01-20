@@ -24,10 +24,19 @@ Bonus to life modifier=12
 Bonus to mana=13
 Bonus to mana modifier=14
 
-Bonus to life recovery=15.000000;
-Bonus to mana recovery=16.000000;
+Bonus to tohit=10;
+Bonus to tohit modifier=5
 
-Price factor=17.000000;   
+Bonus to armor class or damage=1
+Bonus to armor class or damage modifier=0
+
+Bonus to life recovery=15.000000
+Bonus to mana recovery=16.000000
+
+Light radius bonus=15
+
+Price factor=17.000000
+
 ** End of new prefix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -49,10 +58,10 @@ Bonus to life modifier=0
 Bonus to mana=0
 Bonus to mana modifier=0
 
-Bonus to life recovery=0.000000;
-Bonus to mana recovery=0.000000;
+Bonus to life recovery=0.000000
+Bonus to mana recovery=0.000000
 
-Price factor=0.000000;   
+Price factor=0.000000
 ** End of new suffix specification subsection **
 
 *** End of presuff data section ***
