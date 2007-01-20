@@ -1646,12 +1646,6 @@ Get_Item_Data ( char* DataPointer )
     ItemPointer = LocateStringInData ( DataPointer , ITEM_SECTION_BEGIN_STRING );
     EndOfItemData = LocateStringInData ( DataPointer , ITEM_SECTION_END_STRING );
     
-    //--------------------
-    // Later, when we allow for an arbitrary amount of different items instead
-    // of only the amount that fits into a fixed array, it will be useful to count
-    // the number of items before, so that we can allocate the right amount of memory
-    // in advance.  We count already, though it's not yet dynamic memory that is used.
-    //
     Number_Of_Item_Types = CountStringOccurences ( DataPointer , NEW_ITEM_TYPE_BEGIN_STRING ) ;
     
     //--------------------
@@ -1683,13 +1677,8 @@ Get_Item_Data ( char* DataPointer )
     {
 	DebugPrintf ( 1 , "\n\nFound another Item specification entry!  Lets add that to the others!");
 	ItemPointer ++; 
-	
-	//--------------------
-	// Now we set the position of the item, for the moument to a pure
-	// dummy value....
-	//
-	ItemMap [ ItemIndex ] . position_x = 50 + 40 * ( ItemIndex % 10 ) ;
-	ItemMap [ ItemIndex ] . position_y = 50 + 40 * ( ItemIndex / 10 ) ;
+	char * EndOfThisItem = strstr ( ItemPointer, NEW_ITEM_TYPE_BEGIN_STRING );
+        if ( EndOfThisItem ) EndOfThisItem [ 0 ] = 0;
 	
 	//--------------------
 	// Now we read in position of this item, when viewed with the item editor...
@@ -1701,8 +1690,6 @@ Get_Item_Data ( char* DataPointer )
 	
 	// Now we read in the name of this item
 	ItemMap[ItemIndex].item_name = ReadAndMallocStringFromData ( ItemPointer , ITEM_NAME_INDICATION_STRING , "\"" ) ;
-	
-	// DebugPrintf ( 0 , "\nName of item %d is: '%s'." , ItemIndex , ItemMap [ ItemIndex ] . item_name );
 	
 	// Now we read in if this item can be used by the influ without help
 	YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_APPLIED_IN_COMBAT , "\"" ) ;
@@ -1808,11 +1795,11 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	//--------------------
 	// Now we read in minimum strength, dex and magic required to wear/wield this item
 	//
-	ReadValueFromString( ItemPointer , "Strength minimum required to wear/wield this item=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer , "Strength minimum required to wear/wield this item=" , "%d" , "-1",
 			     &ItemMap[ItemIndex].item_require_strength , EndOfItemData );
-	ReadValueFromString( ItemPointer , "Dexterity minimum required to wear/wield this item=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer , "Dexterity minimum required to wear/wield this item=" , "%d" , "-1", 
 			     &ItemMap[ItemIndex].item_require_dexterity , EndOfItemData );
-	ReadValueFromString( ItemPointer , "Magic minimum required to wear/wield this item=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer , "Magic minimum required to wear/wield this item=" , "%d" , "-1",
 			     &ItemMap[ItemIndex].item_require_magic , EndOfItemData );
 	
 	//--------------------
@@ -1821,21 +1808,21 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
 	{
 	    // Now we read in the damage bullets from this gun will do
-	    ReadValueFromString( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: damage of bullets=" , "%d" , "0",
 				 &ItemMap[ItemIndex].base_item_gun_damage , EndOfItemData );
-	    ReadValueFromString( ItemPointer ,  "Item as gun: modifier for damage of bullets=" , "%d" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: modifier for damage of bullets=" , "%d" , "0",
 				 &ItemMap[ItemIndex].item_gun_damage_modifier , EndOfItemData );
 	    
 	    // Now we read in the speed this bullet will go
-	    ReadValueFromString( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: speed of bullets=" , "%lf" , "0.000000",
 				 &ItemMap[ItemIndex].item_gun_speed , EndOfItemData );
 	    
 	    // Now we read in speed of melee application and melee offset from influ
-	    ReadValueFromString( ItemPointer ,  "Item as gun: angle change of bullets=" , "%lf" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: angle change of bullets=" , "%lf" , "0.000000", 
 				 &ItemMap[ItemIndex].item_gun_angle_change , EndOfItemData );
-	    ReadValueFromString( ItemPointer ,  "Item as gun: offset for melee weapon=" , "%lf" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: offset for melee weapon=" , "%lf" , "0.000000",
 				 &ItemMap[ItemIndex].item_gun_fixed_offset , EndOfItemData );
-	    ReadValueFromString( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , 
+	    ReadValueFromStringWithDefault( ItemPointer ,  "Item as gun: modifier for starting angle=" , "%lf" , "0.000000",
 				 &ItemMap[ItemIndex].item_gun_start_angle_modifier , EndOfItemData );
 	    
 	    // Now we read in if this weapon can pass through walls or not...
@@ -2003,20 +1990,16 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	}
 	
 	// Now we read in the armour value of this item as armour or shield or whatever
-	ReadValueFromString( ItemPointer ,  "Item as defensive item: base_ac_bonus=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "Item as defensive item: base_ac_bonus=" , "%d" , "0",
 			     &ItemMap[ItemIndex].base_ac_bonus , EndOfItemData );
-	ReadValueFromString( ItemPointer ,  "Item as defensive item: ac_bonus_modifier=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "Item as defensive item: ac_bonus_modifier=" , "%d" , "0",
 			     &ItemMap[ItemIndex].ac_bonus_modifier , EndOfItemData );
 	
 	// Now we read in the base item duration and the duration modifier
-	ReadValueFromString( ItemPointer ,  "Base item duration=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "Base item duration=" , "%d" , "-1", 
 			     &ItemMap[ItemIndex].base_item_duration , EndOfItemData );
-	ReadValueFromString( ItemPointer ,  "plus duration modifier=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "plus duration modifier=" , "%d" , "0",
 			     &ItemMap[ItemIndex].item_duration_modifier , EndOfItemData );
-	
-	// Now we read in the number of the picture to be used for this item
-	// ReadValueFromString( ItemPointer ,  "Picture number=" , "%d" , 
-	// &ItemMap[ItemIndex].picture_number , EndOfItemData );
 	
 	//--------------------
 	// Now we read in the name of the inventory item image, that is to be used
@@ -2032,9 +2015,9 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	// DebugPrintf ( 0 , "\nName of item %d is: '%s'." , ItemIndex , ItemMap [ ItemIndex ] . item_name );
 	
 	// Now we read the size of the item in the inventory. 0 equals "figure out automatically".
-	ReadValueFromString( ItemPointer ,  "inventory_size_x=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "inventory_size_x=" , "%d" , "0",
 			     &ItemMap [ ItemIndex ] . inv_image . inv_size . x , EndOfItemData );
-	ReadValueFromString( ItemPointer ,  "inventory_size_y=" , "%d" , 
+	ReadValueFromStringWithDefault( ItemPointer ,  "inventory_size_y=" , "%d" , "0",
 			     &ItemMap [ ItemIndex ] . inv_image . inv_size . y , EndOfItemData );
 
 
@@ -2051,9 +2034,9 @@ answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 	//
 	load_item_surfaces_for_item_type ( ItemIndex );
 	
-	
+
 	ItemIndex++;
-	
+        if ( EndOfThisItem ) EndOfThisItem [ 0 ] = '*'; // We put back the star at its place	
     }
     
     //--------------------

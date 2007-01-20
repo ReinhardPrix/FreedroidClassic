@@ -1089,7 +1089,7 @@ Get_Robot_Data ( void* DataPointer )
       // Now we're potentially ready to process the next droid.  Therefore we proceed to
       // the next number in the Droidmap array.
       RobotIndex++;
-      EndOfThisRobot [ 0 ] = '*'; // We put back the star at its place
+      if ( EndOfThisRobot ) EndOfThisRobot [ 0 ] = '*'; // We put back the star at its place
     }
 
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");

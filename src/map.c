@@ -2297,7 +2297,10 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
     {
       ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      char * NextItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      if ( NextItemPointer ) NextItemPointer [ 0 ] = 0;
       ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
+      if ( NextItemPointer ) NextItemPointer [ 0 ] = 'N';
     }
   
   // Now we repair the damage done to the loaded level data
