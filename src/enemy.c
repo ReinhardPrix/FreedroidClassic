@@ -1880,7 +1880,6 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	
 	if ( ThisRobot -> is_friendly )
 	{
-	    DebugPrintf ( 1 , "\nATTACK OF A FRIENDLY DROID WITH BUILT-IN ATTACK ANIMATION DETECTED!-->hurting enemies..." );
 	    for ( j = 0 , target_robot = & ( AllEnemys [ 0 ] ) ; 
 		  j < MAX_ENEMYS_ON_SHIP ; j ++ , target_robot ++ )
 	    {
@@ -2696,6 +2695,7 @@ robot_group_turn_hostile ( int enemy_num )
     enemy* ThisRobot = & ( AllEnemys [ enemy_num ] ) ;
 
     MarkerCode = ThisRobot -> marker ;
+    if (MarkerCode == 9999) SwitchBackgroundMusicTo(BIGFIGHT_BACKGROUND_MUSIC_SOUND);
     
     // if ( ( MarkerCode == 0 ) || ( MarkerCode == 101 ) ) return ;
 
@@ -2703,7 +2703,10 @@ robot_group_turn_hostile ( int enemy_num )
     {
 	if ( AllEnemys [ i ] . marker == MarkerCode )
 	    AllEnemys [ i ] . is_friendly = FALSE ;
+        if ( MarkerCode == 9999 ) 
+	    AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
     }
+
 
 }; // void robot_group_turn_hostile ( int enemy_num )
 
