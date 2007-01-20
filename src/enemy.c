@@ -1888,8 +1888,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 		if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
 		if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
 		if ( target_robot == ThisRobot ) continue;
-		DebugPrintf ( -3 , "\nATTACK OF A FRIENDLY DROID: NOW APPLYING DAMAGE!" );
-		target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
+		if ( MyRandom ( 100 ) < 70 ) target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
 
 		if ( target_robot -> energy < 0 )
 		{
