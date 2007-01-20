@@ -403,16 +403,11 @@ enum
 //
 #define SINGLE_PLAYER_MENU_POINTER_POS_X (INITIAL_BLOCK_WIDTH/2)
 
-//--------------------
-// The following is the definition of the sound file names used in freedroid
-// DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
-// The order of appearance here should match the order of appearance 
-// in the SoundSampleFilenames definition located in sound.c!
-//
 #define TAKEOVER_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define CONSOLE_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define CREDITS_BACKGROUND_MUSIC_SOUND "TheBeginning.ogg"
 #define MENU_BACKGROUND_MUSIC_SOUND "menu.ogg"
+#define BIGFIGHT_BACKGROUND_MUSIC_SOUND "hellforce.ogg"
 #define SILENCE (NULL)
 enum _sounds
 {
@@ -648,6 +643,7 @@ enum
     TAKEOVER_HELP_BUTTON,
 	
     WEAPON_MODE_BUTTON, 
+    SKI_ICON_BUTTON,
 
     //--------------------
     // Please leave this here as the last entry, since it conveniently and
