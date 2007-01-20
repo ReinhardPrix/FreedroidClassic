@@ -457,6 +457,7 @@ EXTERN void DeleteItem( item* Item );
 EXTERN void DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem );
 EXTERN int get_floor_item_index_under_mouse_cursor ( int player_num );
 EXTERN int item_is_currently_equipped( item* Item );
+EXTERN int Get_Prefixes_Data ( char * DataPointer );
 
 // character.c
 #undef EXTERN

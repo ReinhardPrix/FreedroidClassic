@@ -1129,6 +1129,17 @@ Init_Game_Data ()
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ); 
   Get_General_Game_Constants( Data );
   free ( Data );
+  
+  //--------------------
+  // Load magical items informations
+  //
+  fpath = find_file ( "freedroid.prefix_archetypes" , MAP_DIR , FALSE );
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
+  Get_Prefixes_Data ( Data );
+  free ( Data );
+
 
   //--------------------
   // Item archetypes must be loaded too
@@ -2048,9 +2059,9 @@ I will not be able to load or save games or configurations\n\
     
     ShowStartupPercentage ( 14 ) ; 
     
-    Init_Game_Data( NULL ); 
+    Init_Game_Data(); 
     
-    ShowStartupPercentage ( 16 ) ; 
+    ShowStartupPercentage ( 30 ) ; 
     
     // The default should be, that no rescaling of the
     // combat window at all is done.

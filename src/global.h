@@ -39,8 +39,6 @@
 EXTERN char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] ;
 EXTERN obstacle_spec obstacle_map[ NUMBER_OF_OBSTACLE_TYPES ];
 // EXTERN item_image_spec ItemImageList[ NUMBER_OF_ITEM_PICTURES ];
-EXTERN item_bonus PrefixList[];
-EXTERN item_bonus SuffixList[];
 EXTERN char EndTitleText1[];
 EXTERN char EndTitleText2[];
 EXTERN char TitleText1[];
@@ -50,7 +48,6 @@ EXTERN char TitleText4[];
 EXTERN float FPSover1;
 EXTERN float FPSover10;
 EXTERN float FPSover100;
-EXTERN char *Alertcolor[ALLALERTCOLORS];
 EXTERN char *NetworkClientStatusNames[];
 EXTERN char *Classname[];
 EXTERN char *Classes[];
@@ -146,6 +143,8 @@ EXTERN int classic_user_rect;   // use the User-Rect dimensions of the original 
 //
 EXTERN int Number_Of_Item_Types;
 EXTERN itemspec* ItemMap;
+EXTERN item_bonus * PrefixList;
+EXTERN item_bonus * SuffixList;
 EXTERN float timeout_from_item_drop;
 EXTERN int use_open_gl;
 EXTERN int command_line_override_for_screen_resolution;

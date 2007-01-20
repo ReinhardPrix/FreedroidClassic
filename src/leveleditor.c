@@ -1413,7 +1413,7 @@ ItemDropFromLevelEditor( void )
 		     GetMousePos_x()  , 
 		     GetMousePos_y()  ) )
 	    {
-		if ( previous_prefix_selected < 20 )
+		if ( PrefixList[ previous_prefix_selected + 1 ] . bonus_name != NULL )
 		    previous_prefix_selected ++ ;
 	    }
 	    else if ( MouseCursorIsOnButton ( 
@@ -1429,7 +1429,7 @@ ItemDropFromLevelEditor( void )
 		     GetMousePos_x()  , 
 		     GetMousePos_y()  ) )
 	    {
-		if ( previous_suffix_selected < 20 )
+		if ( SuffixList [ previous_suffix_selected + 1 ] . bonus_name != NULL )
 		    previous_suffix_selected ++ ;
 	    }
 	    else if ( MouseCursorIsOnButton ( 
