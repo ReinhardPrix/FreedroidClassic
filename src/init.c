@@ -802,14 +802,12 @@ Get_Robot_Data ( void* DataPointer )
 #define ACCELERATION_BEGIN_STRING "Maximum acceleration of this droid: "
 #define MAXENERGY_BEGIN_STRING "Maximum energy of this droid: "
 #define MAXMANA_BEGIN_STRING "Maximum mana of this droid: "
-#define LOSEHEALTH_BEGIN_STRING "Rate of energyloss under influence control: "
+#define LOSEHEALTH_BEGIN_STRING "Rate of healing: "
 #define GUN_BEGIN_STRING "Weapon type this droid uses: "
 #define AGGRESSION_BEGIN_STRING "Aggression rate of this droid: "
 #define BASE_PHYSICAL_DAMAGE_BEGIN_STRING "Physical (base) damage an attack of this droid will do: "
 #define FLASHIMMUNE_BEGIN_STRING "Is this droid immune to disruptor blasts? "
 #define EXPERIENCE_REWARD_BEGIN_STRING "Experience_Reward gained for destroying one of this type: "
-#define HEIGHT_BEGIN_STRING "Height of this droid : "
-#define WEIGHT_BEGIN_STRING "Weight of this droid : "
 #define DRIVE_BEGIN_STRING "Drive of this droid : "
 #define BRAIN_BEGIN_STRING "Brain of this droid : "
 #define SENSOR1_BEGIN_STRING "Sensor 1 of this droid : "
@@ -949,10 +947,6 @@ Get_Robot_Data ( void* DataPointer )
       ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%lf" , 
 			   &Druidmap[RobotIndex].lose_health , EndOfDataPointer );
 
-      // Now we read in the class of this droid.
-      // ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" , 
-      // &Druidmap[RobotIndex].gun , EndOfDataPointer );
-
       // Now we read in the aggression rate of this droid.
       ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" , 
 			   &Druidmap[RobotIndex].aggression , EndOfDataPointer );
@@ -974,7 +968,7 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].minimal_range_hostile_bots_are_ignored , EndOfDataPointer );
 
       // Now we read in the flash immunity of this droid.
-      ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , "0",
 			   &Druidmap[RobotIndex].flashimmune , EndOfDataPointer );
 
       // Now we experience_reward to be had for destroying one droid of this type
@@ -986,36 +980,20 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].monster_level , EndOfDataPointer );
 
       // Now we read in the number of additional magical items this monster type must drop
-      ReadValueFromString( RobotPointer , "Force how many additional magic items to be dropped=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Force how many additional magic items to be dropped=" , "%d" , "0" ,
 			   &Druidmap[RobotIndex].forced_magic_items , EndOfDataPointer );
 
-      // Now we read in the height of this droid of this type
-      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].height, EndOfDataPointer );
-
-      // Now we read in the weight of this droid type
-      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].weight, EndOfDataPointer );
-
-      // Now we read in the drive of this droid of this type
-      // ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" , 
-      // &Druidmap[RobotIndex].drive, EndOfDataPointer );
-
       // Now we read in the brain of this droid of this type
-      ReadValueFromString( RobotPointer , BRAIN_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , BRAIN_BEGIN_STRING , "%d" , "1",
 			   &Druidmap[RobotIndex].brain, EndOfDataPointer );
 
       // Now we read in the sensor 1, 2 and 3 of this droid type
-      ReadValueFromString( RobotPointer , SENSOR1_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , SENSOR1_BEGIN_STRING , "%d" , "1",
 			   &Druidmap[RobotIndex].sensor1, EndOfDataPointer );
-      ReadValueFromString( RobotPointer , SENSOR2_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , SENSOR2_BEGIN_STRING , "%d" , "5",
 			   &Druidmap[RobotIndex].sensor2, EndOfDataPointer );
-      ReadValueFromString( RobotPointer , SENSOR3_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , SENSOR3_BEGIN_STRING , "%d" , "0",
 			   &Druidmap[RobotIndex].sensor3, EndOfDataPointer );
-
-      // Now we read in the armament of this droid type
-      // ReadValueFromString( RobotPointer , ARMAMENT_BEGIN_STRING , "%d" , 
-      // &Druidmap[RobotIndex].armament , EndOfDataPointer );
 
       // Now we read in the drive item of this droid type
       ReadValueFromString( RobotPointer , DRIVE_ITEM_BEGIN_STRING , "%d" , 
@@ -1026,43 +1004,43 @@ Get_Robot_Data ( void* DataPointer )
 			   &Druidmap[RobotIndex].weapon_item.type , EndOfDataPointer );
 
       // Now we read in the shield item of this droid type
-      ReadValueFromString( RobotPointer , SHIELD_ITEM_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , SHIELD_ITEM_BEGIN_STRING , "%d" , "-1", 
 			   &Druidmap[RobotIndex].shield_item.type , EndOfDataPointer );
 
       // Now we read in the armour item of this droid type
-      ReadValueFromString( RobotPointer , ARMOUR_ITEM_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , ARMOUR_ITEM_BEGIN_STRING , "%d" , "-1",
 			   &Druidmap[RobotIndex].armour_item.type , EndOfDataPointer );
 
       // Now we read in the aux1 item of this droid type
-      ReadValueFromString( RobotPointer , AUX1_ITEM_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , AUX1_ITEM_BEGIN_STRING , "%d" , "-1",
 			   &Druidmap[RobotIndex].aux1_item.type , EndOfDataPointer );
 
       // Now we read in the aux2 item of this droid type
-      ReadValueFromString( RobotPointer , AUX2_ITEM_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , AUX2_ITEM_BEGIN_STRING , "%d" , "-1",
 			   &Druidmap[RobotIndex].aux2_item.type , EndOfDataPointer );
 
       // Now we read in the special item of this droid type
-      ReadValueFromString( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , SPECIAL_ITEM_BEGIN_STRING , "%d" , "-1", 
 			   &Druidmap[RobotIndex].special_item.type , EndOfDataPointer );
 
       // Now we read in the number of plasma transistors
-      ReadValueFromString( RobotPointer , "Number of Plasma Transistors=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Number of Plasma Transistors=" , "%d" , "0",
 			   &Druidmap[RobotIndex].amount_of_plasma_transistors , EndOfDataPointer );
 
       // Now we read in the number of plasma transistors
-      ReadValueFromString( RobotPointer , "Number of Superconductors=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Number of Superconductors=" , "%d" , "0", 
 			   &Druidmap[RobotIndex].amount_of_superconductors , EndOfDataPointer );
 
       // Now we read in the number of plasma transistors
-      ReadValueFromString( RobotPointer , "Number of Antimatter-Matter Converters=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Number of Antimatter-Matter Converters=" , "%d" , "0", 
 			   &Druidmap[RobotIndex].amount_of_antimatter_converters , EndOfDataPointer );
 
       // Now we read in the number of plasma transistors
-      ReadValueFromString( RobotPointer , "Number of Entropy Inverters=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Number of Entropy Inverters=" , "%d" , "0", 
 			   &Druidmap[RobotIndex].amount_of_entropy_inverters , EndOfDataPointer );
 
       // Now we read in the number of plasma transistors
-      ReadValueFromString( RobotPointer , "Number of Tach. Condensators=" , "%d" , 
+      ReadValueFromStringWithDefault( RobotPointer , "Number of Tach. Condensators=" , "%d" , "0",
 			   &Druidmap[RobotIndex].amount_of_tachyon_condensators , EndOfDataPointer );
 
       // Now we read in the greeting sound type of this droid type
