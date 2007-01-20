@@ -439,9 +439,8 @@ exist really (i.e. has a type = (-1) ).",
 	    if ( CurItem->bonus_to_str )
 	    {
 		if ( CurItem->bonus_to_str > 0 ) strcat( ItemDescText , "+" );
-		// sprintf( linebuf , "%d to Power\n" , CurItem->bonus_to_str );
-		sprintf( linebuf , "%d to Power" , CurItem->bonus_to_str );
-		// if ( ForShop ) strcat ( linebuf , ", " ); else strcat ( linebuf , "\n" );
+		else strcat ( ItemDescText, "-");
+		sprintf( linebuf , "%d to strength" , CurItem->bonus_to_str );
 		AppendToLine = TRUE;
 		strcat( ItemDescText , linebuf );
 	    }
@@ -451,7 +450,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_dex > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to Dexterity" , CurItem->bonus_to_dex );
+		sprintf( linebuf , "%d to dexterity" , CurItem->bonus_to_dex );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -460,7 +459,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_mag > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to Mind" , CurItem->bonus_to_mag );
+		sprintf( linebuf , "%d to magic" , CurItem->bonus_to_mag );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -469,7 +468,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "%d to Vitality" , CurItem->bonus_to_vit );
+		sprintf( linebuf , "%d to vitality" , CurItem->bonus_to_vit );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -478,7 +477,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_life > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d Energy" , CurItem->bonus_to_life );
+		sprintf( linebuf , "%d health points" , CurItem->bonus_to_life );
 		strcat( ItemDescText , linebuf );
 	    }
 
