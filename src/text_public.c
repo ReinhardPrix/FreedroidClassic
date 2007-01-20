@@ -400,6 +400,45 @@ This indicates a corrupted or seriously outdated game data or saved game file.",
  * indicator for a value, and read in the value.
  * ---------------------------------------------------------------------- */
 void
+ReadValueFromStringWithDefault( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , const char * DefaultValueString, void* TargetValue , char* EndOfSearchSectionPointer )
+{
+    char OldTerminaterCharValue;
+    char* SourceLocation;
+
+    // We shortly make a termination char into the string.
+    OldTerminaterCharValue=EndOfSearchSectionPointer[0];
+    EndOfSearchSectionPointer[0]=0;
+    
+    // Now we locate the spot, where we finally will find our value
+    SourceLocation = strstr ( SearchBeginPointer , ValuePreceedText );
+    if ( SourceLocation)
+	    SourceLocation += strlen ( ValuePreceedText );
+    else SourceLocation = DefaultValueString;
+    
+    //--------------------
+    // Attention!!! 
+    // Now we try to read in the value!!!
+    //
+    if ( sscanf ( SourceLocation , FormatString , TargetValue ) == EOF )
+    {
+	fprintf( stderr, "\n\nFormatString: '%s'\n" , FormatString );
+	fprintf( stderr, "ValuePreceedText: '%s'\n" , ValuePreceedText );
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+sscanf using a certain format string failed!\n\
+This indicates a corrupted or seriously outdated game data or saved game file.",
+				 PLEASE_INFORM, IS_FATAL );
+    }
+    
+    // Now that we are done, we restore the given SearchArea to former glory
+    EndOfSearchSectionPointer[0]=OldTerminaterCharValue;
+
+}; // void ReadValueFromString( ... )
+
+/* ----------------------------------------------------------------------
+ * This function should analyze a given passage of text, locate an 
+ * indicator for a value, and read in the value.
+ * ---------------------------------------------------------------------- */
+void
 ReadValueFromString( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer )
 {
     char OldTerminaterCharValue;
