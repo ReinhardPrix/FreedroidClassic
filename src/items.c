@@ -3713,7 +3713,9 @@ HandleInventoryScreen ( void )
 		    }
 		    else
 		    {
-			HomeMadeItemRepair ( & ( Me[0].Inventory[ Grabbed_InvPos ] ) ) ;
+			if ( Me[0].Inventory[ Grabbed_InvPos ] . max_duration != -1 )
+				HomeMadeItemRepair ( & ( Me[0].Inventory[ Grabbed_InvPos ] ) ) ;
+			else  ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
 		    }
 		}
 		else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
