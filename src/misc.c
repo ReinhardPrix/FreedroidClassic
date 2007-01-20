@@ -262,6 +262,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     // ------------------
     // This button is for changing the current weapon mode/reloading
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"			    , { CURRENT_WEAPON_RECT_X, 400, CURRENT_WEAPON_RECT_W, CURRENT_WEAPON_RECT_H } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"			    , { CURRENT_SKILL_RECT_X, 400, CURRENT_SKILL_RECT_W, CURRENT_SKILL_RECT_H } , TRUE , FALSE } ,
 
   }; // mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] 
 

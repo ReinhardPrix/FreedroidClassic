@@ -2934,13 +2934,6 @@ ButtonPressWasNotMeantAsFire( int player_num )
   if ( Item_Held_In_Hand != (-1) ) return ( TRUE ) ;
   if ( timeout_from_item_drop > 0 ) return ( TRUE ) ;
 
-  // If the influencer has pressed fire with the mouse cursor
-  // and is in the inventory screen and inventory screen is 
-  // active, then also just return
-  //
-  // And for the character screen, do a similar thing
-  //
-
   //--------------------
   // Maybe the player just pressed the mouse button but INSIDE one of the character/skills/inventory
   // screens.  Then of course we will not interpret the intention to fire the weapon but rather 
@@ -2966,17 +2959,12 @@ ButtonPressWasNotMeantAsFire( int player_num )
        ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	 MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 	 MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) || 
-	 MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  )) )
+	 MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+	 MouseCursorIsOnButton( SKI_ICON_BUTTON, GetMousePos_x(), GetMousePos_y() )) )
     {
       DebugPrintf( 0 , "\n Cursor is on a button, therefore this press will be ignored." );
       return (TRUE) ;
     }
-
-  //--------------------
-  // And also if the whole screen is filled with inventory or other screens, then we will
-  // of course not fire any weapon or something but rather return immediately.
-  //
-  if ( ( GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && GameConfig.Inventory_Visible ) return (TRUE) ;
 
   return ( FALSE );
 

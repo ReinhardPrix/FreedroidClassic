@@ -329,6 +329,13 @@ DisplayButtons( void )
 	TuxReloadWeapon ( );
 	}
     }
+    else if ( MouseCursorIsOnButton( SKI_ICON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
+    {
+	if ( axis_is_active && !WasPressed )
+	{
+        toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
+	}
+    }
     
     WasPressed = axis_is_active;
     

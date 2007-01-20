@@ -2274,24 +2274,9 @@ MouseCursorIsInUserRect( int x , int y )
 	if ( x < User_Rect.x ) return ( FALSE );
 	return ( TRUE );
 	}
-    if ( GameConfig.Inventory_Visible )
-	{
-	if ( ! MouseCursorIsInInvRect(x, y) )
-		return TRUE;
-	else return FALSE;
-	}
-    if ( GameConfig.CharacterScreen_Visible )
-	{
-	if ( ! MouseCursorIsInChaRect(x, y) )
-		return TRUE;
-	else return FALSE;
-	}
-    if ( GameConfig.SkillScreen_Visible )
-	{
-	if ( ! MouseCursorIsInSkiRect(x, y) )
-		return TRUE;
-	else return FALSE;
-	}
+    if ( ( GameConfig.Inventory_Visible && MouseCursorIsInInvRect(x, y) ) || ( GameConfig.CharacterScreen_Visible && MouseCursorIsInChaRect(x, y) ) ||
+	 ( GameConfig.SkillScreen_Visible && MouseCursorIsInSkiRect(x, y) ) )
+	return FALSE;
 return TRUE;
 }; // int MouseCursorIsInUserRect( int x , int y )
 

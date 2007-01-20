@@ -710,7 +710,7 @@ ShowCurrentSkill( void )
     if ( GameConfig . Inventory_Visible && GameConfig . screen_width == 640 ) return;
     if ( GameConfig . SkillScreen_Visible && GameConfig . skill_explanation_screen_visible ) return;
 
-    Target_Rect.x = CURRENT_SKILL_RECT_X + (CURRENT_SKILL_RECT_W * GameConfig . screen_width / 640 - CURRENT_SKILL_RECT_W) / 2;
+    Target_Rect.x = UNIVERSAL_COORD_W(CURRENT_SKILL_RECT_X) + (CURRENT_SKILL_RECT_W * GameConfig . screen_width / 640 - CURRENT_SKILL_RECT_W) / 2;
     Target_Rect.y = CURRENT_SKILL_RECT_Y + (CURRENT_SKILL_RECT_H * GameConfig . screen_height / 480 - CURRENT_SKILL_RECT_H) / 2;
     Target_Rect.w = CURRENT_SKILL_RECT_W;
     Target_Rect.h = CURRENT_SKILL_RECT_H;
@@ -1762,7 +1762,7 @@ DisplayBanner ( void )
     // We display the name of the current level and the current time inside
     // the game.
     //
-    if ( ! GameConfig . CharacterScreen_Visible )
+    if ( ! ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ))
     {
 	sprintf ( level_name_and_time , "%s (%03.1f:%03.1f:%d) day %d %02d:%02d " , 
 		  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
