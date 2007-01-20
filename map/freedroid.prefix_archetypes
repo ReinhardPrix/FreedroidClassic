@@ -6,45 +6,45 @@
 *** Start of presuff data section: ***
 
 ** Start of new prefix specification subsection **
-Prefix name="Example"
+Prefix name="Example "
 
-Bonus to dexterity=0
-Bonus to dexterity modifier=0
-Bonus to vitality=0
-Bonus to vitality modifier=0
-Bonus to magic=0
-Bonus to magic modifier=0
-Bonus to strength=0
-Bonus to strength modifier=0
-Bonus to all attributes=0
-Bonus to all attributes modifier=0
+Bonus to dexterity=1
+Bonus to dexterity modifier=2
+Bonus to vitality=3
+Bonus to vitality modifier=4
+Bonus to magic=5
+Bonus to magic modifier=6
+Bonus to strength=7
+Bonus to strength modifier=8
+Bonus to all attributes=9
+Bonus to all attributes modifier=10
 
-Bonus to life=0
-Bonus to life modifier=0
-Bonus to mana=0
-Bonus to mana modifier=0
+Bonus to life=11
+Bonus to life modifier=12
+Bonus to mana=13
+Bonus to mana modifier=14
 
-Bonus to life recovery=0.000000;
-Bonus to mana recovery=0.000000;
+Bonus to life recovery=15.000000;
+Bonus to mana recovery=16.000000;
 
-Price factor=0.000000;   
+Price factor=17.000000;   
 ** End of new prefix specification subsection **
 
 ** Start of new suffix specification subsection **
-Prefix name="Example"
+Prefix name=" of the example"
 
-Bonus to dexterity=0
+Bonus to dexterity=50
 Bonus to dexterity modifier=0
 Bonus to vitality=0
 Bonus to vitality modifier=0
 Bonus to magic=0
 Bonus to magic modifier=0
-Bonus to strength=0
+Bonus to strength=80
 Bonus to strength modifier=0
-Bonus to all attributes=0
+Bonus to all attributes=100
 Bonus to all attributes modifier=0
 
-Bonus to life=0
+Bonus to life=45
 Bonus to life modifier=0
 Bonus to mana=0
 Bonus to mana modifier=0
