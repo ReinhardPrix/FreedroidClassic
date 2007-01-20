@@ -890,6 +890,8 @@ Get_Robot_Data ( void* DataPointer )
     {
       DebugPrintf (2, "\n\nFound another Robot specification entry!  Lets add that to the others!");
       RobotPointer ++; // to avoid doubly taking this entry
+      char * EndOfThisRobot = strstr ( RobotPointer, NEW_ROBOT_BEGIN_STRING );
+      if ( EndOfThisRobot ) EndOfThisRobot [ 0 ] = 0;
 
       // Now we read in the Name of this droid.  We consider as a name the rest of the
       // line with the DROIDNAME_BEGIN_STRING until the "\n" is found.
@@ -1087,6 +1089,7 @@ Get_Robot_Data ( void* DataPointer )
       // Now we're potentially ready to process the next droid.  Therefore we proceed to
       // the next number in the Droidmap array.
       RobotIndex++;
+      EndOfThisRobot [ 0 ] = '*'; // We put back the star at its place
     }
 
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
