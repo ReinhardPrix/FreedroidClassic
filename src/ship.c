@@ -569,12 +569,9 @@ ShowDroidInfo ( int droidtype, int Displacement , char ShowArrows )
 Unit type %s - %s\n\
 Entry : %d\n\
 Class : %s\n\
-Height : %f\n\
-Weight: %f \n\
 Drive : %s \n\
 Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].class],
 	     droidtype+1, Classes[Druidmap[droidtype].class],
-	     Druidmap[droidtype].height, Druidmap[droidtype].weight,
 	     ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
 	     Brainnames[ Druidmap[droidtype].brain ]);
     

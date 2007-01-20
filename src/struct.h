@@ -527,19 +527,17 @@ typedef struct
     int aggression;		// The aggressiveness of this druidtype 
     int flashimmune;		// is the droid immune to FLASH-bullets 
     int experience_reward;			// experience_reward for the elimination of one droid of this type 
-    double height;                // the height of this droid  
-    double weight;                // the weight of this droid
-    int brain;
-    int sensor1;
-    int sensor2;
-    int sensor3;
+    unsigned char brain;
+    unsigned char sensor1;
+    unsigned char sensor2;
+    unsigned char sensor3;
     
     float range_of_vision;
     float time_spent_eyeing_tux;
     float minimal_range_hostile_bots_are_ignored;
     
-    int monster_level;
-    int forced_magic_items;
+    short int monster_level;
+    short int forced_magic_items;
     
     item drive_item;
     item weapon_item;
