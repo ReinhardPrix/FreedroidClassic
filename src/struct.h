@@ -378,15 +378,15 @@ typedef struct
     int modifier_to_bonus_to_force;
 
     float base_bonus_to_health_recovery;
-    float modifier_to_bonus_to_health_recovery;
     float base_bonus_to_mana_recovery;
-    float modifier_to_bonus_to_mana_recovery;
     
+
+
     int base_bonus_to_tohit;
     int modifier_to_bonus_to_tohit;
     int base_bonus_to_ac_or_damage; // this is a percentage
     int modifier_to_bonus_to_ac_or_damage; // this is a percentage
-    
+
     int base_bonus_to_resist_fire;  // this is a percentage
     int modifier_to_bonus_to_resist_fire;  // this is a percentage
     int base_bonus_to_resist_electricity; // this is a percentage
@@ -394,7 +394,6 @@ typedef struct
     int base_bonus_to_resist_disruptor; // this is a percentage
     int modifier_to_bonus_to_resist_disruptor; // this is a percentage
     int light_bonus_value;
-    int affix_level; // the level of this affix (i.e. to which level items it can be attached or not)
     float price_factor;
 } item_bonus , *Item_bonus;
 

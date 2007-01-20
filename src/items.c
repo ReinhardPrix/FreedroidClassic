@@ -504,12 +504,12 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
 	ThisItem->bonus_to_mana_recovery += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mana_recovery;
 //	    + MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mana_recovery ) ;
-	
+
 	ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
-	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
-	ThisItem->bonus_to_ac_or_damage += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
-	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
-	
+           MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_tohit ) ;
+        ThisItem->bonus_to_ac_or_damage += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_ac_or_damage +
+           MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+
 	ThisItem->bonus_to_resist_fire += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_fire +
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_resist_fire ) ;
 	ThisItem->bonus_to_resist_electricity += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_resist_electricity +
@@ -542,10 +542,10 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 //	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mana_recovery ) ;
 	
 	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
-	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
-	ThisItem->bonus_to_ac_or_damage += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_ac_or_damage +
-	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_ac_or_damage ) ;
-	
+            MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
+        ThisItem->bonus_to_ac_or_damage += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_ac_or_damage +
+            MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_ac_or_damage ) ;
+
 	ThisItem->bonus_to_resist_fire += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_fire +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_resist_fire ) ;
 	ThisItem->bonus_to_resist_electricity += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_resist_electricity +
@@ -744,7 +744,7 @@ count_suffixes_available ( void )
 
     for ( i = 0 ; TRUE ; i++ )
     {
-	if ( ! strcmp ( SuffixList [ i ] . bonus_name , "*** END OF SUFFIX LIST ***" ) )
+	if ( SuffixList [ i ] . bonus_name == NULL )
 	{
 	    DebugPrintf ( 1 , "\n%s(): End of Suffix list found at pos: %d.\n" , __FUNCTION__ , i );
 	    return ( i ) ;
@@ -772,7 +772,7 @@ count_prefixes_available ( void )
 
     for ( i = 0 ; TRUE ; i++ )
     {
-	if ( ! strcmp ( PrefixList [ i ] . bonus_name , "*** END OF PREFIX LIST ***" ) )
+	if ( PrefixList [ i ] . bonus_name == NULL )
 	{
 	    DebugPrintf ( 1 , "\n%s(): End of Prefix list found at pos: %d.\n" , __FUNCTION__ , i );
 	    return ( i ) ;
@@ -4057,6 +4057,101 @@ int item_is_currently_equipped( item* Item )
     if ( ( & ( Me [ 0 ] .weapon_item ) == Item ) ||  ( & ( Me [ 0 ] .drive_item ) == Item ) || ( & ( Me [ 0 ] .armour_item ) == Item )  
 	|| ( & ( Me [ 0 ] .shield_item ) == Item ) || ( & ( Me [ 0 ] .special_item ) == Item ) || ( & ( Me [ 0 ] .aux1_item ) == Item  ) || ( & ( Me [ 0 ] .aux2_item ) == Item ) )
 	return 1;
+
+return 0;
+}
+
+/* ----------------------------------------------------------------------
+ * This function reads the descriptions of the different item prefixes
+ * and suffixes that are used for magical items.
+ * ---------------------------------------------------------------------- */
+int Get_Prefixes_Data ( char * DataPointer )
+{
+    char *PrefixPointer;
+    char *EndOfPrefixData;
+    int PrefixIndex=0;
+    int SuffixIndex=0;
+
+#define PREFIX_SECTION_BEGIN_STRING "*** Start of presuff data section: ***"
+#define PREFIX_SECTION_END_STRING "*** End of presuff data section ***"
+#define NEW_PREFIX_BEGIN_STRING "** Start of new prefix specification subsection **"
+#define NEW_SUFFIX_BEGIN_STRING "** Start of new suffix specification subsection **"
+
+    PrefixPointer = LocateStringInData ( DataPointer , PREFIX_SECTION_BEGIN_STRING );
+    EndOfPrefixData = LocateStringInData ( DataPointer , PREFIX_SECTION_END_STRING );
+
+    int Number_Of_Prefixes = CountStringOccurences ( DataPointer , NEW_PREFIX_BEGIN_STRING ) ;
+    int Number_Of_Suffixes = CountStringOccurences ( DataPointer , NEW_SUFFIX_BEGIN_STRING ) ;
+
+    PrefixList = (item_bonus *) MyMalloc( sizeof ( item_bonus ) * ( Number_Of_Prefixes + 1 ) );
+    SuffixList = (item_bonus *) MyMalloc( sizeof ( item_bonus ) * ( Number_Of_Suffixes + 1 ) );
+
+    char * whattogrep = NEW_PREFIX_BEGIN_STRING;
+    item_bonus * BonusToFill = PrefixList;
+    int i = 0;
+    for ( i = 0; i < 2; i ++)
+	{
+	if ( i == 1 ) whattogrep = NEW_SUFFIX_BEGIN_STRING;
+        while ( (PrefixPointer = strstr ( PrefixPointer, whattogrep )) != NULL)
+    	    {
+            PrefixPointer ++;
+            char * EndOfThisPrefix = strstr ( PrefixPointer, whattogrep );
+            if ( EndOfThisPrefix ) EndOfThisPrefix [ 0 ] = 0;
+    
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to dexterity=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_dex  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to dexterity modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_dex  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to strength=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_str  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to strength modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_str  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to vitality=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_vit  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to vitality modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_vit  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to magic=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_mag  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to magic modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_mag  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all_attributes=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_all_attributes  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all attributes modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_all_attributes  , EndOfPrefixData );
+    
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_life  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_life  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to mana=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_force  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to mana modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_force  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life recovery=" , "%f" , "0.000000",
+                             & BonusToFill -> base_bonus_to_health_recovery  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to mana recovery=" , "%f" , "0.000000",
+                             & BonusToFill -> base_bonus_to_mana_recovery  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Price factor=" , "%f" , "3.000000",
+                             & BonusToFill -> price_factor  , EndOfPrefixData );
+
+
+
+            BonusToFill -> bonus_name = ReadAndMallocStringFromData ( PrefixPointer , "Prefix name=\"" , "\"" ) ;
+            
+            (i == 1 ? PrefixIndex ++ : SuffixIndex ++);
+	    BonusToFill = ( i == 1 ? &PrefixList [ PrefixIndex ] : &SuffixList [ SuffixIndex ] );
+	    if ( EndOfThisPrefix ) EndOfThisPrefix [ 0 ] = '*'; // We put back the star at its place
+            }
+	PrefixPointer =  LocateStringInData ( DataPointer , PREFIX_SECTION_BEGIN_STRING );
+	BonusToFill = SuffixList;
+	}
 
 return 0;
 }
