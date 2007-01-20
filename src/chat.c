@@ -426,6 +426,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     {
 	ChatDroid -> is_friendly = FALSE ;
 	ChatDroid -> combat_state = MAKE_ATTACK_RUN ;
+        return 1;
     }
     else if ( ! strcmp ( ExtraCommandString , "DropDead" ) )
     {
