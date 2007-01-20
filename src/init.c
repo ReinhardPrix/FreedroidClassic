@@ -141,7 +141,7 @@ init_character_descriptions ( void )
 
     character_descriptions [ PERSON_STONE ] = "In some places of the world there exists a very interesting saying. 'Tough as nails.' However, in every place where the Stone trader family stays for a while, a new saying emerges. 'Tough as the Stones.'";
 
-    character_descriptions [ PERSON_DIXON ] = "It is very obivous that this is not a normal Red Guard. Most of them do not have oil stains on their armor and smell of alcohol.";
+    character_descriptions [ PERSON_DIXON ] = "It is very obvious that this is not a normal Red Guard. Most of them do not have oil stains on their armor and smell of alcohol.";
 
     character_descriptions [ PERSON_KEVINS_GUARD ] = "It looks like a 614. It moves like a 614. It even kills like a 614. Must be a 614 then.";
 
