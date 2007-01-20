@@ -1,0 +1,61 @@
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+
+*** Start of presuff data section: ***
+
+** Start of new prefix specification subsection **
+Prefix name="Example"
+
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+
+Bonus to life recovery=0.000000;
+Bonus to mana recovery=0.000000;
+
+Price factor=0.000000;   
+** End of new prefix specification subsection **
+
+** Start of new suffix specification subsection **
+Prefix name="Example"
+
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+
+Bonus to life recovery=0.000000;
+Bonus to mana recovery=0.000000;
+
+Price factor=0.000000;   
+** End of new suffix specification subsection **
+
+*** End of presuff data section ***
+
+*** End of this Freedroid data File ***
+
