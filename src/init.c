@@ -40,7 +40,7 @@
 
 #include "getopt.h"
 
-void Init_Game_Data( char* Datafilename );
+void Init_Game_Data();
 void Get_Bullet_Data ( char* DataPointer );
 
 
@@ -1132,14 +1132,12 @@ Get_Robot_Data ( void* DataPointer )
  * a data file, using mainly subroutines which do the main work.
  * ---------------------------------------------------------------------- */
 void
-Init_Game_Data ( char * Datafilename )
+Init_Game_Data ()
 {
   char *fpath;
   char *Data;
 
 #define INIT_GAME_DATA_DEBUG 1 
-
-  DebugPrintf ( 2 , "\nint Init_Game_Data ( char* Datafilename ) called." );
 
   //--------------------
   // First we load the general game constants
