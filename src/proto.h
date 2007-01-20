@@ -608,6 +608,7 @@ EXTERN int MouseCursorIsOnButton( int ButtonIndex , int x , int y );
 EXTERN void *MyMemmem ( unsigned char *haystack, size_t haystacklen, unsigned char *needle, size_t needlelen);
 EXTERN char* ReadAndMallocStringFromData ( char* SearchString , const char* StartIndicationString , const char* EndIndicationString );
 EXTERN int CountStringOccurences ( char* SearchString , const char* TargetString ) ;
+EXTERN void ReadValueFromStringWithDefault( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , const char * DefaultValueString, void* TargetValue , char* EndOfSearchSectionPointer );
 EXTERN void ReadValueFromString( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, const char* SearchTextPointer ) ;
