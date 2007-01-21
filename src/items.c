@@ -4123,6 +4123,16 @@ int Get_Prefixes_Data ( char * DataPointer )
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all attributes modifier=" , "%d" , "0",
                              & BonusToFill -> modifier_to_bonus_to_all_attributes  , EndOfPrefixData );
     
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to tohit=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_tohit  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to tohit modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_tohit  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to armor class or damage=" , "%d" , "0",
+                             & BonusToFill -> base_bonus_to_ac_or_damage  , EndOfPrefixData );
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to armor class or damage modifier=" , "%d" , "0",
+                             & BonusToFill -> modifier_to_bonus_to_ac_or_damage  , EndOfPrefixData );
+
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life=" , "%d" , "0",
                              & BonusToFill -> base_bonus_to_life  , EndOfPrefixData );
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life modifier=" , "%d" , "0",
@@ -4141,6 +4151,8 @@ int Get_Prefixes_Data ( char * DataPointer )
             ReadValueFromStringWithDefault( PrefixPointer , "Price factor=" , "%f" , "3.000000",
                              & BonusToFill -> price_factor  , EndOfPrefixData );
 
+            ReadValueFromStringWithDefault( PrefixPointer , "Light radius bonus=" , "%d" , "0",
+                             & BonusToFill -> light_bonus_value  , EndOfPrefixData );
 
 
             BonusToFill -> bonus_name = ReadAndMallocStringFromData ( PrefixPointer , "Prefix name=\"" , "\"" ) ;
