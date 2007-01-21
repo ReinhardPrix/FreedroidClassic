@@ -1823,9 +1823,9 @@ int
 requirements_for_item_application_met ( item* CurItem ) 
 {
 
-    if ( Me [ 0 ] . Magic >= required_magic_stat_for_next_level_and_item ( CurItem -> type ) )
+    if ( Me [ 0 ] . Magic >= required_magic_stat_for_next_level_and_item ( CurItem -> type )  || ! required_magic_stat_for_next_level_and_item ( CurItem -> type ))
     {
-	if ( Me [ 0 ] . spellcasting_skill >= required_spellcasting_skill_for_item ( CurItem -> type ) )
+	if ( Me [ 0 ] . spellcasting_skill >= required_spellcasting_skill_for_item ( CurItem -> type ))
 	    return ( TRUE );
 	else
 	    return ( FALSE );
@@ -2527,17 +2527,17 @@ DropHeldItemToTheFloor ( void )
 int 
 ItemUsageRequirementsMet( item* UseItem , int MakeSound )
 {
-    if ( Me [ 0 ] . Strength < ItemMap[ UseItem->type ].item_require_strength )
+    if ( Me [ 0 ] . Strength < ItemMap[ UseItem->type ].item_require_strength && ItemMap[ UseItem->type ].item_require_strength > 0)
     {
 	if ( MakeSound ) Not_Enough_Power_Sound( );
 	return ( FALSE );
     }
-    if ( Me [ 0 ] . Dexterity < ItemMap[ UseItem->type ].item_require_dexterity )
+    if ( Me [ 0 ] . Dexterity < ItemMap[ UseItem->type ].item_require_dexterity &&  ItemMap[ UseItem->type ].item_require_dexterity > 0)
     {
 	if ( MakeSound ) Not_Enough_Dist_Sound( );
 	return ( FALSE );
     }
-    if ( Me [ 0 ] . Magic < ItemMap[ UseItem->type ].item_require_magic )
+    if ( Me [ 0 ] . Magic < ItemMap[ UseItem->type ].item_require_magic && ItemMap[ UseItem->type ].item_require_magic > 0)
     {
 	return ( FALSE );
     }
