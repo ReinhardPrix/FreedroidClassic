@@ -530,16 +530,14 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	ThisItem->bonus_to_vit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_vit +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_vit ) ;
 	ThisItem->bonus_to_all_attributes += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_all_attributes +
-	    MyRandom ( SuffixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_all_attributes ) ;
+	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_all_attributes ) ;
 	
 	ThisItem->bonus_to_life += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_life +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_life ) ;
-	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery;// +
-//	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_health_recovery ) ;
+	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery;
 	ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
-	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery;// +
-//	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_mana_recovery ) ;
+	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery;
 	
 	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
             MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
