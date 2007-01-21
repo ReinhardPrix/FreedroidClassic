@@ -46,7 +46,7 @@
 void 
 ClearAutomapData( void )
 {
-    int x , y , level ;
+/*    int x , y , level ;
 
     for ( level = 0 ; level < MAX_LEVELS ; level ++ )
     {
@@ -57,7 +57,8 @@ ClearAutomapData( void )
 		Me [ 0 ] . Automap[level][y][x] = 0 ;
 	    }
 	}
-    }
+    }*/
+memset ( Me [ 0 ] . Automap, 0, MAX_LEVELS * 100 * 100);
     
 }; // void ClearAutomapData ( void )
 
