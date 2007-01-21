@@ -4114,7 +4114,7 @@ int Get_Prefixes_Data ( char * DataPointer )
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to magic modifier=" , "%d" , "0",
                              & BonusToFill -> modifier_to_bonus_to_mag  , EndOfPrefixData );
 
-            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all_attributes=" , "%d" , "0",
+            ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all attributes=" , "%d" , "0",
                              & BonusToFill -> base_bonus_to_all_attributes  , EndOfPrefixData );
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to all attributes modifier=" , "%d" , "0",
                              & BonusToFill -> modifier_to_bonus_to_all_attributes  , EndOfPrefixData );
