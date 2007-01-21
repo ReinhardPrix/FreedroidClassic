@@ -760,7 +760,8 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
     // NEW RULE:  Even when the bullet hits, there's still a chance that
     // the armour will compensate the shot
     //
-    int monster_level = Druidmap [ owner ] . monster_level;
+    int monster_level = -1;
+    if ( owner >= 0 ) monster_level = Druidmap [ owner ] . monster_level;
     if( ! monster_level || monster_level == -1)
 	monster_level = 1;
     if ( MyRandom(100) / monster_level >= Me [ player_num ] . lv_1_bot_will_hit_percentage )
@@ -788,9 +789,9 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
 	// As the new rule, the influencer after getting hit, must completely
 	// start anew to recover his weapon from the previous shot
 	//
-        //if ( Me [ player_num ] . busy_type == NONE || Me [ player_num ] . busy_type == WEAPON_FIREWAIT)
-	//	Me [ player_num ] . busy_time = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
-	// Me [ player_num ] . got_hit_time = 0;
+        /*if ( Me [ player_num ] . busy_type == NONE || Me [ player_num ] . busy_type == WEAPON_FIREWAIT)
+		Me [ player_num ] . busy_time = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_recharging_time;
+	 Me [ player_num ] . got_hit_time = 0;*/
 	
 	// GotHitSound ();
 	tux_scream_sound ( );
@@ -943,7 +944,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  // ThisRobot -> firewait =
 		  // 1 * ItemMap [ Druidmap [ ThisRobot -> type ].weapon_item.type ].item_gun_recharging_time ;
 		  
-		  if(ThisRobot -> firewait < Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit)
+		  if(ThisRobot -> firewait < Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit && MyRandom(100) <= 60)
 			  ThisRobot -> firewait = Druidmap [ ThisRobot -> type ] . recover_time_after_getting_hit ;
 
 		  start_gethit_animation_if_applicable ( ThisRobot ) ;
