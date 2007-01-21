@@ -2366,8 +2366,8 @@ End of pure obstacle label information for this level
 
 Start of pure obstacle description information for this level
 obstacle_description.index=0 obstacle_description_text="The sign reads;  'Don't step on the lawn.'"
-obstacle_description.index=1 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be persecuted."
-obstacle_description.index=2 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be persecuted."
+obstacle_description.index=1 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be executed."
+obstacle_description.index=2 obstacle_description_text="The sign reads; Restricted Area.  Guard Members only.  Trespassers will be executed."
 obstacle_description.index=3 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=4 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=5 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
