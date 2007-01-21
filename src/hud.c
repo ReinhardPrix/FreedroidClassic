@@ -431,7 +431,7 @@ exist really (i.e. has a type = (-1) ).",
 	if ( CurItem->is_identified == TRUE )
 	{
 	    strcat ( ItemDescText , "\n" );
-	    strcat ( ItemDescText , font_switchto_red );
+	    //strcat ( ItemDescText , font_switchto_red );
 	    AppendToLine = 0 ;
 	    
 	    if ( ForShop ) strcat( ItemDescText , "             " );
