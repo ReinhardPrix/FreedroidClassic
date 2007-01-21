@@ -840,8 +840,8 @@ EXTERN int IsActive (int color, int row);
 #endif
 EXTERN inline Uint32 FdGetPixel32 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 EXTERN inline Uint32 FdGetPixel24 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
-EXTERN inline Uint32 FdGetPixel16 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
-EXTERN inline Uint32 FdGetPixel8 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
+EXTERN inline Uint16 FdGetPixel16 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
+EXTERN inline Uint8 FdGetPixel8 (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 EXTERN inline void PutPixel32 (SDL_Surface * surface, int x, int y, Uint32 pixel);
 EXTERN inline void PutPixel24 (SDL_Surface * surface, int x, int y, Uint32 pixel);
 EXTERN inline void PutPixel16 (SDL_Surface * surface, int x, int y, Uint32 pixel);

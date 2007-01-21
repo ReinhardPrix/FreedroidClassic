@@ -883,12 +883,6 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 inline Uint32
 FdGetPixel32 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
-
-  Uint8 *bits;
-
-  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 4;
-
-  // Get the pixel
   return *((Uint32 *) Surface->pixels + Y * Surface->pitch / 4 + X);
 }
 
@@ -896,39 +890,21 @@ inline Uint32
 FdGetPixel24 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
 
-  Uint8 *bits;
+  Uint8 *bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 3;
 
-  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 3;
+  return SDL_MapRGB (Surface->format, *((bits) + Surface->format->Rshift / 8), *((bits) + Surface->format->Gshift / 8), *((bits) + Surface->format->Bshift / 8));
 
-  // Get the pixel
-  Uint8 r, g, b;
-  r = *((bits) + Surface->format->Rshift / 8);
-  g = *((bits) + Surface->format->Gshift / 8);
-  b = *((bits) + Surface->format->Bshift / 8);
-  return SDL_MapRGB (Surface->format, r, g, b);
 }
 
-inline Uint32
+inline Uint16
 FdGetPixel16 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
-
-  Uint8 *bits;
-
-  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 2;
-
-  // Get the pixel
   return *((Uint16 *) Surface->pixels + Y * Surface->pitch / 2 + X);
 }
 
-inline Uint32
+inline Uint8
 FdGetPixel8 (SDL_Surface * Surface, Sint32 X, Sint32 Y)
 {
-
-  Uint8 *bits;
-
-  bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * 2;
-
-  // Get the pixel
   return *((Uint8 *) Surface->pixels + Y * Surface->pitch + X);
 }
 
