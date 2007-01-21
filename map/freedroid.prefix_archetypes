@@ -6,62 +6,515 @@
 *** Start of presuff data section: ***
 
 ** Start of new prefix specification subsection **
-Prefix name="Example "
-
-Bonus to dexterity=1
-Bonus to dexterity modifier=2
-Bonus to vitality=3
-Bonus to vitality modifier=4
-Bonus to magic=5
-Bonus to magic modifier=6
+Prefix name="Hardcoded "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=-20
+Bonus to magic modifier=-20
 Bonus to strength=7
-Bonus to strength modifier=8
-Bonus to all attributes=9
-Bonus to all attributes modifier=10
-
-Bonus to life=11
-Bonus to life modifier=12
-Bonus to mana=13
-Bonus to mana modifier=14
-
-Bonus to tohit=10;
-Bonus to tohit modifier=5
-
-Bonus to armor class or damage=1
+Bonus to strength modifier=3
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
 Bonus to armor class or damage modifier=0
-
-Bonus to life recovery=15.000000
-Bonus to mana recovery=16.000000
-
-Light radius bonus=15
-
-Price factor=17.000000
-
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1.1
 ** End of new prefix specification subsection **
 
-** Start of new suffix specification subsection **
-Prefix name=" of the example"
-
-Bonus to dexterity=50
+** Start of new prefix specification subsection **
+Prefix name="Cursed "
+Bonus to dexterity=0
 Bonus to dexterity modifier=0
 Bonus to vitality=0
 Bonus to vitality modifier=0
 Bonus to magic=0
 Bonus to magic modifier=0
-Bonus to strength=80
+Bonus to strength=0
 Bonus to strength modifier=0
-Bonus to all attributes=100
-Bonus to all attributes modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=-5
+Bonus to life=0
+Bonus to life modifier=-15
+Bonus to mana=0
+Bonus to mana modifier=-15
+Bonus to tohit=0
+Bonus to tohit modifier=-5
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=-5
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=0.25
+** End of new prefix specification subsection **
 
-Bonus to life=45
+** Start of new prefix specification subsection **
+Prefix name="Quartz "
+Bonus to dexterity=-2
+Bonus to dexterity modifier=-3
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
 Bonus to life modifier=0
 Bonus to mana=0
 Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=1
+Bonus to armor class or damage modifier=5
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1
+** End of new prefix specification subsection **
 
-Bonus to life recovery=0.000000
-Bonus to mana recovery=0.000000
+** Start of new prefix specification subsection **
+Prefix name="First aid "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=-100
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=1.5
+Bonus to mana recovery=1.5
+Light radius bonus=0
+Price factor=1.1
+** End of new prefix specification subsection **
 
-Price factor=0.000000
+** Start of new prefix specification subsection **
+Prefix name="Razor "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=10
+Bonus to armor class or damage modifier=20
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1.1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Light "
+Bonus to dexterity=5
+Bonus to dexterity modifier=5
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1.1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Beautiful "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=-5
+Bonus to armor class or damage modifier=-5
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=2
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Howling "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=2
+Bonus to all attributes modifier=3
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1.5
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Accelerating "
+Bonus to dexterity=5
+Bonus to dexterity modifier=5
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=-2
+Light radius bonus=0
+Price factor=1.4
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Colorful "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=3
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Suicide "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=-10
+Bonus to all attributes modifier=0
+Bonus to life=-100
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=0.1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Broken "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=-20
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=-5
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1.1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Fluorescent "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=2
+Bonus to tohit modifier=2
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=1
+Price factor=1.1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Luminescent "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=6
+Bonus to tohit modifier=6
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=3
+Price factor=1.5
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Fluorescent "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=10
+Bonus to tohit modifier=10
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=5
+Price factor=2
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Hungry "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=3
+Bonus to all attributes modifier=2
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=3
+Bonus to armor class or damage modifier=2
+Bonus to life recovery=-1
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Devouring "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=6
+Bonus to all attributes modifier=4
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=-2
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
+Prefix name="Ravenous "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=12
+Bonus to all attributes modifier=8
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=-4
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1
+** End of new prefix specification subsection **
+
+** Start of new suffix specification subsection **
+Prefix name=" (C)MegaSys"
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=-20
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=0.001
+** End of new suffix specification subsection **
+
+** Start of new suffix specification subsection **
+Prefix name=" with no suffix"
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=1
 ** End of new suffix specification subsection **
 
 *** End of presuff data section ***
