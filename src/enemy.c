@@ -1888,7 +1888,8 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 		if ( fabsf ( (float) ( target_robot -> pos . x - ThisRobot -> pos . x ) ) > 2.5 ) continue;
 		if ( fabsf ( target_robot -> pos . y - ThisRobot -> pos . y ) > 2.5 ) continue;
 		if ( target_robot == ThisRobot ) continue;
-		if ( MyRandom ( 100 ) < 70 ) target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
+		if ( ((float) Druidmap [ target_robot -> type ] . monster_level * (float)MyRandom ( 100 ) / (float)Druidmap [ ThisRobot -> type ] . monster_level) < 60 )
+			 target_robot -> energy -= Druidmap [ ThisRobot -> type ] . physical_damage ; 
 
 		if ( target_robot -> energy < 0 )
 		{
@@ -1910,12 +1911,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 	    {
 		case ATTACK_TARGET_IS_ENEMY:
 		    DebugPrintf ( -4 , "\nNow hostile bot is trying to hurt friendly bot!" );
-		    //--------------------
-		    // For now we use a constant of 70% hit chance of hostile bots against
-		    // any friendly bots.  This might be replaced by something more sophisticated
-		    // some time later.
-		    //
-		    if ( MyRandom ( 100 ) <= 70 )
+		    if ( ((float) Druidmap [ AllEnemys [ ThisRobot -> attack_target_index ] . type ] . monster_level * (float)MyRandom ( 100 ) / (float)Druidmap [ ThisRobot -> type ] . monster_level) <= 60 )
 		    {
 			//--------------------
 			// If the bot hit, we reduce the energy of the other bot and maybe there
@@ -2700,7 +2696,7 @@ robot_group_turn_hostile ( int enemy_num )
 
     for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i ++ )
     {
-	if ( AllEnemys [ i ] . marker == MarkerCode )
+	if ( AllEnemys [ i ] . marker == MarkerCode && AllEnemys [ i ] . has_been_taken_over == FALSE)
 	    AllEnemys [ i ] . is_friendly = FALSE ;
         if ( MarkerCode == 9999 ) 
 	    AllEnemys [ i ] . combat_state = MAKE_ATTACK_RUN ;
