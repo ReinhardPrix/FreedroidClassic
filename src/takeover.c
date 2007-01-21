@@ -334,12 +334,7 @@ Takeover ( int enemynum )
 		AllEnemys [ enemynum ] . on_death_drop_item_code = -1;
 	    }  
 
-	    //--------------------
-	    // The enemy is now taken over.  Therefore it will get some energy
-	    // bonus, such that the new henchman of the Tux will not be destroyed
-	    // that easily after the big success in that takeover game...
-	    //
-	    AllEnemys [ enemynum ] . energy =  2 * Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
+	    AllEnemys [ enemynum ] . energy =  Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ; 
 
 	    //--------------------
 	    // After takeover, the enemy suddenly becomes friendly and will also have
