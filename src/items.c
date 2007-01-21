@@ -4069,8 +4069,6 @@ int Get_Prefixes_Data ( char * DataPointer )
 {
     char *PrefixPointer;
     char *EndOfPrefixData;
-    int PrefixIndex=0;
-    int SuffixIndex=0;
 
 #define PREFIX_SECTION_BEGIN_STRING "*** Start of presuff data section: ***"
 #define PREFIX_SECTION_END_STRING "*** End of presuff data section ***"
@@ -4157,8 +4155,7 @@ int Get_Prefixes_Data ( char * DataPointer )
 
             BonusToFill -> bonus_name = ReadAndMallocStringFromData ( PrefixPointer , "Prefix name=\"" , "\"" ) ;
             
-            (i == 1 ? PrefixIndex ++ : SuffixIndex ++);
-	    BonusToFill = ( i == 1 ? &PrefixList [ PrefixIndex ] : &SuffixList [ SuffixIndex ] );
+	    BonusToFill ++;
 	    if ( EndOfThisPrefix ) EndOfThisPrefix [ 0 ] = '*'; // We put back the star at its place
             }
 	PrefixPointer =  LocateStringInData ( DataPointer , PREFIX_SECTION_BEGIN_STRING );
