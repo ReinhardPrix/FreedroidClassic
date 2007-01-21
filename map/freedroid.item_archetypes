@@ -1036,6 +1036,8 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_21.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.wav"
 Base list price=310
+inventory_size_x=2
+inventory_size_y=2
 Item description text="A short, but sharp and very dangerous sword. Has many uses other than offensive if used correctly."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.850000
