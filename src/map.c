@@ -428,11 +428,9 @@ void
 decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 {
     int i;
-    char PreservedLetter;
-    char* obstacle_Pointer;
+    char* curfield = NULL;
+    char* curfieldend = NULL;
     char* obstacle_SectionBegin;
-    char* obstacle_SectionEnd;
-    int NumberOfobstacle_sInThisLevel;
     
     //--------------------
     // First we initialize the obstacles with 'empty' information
@@ -450,42 +448,56 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
     // Now we look for the beginning and end of the obstacle section
     //
     obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING ) + strlen(OBSTACLE_DATA_BEGIN_STRING) + 1;
-    obstacle_SectionEnd = LocateStringInData( DataPointer , OBSTACLE_DATA_END_STRING );
-    
-    //--------------------
-    // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
-    //
-    PreservedLetter=obstacle_SectionEnd[0];
-    obstacle_SectionEnd[0]=0;
-    NumberOfobstacle_sInThisLevel = CountStringOccurences ( obstacle_SectionBegin , OBSTACLE_TYPE_STRING ) ;
-    //fprintf( stderr , "\nNumber of obstacles found in this level : %d.\n" , NumberOfobstacle_sInThisLevel );
     
     //--------------------
     // Now we decode all the obstacle information
     //
-    obstacle_Pointer=obstacle_SectionBegin;
-    for ( i = 0 ; i < NumberOfobstacle_sInThisLevel ; i ++ )
+    curfield = obstacle_SectionBegin;
+    i = 0;
+    while ( *curfield != '/' )
     {
-	if( i ) obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
-	ReadValueFromString( obstacle_Pointer , OBSTACLE_TYPE_STRING , "%d" , 
-			     & ( loadlevel -> obstacle_list [ i ] . type ) , obstacle_SectionEnd );
-	ReadValueFromString( obstacle_Pointer , OBSTACLE_X_POSITION_STRING , "%f" , 
-			     & ( loadlevel -> obstacle_list [ i ] . pos . x ) , obstacle_SectionEnd );
-	ReadValueFromString( obstacle_Pointer , OBSTACLE_Y_POSITION_STRING , "%f" , 
-			     & ( loadlevel -> obstacle_list [ i ] . pos . y ) , obstacle_SectionEnd );
-	ReadValueFromString( obstacle_Pointer , OBSTACLE_LABEL_INDEX_STRING , "%d" , 
-			     & ( loadlevel -> obstacle_list [ i ] . name_index ) , obstacle_SectionEnd );
-	ReadValueFromString( obstacle_Pointer , OBSTACLE_DESCRIPTION_INDEX_STRING , "%d" , 
-			     & ( loadlevel -> obstacle_list [ i ] . description_index ) , obstacle_SectionEnd );
+	//structure of obstacle entry is :	// t59 x2.50 y63.50 l-1 d-1 
+	curfield ++;
+	curfieldend = curfield;
+	while ( (*curfieldend) != ' ' ) curfieldend ++;
+	(*curfieldend) = 0;
+	loadlevel -> obstacle_list [ i ] . type = atoi(curfield);
 	
+	curfield = curfieldend + 2;
+	(*curfieldend) = ' ';
+	curfieldend += 2;
+	while ( (*curfieldend) != ' ' ) curfieldend ++;
+	(*curfieldend) = 0;
+	loadlevel -> obstacle_list [ i ] . pos . x = atof(curfield);
+
+	curfield = curfieldend + 2;
+	(*curfieldend) = ' ';
+	curfieldend += 2;
+	while ( (*curfieldend) != ' ' ) curfieldend ++;
+	(*curfieldend) = 0;
+	loadlevel -> obstacle_list [ i ] . pos . y = atof(curfield);
+
+	curfield = curfieldend + 2;
+	(*curfieldend) = ' ';
+	curfieldend += 2;
+	while ( (*curfieldend) != ' ' ) curfieldend ++;
+	(*curfieldend) = 0;
+	loadlevel -> obstacle_list [ i ] . name_index = atoi(curfield);
+
+	curfield = curfieldend + 2;
+	(*curfieldend) = ' ';
+	curfieldend += 2;
+	while ( (*curfieldend) != ' ' ) curfieldend ++;
+	(*curfieldend) = 0;
+	loadlevel -> obstacle_list [ i ] . description_index = atoi(curfield);
+	(*curfieldend) = ' ';
+
+	while ( (*curfield) != '\n' ) curfield++;
+	curfield ++;
 	//fprintf( stderr , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f\n" , loadlevel -> obstacle_list [ i ] . type ,  loadlevel -> obstacle_list [ i ] . pos . 
 //x , loadlevel-> obstacle_list [ i ] . pos . y );
+	i++;
     }
-    
-    //--------------------
-    // Now we repair the damage done to the loaded level data
-    //
-    obstacle_SectionEnd [ 0 ] = PreservedLetter;
     
 }; // void decode_obstacles_of_this_level ( loadlevel , DataPointer )
 
