@@ -317,6 +317,7 @@ SaveGame( void )
     
     //--------------------
     sprintf( filename , "%s/%s%s", our_config_dir, Me[0].character_name, SHIP_EXT );
+
     if ( SaveShip( filename ) != OK )
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -329,7 +330,6 @@ or file permissions of ~/.freedroid_rpg are somehow not right.",
     {
 	DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
     }
-    
     // ShowSaveGameProgressMeter( 30 ) ;
     
     //--------------------
@@ -715,7 +715,7 @@ LoadGame( void )
 
     load_game_command_came_from_inside_running_game = TRUE ;
 
-    append_new_game_message ( "Game Loaded." );
+    append_new_game_message ( "Game loaded." );
 
     return OK;
 }; // int LoadGame ( void ) 
