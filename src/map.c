@@ -165,7 +165,6 @@ decode_floor_tiles_of_this_level (Level Lev)
     int row, col;
     map_tile *Buffer;
     int tmp;
-    int glue_index;
     
     DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
     
@@ -182,12 +181,12 @@ decode_floor_tiles_of_this_level (Level Lev)
 	Buffer = MyMalloc( ( xdim + 10 ) * sizeof (map_tile));
 	for ( col = 0 ; col < xdim  ; col ++ )
 	{
-	    sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+	    //sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+ 	    *( (char*)(Lev->map[row])  + 4 * col + 4) = '0';
+	    tmp = atoi(( (char*)(Lev->map[row]) ) + 4 * col);
+ 	    *( (char*)(Lev->map[row])  + 4 * col + 4) = ' ';
 	    Buffer [ col ] . floor_value = (Uint16) tmp;
-	    for ( glue_index = 0 ; glue_index < MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE ; glue_index ++ )
-	    {
-		Buffer [ col ] . obstacles_glued_to_here [ glue_index ] = ( -1 ) ;
-	    }
+	    memset (Buffer [ col ] . obstacles_glued_to_here, -1, MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE);
 	}
 	
 	//--------------------
@@ -423,6 +422,7 @@ DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer )
 /* ----------------------------------------------------------------------
  * Next we extract the human readable obstacle data into the level struct
  * WITHOUT destroying or damaging the human-readable data in the process!
+ * This is an improved parser that is not quite readable but very performant.
  * ---------------------------------------------------------------------- */
 void
 decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
