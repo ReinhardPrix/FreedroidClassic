@@ -1468,36 +1468,20 @@ void
 EncodeMapLabelsOfThisLevel ( char* LevelMem , Level Lev )
 {
     int i;
-    char linebuf[5000];	  
-    
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat(LevelMem, MAP_LABEL_BEGIN_STRING);
     strcat(LevelMem, "\n");
+    LevelMem += strlen(LevelMem);
     
     for ( i = 0 ; i < MAX_MAP_LABELS_PER_LEVEL ; i ++ )
     {
 	if ( Lev -> labels [ i ] . pos . x == (-1) ) continue;
+
+	sprintf( LevelMem, "%s%d %s%d %s%s\"\n", X_POSITION_OF_LABEL_STRING,  Lev -> labels [ i ] . pos . x, Y_POSITION_OF_LABEL_STRING,
+	Lev -> labels [ i ] . pos . y, LABEL_ITSELF_ANNOUNCE_STRING,  Lev -> labels [ i ] . label_name);	
 	
-	strcat( LevelMem , X_POSITION_OF_LABEL_STRING );
-	sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . x );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , Y_POSITION_OF_LABEL_STRING );
-	sprintf( linebuf , "%d " , Lev -> labels [ i ] . pos . y );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , LABEL_ITSELF_ANNOUNCE_STRING );
-	strcat( LevelMem , Lev -> labels [ i ] . label_name );
-	strcat( LevelMem , "\"\n" );
+        LevelMem += strlen(LevelMem);
     }
     
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat ( LevelMem , MAP_LABEL_END_STRING );
     strcat ( LevelMem , "\n" );
     
@@ -1516,34 +1500,20 @@ void
 encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
 {
     int i;
-    char linebuf[5000];	  
-    
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
+
     strcat ( LevelMem , OBSTACLE_LABEL_BEGIN_STRING );
     strcat ( LevelMem , "\n");
+    LevelMem += strlen(LevelMem);
     
     for ( i = 0 ; i < MAX_OBSTACLE_NAMES_PER_LEVEL ; i ++ )
     {
 	if ( Lev -> obstacle_name_list [ i ] == NULL ) continue;
-	
-	strcat( LevelMem , INDEX_OF_OBSTACLE_NAME );
-	sprintf( linebuf , "%d " , i );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , OBSTACLE_LABEL_ANNOUNCE_STRING );
-	strcat( LevelMem , Lev -> obstacle_name_list [ i ] );
-	strcat( LevelMem , "\"\n" );
+	sprintf( LevelMem, "%s%d %s%s\"\n", INDEX_OF_OBSTACLE_NAME, i, OBSTACLE_LABEL_ANNOUNCE_STRING,  Lev -> obstacle_name_list [ i ]);
+        LevelMem += strlen(LevelMem);
     }
     
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat ( LevelMem , OBSTACLE_LABEL_END_STRING );
-    strcat ( LevelMem , "\n\n");
+    strcat ( LevelMem , "\n");
     
 }; // void encode_obstacle_names_of_this_level ( char* LevelMem , Level Lev )
 
@@ -1569,32 +1539,17 @@ void
 encode_obstacle_descriptions_of_this_level ( char* LevelMem , Level Lev )
 {
     int i;
-    char linebuf[5000];	  
-    
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat ( LevelMem , OBSTACLE_DESCRIPTION_BEGIN_STRING );
     strcat ( LevelMem , "\n" );
+    LevelMem += strlen(LevelMem);
     
     for ( i = 0 ; i < MAX_OBSTACLE_DESCRIPTIONS_PER_LEVEL ; i ++ )
     {
 	if ( Lev -> obstacle_description_list [ i ] == NULL ) continue;
-	
-	strcat( LevelMem , INDEX_OF_OBSTACLE_DESCRIPTION );
-	sprintf( linebuf , "%d " , i );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , OBSTACLE_DESCRIPTION_ANNOUNCE_STRING );
-	strcat( LevelMem , Lev -> obstacle_description_list [ i ] );
-	strcat( LevelMem , "\"\n" );
+	sprintf( LevelMem, "%s%d %s%s\"\n", INDEX_OF_OBSTACLE_DESCRIPTION, i, OBSTACLE_DESCRIPTION_ANNOUNCE_STRING, Lev -> obstacle_description_list [ i ]);
+        LevelMem += strlen(LevelMem);
     }
     
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat ( LevelMem , OBSTACLE_DESCRIPTION_END_STRING );
     strcat ( LevelMem , "\n\n" );
     
@@ -1608,36 +1563,18 @@ void
 EncodeStatementsOfThisLevel ( char* LevelMem , Level Lev )
 {
     int i;
-    char linebuf[5000];	  
-    
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat(LevelMem, STATEMENT_BEGIN_STRING);
     strcat(LevelMem, "\n");
+    LevelMem += strlen(LevelMem);
     
     for ( i = 0 ; i < MAX_STATEMENTS_PER_LEVEL ; i ++ )
     {
 	if ( Lev->StatementList[ i ].x == (-1) ) continue;
-	
-	strcat( LevelMem , X_POSITION_OF_STATEMENT_STRING );
-	sprintf( linebuf , "%d " , Lev->StatementList[ i ].x );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , Y_POSITION_OF_STATEMENT_STRING );
-	sprintf( linebuf , "%d " , Lev->StatementList[ i ].y );
-	strcat( LevelMem , linebuf );
-	
-	strcat( LevelMem , STATEMENT_ITSELF_ANNOUNCE_STRING );
-	strcat( LevelMem , Lev->StatementList[ i ].Statement_Text );
-	strcat( LevelMem , "\"\n" );
+	sprintf( LevelMem, "%s%d %s%d %s%s\"\n", X_POSITION_OF_STATEMENT_STRING, Lev->StatementList[ i ].x, Y_POSITION_OF_STATEMENT_STRING,
+		Lev->StatementList[ i ].y, STATEMENT_ITSELF_ANNOUNCE_STRING, Lev->StatementList[ i ].Statement_Text);	
+        LevelMem += strlen(LevelMem);
     }
     
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat(LevelMem, STATEMENT_END_STRING);
     strcat(LevelMem, "\n\n");
     
