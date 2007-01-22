@@ -2594,21 +2594,15 @@ void
 TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine)
 {
   int col;
-  char Buffer[10];
-
-  DebugPrintf (1,"\n\nTranslating mapline into human readable format...");
-  
-  // Now in the game and in the level editor, it might have happend that some open
-  // doors occur.  The make life easier for the saving routine, these doors should
-  // be closed first.
-
 
   HumanReadable[0]=0;  // Add a terminator at the beginning
+	
+  HumanReadable += strlen( (char *)HumanReadable );
 
   for (col = 0; col < LineLength; col++)
     {
-      sprintf( Buffer , "%3d " , MapInfo [col] . floor_value );
-      strcat ( (char*)HumanReadable , Buffer );
+      sprintf( (char *)HumanReadable , "%3d " , MapInfo [col] . floor_value );
+      HumanReadable += 2;
     }
 
 }; // void TranslateToHumanReadable( ... )
