@@ -37,7 +37,7 @@
 /* some defines */
 
 
-#define CONNECTION_STRING	"connections: "
+#define CONNECTION_STRING	"c: "
 #define WHITE_SPACE 		" \t"
 #define MAP_BEGIN_STRING	"beginning_of_map"
 #define WP_SECTION_BEGIN_STRING		"wp"
