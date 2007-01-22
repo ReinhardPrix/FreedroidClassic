@@ -1439,56 +1439,22 @@ void
 encode_obstacles_of_this_level ( char* LevelMem , Level Lev )
 {
     int i;
-    char linebuf[5000];	  
-    char* running_pointer = LevelMem ;
-    
-    //--------------------
-    // Now we write out a marker.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
-    strcat(running_pointer, OBSTACLE_DATA_BEGIN_STRING);
-    strcat(running_pointer, "\n");
-    
+    strcat(LevelMem, OBSTACLE_DATA_BEGIN_STRING);
+    strcat(LevelMem, "\n");
+    LevelMem += strlen(LevelMem);
+
     for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
     {
 	if ( Lev -> obstacle_list [ i ] . type == (-1) ) continue;
 	
-	strcat( running_pointer , OBSTACLE_TYPE_STRING );
-	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . type );
-	strcat( running_pointer , linebuf );
-	
-	strcat( running_pointer , OBSTACLE_X_POSITION_STRING );
-	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . x );
-	strcat( running_pointer , linebuf );
-	
-	strcat( running_pointer , OBSTACLE_Y_POSITION_STRING );
-	sprintf( linebuf , "%3.2f " , Lev -> obstacle_list [ i ] . pos . y );
-	strcat( running_pointer , linebuf );
-	
-	strcat( running_pointer , OBSTACLE_LABEL_INDEX_STRING );
-	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . name_index );
-	strcat( running_pointer , linebuf );
-	
-	strcat( running_pointer , OBSTACLE_DESCRIPTION_INDEX_STRING );
-	sprintf( linebuf , "%d " , Lev -> obstacle_list [ i ] . description_index );
-	strcat( running_pointer , linebuf );
-	
-	strcat( running_pointer , "\n" );
+	sprintf( LevelMem , "%s%d %s%3.2f %s%3.2f %s%d %s%d \n" , OBSTACLE_TYPE_STRING, Lev -> obstacle_list [ i ] . type,
+		OBSTACLE_X_POSITION_STRING, Lev -> obstacle_list [ i ] . pos . x, OBSTACLE_Y_POSITION_STRING, 
+		Lev -> obstacle_list [ i ] . pos . y, OBSTACLE_LABEL_INDEX_STRING, Lev -> obstacle_list [ i ] . name_index,
+		OBSTACLE_DESCRIPTION_INDEX_STRING, Lev -> obstacle_list [ i ] . description_index );
+	LevelMem += strlen(LevelMem);       
 
-	//--------------------
-	// We can increase our running pointer a bit.  That way, we don't
-	// append to a very very long string every time, but to a shorter
-	// string every time, which might mean speed gains over strcatting
-	// to LevelMeme (i.e. the beginning of the save very long string)
-	// every time.
-	//
-	running_pointer = LevelMem + strlen ( LevelMem ) - 1 ;
     }
     
-    //--------------------
-    // Now we write out a marker at the end of the map data.  This marker is not really
-    // vital for reading in the file again, but it adds clearness to the files structure.
-    //
     strcat(LevelMem, OBSTACLE_DATA_END_STRING );
     strcat(LevelMem, "\n");
     
