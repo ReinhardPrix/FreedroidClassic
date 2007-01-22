@@ -2061,7 +2061,7 @@ I will not be able to load or save games or configurations\n\
     
     Init_Game_Data(); 
     
-    ShowStartupPercentage ( 30 ) ; 
+    ShowStartupPercentage ( 16 ) ; 
     
     // The default should be, that no rescaling of the
     // combat window at all is done.
