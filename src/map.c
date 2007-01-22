@@ -449,7 +449,7 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
     //--------------------
     // Now we look for the beginning and end of the obstacle section
     //
-    obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING );
+    obstacle_SectionBegin = LocateStringInData( DataPointer , OBSTACLE_DATA_BEGIN_STRING ) + strlen(OBSTACLE_DATA_BEGIN_STRING) + 1;
     obstacle_SectionEnd = LocateStringInData( DataPointer , OBSTACLE_DATA_END_STRING );
     
     //--------------------
@@ -458,7 +458,7 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
     PreservedLetter=obstacle_SectionEnd[0];
     obstacle_SectionEnd[0]=0;
     NumberOfobstacle_sInThisLevel = CountStringOccurences ( obstacle_SectionBegin , OBSTACLE_TYPE_STRING ) ;
-    DebugPrintf( 1 , "\nNumber of obstacles found in this level : %d." , NumberOfobstacle_sInThisLevel );
+    //fprintf( stderr , "\nNumber of obstacles found in this level : %d.\n" , NumberOfobstacle_sInThisLevel );
     
     //--------------------
     // Now we decode all the obstacle information
@@ -466,7 +466,7 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
     obstacle_Pointer=obstacle_SectionBegin;
     for ( i = 0 ; i < NumberOfobstacle_sInThisLevel ; i ++ )
     {
-	obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
+	if( i ) obstacle_Pointer = strstr ( obstacle_Pointer + 1 , OBSTACLE_TYPE_STRING );
 	ReadValueFromString( obstacle_Pointer , OBSTACLE_TYPE_STRING , "%d" , 
 			     & ( loadlevel -> obstacle_list [ i ] . type ) , obstacle_SectionEnd );
 	ReadValueFromString( obstacle_Pointer , OBSTACLE_X_POSITION_STRING , "%f" , 
@@ -478,8 +478,8 @@ decode_obstacles_of_this_level ( Level loadlevel , char* DataPointer )
 	ReadValueFromString( obstacle_Pointer , OBSTACLE_DESCRIPTION_INDEX_STRING , "%d" , 
 			     & ( loadlevel -> obstacle_list [ i ] . description_index ) , obstacle_SectionEnd );
 	
-	// DebugPrintf( 0 , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f" , loadlevel -> obstacle_list [ i ] . type , 
-	// loadlevel -> obstacle_list [ i ] . pos . x , loadlevel-> obstacle_list [ i ] . pos . y );
+	//fprintf( stderr , "\nobtacle_type=%d pos.x=%3.2f pos.y=%3.2f\n" , loadlevel -> obstacle_list [ i ] . type ,  loadlevel -> obstacle_list [ i ] . pos . 
+//x , loadlevel-> obstacle_list [ i ] . pos . y );
     }
     
     //--------------------
@@ -516,7 +516,7 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
     //--------------------
     // Now we look for the beginning and end of the map labels section
     //
-    MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING );
+    MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING ) + strlen(MAP_LABEL_BEGIN_STRING) + 1;
     MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
     
     //--------------------
@@ -533,7 +533,7 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
     MapLabelPointer=MapLabelSectionBegin;
     for ( i = 0 ; i < NumberOfMapLabelsInThisLevel ; i ++ )
     {
-	MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
+	if ( i ) MapLabelPointer = strstr ( MapLabelPointer + 1 , X_POSITION_OF_LABEL_STRING );
 	ReadValueFromString( MapLabelPointer , X_POSITION_OF_LABEL_STRING , "%d" , 
 			     &(loadlevel->labels[ i ].pos.x) , MapLabelSectionEnd );
 	ReadValueFromString( MapLabelPointer , Y_POSITION_OF_LABEL_STRING , "%d" , 
@@ -2075,39 +2075,7 @@ SaveShip(char *filename)
     // we will write to the file will be a fine header, indicating what this file is about
     // and things like that...
     //
-    MapHeaderString="% -*- mode: fill -*- \n\n\
-----------------------------------------------------------------------\n\
- *\n\
- *   Copyright (c) 2002, 2003, 2004 Freedroid dev team\n\
- *\n\
- *\n\
- *  This file is part of Freedroid\n\
- *\n\
- *  Freedroid is free software; you can redistribute it and/or modify\n\
- *  it under the terms of the GNU General Public License as published by\n\
- *  the Free Software Foundation; either version 2 of the License, or\n\
- *  (at your option) any later version.\n\
- *\n\
- *  Freedroid is distributed in the hope that it will be useful,\n\
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of\n\
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\
- *  GNU General Public License for more details.\n\
- *\n\
- *  You should have received a copy of the GNU General Public License\n\
- *  along with Freedroid; see the file COPYING. If not, write to the \n\
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, \n\
- *  MA  02111-1307  USA\n\
- *\n\
-----------------------------------------------------------------------\n\
-\n\
-This file was generated using the Freedroid level editor.\n\
-Please feel free to make any modifications you like, but in order for you\n\
-to have an easier time, it is recommended that you use the Freedroid level\n\
-editor for this purpose.  If you have created some good new maps, please \n\
-send a short notice (not too large files attached) to the freedroid project.\n\
-\n\
-freedroid-discussion@lists.sourceforge.net\n\
-\n";
+    MapHeaderString="\n";
     fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
     
     // Now we write the area name back into the file
@@ -2296,7 +2264,8 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
   ItemPointer=ItemsSectionBegin;
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
     {
-      ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+      if ( ! (ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING )) )
+	break;
       char * NextItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
       if ( NextItemPointer ) NextItemPointer [ 0 ] = 0;
       ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
@@ -3100,7 +3069,7 @@ game data file with all droid type specifications.",
 	ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
 	DifferentRandomTypes++;
     }
-    DebugPrintf( 1 , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
+    //fprintf( stderr , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
   
     //--------------------
     // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
