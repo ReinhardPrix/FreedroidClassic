@@ -2544,7 +2544,7 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define ALL_KNOWN_BACKGROUNDS 33
 
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
-static int backgrounds_should_be_loaded_now = TRUE;
+static int background_has_been_loaded [ ALL_KNOWN_BACKGROUNDS ] ;
 
 /* ----------------------------------------------------------------------
  * For blitting backgrounds and static images in various positions of the
@@ -2556,9 +2556,16 @@ blit_special_background ( int background_code )
 {
     SDL_Surface* tmp_surf_1;
     SDL_Rect src_rect;
-    int i;
     char *fpath;
 
+    if ( background_code >= ALL_KNOWN_BACKGROUNDS ) 
+	{
+	GiveStandardErrorMessage ( __FUNCTION__  ,
+                                   "Received a request to display a background that does not exist.",
+                                   PLEASE_INFORM, IS_FATAL );
+	exit(1);
+	}
+	
     static char* background_filenames [ ALL_KNOWN_BACKGROUNDS ] = 
 	{ 
 	    INVENTORY_SCREEN_BACKGROUND_FILE ,  // 0
@@ -2674,18 +2681,12 @@ blit_special_background ( int background_code )
 	    TRUE  , // 32
 	};
 	    
-    //--------------------
-    // On the first function call, we load all the surfaces we will need, and
-    // in case of OpenGL output method, we also make textures from them...
-    //
-    if ( backgrounds_should_be_loaded_now )
+    if ( ! background_has_been_loaded [ background_code] )
     {
-	backgrounds_should_be_loaded_now = FALSE ; 
-	for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
-	{
+	background_has_been_loaded [ background_code ] = 1; 
 	    
-	    fpath = find_file ( background_filenames [ i ] , GRAPHICS_DIR , FALSE );
-	    get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ i ] ) , FALSE ) ;
+	    fpath = find_file ( background_filenames [ background_code ] , GRAPHICS_DIR , FALSE );
+	    get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ background_code ] ) , FALSE ) ;
 	    
 	    //--------------------
 	    // For the dialog, we need not only the dialog background, but also some smaller
@@ -2694,7 +2695,7 @@ blit_special_background ( int background_code )
 	    // but rather extract the info inside the code.  That makes for easier adaption
 	    // of the window dimensions from inside the code...
 	    //
-	    if ( i == CHAT_DIALOG_BACKGROUND_EXCERPT_CODE )
+	    if ( background_code == CHAT_DIALOG_BACKGROUND_EXCERPT_CODE )
 	    {
 		tmp_surf_1 = SDL_CreateRGBSurface ( SDL_SWSURFACE , CHAT_SUBDIALOG_WINDOW_W , CHAT_SUBDIALOG_WINDOW_H , 
 						    32 , 0x000000ff , 0x0000ff00 , 0x00ff0000 , 0xff000000 );
@@ -2717,22 +2718,18 @@ blit_special_background ( int background_code )
 		    src_rect . y = CHAT_SUBDIALOG_WINDOW_Y ;
 		}
 		
-		SDL_BlitSurface ( our_backgrounds [ i ] . surface , &src_rect , tmp_surf_1 , NULL );
-		SDL_FreeSurface ( our_backgrounds [ i ] . surface ) ;
-		our_backgrounds [ i ] . surface = SDL_DisplayFormat ( tmp_surf_1 );
+		SDL_BlitSurface ( our_backgrounds [ background_code ] . surface , &src_rect , tmp_surf_1 , NULL );
+		SDL_FreeSurface ( our_backgrounds [ background_code ] . surface ) ;
+		our_backgrounds [ background_code ] . surface = SDL_DisplayFormat ( tmp_surf_1 );
 	    }
 	    
 	    if ( use_open_gl )
 	    {
-		make_texture_out_of_surface ( & ( our_backgrounds [ i ] ) ) ;
+		make_texture_out_of_surface ( & ( our_backgrounds [ background_code ] ) ) ;
 	    }
-	}
+	
     }
     
-    //--------------------
-    // Now that all the surfaces are loaded, we can start to blit the backgrounds
-    // in question to their proper locations.
-    //
     if ( use_open_gl )
     {
 	if ( need_scaling [ background_code ] )
@@ -2780,12 +2777,6 @@ flush_background_image_cache ( void )
     static iso_image empty_image = UNLOADED_ISO_IMAGE ;
     
     //--------------------
-    // Of course the display function must be informed, that it must
-    // reload all background images...
-    //
-    backgrounds_should_be_loaded_now = TRUE;
-    
-    //--------------------
     // Also we dutifully set all background variables to 'empty'
     // status, cause re-initializing stuff might cause error or
     // warning messages, if the 'has_been_created' flags are still
@@ -2793,6 +2784,7 @@ flush_background_image_cache ( void )
     //
     for ( i = 0 ; i < ALL_KNOWN_BACKGROUNDS ; i ++ )
     {
+	background_has_been_loaded [ i ] = 0;
 	memcpy ( & ( our_backgrounds [ i ] ) , & empty_image , sizeof ( iso_image ) );
     }
     
