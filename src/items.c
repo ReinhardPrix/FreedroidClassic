@@ -2328,18 +2328,11 @@ MouseCursorIsInSkiRect( int x , int y )
 int 
 MouseCursorIsInInventoryGrid( int x , int y )
 {
-    point CurPos;
-
-    CurPos.x = x ;
-    CurPos.y = y ;
-    
-    if ( ( CurPos.x >= INVENTORY_RECT_X ) && ( CurPos.x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INV_SUBSQUARE_WIDTH ) )
+    if ( ( x >= INVENTORY_RECT_X ) && ( x <= INVENTORY_RECT_X + INVENTORY_GRID_WIDTH * INV_SUBSQUARE_WIDTH ) )
     {
-	DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as x is concerned.");
-	if ( ( CurPos.y >= User_Rect.y + INVENTORY_RECT_Y ) && 
-	     ( CurPos.y <= User_Rect.y + INVENTORY_RECT_Y + INV_SUBSQUARE_HEIGHT * INVENTORY_GRID_HEIGHT ) )
+	if ( ( y >= User_Rect.y + INVENTORY_RECT_Y ) && 
+	     ( y <= User_Rect.y + INVENTORY_RECT_Y + INV_SUBSQUARE_HEIGHT * INVENTORY_GRID_HEIGHT ) )
 	{
-	    DebugPrintf( INVENTORY_RECTANGLE_DEBUG_LEVEL , "\nMight be grabbing in inventory, as far as y is concerned.");
 	    return( TRUE );
 	}
     }
@@ -3005,10 +2998,10 @@ handle_player_identification_command( int player_num )
 		GrabbedItem = & Me [ 0 ] . armour_item;
 	if ( MouseCursorIsOnButton(HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 		GrabbedItem = & Me [ 0 ] . special_item;
-	if ( MouseCursorIsOnButton(AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
+	/*if ( MouseCursorIsOnButton(AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 		GrabbedItem = & Me [ 0 ] . aux1_item;
 	if ( MouseCursorIsOnButton(AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
-		GrabbedItem = & Me [ 0 ] . aux2_item;
+		GrabbedItem = & Me [ 0 ] . aux2_item;*/
 
 	}
 
