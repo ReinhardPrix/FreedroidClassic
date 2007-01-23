@@ -464,15 +464,33 @@ get_obstacle_below_mouse_cursor ( void )
 void
 fade_out_using_gamma_ramp ( void )
 {
-    int i;
+    int i = 0;
     Activate_Conservative_Frame_Computation( );
-    for ( i = 0 ; i < 100 ; i ++ ) 
-    {
-	SDL_SetGamma ( GameConfig . current_gamma_correction * 0.01 * ( (float) ( 100 - i ) ) , 
+    #ifdef HAVE_LIBGL
+	if ( ! use_open_gl ) 
+    #endif
+	    for ( i = 0 ; i < 100 ; i ++ ) 
+		    {
+		    SDL_SetGamma ( GameConfig . current_gamma_correction * 0.01 * ( (float) ( 100 - i ) ) , 
 		       GameConfig . current_gamma_correction * 0.01 * ( (float) ( 100 - i ) ) , 
 		       GameConfig . current_gamma_correction * 0.01 * ( (float) ( 100 - i ) ) );
-	SDL_Delay ( 8 ) ;
-    }
+ 	            SDL_Delay ( 4 ) ;
+		    }
+    #ifdef HAVE_LIBGL
+	else {
+	Uint8 val = 10;
+	while ( i < 55 )
+		{
+		glPixelZoom ( GameConfig . screen_width, GameConfig . screen_height);
+		glRasterPos2i( 0 , GameConfig . screen_height - 1) ;
+	        glDrawPixels( 1 , 1, GL_ALPHA , GL_UNSIGNED_BYTE , & val );
+		SDL_GL_SwapBuffers();
+		SDL_Delay(5);
+		i++;
+		}
+	glPixelZoom (1, 1);
+	}
+    #endif 
 }; // void fade_out_using_gamma_ramp ( void )
 
 /* ----------------------------------------------------------------------
@@ -487,15 +505,40 @@ fade_out_using_gamma_ramp ( void )
 void
 fade_in_using_gamma_ramp ( void )
 {
-    int i;
-    Activate_Conservative_Frame_Computation( );
-    for ( i = 0 ; i < 100 ; i ++ ) 
-    {
-	SDL_SetGamma ( GameConfig . current_gamma_correction * 0.01 * ((float)i) , 
+int i;
+Activate_Conservative_Frame_Computation( );
+
+ #ifdef HAVE_LIBGL
+        if ( ! use_open_gl )
+   #endif
+	    for ( i = 0 ; i < 100 ; i ++ ) 
+	    {
+		SDL_SetGamma ( GameConfig . current_gamma_correction * 0.01 * ((float)i) , 
 		       GameConfig . current_gamma_correction * 0.01 * ((float)i) , 
 		       GameConfig . current_gamma_correction * 0.01 * ((float)i) );
-	SDL_Delay ( 8 ) ;
-    }
+		SDL_Delay ( 4 ) ;
+	    }
+    #ifdef HAVE_LIBGL
+	else {
+	Uint8 val = 255;
+	while ( val != 0 )
+		{
+		RestoreMenuBackground(0);
+		glPixelZoom ( GameConfig . screen_width, GameConfig . screen_height);
+		glRasterPos2i( 0 , GameConfig . screen_height - 1) ;
+	        glDrawPixels( 1 , 1, GL_ALPHA , GL_UNSIGNED_BYTE , & val );
+		SDL_GL_SwapBuffers();
+		SDL_Delay(5);
+		glPixelZoom (1, 1);
+                RestoreMenuBackground(0);
+		if ( val >= 8)
+			val -= 8;
+		else if (val == 1) val = 0;
+		else val = 1;
+		}
+	}
+    #endif 
+
 }; // void fade_in_using_gamma_ramp ( void )
 
 /* ----------------------------------------------------------------------
