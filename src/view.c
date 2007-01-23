@@ -1981,7 +1981,9 @@ AssembleCombatPicture ( int mask )
     if ( GameConfig.Inventory_Visible ) 
     {
 	User_Rect.x = 320;
-	User_Rect.w = GameConfig . screen_width - 320;
+	if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible )
+		User_Rect.w = GameConfig . screen_width - 640;
+	else	User_Rect.w = GameConfig . screen_width - 320;
     }
     else if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ) 
     {
