@@ -3825,125 +3825,6 @@ handle_player_examine_command ( int player_num )
 
 
 /* ----------------------------------------------------------------------
- * When the player has actiavted global mode loot and clicked the
- * left button, the loot command must be executed.  This function
- * should deal with the effects of one such loot click by the player.
- * ---------------------------------------------------------------------- */
-void
-handle_player_loot_command ( int player_num ) 
-{
-    int obstacle_index ;
-    obstacle* our_obstacle;
-    char game_message_text[ 2000 ] ;
-    Level our_level;
-    int way_find_attempts;
-    moderately_finepoint offset_vector;
-    our_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
-    int final_bot_found=(-1);
-
-    //--------------------
-    // The highest priority is other droids and characters.  If one
-    // of those is under the mouse cursor, then the loot command
-    // is interpretet to refer to him/her and therefore we will say,
-    // that no looting of characters is possible, i.e. no pickpocket.
-    // 
-    final_bot_found = GetLivingDroidBelowMouseCursor ( player_num ) ;
-    if ( final_bot_found != (-1) )
-    {
-	sprintf( game_message_text , "Sorry, looting characters is not possible." ) ;
-	append_new_game_message ( game_message_text );
-	return;
-    }
-
-
-    obstacle_index = GetObstacleBelowMouseCursor ( player_num ) ;
-    if ( obstacle_index == (-1) )
-    {
-	sprintf ( game_message_text , "Loot what?  The floor?" );
-	append_new_game_message ( game_message_text );
-	return;
-    }
-    our_obstacle = & ( curShip . AllLevels [ Me [ player_num ] . pos . z ] -> obstacle_list [ obstacle_index ] ) ;
-
-    if ( obstacle_map [ our_obstacle -> type ] . can_be_looted )
-    {
-	sprintf ( game_message_text , "Looting %s." , 
-		  obstacle_map [ our_obstacle -> type ] . obstacle_short_name );
-	append_new_game_message ( game_message_text );
-
-	
-	offset_vector . x = 0 ; 
-	offset_vector . y = 0 ; 
-	if ( fabsf ( Me [ player_num ] . pos . x - our_obstacle -> pos . x ) >
-	     fabsf ( Me [ player_num ] . pos . y - our_obstacle -> pos . y ) )
-	{
-	    if ( Me [ player_num ] . pos . x > our_obstacle -> pos . x ) 
-		offset_vector . x = 0.8 ;
-	    else
-		offset_vector . x = -0.8 ;
-	}
-	else
-	{
-	    if ( Me [ player_num ] . pos . y > our_obstacle -> pos . y ) 
-		offset_vector . y = 0.8 ;
-	    else
-		offset_vector . y = -0.8 ;
-	}
-
-	for ( way_find_attempts = 0 ; way_find_attempts < 4 ; way_find_attempts ++ )
-	{
-	    Me [ player_num ] . mouse_move_target . x = 
-		our_level -> obstacle_list [ obstacle_index ] . pos . x ;
-	    Me [ player_num ] . mouse_move_target . y = 
-		our_level -> obstacle_list [ obstacle_index ] . pos . y ;
-	    Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-
-	    Me [ player_num ] . mouse_move_target . x += offset_vector . x ;
-	    Me [ player_num ] . mouse_move_target . y += offset_vector . y ;
-	    
-	    if ( way_find_attempts == 0 )
-		RotateVectorByAngle ( & offset_vector , 90 ) ;
-	    else if ( way_find_attempts == 1 )
-		RotateVectorByAngle ( & offset_vector , -180 ) ;
-	    else
-		RotateVectorByAngle ( & offset_vector , -90 ) ;
-
-	    if ( set_up_intermediate_course_for_tux ( player_num ) ) 
-	    {
-		DebugPrintf ( -4 , "\n%s(): found suitable way on attempt %d." , __FUNCTION__ , 
-			      way_find_attempts );
-		break;
-	    }
-	}
-	
-	Me [ player_num ] . current_enemy_target = ( -1 ) ;
-	Me [ player_num ] . mouse_move_target_combo_action_type = COMBO_ACTION_LOOT_OBSTACLE ;
-	Me [ player_num ] . mouse_move_target_combo_action_parameter = obstacle_index ;
-    }
-    else
-    {
-	//--------------------
-	// We do a case separation:  Crates and barrels get a separate
-	// message on how to loot them.
-	//
-	switch ( our_obstacle -> type )
-	{
-	    case ISO_BARREL_1:
-	    case ISO_BARREL_2:
-	    case ISO_BARREL_3:
-	    case ISO_BARREL_4:
-		sprintf ( game_message_text , "In order to loot that, I'll have to smash it." );
-		break;
-	    default:
-		sprintf ( game_message_text , "That's not a container, so no way to loot it." );
-		break;
-	}
-	append_new_game_message ( game_message_text );
-    }
-
-}; // void handle_player_loot_command ( int player_num ) 
-
-/* ----------------------------------------------------------------------
  * When the player has actiavted global mode unlock and clicked the
  * left button, the unlock command must be executed.  This function
  * should deal with the effects of one such unlock click by the player.
@@ -4292,20 +4173,9 @@ AnalyzePlayersMouseClick ( int player_num )
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
-	case GLOBAL_INGAME_MODE_LOOT:
-	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
-	    DebugPrintf ( -4 , "\n%s(): received loot command." , __FUNCTION__ );
-	    handle_player_loot_command ( 0 ) ;
-	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
-	    
-	    //--------------------
-	    // To stop any movement, we wait for the release of the 
-	    // mouse button.
-	    //
-	    while ( SpacePressed() );
-	    Activate_Conservative_Frame_Computation();
 
-	    break;
+        case GLOBAL_INGAME_MODE_LOOT: break;
+
 	case GLOBAL_INGAME_MODE_REPAIR:
 	    // if ( ButtonPressWasNotMeantAsFire( player_num ) ) return;
 	    DebugPrintf ( -4 , "\n%s(): received repair command." , __FUNCTION__ );

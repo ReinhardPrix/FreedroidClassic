@@ -2532,7 +2532,6 @@ init_obstacle_data( void )
 	obstacle_map [ i ] . block_area_parm_1 = 1.2 ;
 	obstacle_map [ i ] . block_area_parm_2 = 1.2 ; // standard_wall_thickness ;
 	obstacle_map [ i ] . is_smashable = FALSE ;
-	obstacle_map [ i ] . can_be_looted = FALSE ;  // is this where treasure could be hidden?
 	obstacle_map [ i ] . result_type_after_smashing_once = (-1) ;
 	obstacle_map [ i ] . drop_random_treasure = FALSE ;
 	obstacle_map [ i ] . needs_pre_put = FALSE ;
@@ -2859,7 +2858,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . filename = "iso_container_0004.png" ;
   obstacle_map [ ISO_V_CHEST_OPEN ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_V_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_V_CHEST_OPEN ] . obstacle_short_name = "Chest";
   obstacle_map [ ISO_V_CHEST_OPEN ] . obstacle_long_description = "This chest has already been opened";
   
@@ -2869,7 +2867,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_area_parm_2 = 0.8 ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . filename = "iso_container_0002.png" ;
   obstacle_map [ ISO_V_CHEST_CLOSED ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_V_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_V_CHEST_CLOSED ] . obstacle_short_name = "Chest";
   obstacle_map [ ISO_V_CHEST_CLOSED ] . obstacle_long_description = "This chest is closed.";
 
@@ -2878,7 +2875,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . filename = "iso_container_0003.png" ;
   obstacle_map [ ISO_H_CHEST_OPEN ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_H_CHEST_OPEN ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_H_CHEST_OPEN ] . obstacle_short_name = "Chest";
   obstacle_map [ ISO_H_CHEST_OPEN ] . obstacle_long_description = "This chest has already been opened";
 
@@ -2887,7 +2883,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_area_parm_2 = standard_wall_thickness ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . filename = "iso_container_0001.png" ;
   obstacle_map [ ISO_H_CHEST_CLOSED ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_H_CHEST_CLOSED ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_H_CHEST_CLOSED ] . obstacle_short_name = "Chest";
   obstacle_map [ ISO_H_CHEST_CLOSED ] . obstacle_long_description = "This chest is closed.";
 
@@ -3290,7 +3285,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_N_DESK ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_N_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_N_DESK ] . filename = "iso_tables_0001.png";
-  obstacle_map [ ISO_N_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_N_DESK ] . obstacle_short_name = "Desk";
   obstacle_map [ ISO_N_DESK ] . obstacle_long_description = "This desk is designed to handle extreme loads of office work.";
   obstacle_map [ ISO_E_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -3298,7 +3292,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_E_DESK ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_E_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_E_DESK ] . filename = "iso_tables_0002.png" ;
-  obstacle_map [ ISO_E_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_E_DESK ] . obstacle_short_name = "Desk";
   obstacle_map [ ISO_E_DESK ] . obstacle_long_description = "This desk is designed to handle extreme loads of office work.";
   obstacle_map [ ISO_S_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -3306,7 +3299,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_S_DESK ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_S_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_S_DESK ] . filename = "iso_tables_0003.png";
-  obstacle_map [ ISO_S_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_S_DESK ] . obstacle_short_name = "Desk";
   obstacle_map [ ISO_S_DESK ] . obstacle_long_description = "This desk is designed to handle extreme loads of office work.";
   obstacle_map [ ISO_W_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
@@ -3314,7 +3306,6 @@ init_obstacle_data( void )
   obstacle_map [ ISO_W_DESK ] . block_area_parm_2 = 0.4 ;
   obstacle_map [ ISO_W_DESK ] . is_smashable = TRUE ;
   obstacle_map [ ISO_W_DESK ] . filename = "iso_tables_0004.png";
-  obstacle_map [ ISO_W_DESK ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_W_DESK ] . obstacle_short_name = "Desk";
   obstacle_map [ ISO_W_DESK ] . obstacle_long_description = "This desk is designed to handle extreme loads of office work.";
 
@@ -4135,24 +4126,20 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . filename = "iso_shop_furniture_0003.png" ;
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . obstacle_short_name = "Set of shelves" ;
   obstacle_map [ ISO_SHOP_FURNITURE_3 ] . obstacle_long_description = "There is a lot of junk in here. Bot parts, medical supplies, scrap metal bits and other useless things like that." ;
-  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . filename = "iso_shop_furniture_0004.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_4 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . obstacle_short_name = "Set of shelves" ;
   obstacle_map [ ISO_SHOP_FURNITURE_4 ] . obstacle_long_description = "There is a lot of junk in here. Bot parts, gold bars, dead rodents, scrap metal bits and other useless things like that." ;
 
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . filename = "iso_shop_furniture_0005.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_5 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . obstacle_short_name = "Empty shelves" ;
   obstacle_map [ ISO_SHOP_FURNITURE_5 ] . obstacle_long_description = "Whatever was here before, is not here anymore." ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . filename = "iso_shop_furniture_0006.png" ;
-  obstacle_map [ ISO_SHOP_FURNITURE_6 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . obstacle_short_name = "Empty shelves" ;
   obstacle_map [ ISO_SHOP_FURNITURE_6 ] . obstacle_long_description = "These are empty shelves. Silent and hollow they sleep in Spring. No thing remains here now." ;
 
@@ -4160,13 +4147,11 @@ init_obstacle_data( void )
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_1 = 3.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . filename = "iso_library_furniture_0001.png" ;
-  obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_LIBRARY_FURNITURE_1 ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_1 = 1.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_area_parm_2 = 3.5 ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . filename = "iso_library_furniture_0002.png" ;
   obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . block_vision_too = FALSE ;
-  obstacle_map [ ISO_LIBRARY_FURNITURE_2 ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
 
   for ( i = ISO_OUTER_WALL_N1 ; i <= ISO_OUTER_WALL_CORNER_4 ; i++) 
   {
@@ -4565,52 +4550,44 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHELF_FULL_V ] . filename = "iso_obstacle_0091.png" ;
-  obstacle_map [ ISO_SHELF_FULL_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_FULL_V ] . obstacle_short_name = "Bookcase" ;
   obstacle_map [ ISO_SHELF_FULL_V ] . obstacle_long_description = "There are many interesting books here, but none of them is a switch opening a secret passage." ;
   obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_SHELF_FULL_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_FULL_H ] . filename = "iso_obstacle_0092.png" ;
-  obstacle_map [ ISO_SHELF_FULL_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_FULL_H ] . obstacle_short_name = "Bookcase" ;
   obstacle_map [ ISO_SHELF_FULL_H ] . obstacle_long_description = "There are exactly 451 books here." ;
 
   obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_EMPTY_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_SHELF_EMPTY_V ] . filename = "iso_obstacle_0093.png" ;
-  obstacle_map [ ISO_SHELF_EMPTY_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_EMPTY_V ] . obstacle_short_name = "Empty bookcase" ;
   obstacle_map [ ISO_SHELF_EMPTY_V ] . obstacle_long_description = "No books here, just dust." ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . filename = "iso_obstacle_0094.png" ;
-  obstacle_map [ ISO_SHELF_EMPTY_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_EMPTY_H ] . obstacle_short_name = "Empty bookcase" ;
   obstacle_map [ ISO_SHELF_EMPTY_H ] . obstacle_long_description = "No books here, just dust." ;
 
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . filename = "iso_obstacle_0095.png" ;
-  obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . obstacle_short_name = "Bookcase" ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_V ] . obstacle_long_description = "Only boring books like the Necronomicon are here. Yawn. Nothing interesting." ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . filename = "iso_obstacle_0096.png" ;
-  obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . obstacle_short_name = "Bookcase" ;
   obstacle_map [ ISO_SHELF_SMALL_FULL_H ] . obstacle_long_description = "Only boring books like the Necronomicon are here. Yawn. Nothing interesting." ;
 
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . filename = "iso_obstacle_0097.png" ;
-  obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . obstacle_short_name = "Empty bookcase" ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_V ] . obstacle_long_description = "Dust to trees. Trees to pages. Pages to books. Books to dust." ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_1 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . filename = "iso_obstacle_0098.png" ;
-  obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . can_be_looted = TRUE ;  // is this where treasure could be hidden?
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . obstacle_short_name = "Empty bookcase" ;
   obstacle_map [ ISO_SHELF_SMALL_EMPTY_H ] . obstacle_long_description = "Dust to trees. Trees to pages. Pages to books. Books to dust." ;
 
