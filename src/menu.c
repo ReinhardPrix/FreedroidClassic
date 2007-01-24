@@ -339,7 +339,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	{
 	    if (MenuPosition > 1) MenuPosition--;
 	    MoveMenuPositionSound();
-	    HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	    HighlightRect.x = UNIVERSAL_COORD_W(320) ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
 	    HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
 	    SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	    while (UpPressed());
@@ -348,7 +348,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	{
 	    if ( MenuPosition < NumberOfOptionsGiven ) MenuPosition++;
 	    MoveMenuPositionSound();
-	    HighlightRect.x = 320 ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
+	    HighlightRect.x = UNIVERSAL_COORD_W(320) ; // ( TextWidth ( MenuTexts [ MenuPosition - 1 ] ) ) / 2 ;
 	    HighlightRect.y = first_menu_item_pos_y + ( MenuPosition - 1 ) * h ;
 	    SDL_WarpMouse ( HighlightRect.x , HighlightRect.y );
 	    while (DownPressed());
