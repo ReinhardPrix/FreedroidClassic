@@ -153,55 +153,6 @@ respawn_level ( int level_num )
     
 }; // void respawn_level ( int level_num )
 
-/* -----------------------------------------------------------------
- *
- *
- *-----------------------------------------------------------------*/
-int
-decode_floor_tiles_of_this_level (Level Lev)
-{
-    int xdim = Lev->xlen;
-    int ydim = Lev->ylen;
-    int row, col;
-    map_tile *Buffer;
-    int tmp;
-    
-    DebugPrintf ( 1 , "\nStarting to translate the map from human readable disk format into game-engine format.");
-    
-    for (row = 0; row < ydim  ; row++)
-    {
-	
-	//--------------------
-	// Now a strange thing is going on here:  The floor tile information, stored
-	// as text is already in the 'map' poitner, that is NORMALLY SOMETHING 
-	// COMPLETELY DIFFERENT than a text pointer.  But the information is there
-	// we need to convert it into real map information with proper struct...
-	// Finally the proper struct can then replace the old map pointer.
-	//
-	Buffer = MyMalloc( ( xdim + 10 ) * sizeof (map_tile));
-	for ( col = 0 ; col < xdim  ; col ++ )
-	{
-	    //sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
- 	    *( (char*)(Lev->map[row])  + 4 * col + 4) = '0';
-	    tmp = atoi(( (char*)(Lev->map[row]) ) + 4 * col);
- 	    *( (char*)(Lev->map[row])  + 4 * col + 4) = ' ';
-	    Buffer [ col ] . floor_value = (Uint16) tmp;
-	    memset (Buffer [ col ] . obstacles_glued_to_here, -1, MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE);
-	}
-	
-	//--------------------
-	// Now the old text pointer can be replaced with a pointer to the 
-	// correctly assembled struct...
-	//
-	Lev -> map [ row ] = Buffer;
-	
-    } // for ( row = 0 ..) 
-    
-    DebugPrintf (2, "\nint decode_floor_tiles_of_this_level (Level Lev): end of function reached.");
-    
-    return OK;
-}; // int decode_floor_tiles_of_this_level ( Level lev )
-
 /* ----------------------------------------------------------------------
  * Now that we plan not to use hard-coded and explicitly human written 
  * coordinates any more, we need to use some labels instead.  But there
@@ -522,6 +473,11 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
     {
 	loadlevel -> labels [ i ] . pos . x = ( -1 ) ;
 	loadlevel -> labels [ i ] . pos . y = ( -1 ) ;
+	if ( loadlevel -> labels [ i ] . label_name != NULL )
+		{
+		free ( loadlevel -> labels [ i ] . label_name );
+		loadlevel -> labels [ i ] . label_name = NULL;
+		}
 	loadlevel -> labels [ i ] . label_name = "no_label_defined" ;
     }
     
@@ -1286,13 +1242,28 @@ Error:  A teleporter index pointing not to a teleporter obstacle found.",
 int
 LoadShip (char *filename)
 {
-    char *ShipData;
+    char *ShipData = NULL;
     char *endpt;				// Pointer to end-strings 
     char *LevelStart[MAX_LEVELS];		// Pointer to a level-start
     int level_anz;
     int i;
     
 #define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
+    for ( i = 0 ; i < curShip.num_levels ; i++ )
+    {
+	if(curShip . AllLevels [ i ] != NULL) 
+		{ //we need to free memory! otherwise 10MB leak! 
+		int ydim = curShip . AllLevels [ i ] -> ylen;
+		int row = 0;
+		 for (row = 0; row < ydim  ; row++)
+		    {
+	            free(curShip . AllLevels [ i ] -> map [ row ]);
+	            curShip . AllLevels [ i ] -> map [ row ] = NULL;
+		    }
+		free(curShip . AllLevels [ i ]);
+		curShip . AllLevels[i] = NULL;
+		}
+    }
     
     //--------------------
     // Read the whole ship-data to memory 
@@ -1302,6 +1273,11 @@ LoadShip (char *filename)
     //--------------------
     // Now we read the shipname information from the loaded data
     //
+    if ( curShip.AreaName != NULL )
+	{
+	free ( curShip.AreaName );
+	curShip . AreaName = NULL;
+	}
     curShip.AreaName = ReadAndMallocStringFromData ( ShipData , AREA_NAME_STRING , "\"" ) ;
     
     //--------------------
@@ -1325,22 +1301,8 @@ LoadShip (char *filename)
     //
     for ( i = 0 ; i < curShip.num_levels ; i++ )
     {
-	if(curShip . AllLevels [ i ] != NULL) 
-		{ //we need to free memory! otherwise 10MB leak! 
-		int ydim = curShip . AllLevels [ i ] -> ylen;
-		int row = 0;
-		 for (row = 0; row < ydim  ; row++)
-		    {
-	            free(curShip . AllLevels [ i ] -> map [ row ]);
-	            curShip . AllLevels [ i ] -> map [ row ] = NULL;
-		    }
-		free(curShip . AllLevels [ i ]);
-		curShip . AllLevels[i] = NULL;
-		}
 
 	curShip . AllLevels [ i ] = DecodeLoadedLeveldata ( LevelStart [ i ] );
-	
-	decode_floor_tiles_of_this_level ( curShip . AllLevels [ i ] ) ;
 	
 	//--------------------
 	// The level structure contains an array with the locations of all
@@ -2259,7 +2221,6 @@ DecodeLoadedLeveldata ( char *data )
     Level loadlevel;
     char *pos;
     char *map_begin, *wp_begin;
-    char *WaypointPointer;
     int i;
     int nr, x, y, wp_rnd;
     int k;
@@ -2324,21 +2285,52 @@ DecodeLoadedLeveldata ( char *data )
     //
     if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
 	return NULL;
+    map_begin += strlen(MAP_BEGIN_STRING) + 1;
     
     /* set position to Waypoint-Data */
     if ((wp_begin = strstr (data, WP_SECTION_BEGIN_STRING)) == NULL)
 	return NULL;
+    wp_begin += strlen(WP_SECTION_BEGIN_STRING) + 1;
     
     /* now scan the map */
-    strtok (map_begin, "\n");	/* init strtok to map-begin */
+    short int curlinepos = 0;
+    this_line = (char *) MyMalloc ( 4096 );
     
     /* read MapData */
     for (i = 0; i < loadlevel->ylen; i++)
-	if ( ( loadlevel -> map[i] = (void *)strtok ( NULL, "\n") ) == NULL)
-	    return NULL;
-    
-    /* Get Waypoints */
-    WaypointPointer = wp_begin;
+	{
+	int col;
+        map_tile *Buffer;
+        int tmp;
+
+	/* Select the next line */
+	short int nlpos = 0;
+	memset ( this_line, 0, 4096 );
+	while ( map_begin[curlinepos + nlpos] != '\n') nlpos ++;
+	memcpy ( this_line, map_begin + curlinepos, nlpos );
+	this_line [ nlpos ] = '\0';
+	nlpos ++; 
+
+	/* Decode it */
+	Buffer = MyMalloc( ( loadlevel->xlen + 10 ) * sizeof (map_tile));
+        for ( col = 0 ; col < loadlevel->xlen  ; col ++ )
+        {
+            //sscanf( ( ( (char*)(Lev->map[row]) ) + 4 * col) , "%04d " , &tmp);
+            *( this_line  + 4 * col + 4) = '0';
+            tmp = atoi( this_line + 4 * col);
+            *( this_line  + 4 * col + 4) = ' ';
+            Buffer [ col ] . floor_value = (Uint16) tmp;
+            memset (Buffer [ col ] . obstacles_glued_to_here, -1, MAX_OBSTACLES_GLUED_TO_ONE_MAP_TILE);
+        }
+
+        //--------------------
+        // Now the old text pointer can be replaced with a pointer to the
+        // correctly assembled struct...
+        //
+        loadlevel -> map [ i ] = Buffer;
+
+	curlinepos += nlpos;
+	}
     
     DebugPrintf( 2 , "\nReached Waypoint-read-routine.");
     
@@ -2347,17 +2339,25 @@ DecodeLoadedLeveldata ( char *data )
     //--------------------
     // We decode the waypoint data from the data file into the waypoint
     // structs...
-    strtok (wp_begin, "\n");
-    
+    curlinepos = 0;
     for ( i = 0 ; i < MAXWAYPOINTS ; i++ )
     {
-	if ( (this_line = strtok (NULL, "\n")) == NULL)
-	    return (NULL);
-	if (this_line == level_end)
-	{
-	    loadlevel->num_waypoints = i;
-	    break;
-	}
+	/* Select the next line */
+	short int nlpos = 0;
+	memset ( this_line, 0, 4096 );
+	while ( wp_begin[curlinepos + nlpos] != '\n') nlpos ++;
+	memcpy ( this_line, wp_begin + curlinepos, nlpos );
+	this_line [ nlpos ] = '\0';
+	nlpos ++; 
+	/* Copy it */
+	curlinepos += nlpos;
+	
+	if (*this_line != 'N' )
+		if (!strcmp(this_line, LEVEL_END_STRING))
+		{
+		    loadlevel->num_waypoints = i;
+		    break;
+		}
 	wp_rnd = 0 ;
 	sscanf( this_line , "Nr.=%d \t x=%d \t y=%d   rnd=%d" , &nr , &x , &y , &wp_rnd );
 	
@@ -2372,7 +2372,7 @@ DecodeLoadedLeveldata ( char *data )
 	
 	pos = strstr (this_line, CONNECTION_STRING);
 	pos += strlen (CONNECTION_STRING);	// skip connection-string
-	pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
+        pos += strspn (pos, WHITE_SPACE);               // skip initial whitespace
 	
 	
 	for ( k = 0 ; k < MAX_WP_CONNECTIONS ; k++ )
@@ -2383,9 +2383,8 @@ DecodeLoadedLeveldata ( char *data )
 	    if ( (connection == -1) || (res == 0) || (res == EOF) )
 		break;
 	    loadlevel -> AllWaypoints [ i ] . connections [ k ] = connection;
-	    
-	    pos += strcspn (pos, WHITE_SPACE); // skip last token
-	    pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
+            pos += strcspn (pos, WHITE_SPACE); // skip last token
+            pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace for next one
 	    
 	} // for k < MAX_WP_CONNECTIONS
 	
@@ -2397,7 +2396,7 @@ DecodeLoadedLeveldata ( char *data )
     // "holes" (0/0) in the waypoint-list, and we had to keep all of the in
     // but now let's get rid of them!
     PurifyWaypointList (loadlevel);
-    
+    free ( this_line ); 
     return (loadlevel);
     
 }; // Level DecodeLoadedLeveldata (char *data)
