@@ -291,8 +291,8 @@ DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
     int off = 0;
 
     /* Read levelnumber */
-    char * fp = strstr(DataPointer, "Levelnumber");
-    fp += 14;
+    char * fp = DataPointer; //strstr(DataPointer, "Levelnumber");
+    fp += 12;
     while ( * (fp + off) != '\n' ) off ++;
     fp [ off ] = 0;
     loadlevel -> levelnum = atoi ( fp );
