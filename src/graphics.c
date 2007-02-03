@@ -523,16 +523,14 @@ Activate_Conservative_Frame_Computation( );
 	Uint8 val = 255;
 	while ( val != 0 )
 		{
-		RestoreMenuBackground(0);
 		glPixelZoom ( GameConfig . screen_width, GameConfig . screen_height);
 		glRasterPos2i( 0 , GameConfig . screen_height - 1) ;
 	        glDrawPixels( 1 , 1, GL_ALPHA , GL_UNSIGNED_BYTE , & val );
 		SDL_GL_SwapBuffers();
-		SDL_Delay(5);
 		glPixelZoom (1, 1);
                 RestoreMenuBackground(0);
-		if ( val >= 8)
-			val -= 8;
+		if ( val >= 40)
+			val -= 15;
 		else if (val == 1) val = 0;
 		else val = 1;
 		}
