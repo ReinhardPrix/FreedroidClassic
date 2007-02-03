@@ -288,24 +288,70 @@ void
 DecodeDimensionsOfThisLevel ( Level loadlevel , char* DataPointer )
 {
     
-    sscanf ( DataPointer , "Levelnumber: %u \n\
- xlen of this level: %u \n\
- ylen of this level: %u \n\
- light radius bonus of this level: %u \n\
- minimal light on this level: %u \n\
- infinite_running_on_this_level: %u \n" , 
-	     &( loadlevel -> levelnum ), 
-	     &( loadlevel -> xlen ),
-	     &( loadlevel -> ylen ), 
-	     &( loadlevel -> light_radius_bonus ),
-	     &( loadlevel -> minimum_light_value),
-	     &( loadlevel -> infinite_running_on_this_level ) );
-    
-    DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
-    DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
-    DebugPrintf( 2 , "\nylen of this level: %d ", loadlevel->ylen );
-    DebugPrintf( 2 , "\ncolor of this level: %d ", loadlevel->ylen );
-    
+    int off = 0;
+
+    /* Read levelnumber */
+    char * fp = strstr(DataPointer, "Levelnumber");
+    fp += 14;
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> levelnum = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+    /* Read xlen */
+    fp += strlen ("xlen of this level:");
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> xlen = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+    /* Read ylen */
+    fp += strlen ("ylen of this level:");
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> ylen = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+    /* Read lrb */
+    fp += strlen ("light radius bonus of this level:");
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> light_radius_bonus = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+    fp += strlen ("minimal light on this level:");
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> minimum_light_value = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+    fp += strlen ("infinite_running_on_this_level:");
+    while ( * (fp + off) != '\n' ) off ++;
+    fp [ off ] = 0;
+    loadlevel -> infinite_running_on_this_level = atoi ( fp );
+    fp [ off ] = '\n';
+    fp += off + 1;
+    off = 0;
+
+/*
+
+
+    loadlevel -> light_radius_bonus = atoi ( DataPointer );
+
+    loadlevel -> minimum_light_value = atoi ( DataPointer );
+
+    loadlevel -> infinite_running_on_this_level = atoi ( DataPointer );
+*/
     if ( loadlevel->ylen >= MAX_MAP_LINES ) 
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
