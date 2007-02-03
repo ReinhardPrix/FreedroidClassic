@@ -388,7 +388,7 @@ DecodeStatementsOfThisLevel ( Level loadlevel , char* DataPointer )
     
     // We look for the beginning and end of the map statement section
     StatementSectionBegin = LocateStringInData( DataPointer , STATEMENT_BEGIN_STRING );
-    StatementSectionEnd = LocateStringInData( DataPointer , STATEMENT_END_STRING );
+    StatementSectionEnd = LocateStringInData( StatementSectionBegin , STATEMENT_END_STRING );
     
     // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
     PreservedLetter=StatementSectionEnd[0];
@@ -531,7 +531,7 @@ DecodeMapLabelsOfThisLevel ( Level loadlevel , char* DataPointer )
     // Now we look for the beginning and end of the map labels section
     //
     MapLabelSectionBegin = LocateStringInData( DataPointer , MAP_LABEL_BEGIN_STRING ) + strlen(MAP_LABEL_BEGIN_STRING) + 1;
-    MapLabelSectionEnd = LocateStringInData( DataPointer , MAP_LABEL_END_STRING );
+    MapLabelSectionEnd = LocateStringInData( MapLabelSectionBegin , MAP_LABEL_END_STRING );
     
     //--------------------
     // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
@@ -599,7 +599,7 @@ decode_obstacle_names_of_this_level ( Level loadlevel , char* DataPointer )
     // Now we look for the beginning and end of the map labels section
     //
     obstacle_nameSectionBegin = LocateStringInData( DataPointer , OBSTACLE_LABEL_BEGIN_STRING );
-    obstacle_nameSectionEnd = LocateStringInData( DataPointer , OBSTACLE_LABEL_END_STRING );
+    obstacle_nameSectionEnd = LocateStringInData( obstacle_nameSectionBegin , OBSTACLE_LABEL_END_STRING );
     
     //--------------------
     // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
@@ -669,7 +669,7 @@ decode_obstacle_descriptions_of_this_level ( Level loadlevel , char* DataPointer
     // Now we look for the beginning and end of the obstacle descriptions section
     //
     obstacle_descriptionSectionBegin = LocateStringInData( DataPointer , OBSTACLE_DESCRIPTION_BEGIN_STRING );
-    obstacle_descriptionSectionEnd = LocateStringInData( DataPointer , OBSTACLE_DESCRIPTION_END_STRING );
+    obstacle_descriptionSectionEnd = LocateStringInData( obstacle_descriptionSectionBegin , OBSTACLE_DESCRIPTION_END_STRING );
     
     //--------------------
     // We add a terminator at the end, but ONLY TEMPORARY.  The damage will be restored later!
@@ -2174,7 +2174,7 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
 
   // We look for the beginning and end of the items section
   ItemsSectionBegin = LocateStringInData( data , ITEMS_SECTION_BEGIN_STRING );
-  ItemsSectionEnd = LocateStringInData( data , ITEMS_SECTION_END_STRING );
+  ItemsSectionEnd = LocateStringInData( ItemsSectionBegin , ITEMS_SECTION_END_STRING );
 
   // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
   // The damage will be restored later!
@@ -2225,7 +2225,7 @@ DecodeChestItemSectionOfThisLevel ( Level loadlevel , char* data )
 
   // We look for the beginning and end of the items section
   ItemsSectionBegin = LocateStringInData( data , CHEST_ITEMS_SECTION_BEGIN_STRING );
-  ItemsSectionEnd = LocateStringInData( data , CHEST_ITEMS_SECTION_END_STRING );
+  ItemsSectionEnd = LocateStringInData( ItemsSectionBegin , CHEST_ITEMS_SECTION_END_STRING );
 
   // We add a terminator at the end of the items section, but ONLY TEMPORARY.  
   // The damage will be restored later!
@@ -2315,7 +2315,6 @@ DecodeLoadedLeveldata ( char *data )
     // or damaging the data in the process!
     //
     DecodeStatementsOfThisLevel ( loadlevel , DataPointer );
-    
     DecodeItemSectionOfThisLevel ( loadlevel , data );
     
     DecodeChestItemSectionOfThisLevel ( loadlevel , data );
