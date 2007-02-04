@@ -202,6 +202,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You are lucky that I found you and woke you up. A few more decades in there and you would end up insane."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
+ChangeOption=16 ChangeToValue=1
 ChangeOption=21 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -228,6 +229,8 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText=" Why did the bots attack?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=83  PositionY=50  
+Subtitle="We don't really know the reason for this insanity. However..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="All of the attacking bots are using a MegaSys operating system, so we think they are responsible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Not surprisingly, the bastards deny everything."
@@ -236,6 +239,18 @@ Subtitle="Of course because nearly every single bot in the world runs on that ju
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText=" I also heard a voice... Someone calling himself Dvorak... "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Relax. Everything will be fine in a few hours."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is perfectly normal."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=16 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
