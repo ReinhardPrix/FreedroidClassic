@@ -2416,6 +2416,10 @@ DecodeLoadedLeveldata ( char *data )
 	loadlevel -> AllWaypoints [ i ] . suppress_random_spawn = wp_rnd ;
 	
 	pos = strstr (this_line, CONNECTION_STRING);
+	if ( pos == NULL ) 
+		{
+		fprintf(stderr, "Unable to find connection string? i is %i, line is %s, level %i\n", i, this_line, loadlevel->levelnum);
+		}
 	pos += strlen (CONNECTION_STRING);	// skip connection-string
         pos += strspn (pos, WHITE_SPACE);               // skip initial whitespace
 	
