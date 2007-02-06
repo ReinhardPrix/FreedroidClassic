@@ -522,8 +522,7 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 	//
 	One_Shot_WAV_File = NULL;
 
-	strcpy ( Temp_Filename , "speeches/" );
-	strcat ( Temp_Filename , SoundSampleFileName );
+	strcpy ( Temp_Filename , SoundSampleFileName );
 
 	//--------------------
 	// Only if the file name wasn't 'no_voice_sample', we really
@@ -792,8 +791,7 @@ play_sample_using_WAV_cache_v( char* SoundSampleFileName , int With_Waiting , in
 		// Now we try to load the requested sound file into memory...
 		//
 		dynamic_WAV_cache[ next_free_position_in_cache ] = NULL ;
-		strcpy ( Temp_Filename , "speeches/" );
-		strcat ( Temp_Filename , SoundSampleFileName );
+		strcpy ( Temp_Filename , SoundSampleFileName );
 		fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE );
 		dynamic_WAV_cache[ next_free_position_in_cache ] = Mix_LoadWAV( fpath );
 		if ( dynamic_WAV_cache [ next_free_position_in_cache ] == NULL )

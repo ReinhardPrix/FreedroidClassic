@@ -193,14 +193,14 @@ HomeMadeItemRepair ( Item RepairItem )
     //
     if ( RepairItem->max_duration == (-1) )
     {
-	PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/Tux_Item_Cant_Be_0.wav" , FALSE , FALSE );
     }
     else
     {
 	    RepairItem->current_duration = RepairItem->current_duration + ceil((RepairItem->max_duration - RepairItem->current_duration) * 0.08 * ( 1.0 + MyRandom(9)));
 	    RepairItem->max_duration = RepairItem->current_duration;
 	    // Play_Shop_ItemRepairedSound( );
-	    PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
+	    PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/Tux_This_Quick_Fix_0.wav" , FALSE , FALSE );
     }
 }; // void HomeMadeItemRepair ( Item RepairItem ) 
 
@@ -3009,7 +3009,7 @@ handle_player_identification_command( int player_num )
 	{
 	    if ( GrabbedItem -> is_identified == TRUE )
 	    {
-		PlayOnceNeededSoundSample ( "../effects/is_already_indentif.wav" , FALSE , FALSE );
+		PlayOnceNeededSoundSample ( "effects/is_already_indentif.wav" , FALSE , FALSE );
 	    }
 	    else
 	    {
@@ -3446,7 +3446,7 @@ HandleInventoryScreen ( void )
 				// Since a sword and a shield are both equipped, we must refuse to
 				// equip this 2-handed weapon here and now...
 				//
-				PlayOnceNeededSoundSample ( "../effects/tux_ingame_comments/ThisItemRequiresBothHands.wav" , FALSE , FALSE );
+				PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/ThisItemRequiresBothHands.wav" , FALSE , FALSE );
 			    }
 			}
 		    }

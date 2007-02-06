@@ -1298,7 +1298,7 @@ TryToRepairItem( item* RepairItem )
 		while (EnterPressed() || SpacePressed() );
 		Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
 		RepairItem->current_duration = RepairItem->max_duration;
-		PlayOnceNeededSoundSample ( "../effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
+		PlayOnceNeededSoundSample ( "effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
 		return;
 		break;
 	    case ANSWER_NO:
@@ -1342,7 +1342,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	while (EnterPressed() || SpacePressed() );
 	Me[0].Gold -= 100 ;
 	IdentifyItem -> is_identified = TRUE ;
-	PlayOnceNeededSoundSample ( "../effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
 
     return;
 }; // void TryToIdentifyItem( item* IdentifyItem )
@@ -1415,7 +1415,7 @@ please inform the developers...",
 		    
 		    Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem );
 		    DeleteItem( SellItem );
-		    PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+		    PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
 		    
 		    return;
 		    break;
@@ -1438,7 +1438,7 @@ please inform the developers...",
 	else 
 	    DeleteItem( SellItem );
 	
-	PlayOnceNeededSoundSample ( "../effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1638,7 +1638,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
 	Me[0].Gold -= PotentialPrice ;
-	PlayOnceNeededSoundSample ( "../effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
     }
     else
     {
