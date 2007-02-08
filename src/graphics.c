@@ -1041,6 +1041,10 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     /* Here p is the address to the pixel we want to set */
     Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
+    /* no valid point to set: return */
+    if ( !surface || (x<0) || (x >= surface->w) || (y<0) || (y >= surface->h) )
+      return;
+
     switch(bpp) {
     case 1:
         *p = pixel;

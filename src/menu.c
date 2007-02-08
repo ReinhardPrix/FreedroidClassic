@@ -1546,6 +1546,15 @@ LevelEditMenu (void)
 		  MenuItemSelectedSound();
 		  Weiter=!Weiter;
 		  Done = TRUE;
+		  {
+		    int i;
+		    for (i = 0; i < curShip.num_levels; i++)
+		      {
+			ResetLevelMap (curShip.AllLevels[i]);	// close all doors
+			InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
+		      }
+		  }
+		  
 		  SetCombatScaleTo( 1 );
 		}
 	      break;
