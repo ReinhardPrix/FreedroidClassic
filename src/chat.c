@@ -1342,14 +1342,14 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
 {
     int TurningDone = FALSE;
     float AngleInBetween;
-    float WaitBeforeTurningTime = 0.1 ;
-    float WaitAfterTurningTime = 0.1 ;
+    float WaitBeforeTurningTime = 0.00001 ;
+    float WaitAfterTurningTime = 0.0001 ;
     int TurningStartTime;
     float OldAngle;
     float RightAngle;
     float TurningDirection;
     
-#define TURN_SPEED 90.0
+#define TURN_SPEED 900.0
 
     //--------------------
     // We reset the mouse cursor shape and abort any other
