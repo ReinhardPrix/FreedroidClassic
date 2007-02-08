@@ -572,9 +572,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
     // Now we set some viable choice window and we compute the maximum number of lines
     // that will still fit well into the choice window.
     //
-    Choice_Window . x = 35*GameConfig . screen_width/640; Choice_Window . y = 340*GameConfig . screen_height/480; Choice_Window . w = ( 640 - 70 ) * GameConfig . screen_width / 640 ; Choice_Window . h = 110 * GameConfig . screen_height / 480 ;
+    Choice_Window . x = 35*GameConfig . screen_width/640;
+    Choice_Window . y = 340*GameConfig . screen_height/480; Choice_Window . w = ( 640 - 70 ) * GameConfig . screen_width / 640 ; Choice_Window . h = 110 * GameConfig . screen_height / 480 ;
     MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
-    MaxLinesInMenuRectangle = 5;
+//    MaxLinesInMenuRectangle = 5;
     DebugPrintf ( 1 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
     
     //--------------------
