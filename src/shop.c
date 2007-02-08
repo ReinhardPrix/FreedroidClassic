@@ -1283,30 +1283,9 @@ TryToRepairItem( item* RepairItem )
 	return;
     }
     
-    while ( 1 )
-    {
-	GiveItemDescription( linebuf , RepairItem , TRUE );
-	strcat ( linebuf , "\n\n    Are you sure you want this item repaired?" );
-        SetCurrentFont ( Menu_BFont );
-	MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
-	switch (MenuPosition) 
-	{
-	    case (-1):
-		return;
-		break;
-	    case ANSWER_YES:
-		while (EnterPressed() || SpacePressed() );
-		Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
-		RepairItem->current_duration = RepairItem->max_duration;
-		PlayOnceNeededSoundSample ( "effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
-		return;
-		break;
-	    case ANSWER_NO:
-		while (EnterPressed() || SpacePressed() );
-		return;
-		break;
-	}
-    }
+    Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
+    RepairItem->current_duration = RepairItem->max_duration;
+    PlayOnceNeededSoundSample ( "effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
 }; // void TryToRepairItem( item* RepairItem )
 
 /* ----------------------------------------------------------------------
