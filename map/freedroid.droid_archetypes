@@ -60,7 +60,7 @@ Is this droid immune to disruptor blasts? 0
 Experience_Reward gained for destroying one of this type: 50
 Monster Level and maximum treasure chest to pick from=1
 Force how many additional magic items to be dropped=0
-Range of vision of this droid=3.25
+Range of vision of this droid=6.50
 Time spent eyeing Tux=1.0
 Minimal distance hostile bots are tolerated=6
 Height of this droid : 1.22
@@ -179,7 +179,7 @@ Aggression rate of this droid: 99
 Physical (base) damage an attack of this droid will do: 3.0
 Experience_Reward gained for destroying one of this type: 40
 Monster Level and maximum treasure chest to pick from=1
-Range of vision of this droid=1.6
+Range of vision of this droid=6
 Time spent eyeing Tux=1.0
 Minimal distance hostile bots are tolerated=6
 Drive of this droid : 1
