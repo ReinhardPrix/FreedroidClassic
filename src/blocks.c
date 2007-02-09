@@ -3261,24 +3261,32 @@ init_obstacle_data( void )
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_area_parm_2 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . block_vision_too = FALSE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . filename = "iso_chairs_0021.png";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . obstacle_short_name = "Plant";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_1 ] . obstacle_long_description = "After all the humans are killed by the bots, only plants like this one will remain.";
   
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_parm_1 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_area_parm_2 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . block_vision_too = FALSE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . filename = "iso_chairs_0022.png";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . obstacle_short_name = "Plant";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_2 ] . obstacle_long_description = "After all the humans are killed by the bots, only plants like this one will remain.";
 
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_parm_1 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_area_parm_2 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . block_vision_too = FALSE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . filename = "iso_chairs_0023.png";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . obstacle_short_name = "Plant";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_3 ] . obstacle_long_description = "After all the humans are killed by the bots, only plants like this one will remain.";
   
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_parm_1 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_area_parm_2 = 1.0;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . block_vision_too = FALSE;
   obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . filename = "iso_chairs_0024.png";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . obstacle_short_name = "Plant";
+  obstacle_map [ ISO_SOFFA_CORNER_PLANT_4 ] . obstacle_long_description = "After all the humans are killed by the bots, only plants like this one will remain.";
 
   obstacle_map [ ISO_N_DESK ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_N_DESK ] . block_area_parm_1 = 0.4 ;
