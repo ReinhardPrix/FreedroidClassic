@@ -1191,10 +1191,10 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     // Now of course we need to find out the proper target position.
     //
     target_rectangle . x = 
-	translate_map_point_to_screen_pixel ( our_col , our_line , TRUE ) + 
+	translate_map_point_to_screen_pixel_x ( our_col , our_line ) + 
 	our_floor_iso_image . offset_x ;
     target_rectangle . y = 
-	translate_map_point_to_screen_pixel ( our_col , our_line , FALSE ) +
+	translate_map_point_to_screen_pixel_y ( our_col , our_line ) +
 	our_floor_iso_image . offset_y ;
     
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -2137,6 +2137,7 @@ set_up_stretched_texture_for_light_radius ( void )
 
 #endif
 
+
 }; // void set_up_stretched_texture_for_light_radius ( void )
 
 /* ----------------------------------------------------------------------
@@ -2153,10 +2154,10 @@ light_radius_update_stretched_texture ( void )
     int green = 0 ;
     int alpha = 0 ;
     moderately_finepoint target_pos ;
-    int square_width = GameConfig . screen_width / 64 ;
-    int square_height = GameConfig . screen_height / 48 ;
     int light_strength ;
-
+    int lr_square_width = GameConfig . screen_width / 64;
+    int lr_square_height = GameConfig . screen_height / 48;
+    static float alpha_factor = 255.0 / (float) NUMBER_OF_SHADOW_IMAGES;
     //--------------------
     // Now it's time to edit the automap texture.
     //
@@ -2164,19 +2165,19 @@ light_radius_update_stretched_texture ( void )
     {
 	for ( y = 0 ; y < 48 ; y ++ )
 	{
-	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 0 + x ) * square_width - UserCenter_x + square_width ,
-							       ( 0 + y ) * square_height - UserCenter_y + square_width , TRUE );
-	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 0 + x ) * square_width - UserCenter_x + square_width ,
-							       ( 0 + y ) * square_height - UserCenter_y + square_width , FALSE );
+	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x,
+							       ( 0 + y ) * lr_square_height - UserCenter_y + lr_square_width , TRUE );
+	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x,
+							       ( 0 + y ) * lr_square_height - UserCenter_y + lr_square_width , FALSE );
 
 	    light_strength = get_light_strength ( target_pos );
 	    
 	    if ( light_strength >= NUMBER_OF_SHADOW_IMAGES ) light_strength = NUMBER_OF_SHADOW_IMAGES -1 ;
 	    if ( light_strength <= 0 ) light_strength = 0 ;
 	    
-	    alpha = ( 255.0 / ( (float) NUMBER_OF_SHADOW_IMAGES ) ) * ( (float) light_strength ) ; 
+            alpha = ( alpha_factor ) * ( (float) light_strength ) ; 
 
-	    PutPixel ( light_radius_stretch_surface , x , LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT - y - 1 , 
+	    PutPixel32 ( light_radius_stretch_surface , x , LIGHT_RADIUS_STRETCH_TEXTURE_HEIGHT - y - 1 , 
 		       SDL_MapRGBA ( light_radius_stretch_surface -> format , red , green , blue , alpha ) ) ;
 
 	}
@@ -2385,8 +2386,8 @@ blit_open_gl_light_radius ( void )
 	    make_texture_out_of_surface ( & ( light_radius_chunk [ i ] ) ) ;
 	}
 	
-	pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
-	pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
+	pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel_x ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) ) - 10 ;
+	pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel_y ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) ) - 42 ;
 	
 	chunk_size_x = 26 /2 + 1 ;
 	chunk_size_y = 14 /2 ; 
