@@ -570,30 +570,30 @@ blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
     // Now we draw the collision rectangle.  We use the same parameters
     // of the obstacle spec, that are also used for the collision checks.
     //
-    x1 = translate_map_point_to_screen_pixel ( 
+    x1 = translate_map_point_to_screen_pixel_x ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , TRUE );
-    y1 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border );
+    y1 = translate_map_point_to_screen_pixel_y ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , FALSE );
-    x2 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border );
+    x2 = translate_map_point_to_screen_pixel_x ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , TRUE );
-    y2 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
+    y2 = translate_map_point_to_screen_pixel_y ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , FALSE );
-    x3 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
+    x3 = translate_map_point_to_screen_pixel_x ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , TRUE );
-    y3 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
+    y3 = translate_map_point_to_screen_pixel_y ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border , FALSE );
-    x4 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
+    x4 = translate_map_point_to_screen_pixel_x ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , TRUE );
-    y4 = translate_map_point_to_screen_pixel ( 
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border);
+    y4 = translate_map_point_to_screen_pixel_y ( 
 	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border , FALSE );
+	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border);
     blit_quad ( x1, y1, x2, y2, x3, y3, x4, y4, 0x00FEEAA );
 }; // void blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
 
@@ -1619,8 +1619,8 @@ WARNING!  Null string for description found.  Deleting description index in ques
 	    }
 	    
 	    show_backgrounded_text_rectangle ( EditLevel -> obstacle_description_list [ level_editor_marked_obstacle -> description_index ]  , 
-					       translate_map_point_to_screen_pixel ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y , TRUE ) ,
-					       translate_map_point_to_screen_pixel ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y , FALSE ) ,
+					       translate_map_point_to_screen_pixel_x ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y ) ,
+					       translate_map_point_to_screen_pixel_y ( level_editor_marked_obstacle -> pos . x , level_editor_marked_obstacle -> pos . y ) ,
 					       320 , 240 ) ;
 	    /*
 	    show_backgrounded_label_at_map_position ( EditLevel -> obstacle_description_list [ level_editor_marked_obstacle -> description_index ]  ,
@@ -1792,13 +1792,13 @@ update_item_text_slot_positions ( void )
 	cur_item -> text_slot_rectangle . w = 
 	    TextWidthFont ( BFont_to_use , ItemMap [ cur_item -> type ] . item_name );
 	cur_item -> text_slot_rectangle . x = 
-	    translate_map_point_to_screen_pixel ( 
+	    translate_map_point_to_screen_pixel_x ( 
 		cur_item -> pos . x , 
-		cur_item -> pos . y , TRUE ) - cur_item -> text_slot_rectangle . w / 2 ;
+		cur_item -> pos . y ) - cur_item -> text_slot_rectangle . w / 2 ;
 	cur_item -> text_slot_rectangle . y = 
-	    translate_map_point_to_screen_pixel ( 
+	    translate_map_point_to_screen_pixel_y ( 
 		cur_item -> pos . x , 
-		cur_item -> pos . y , FALSE ) - cur_item -> text_slot_rectangle . h / 2 ;
+		cur_item -> pos . y ) - cur_item -> text_slot_rectangle . h / 2 ;
 
 	//--------------------
 	// But maybe the situation is already very crowded, i.e. maybe there are
@@ -2047,9 +2047,9 @@ PutMouseMoveCursor ( void )
     if ( Me [ 0 ] . mouse_move_target.x != (-1) )
     {
 	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , TRUE );
+	    translate_map_point_to_screen_pixel_x ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y , FALSE );
+	    translate_map_point_to_screen_pixel_y ( Me [ 0 ] . mouse_move_target . x , Me [ 0 ] . mouse_move_target . y );
 	if ( use_open_gl )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
@@ -2070,11 +2070,11 @@ PutMouseMoveCursor ( void )
 	// translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
 	
 	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
-						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y , TRUE );
+	    translate_map_point_to_screen_pixel_x ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
-						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y , FALSE );
+	    translate_map_point_to_screen_pixel_y ( AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . x , 
+						  AllEnemys [ Me [ 0 ] . current_enemy_target ] . pos . y );
 	if ( use_open_gl )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
@@ -3471,8 +3471,8 @@ PrintCommentOfThisEnemy ( int Enum )
     if ( ( AllEnemys [ Enum ] . TextVisibleTime < GameConfig . WantedTextVisibleTime )
 	 && GameConfig . All_Texts_Switch )
     {
-	x_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y , TRUE );
-	y_pos = translate_map_point_to_screen_pixel ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y , FALSE )
+	x_pos = translate_map_point_to_screen_pixel_x ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y );
+	y_pos = translate_map_point_to_screen_pixel_y ( AllEnemys[ Enum ] . virt_pos . x , AllEnemys [ Enum ] . virt_pos . y )
 	    - 100 ;
 	
 	//--------------------
@@ -4031,9 +4031,9 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	}
 	
 	TargetRectangle . x = 
-	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , TRUE );
+	    translate_map_point_to_screen_pixel_x ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y );
 	TargetRectangle . y = 
-	    translate_map_point_to_screen_pixel ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y , FALSE ) ;
+	    translate_map_point_to_screen_pixel_y ( ThisRobot -> virt_pos.x , ThisRobot -> virt_pos.y ) ;
 	// - ENEMY_ENERGY_BAR_OFFSET_Y ;
 	  
 	if ( use_open_gl )
@@ -4413,13 +4413,13 @@ function used for this did not succeed.",
 	
 	if ( use_open_gl )
 	{
-	    TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_width ) / 2 );
-	    TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_height ) / 2 );
+	    TargetRectangle . x = translate_map_point_to_screen_pixel_x ( PosX + Displacement . x , PosY + Displacement . y ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_width ) / 2 );
+	    TargetRectangle . y = translate_map_point_to_screen_pixel_y ( PosX + Displacement . x , PosY + Displacement . y ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . original_image_height ) / 2 );
 	}
 	else
 	{
-	    TargetRectangle . x = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , TRUE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> w ) / 2 );
-	    TargetRectangle . y = translate_map_point_to_screen_pixel ( PosX + Displacement . x , PosY + Displacement . y , FALSE ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> h ) / 2 );
+	    TargetRectangle . x = translate_map_point_to_screen_pixel_x ( PosX + Displacement . x , PosY + Displacement . y ) - ( ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> w ) / 2 );
+	    TargetRectangle . y = translate_map_point_to_screen_pixel_y ( PosX + Displacement . x , PosY + Displacement . y ) - ( (PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] . surface -> h ) / 2 );
 	}
 	
 	if ( use_open_gl )

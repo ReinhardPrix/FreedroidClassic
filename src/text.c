@@ -91,8 +91,8 @@ show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , 
     }
     else
     {
-	pixel_x = translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE );
-	pixel_y = translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE );
+	pixel_x = translate_map_point_to_screen_pixel_x ( pos_x , pos_y );
+	pixel_y = translate_map_point_to_screen_pixel_y ( pos_x , pos_y );
     }
     show_backgrounded_label_at_pixel_position ( LabelText , fill_status , pixel_x , pixel_y );
     

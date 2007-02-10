@@ -248,10 +248,10 @@ mouse_cursor_is_on_that_iso_image ( float pos_x , float pos_y , iso_image* our_i
     SDL_Rect screen_rectangle ;
 
     screen_rectangle . x = 
-	translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+	translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
 	our_iso_image -> offset_x ;
     screen_rectangle . y = 
-	translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+	translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
 	our_iso_image -> offset_y ;
     screen_rectangle . w = our_iso_image -> original_image_width ;
     screen_rectangle . h = our_iso_image -> original_image_height ;
@@ -3291,7 +3291,7 @@ Me [ 0 ] . busy_type = WEAPON_RELOAD;
  *
  *
  * ---------------------------------------------------------------------- */
-float
+inline float
 translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) 
 {
 
@@ -3341,19 +3341,6 @@ translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float a
  *
  * 
  * ---------------------------------------------------------------------- */
-int
-translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
-{
-    if ( give_x )
-    {
-	return ( rintf ( UserCenter_x + ( x_map_pos + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - y_map_pos ) * iso_floor_tile_width / 2 ) ) ; 
-    }
-  else
-    {
-	return ( rintf ( ( UserCenter_y + ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / 2 ) ) ) ;
-    }
-}; // int translate_map_point_to_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
-
 
 int
 translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x )

@@ -638,8 +638,8 @@ create_and_blit_droid_description ( int enemy_num )
     // temp_fill_rect . y = 50 ;
     // temp_fill_rect . x = UserCenter_x - text_length / 2 ;
     //
-    temp_fill_rect . x = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , TRUE ) - text_length / 2 ;;
-    temp_fill_rect . y = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , FALSE ) + enemy_iso_images [ AllEnemys [ enemy_num ] . type ] [ 0 ] [ 0 ] . offset_y - 2.5 * FontHeight ( BFont_to_use ) ;
+    temp_fill_rect . x = translate_map_point_to_screen_pixel_x ( cur_enemy -> pos . x , cur_enemy -> pos . y ) - text_length / 2 ;;
+    temp_fill_rect . y = translate_map_point_to_screen_pixel_y ( cur_enemy -> pos . x , cur_enemy -> pos . y ) + enemy_iso_images [ AllEnemys [ enemy_num ] . type ] [ 0 ] [ 0 ] . offset_y - 2.5 * FontHeight ( BFont_to_use ) ;
     
     //--------------------
     // If the 'enemy' is hostile, then we use red underlying color.  If
@@ -687,7 +687,7 @@ create_and_blit_droid_description ( int enemy_num )
     // Now we can blit the actual droid short description text
     //
     // temp_fill_rect . x = UserCenter_x - text_length / 2 ;
-    temp_fill_rect . x = translate_map_point_to_screen_pixel ( cur_enemy -> pos . x , cur_enemy -> pos . y , TRUE ) - text_length / 2 ; 
+    temp_fill_rect . x = translate_map_point_to_screen_pixel_x ( cur_enemy -> pos . x , cur_enemy -> pos . y ) - text_length / 2 ; 
     PutStringFont ( Screen , BFont_to_use , temp_fill_rect . x , temp_fill_rect . y , 
 		    AllEnemys [ enemy_num ] . short_description_text );
     
@@ -1385,14 +1385,12 @@ prepare_text_window_content ( char* ItemDescText )
 	    GiveItemDescription ( 
 		ItemDescText , & ( CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] ) , 
 		FALSE );
-	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
+	    best_banner_pos_x = translate_map_point_to_screen_pixel_x ( 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . x , 
-		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 80 ;
-	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
+		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ) + 80 ;
+	    best_banner_pos_y = translate_map_point_to_screen_pixel_y ( 
 		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . x , 
-		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ,
-		FALSE ) - 30 ;
+		CurLevel -> ItemList [ index_of_floor_item_below_mouse_cursor ] . pos . y  ) - 30 ;
 	}
 	
 	//--------------------
@@ -1404,14 +1402,12 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	    strcpy ( ItemDescText , " C H E S T " ); 
 	    // index_of_chest_below_mouse_cursor
-	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
+	    best_banner_pos_x = translate_map_point_to_screen_pixel_x ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
-		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 70 ;
-	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
+		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y ) + 70 ;
+	    best_banner_pos_y = translate_map_point_to_screen_pixel_y ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
-		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y  ,
-		FALSE ) - 20 ;
+		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . y ) - 20 ;
 	}
 	
 	//--------------------
@@ -1443,14 +1439,12 @@ A barrel was detected, but the barrel type was not valid.",
 					       PLEASE_INFORM, IS_FATAL );
 			break;
 	    }
-	    best_banner_pos_x = translate_map_point_to_screen_pixel ( 
+	    best_banner_pos_x = translate_map_point_to_screen_pixel_x ( 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
-		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
-		TRUE ) + 70 ;
-	    best_banner_pos_y = translate_map_point_to_screen_pixel ( 
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ) + 70 ;
+	    best_banner_pos_y = translate_map_point_to_screen_pixel_y ( 
 		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . x , 
-		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ,
-		FALSE ) - 20 ;
+		CurLevel -> obstacle_list [ index_of_barrel_below_mouse_cursor ] . pos . y  ) - 20 ;
 	}
 	
 	//--------------------

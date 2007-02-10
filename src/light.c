@@ -511,8 +511,8 @@ get_light_strength ( moderately_finepoint target_pos )
 {
     int x , y ;
 
-    x = translate_map_point_to_screen_pixel ( target_pos . x ,  target_pos . y , TRUE );
-    y = translate_map_point_to_screen_pixel ( target_pos . x ,  target_pos . y , FALSE );
+    x = translate_map_point_to_screen_pixel_x ( target_pos . x ,  target_pos . y );
+    y = translate_map_point_to_screen_pixel_y ( target_pos . x ,  target_pos . y );
 
     x = ( x * 64 ) / GameConfig . screen_width ;
     y = ( y * 48 ) / GameConfig . screen_height ;
@@ -585,8 +585,8 @@ blit_classic_SDL_light_radius( void )
 	    SDL_FreeSurface ( tmp ) ;
 	}
 	
-	pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , TRUE ) - 10 ;
-	pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , FALSE ) - 42 ;
+	pos_x_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel_x ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) ) - 10 ;
+	pos_y_grid [ 0 ] [ 0 ] = translate_map_point_to_screen_pixel_y ( Me [ 0 ] . pos . x - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) , Me [ 0 ] . pos . y - ( FLOOR_TILES_VISIBLE_AROUND_TUX ) ) - 42 ;
 	
 	chunk_size_x = 26 /2 + 1 ;
 	chunk_size_y = 14 /2 ; 

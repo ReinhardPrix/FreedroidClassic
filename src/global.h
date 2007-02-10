@@ -277,6 +277,8 @@ EXTERN iso_image floor_iso_images [ ALL_ISOMETRIC_FLOOR_TILES ] ;
 
 EXTERN float iso_floor_tile_width;
 EXTERN float iso_floor_tile_height;
+EXTERN float iso_floor_tile_width_over_two;
+EXTERN float iso_floor_tile_height_over_two;
 EXTERN const SDL_VideoInfo *vid_info;  // info about current video mode 
 EXTERN int vid_bpp; 		       // bits per pixel 
 

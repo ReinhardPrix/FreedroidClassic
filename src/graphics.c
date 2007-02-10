@@ -1609,6 +1609,8 @@ UNABLE TO LOAD STANDARD TILE!",
     else
 	iso_floor_tile_height = standard_floor_tile -> h - 2;
 
+    iso_floor_tile_width_over_two = iso_floor_tile_width / 2;
+    iso_floor_tile_height_over_two = iso_floor_tile_height / 2;
     SDL_FreeSurface ( standard_floor_tile );
 
 }; // void get_standard_iso_floor_tile_size ( void )

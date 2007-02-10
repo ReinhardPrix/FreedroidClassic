@@ -534,12 +534,8 @@ blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float p
 {
   SDL_Rect target_rectangle;
 
-  target_rectangle . x = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
-    our_iso_image . offset_x ;
-  target_rectangle . y = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
-    our_iso_image . offset_y ;
+  target_rectangle . x = translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) +     our_iso_image . offset_x ;
+  target_rectangle . y = translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +    our_iso_image . offset_y ;
 
   our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
 
@@ -564,10 +560,10 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
   DebugPrintf ( 1 , "\nblit_outline_of_iso_image_to_map_position: function invoked." );
 
   target_rectangle . x = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
     our_iso_image . offset_x ;
   target_rectangle . y = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
     our_iso_image . offset_y ;
 
   if ( our_iso_image . surface -> flags & SDL_SRCCOLORKEY )
@@ -786,10 +782,10 @@ blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer ,
   SDL_Rect target_rectangle;
 
   target_rectangle . x = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
     our_iso_image . offset_x ;
   target_rectangle . y = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
     our_iso_image . offset_y ;
 
   our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
@@ -807,10 +803,10 @@ iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos
   SDL_Rect target_rectangle;
 
   target_rectangle . x = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , TRUE ) + 
+    translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
     our_iso_image . offset_x ;
   target_rectangle . y = 
-    translate_map_point_to_screen_pixel ( pos_x , pos_y , FALSE ) +
+    translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
     our_iso_image . offset_y ;
 
   if ( ( target_rectangle . x > shift_pixels_x ) && ( target_rectangle . y > shift_pixels_y ) &&
