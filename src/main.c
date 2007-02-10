@@ -135,7 +135,6 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 	GameOver = TRUE;
 	StartupMenu ( );
 	GameOver = FALSE;
-	
 	while ( (!GameOver && !QuitProgram) || ServerMode )
 	{
 	    CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
@@ -420,7 +419,11 @@ UpdateCountersForThisFrame ( int player_num )
 	if ( Me [ player_num ] . busy_time < 0 ) Me [ player_num ] . busy_time = 0 ;
     }
     if ( Me [ player_num ] . busy_time == 0)
+	{
+	if ( Me [ player_num ] . busy_type == WEAPON_RELOAD )
+		append_new_game_message("Weapon reloaded");
 	Me [ player_num ] . busy_type = NONE;
+	}
 
     // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
     

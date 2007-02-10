@@ -3284,7 +3284,6 @@ Me [ 0 ] . weapon_item . ammo_clip += count;
 Me [ 0 ] . busy_time = ItemMap[ Me [ 0 ] . weapon_item . type ].item_gun_reloading_time;
 Me [ 0 ] . busy_time *= RangedRechargeMultiplierTable [ Me [ 0 ] . ranged_weapon_skill ] ;
 Me [ 0 ] . busy_type = WEAPON_RELOAD;
-append_new_game_message("Weapon reloaded");
 }
 
 
