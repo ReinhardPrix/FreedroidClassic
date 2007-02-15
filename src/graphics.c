@@ -601,7 +601,7 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
     int knob_end_x = UNIVERSAL_COORD_W(390);
     if(!(upper_range - lower_range))
 	return upper_range;
-    int knob_offset_x = ceilf ( (float)(default_value * (knob_end_x - knob_start_x)) / (float)(upper_range - lower_range));
+    int knob_offset_x = ceilf ( (float)(default_value * (knob_end_x - knob_start_x)) / (float)(upper_range - lower_range + 1));
     int knob_is_grabbed = FALSE ;
     char number_text[1000];
     static SDL_Rect knob_target_rect;
@@ -646,7 +646,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	knob_target_rect . x = knob_start_x + knob_offset_x - knob_target_rect . w / 2 ;
 	knob_target_rect . y = UNIVERSAL_COORD_H(260) - knob_target_rect . h / 2 ;
 	our_SDL_blit_surface_wrapper ( SelectionKnob , NULL , Screen , &knob_target_rect );
-	sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) )  ;
+	sprintf ( number_text , "%d" , knob_offset_x * ( upper_range - lower_range + 1) / ( knob_end_x - knob_start_x ) )  ;
 	PutStringFont( Screen , FPS_Display_BFont , UNIVERSAL_COORD_W(320) , UNIVERSAL_COORD_H(190) , number_text );
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
@@ -671,9 +671,9 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 		ok_button_was_pressed = TRUE ;
 	    if ( MouseCursorIsOnButton ( NUMBER_SELECTOR_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	    {
-		if(knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range)))
+		if(knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range + 1)))
 			{
-			knob_offset_x -= (knob_end_x - knob_start_x) / (upper_range - lower_range);
+			knob_offset_x -= (knob_end_x - knob_start_x) / (upper_range - lower_range + 1);
 			}
 		if(knob_offset_x > 0)
 			knob_offset_x --;
@@ -683,9 +683,9 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	    {
 		if ( knob_end_x - knob_start_x - knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range)))
 			{
-			knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range);
+			knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range + 1);
 			}
-		if ( knob_offset_x < knob_end_x - knob_start_x )
+		if ( knob_offset_x < knob_end_x - knob_start_x - 1)
 			knob_offset_x ++;
 	    }
 	    
@@ -695,7 +695,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	if ( knob_is_grabbed )
 	{
 	    knob_offset_x = GetMousePos_x()  - knob_start_x ;
-	    if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x ;
+	    if ( knob_offset_x >= knob_end_x - knob_start_x ) knob_offset_x = knob_end_x - knob_start_x - 1;
 	    if ( knob_offset_x <= 0 ) knob_offset_x = 0 ; 
 	}
 	
@@ -704,8 +704,8 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	SDL_Delay (1);
     }
     
-    
-    return ( knob_offset_x * ( upper_range - lower_range ) / ( knob_end_x - knob_start_x ) ) ;
+    int result =  (knob_offset_x * ( upper_range - lower_range + 1) / ( knob_end_x - knob_start_x ));
+    return ( result > upper_range ? result : upper_range ) ;
     
 }; // int do_graphical_number_selection_in_range ( int lower_range , int upper_range )
 
