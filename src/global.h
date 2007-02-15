@@ -238,6 +238,9 @@ EXTERN int last_index_of_bot_on_level [ MAX_LEVELS ] ;
 EXTERN int Number_Of_Bullet_Types;
 EXTERN SDL_Surface *Screen;   
 EXTERN SDL_Surface* StoredMenuBackground [ 2 ] ;
+#ifdef HAVE_LIBGL
+EXTERN GLuint * StoredMenuBackgroundTex [ 2 ] ;
+#endif
 EXTERN int current_mouse_cursor_shape;
 
 //--------------------

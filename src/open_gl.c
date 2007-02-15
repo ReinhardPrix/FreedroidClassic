@@ -1886,12 +1886,31 @@ RestoreMenuBackground ( int backup_slot )
 {
     if ( use_open_gl )
     {
-	
 #ifdef HAVE_LIBGL
-	glRasterPos2i ( 0 , GameConfig . screen_height - 1 ) ; 
-	glDrawPixels ( GameConfig . screen_width , GameConfig . screen_height - 2 , GL_RGB, GL_UNSIGNED_BYTE, 
-		       (GLvoid*) StoredMenuBackground [ backup_slot ] );
-	return ;
+    
+/* Our new approach simply draws a textured quad with the proper texture */
+    glEnable( GL_TEXTURE_2D );
+    glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+    glEnable ( GL_BLEND );
+    glDisable ( GL_ALPHA_TEST );
+    glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+    glBindTexture( GL_TEXTURE_2D, * ( StoredMenuBackgroundTex [ backup_slot ] ) );
+    glBegin(GL_QUADS);
+    glTexCoord2i( 0.0f, 1.0f ); 
+    glVertex2i( 0 , 0 );
+    glTexCoord2i( 0.0f, 0.0 ); 
+    glVertex2i( 0 , 1024 );
+    glTexCoord2i( 1.0f, 0.0 ); 
+    glVertex2i( 1024 , 1024 );
+    glTexCoord2f( 1.0f, 1.0 ); 
+    glVertex2i( 1024 , 0 );
+    glEnd( );
+    
+
+    glDisable ( GL_BLEND );
+    glEnable ( GL_ALPHA_TEST );
+    glDisable( GL_TEXTURE_2D );
+
 #endif
     }
     else
@@ -1920,20 +1939,28 @@ StoreMenuBackground ( int backup_slot )
     if ( use_open_gl )
     {
 #ifdef HAVE_LIBGL
-	//--------------------
-	// WARNING!  WE ARE USING THE SDL_SURFACE* here much like a char*!!!
-	// BEWARE!
-	//
-	// Also note, that we allocate +2 width and height to be on the safe
-	// side concerning rounding issues and the size of the final read-pixel
-	// data...
-	//
-	if ( StoredMenuBackground [ backup_slot ] == NULL )
-	{
-	    StoredMenuBackground [ backup_slot ] = malloc ( ( GameConfig . screen_width + 2 ) * ( GameConfig . screen_height + 2 ) * 4 ) ;
-	}
-	
-	glReadPixels( 0 , 1, GameConfig . screen_width , GameConfig . screen_height-1 , GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*) ( StoredMenuBackground [ backup_slot ] ) );
+	/* The old approach was to malloc a buffer the size of the screen and glReadPixels to it. The problem
+	is that it's awfully slow, and subsequent RestoreMenuBackground will be slow as well. Here, we hope the
+	graphics card has enough RAM, and just create a big texture to store the image.
+	*/
+	if ( StoredMenuBackgroundTex [ backup_slot ] == 0 )
+		{ //Assign a texture number (yes, we use StoredMenuBackground this way, isn't that nice ? !!
+		StoredMenuBackgroundTex [ backup_slot ]= &all_freedroid_textures [ next_texture_index_to_use ] ;
+	        next_texture_index_to_use ++ ;
+		if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
+		    {
+                    GiveStandardErrorMessage ( __FUNCTION__  ,
+                                   "Ran out of initialized texture positions to use for new textures.",
+                                   PLEASE_INFORM, IS_FATAL );
+                    } 
+		glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
+		glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+		glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
+		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, GameConfig.screen_height - 1024,  1024,  1024, 0);
+		open_gl_check_error_status("Store05");
+
+		}
 #endif
     }
     else
@@ -2543,7 +2570,6 @@ GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r ,
 #define HUD_BACKGROUND_IMAGE_FILE "backgrounds/hud_background.png"
 
 #define ALL_KNOWN_BACKGROUNDS 33
-
 static iso_image our_backgrounds [ ALL_KNOWN_BACKGROUNDS ] ;
 static int background_has_been_loaded [ ALL_KNOWN_BACKGROUNDS ] ;
 
