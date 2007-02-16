@@ -705,7 +705,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
     }
     
     int result =  (knob_offset_x * ( upper_range - lower_range + 1) / ( knob_end_x - knob_start_x ));
-    return ( result > upper_range ? result : upper_range ) ;
+    return ( result > upper_range ? upper_range : result) ;
     
 }; // int do_graphical_number_selection_in_range ( int lower_range , int upper_range )
 
