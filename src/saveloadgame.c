@@ -207,7 +207,7 @@ void
 SaveThumbnailOfGame ( void )
 {
     char filename[1000];
-    SDL_Surface* NewThumbnail;
+    SDL_Surface* NewThumbnail = NULL;
     SDL_Surface* FullView;
     
     if ( ! our_config_dir )
@@ -236,6 +236,9 @@ SaveThumbnailOfGame ( void )
 	
 	NewThumbnail = zoomSurface( FullView , 0.32 * 640.0f / GameConfig . screen_width , 0.32 * 640.0f / GameConfig . screen_width , 0 );
 	
+	if ( NewThumbnail == NULL ) 
+		return;		
+
 	//--------------------
 	// Of course, since we used OpenGL for generating the raw image data, the data is
 	// upside down again.  Now that won't be much of a problem, since we've already
