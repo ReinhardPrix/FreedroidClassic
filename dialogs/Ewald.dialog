@@ -30,10 +30,16 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Hi. You look really happy."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=44  PositionY=157  
-Subtitle="Hey! I'm Ewald. I run this joint. Want something to drink?"
+Subtitle="Hey! I'm Ewald. I'm a bartender."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I used to do a lot of drugs, and I destroyed my brain."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'm not too smart now, but very happy!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Want something to drink?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=13 ChangeToValue=1
@@ -50,11 +56,11 @@ Subtitle="Nah, No darn good at all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The bots ruined it for me. Now the supplies are very low and I had to make the prices high."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No one wants to pay 499 triangles for bottom shelf swill that even Bender would not drink..."
+Subtitle="No one wants to pay 499 tribucks for bottom shelf swill that even Bender would not drink..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The tax is quite brutal as well. And the Red Guard always demands discounts too."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Life is tough."
+Subtitle="Life is tough. I am still happy though."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -137,7 +143,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Ahh... Really smooth. Give me some more of that."
+New Option Nr=8  OptionText=" Ahh... Fresh water! Give me some more of that."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Yeah, I thought you would like it. Here is more."
