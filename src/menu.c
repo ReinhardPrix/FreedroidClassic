@@ -700,9 +700,10 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  HighlightRect.x = MenuPosX[ menu_position_to_remember -1 ] - 0 * h ;
 	  HighlightRect.y = MenuPosY[ menu_position_to_remember -1 ] ;
 	  HighlightRect.w = TextWidth ( MenuTexts [ menu_position_to_remember - 1 ] ) + 0 * h ;
-	  if ( HighlightRect . w > 550 * GameConfig . screen_width / 640 ) HighlightRect . w = 550 * GameConfig . screen_width / 640 ;
+	  if ( HighlightRect . w > 580 * GameConfig . screen_width / 640 ) HighlightRect . w = 580 * GameConfig . screen_width / 640 ;
 	  HighlightRect.h = MenuOptionLineRequirement [ menu_position_to_remember - 1 ] * 
 	      ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;	    
+	  if ( HighlightRect . h + HighlightRect.y > UNIVERSAL_COORD_H(458) ) HighlightRect . h = UNIVERSAL_COORD_H(458) - HighlightRect.y;
 	  HighlightRectangle ( Screen , HighlightRect );
 	  // Display again the highlighted line
 	  DisplayText ( MenuTexts [ menu_position_to_remember -1 ] , MenuPosX [ menu_position_to_remember - 1 ], MenuPosY [ menu_position_to_remember - 1 ] , &Choice_Window , TEXT_STRETCH);	  
