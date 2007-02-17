@@ -1944,7 +1944,7 @@ StoreMenuBackground ( int backup_slot )
 	graphics card has enough RAM, and just create a big texture to store the image.
 	*/
 	if ( StoredMenuBackgroundTex [ backup_slot ] == 0 )
-		{ //Assign a texture number (yes, we use StoredMenuBackground this way, isn't that nice ? !!
+		{ 
 		StoredMenuBackgroundTex [ backup_slot ]= &all_freedroid_textures [ next_texture_index_to_use ] ;
 	        next_texture_index_to_use ++ ;
 		if ( next_texture_index_to_use >= MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE )
@@ -1953,14 +1953,14 @@ StoreMenuBackground ( int backup_slot )
                                    "Ran out of initialized texture positions to use for new textures.",
                                    PLEASE_INFORM, IS_FATAL );
                     } 
-		glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
-		glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
-		glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
-		glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
-		glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, GameConfig.screen_height - 1024,  1024,  1024, 0);
-		open_gl_check_error_status("Store05");
-
 		}
+	glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
+	glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MAG_FILTER , GL_LINEAR );
+	glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
+	glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
+	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, GameConfig.screen_height - 1024,  1024,  1024, 0);
+	open_gl_check_error_status("StoreMenuBackground");
+
 #endif
     }
     else
