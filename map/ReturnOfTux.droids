@@ -364,6 +364,9 @@ SForce: T=302 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Paramet
 SForce: T=249 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 SForce: T=247 X=38 Y=11 Fixed=0 Marker=22 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Stalker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
+SForce: T=GUA X=74 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardStartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Bot Factory Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=GUA X=76 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardChiefStartGameSquare" RushTux="no" DialogSectionToUse="MSFacilityGateGuardLeader" ShortLabel="Bot Factory Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
 Sp**ecialForce: Type=139 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 Sp**ecialForce: Type=247 X=38 Y=11 Fixed=0 Marker=23 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level9Trotter2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
@@ -739,10 +742,6 @@ Level=31
 Maximum number of Random Droids=0
 Minimum number of Random Droids=0
 Allowed Type of Random Droid for this level: 751
-
-SForce: T=GUA X=72 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard1StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=GUA X=74 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuard2StartGameSquare" RushTux="no" DialogSectionToUse="StandardMSFacilityGateGuard" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=GUA X=76 Y=8 Fixed=0 Marker=10 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MSAreaGuardChiefStartGameSquare" RushTux="yes" DialogSectionToUse="MSFacilityGateGuardLeader" ShortLabel="Old Town Gate Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 
 ** End of this levels droid data **
