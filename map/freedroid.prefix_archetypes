@@ -32,6 +32,32 @@ Price factor=1.1
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
+Prefix name="Melting "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=0
+Bonus to tohit modifier=0
+Bonus to armor class or damage=0
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=-0.5
+Bonus to mana recovery=0.5
+Light radius bonus=0
+Price factor=1.0
+** End of new prefix specification subsection **
+
+** Start of new prefix specification subsection **
 Prefix name="Cursed "
 Bonus to dexterity=0
 Bonus to dexterity modifier=0
@@ -56,6 +82,32 @@ Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.15
 ** End of new prefix specification subsection **
+
+** S*tart of new prefix specification subsection **
+Prefix name="Perfect "
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to tohit=100
+Bonus to tohit modifier=0
+Bonus to armor class or damage=-99
+Bonus to armor class or damage modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=0
+** E*nd of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
 Prefix name="Quartz "
@@ -707,8 +759,8 @@ Bonus to magic=0
 Bonus to magic modifier=0
 Bonus to strength=0
 Bonus to strength modifier=0
-Bonus to all attributes=0
-Bonus to all attributes modifier=10
+Bonus to all attributes=5
+Bonus to all attributes modifier=5
 Bonus to life=0
 Bonus to life modifier=0
 Bonus to mana=0
@@ -722,23 +774,45 @@ Price factor=8
 ** Start of new suffix specification subsection **
 Prefix name=" from hell"
 Bonus to dexterity=0
-Bonus to dexterity modifier=10
+Bonus to dexterity modifier=5
 Bonus to vitality=0
-Bonus to vitality modifier=10
+Bonus to vitality modifier=5
 Bonus to magic=0
-Bonus to magic modifier=10
+Bonus to magic modifier=5
 Bonus to strength=0
-Bonus to strength modifier=10
+Bonus to strength modifier=5
 Bonus to all attributes=0
-Bonus to all attributes modifier=10
+Bonus to all attributes modifier=5
 Bonus to life=0
 Bonus to life modifier=0
 Bonus to mana=0
 Bonus to mana modifier=0
 Bonus to life recovery=0
 Bonus to mana recovery=0
-Light radius bonus=-10
-Price factor=4
+Light radius bonus=-5
+Price factor=3
+** End of new suffix specification subsection **
+
+** Start of new suffix specification subsection **
+Prefix name=" with strange runes"
+Bonus to dexterity=0
+Bonus to dexterity modifier=0
+Bonus to vitality=0
+Bonus to vitality modifier=0
+Bonus to magic=0
+Bonus to magic modifier=0
+Bonus to strength=0
+Bonus to strength modifier=0
+Bonus to all attributes=0
+Bonus to all attributes modifier=0
+Bonus to life=0
+Bonus to life modifier=0
+Bonus to mana=0
+Bonus to mana modifier=0
+Bonus to life recovery=0
+Bonus to mana recovery=0
+Light radius bonus=0
+Price factor=10
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -752,7 +826,7 @@ Bonus to magic modifier=0
 Bonus to strength=0
 Bonus to strength modifier=0
 Bonus to all attributes=0
-Bonus to all attributes modifier=10
+Bonus to all attributes modifier=0
 Bonus to life=0
 Bonus to life modifier=0
 Bonus to mana=0
@@ -760,7 +834,7 @@ Bonus to mana modifier=0
 Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
-Price factor=1
+Price factor=0.01
 ** End of new suffix specification subsection **
 
 *** End of presuff data section ***
