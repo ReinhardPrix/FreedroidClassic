@@ -30,10 +30,14 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi, I'm new here."
+New Option Nr=0  OptionText=" Hello... Oh dear... You look awful... Who did this to you? Did they torture you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=841  PositionY=147  
-Subtitle="Hi, I'm Kevin. I'm a computer security expert."
+Subtitle="Hi. I haven't slept for a few weeks, so I'm just a little bit tired."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Don't worry about me. I'll be fine."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I'm Kevin, a computer security expert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 LinkedTo:20
@@ -359,6 +363,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" I'll be off then."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=530  PositionY=241  
+Subtitle="Be careful. The bots are in a foul mood today."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Very easy to get killed. Very easy."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
