@@ -1284,31 +1284,6 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_type = ITEM_EMP_SHOCK_GRENADE ;
 		    drop_item_multiplicity =  1 ;
 		    break;
-		case 7:
-		    switch ( MyRandom ( 4 ) )
-		    {
-			case 0:
-			    drop_item_type = ITEM_SPELLBOOK_OF_HEALING ;
-			    drop_item_multiplicity =  1 ;
-			    break;
-			case 1:
-			    drop_item_type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE ;
-			    drop_item_multiplicity =  1 ;
-			    break;
-			case 2:
-			    drop_item_type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY ;
-			    drop_item_multiplicity =  1 ;
-			    break;
-			case 3:
-			    drop_item_type = ITEM_SPELLBOOK_OF_TELEPORT_HOME ;
-			    drop_item_multiplicity =  1 ;
-			    break;
-			default:
-			    drop_item_type = ITEM_SPELLBOOK_OF_TELEPORT_HOME ;
-			    drop_item_multiplicity =  1 ;
-			    break;
-		    }
-		    break;
 		default:
 		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
