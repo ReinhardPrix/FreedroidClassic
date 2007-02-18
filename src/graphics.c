@@ -1298,18 +1298,18 @@ TakeScreenshot( void )
 
   if ( use_open_gl )
     {
+#ifdef HAVE_LIBGL
       //--------------------
-      // We need to make a copy in processor memory.  This has already
-      // been implemented once, and we can just reuse the old code here.
-      //
-      StoreMenuBackground ( 1 ) ;
+      // We need to make a copy in processor memory.
+      GLvoid * imgdata = malloc ( ( GameConfig . screen_width + 2 ) * ( GameConfig . screen_height + 2 ) * 4 );
+      glReadPixels( 0 , 1, GameConfig . screen_width , GameConfig . screen_height-1 , GL_RGB, GL_UNSIGNED_BYTE, imgdata );
 
       //--------------------
       // Now we need to make a real SDL surface from the raw image data we
       // have just extracted.
       //
-      FullView = SDL_CreateRGBSurfaceFrom( StoredMenuBackground [ 1 ] , GameConfig . screen_width , GameConfig . screen_height, 24, 3 * GameConfig . screen_width, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
-
+      FullView = SDL_CreateRGBSurfaceFrom( imgdata , GameConfig . screen_width , GameConfig . screen_height, 24, 3 * GameConfig . screen_width, 0x0FF0000, 0x0FF00, 0x0FF , 0 );
+      free ( imgdata );
       flip_image_horizontally ( FullView );
       
       swap_red_and_blue_for_open_gl ( FullView );
@@ -1317,7 +1317,7 @@ TakeScreenshot( void )
       SDL_SaveBMP( FullView , Screenshoot_Filename );
 
       SDL_FreeSurface ( FullView ) ;
-
+#endif
     }
   else
     {
