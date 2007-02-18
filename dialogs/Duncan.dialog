@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Hi... Erm... Who are you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
 Subtitle="Duncan McNamara, The Red Guard's resident bombmaker, at your service."
@@ -142,7 +142,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=90  OptionText=" I feel you are... Different."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="That is true. I am not who I seem to be."
+Subtitle="What a great way to start a conversation."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Yes, that is true. I am not who I seem to be."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="But then again, neither are you, so my thoughts are we are even."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
