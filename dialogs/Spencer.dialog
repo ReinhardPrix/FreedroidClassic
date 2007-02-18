@@ -99,6 +99,8 @@ Subtitle="But since you are said to be powerful and a former hero, I'll once mor
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I've unlocked the accessway to the warehouse. It's to the north of this town, somewhat hidden in the woods northeast."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The stuff we need is on the first floor. Don't go any deeper, it does not benefit us and the bots there can kill you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I wish you the best of luck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
