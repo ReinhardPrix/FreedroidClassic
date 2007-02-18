@@ -138,7 +138,12 @@ respawn_level ( int level_num )
 	AllEnemys [ i ] . phase = 0 ;
 	AllEnemys [ i ] . animation_phase = 0 ;
 	AllEnemys [ i ] . animation_type = WALK_ANIMATION ; 
-	
+        if( AllEnemys [ enemynum ] . has_been_taken_over == TRUE)
+		{
+                AllEnemys [ enemynum ] . is_friendly = FALSE ;
+                AllEnemys [ enemynum ] . has_been_taken_over = FALSE ;
+		}
+
 	if ( ! AllEnemys [ i ] . is_friendly )
 	{
 	    if ( AllEnemys [ i ] . stick_to_waypoint_system_by_default )
