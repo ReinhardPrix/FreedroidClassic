@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Login : tux  Password : *******"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
-Subtitle="Last login from dev/ttyS0 on Sun, 23 mar 2314. tux@hacked_bot: ~ #"
+Subtitle="Last login from dev/ttyS0 on Sun, 23 mar 2057. tux@hacked_bot: ~ #"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=1  OptionText=" ./pull_breaks.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186  
-Subtitle="Pulling breaks, using script V 1.0.2 (c) gnu.org, 2324 Checking requirements. Energy on breaks. Done. Status: All movement suppressed."
+Subtitle="Pulling breaks, using script V 1.0.2 (c) gnu.org, 2054 Checking requirements. Energy on breaks. Done. Status: All movement suppressed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="SetCompletelyFixedProperty"
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" ./move_freely.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=250  
-Subtitle="Removing energy from breaks. Resuming normal patrol operations. Done. Status: Patrolling, using script V 1.0.2 (c) gnu.org, 2324"
+Subtitle="Removing energy from breaks. Resuming normal patrol operations. Done. Status: Patrolling."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"
