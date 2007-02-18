@@ -222,6 +222,7 @@ SaveThumbnailOfGame ( void )
     
     if ( use_open_gl )
     {
+#ifdef HAVE_LIBGL
 	//--------------------
 	// We need to make a copy in processor memory. 
         GLvoid * imgdata = malloc ( ( GameConfig . screen_width + 2 ) * ( GameConfig . screen_height + 2 ) * 4 );
@@ -248,6 +249,7 @@ SaveThumbnailOfGame ( void )
 	swap_red_and_blue_for_open_gl ( NewThumbnail );
 	
 	SDL_FreeSurface ( FullView ) ;
+#endif
     }
     else
     {
