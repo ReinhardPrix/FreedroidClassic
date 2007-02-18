@@ -301,7 +301,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" I'll be going."
+New Option Nr=99  OptionText=" See you later, tin can."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=700  PositionY=70  
 Subtitle="EOT ACKNOWLEDGED. CONNECTION CLOSED."
