@@ -145,7 +145,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText=" I want to leave this place."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=251  
-Subtitle="We all do Linarian, we all do."
+Subtitle="We all do, Linarian, we all do."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The act in question is made impossible by the quasi-infinite bots outside of the city walls."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

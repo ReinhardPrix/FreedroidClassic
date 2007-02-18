@@ -70,7 +70,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Why do you work so hard in the mine?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=302  PositionY=228  
-Subtitle="Because I must! The Red Guard makes everyone work up to his limits!"
+Subtitle="Because I must! The Red Guard makes everyone work up to their limits!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you do not work for a full work period, you will be in trouble."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

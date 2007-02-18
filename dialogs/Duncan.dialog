@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi... Erm... Who are you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Duncan McNamara, The Red Guard's resident bombmaker, at your service."
+Subtitle="Duncan McNamara, The Red Guard's resident bomb maker, at your service."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
