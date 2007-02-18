@@ -2210,7 +2210,7 @@ adapt_global_mode_for_player ( int player_num )
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_EXAMINE )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
+	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
 	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
 	    // global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
