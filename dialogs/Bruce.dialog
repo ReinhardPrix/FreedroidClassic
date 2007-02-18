@@ -30,10 +30,12 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText="Hi. Are you all right? You don't look too good."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=133  
 Subtitle="Good day. I am Bruce."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am unwell."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
