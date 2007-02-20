@@ -47,6 +47,8 @@ dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 char* chat_protocol = NULL ;
 
+char *DIALOG_DIRS[] = { "dialogs/", "dialogs/de/", "" };
+ 
 void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int ClearProtocol );
 
 /* ----------------------------------------------------------------------
@@ -574,7 +576,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	//
 	// InitChatRosterForNewDialogue(  );
 	strcat ( tmp_filename , ".dialog" );
-	fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
+	fpath = find_file ( tmp_filename , (DIALOG_DIRS[GameConfig . language]), FALSE);
 	
 	for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
 	{
@@ -1544,7 +1546,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     //
     strcpy ( tmp_filename , ChatDroid -> dialog_section_name );
     strcat ( tmp_filename , ".dialog" );
-    fpath = find_file ( tmp_filename , DIALOG_DIR, FALSE);
+    fpath = find_file ( tmp_filename , DIALOG_DIRS[GameConfig . language], FALSE);
     LoadChatRosterWithChatSequence ( fpath );
 
     if ( ! Me [ 0 ] . chat_character_initialized [ ChatFlagsIndex ] )

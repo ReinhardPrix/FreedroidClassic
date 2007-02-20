@@ -167,6 +167,7 @@ typedef struct
     int next_time_height_of_screen;
     float automap_display_scale ;
     int skip_shadow_blitting ;
+    int language ; // index of language, see in defs.h
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 

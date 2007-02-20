@@ -2260,6 +2260,72 @@ Droid_Talk_Options_Menu (void)
 
 }; // Droid_Talk_Options_Menu
 
+/************************************
+Configure the language
+**********************************/
+
+
+void
+Language_Options_Menu (void)
+{
+
+  int can_continue = 0;
+  int MenuPosition=1;
+  char Options0[1000];
+  char Options1[1000];
+  char* MenuTexts[10]={ "" , "" , "" , "" , "" ,
+			"" , "" , "" , "" , "" };
+  enum
+    { 
+      ENGLISH=1,
+      GERMAN,
+      LEAVE_LANGUAGE_OPTIONS_MENU 
+    };
+
+  while (!can_continue)
+    {
+      sprintf( Options0 , "English");
+      sprintf( Options1 , "German");
+      MenuTexts[0]=Options0;
+      MenuTexts[1]=Options1;
+      MenuTexts[2]="Back";
+
+	if ( GameOver == TRUE ) 
+                MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );     
+        else    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , NULL );     
+
+      switch (MenuPosition) 
+	{
+	case (-1):
+	  can_continue=!can_continue;
+	  break;
+
+	case ENGLISH:
+	  while (EnterPressed() || SpacePressed() );
+	  can_continue=TRUE;
+	  GameConfig . language = 0;
+	  break;
+
+	case GERMAN:
+	  while (EnterPressed() || SpacePressed() );
+	  can_continue=TRUE;
+	  GameConfig . language = 1;
+	  break;
+
+	case LEAVE_LANGUAGE_OPTIONS_MENU:
+	  while (EnterPressed() || SpacePressed() );
+	  can_continue=TRUE;
+	  break;
+	default: 
+	  break;
+	} 
+    }
+
+  ClearGraphMem ();
+  if ( GameOver == FALSE ) DisplayBanner ( ) ;
+
+}; // Droid_Talk_Options_Menu
+
 /* ----------------------------------------------------------------------
  * This function provides a the options menu.  This menu is a 
  * submenu of the big EscapeMenu.  Here you can change sound vol.,
@@ -2276,6 +2342,7 @@ Options_Menu (void)
 	{ 
 	    GRAPHICS_OPTIONS=1, 
 	    SOUND_OPTIONS,
+	    LANGUAGE_OPTIONS,
 	    DROID_TALK_OPTIONS,
 	    ON_SCREEN_DISPLAYS,
 	    PERFORMANCE_TWEAKS_OPTIONS,
@@ -2285,12 +2352,13 @@ Options_Menu (void)
     
     MenuTexts[0]="Graphics Options";
     MenuTexts[1]="Sound Options";
-    MenuTexts[2]="Droid Talk";
-    MenuTexts[3]="On-Screen Displays";
-    MenuTexts[4]="Performance Tweaks";
-    MenuTexts[5]="Save Options";
-    MenuTexts[6]="Back";
-    MenuTexts[7]="";
+    MenuTexts[2]="Language";
+    MenuTexts[3]="Droid Talk";
+    MenuTexts[4]="On-Screen Displays";
+    MenuTexts[5]="Performance Tweaks";
+    MenuTexts[6]="Save Options";
+    MenuTexts[7]="Back";
+    MenuTexts[8]="";
     
     while ( !can_continue )
     {
@@ -2311,6 +2379,10 @@ Options_Menu (void)
 	    case SOUND_OPTIONS:
 		while (EnterPressed() || SpacePressed() );
 		Sound_Options_Menu();
+		break;
+	    case LANGUAGE_OPTIONS:
+		while (EnterPressed() || SpacePressed() );
+		Language_Options_Menu();
 		break;
 	    case DROID_TALK_OPTIONS:
 		while (EnterPressed() || SpacePressed() );

@@ -299,7 +299,6 @@ enum
 #define GRAPHICS_DIR		"graphics/"
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
-#define DIALOG_DIR		"dialogs/"
 
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"
