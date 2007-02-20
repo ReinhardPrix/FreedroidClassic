@@ -1278,7 +1278,8 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	if ( ChatRoster [ i ] . always_execute_this_option_prior_to_dialog_start )
 	{
 	    DebugPrintf ( 0 , "\nExecuting option no. %d prior to dialog start.\n" , i );
-	    ProcessThisChatOption ( i , PlayerNum , ChatPartnerCode , ChatDroid );
+	    if (( ProcessThisChatOption ( i , PlayerNum , ChatPartnerCode , ChatDroid ) == 1))
+		return;
 	}
     }
     
