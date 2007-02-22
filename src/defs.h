@@ -275,7 +275,7 @@ enum
 // texture size here.  Vodoo users can recompile the game for their needs...
 // 
 #define AUTOMAP_ZOOM_OUT_FACT 8.0
-#define AUTOMAP_SANITY_FACTOR 0.5
+#define AUTOMAP_SANITY_FACTOR 1
 #define AUTOMAP_TEXTURE_WIDTH (2048*AUTOMAP_SANITY_FACTOR)
 #define AUTOMAP_TEXTURE_HEIGHT (1024*AUTOMAP_SANITY_FACTOR)
 
@@ -299,6 +299,8 @@ enum
 #define GRAPHICS_DIR		"graphics/"
 #define SOUND_DIR		"sound/"
 #define MAP_DIR			"map/"
+#define TITLES_DIR		"map/titles/"
+#define DIALOG_DIR		"dialogs/"
 
 #define MOUSE_CURSOR_BLOCK_FILE "mouse_move_cursor.png"
 #define SKILL_ICON_FILE         "skills.png"

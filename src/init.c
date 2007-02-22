@@ -277,13 +277,15 @@ PlayATitleFile ( char* Filename )
     char* TerminationPointer;
     char* TitleSongName;
     int ThisTextLength;
-    
+    extern char * language_dirs[];
+    char finaldir[50];
     while ( SpacePressed() );
-    
+
+    snprintf(finaldir, 50, "%s%s", TITLES_DIR,  language_dirs[GameConfig.language]);
     //--------------------
     // Now its time to start loading the title file...
     //
-    fpath = find_file ( Filename , MAP_DIR , FALSE );
+    fpath = find_file ( Filename , finaldir , FALSE );
     TitleFilePointer = 
 	ReadAndMallocAndTerminateFile( fpath , "*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
     
