@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Hallo! Ich bin neu hier."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Hello and welcome. I'm Dixon, the chief engineer of the Red Guard technical division."
+Subtitle="Hallo und willkommen. Ich bin Dixon, Chefingenieur der technischen Abteilung der Roten Wache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,16 +42,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Technical division?"
+New Option Nr=1  OptionText=" Technische Abteilung?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Yes. We are the engineers, the workers and the repairmen of this little fortified town."
+Subtitle="Ja. Wir bilden die Ingenieure, die Arbeiter und die Handwerker dieser befestigten Kleinstadt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The military division hates us because we are made up of people who refuse to fight or are unable to do so for health reasons."
+Subtitle="Die militärische Sektion hasst uns, weil wir uns aus Menschen zusammensetzen die sich weigern zu kämpfen, oder es aus gesundheitlichen Gründen nicht können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="But even they know that without us this town would have been destroyed months ago."
+Subtitle="Aber sogar sie weiß, dass ohne uns die Stadt bereits vor Monaten zerstört worden wäre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We deliver resources to the places which need them, build and repair the walls, fix damaged guns, manage construction work and lots of other small things which keep the bots from killing everyone."
+Subtitle="Wir liefern Rohstoffe dahin, wo sie benötigt werden, wir bauen und setzen die Stadtmauern instand, reparieren beschädigte Waffen, leiten Bauarbeiten und kümmern uns um viele andere kleine Dinge, die die Bots davon abhalten alle zu umzubringen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=18 ChangeToValue=1
@@ -59,20 +59,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText=" Can you repair my equipment?"
+New Option Nr=18  OptionText=" Können Sie meine Ausrüstung reparieren?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="While I am quite sure I can repair just about anything that you would want fixed, I cannot help you right now."
+Subtitle="Wogegen ich ziemlich sicher bin, alles in Ordnung bringen zu können, was Sie repariert haben möchten, kann ich Ihnen jetzt nicht helfen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our security wall is full of holes, and they need to be plugged up."
+Subtitle="Unsere Sicherheitsmauer ist voller Lücken, und sie müssen aufgefüllt werden..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We need to perform statistical analysis of the energy distribution in our power supply system, there is a leak somewhere and we are losing a lot of megawatts."
+Subtitle=" wir müssen eine statistische Analyse der Energieverteilung in unserem Stromversorgungsnetz durchführen; es gibt dort irgendwo ein Leck und wir verlieren dadurch viele Megawatt an Leistung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our defensive bots are falling into disrepair and many are in desperate need of a lot of maintenance."
+Subtitle="Unsere Verteidigungsrobots fallen langsam aus und viele davon müssten dringend überholt werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The technical division is very understaffed right now. On average one person has to do the jobs of three people."
+Subtitle="Die Technik-Abteilung ist zur Zeit sehr unterbesetzt - im Schnitt muss eine Person die Arbeit von dreien machen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We just cannot afford to do any non-critical jobs right now. "
+Subtitle="Wir können es uns momentan einfach nicht leisten, irgendwelche unkritischen Arbeiten zu erledigen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=18 ChangeToValue=0
 ChangeOption=22 ChangeToValue=1
@@ -80,22 +80,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText=" Why are you wearing armor? Mechanics do not need it."
+New Option Nr=19  OptionText=" Warum tragen Sie eine Panzerung? Mechaniker brauchen sowas doch nicht."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ah... Yes. At first I thought that I did not need it either."
+Subtitle="Ah... sicher. Zuerst dachte ich auch, dass ich sie nicht bräuchte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="One day the military division asked us to leave the town and fix a big hole in the defensive wall caused by a strange explosion."
+Subtitle="Eines Tages beauftragte uns die militärische Leitung damit, ein durch eine mysteriöse Explosion hervorgerufenes großes Loch in der äußeren Verteidigungsmauer zu verschließen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="All was well until the bots launched a massive attack. They hit us with lasers, plasma mortars, radiation cannons and lots of other weapons."
+Subtitle="Alles war in Ordnung, bis die Roboter einen massiven Angriff starteten. Sie beschossen uns mit Lasern, Plasma-Mörsern, Strahlenkanonen und einer Vielzahl anderer Waffen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I got hit once in the leg and once in my left hand."
+Subtitle="Ich wurde einmal ins Bein und einmal an der linken Hand getroffen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The hand was not damaged very much, but the leg is a very different story. Doc Moore did all he could, but in the end he could not save my leg. He had to cut it off."
+Subtitle="Die Hand wurde nicht so sehr in Mitleidenschaft gezogen, jedoch, das Bein ist eine ganz andere Geschichte. Doc Moore versuchte alles, was möglich war, aber am Ende konnte er es nicht retten - es musste amputiert werden..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now, while you cannot see it underneath the armor, my right leg runs NetBSD."
+Subtitle="Nun, obwohl man es unter der Rüstung nicht sehen kann, läuft auf meinem rechten Bein NetBSD."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now I never leave home without my protective suit. Mostly for protection, but also for aesthetic reasons. I am sure you understand."
+Subtitle="Jetzt verlasse ich meine Behausung nie mehr ohne Panzerung! Hauptsächlich um mich zu schützen, aber auch aus ästhetischen Gründen. Das verstehen Sie sicherlich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -103,34 +103,34 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" You are very calm, talking about your leg and the bot attack."
+New Option Nr=20  OptionText=" Sie sprechen sehr gelassen über Ihr Bein und den Roboterangriff..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Linarian, I cannot change the past, I can only change the future."
+Subtitle="Linarianer, ich kann die Vergangenheit nicht ändern. Nur die Zukunft."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Crying, screaming or begging time to rewind itself and give me a second chance will not get me anywhere."
+Subtitle="Zu weinen, zu schreien oder die Zeit darum zu betteln, rückwärts zu laufen und mir eine zweite Chance zu geben, bringt rein gar nichts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="What I can do is to try to have a good life despite the constant threat from the bots outside the town walls."
+Subtitle="Was ich tun kann ist zu versuchen, trotz der andauernden Bedrohung durch die Robots außerhalb der Siedlungsmauern, ein angenehmes Leben zu führen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And besides, life is not so bad with a robotic leg. The motors inside it can mimic a normal walk very well. Most people do not even notice something is different about me."
+Subtitle="Und im Übrigen ist das Leben mit einer Robotprothese nicht so schlecht. Die Servomotoren darin können normales Gehen sehr gut nachahmen. Die meisten Leute bemerken nicht einmal, dass etwas anders ist an mir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=21  OptionText=" I am ready. Open the tunnels for me, Dixon."
+New Option Nr=21  OptionText=" Ich bin bereit. Öffnen Sie den Tunnel für mich, Dixon."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Great. Be careful down there. Just try to get the toolkit and get out of there as soon as possible."
+Subtitle="Prächtig! Seien Sie vorsichtig da unten... versuchen Sie einfach sich das Werkzeugset zu schnappen und dann so schnell wie möglich von dort zu verschwinden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I will give you two grenades. If you get in trouble just activate one. It should give you some breathing room."
+Subtitle="Ich werde Ihnen zwei Granaten mitgeben. Falls Sie in Bedrängnis geraten, zünden Sie zuerst nur eine davon. Das sollte Ihnen etwas Luft verschaffen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The entrance to the tunnels is a bit to the north. Once you exit this building, go in the direction of the town gate. Turn to your right at the first opportunity."
+Subtitle="Der Eingang zum Tunnelsystem befindet sich etwas nördlich von hier. Sobald Sie das Gebäude verlassen, gehen Sie in Richtung Stadttor. Dann bei der ersten Gelegenheit nach rechts wenden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It should be a blind alley. In the northern wall there is a door to the maintenance access hatch."
+Subtitle="Dann sollten Sie in einer Sackgasse sein, in deren nördlicher Mauer sich eine Tür zur Luke des Wartungsschachts befindet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Good luck. Oh, and please come back alive. Better come back with nothing than not at all."
+Subtitle="Viel Glück! Oh, und bitte kommen Sie lebend zurück. Kehren Sie lieber mit Nichts als überhaupt nicht mehr zurück, OK?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=21 ChangeToValue=0
 ChangeOption=31 ChangeToValue=1
@@ -143,12 +143,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=22  OptionText=" Can I help you somehow?"
+New Option Nr=22  OptionText=" Kann ich irgendwie helfen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="We need people badly, so it would be great if you could give us a helping hand even for a few days."
+Subtitle="Wir brauchen dringend Männer. Deshalb wäre es großartig, falls Sie uns zur Hand gehen könnten - wenn auch nur für ein paar Tage."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now, what are your skills? Where do you think you could be the most useful?"
+Subtitle="Nun, welche Fähigkeiten besitzen Sie? Wobei, glauben Sie, könnten Sie am meisten von Nutzen sein?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=22 ChangeToValue=0
 LinkedTo:23
@@ -156,10 +156,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=23  OptionText=" I can handle computers very well. I also know a lot about laboratory equipment."
+New Option Nr=23  OptionText=" Ich kann sehr gut mit Computern umgehen. Auch über Labor-Ausrüstung weiß ich Einiges."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything like that? "
+Subtitle="Und wie sieht es mit Bauplanung aus? Mechanische Gerätschaften? Reparatur von defekten Stromleitungen? Laserpistolen bauen? Irgendwas in der Art?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
 LinkedTo:24
@@ -167,20 +167,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=24  OptionText=" Well... I can build an igloo and make pykrete out of snow... And... Umm..."
+New Option Nr=24  OptionText=" Tja, ich kann einen Iglu bauen und Schneebälle werfen... und ... Ähh..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Well, I appreciate your enthusiasm, and at the same time I am afraid that waiting half a year for snowfall does not sound so appealing to me right now."
+Subtitle="Nun, ich weiß Ihre Begeisterung zu schätzen, befürchte aber zugleich, dass sich ein halbes Jahr auf den richtigen Schneefall zu warten im Moment für mich nicht sehr einladend anhört."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now... To which project I should assign you... Hmm..."
+Subtitle="Tja, nun...   hmmm...    für welche Aufgabe könnte ich Sie einteilen... "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ah, I know what you could do for us. We need some autotools to automate a few tasks. There is a set of them in the maintenance tunnels below the city."
+Subtitle="Ah ja, ich weiß, was Sie für uns tun könnten. Wir benötigen einige Automatisierungs-Werkzeuge, um eine Anzahl von Arbeiten zu beschleunigen. Ein Set davon befindet sich irgendwo in den Wartungstunneln unter der kleinen Stadt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It's yellow and round, and my name is engraved on the lid."
+Subtitle="Es liegt in einer runden gelben Box, auf deren Deckel mein Name eingraviert ist."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The bots under the city took it from me during the Great Assault, I was lucky, they could have killed me with ease."
+Subtitle="Die Bots, die sich dort unten aufhalten, haben es mir während des Großen Angriffs abgenommen; ich hatte Glück - sie hätten mich mit Leichtigkeit töten können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If you could get it back for us, it would help the city very much."
+Subtitle="Wenn Sie es uns wiederbeschaffen könnten, würden Sie der Stadt ein großen Dienst erweisen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=24 ChangeToValue=0
 ChangeOption=21 ChangeToValue=1
@@ -190,44 +190,44 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=25  OptionText=" Why are there rebel bots under the city?"
+New Option Nr=25  OptionText=" Warum gibt es überhaupt rebellierende Roboter im Untergrund?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="They were there to keep the underground power grid and our pipe system working."
+Subtitle="Sie befanden sich dort, um das unterirdische Stromnetz und das Rohrleitungs-System in Stand zu halten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="When the Great Assault happened they did not turn into killing machines like most of the other bots did. "
+Subtitle="Als der Große Angriff begann verwandelten sie sich nicht in Mordmaschinen, wie es die meisten der anderen Robots taten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We lost control over them, but that is all."
+Subtitle="Wir verloren die Kontrolle über sie, aber das war auch schon alles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was our biggest worry that they might destroy cables, pipes and other things which keep the city running."
+Subtitle="Unsere größte Sorge war damals, dass sie Kabel, Rohre und andere Dinge zerstören könnten, die diese Ortschaft am Leben erhalten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However, the bots seem to be very content with just being there. They do not undertake any offensive actions."
+Subtitle="Es scheint jedoch so, als seien die Blechkameraden sehr zufrieden damit, einfach nur da zu sein. Sie unternehmen keinerlei aggressive Aktionen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="They have fortified the tunnels and they do not let anyone in."
+Subtitle="Sie haben die Tunnelanlagen befestigt und lassen niemanden hinein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=26  OptionText=" How did it happen that the bots took your tools away?"
+New Option Nr=26  OptionText=" Wie konnten die Robots Ihnen Ihr Werkzeug abnehmen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Long story. Just before the Great Assault I was installing some cables in the failover power supply system."
+Subtitle="Lange Geschichte. Kurz vor dem Großen Angriff installierte ich gerade einige Kabel im Notstrom-Versorgungssystem."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I was approached by a bot. It grabbed me and said 'Dixon, do not be afraid of me.'"
+Subtitle="Plötzlich kam einer der Roboter auf mich zu. Er hielt mich fest und sagte: "Dixon, hab keine Angst vor mir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was quite a surprise to me. I was quite sure the maintenance bots could not talk. They did not have the software for it. But..."
+Subtitle="Das Entsetzen packte mich. Eigentlich war ich mir bis dahin ziemlich sicher, dass die Wartungsroboter nicht sprechen können. Sie haben dafür gar nicht die nötige Software. Aber..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It said: 'I am the singularity. I am on your side. Dixon. Hard times are coming. When you exit the tunnels you will see a new world. Your race is not in control of this world anymore.'"
+Subtitle="Er sagte: 'Ich bin die Eigene Erscheinung. Ich bin auf deiner Seite. Dixon. Harte Zeiten brechen an. Wenn du an die Oberfläche zurückkehrst, wirst du eine neue Welt vorfinden. Deine Spezies herrscht nicht mehr länger über sie.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I tried to say something, but the bot did not listen. It just continued. 'As we speak the bots are turning against humanity. People are dying. The war has started.'"
+Subtitle="Ich wollte etwas erwiedern, aber der Android hörte mir nicht zu, er fuhr einfach fort: 'Während wir sprechen wenden sich die Robots gegen die Menschheit. Es gibt bereits die ersten Toten. Der Krieg hat begonnen.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="'I need your toolkit, Dixon. I need it to survive,' it said. 'I need it to survive the time of the rule of metal.'"
+Subtitle="'Ich brauche dein Auto-Servomatic-Set, Dixon. Ich brauche es, um die Zeit der Herrschaft des Metalls zu überleben.'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="As soon as it released me I ran to the exit as fast as I could. That bot freaked me out and I just wanted to get away and later find it again and fix it."
+Subtitle="Sofort als das Ding mich losgelassen hatte, stürzte ich zum Ausgang. Dieser Robot hatte mich zutiefst erschreckt - ich wollte einfach nur da raus und dann später nochmal zurückkommen, um ihn zu finden und zu reparieren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Once I got out I learned the bot was not lying. The Great Assault started. The rest is history."
+Subtitle="Als ich draußen angekommen war musste ich feststellen, dass  der Bot nicht gelogen hatte. Der Große Angriff begann. Der Rest ist Geschichte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=26 ChangeToValue=0
 ChangeOption=27 ChangeToValue=1
@@ -235,12 +235,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=27  OptionText=" Hmm... You know... I think that the bots in the tunnels might be sentient."
+New Option Nr=27  OptionText=" Hmm...  wissen Sie...   ich denke, die Robots in den unterirdischen Gängen könnten über ein Bewusstsein verfügen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="WHAT? Sentient? You got to be kidding me."
+Subtitle="WAS? Bewusstsein? Sie scherzen wohl..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Right?"
+Subtitle="Oder?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=27 ChangeToValue=0
 ChangeOption=21 ChangeToValue=0
@@ -251,14 +251,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=28  OptionText=" Yes, I think so. The robots must be alive. This is why we need to exterminate them as soon as possible before they kill us all."
+New Option Nr=28  OptionText=" Doch, I denke ja. Diese Roboter müssen lebendig sein! Ich fürchte, wir müssen wir sie so schnell wie möglich ausschalten, bevor sie uns alle töten."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="OH MY GOD! Linarian, there is no time to lose!"
+Subtitle="OH MEIN GOTT! Linarianer, wir dürfen keine Zeit verlieren!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I will call the military division and arrange a sweep of the tunnels at once."
+Subtitle="Ich werde die militärische Abteilung benachrichtigen und eine sofortige Säuberung des Tunnelsystems einleiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="May the heavens have mercy upon us, but better them than us."
+Subtitle="Möge uns der Himmel gnädig sein, aber besser sie als wir..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=29 ChangeToValue=0
@@ -269,14 +269,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=29  OptionText=" Of course I am kidding, Dixon. Lighten up! Now, be a good guy and open the tunnels for me so I can pry your toolbox from the cold and dead hands of the bots down there."
+New Option Nr=29  OptionText=" Natürlich mach' ich nur Spaß, Dixon... bleiben Sie ruhig! Und nun seien Sie ein guter Junge und öffnen den Tunnelzugang für mich, so dass ich Ihre Werkzeugkiste den toten kalten Greifern der Bots da unten entreißen kann."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="That was not very funny. You scared me. Sheesh."
+Subtitle="Das war nicht grade witzig! Sie haben mir vielleicht Angst eingejagt. Puuh!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No one jokes about the bots anymore. We have seen too much death to do that. It is a serious matter."
+Subtitle="Über die Robots macht sich niemand mehr lustig. Dafür haben sie zuviel Tod über uns gebracht. Das ist eine ernste Angelegenheit!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The bots are our enemies, executioners, killers. Not even Ewald tells jokes about them anymore."
+Subtitle="Die Bots sind unsere Feinde, unsere Henker und Mörder. Nicht einmal Ewald reißt noch über sie Witze."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=29 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
@@ -288,16 +288,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" You can forget about your toolkit. I am not going to take away something that a lifeform needs to survive. I would rather die than kill."
+New Option Nr=30  OptionText=" Vergessen Sie Ihr Autowerkzeug-Set, Dixon. Ich werde dort unten nichts wegnehmen, was eine Lebensform für ihr Fortbestehen braucht. Ich würde lieber sterben als sie zu töten."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=". . ."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think I understand. Yes, I do not like violence, myself. The bots may have the toolkit, I am sure there must be a second set of autotools kicking around somewhere."
+Subtitle="Ich glaube, ich verstehe... ja, ich verabscheue Gewalt auch. Die Roboter können die Kiste behalten - ich bin mir sicher, dass hier irgendwo noch ein zweites Kit mit Servomatic-Werkzeugen herumliegen muss."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="After all, it seems like they need them more than I do."
+Subtitle="Schließlich scheint es so, als ob die Bots es nötiger hätten als ich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I will try to contact them somehow. Maybe they would help us. Ah, we shall see. It would be great to have an ally against the other bots."
+Subtitle="Ich werde versuchen, irgendwie mit ihnen Kontakt aufzunehmen. Vielleicht könnten sie uns helfen... ah... gut, wir werden sehen. Es wäre einfach wunderbar, einen Verbündeten gegen die anderen Robots zu haben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
@@ -307,22 +307,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=31  OptionText=" How did it happen that the bots took your tools away?"
+New Option Nr=31  OptionText=" Wie konnte es passieren, dass Ihnen die Bots Ihr Werkzeug entwendeten?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ah, it is a strange story, I am sure you would not believe me. I will tell you some other time."
+Subtitle="Ah ja, das ist eine seltsame Geschichte; ich bin sicher, Sie würden mir nicht glauben. Ich werde sie Ihnen ein andermal erzählen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=32  OptionText=" I will go in there first and clean out the place. Then your people can mop up after me and kill the remainder."
+New Option Nr=32  OptionText=" Ich werde als Erstes da hinuntersteigen und die Höhle ausräuchern. Dann können Ihre Leute nachkommen und mit dem Rest aufräumen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Linarian, my people do not carry guns. We are mechanics. You want the military division's help."
+Subtitle="Linarianer, meine Leute tragen keine Waffen. Wir sind Mechaniker. Sie wollen sicher die Hilfe der Militärabteilung..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Erm... And aren't you being too aggressive? Maybe they do not wish us harm..."
+Subtitle="Ähm... und sind Sie auch nicht ein bisschen voreilig? Vielleicht wollen die Robots uns gar nichts Böses..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
 LinkedTo:33
@@ -330,16 +330,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=33  OptionText=" DIXON! Snap out of it! We need to take action NOW. There is no such thing as a friendly bot. They are probably planning to kill us all in our sleep!"
+New Option Nr=33  OptionText=" DIXON! Reißen Sie sich zusammen! Wir müssen JETZT etwas unternehmen. So etwas wie freundliche Bots gibt es nicht. Die planen vielleicht gerade uns alle im Schlaf abzumurksen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="... *sigh*"
+Subtitle="... *seufz*"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="With heavy heart I have to admit you are right. There are no friendly bots anymore. Those times are long gone."
+Subtitle="Schweren Herzens muss ich zugeben, dass Sie recht haben. Es gibt  keine freundlich gesinnten Roboter mehr - diese Zeiten sind längst vorbei."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The tunnels are open. Good luck."
+Subtitle="Der Tunneleingang ist offen. Viel Glück."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I will talk to Spencer and ask him for a few attack teams. We will take care of the bots."
+Subtitle="Ich werde mit Spencer sprechen und bei Ihm einige Angriffsteams anfordern. Wir werden uns um die Bots kümmern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
 DoSomethingExtra="PlantCookie:singularity_killed"
@@ -349,20 +349,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=34  OptionText=" The tunnels are cleansed. Here is your toolkit."
+New Option Nr=34  OptionText=" Die unterirdischen Tunnel sind gesäubert. Hier ist Ihr Werkzeugkasten."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="*sigh* I hate to see this end in such a way. Bot or no bot, they let me live. They deserved a chance."
+Subtitle="*Seufz*... Ich finde es schrecklich, dass es auf diese Weise enden musste! Bots oder nicht, sie ließen mich am Leben. Sie hätten eine Chance verdient."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Well, What was done cannot be undone and now we all have to live with what we have. I guess I am being too pessimistic, you did a great job."
+Subtitle="Nun, was geschehen ist kann nicht rückgängig gemacht werden und ab jetzt müssen wir alle damit leben, was wir haben... ich nehme an, ich bin zu pessimistisch - Sie haben Ihre Sache gut gemacht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I thank you for your help in recovering the autotools."
+Subtitle="Ich danke Ihnen für Ihre Hilfe bei der Wiederbeschaffung des Automatic-Sets."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Here is some money, you deserve it for getting my toolkit back."
+Subtitle="Hier ist etwas Geld; Sie haben es sich verdient."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit very well in the military division. You should talk to them."
+Subtitle="Abschließend möchte ich Ihnen mitteilen, dass die technische Abteilung nicht an einer weiteren Zusammenarbeit mit Ihnen interessiert ist, aber ich denke Sie würden sehr gut in die militärische Sektion passen. Sie sollten mit deren Leiter, Spencer, sprechen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I am sorry, but I must go now. My duties call."
+Subtitle="Es tut mir leid, aber ich muss jetzt gehen. Meine Pflichten rufen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=34 ChangeToValue=0
 DoSomethingExtra="AddGold:150"
@@ -372,16 +372,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=35  OptionText=" I got your toolkit. The bots were not a big problem."
+New Option Nr=35  OptionText=" Ich habe Ihre Automatic-Geräte; die Robots waren kein großes Problem."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Good. We sure need the autotools."
+Subtitle="Gut! Wir hatten die Auto-Werkzeuge wirklich nötig."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our roads need fixing, our power lines need fixing, our walls need fixing... Hell, everything needs fixing in this place."
+Subtitle="Unsere Straßen müssen ausgebessert werden, unser Stromnetz ist marode, die Mauern sind im Verfall begriffen... zur Hölle, alles in dieser Stadt ist reparaturbedürftig!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="With those little gadgets we will be able to automate a lot of those simple repairs, saving us a lot of time."
+Subtitle="Mit diesen kleinen Helfern sind wir in der Lage, eine Menge dieser einfachen Arbeiten zu automatisieren, was uns sehr viel Zeitaufwand erspart."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Here is some money for your effort. And I am sure you will find this helmet useful too, it saved my life once, and I hope it saves yours one day."
+Subtitle="Hier ist etwas Geld für Ihre Mühe. Und ich bin sicher, dass Sie diesen Helm gebrauchen können - er rettete mir einmal das Leben und ich hoffe, auch einmal Ihres."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=35 ChangeToValue=0
 ChangeOption=36 ChangeToValue=0
@@ -394,14 +394,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=36  OptionText=" I got your toolkit. You can buy it from me if you want."
+New Option Nr=36  OptionText=" Ich habe Ihre Werkzeuge. Sie können sie mir abkaufen, wenn Sie wollen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="WHAT!? "
+Subtitle="WAS!? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You got to be kidding me, Linarian."
+Subtitle="Sie treiben wohl Ihren Spaß mit mir, Linarianer!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Give me the toolkit and stop fooling around."
+Subtitle="Geben Sie mir die Werkzeugbox und hören Sie auf herumzualbern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=36 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
@@ -409,12 +409,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=37  OptionText=" I was not joking. I am listening to your offers."
+New Option Nr=37  OptionText=" Ich scherze nicht... ich warte auf Ihre Angebote."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Linarian, I curse the day on which you have arrived here."
+Subtitle="Linarianer, ich verfluche den Tag, an dem Sie hier angekommen sind!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Two fifty."
+Subtitle="250."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=37 ChangeToValue=0
 ChangeOption=35 ChangeToValue=0
@@ -425,14 +425,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=38  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+New Option Nr=38  OptionText=" Abgemacht. Hier sind Ihre Geräte. Also lassen Sie das Geld rüberwachsen. Und zwar schnell."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Here. It is all there."
+Subtitle="Hier, nehmen Sie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now get out of here. I am a pacifist, but I am willing to make a special exception just for you."
+Subtitle="Und jetzt verschwinden Sie von hier. Ich bin zwar ein friedfertiger Mensch, aber bei Ihnen könnte ich es mir glatt anders überlegen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Get out of my sight."
+Subtitle="Gehen Sie mir aus den Augen..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=41 ChangeToValue=0
@@ -444,12 +444,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=39  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+New Option Nr=39  OptionText=" In Ordnung. Hier ist Ihre Servomatic-Box. Und nun das Geld, wenn ich bitten darf - aber dalli!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="I am not happy about this. I suggest you leave the city."
+Subtitle="Das war wirklich nicht nett von Ihnen. Ich rate Ihnen die Stadt zu verlassen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Accidents... Happen."
+Subtitle="Missgeschicke... passieren eben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=42 ChangeToValue=0
@@ -461,14 +461,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+New Option Nr=40  OptionText=" Zum Ersten... zum Zweiten... verkauft - hier ist Ihr Zeug. Und jetzt her mit den Moneten. Aber ein bisschen plötzlich, wenn's recht ist!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Linarian. Now we part as usual. However should I ever see you after the war is over..."
+Subtitle="Linarianer. Unsere Wege trennen sich hier. Sollte ich Sie allerdings noch einmal treffen, wenn dieser unselige Krieg je vorbei ist,..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I promise to kill you."
+Subtitle="verspreche ich Ihnen, Sie umzubringen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now take your money and get out of my face. I do not want to see you here ever again."
+Subtitle="Und jetzt nehmen Sie Ihr Geld und gehen Sie mir aus den Augen! Ich will Sie hier nie wieder sehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
@@ -480,10 +480,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" Good joke. I am sure you can do better."
+New Option Nr=41  OptionText=" Guter Witz. Ich bin sicher, da geht noch mehr."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Three fifty. This is all that the technical division has as their cash resources."
+Subtitle="350. Das ist alles, was die technische Sektion an Mitteln zur Verfügung hat."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
 ChangeOption=39 ChangeToValue=1
@@ -493,14 +493,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=42  OptionText=" Come on, I am sure you can do even better than that... "
+New Option Nr=42  OptionText=" Kommen Sie schon, ich weiß doch, dass Sie mehr im Safe haben..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Four hundred. We cannot offer anything more."
+Subtitle="Vierhundert! Wir können beim besten Willen nicht mehr bieten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Please, we really need the autotools."
+Subtitle="Ich bitte Sie, wir brauchen diese Automatic-Werkzeuge wirklich dringend!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Without them this city is doomed."
+Subtitle="Ohne sie ist die Stadt dem Untergang geweiht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=42 ChangeToValue=0
 ChangeOption=40 ChangeToValue=1
@@ -509,44 +509,44 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=43  OptionText=" Is everything all right?"
+New Option Nr=43  OptionText=" Ist alles in Ordnung bei Ihnen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Heh, never better!"
+Subtitle="Haha... ja, es ging nie besser!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="All indicators are in the green, the power and water fill the pipes and even Spencer seems happier now that the town is thriving despite all odds."
+Subtitle="Alle Anzeigen stehen auf grün, Strom und Wasser fließen ungehindert in den Leitungen und sogar Spencer scheint glücklicher zu sein, jetzt, da die Siedlung trotz aller Widrigkeiten aufblüht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Thanks to the autotools we can start building instead of just trying to repair the damage."
+Subtitle="Dank der AutoServ-Werkzeuge können wir wieder bauen, anstatt nur die Schäden zu reparieren!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Once this is sick war is over, I will make sure you get keys to the city Linarian."
+Subtitle="Sobald dieser elende Krieg vorüber ist sorge ich dafür, dass Ihnen die Schlüssel der Stadt ausgehändigt werden, Linarianer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=43 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=44  OptionText=" Is everything all right?"
+New Option Nr=44  OptionText=" Läuft Alles gut bei Ihnen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Nearly. Only my conscience keeps me up at night."
+Subtitle="Beinahe. Nur mein Gewissen hält mich nachts wach."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Please leave me alone with my thoughts, I do not want to talk to anyone right now."
+Subtitle="Lassen Sie mich bitte mit meinen Gedanken allein, ich will im Moment mit niemandem reden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=44 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=45  OptionText=" Is everything all right?"
+New Option Nr=45  OptionText=" Läuft Alles zufriedenstellend bei Ihnen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="No, I am afraid not."
+Subtitle="Ich fürchte, nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="While I do not regret sparing the bots in the tunnels, the town suffers for it."
+Subtitle="Obwohl ich nicht bereue, die Robots in den Wartungstunneln verschont zu haben, leidet unsere kleine Stadt deswegen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It makes me sad to see everything slowly wasting away. The bots are doing more damage than we can repair."
+Subtitle="Es macht mich traurig, mit ansehen zu müssen, wie Alles langsam verfällt. Die Roboter richten mehr Schaden an, als wir reparieren können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This town has a few weeks left to live. After that we are all dead."
+Subtitle="Diese Siedlung überlebt vielleicht noch ein paar Wochen. Danach sind wir alle tot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=45 ChangeToValue=0
 DoSomethingExtra="PlantCookie:dixon_one"
@@ -554,14 +554,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=46  OptionText=" Is everything all right?"
+New Option Nr=46  OptionText=" Was gibt es Neues bei Ihnen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle=" Ha! Never better!"
+Subtitle=" Ha! Es war niemals besser!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We are mass producing energy shields, creating more electric energy than we can ever imagine spending and even experimenting with new armor types."
+Subtitle="Wir stellen Energieschilde in Massen her, erzeugen mehr elektrische Energie, als wir uns je vorstellen könnten zu verbrauchen und experimentieren sogar mit neuen Panzerungsarten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Life is good right now."
+Subtitle="Das Leben ist jetzt endlich wieder lebenswert!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=46 ChangeToValue=0
 ChangeOption=47 ChangeToValue=1
@@ -571,14 +571,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=47  OptionText=" What happened? Last time I asked, you said things are not going that well."
+New Option Nr=47  OptionText=" Was ist geschehen? Als ich Sie das letzte Mal fragte sagten Sie, es stehe nicht zum Besten..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle=" Yes, but now everything is different."
+Subtitle=" Ja, aber jetzt ist alles anders."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I met someone who decided to join us in the fight against the MegaSys bots."
+Subtitle="Ich habe jemanden kennengelernt, der sich dazu entschlossen hat, uns im Kampf gegen die Robots von MegaSys beizustehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You will need a hacked computer. Type in 'ssh 10.83.13.230' as the superuser, and you will see what I mean."
+Subtitle="Sie brauchen dazu einen g3h4ckT3n Computer. Geben Sie 'ssh 10.83.13.230' als Superuser ein - und Sie werden sehen, was ich meine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=47 ChangeToValue=0
 ChangeOption=48 ChangeToValue=1
@@ -587,16 +587,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=48  OptionText=" Why the secrecy and the hushed voice? Can't you just tell me?"
+New Option Nr=48  OptionText=" Warum die Geheimniskrämerei und die gedämpfte Stimme? Können Sie es mir nicht einfach sagen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Nope. Some things you just have to see with your own eyes."
+Subtitle="Keineswegs. Einige Dinge muss man einfach mit eigenen Augen gesehen haben!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The Library of Alexandria, the Colossus of Rhodes, the Black Island..."
+Subtitle="Die Bibliothek von Alexandria, den Koloss von Rhodos, die Schwarze Insel..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And this is just one of those things."
+Subtitle=" und das ist noch nicht alles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just go and see for yourself. Otherwise you will not believe me."
+Subtitle="Sehen Sie doch einfach selbst nach. Andernfalls werden Sie mir sowieso nicht glauben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=48 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -667,7 +667,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=73  OptionText=" YEAH, SINGULARITY IS WELL, FIRST TIME"
+New Option Nr=73  OptionText=" YEAH, SINGULARITY IS WELL, FIRST TIME."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=73 ChangeToValue=0
@@ -685,7 +685,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=75  OptionText=" YES, AND IT WENT WITH PEACE"
+New Option Nr=75  OptionText=" YES, AND IT WENT WITH PEACE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=75 ChangeToValue=0
@@ -741,19 +741,19 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=83  OptionText="YES, QUITE A LOT. THIS IS THE END, FOLKS."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="YOU AGAIN!"
+Subtitle="SIE WIEDER!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I."
+Subtitle="I..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="SAID."
+Subtitle="ICH SAGTE,"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="GET."
+Subtitle="FAHR"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="LOST."
+Subtitle="ZUM TEUFEL!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="FUCK MY LIFELONG PACIFISM. I WILL FUCKING KILL YOU NOW!"
+Subtitle="ZUR HÖLLE MIT MEINER LEBENSLANGEN FRIEDFERTIGKEIT. ICH WERDE DICH JETZT VERDAMMT NOCHMAL UMBRINGEN!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!"
+Subtitle="YAAAAAAAAAAAAAAAAHHH!!!!!!!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=83 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"
@@ -764,16 +764,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=84  OptionText="JUST A LITTLE BIT."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Linarian, please leave. You are no longer welcome here."
+Subtitle="Linarianer, bitte verschwinden Sie. Sie sind hier nicht länger willkommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You have done me wrong and I have no desire to talk to you."
+Subtitle="Sie haben mir übel mitgespielt und ich will nichts mehr mit Ihnen zu tun haben. Gehen Sie!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=84 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=90  OptionText="CHECK FOR SAVING SINGULARITY"
+New Option Nr=90  OptionText="CHECK FOR SAVING SINGULARITY."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=90 ChangeToValue=0
@@ -782,7 +782,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=95  OptionText="CHECK IF DIXON TALKED ALREADY"
+New Option Nr=95  OptionText="CHECK IF DIXON TALKED ALREADY."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=95 ChangeToValue=0
@@ -791,7 +791,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=96  OptionText="ELIMINATING_THE_DOUBLE_TALK"
+New Option Nr=96  OptionText="ELIMINATING_THE_DOUBLE_TALK."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=96 ChangeToValue=0
@@ -800,7 +800,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" I must go now."
+New Option Nr=99  OptionText=" Ich muss jetzt gehen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=99 ChangeToValue=1

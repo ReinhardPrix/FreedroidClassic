@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hallo! "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=121  PositionY=241  
-Subtitle="Welcome them!  I'm called MER.  My dialog isn't done though."
+Subtitle="Guten Tag. Ich bin MER. Im Moment habe ich leider keine Zeit für Sie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

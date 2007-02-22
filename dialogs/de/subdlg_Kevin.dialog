@@ -43,7 +43,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=329  PositionY=121  
-Subtitle="You don't have enough cash, cheapskate. Come back when you can afford to pay me."
+Subtitle="Du hast nicht genügend Knete, Geizhals! Komm wieder, wenn du dir mich leisten kannst."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Improve Hacking Ability (cost 300 cash, 10 ability points)"
+New Option Nr=4  OptionText=" Hacker-Fähigkeiten erweitern (kostet 300 Tribucks, 10 Trainingspunkte)"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=195  PositionY=184  
 ChangeOption=4 ChangeToValue=1
@@ -72,11 +72,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=423  PositionY=183  
-Subtitle="Good. The most important thing about hacking is to understand the nature of the machine you want to hack."
+Subtitle="Gut. Also, hör zu: das Allerwichtigste beim Hacken ist, dass du das Wesen der Maschine verstehst, in die du eindringen willst!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Once you have figured out what the creators of the system were doing when setting it up, you'll also know how to best hack it."
+Subtitle="Sobald du herausgefunden hast, was die Entwickler des Systems beim Aufbau gemacht haben, weißt du auch, wie du sie am besten hacken kannst."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now I see your hacking skill has already improved a lot."
+Subtitle="Nun, ich sehe, dass sich deine Hackerfähigkeiten bereits beträchtlich verbessert haben!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="IncreaseHackingSkill"
@@ -89,7 +89,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=419  PositionY=330  
-Subtitle="You don't have enough experience. I can't teach you anything more this way."
+Subtitle="Du hast zuwenig Erfahrung. So kann ich dir nichts weiter zeigen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

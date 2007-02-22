@@ -30,14 +30,14 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Tag! Ich bin eben erst hierher gekommen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=157  PositionY=219  
-Subtitle="You don't say. I'm not living here either. I'm just on vacation. "
+Subtitle="Was Sie nicht sagen! Ich wohne auch nicht hier. Ich habe Urlaub und bin nur auf der Durchreise..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Normally I'm a fighter. But now I try to relax, chill, take it easy and have a lot of fun."
+Subtitle="Eigentlich bin ich Kämpfer. Aber im Moment versuche ich mich zu entspannen, herunterzukommen, mir keinen Stress zu machen und jede Menge Spaß zu haben!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And in case you couldn't tell, that was sarcasm."
+Subtitle="Ach ja, und falls Sie's nicht mitgekriegt haben sollten -- das war purer Sarkasmus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -45,12 +45,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Could you teach me how to fight?"
+New Option Nr=1  OptionText=" Könnten Sie mir zeigen wie man kämpft?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=265  PositionY=236  
-Subtitle="Well, I don't do that for a living, but I certainly could. For a price."
+Subtitle="Tja, das ist zwar nicht mein Beruf, aber sicherlich könnte ich. Für einen vernünftigen Preis, versteht sich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="How about... Ah, hundred bucks?"
+Subtitle="Wie wärs mit... 100 Tribucks?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
@@ -58,10 +58,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" See you later."
+New Option Nr=99  OptionText=" Bis bald."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=261  PositionY=316  
-Subtitle="Have courage."
+Subtitle="Verlieren Sie nicht den Mut!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

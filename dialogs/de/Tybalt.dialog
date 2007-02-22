@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Hallo. Ich bin neu hier im Ort. Was tun Sie da?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hello. I'm Tybalt. I'm guarding the guardhouse gate. Only authorized personnel are permitted."
+Subtitle="Hallo. Ich bin Tybalt. Ich bewache das Tor der Wachfestung. Nur befugte Personen haben Zutritt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,10 +42,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Why is the guardhouse locked most of the time?"
+New Option Nr=1  OptionText=" Warum ist das Wachhaus die meiste Zeit über verschlossen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="It's locked so no one can sneak inside while I'm not looking. That's why."
+Subtitle="Es ist verriegelt damit sich niemand hineinschleicht, während ich nicht hinsehe. Deshalb."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="THE GATE OPENS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=224  PositionY=154  
-Subtitle="Of course. Guard members are always authorized to enter the guardhouse. The gate is open. Enjoy your stay."
+Subtitle="Natürlich! Mitglieder der Wache können das Wachhaus jederzeit betreten. Das Tor ist offen - genieß' deinen Aufenthalt..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_guardhouse_door"
@@ -76,9 +76,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="YOU SHALL NOT PASS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
-Subtitle="Sorry pal, but I don't think so. Only authorized personnel are permitted and that means members of the Red Guard."
+Subtitle="Tut mir leid mein Freund, aber das denke ich nicht. Nur befugtes Personal hat Zutritt und das bedeutet, Mitglieder der Roten Wache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Talk to Spencer if you have any issues inside. I cannot let you pass."
+Subtitle="Reden Sie mit Spencer, falls Sie irgendwelche Angelegenheiten da drinnen regeln müssen. Ich kann Sie so nicht passieren lassen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 LinkedTo:60
@@ -86,10 +86,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=50  OptionText=" I have a lot of money for you."
+New Option Nr=50  OptionText=" ... ich kann Ihnen viel Geld geben..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Fascinating. Hundred."
+Subtitle="Faszinierend. Einhundert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 LinkedTo:51
@@ -124,20 +124,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=54  OptionText=" Erm... I don't have that much."
+New Option Nr=54  OptionText=" Ähm... ich habe nicht so viel."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Well, I cannot open the door then."
+Subtitle="Tja, dann kann ich das Tor nicht öffnen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=54 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=55  OptionText=" Here you go."
+New Option Nr=55  OptionText=" Bittesehr."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Thank you."
+Subtitle="Danke."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=55 ChangeToValue=0
 ChangeOption=56 ChangeToValue=1
@@ -146,10 +146,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=56  OptionText=" Ok, now please open the door for me."
+New Option Nr=56  OptionText=" Ok, öffnen Sie jetzt das Tor für mich."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="What door?"
+Subtitle="Hm? Welches Tor?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=56 ChangeToValue=0
 ChangeOption=57 ChangeToValue=1
@@ -157,12 +157,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=57  OptionText=" The door to the citadel!"
+New Option Nr=57  OptionText=" Das Tor zur Festung!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="But you are not a member of the Red Guard."
+Subtitle="Aber Sie sind kein Mitglied der Roten Wache..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You cannot come in."
+Subtitle="Sie kommen da nicht rein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=57 ChangeToValue=0
 ChangeOption=58 ChangeToValue=1
@@ -170,10 +170,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=58  OptionText=" I paid you!"
+New Option Nr=58  OptionText=" Ich habe dafür bezahlt!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Really? I don't remember that."
+Subtitle="Im Ernst? Kann mich nicht dran erinnern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=58 ChangeToValue=0
 ChangeOption=59 ChangeToValue=1
@@ -181,10 +181,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=59  OptionText=" I want my money back."
+New Option Nr=59  OptionText=" Ich will mein Geld zurück!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="What money?"
+Subtitle="Hm? Welches Geld?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=59 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -217,10 +217,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" See you later."
+New Option Nr=99  OptionText=" Tschüß."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
-Subtitle="Good riddance."
+Subtitle="Na endlich..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

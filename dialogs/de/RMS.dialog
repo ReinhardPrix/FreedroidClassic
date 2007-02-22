@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here. "
+New Option Nr=0  OptionText=" Tag auch! Ich bin ein neues Mitglied der Wache!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Welcome, then! I'm Richard. I oversee the computer cluster of our community."
+Subtitle="Na dann, willkommen! Mein Name ist Richard. Ich bin Aufseher über den Computercluster unserer Gemeinde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -41,12 +41,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" A computer cluster? What's that?"
+New Option Nr=1  OptionText=" Computercluster... was ist das?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="A cluster is a collection of literally thousands of normal computers into a whole new entity."
+Subtitle="Ein Cluster ist ein Verbund von sprichwörtlich tausenden gewöhnlichen Rechnern, zu einer ganzen großen Einheit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It can be used to perform the most complex of operations in comparatively little time, provided suitable methods for analyzing the data are used."
+Subtitle="Es kann dazu verwendet werden, die kompliziertesten Berechnungen in vergleichsweise geringer Zeit anzustellen, vorausgesetzt man benutzt geeignete Methoden zur Datenanalyse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -62,14 +62,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" I have a data cube with confidential crucial information on the colony installations "
+New Option Nr=6  OptionText=" Ich habe einen Datenkubus mit vertraulichen kritischen Informationen, betreffend der Kolonie-Anlagen für Sie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="Interesting. Let me see this thing. Wow, the amount of data is incredible. Maybe we could use our cluster to evaluate the data."
+Subtitle="Interessant. Lassen Sie mich das Ding mal sehen... Hui, die Menge an Daten ist unglaublich! Wir sollten vielleicht unseren Rechnerkomplex zur Auswertung der Daten einsetzen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hey, what's that. The data are already prepared for processing by a cluster like ours. Wow! That's good work!"
+Subtitle="Hey, was ist das? Die Daten sind schon für eine Bearbeitung durch einen Cluster wie den unseren vorbereitet... Super! Das ist gute Arbeit!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I'll feed it into the cluster right away."
+Subtitle="Ich speise Sie sofort ins Rechenzentrum ein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
@@ -97,22 +97,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Are there any results of the cluster data evaluation yet?"
+New Option Nr=9  OptionText=" Gibt es schon irgendwelche Ergebnisse aus der Clusterdaten-Auswertung?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Yes, of course. Some preliminary results are there and they look most interesting. I'll have to inform the chief about this."
+Subtitle="Ja, natürlich! Die ersten Ergebnisse stehen bereits zur Verfügung und sie sehen äußerst interessant aus. Ich muss den Chef darüber informieren..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You'll want to talk with him. He'll know what to do. Thanks a lot for your efforts. This might in fact be crucial information for our survival."
+Subtitle="Sie sollten am besten mit Spencer sprechen - er wird Sie einweihen und wissen, was zu tun ist. Ich danke Ihnen vielmals für Ihre Bemühungen! Es könnte sich in der Tat um für uns überlebenswichtige Informationen handeln."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" See you later."
+New Option Nr=99  OptionText=" Na dann, auf Wiedersehen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
-Subtitle="Take care, Linarian."
+Subtitle="Passen Sie auf sich auf, Linarianer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

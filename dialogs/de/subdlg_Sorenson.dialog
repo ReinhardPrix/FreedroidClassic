@@ -42,7 +42,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Mind +1 (costs 1 training point)"
+New Option Nr=3  OptionText=" Geisteskraft +1 (kostet 1 Trainingspunkt)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=316  PositionY=298  
 ChangeOption=3 ChangeToValue=0
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Mind +5 (costs 5 training points)"
+New Option Nr=4  OptionText=" Geisteskraft +5 (kostet 5 Trainingspunkte)"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=313  PositionY=213  
 ChangeOption=4 ChangeToValue=0
@@ -60,7 +60,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Improve spellcasting ability (cost 5 training points, 100 cash) "
+New Option Nr=5  OptionText=" Zauberspruch-Fähigkeiten verbessern (kostet 5 Trainingspunkte, 100 Tribucks) "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=311  PositionY=146  
 ChangeOption=5 ChangeToValue=0
@@ -72,7 +72,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=509  PositionY=272  
-Subtitle="The force-capacity of your mind has risen considerably."
+Subtitle="Die Kraftreserven Ihres Geistes haben zugenommen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -84,9 +84,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=404  PositionY=363  
-Subtitle="You don't have enough experience. I can't teach you anything more right now."
+Subtitle="Sie haben leider nicht genug Erfahrung. So kann ich Ihnen nichts beibringen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="First collect more experience. Then we can go on."
+Subtitle="Sammeln Sie noch etwas Erfahrung und kommen Sie dann wieder zu mir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -96,7 +96,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=522  PositionY=191  
-Subtitle="The force-capacity of your mind has risen considerably now."
+Subtitle="Die Kraftreserven Ihres Geistes haben beträchtlich zugenommen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"
@@ -108,7 +108,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=520  PositionY=137  
-Subtitle="You don't have enough bucks on you!  Come back when you have the money."
+Subtitle="Sie haben nicht genug Geld mit dabei! Kommen Sie wieder zu mir, wenn Sie die Tribucks haben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -127,11 +127,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=539  PositionY=73  
-Subtitle="The ability to cast spells is very complicated, and best transferred directly to you."
+Subtitle="Die Fähigkeit, Zaubersprüche anzuwenden, ist sehr komplex und wird daher am besten direkt an Sie übertragen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="We'll use magic to transfer the power. Just a moment... and all right, it's done."
+Subtitle="Wir werden Magie benutzen, um dieses Können auf Sie zu übertragen. Einen kleinen Moment bitte... und jawohl - fertig."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Your spellcasting ability has improved a lot. Come back when you want to learn more."
+Subtitle="Ihre Zauberfertigkeit hat sich nun um einiges gesteigert -- kommen Sie wieder vorbei, wenn Sie noch mehr lernen möchten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"

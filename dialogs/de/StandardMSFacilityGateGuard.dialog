@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Hey, wie geht's?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=73  PositionY=220  
-Subtitle="Great. Now back to where you came from. This is no place for you."
+Subtitle="Großartig. Jetzt zurück mit dir dorthin, wo du herkommst. Das ist kein Ort für dich..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -41,14 +41,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" What's the matter with this gate?"
+New Option Nr=1  OptionText=" Was hat es mit dem Tor da auf sich?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=151  PositionY=218  
-Subtitle="This is a gate to an automated bot factory we call the Hell Fortress."
+Subtitle="Das ist ein Tor zu einer vollautomatischen Roboterfabrik, die wir die Höllenfestung nennen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You must be crazy if you want to get in there. That place is full of bots."
+Subtitle="Du müsstest vollkommen irre sein, falls du da durch willst. An diesem Ort wimmelt es von Bots!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Get out of here. They might attack at any moment!"
+Subtitle="Verschwinde jetzt von hier... sie können jeden Augenblick angreifen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -56,16 +56,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" What if I just walk in there? Will you try to stop me?"
+New Option Nr=2  OptionText=" Was, wenn ich da einfach reingehe? Werdet ihr versuchen mich aufzuhalten?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=279  PositionY=102  
-Subtitle="Of course not. Murdering you would be a complete waste of time."
+Subtitle="Sicher nicht! Dich umzubringen wäre komplette Zeitverschwendung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The bots will take care of that for me."
+Subtitle="Die Blechfresser werden das für mich übernehmen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just remember to give me your valuables before you commit suicide."
+Subtitle="Vergiss nur nicht mir alle deine Wertsachen zu geben, bevor du in den Tod rennst..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You won't need any money once you're damn dead, and I could use it, eh?"
+Subtitle="Du wirst keine Moneten mehr brauchen, wenn sie dich kaltgemacht haben - und ich habe noch Schulden; du siehst also, es wär für 'nen guten Zweck!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -73,22 +73,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Thanks for the advice."
+New Option Nr=3  OptionText=" Danke für den Hinweis."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=113  
-Subtitle="You're dead if you don't take it."
+Subtitle="Du bist tot, wenn du ihn nicht beachtest."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" I'll be going then."
+New Option Nr=99  OptionText=" Ich bin schon weg..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=398  PositionY=220  
-Subtitle="Finally."
+Subtitle="Na endlich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Don't come back."
+Subtitle="Komm lieber nicht zurück!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

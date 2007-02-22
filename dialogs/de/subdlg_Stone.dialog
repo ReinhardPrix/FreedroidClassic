@@ -33,9 +33,9 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=491  PositionY=265  
-Subtitle="You are Tux, aren't you..."
+Subtitle="Sie sind Tux, nicht wahr..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="The hero..."
+Subtitle="Der Held..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -46,16 +46,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Yes, its me."
+New Option Nr=1  OptionText=" Ja, ich bin es."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=491  PositionY=354  
-Subtitle="I thought so. My grandfather used to tell me stories about you. He said you would come here in a time of despair."
+Subtitle="Ich wusste es! Mein Großvater erzählte mir oft Geschichten von dir... er sagte, du würdest in einer Zeit der Verzweiflung auftauchen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="And here you are."
+Subtitle="Und hier bist du!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I hope your arrival changes the tide of this war..."
+Subtitle="Ich hoffe, deine Ankunft bringt uns die Wende in diesem Krieg..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tux, if you ever find out who started the Great Assault... GIVE THEM A KICK IN THE ASS, FROM LILY STONE!!!"
+Subtitle="Tux, wenn du je herausfindest, wer für den Großen Angriff verantwortlich ist... GIB IHNEN EINEN ARSCHTRITT VON LILLY STONE!!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -65,12 +65,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" It's not important who am I."
+New Option Nr=2  OptionText=" Wer ich bin ist nicht wichtig."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=491  PositionY=166  
-Subtitle="If you want to remain a stranger, I will respect your wishes."
+Subtitle="Wenn Sie unerkannt bleiben wollen, werde ich das respektieren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="So be it."
+Subtitle="So sei es."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -80,14 +80,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Ha ha ha, You fell for it! You get nothing from me! Hahahahah!"
+New Option Nr=3  OptionText=" Ha ha ha, reingefallen!! Sie kriegen nichts von mir!  Hahahahah!!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=583  PositionY=265  
-Subtitle="You... monster..."
+Subtitle="Du... Monster..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="No one makes fun of Lily Stone's family store!"
+Subtitle="Niemand macht sich über Lilly Stones Familienladen lustig!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Say your prayers, you oversized duck!!!"
+Subtitle="Sag dein letztes Gebet auf, du zu groß geratene Ente!!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"

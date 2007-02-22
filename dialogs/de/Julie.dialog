@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hallo. Ich sehe mich nur hier um..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=82  PositionY=125  
-Subtitle="Hello!  I'm Julie.  I'm in charge of the guilds library."
+Subtitle="Ja, gerne. Ich bin Aufseherin über die Bibliothek der Gilde. Sie können mich Julie nennen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -41,12 +41,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="A library?  I thought information was stored only in databases?"
+New Option Nr=1  OptionText="Eine Bibliothek? Ich dachte, Wissen würde nur in Datenbanken gespeichert?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=159  PositionY=183  
-Subtitle="Yes, you're right.  And the library is our database.  Look at all those books.  They are merely stylish designed memory modules."
+Subtitle="Ja, da haben Sie recht - und die Bibliothek ist UNSERE Datenbank. Sehen Sie nur all die Bücher! Sie sind sozusagen stilvoll entworfene Speichermodule."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="In fact every book in here contains much more information than any book of the ancient times could hold.  So each book is in fact many books."
+Subtitle="Jedes dieser Bücher hier enthält mehr Wissen, als irgendein Buch aus vergangenen Zeiten... jedes Buch hier beinhaltet daher in Wirklichkeit viele Bücher."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -54,10 +54,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="How do I use all those books?  Is it complicated?"
+New Option Nr=2  OptionText="Wie benutzt man diese ganzen Bücher? Ist das schwierig?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=257  PositionY=116  
-Subtitle="No, not at all.  But you should be careful.  You should only read those books that you really want to read.  You might waste them."
+Subtitle="Nein, überhaupt nicht. Aber Sie sollten mit Bedacht vorgehen. Sie sollten nur die Bücher lesen, die Sie auch wirklich interessieren. Es wäre sonst schade drum."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -65,14 +65,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Aren't they here for reading?  How can you waste them?"
+New Option Nr=3  OptionText="Stehen sie denn nicht hier, um gelesen zu werden? Wie könnte es dann schade drum sein?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=362  PositionY=121  
-Subtitle="Normally that would be right.  But these books are special.  Each of them tries to transfer the content of the book directly to your memory, if possible."
+Subtitle="Das wäre eigentlich richtig. Aber diese Bücher sind etwas ganz Besonderes... jedes davon versucht seinen Inhalt direkt an Ihr Gehirn weiterzugeben, wenn möglich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However, this process is very demanding for the book itself.  It would need recharging after each such read, which we currently can't do."
+Subtitle="Dieser Prozess beansprucht das Buch selbst allerdings sehr stark. Es bräuchte deshalb nach diesem Vorgang eine Wiederaufladung, was wir zur Zeit allerdings nicht bewerkstelligen können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Our book-rechargement machine was stolen shortly before the great assault and we can't get any replacement.  I'm sorry."
+Subtitle="Unser Buch-Regenerator wurde kurz vor dem Großen Angriff gestohlen und wir können keinen Ersatz auftreiben. Tut mir leid."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -80,10 +80,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Are you telling me that any book here can be read only once?"
+New Option Nr=4  OptionText="Wollen Sie damit sagen, dass die Bücher hier nur ein einziges Mal gelesen werden können?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=460  PositionY=150  
-Subtitle="Exactly."
+Subtitle="Exakt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=158  PositionY=301  
-Subtitle="See you later."
+Subtitle="Ich komme später wieder..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

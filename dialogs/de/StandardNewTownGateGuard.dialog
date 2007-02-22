@@ -31,10 +31,10 @@ freedroid-discussion@lists.sourceforge.net
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi!  I'm new here. "
+New Option Nr=0  OptionText=" Hallo... was ist das für ein Ort?"
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=66  PositionY=246  
-Subtitle="That I see."
+Subtitle="Aha. Offenbar neu hier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,38 +42,38 @@ ChangeOption=2 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="What, no questions, where are you from, what do you want?"
+New Option Nr=1  OptionText="Was - keine Fragen, woher kommen Sie, was wollen Sie und dergleichen??"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=177  PositionY=305  
-Subtitle="No."
+Subtitle="Nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is not the old town.  None will ask for your buisness here."
+Subtitle="Dies ist nicht die alte Stadt. Niemand wird Sie hier nach Ihren Anliegen fragen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is the camp of the free coders.  Here everybody can proceed as he or she sees fit."
+Subtitle="Das ist die Siedlung der freien Programmierer. Hier kann jeder tun und lassen, was er will."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="However this also means that in here, you got to see for your safety all by youselves."
+Subtitle="Allerdings bedeutet das auch, dass Sie hier drin für Ihre Sicherheit selbst sorgen müssen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="What are you doing out here?"
+New Option Nr=2  OptionText="Was machen Sie da draußen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=213  
-Subtitle="What do you think we are doing here?  Any idea how boring this is?"
+Subtitle="Was glauben Sie denn, was wir tun? Eine Ahnung, wie langweilig das ist?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It's more of a strain to stand here and do nothing than any task of coding or the like."
+Subtitle="Es ist anstrengender hier zu stehen und nichts zu tun, als irgendwas zu programmieren oder so."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Just spend a few days standing here and you'll see what I mean."
+Subtitle="Stellen Sie sich einfach ein paar Tage hierher und sie werden begreifen, was ich meine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="I'll be going then."
+New Option Nr=99  OptionText="Ich muss weiter."
 OptionSample="Tux_Ill_Be_Back_0.wav"
 PositionX=331  PositionY=268  
-Subtitle="Good."
+Subtitle="Gut."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=2 ChangeToValue=1

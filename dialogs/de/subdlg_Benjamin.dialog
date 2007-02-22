@@ -40,7 +40,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Improve ranged weapon skill (cost 5 training points, 100 cash) "
+New Option Nr=5  OptionText=" Umgang mit Schusswaffen verbessern (kostet 5 Trainingspunkte, 100 Tribucks) "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=477  PositionY=203  
 OnCondition="GoldIsLessThan:100" JumpToOption=10 ElseGoto=11
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=636  PositionY=469  
-Subtitle="Done. Small improvements of dexterity are not so hard to achieve after all."
+Subtitle="Fertig. Kleine Steigerungen der Geschicklichkeit sind schließlich nicht allzu schwer zu erreichen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=635  PositionY=361  
-Subtitle="You don't have enough experience. Come here after you see some more action."
+Subtitle="Sie sind noch zu unerfahren! Kommen Sie wieder, wenn Sie ein bisschen mehr auf dem Kasten haben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=557  PositionY=98  
-Subtitle="You don't have enough money! I cannot afford to just give away training for free."
+Subtitle="Sie haben ja gar nicht genug Geld dabei... ich kann es mir wirklich nicht leisten, kostenlose Trainingsstunden zu geben!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -92,19 +92,19 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=639  PositionY=189  
-Subtitle="Now the most important thing is that you turn off the auto-aim on your weapon, like this."
+Subtitle="Passen Sie auf - das Allerwichtigste ist, dass Sie die Auto-Zielfunktion abschalten, so."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Otherwise your weapon might 'help' you and shoot somewhere you didn't intend to fire."
+Subtitle="Andernfalls könnte die Waffe Ihnen 'helfen' und dorthin schießen, wohin Sie es gar nicht wollten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Next important thing is to remember how to properly fire a shot."
+Subtitle="Auch dürfen Sie nicht vergessen, wie man einen Schuß richtig abfeuert..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Watch your target closely.  Pretend you're moving with it. Aim for the head."
+Subtitle="Beobachten Sie ihr Ziel genau! Stellen Sie sich vor, mitzuwandern. Zielen Sie auf den Kopf."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="When you feel completely in sync with your target, then you pull the trigger."
+Subtitle="Wenn Sie sich vollkommen mit dem Ziel im Einklang fühlen, dann ziehen Sie den Abzug."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Good. You are learning fast. Try it a few more times."
+Subtitle="Gut! Sie lernen schnell. Versuchen Sie es noch ein paar Mal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Good. I think that it is enough for today."
+Subtitle="Sehr Gut! Ich glaube, das reicht für heute."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:5"

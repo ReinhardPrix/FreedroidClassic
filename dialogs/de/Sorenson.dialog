@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hi! I'm new here."
+New Option Nr=0  OptionText=" Einen schönen Guten Tag!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=64  PositionY=224  
-Subtitle="Welcome then to this camp! I'm Sorenson, teacher of magical abilities."
+Subtitle="Nun denn, willkommen in unserer befestigten Niederlassung! Ich bin Sorenson, Lehrer magischer Fähigkeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
@@ -51,16 +51,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" What can you teach me about mental abilities?"
+New Option Nr=2  OptionText=" Können Sie meine geistigen Fähigkeiten erweitern?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=170  
-Subtitle="That depends. What would you like to learn?"
+Subtitle="Das kommt darauf an. Was genau möchten Sie trainieren?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I could help to enhance the force-capacity of your mind."
+Subtitle="Ich könnte Ihnen helfen, das Kraftreservoir Ihres Geists zu vergrößern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I could also teach you how to become more adept at spellcasting."
+Subtitle="Außerdem kann ich Ihnen zeigen, wie Sie besser im Sprechen eines Zaubers werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now, what will it be?"
+Subtitle="Nun, was soll es denn sein?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
@@ -71,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" END "
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=250  
-Subtitle="See you later!"
+Subtitle="Schönen Tag noch!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

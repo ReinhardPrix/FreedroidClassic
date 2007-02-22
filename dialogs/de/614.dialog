@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Who are you? "
+New Option Nr=0  OptionText=" Identifizieren Sie sich!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=98  PositionY=280  
-Subtitle="I am a 614 security bot, once one of the best-selling products of the Nicholson company."
+Subtitle="Ich bin ein Sicherheitsrobot Typ 614, ehemals eines der am besten verkauften Produkte der Firma Nicholson."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -41,64 +41,64 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Have you detected any hostile bot activity?"
+New Option Nr=1  OptionText=" Sind irgendwelche Feindaktivitäten zu orten?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=204  
-Subtitle="No. The hostiles have not shown up within the last 24 hours."
+Subtitle="Nein. Keine Feindaktivitäten innerhalb der letzten 24 Stunden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" What can you tell me about the 614 type? "
+New Option Nr=2  OptionText=" Was kannst du mir über den Typ 614 sagen? "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=96  PositionY=134  
-Subtitle="The official manual classifies the 614 as a high class security droid."
+Subtitle="Das offizielle Handbuch klassifiziert den Typ 614 als hochsicherheits-Androiden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It was mainly used within ships to protect certain areas from intruders."
+Subtitle="Hauptsächlich wurde er in Raumschiffen eingesetzt, um spezielle Bereiche von Eindringlingen abzusichern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It is considered an old but reliable device."
+Subtitle="Er wird als alte aber zuverlässige Einheit angesehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="So don't worry. I'm still in pretty good shape."
+Subtitle="Also machen Sie sich keine Sorgen. Ich bin immer noch in recht gutem Zustand."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" What are your orders?"
+New Option Nr=3  OptionText=" Wie lauten deine Befehle?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=71  
-Subtitle="My orders are to protect the living beings in this camp from attacks by hostile bots."
+Subtitle="Mein Befehl lautet, die Lebewesen in dieser Niederlassung vor den Angriffen feindlicher Roboter zu schützen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This has top priority. There are no other priorities."
+Subtitle="Dies hat höchste Priorität. Es gibt keine anderen Prioritäten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Why are you not hostile as all the other bots?"
+New Option Nr=4  OptionText=" Weshalb bist du nicht wie all die anderen Robots feindlich gesinnt?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=223  PositionY=270  
-Subtitle="I belong to a an older generation of bots, running a custom-made security guard operating system."
+Subtitle="Ich gehöre einer älteren Generation von Bots an, auf denen ein speziell für Sicherheits- und Überwachungszwecke ausgelegtes Betriebssystem läuft."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="None of the bots of this generation were affected by the proceedings that led to bots attacking, generally known as the Great Assault."
+Subtitle="Keiner der Robots dieser Generation wurde durch die Vorgänge beeinflusst, die zu den Robot-Übergriffen führten - allgemein bekannt als der Große Angriff."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Even though discontinued from Nicholson Company long ago, today, some people have picked up the work and are even trying to improve the operating system running on my series."
+Subtitle="Obwohl mein Typ schon vor langer Zeit von der Firma Nicholson eingestellt wurde, haben in jüngster Zeit einige Leute die Arbeit daran wieder aufgenommen und man versucht sogar das Betriebssystem der Baureihe zu verbessern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Don't forget to buy products from Nicholson Company. They are the best."
+Subtitle="Nicht vergessen - kaufen Sie Produkte der Firma Nicholson. Sie sind die besten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" See you later."
+New Option Nr=99  OptionText=" Auf wiedersehen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=438  PositionY=268  
-Subtitle=" Resuming guard program."
+Subtitle=" Fahre mit Wachprogramm fort."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
