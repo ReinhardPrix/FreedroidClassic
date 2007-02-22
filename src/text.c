@@ -708,19 +708,25 @@ DisplayChar (unsigned char c)
 	SetCurrentFont ( FPS_Display_BFont );
 	return;
     }
-    else if ( !isprint(c) ) // don't accept non-printable characters
-    {
-	fprintf ( stderr , "\nIllegal char passed to DisplayChar(): %d \n", c);
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-There was an illegal character passed to DisplayChar for printing.\n\
-This indicates some error within Freedroid or within one of the dialog\n\
-files of Freedroid.",
-				   PLEASE_INFORM, IS_FATAL );
-	return;
-    }
     
-    if ( ! display_char_disabled ) 
-	PutChar ( Screen, MyCursorX, MyCursorY, c );
+    if ( isprint(c) )
+	{
+	if ( ! display_char_disabled ) 
+		PutChar ( Screen, MyCursorX, MyCursorY, c );
+	}
+    else
+	{
+	PutChar ( Screen, MyCursorX, MyCursorY, 127 );
+	switch(c)
+		{
+		case 0xe4: PutChar ( Screen, MyCursorX, MyCursorY, 'a' ); break;
+	        case 0xfc: PutChar ( Screen, MyCursorX, MyCursorY, 'u' ); break;
+		case 0xeb: PutChar ( Screen, MyCursorX, MyCursorY, 'e' ); break;
+		case 0xf6: PutChar ( Screen, MyCursorX, MyCursorY, 'o' ); break;
+		}
+	c = 'a';
+	}
+
     
     // DebugPrintf( 0 , "%c" , c );
     
