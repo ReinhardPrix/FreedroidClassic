@@ -1,0 +1,79 @@
+
+ *  --------------------------------------------------
+ *
+ *  Copyright (c) 2003 Johannes Prix
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+ *
+ =
+ =  Feel free to make any modifications you like.  If you set up 
+ =  something cool, please send your file in to the Freedroid project.
+ = 
+ * --------------------------------------------------
+
+The title picture in the graphics subdirectory for this mission is : backgrounds/scientist.jpg
+The title song in the sound subdirectory for this mission is : TheBeginning.ogg
+Song name to play in the end title if the mission is completed: TheBeginning.ogg
+
+
+--------------------
+--------------------
+--------------------
+*** START OF PURE SCROLLTEXT DATA ***
+The FreedroidRPG Level Editor
+
+Introduction:
+FreedroidRPG comes with a built-in level editor.  This level editor should allow you to control any aspect of a normal FreedroidRPG map as well as to save this map.
+
+Moving around:
+You can always use the left mouse button to move around on the given map as well as use the cursor keys for this.  To change the current level, you can either use the 'go level north/east/west/south' buttons (if available) or you can press escape to enter the menu and change the level inside the menu.
+
+Floor edit mode:
+The FreedroidRPG level editor has 2 modes of operation:  The first mode is floor edit mode.  In floor edit mode, right mouse button will plant floor tiles.  You can use the left mouse button to select the floor tile type from the selection bar. To change from floor edit mode to obstacle edit mode and back again you can use the 'f' key on the keyboard.
+
+Obstacle edit mode:
+The other mode is obstacle edit mode.  In obstacle edit mode, right mouse button will plant new obstacles.  You can select the type of obstacle to be planed by clicking the left mouse button into the obstacle selection bar on top of the screen.  However, planing obstacles with the mouse is a bit unprecise.  To plant obstacles in a more precise way, you can use the number pad.  Each of the number pad keys 1-9 will plant the currently marked obstacle to a specific standard location within the tile you're currently standing on.  It doesn't matter where inside this tile you're standing if you use this mode of operation.
+
+In obstacle edit mode, there are also several other keys, that might help to speed up level edit operations.
+The 1-8 keys on the normal keyboard (not the number pad!) will select specific wall types.
+The T key will select teleporter. 
+The U key will select a chest.
+The A key will select an alert.
+
+In obstacle edit mode, you will also notice that if you get close to some obstacle, the obstacle may get 'highlighted' i.e. it's color map will be awkwardly but noticeable shifted.  That means that this obstacle is currently marked.  If you press the 'x' key now, the obstacle in question will be deleted.  
+Sometimes there are more than one obstacle associated with the current map square.  If that is so, you can use the 'n' key to switch the marker from one obstacle to the other and back again.
+
+Planting waypoints:
+Currently, droids (and that means all non-player characters) move about on a level using predefined waypoints.  To plant a waypoint, press the 'w' key.  This should turn on/off the waypoint on the square where you're standing.
+Note:  Waypoints are also used to position randomly spawned bots.  However this might be inappropriate for some waypoints.  You can exempt some waypoints from random spawning by pressing the 'R' key.  The waypoint in question will turn bright red to indicate that random spawning will be suppressed there.
+
+Connecting waypoints:
+Waypoints are of no use as long as they are not connected among each other.  To connect one waypoint to another waypoint, go to the first waypoint, press the 'c' key, then go to the second waypoint and press the 'c' key again.  This has established a one-way connection from the first waypoint to the second waypoint.  To allow the droids to move the other way around as well, do the same thing with reversed order of waypoints.  
+To inspect the possible ways for droids from one waypoint to other waypoints, just step on the square with the waypoint.  You will notice a dotted line leading from this waypoint to all other waypoints that are possible targets from here.
+
+Planting map labels:
+Map labels are not the same as obstacle labels.  Map labels can be used for various purposes, like e.g. to define the point where a teleporter should put the Tux or to define a spot that will cause some event to happen as soon as the Tux steps on this spot.
+To define a new map label, press the 'm' key on the keyboard.  You will be prompted for the map label.  Giving an empty string here will delete the existing label on this square.  Note that there will be a colorful circle appearing on any map tile that has been fitted with a map label.
+
+Planting obstacle labels:
+Obstacle labels are important so that some obstacles can be marked for events to happen.  If e.g. an event is supposed to remove a special wall obstacle, then this obstacle must be given a name first, so it can be referred to later in the definition of the event.
+To plant a label on an obstacle, you must first mark this obstacle (see obstacle mode explanation above).  As soon as the obstacle in question is marked, you can use the 'h' key on the keyboard.  You will be prompted for the new label to attach to this obstacle.  Giving an empty string here will delete any existing obstacle label of this obstacle.
+
+*** END OF PURE SCROLLTEXT DATA ***
+
+*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***
