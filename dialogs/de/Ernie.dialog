@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="Ich bin hier, um eurem faschistoiden Minengesch‰ft ein Ende zu bereiten!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=103  
-Subtitle="Ok Linarianer!  Du wolltest es so haben -- auﬂerdem kann ich Pinguine nicht ausstehen!!"
+Subtitle="Ok Linarianer!  Du wolltest es so haben -- ausserdem kann ich Pinguine nicht ausstehen!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0

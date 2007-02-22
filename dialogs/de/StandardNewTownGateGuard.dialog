@@ -57,7 +57,7 @@ ChangeOption=1 ChangeToValue=0
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="Was machen Sie da drauﬂen?"
+New Option Nr=2  OptionText="Was machen Sie da draussen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=213  
 Subtitle="Was glauben Sie denn, was wir tun? Eine Ahnung, wie langweilig das ist?"

@@ -71,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Ich will keine Belohnung. Nur etwas Dankbarkeit."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=436  PositionY=250  
-Subtitle="Das kannst du natürlich haben. Hier, bitte sehr, ich bin dir äußerst dankbar... so, das sollte dir genügen."
+Subtitle="Das kannst du natürlich haben. Hier, bitte sehr, ich bin dir äusserst dankbar... so, das sollte dir genügen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0

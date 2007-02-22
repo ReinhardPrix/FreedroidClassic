@@ -54,10 +54,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas größeres?"
+New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas grösseres?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Zu meinem größten Bedauern, nein."
+Subtitle="Zu meinem grössten Bedauern, nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Rote Wache verbietet den Verkauf von extrem gefährlichen Sprengkörpern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -96,7 +96,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Es ist noch nicht an der Zeit, von solchen Dingen zu sprechen. Kommen Sie eines Tages wieder, und wir werden darüber Genaueres besprechen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Rote Wache hat vielleicht ihre großen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
+Subtitle="Die Rote Wache hat vielleicht ihre grossen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -207,7 +207,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruß? Niemand hier kennt ihn!"
+New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruss? Niemand hier kennt ihn!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich habe viele Bücher über Linarianer gelesen. Das ist alles."

@@ -53,7 +53,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Nicht schieﬂen! Ich komme in Frieden!"
+New Option Nr=2  OptionText=" Nicht schiessen! Ich komme in Frieden!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=368  
 Subtitle="GEBEN SIE DEN ZWECK IHRES HIERSEINS AN."
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" ... sein Leben ist in groﬂer Gefahr!"
+New Option Nr=5  OptionText=" ... sein Leben ist in grosser Gefahr!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=168  PositionY=109  
 Subtitle="ERROR: GRUND UNG‹LTIG."

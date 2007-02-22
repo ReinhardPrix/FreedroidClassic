@@ -50,7 +50,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=13  OptionText="DIXON SUCCESSFUL."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
-Subtitle="Die technische Abteilung berichtete, dass Sie ihnen bei einem großen Problem ausgeholfen hätten, obwohl die Angaben dazu recht vage waren..."
+Subtitle="Die technische Abteilung berichtete, dass Sie ihnen bei einem grossen Problem ausgeholfen hätten, obwohl die Angaben dazu recht vage waren..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Gute Arbeit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -131,7 +131,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
-Subtitle="Wir haben hier einen Show-Kampfplatz. Wenn Sie dort einen Kampf überstehen weiß ich, dass Sie einem echten Kampf gewachsen sein werden."
+Subtitle="Wir haben hier einen Show-Kampfplatz. Wenn Sie dort einen Kampf überstehen weiss ich, dass Sie einem echten Kampf gewachsen sein werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 LinkedTo:21

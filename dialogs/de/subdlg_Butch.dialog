@@ -133,7 +133,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="NOVICE_NOT_YET_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=383  
-Subtitle="Ich bin untröstlich, aber die städtischen Vorschriften verbieten den Zugang zur Meister-Arena, außer man hat zuerst die Anfänger-Arena überstanden."
+Subtitle="Ich bin untröstlich, aber die städtischen Vorschriften verbieten den Zugang zur Meister-Arena, ausser man hat zuerst die Anfänger-Arena überstanden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Diese Regelung besteht zu Ihrer eigenen Sicherheit, so dass Sie nicht versehentlich als Anfänger in der Meister-Arena landen können..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

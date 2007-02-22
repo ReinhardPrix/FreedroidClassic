@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=99  OptionText="Ich halt das nicht mehr aus!"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=100  PositionY=20  
-Subtitle="Ich w‰re erfreut, die verbesserte Zusammenarbeit mit Ihnen mittels einer Netzverbindung zu genieﬂen - in einem Ihnen angenehmeren zeitlichen Fenster Ihrer Wahl."
+Subtitle="Ich w‰re erfreut, die verbesserte Zusammenarbeit mit Ihnen mittels einer Netzverbindung zu geniessen - in einem Ihnen angenehmeren zeitlichen Fenster Ihrer Wahl."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Schönen Tag... äh, ich kenne mich hier noch nicht aus..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=63  PositionY=228  
-Subtitle="Ah, ein weiterer Schutzbedürftiger- gut, gut. Ich heiße Sie willkommen in unserer kleinen Festungs-Stadt!"
+Subtitle="Ah, ein weiterer Schutzbedürftiger- gut, gut. Ich heisse Sie willkommen in unserer kleinen Festungs-Stadt!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Darf ich mich vorstellen: Spencer, Kommandeur der Militärsektion Rote Wache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -77,7 +77,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Spencer, was, wenn ich der Roten Wache eine größere Summe spende? Kann ich so vielleicht 'Ehrenmitglied' werden?"
+New Option Nr=3  OptionText=" Spencer, was, wenn ich der Roten Wache eine grössere Summe spende? Kann ich so vielleicht 'Ehrenmitglied' werden?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=196  PositionY=430  
 Subtitle="Wollen Sie mich etwa bestechen?"
@@ -93,7 +93,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Er läuft ziemlich schlecht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie sind der erste Ankommende seit etwa einer Woche. Die meisten Menschen außerhalb dieser Stadt sind mittlerweile tot."
+Subtitle="Sie sind der erste Ankommende seit etwa einer Woche. Die meisten Menschen ausserhalb dieser Stadt sind mittlerweile tot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Uns gehen langsam die Leute und die Vorräte aus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -326,7 +326,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=462  PositionY=578  
 Subtitle="Gut. Sie sollten hervorragend gerüstet sein, falls Sie wirklich dorthin gehen wollen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es besteht auch keine Grund zur Eile deswegen. Schließlich läuft uns die Forschungsbasis nicht davon, also lassen Sie es am besten ruhig angehen."
+Subtitle="Es besteht auch keine Grund zur Eile deswegen. Schliesslich läuft uns die Forschungsbasis nicht davon, also lassen Sie es am besten ruhig angehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=44 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
