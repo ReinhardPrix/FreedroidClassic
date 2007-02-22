@@ -1,0 +1,217 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Tag! Ich bin neu in der Siedlung..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=57  PositionY=221  
+Subtitle="Großartig! Ein Neuankömmling! Willkommen! Willkommen! Ich heiße Skippy und ich bin dein neuer bester Freund!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Und als besonderen Gefallen verkaufe ich dir eine Automap-Einheit zum halben Preis!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Was für ein TOLLES Angebot! Hast du ein Glück!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
+ChangeOption=2 ChangeToValue=1
+ChangeOption=3 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Zeigen Sie mir eine dieser Automap-Einheiten."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=148  PositionY=306  
+Subtitle="Sicher! Ich habe eine, die wie EINgegossen auf deinen Kopf passen wird..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Skippy"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText=" Wie aktiviere ich so eine Kartographie-Einheit?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=152  PositionY=224  
+Subtitle="Oh, das ist so einfach! Überhaupt keine Notwendigkeit, irgendwas einzuschalten."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Setz dir das Ding einfach auf und die Nanobots dringen in deinen Körper ein."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sie werden sich mit deinen Augen verbinden und Daten mit Hilfe der Sehnerven an dein Gehirn weiterleiten. Hübsch, was?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Alles innerhalb von 7 Metern wird erfasst und bei Bedarf auf deine Retinas projiziert."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="(Drücke einfach TAB, um die Karte einzublenden.)"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0
+ChangeOption=4 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" Sie sagten, Sie machen diese Dinger selbst? Wie stellen Sie das an?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=154  PositionY=150  
+Subtitle="Oh, ich war schon immer ein Technikfreak. Und ich habe die Blaupausen aus der Zeit vor dem Großen Angriff."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Man kann nichts mehr aus Katalogen bestellen, weißt du."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die einzige Quelle für diese kleinen Dingerchen ist hier. Bei mir!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText=" Nanotechnologie? Ist das nicht gefährlich?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=247  PositionY=299  
+Subtitle="Keine Spur Mann, glaub mir. Nimm nicht alles ernst, was du vielleicht so gehört hast."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Das ist supersichere und erprobte Technologie. Überhaupt kein Risiko! Echt!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Keine Gefahr, dass dein Kopf von einem nanotechnischen Alptraum aufgefressen wird oder irgendwas lächerliches in der Art."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Vertrau mir! Ich bin dein bester Freund und würde dich nie anlügen! Niemals!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" Ich trau Ihnen nicht!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WAS? Aber ich bin dein bester Freund! Du must mir vertrauen!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" Ich glaube Ihnen immer noch nicht. Sie verkaufen Mist an die Leute."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WAS?! Schön, jetzt du kannst die guten Schnäppchen vergessen! Ich will gar nicht mehr mit dir handeln!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich bin nicht mehr länger dein bester Freund... verschwinde, Dreckskerl!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+DoSomethingExtra="PlantCookie:skippy_angry"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Warum sind Sie so freundlich?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Weil du mein bester Freund bist!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich kümmere mich immer gut um meine speziellen Kumpels!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" Sie sind nur deshalb so freundlich, um mir diese Dinger anzudrehen, stimmts?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nein, nie! Ich wäre nie im Leben so oberflächlich!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich bin so freundlich, weil ich dich mag."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=90  OptionText="CHECK FOR SKIPPY ANGER"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=90 ChangeToValue=0
+OnCondition="CookieIsPlanted:skippy_angry:" JumpToOption=91 ElseGoto=92
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=91  OptionText="YEAH, HE IS ANGRY."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="Was? Du wieder? Ich will dich hier nicht haben, hau ab."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=91 ChangeToValue=0
+ChangeOption=99 ChangeToValue=0
+ChangeOption=98 ChangeToValue=1
+ChangeOption=21 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=92  OptionText="NO, HE IS NOT ANGRY"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=92 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=98  OptionText=" Bis irgendwann."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Komm ja nicht wieder... falsches Aas!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=98 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" Bis bald, mein Freund."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=321  PositionY=222  
+Subtitle="Ja, wir werden uns wiedersehen, mein Freund. Und ich werde wieder gute Angebote für dich haben!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

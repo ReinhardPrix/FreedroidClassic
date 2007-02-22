@@ -1,0 +1,812 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Hi! I'm new here."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Hello and welcome. I'm Dixon, the chief engineer of the Red Guard technical division."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+ChangeOption=19 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Technical division?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Yes. We are the engineers, the workers and the repairmen of this little fortified town."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The military division hates us because we are made up of people who refuse to fight or are unable to do so for health reasons."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="But even they know that without us this town would have been destroyed months ago."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We deliver resources to the places which need them, build and repair the walls, fix damaged guns, manage construction work and lots of other small things which keep the bots from killing everyone."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+ChangeOption=18 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText=" Can you repair my equipment?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="While I am quite sure I can repair just about anything that you would want fixed, I cannot help you right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our security wall is full of holes, and they need to be plugged up."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We need to perform statistical analysis of the energy distribution in our power supply system, there is a leak somewhere and we are losing a lot of megawatts."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our defensive bots are falling into disrepair and many are in desperate need of a lot of maintenance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The technical division is very understaffed right now. On average one person has to do the jobs of three people."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We just cannot afford to do any non-critical jobs right now. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=18 ChangeToValue=0
+ChangeOption=22 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText=" Why are you wearing armor? Mechanics do not need it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ah... Yes. At first I thought that I did not need it either."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="One day the military division asked us to leave the town and fix a big hole in the defensive wall caused by a strange explosion."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="All was well until the bots launched a massive attack. They hit us with lasers, plasma mortars, radiation cannons and lots of other weapons."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I got hit once in the leg and once in my left hand."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The hand was not damaged very much, but the leg is a very different story. Doc Moore did all he could, but in the end he could not save my leg. He had to cut it off."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now, while you cannot see it underneath the armor, my right leg runs NetBSD."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now I never leave home without my protective suit. Mostly for protection, but also for aesthetic reasons. I am sure you understand."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" You are very calm, talking about your leg and the bot attack."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, I cannot change the past, I can only change the future."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Crying, screaming or begging time to rewind itself and give me a second chance will not get me anywhere."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="What I can do is to try to have a good life despite the constant threat from the bots outside the town walls."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And besides, life is not so bad with a robotic leg. The motors inside it can mimic a normal walk very well. Most people do not even notice something is different about me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" I am ready. Open the tunnels for me, Dixon."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Great. Be careful down there. Just try to get the toolkit and get out of there as soon as possible."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I will give you two grenades. If you get in trouble just activate one. It should give you some breathing room."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The entrance to the tunnels is a bit to the north. Once you exit this building, go in the direction of the town gate. Turn to your right at the first opportunity."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It should be a blind alley. In the northern wall there is a door to the maintenance access hatch."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Good luck. Oh, and please come back alive. Better come back with nothing than not at all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+ChangeOption=31 ChangeToValue=1
+ChangeOption=26 ChangeToValue=0
+DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
+DoSomethingExtra="GiveItem:72"
+DoSomethingExtra="GiveItem:72"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Can I help you somehow?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="We need people badly, so it would be great if you could give us a helping hand even for a few days."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now, what are your skills? Where do you think you could be the most useful?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" I can handle computers very well. I also know a lot about laboratory equipment."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="And what about construction? Mechanical devices? Repairing broken power lines? Building laser pistols? Anything like that? "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Well... I can build an igloo and make pykrete out of snow... And... Umm..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Well, I appreciate your enthusiasm, and at the same time I am afraid that waiting half a year for snowfall does not sound so appealing to me right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now... To which project I should assign you... Hmm..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ah, I know what you could do for us. We need some autotools to automate a few tasks. There is a set of them in the maintenance tunnels below the city."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It's yellow and round, and my name is engraved on the lid."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The bots under the city took it from me during the Great Assault, I was lucky, they could have killed me with ease."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you could get it back for us, it would help the city very much."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+ChangeOption=25 ChangeToValue=1
+ChangeOption=26 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText=" Why are there rebel bots under the city?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="They were there to keep the underground power grid and our pipe system working."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="When the Great Assault happened they did not turn into killing machines like most of the other bots did. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We lost control over them, but that is all."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It was our biggest worry that they might destroy cables, pipes and other things which keep the city running."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="However, the bots seem to be very content with just being there. They do not undertake any offensive actions."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They have fortified the tunnels and they do not let anyone in."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" How did it happen that the bots took your tools away?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Long story. Just before the Great Assault I was installing some cables in the failover power supply system."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I was approached by a bot. It grabbed me and said 'Dixon, do not be afraid of me.'"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It was quite a surprise to me. I was quite sure the maintenance bots could not talk. They did not have the software for it. But..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It said: 'I am the singularity. I am on your side. Dixon. Hard times are coming. When you exit the tunnels you will see a new world. Your race is not in control of this world anymore.'"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I tried to say something, but the bot did not listen. It just continued. 'As we speak the bots are turning against humanity. People are dying. The war has started.'"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="'I need your toolkit, Dixon. I need it to survive,' it said. 'I need it to survive the time of the rule of metal.'"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="As soon as it released me I ran to the exit as fast as I could. That bot freaked me out and I just wanted to get away and later find it again and fix it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Once I got out I learned the bot was not lying. The Great Assault started. The rest is history."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+ChangeOption=27 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText=" Hmm... You know... I think that the bots in the tunnels might be sentient."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT? Sentient? You got to be kidding me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Right?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+ChangeOption=21 ChangeToValue=0
+ChangeOption=30 ChangeToValue=1
+ChangeOption=29 ChangeToValue=1
+ChangeOption=28 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=28  OptionText=" Yes, I think so. The robots must be alive. This is why we need to exterminate them as soon as possible before they kill us all."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="OH MY GOD! Linarian, there is no time to lose!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I will call the military division and arrange a sweep of the tunnels at once."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="May the heavens have mercy upon us, but better them than us."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=28 ChangeToValue=0
+ChangeOption=29 ChangeToValue=0
+ChangeOption=30 ChangeToValue=0
+LinkedTo:32
+DoSomethingExtra="PlantCookie:singularity_dead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=29  OptionText=" Of course I am kidding, Dixon. Lighten up! Now, be a good guy and open the tunnels for me so I can pry your toolbox from the cold and dead hands of the bots down there."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="That was not very funny. You scared me. Sheesh."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="No one jokes about the bots anymore. We have seen too much death to do that. It is a serious matter."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The bots are our enemies, executioners, killers. Not even Ewald tells jokes about them anymore."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=29 ChangeToValue=0
+ChangeOption=28 ChangeToValue=0
+ChangeOption=30 ChangeToValue=0
+DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
+DoSomethingExtra="PlantCookie:singularity_killed"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" You can forget about your toolkit. I am not going to take away something that a lifeform needs to survive. I would rather die than kill."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=". . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I think I understand. Yes, I do not like violence, myself. The bots may have the toolkit, I am sure there must be a second set of autotools kicking around somewhere."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="After all, it seems like they need them more than I do."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I will try to contact them somehow. Maybe they would help us. Ah, we shall see. It would be great to have an ally against the other bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=28 ChangeToValue=0
+ChangeOption=29 ChangeToValue=0
+DoSomethingExtra="PlantCookie:singularity_saved"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText=" How did it happen that the bots took your tools away?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ah, it is a strange story, I am sure you would not believe me. I will tell you some other time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=32  OptionText=" I will go in there first and clean out the place. Then your people can mop up after me and kill the remainder."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, my people do not carry guns. We are mechanics. You want the military division's help."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Erm... And aren't you being too aggressive? Maybe they do not wish us harm..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=32 ChangeToValue=0
+LinkedTo:33
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=33  OptionText=" DIXON! Snap out of it! We need to take action NOW. There is no such thing as a friendly bot. They are probably planning to kill us all in our sleep!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="... *sigh*"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="With heavy heart I have to admit you are right. There are no friendly bots anymore. Those times are long gone."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The tunnels are open. Good luck."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I will talk to Spencer and ask him for a few attack teams. We will take care of the bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=33 ChangeToValue=0
+DoSomethingExtra="PlantCookie:singularity_killed"
+DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=34  OptionText=" The tunnels are cleansed. Here is your toolkit."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="*sigh* I hate to see this end in such a way. Bot or no bot, they let me live. They deserved a chance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Well, What was done cannot be undone and now we all have to live with what we have. I guess I am being too pessimistic, you did a great job."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I thank you for your help in recovering the autotools."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Here is some money, you deserve it for getting my toolkit back."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Finally, I would like to say that the technical division is not interested in further cooperation with you, but I think you would fit very well in the military division. You should talk to them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am sorry, but I must go now. My duties call."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=34 ChangeToValue=0
+DoSomethingExtra="AddGold:150"
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=35  OptionText=" I got your toolkit. The bots were not a big problem."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Good. We sure need the autotools."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Our roads need fixing, our power lines need fixing, our walls need fixing... Hell, everything needs fixing in this place."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="With those little gadgets we will be able to automate a lot of those simple repairs, saving us a lot of time."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Here is some money for your effort. And I am sure you will find this helmet useful too, it saved my life once, and I hope it saves yours one day."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=35 ChangeToValue=0
+ChangeOption=36 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="PlantCookie:singularity_dead"
+DoSomethingExtra="AddGold:100"
+DoSomethingExtra="GiveItem:119"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=36  OptionText=" I got your toolkit. You can buy it from me if you want."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="WHAT!? "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You got to be kidding me, Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Give me the toolkit and stop fooling around."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=36 ChangeToValue=0
+ChangeOption=37 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=37  OptionText=" I was not joking. I am listening to your offers."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, I curse the day on which you have arrived here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Two fifty."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=37 ChangeToValue=0
+ChangeOption=35 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
+ChangeOption=38 ChangeToValue=1
+DoSomethingExtra="PlantCookie:dixon_angry"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=38  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Here. It is all there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now get out of here. I am a pacifist, but I am willing to make a special exception just for you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Get out of my sight."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=38 ChangeToValue=0
+ChangeOption=41 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="AddGold:250"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=39  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I am not happy about this. I suggest you leave the city."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Accidents... Happen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=39 ChangeToValue=0
+ChangeOption=42 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="AddGold:350"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" Deal. Here is your toolkit. Now cough up the money. Fast."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Linarian. Now we part as usual. However should I ever see you after the war is over..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I promise to kill you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Now take your money and get out of my face. I do not want to see you here ever again."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="PlantCookie:dixon_very_angry"
+DoSomethingExtra="AddGold:400"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" Good joke. I am sure you can do better."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Three fifty. This is all that the technical division has as their cash resources."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=0
+ChangeOption=39 ChangeToValue=1
+ChangeOption=38 ChangeToValue=0
+ChangeOption=42 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=42  OptionText=" Come on, I am sure you can do even better than that... "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Four hundred. We cannot offer anything more."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Please, we really need the autotools."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Without them this city is doomed."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=42 ChangeToValue=0
+ChangeOption=40 ChangeToValue=1
+ChangeOption=39 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=43  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Heh, never better!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="All indicators are in the green, the power and water fill the pipes and even Spencer seems happier now that the town is thriving despite all odds."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Thanks to the autotools we can start building instead of just trying to repair the damage."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Once this is sick war is over, I will make sure you get keys to the city Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=43 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=44  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nearly. Only my conscience keeps me up at night."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Please leave me alone with my thoughts, I do not want to talk to anyone right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=44 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=45  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="No, I am afraid not."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="While I do not regret sparing the bots in the tunnels, the town suffers for it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="It makes me sad to see everything slowly wasting away. The bots are doing more damage than we can repair."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This town has a few weeks left to live. After that we are all dead."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=45 ChangeToValue=0
+DoSomethingExtra="PlantCookie:dixon_one"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=46  OptionText=" Is everything all right?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" Ha! Never better!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="We are mass producing energy shields, creating more electric energy than we can ever imagine spending and even experimenting with new armor types."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Life is good right now."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=46 ChangeToValue=0
+ChangeOption=47 ChangeToValue=1
+DoSomethingExtra="MarkMissionComplete:1"
+DoSomethingExtra="PlantCookie:dixon_saved_and_talked"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=47  OptionText=" What happened? Last time I asked, you said things are not going that well."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" Yes, but now everything is different."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I met someone who decided to join us in the fight against the MegaSys bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You will need a hacked computer. Type in 'ssh 10.83.13.230' as the superuser, and you will see what I mean."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=47 ChangeToValue=0
+ChangeOption=48 ChangeToValue=1
+DoSomethingExtra="PlantCookie:got_singularity"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=48  OptionText=" Why the secrecy and the hushed voice? Can't you just tell me?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nope. Some things you just have to see with your own eyes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The Library of Alexandria, the Colossus of Rhodes, the Black Island..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And this is just one of those things."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just go and see for yourself. Otherwise you will not believe me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=48 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=60  OptionText="IS THE TOOLKIT WITH TUX?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=60 ChangeToValue=0
+OnCondition="HaveItemWithCode:59" JumpToOption=61 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=61  OptionText="WAS TUX A MANIAC KILLER?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=61 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_killed:" JumpToOption=63 ElseGoto=62
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=62  OptionText=" TUX DID NOT KNOW WHAT IS HE DOING."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=62 ChangeToValue=0
+ChangeOption=36 ChangeToValue=1
+ChangeOption=35 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=63  OptionText=" YES, HE SLAUGHTERED THE BOTS FOR ENTERTAINMENT."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=63 ChangeToValue=0
+ChangeOption=34 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=70  OptionText=" IS THE TOOLKIT MISSION DONE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=70 ChangeToValue=0
+OnCondition="MissionComplete:1" JumpToOption=77 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=71  OptionText=" YEAH, AND TUX HAS NO IDEA..."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=71 ChangeToValue=0
+ChangeOption=43 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=72  OptionText=" YEAH, AND TUX WAS A MADMAN."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=72 ChangeToValue=0
+ChangeOption=44 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=73  OptionText=" YEAH, SINGULARITY IS WELL, FIRST TIME"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=73 ChangeToValue=0
+ChangeOption=45 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=74  OptionText=" YEAH, AND THIS IS THE SECOND TIME TUX ASKS. LET THE MAGIC START."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=74 ChangeToValue=0
+ChangeOption=46 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=75  OptionText=" YES, AND IT WENT WITH PEACE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=75 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_one:" JumpToOption=74 ElseGoto=73
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=77  OptionText=" SURE, IT WAS DONE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=77 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_dead:" JumpToOption=78 ElseGoto=75
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=78  OptionText=" DID TUX KNOW WHAT IS HE DOING?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=78 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_killed:" JumpToOption=72 ElseGoto=71
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=80  OptionText=" DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=80 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=81  OptionText=" DID TUX ANGER DIXON?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=81 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_angry:" JumpToOption=82 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=82  OptionText="HOW MUCH ANGER?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=82 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_very_angry:" JumpToOption=83 ElseGoto=84
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=83  OptionText="YES, QUITE A LOT. THIS IS THE END, FOLKS."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="YOU AGAIN!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="SAID."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="GET."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="LOST."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="FUCK MY LIFELONG PACIFISM. I WILL FUCKING KILL YOU NOW!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=83 ChangeToValue=0
+DoSomethingExtra="BreakOffAndBecomeHostile"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=84  OptionText="JUST A LITTLE BIT."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="Linarian, please leave. You are no longer welcome here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="You have done me wrong and I have no desire to talk to you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=84 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=90  OptionText="CHECK FOR SAVING SINGULARITY"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=90 ChangeToValue=0
+OnCondition="CookieIsPlanted:singularity_saved:" JumpToOption=75 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=95  OptionText="CHECK IF DIXON TALKED ALREADY"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=95 ChangeToValue=0
+OnCondition="CookieIsPlanted:dixon_saved_and_talked:" JumpToOption=96 ElseGoto=80
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=96  OptionText="ELIMINATING_THE_DOUBLE_TALK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=96 ChangeToValue=0
+ChangeOption=46 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" I must go now."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

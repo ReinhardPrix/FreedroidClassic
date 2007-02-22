@@ -1,0 +1,203 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Hello!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=399  PositionY=327  
+Subtitle="Ah, so you are the new member. Welcome. My name is Benjamin, and I take care of our ranged weaponry here in the citadel."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=0 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
+ChangeOption=2 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" What are you doing here alone? "
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=398  PositionY=247  
+Subtitle="I'm experimenting with new designs. I want to redesign the laser pistol."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="A lot of energy is wasted somewhere during firing, and I have no idea where. If I could find the source of the problem, the gun would become much more powerful."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="So far all my prototypes have failed. Mostly overheating and jamming. Sometimes I wonder if I am doing something wrong."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText=" Can you teach me how to properly use rifles and guns?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=310  PositionY=326  
+Subtitle="If anyone in this city knows more about guns than me, then I am not called Benjamin."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Of course I will need compensation for the ammunition spent in the training and for my time. Say... Hundred triangles should be enough."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=1
+DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" Did you think about somehow gathering the excess heat and using it to make the beam stronger?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=262  PositionY=176  
+Subtitle="Hmm... There might be something in that idea. I will think about it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+DoSomethingExtra="PlantCookie:Ben_better_beams:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText=" If I were you, I would focus my work on the firing rate."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=397  PositionY=112  
+Subtitle="Hmm... I will think about it. Hmm..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+ChangeOption=4 ChangeToValue=0
+DoSomethingExtra="PlantCookie:Ben_faster_shooting:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" You know, laser pistols are not a very promising weapon. I think you should work on something different."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=530  PositionY=176  
+Subtitle="Yeah, maybe you are right. I will think about it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=3 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
+DoSomethingExtra="PlantCookie:Ben_something_else:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" What weapons are available to the members of the Red Guard?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=798  PositionY=327  
+Subtitle="Well, for novice members there are simple laser and plasma pistols. They have their share of problems, but they do the trick nine times out of ten."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="For bigger bots we have bigger guns. The exterminator is the best weapon that we have. We hand them out only in case of an emergency or to highly experienced people."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+ChangeOption=8 ChangeToValue=1
+ChangeOption=7 ChangeToValue=1
+ChangeOption=9 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText=" Plasma sounds deadly."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=797  PositionY=402  
+Subtitle="It is!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="While many people find the ammunition canisters too big, and the bullets too slow. Even they cannot deny that once plasma hits, it leaves big holes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Plasma is matter, ionised gas to be exact. It also happens to be hot enough to make steel boil."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Most of new recruits hate how hard to aim this weapon is. If bullets were animals, then plasma would be a well fed cow. By the time it arrives at the target, the bot is already a mile away."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you are going to use plasma weapons you need to remember one thing: Don't let the weapon get damaged. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Even though our armor is designed to resist high temperatures, once the plasma containment module goes, you will die, along with anything within ten meters of you."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Because of all those drawbacks plasma weapons are not too popular. Quite a pity, they have great potential."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText=" Tell me more about laser weapons."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=797  PositionY=249  
+Subtitle="Laser is the technology employed in most of our weaponry. It uses a focused light beam to cause damage."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Because the beam is composed out of light, it travels REALLY fast. Also it is not affected by gravity or wind, which makes aiming easier."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="However, other than a good training tool for newbies, that design just fails to deliver."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="The shots tend to be underpowered, the gun takes a long while to power up for a shot and can overheat during intense combat."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is why I am trying to improve it, but so far I have had no success. I just feel like giving up."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=8 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText=" I am curious about the exterminator."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=883  PositionY=327  
+Subtitle="Sorry, but that is classified and confidential. I have said too much already."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" I will make it worth your while..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=882  PositionY=249  
+Subtitle="Intriguing."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin_bribe"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" I will be going then."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=660  PositionY=171  
+Subtitle="See you later!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

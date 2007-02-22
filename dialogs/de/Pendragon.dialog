@@ -1,0 +1,72 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Hi! I'm new here."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=157  PositionY=219  
+Subtitle="You don't say. I'm not living here either. I'm just on vacation. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Normally I'm a fighter. But now I try to relax, chill, take it easy and have a lot of fun."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="And in case you couldn't tell, that was sarcasm."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Could you teach me how to fight?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=265  PositionY=236  
+Subtitle="Well, I don't do that for a living, but I certainly could. For a price."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="How about... Ah, hundred bucks?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" See you later."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=261  PositionY=316  
+Subtitle="Have courage."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

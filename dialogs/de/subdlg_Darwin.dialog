@@ -1,0 +1,312 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=267  PositionY=283  
+ChangeOption=0 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
+ChangeOption=4 ChangeToValue=1
+ChangeOption=3 ChangeToValue=1
+ChangeOption=2 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Extract Entropy Inverters (costs 1 training point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=408  PositionY=189  
+ChangeOption=1 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract1:" JumpToOption=11 ElseGoto=12
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText=" Extract Plasma Transistors (costs 1 training point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=424  PositionY=396  
+ChangeOption=2 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract4:" JumpToOption=11 ElseGoto=22
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" Extract Superconductors (costs 1 training point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=428  PositionY=317  
+ChangeOption=3 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract3:" JumpToOption=11 ElseGoto=14
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText=" Extract Antimatter-Matter Converters (costs 1 training point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=421  PositionY=251  
+ChangeOption=4 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract2:" JumpToOption=11 ElseGoto=13
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" Extract Tachyon Condensators (costs 1 training point, 50 bucks)"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=430  PositionY=474  
+ChangeOption=5 ChangeToValue=0
+OnCondition="CookieIsPlanted:know_extract5:" JumpToOption=11 ElseGoto=23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=686  PositionY=264  
+Subtitle="Hmm... Entropy inverters? Simple."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Just take a hammer and hit the bot sehr hard on the head."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="When you have the head open wide, look around for a part which looks like two circles around a cube. That is what you are looking for."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractInverterSkill"
+DoSomethingExtra="PlantCookie:know_extract1:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=685  PositionY=414  
+Subtitle="Plasma transistors? Trivial."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Remove the bot's engine and look around somewhere close to the battery."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Plasma transistors are shaped like the letter Y. Just rip them out, it's safe."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=7 ChangeToValue=0
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractPlasmaTransistorSkill"
+DoSomethingExtra="PlantCookie:know_extract4:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=690  PositionY=369  
+Subtitle="Superconductors are easy to get out."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Look around the electric system. Power coils, capacitors, generators and the like. Usually there are plenty of great parts there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wear rubber gloves. Just in case, you know."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractSuperconductorSkill"
+DoSomethingExtra="PlantCookie:know_extract3:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=682  PositionY=321  
+Subtitle="Hmm... Converters are a problem."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They are easy to find, all you have to do is to get to the engine. But you must remember something very important:"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Make sure you turn the converter off before you remove it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="If you do not do that, you will only succeed in converting yourself to anti-matter. And as you know, there is no coming back from there."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractConverterSkill"
+DoSomethingExtra="PlantCookie:know_extract2:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=682  PositionY=469  
+Subtitle="Tachyons are very interesting particles. Many stories have been told about them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I have no idea why bots have them inside. They are usually not connected to anything and serve no function."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They are usually quite hot when you get them out, but they cool down quickly, so handling them is not a big deal."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="They can be installed just about anywhere, so you have to spend some time digging through the circuits to find one."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="SubtractPointsToDistribute:1"
+DoSomethingExtra="SubtractGold:50"
+DoSomethingExtra="IncreaseExtractCondensatorSkill"
+DoSomethingExtra="PlantCookie:know_extract5:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=478  PositionY=77  
+Subtitle="Nein, I told you everything I know about that. No use asking me twice, ja?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=11 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=484  PositionY=188  
+ChangeOption=12 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=15 ElseGoto=20
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=492  PositionY=252  
+ChangeOption=13 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=15 ElseGoto=19
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=492  PositionY=318  
+ChangeOption=14 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=15 ElseGoto=18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=595  PositionY=93  
+Subtitle="Kein geld, Keine hilfe."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Come back with some money."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=15 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=713  PositionY=171  
+Subtitle="You look green. Toughen up. Get some experience, kill some bots."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Then we can talk."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=16 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=568  PositionY=393  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=7 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=325  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=8 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=259  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=9 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=563  PositionY=207  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=6 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=448  
+OnCondition="PointsToDistributeAtLeast:1" JumpToOption=10 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=494  PositionY=394  
+ChangeOption=22 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=15 ElseGoto=17
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=494  PositionY=457  
+ChangeOption=23 ChangeToValue=0
+OnCondition="GoldIsLessThan:50" JumpToOption=15 ElseGoto=21
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="BACK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=419  PositionY=116  
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

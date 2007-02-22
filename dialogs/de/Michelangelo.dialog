@@ -1,0 +1,426 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Hallo! Ich bin Tux und noch neu in der Stadt. Sie müssen der Koch hier sein, richtig?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=718  PositionY=238  
+Subtitle="Hallo. Ich bin Michelangelo. Auch ich bin noch nicht so lang hier. Und ja, ich bin der Koch."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich wünschte, die Bots hätten mich einfach umgebracht. Aber ich hatte 'Glück' und bin in diesem Höllenloch gelandet."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+ChangeOption=11 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" Wie geht es Ihnen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=719  PositionY=160  
+Subtitle="Frag nicht!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="'Furchtbar' wäre eine grobe Untertreibung."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=18 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText=" Sie hören sich nicht sehr glücklich an. Was fehlt Ihnen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=717  PositionY=319  
+Subtitle="ALLES!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Schau dir nur dieses miese Nest an!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wir werden andauernd von unseren 'Rettern', der verdammten Roten Wache, herumkommandiert. Ich hoffe, dass sie alle ganz schnell an Rattenbissen zugrunde gehen und in der tiefsten Hölle landen, um für immer in heißer Lava zu schmoren!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Und die Robots halten uns auf Trab, indem sie uns töten, zerhacken, aufschlitzen, zerstückeln, zerreißen und verwunden."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die Wachen haben mir ein verdrecktes Loch überlassen, in dem ich hausen darf. Die Wände sind so dünn, dass ich dazu verdammt bin jede Nacht mit dem Gepiepe und den modemartigen Geräuschen der Roboter im Ohr einzuschlafen, durch die sie draußen kommunizieren."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Es hört sich an, als würden sie etwas singen. Jede Nacht beginnen sie ihr Lied... dank diesem elektronischen Chor kann ich niemals schlafen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Habe ich schon erwähnt, dass die einzige Nahrung, über die wir verfügen, aus einer Art widerwärtiger Armee-Rationen besteht? Allein durch den Geruch könnte ich kotzen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=18 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+ChangeOption=19 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText=" Lass dich nicht hängen! Alles wird gut! Bald werden glücklichere Tage anbrechen! Hurra!!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=797  PositionY=319  
+Subtitle="..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Linarianer, hast du dich mit psychoaktiven Pillen vollgestopft oder was?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Krieg dich wieder ein - die Situation ist übel und es bringt nichts so zu tun, als ob es anders wäre."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Du bist Koch..! Hör auf herumzulästern wegen dem schlechten Essen. Bereite dir selbst etwas zu."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=634  PositionY=319  
+Subtitle="Ich kann nicht! Mein schöner Macrowellen-Ofen hat keinen Strom mehr. Diese bösartigen Widerlinge von der Roten Wache haben meine Uranium-Batterie konfisziert."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich würde sie am liebsten alle mit bloßen Händen umbringen! Das hätten sie verdient."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wenn ich nur etwas Dilizium hätte, als Ersatz-Stromquelle..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=80 ChangeToValue=1
+ChangeOption=70 ChangeToValue=1
+ChangeOption=40 ChangeToValue=1
+ChangeOption=41 ChangeToValue=1
+ChangeOption=42 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=70  OptionText=" Warum schickst du niemanden los, um welches zu holen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=634  PositionY=400  
+Subtitle="Das hab ich."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Gestern fand eine Wachpatrouille ein paar kleine Fetzen von ihm, und viel getrocknetes Blut."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die Blechfritzen haben Blutsalat aus ihm gemacht."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=70 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=80  OptionText=" Ich kann dir Dilizium bringen."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=557  PositionY=319  
+Subtitle="Bist du zu lange in der Sonne gewesen, Linarianer?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Schau, es gibt dutzende Möglichkeiten, sich selbst auszulöschen und die meisten davon sind weniger schmerzhaft, als von einem Robot geschlachtet zu werden."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wenn du lebensmüde bist, steig einfach in einen Atomreaktor oder sowas. Das ist um soviel einfacher."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=80 ChangeToValue=0
+ChangeOption=81 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=81  OptionText=" Ich werde es schon schaffen, keine Sorge."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=476  PositionY=318  
+Subtitle="Weißt du, wie Bots handeln? Manche wollen dich so schnell wie möglich killen... andere wollen das Gleiche - nur viel langsamer."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich habe Leichen gesehen, an denen fast alle Finger ausgerissen waren. Menschen, mit durch ein großes Werkzeug herausgebohrten Augen!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich roch verbranntes Fleisch und hörte die Schreie der Gefangenen, als sie außerhalb der Stadtmauern lebendig abgefackelt wurden."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die Robos kennen keine Gnade. Die können so was nicht einmal definieren, diese verfluchten Schrottmetall-Teufel."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Lass dich nicht aufhalten, Linarianer. Aber stell sicher, dass du auch wirklich tot bist, bevor sie anfangen dich umzubringen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=81 ChangeToValue=0
+ChangeOption=19 ChangeToValue=0
+ChangeOption=82 ChangeToValue=1
+ChangeOption=40 ChangeToValue=0
+ChangeOption=42 ChangeToValue=0
+ChangeOption=41 ChangeToValue=0
+ChangeOption=70 ChangeToValue=0
+DoSomethingExtra="AssignMission:2"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Schon etwas zu essen bekommen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=1174  PositionY=157  
+Subtitle="Ich hatte einige Delikatessen zubereitet, aber die gefräßigen Scheusale der Roten Wache haben alles verschlungen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Aber nicht weiter schlimm, ich habe eine zweite Ladung Nahrungswürfel im Ofen, und sie sind bald fertig."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich nehme an, die Stimmung in diesem Kaff wird sich heben, sobald Meisterkoch Michelangelo in Aktion tritt. Ha!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText=" Kann ich hier etwas zu essen kaufen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=799  PositionY=239  
+Subtitle="Hier gibt es kein Essen, nur die ekelerregenden Fresspakete aus Armeebeständen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Vollständig aus künstlichen Nährstoffen und krebsfördernden Geschmacksstoffen hergestellt. Sogar beim Militär hat man sie gehasst."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Es ist besser als verhungern, aber einige Menschen haben bereits Selbstmord begangen, weil dieses abartige Zeug das einzige ist, was zu essen da ist."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich kann dir was davon geben, aber es ist nicht wert, Essen genannt zu werden."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=11 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText=" Ich will ein paar appetitliche Armee-Rationen!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=882  PositionY=239  
+Subtitle="Ich sollte das besser allen Neulingen vorlesen. Aufgepasst:"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="'Bitte beachten Sie, dass die Armee-Mahlzeit Modell #23, welche Sie im Begriff sind zu verzehren, 'wie erhalten' zur Verfügung gestellt wird, und ohne Garantie jedweder Art."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Dies schließt eine suggerierte Garantie der Essbarkeit oder Eignung für einen besonderen Zweck mit ein. Jegliche Risiken, auch betreffend der Qualität des Produkts, liegen bei Ihnen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sollte sich die Armee-Mahlzeit Modell #23 als giftig erweisen, erklären Sie sich hiermit bereit, die Kosten für lebenserhaltende Maßnahmen durch das medizinische Personal der Kolonie oder die Kosten Ihrer Einäscherung in unseren atomaren Brennkammern zu tragen.'"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Tja, das war alles. Hier ist der Abfall, wie gewünscht. Guten Appetit."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=12 ChangeToValue=0
+LinkedTo:27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText=" Hmm... knusprig... das ist... Oh... Nein! Äärrx... Hilfe!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=882  PositionY=325  
+Subtitle="Oh ja! Ich habe dich gewarnt, also gib mir keine Schuld."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+LinkedTo:28
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=28  OptionText=" Wüürrgh!! ... das... das kann niemals Essen sein!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=970  PositionY=325  
+Subtitle="Das wissen wir bereits. Hier gibt es nichts anderes zu essen, daher hoffe ich, dass du dich an den Geschmack gewöhnst."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Das Zeug sieht nur schön aus und hat eine nette Farbe..!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Aber wie du siehst, ist Farbe nicht essbar. Nur der Geschmack zählt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=28 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=29  OptionText=" Ich habe das gewünschte Dilizium."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=1129  PositionY=196  
+Subtitle="Wirklich? ...Ich dachte, du wärst längst tot, aber du kommst nicht nur lebend zurück sondern bringst auch noch Energiekristalle für meinen geliebten Ofen mit!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich werde sofort zu kochen anfangen.
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Vielen Dank, Linarianer! Sobald die Nahrungswürfel fertig sind kann ich damit anfangen, sie an die hungrigen Bürger verteilen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=29 ChangeToValue=0
+DoSomethingExtra="MarkMissionComplete:2"
+DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored Michaelangelo's power supply:"
+DoSomethingExtra="AddExperienceBonus:350"
+DoSomethingExtra="OpenQuestDiaryEntry:M2E1:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText="HAVE THE CRYSTALS"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1216  PositionY=125  
+ChangeOption=30 ChangeToValue=0
+OnCondition="HaveItemWithCode:74" JumpToOption=32 ElseGoto=33
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText=" Was brauchen Sie gleich nochmal?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=1128  PositionY=60  
+Subtitle="Besorg mir Dilizium, bevor die ganze dämliche Kolonie Massenselbstmord wegen diesem grauenhaften Fraß begeht."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Natürlich könnte der abscheuliche Glibber uns schon viel früher erledigen. Ich schwöre, ich habe ein paar Mal gesehen, wie das Zeug im Dunkeln glühte und wie es sich von meinem Teller davonstehlen wollte."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=32  OptionText="TUX GIVES THE CRYSTALS"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1215  PositionY=195  
+ChangeOption=32 ChangeToValue=0
+ChangeOption=82 ChangeToValue=0
+ChangeOption=29 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=33  OptionText="TUX DOES NOT HAVE THE CRYSTALS"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1216  PositionY=60  
+ChangeOption=33 ChangeToValue=0
+ChangeOption=31 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=34  OptionText="MISSION IS DONE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1061  PositionY=198  
+ChangeOption=34 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=35 ElseGoto=36
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=35  OptionText="YEAH, MISSION IS DONE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1129  PositionY=123  
+ChangeOption=35 ChangeToValue=0
+ChangeOption=31 ChangeToValue=0
+ChangeOption=29 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=39 ElseGoto=36
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=36  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1062  PositionY=122  
+ChangeOption=36 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=37  OptionText="TUX STARTED ON THE QUEST"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1062  PositionY=58  
+ChangeOption=37 ChangeToValue=0
+OnCondition="MissionAssigned:2" JumpToOption=36 ElseGoto=35
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=82  OptionText=" Wo kann ich solche Kristalle finden?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=476  PositionY=396  
+Subtitle="Es gibt östlich von hier eine alte Dilizium-Mine. Ich bin mir sicher, dass es dort eine Menge von dem Kram gibt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich sage den Wachen bescheid, sie werden das Osttor für dich öffnen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Viel Glück. Versuch, dich nicht umbringen zu lassen!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=82 ChangeToValue=0
+DoSomethingExtra="ExecuteActionWithLabel:unlock_east_gate_of_town"
+DoSomethingExtra="AssignMission:2"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=39  OptionText="MISSION IS DONE #2"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1174  PositionY=91  
+ChangeOption=39 ChangeToValue=0
+ChangeOption=24 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" Was ist das, Dilizium?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=633  PositionY=239  
+Subtitle="Das weißt du nicht? Ich glaubte immer, Linarianer wären unübertroffen in ihrer Kenntnis des Universums. Wie auch immer..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Dilizium ist ein Stoff, der für gewöhnlich in Form eines kleinen roten Kristalls in Erscheinung tritt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Irgendwie erzeugt und speichert es erstaunliche Mengen an elektrischer Energie. Einzelheiten sind mir nicht bekannt; ich bin Koch, kein Quantenphysiker."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Schon ein kleiner Kristall würde meinen Ofen für Wochen mit Strom versorgen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" Ich habe eine Idee... mach ein Feuer, um die Gerichte für die Siedler zuzubereiten."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=555  PositionY=242  
+Subtitle="Netter Einfall, aber es gibt da ein paar größere Hindernisse..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Wir sind eine Stadt mit 450 hungrigen Menschen. Das wäre notwendigerweise ein sehr großes Feuer, um eine ausreichende Hitze für so viele Mahlzeiten zu erzeugen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Außerdem gibt es nichts brennbares innerhalb des Verteidigungswalls. Wenn du willst kannst du losgehen und versuchen, ein paar Bäume in der nördlichen Waldregion zu fällen. Allerdings stehen die Chancen nicht schlecht, dass die Blechmänner DICH fällen, bevor du eine Chance hast, dein Beil auch nur einmal zu schwingen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Zudem sind die Esswürfel, die wir haben, für Makrowellen optimiert. Würden wir sie ins Feuer halten, sie würden sich einfach entzünden, nicht etwa braten."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Kein Ofen heißt, vorgekochtes Essen wird benötigt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Und die einzige Nahrung solcher Art hier ist die verabscheute Mititär-Pampe."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=42  OptionText=" Sag den Jungs von der Roten Wache, dass du deine Batterie wieder zurück haben willst."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=558  PositionY=397  
+Subtitle="Das hab ich."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Man sagte mir, sie wäre bereits als Brennstoff in den Reaktor gewandert."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=42 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" Ich verabschiede mich."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=640  PositionY=162  
+Subtitle="Ciao."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
