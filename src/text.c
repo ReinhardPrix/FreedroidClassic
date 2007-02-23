@@ -663,9 +663,8 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	
 	tmp++;
 	
-	if (clip)
-	    if(ImprovedCheckLineBreak( tmp , clip , text_stretch ) == 1)   // dont write over right border 
-		{
+        if(ImprovedCheckLineBreak( tmp , clip , text_stretch ) == 1)   // dont write over right border 
+		{ /*THE CALL ABOVE HAS DONE THE CARRIAGE RETURN FOR US !!!*/
 		line_nb++;
 		}
 	
@@ -714,17 +713,31 @@ DisplayChar (unsigned char c)
 	if ( ! display_char_disabled ) 
 		PutChar ( Screen, MyCursorX, MyCursorY, c );
 	}
-    else
+    else if(c > 128)
 	{
-	PutChar ( Screen, MyCursorX, MyCursorY, 127 );
-	switch(c)
+	if ( c < 0xE0 ) //then we are working on a ISO8859-15 higher case character
 		{
-		case 0xe4: PutChar ( Screen, MyCursorX, MyCursorY, 'a' ); break;
-	        case 0xfc: PutChar ( Screen, MyCursorX, MyCursorY, 'u' ); break;
-		case 0xeb: PutChar ( Screen, MyCursorX, MyCursorY, 'e' ); break;
-		case 0xf6: PutChar ( Screen, MyCursorX, MyCursorY, 'o' ); break;
+		PutChar ( Screen, MyCursorX, MyCursorY - 3, 127 );
+		switch ( c )
+		    {
+		    case 0xc4: PutChar ( Screen, MyCursorX, MyCursorY, 'A' ); break;
+	            case 0xdc: PutChar ( Screen, MyCursorX, MyCursorY, 'U' ); break;
+		    case 0xcb: PutChar ( Screen, MyCursorX, MyCursorY, 'E' ); break;
+		    case 0xd6: PutChar ( Screen, MyCursorX, MyCursorY, 'O' ); break;
+		    }
+		c = 'A';
 		}
-	c = 'a';
+	else {
+		PutChar ( Screen, MyCursorX, MyCursorY, 127 );
+		switch(c)
+			{
+			case 0xe4: PutChar ( Screen, MyCursorX, MyCursorY, 'a' ); break;
+		        case 0xfc: PutChar ( Screen, MyCursorX, MyCursorY, 'u' ); break;
+			case 0xeb: PutChar ( Screen, MyCursorX, MyCursorY, 'e' ); break;
+			case 0xf6: PutChar ( Screen, MyCursorX, MyCursorY, 'o' ); break;
+			}
+		c = 'a';
+	     }
 	}
 
     
@@ -753,7 +766,7 @@ DisplayChar (unsigned char c)
  * ah: added return value : 1 if carriage return was done, FALSE otherwise
  * ---------------------------------------------------------------------- */
 int
-ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch )
+ImprovedCheckLineBreak (unsigned char* Resttext, const SDL_Rect *clip, float text_stretch )
 {
     int i;
     int NeededSpace=0;
@@ -779,7 +792,7 @@ ImprovedCheckLineBreak (char* Resttext, const SDL_Rect *clip, float text_stretch
 	}
     }
 return 0;
-}; // int ImprovedCheckLineBreak(void)
+}; // int ImprovedCheckLineBreak()
 
 /* -----------------------------------------------------------------
  * This function reads a string of "MaxLen" from User-input, and 

@@ -716,7 +716,7 @@ EXTERN void display_current_chat_protocol ( int background_picture_code , enemy*
 EXTERN void DisplayChar (unsigned char c);
 EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
 
-EXTERN int ImprovedCheckLineBreak(char *text, const SDL_Rect *clip , float text_stretch );
+EXTERN int ImprovedCheckLineBreak(unsigned char *text, const SDL_Rect *clip , float text_stretch );
 EXTERN char *PreviousLine (char *textstart, char *text);
 EXTERN char *NextLine (char *text);
 EXTERN char *GetString ( int max_len , int echo , int background_code , const char* text_for_overhead_promt ) ;

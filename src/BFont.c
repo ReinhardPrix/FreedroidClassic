@@ -299,7 +299,10 @@ SetFontHeight (BFont_Info * Font, int height)
 int
 CharWidth (BFont_Info * Font, int c)
 {
-  return Font->Chars[c].w;
+if(c > 128)
+	c = 'a';
+
+return Font->Chars[c].w;
 }
 
 /* ----------------------------------------------------------------------
