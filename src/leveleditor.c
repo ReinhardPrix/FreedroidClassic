@@ -2431,7 +2431,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	    case SAVE_LEVEL_POSITION:
 		while (EnterPressed() || SpacePressed() ) ;
 		close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-		SaveShip("../map/Asteroid.maps");
+		SaveShip(find_file("Asteroid.maps", MAP_DIR, FALSE));
 		CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		our_SDL_flip_wrapper ( Screen );
 		while (!EnterPressed() && !SpacePressed() ) ;
@@ -4714,7 +4714,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-	    SaveShip("../map/Asteroid.maps");
+	    SaveShip(find_file("Asteroid.maps", MAP_DIR, FALSE));
 	    
 	    // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 	    // our_SDL_flip_wrapper ( Screen );
