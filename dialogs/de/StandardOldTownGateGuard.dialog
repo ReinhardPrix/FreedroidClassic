@@ -30,16 +30,16 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Guten Tag, ich bin noch neu hier..."
+New Option Nr=0  OptionText=" Guten Tag, ich suche hier vorübergehend Schutz..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=43  PositionY=138  
-Subtitle="Ah, ein Neuankömmling. Ich sehe, Sie sind ziemlich ruppig von meinem Freund am Tor behandelt worden? Entschuldigen Sie ihn bitte; er hat seine kleine Schwester beim Grossen Angriff verloren - er ist nie darüber hinweggekommen."
+Subtitle="Ah, ein Neuankömmling. Ich sehe, Sie sind ziemlich ruppig von meinem Freund am Tor behandelt worden? Entschuldigen Sie ihn bitte, er hat seine kleine Schwester beim Großen Angriff verloren - er ist nie darüber hinweggekommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also, Fremder, seien Sie hier willkommen. Sie werden vielleicht mit Chandra oder Spencer sprechen wollen - diese beiden können Ihnen einiges über unsere gegenwärtige Lage erzählen."
+Subtitle="Also Fremder, seien Sie hier willkommen. Sie werden vielleicht mit Chandra oder Spencer sprechen wollen - diese beiden können Ihnen einiges über unsere gegenwärtige Lage erzählen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Stadt wird derzeit von der Roten Wache regiert. Wir stellen die Polizei und die Soldaten hier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es gibt hier nur ein Gesetz, das Aussenstehende angeht: Sei kein Idiot!"
+Subtitle="Es gibt hier nur ein Gesetz das Außenstehende angeht: Sei kein Idiot!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich denke, das reicht Ihnen erst einmal als Einführung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -64,7 +64,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Ich muss dann weiter."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=171  PositionY=138  
-Subtitle="Auf Wiedersehen."
+Subtitle="Seien Sie wachsam, mein Freund."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

@@ -35,7 +35,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=133  
 Subtitle="Guten Tag. Bruce der Name."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ja, ich bin o.k."
+Subtitle="Ja, ich bin OK."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Sie reden nicht besonders viel, wie?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=214  PositionY=229  
-Subtitle="Nein, ich bin einfach zu müde jetzt. Ich bin seit Wochen in der Mine am schuften."
+Subtitle="Nein, ich bin einfach zu müde jetzt. Seit Wochen bin ich in der Mine am schuften."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich fühle mich wirklich fertig. Es wäre vielleicht besser, wenn Sie ein andermal wiederkommen würden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -72,7 +72,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=302  PositionY=228  
 Subtitle="Weil ich muss! Die Rote Wache zwingt jeden, bis zur Erschöpfung zu arbeiten!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn man sich keinen vollen Arbeitszyklus abrackert, ist man in grossen Schwierigkeiten."
+Subtitle="Wenn man sich keinen vollen Arbeitszyklus abrackert, ist man in großen Schwierigkeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Aber ich habe keine Wahl. Ich will kein Soldat mehr sein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -94,14 +94,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Also gut... na los, jetzt reden Sie schon!"
+New Option Nr=5  OptionText=" Also gut, wie Sie meinen..... na los, jetzt reden Sie schon!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=498  PositionY=227  
 Subtitle="Es sind sehr schmerzhafte Erinnerungen aus der Vergangenheit..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nach dem Grossen Angriff trat ich der Roten Wache bei. Sie brauchten Verstärkung und suchten Freiwillige."
+Subtitle="Nach dem Großen Angriff trat ich der Roten Wache bei. Sie brauchten Verstärkung und suchten Freiwillige."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich hatte dort seit einer Weile gedient und man liess mich sogar einen Exterminator tragen. Aber dann, nach einem fehlgeschlagenen Auftrag, nahm ich meinen Abschied und habe nie wieder eine Uniform getragen."
+Subtitle="Ich hatte dort seit einer Weile gedient und man ließ mich sogar einen Exterminator tragen. Aber dann, nach einem fehlgeschlagenen Auftrag, nahm ich meinen Abschied und habe nie wieder eine Uniform getragen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=98 ChangeToValue=1
@@ -118,7 +118,7 @@ Subtitle="Das ist die beste Waffe, die der Roten Wache gegen die Blechmonster zu
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ein direkter Treffer aus einem dieser Gewehre reicht aus, um die meisten Bots in Altmetall zu verwandeln."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Viele der grossen Siege der Roten Wache verdanken wir dem Exterminator."
+Subtitle="Viele der großen Siege der Roten Wache verdanken wir dem Exterminator."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Natürlich können ihm, wegen seines kleinen Munitionsclips und seiner fürchterlich langen Ladezeit, genausoviele Todesfälle zugeschrieben werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -132,13 +132,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=592  PositionY=227  
 Subtitle="Wir waren zu sechst. Ich, Wilber, Anderson und drei weitere. Ich kann mich an ihre Namen nicht mehr erinnern. Wir waren Team Nummer 9."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es war nur ein routinemässiger Spähereinsatz. Irgendwo im Süden entdeckten wir ein interessantes Gebäude, welches beim letzten Mal noch nicht dagewesen war und so entschieden wir uns, einen Blick zu riskieren."
+Subtitle="Es war nur ein routinemäßiger Spähereinsatz. Irgendwo im Süden entdeckten wir ein interessantes Gebäude, welches beim letzten Mal noch nicht dagewesen war und so entschieden wir uns, einen Blick zu riskieren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es war eine schreckliche Festung, viele Stockwerke hoch, mit Geschützen auf allen Seiten. Als wir schon nahe herangekommen waren, setzte das Feuer ein."
+Subtitle="Es war eine schreckliche Festung, viele Stockwerke hoch, mit Geschützen auf allen Seiten. Als wir schon nahe herangekommen waren setzte auf einmal das Feuer ein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie hatten auf uns gewartet, kamen in endlosen Schwärmen - mehr und mehr und immer mehr. Wir hielten unsere Stellung und hörten nicht auf zu schiessen, aber es war sinnlos! Es wurden immer noch mehr."
+Subtitle="Sie hatten auf uns gewartet, kamen in endlosen Schwärmen - mehr und mehr und immer mehr. Wir hielten unsere Stellung und hörten nicht auf zu schießen, aber es war sinnlos! Es waren unzählige der Metallteufel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Unsere Munition ging zur Neige... sie kamen rasch näher. Team Nummer 9 hörte auf zu existieren. Die Höllenfestung verschlang ihr Leben. Ich lief. Ich überlebte."
+Subtitle="Unsere Munition ging zur Neige... sie kamen rasch heran. Team Nummer 9 hörte auf zu existieren - die Höllenfestung verschlang ihr Leben. Ich lief. Ich überlebte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Danach entschied ich, dass ich nicht gut genug bin, ein Mitglied der Roten Wache zu sein. Ich schied aus und begann kurz danach in der Mine zu arbeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -164,7 +164,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText=" Sie verstehen nicht... ich habe nicht GEFRAGT. Und jetzt erzählen Sie mir über Ihr Leben als Soldat oder ich werde den Wachen sagen, dass Sie hier herumfaulenzen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=497  PositionY=132  
-Subtitle="Nein! Bitte... ich werde alles tun was Sie wollen, nur rufen Sie nicht die Rote Wache! Sie mögen Leute nicht, die ihren Dienst quittiert haben! Sie mögen MICH nicht..."
+Subtitle="Nein! Bitte... ich werde alles tun, was Sie wollen, nur rufen Sie nicht die Rote Wache! Sie mögen Leute nicht, die ihren Dienst quittiert haben! Sie mögen MICH nicht..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich werde Ihnen alles erzählen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -176,7 +176,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Ich habe auch einige schlimme Erinnerungen. Ich weiss wie schwer es sein kann, darüber zu reden. Behalten Sie Ihre Geschichten ruhig für sich."
+New Option Nr=10  OptionText=" Ich habe auch einige schlimme Erinnerungen. Ich weiß wie schwer es sein kann, darüber zu reden. Behalten Sie Ihre Geschichten ruhig für sich."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ja. Und nun würde ich gerne zu Bett gehen. Gute Nacht, Linarianer."
@@ -215,7 +215,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=98  OptionText=" Auf Wiedersehen."
+New Option Nr=98  OptionText=" Auf Wiedersehen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=". . ."

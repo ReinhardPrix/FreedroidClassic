@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hey, wie geht's?"
+New Option Nr=0  OptionText=" Hey, wie gehts?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=73  PositionY=220  
-Subtitle="Grossartig. Jetzt zurück mit dir dorthin, wo du herkommst. Das ist kein Ort für dich..."
+Subtitle="Großartig. Und jetzt zurück mit dir, dorthin wo du herkommst. Das ist kein Ort für dich..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -44,11 +44,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Was hat es mit dem Tor da auf sich?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=151  PositionY=218  
-Subtitle="Das ist ein Tor zu einer vollautomatischen Roboterfabrik, die wir die Höllenfestung nennen."
+Subtitle="Das ist das Tor zu einer vollautomatischen Roboterfabrik, die wir die Höllenfestung nennen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Du müsstest vollkommen irre sein, falls du da durch willst. An diesem Ort wimmelt es von Bots!"
+Subtitle="Du müsstest vollkommen irre sein, falls du da durch willst. An diesem Ort wimmelt es nur so von Bots!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Verschwinde jetzt von hier... sie können jeden Augenblick angreifen!"
+Subtitle="Verschwinde jetzt von hier... sie könnten jeden Augenblick angreifen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -61,7 +61,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=279  PositionY=102  
 Subtitle="Sicher nicht! Dich umzubringen wäre komplette Zeitverschwendung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Blechfresser werden das für mich übernehmen."
+Subtitle="Die Elektrobestien werden das für mich übernehmen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Vergiss nur nicht mir alle deine Wertsachen zu geben, bevor du in den Tod rennst..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -88,7 +88,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=398  PositionY=220  
 Subtitle="Na endlich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Komm lieber nicht zurück!"
+Subtitle="Komm lieber nicht hierher zurück!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

@@ -57,7 +57,7 @@ Subtitle="Ah, Linarianer, Sie amüsieren mich wirklich..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sie sind ein ziemlich ehrgeiziger Zeitgenosse!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lernen Sie zuerst die Grundlagen. Arbeiten Sie zunächst mal ein Jahr daran, dann werde ich Ihnen ein paar fortgeschrittene Techniken zeigen können."
+Subtitle="Lernen Sie zuerst die Grundlagen. Arbeiten Sie zunächst einmal ein Jahr daran, dann werde ich Ihnen ein paar fortgeschrittene Techniken zeigen können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -107,7 +107,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=484  PositionY=411  
 Subtitle="Sie verfügen über keine ausreichende Erfahrung, daher kann ich Sie momentan nichts lehren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sammeln Sie erst einmal etwas Erfahrung, dann können wir weitermachen."
+Subtitle="Sammeln Sie erst einmal etwas Kampferfahrung, dann können wir weitermachen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

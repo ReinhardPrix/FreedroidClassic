@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Nicht schiessen..!"
+New Option Nr=0  OptionText=" Nicht schießen..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=65  PositionY=241  
 Subtitle="Buzz off."
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Ich hab keine Ahnung, was das heissen soll..."
+New Option Nr=2  OptionText=" Ich hab keine Ahnung, was das heißen soll..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=149  
 Subtitle="One, who nicht kennte die Elemente,"
@@ -72,7 +72,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Wenn ich nur wüsste, wovon Sie reden."
+New Option Nr=3  OptionText=" Wenn ich nur wüsste wovon Sie reden."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Get lost."

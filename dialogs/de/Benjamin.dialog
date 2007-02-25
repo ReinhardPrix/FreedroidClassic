@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo!"
+New Option Nr=0  OptionText=" Ich grüße Sie!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=399  PositionY=327  
 Subtitle="Ah, Sie sind also das neue Mitglied. Willkommen! Mein Name ist Benjamin und ich kümmere mich um die  Strahlwaffen hier in der Festung."
@@ -48,9 +48,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=398  PositionY=247  
 Subtitle="Ich experimentiere mit neuen Konstruktionen. Ich will die Laserpistole verbessern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Eine Menge Energie wird irgendwo während des Feuerns vergeudet und ich habe keine Ahnung, wo. Wenn ich die Quelle des Problems ausfindig machen könnte, würde der Strahler viel wirkungsvoller werden."
+Subtitle="Eine Menge Energie wird irgendwo während des Feuerns vergeudet und ich habe keine Ahnung, wo. Wenn ich die Quelle des Problems ausfindig machen könnte würde der Strahler viel wirkungsvoller werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Bis jetzt haben alle meine Prototypen versagt. Meist durch Überhitzung und Blockierung. Manchmal frage ich mich, ob ich etwas falsch mache."
+Subtitle="Bis jetzt haben alle meine Prototypen versagt. Meist durch Überhitzung und Blockierung. Manchmal frage ich mich ob ich etwas falsch mache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Können Sie mir beibringen, wie man richtig mit Schusswaffen umgeht?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=310  PositionY=326  
-Subtitle="Wenn jemand in der Stadt mehr über Feuerwaffen weiss als ich, dann will ich nicht mehr Benjamin heissen!"
+Subtitle="Wenn jemand in der Stadt mehr über Feuerwaffen weiß als ich dann will ich nicht mehr Benjamin heißen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Natürlich verlange ich eine kleine Gegenleistung für die im Training verbrauchte Munition und meine verschenkte Zeit. Sagen wir... 100 Tribucks sollten in Ordnung sein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -86,10 +86,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Wenn ich Sie wäre, würde ich meine Arbeit auf eine Erhöhung der Feuerrate konzentrieren."
+New Option Nr=4  OptionText=" Wenn ich Sie wäre würde ich meine Arbeit auf eine Erhöhung der Feuerrate konzentrieren."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=397  PositionY=112  
-Subtitle="Hmm... gut, ich werde mal darüber nachdenken. hmm..."
+Subtitle="Hmm... gut, ich werde mal darüber nachdenken. Hmm..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -117,7 +117,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=798  PositionY=327  
 Subtitle="Also, für Neumitglieder gibts die einfachen Laser- oder Plasmapistolen. Die haben zwar ihre Macken, aber sie erfüllen ihren Zweck in neun von zehn Fällen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Für grössere Blechbiester haben wir grössere Schiesseisen. Der Exterminator ist die beste tragbare Waffe, die wir haben. Wir geben sie nur im Notfall aus oder an überaus erfahrene Leute."
+Subtitle="Für größere Blechbiester haben wir größere Schießeisen. Der Exterminator ist die beste tragbare Waffe, die wir haben. Wir geben sie nur im Notfall aus oder an überaus erfahrene Leute."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=8 ChangeToValue=1
@@ -132,15 +132,15 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=402  
 Subtitle="Ist's auch!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Zwar finden manche die Munitionskanister zu gross und die Geschosse zu langsam. Aber auch diejenigen können nicht verleugnen, dass, wo die Projektile auftreffen, GROSSE Löcher zurückbleiben."
+Subtitle="Zwar finden manche die Munitionskanister zu groß und die Geschosse zu langsam. Aber auch diejenigen können nicht verleugnen, dass, wo die Projektile auftreffen, GROSSE Löcher zurückbleiben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Plasma ist Materie, genauer gesagt, ionisiertes Gas. Ausserdem ist es heiss genug, um Stahl zum kochen zu bringen."
+Subtitle="Plasma ist Materie, genauer gesagt, ionisiertes Gas. Außerdem ist es heiß genug um Stahl zum kochen zu bringen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die meisten Neulinge hassen, wie schwer das Zielen mit diesem Gerät ist. Wenn Kugeln Tiere wären, Plasma wäre eine wohlgenährte Kuh. Wenn es am Ziel ankommt, ist der Bot schon einen Kilometer weit weg."
+Subtitle="Die meisten Neulinge hassen, wie schwer das Zielen mit diesem Gerät ist. Wenn Kugeln Tiere wären, Plasma wäre eine wohlgenährte Kuh. Wenn es am Ziel ankommt, ist der Bot oft schon einen Kilometer weit weg."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wenn Sie Plasmawaffen einsetzen wollen, müssen Sie immer an eins denken: sehen Sie zu, dass das Ding nichts abkriegt!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn auch unsere Panzerung für hohe Temperaturen ausgelegt ist - sobald das Plasmabehälter-Modul platzt, geht man hoch, mit allem im Umkreis von zehn Metern."
+Subtitle="Wenn auch unsere Panzerung für hohe Temperaturen ausgelegt ist - sobald das Plasmabehälter-Modul platzt geht man hoch, mit allem im Umkreis von zehn Metern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wegen der ganzen Nachteile sind Plasmablaster nicht gerade beliebt. Eine Schande eigentlich, da steckt viel Bums drin..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -149,14 +149,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Erzählen Sie mir mehr über die Laserpistolen."
+New Option Nr=8  OptionText=" Erzählen Sie mir bitte mehr über die Laserpistolen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=249  
 Subtitle="Lasertechnik steckt in den meisten unserer Waffen. Dabei ist ein gebündelter Lichtstrahl für die Zerstörungswirkung verantwortlich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Weil der Strahl aus Licht besteht, ist er RICHTIG schnell. Auch ist er nicht von Schwerkraft oder Wind abhängig und darum sehr einfach beim Zielen zu handhaben."
+Subtitle="Weil der Strahl aus Licht besteht ist er RICHTIG schnell. Auch ist er nicht von Schwerkraft oder Wind abhängig und darum sehr einfach beim Zielen zu handhaben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Aber, ausser dass er ein gutes Übungswerkzeug für Grünschnäbel abgibt, fehlt es dem Teil einfach an Durchschlagskraft!"
+Subtitle="Aber außer, dass er ein gutes Übungswerkzeug für Anfänger abgibt, fehlt es dem Teil einfach an Durchschlagskraft!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Schüsse sind eher kraftlos, die Pistole hat einen langen Ladezyklus vor dem Schuss und kann in einem heftigen Kampf schon mal überhitzen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -181,7 +181,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Ich würde es mir auch etwas kosten lassen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=882  PositionY=249  
-Subtitle="Höchst interessant."
+Subtitle="Höchst interessant!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin_bribe"
@@ -189,7 +189,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ich geh dann mal wieder."
+New Option Nr=99  OptionText=" Ich lasse Sie jetzt wieder in Ruhe..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=660  PositionY=171  
 Subtitle="Bis später dann!"

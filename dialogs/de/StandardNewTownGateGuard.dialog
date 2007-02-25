@@ -31,7 +31,7 @@ freedroid-discussion@lists.sourceforge.net
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo... was ist das für ein Ort?"
+New Option Nr=0  OptionText=" Hallo... was ist das hier für ein Ort?"
 OptionSample="Tux_Hi_Im_New_0.wav"
 PositionX=66  PositionY=246  
 Subtitle="Aha. Offenbar neu hier."
@@ -49,7 +49,7 @@ Subtitle="Nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Dies ist nicht die alte Stadt. Niemand wird Sie hier nach Ihren Anliegen fragen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Das ist die Siedlung der freien Programmierer. Hier kann jeder tun und lassen, was er will."
+Subtitle="Das ist die Siedlung der freien Programmierer. Hier kann jeder tun und lassen was er will."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Allerdings bedeutet das auch, dass Sie hier drin für Ihre Sicherheit selbst sorgen müssen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -57,14 +57,14 @@ ChangeOption=1 ChangeToValue=0
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText="Was machen Sie da draussen?"
+New Option Nr=2  OptionText="Was machen Sie da draußen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=213  
-Subtitle="Was glauben Sie denn, was wir tun? Eine Ahnung, wie langweilig das ist?"
+Subtitle="Was glauben Sie denn was wir tun? Eine Ahnung, wie langweilig das hier ist?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Es ist anstrengender hier zu stehen und nichts zu tun, als irgendwas zu programmieren oder so."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Stellen Sie sich einfach ein paar Tage hierher und sie werden begreifen, was ich meine."
+Subtitle="Stellen Sie sich einfach ein paar Tage hier hin und sie werden begreifen, was ich meine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 

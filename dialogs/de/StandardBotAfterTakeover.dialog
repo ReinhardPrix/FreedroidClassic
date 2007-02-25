@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" ./folge_mir.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=107  
-Subtitle="Leite Begleitsequenz ein. Energie an Bremsen abgeschaltet. Versuche jetzt, mit Position von Tux gleichauf zu bleiben... Ok, folge Tux."
+Subtitle="Leite Begleitsequenz ein. Energie an Bremsen abgeschaltet. Versuche jetzt, mit Position von Tux gleichauf zu bleiben... OK, folge Tux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="SetFollowTuxProperty"

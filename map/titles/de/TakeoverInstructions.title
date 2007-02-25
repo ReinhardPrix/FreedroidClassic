@@ -35,23 +35,23 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 --------------------
 --------------------
 *** START OF PURE SCROLLTEXT DATA ***
-The Freedroid/FreedroidRPG Takeover game
+Das Freedroid/FreedroidRPG Hackerspiel
 
-In FreedroidRPG, the takeover subgame is used whenever the Tux wishes to take control of a (formerly hostile) robot or hacking open the electronic lock of a secured chest.  Winning the takeover subgame results in the robot becoming 'friendly' or the chest being unlocked.
+In FreedroidRPG wird die Hacker-Konsole immer dann aufgerufen, wenn Tux versucht die Kontrolle über einen (vorher feindlichen) Robot zu gewinnen oder das elektronische Schloss einer gesicherten Truhe zu knacken. Wenn man das Übernahmespiel gewinnt, wird der Angegriffene in einen 'freundlichen' Bot umgewandelt, dem Tux Befehle geben kann, bzw. wird das Schloss der Truhe entriegelt.
 
-How to play:
+So gehts:
 
-The takeover game shows a simple and randomly generated circuit board with two sides.
-The left side is considered the 'light' side, while the right side is associated with the 'dark' color.
-The first step is to choose a side on the takeover board.  The Tux has the advantage of getting to choose the better side.  Choosing the left side means taking the 'light' color, choosing the right side means taking the 'dark color'
+Das Hackerspiel zeigt eine einfache und zufällig erzeugte Schaltkreis-Tafel mit zwei Seiten.
+Die linke Seite wird als die 'helle' bezeichnet, während die rechte Seite der 'dunklen' Farbe zugeschrieben wird.
+Als Erstes muss man sich für eine Seite des Interfaces entscheiden. Tux hat den Vorteil, sich die vielversprechendere Seite aussuchen zu können. Die linke Seite zu wählen heißt, sich für die 'helle' Farbe zu entscheiden, während man mit der rechten Seite die 'dunkle' Farbe wählt.
 
-After pressing a button or waiting for the timeout the sides will be fixed and the real takeover game will start.
-The Tux must try to get a majority of the fields on the central column to show his color, while the bot on the other side will try to achieve the same thing for his color.
-In order to win a few fields for his color, the Tux can plant small connector capsules.  
-Note however, that there is only a limited supply of those.  The number of capsules available depends on the 'hacking' skill of the Tux.  A better hacking skill will mean more connector capsules to set.  The robot on the other side will have connector capsules of his own.  The number again depends on the strength of the bot. 
-Use the mouse wheel and mouse button or cursor keys and space button to set your connector capsules.  Try to use the advantages offered by the circuit board and try to target the fields of enemy color.
+Durch drücken der Aktionstaste oder nachdem der Countdown abgelaufen ist, werden die Seiten festgelegt und das eigentliche Spiel beginnt.
+Tux muss versuchen eine Mehrheit an Feldern in der zentralen Säule mit seiner Farbe zu belegen, während der elektronische Gegner auf der anderen Seite der Tafel das gleiche für seine Farbe zu erreichen versucht.
+Um einige Felder für seine Seite zu gewinnen, kann Tux kleine Link-Bits zu den Farbfeldern des Widersachers setzen.
+Allerdings ist zu beachten, dass nur eine sehr begrenzte Anzahl zur Verfügung steht; die Menge der einsetzbaren Bits hängt direkt von Tux' Hacker-Fähigkeiten ab. Eine bessere Hacker-Fertigkeit resultiert in einer größeren Anzahl an Verbindungspunkten im Übernahmespiel, welche gesetzt werden können. Der Robot auf der gegnerischen Seite kann seine eigenen Verbindungspunkte setzen und zwar umso mehr, je höherwertiger er ist. Das bedeutet, je höher die Typ-Nummer des Roboters, umso mehr Verteidigungsbits kann er gegen Sie einsetzen.
+ Man kann Mausrad und Mausbuttons oder die Cursortasten und Space verwenden, um seine Bits zu setzen - auch eine Mischtechnik ist möglich. Versuchen Sie, sich die Vorteile einer Interface-Seite zunutze zu machen und die Farbfelder der gegnerischen Farbe anzuvisieren. Die kürzesten Verbindungen sind immer auch die stärksten.
 
-Once the time has run out, the takeover game will stop and the final result will be evaluated.  If the head of the central column shows the Tux color, the game is won, if it shows black color, the game ended drawn and a new round will start shortly.  If the head shows the enemy color, the Tux has lost the takeover attempt, resulting in energy loss and the enemy bot being a free agent once more.
+Sobald die Zeit abgelaufen ist wird das Übernahmespiel angehalten und das Ergebnis ausgewertet. Wenn der Kopf der mittleren Säule Tux' Farbe anzeigt, ist das Spiel gewonnen. Zeigt es Schwarz an, steht es unentschieden und eine neue Runde beginnt. Der Übernahmeversuch ist gescheitert, wenn der Kopf der Säule die Farbe des Gegners anzeigt. In diesem Fall gibt es eine Energierückkopplung - Tux büßt einen großen Teil seiner Energie ein und der Robot erlangt seine Freiheit zurück.
 
 *** END OF PURE SCROLLTEXT DATA ***
 

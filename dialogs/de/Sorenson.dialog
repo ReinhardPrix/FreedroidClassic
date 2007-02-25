@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Einen schönen Guten Tag!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=64  PositionY=224  
-Subtitle="Nun denn, willkommen in unserer befestigten Niederlassung! Ich bin Sorenson, Lehrer magischer Fähigkeiten."
+Subtitle="Nun denn, willkommen in unserer befestigten Niederlassung! Ich bin Sorenson, Lehrerin magischer Fähigkeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
@@ -56,9 +56,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=170  
 Subtitle="Das kommt darauf an. Was genau möchten Sie trainieren?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich könnte Ihnen helfen, das Kraftreservoir Ihres Geists zu vergrössern."
+Subtitle="Ich könnte Ihnen helfen, das Kraftreservoir Ihres Geists zu vergrößern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ausserdem kann ich Ihnen zeigen, wie Sie besser im Sprechen eines Zaubers werden."
+Subtitle="Außerdem kann ich Ihnen zeigen wie Sie besser im Sprechen eines Zaubers werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nun, was soll es denn sein?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

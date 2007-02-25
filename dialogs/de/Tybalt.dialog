@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo. Ich bin neu hier im Ort. Was tun Sie da?"
+New Option Nr=0  OptionText=" Äh, schönen Tag. Was tun Sie da?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Hallo. Ich bin Tybalt. Ich bewache das Tor der Wachfestung. Nur befugte Personen haben Zutritt."
+Subtitle="Sonderoffizier Tybalt, wenns recht ist. Ich bewache natürlich das Tor der Wachfestung, was sonst? Nur befugte Personen haben Zutritt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,17 +42,17 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Warum ist das Wachhaus die meiste Zeit über verschlossen?"
+New Option Nr=1  OptionText=" Wieso ist das Wachhaus die meiste Zeit über verschlossen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="Es ist verriegelt damit sich niemand hineinschleicht, während ich nicht hinsehe. Deshalb."
+Subtitle="Vielleicht, damit sich niemand hineinschleicht, während ich nicht hinsehe? Das wäre doch eine Möglichkeit?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" I want to get into the guardhouse."
+New Option Nr=2  OptionText=" Kann ich rein?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
 ChangeOption=2 ChangeToValue=0
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="THE GATE OPENS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=224  PositionY=154  
-Subtitle="Natürlich! Mitglieder der Wache können das Wachhaus jederzeit betreten. Das Tor ist offen - geniess' deinen Aufenthalt..."
+Subtitle="Sicher! Mitglieder der Wache können die Wachfeste jederzeit betreten. Das Tor ist offen - viel Vergnügen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_guardhouse_door"
@@ -89,7 +89,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=50  OptionText=" ... ich kann Ihnen viel Geld geben..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Faszinierend. Einhundert."
+Subtitle="Faszinierend! Einhundert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 LinkedTo:51
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=56  OptionText=" Ok, öffnen Sie jetzt das Tor für mich."
+New Option Nr=56  OptionText=" OK, öffnen Sie jetzt das Tor für mich."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Hm? Welches Tor?"
@@ -162,7 +162,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Aber Sie sind kein Mitglied der Roten Wache..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie kommen da nicht rein."
+Subtitle="Sie dürfen da nicht rein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=57 ChangeToValue=0
 ChangeOption=58 ChangeToValue=1
@@ -217,7 +217,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Tschüss."
+New Option Nr=99  OptionText=" Tschüß."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
 Subtitle="Na endlich..."

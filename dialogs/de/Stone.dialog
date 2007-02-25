@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo! Ich bin noch neu hier."
+New Option Nr=0  OptionText=" Guten Tag die Dame! Ich möchte mich gern ein bisschen umsehen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=173  PositionY=239  
 Subtitle="Willkommen in unserer Niederlassung! Ich bin Ms. Stone. Ich betreibe diesen Laden."
@@ -60,7 +60,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=546  PositionY=238  
 Subtitle="Tut mir leid, das ist alles, was wir jetzt noch haben. Die Rote Wache hat uns alle Ballermänner abgenommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Natürlich nur zu 'unserem Besten'."
+Subtitle="Natürlich nur zu 'unserem besten'."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="PlantCookie:Stone_no_guns:"
@@ -73,7 +73,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=174  PositionY=149  
 Subtitle="Ah, die Rote Wache... "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Fremder - besser, Sie stellen keine solche Fragen!"
+Subtitle="Fremder - besser, Sie stellen keine solchen Fragen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sie bewachen und schützen uns vor den Robots, aber..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -92,7 +92,7 @@ Subtitle="Wir alle müssen ihre Regeln befolgen. Wir haben hart zu arbeiten oder 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich nehme an, ich sollte mich nicht beklagen. Die Bots sind weitaus schlimmer, als es die Wachen je sein könnten. Aber..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Von einem blutgierigen Regime über viele Jahre hinweg ausgesaugt zu werden oder einfach von den früheren Dienern in Stückchen gehäckselt zu werden..."
+Subtitle="Von einem skrupellosen und gierigen Regime über viele Jahre hinweg ausgesaugt zu werden oder einfach von den früheren Dienern in Stückchen gehäckselt zu werden..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="... wo liegt da der Unterschied?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -140,21 +140,21 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Wenn jetzt alles so mies ist, warum --"
+New Option Nr=9  OptionText=" Wenn jetzt alles so unerträglich ist, warum --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=172  PositionY=63  
 Subtitle="Ich will von diesem Gelabere nichts mehr hören!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Kleiner Tipp, Linarianer: wir haben nicht viel, aber wir sind am Leben, und wir würden es ganz gern bleiben."
+Subtitle="Kleiner Tipp, Linarianer: wir haben nicht viel, aber wir sind am Leben und wir würden es ganz gern bleiben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn Sie hier eine Revolution starten wollen, sind Sie auf sich allein gestellt."
+Subtitle="Wenn Sie hier eine Revolution starten wollen sind Sie auf sich allein gestellt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Wie laufen Ihre Geschäfte?"
+New Option Nr=10  OptionText=" Wie läuft der Laden?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=174  PositionY=325  
 ChangeOption=10 ChangeToValue=0
@@ -166,11 +166,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText=" Wie läuft der Laden?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=276  PositionY=324  
-Subtitle="Ich werde ihn in etwa einer Woche schliessen."
+Subtitle="Ich werde ihn in etwa einer Woche schließen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Familie Stone hat schon immer billig ein- und kaum teuerer verkauft. Die Zeiten haben sich gewandelt, aber nicht meine Preise."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die neuen Steuern, der weltweite wirtschaftliche Zusammenbruch und andere Faktoren machen unserem Familienbetrieb langsam den Garaus."
+Subtitle="Die neuen Steuern, der weltweite wirtschaftliche Zusammenbruch und andere Faktoren machen unserem Familienbetrieb nun den Garaus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=13 ChangeToValue=1
@@ -179,7 +179,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Wie gehen die Geschäfte?"
+New Option Nr=12  OptionText=" Wie läuft der Laden?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=79  PositionY=325  
 Subtitle="Dank Ihnen habe ich jetzt eine Chance!"
@@ -194,11 +194,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText=" Kann ich Ihnen eventuell behilflich sein, Ms. Stone?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=277  PositionY=410  
-Subtitle="Nein, es gibt nichts mehr, was man noch tun könnte. Ich habe nicht genug Geld, um den Laden aus der Abwärtsspirale herauszuziehen."
+Subtitle="Nein, es gibt nichts mehr was man noch tun könnte. Ich habe nicht genug Geld, um den Laden aus der Abwärtsspirale herauszuziehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich bräuchte tausdende, um allein diesen Monat zu überstehen."
+Subtitle="Ich bräuchte tausende, um allein diesen Monat zu überstehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Das Geschäft geht zugrunde und es gibt nichts, was jemand von uns beiden dagegen tun könnte."
+Subtitle="Das Geschäft geht zu Grunde und es gibt nichts, was jemand von uns beiden dagegen tun könnte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 ChangeOption=15 ChangeToValue=1
@@ -219,7 +219,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=15  OptionText=" Vielleicht gibt es noch Hoffnung, Ms. Stone. Wie viel Geld brauchen Sie genau?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=362  PositionY=410  
-Subtitle="Ich bin seit einiger Zeit nicht mehr dazu gekommen, einen Blick in die Geschäftbücher zu werfen. Ich schätze so fünf- bis sechstausend Tribucks."
+Subtitle="Ich bin seit einiger Zeit nicht mehr dazu gekommen, einen Blick in die Geschäftsbücher zu werfen. Ich schätze, so fünf- bis sechstausend Tribucks."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="PlantCookie:Helping_Stone:"
@@ -295,11 +295,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=23  OptionText=" Ich habe das Geld, das Sie brauchen Ms. Stone - Sie können es haben!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1024  PositionY=178  
-Subtitle="Ist... ist das ein Scherz? So viel Geld? Und Sie geben es mir einfach so??"
+Subtitle="Ist... ist das ein Scherz? So viel Geld? Und Sie geben es mir, einfach so??"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Danke! Ich danke Ihnen!! Vielen Dank!!! Sie Engel!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Aber das wäre Ihnen gegenüber nicht gerecht. Die Stones ist eine Familie fairer Händler und ich beabsichtige diese Tradition aufrecht zu erhalten."
+Subtitle="Aber das wäre Ihnen gegenüber nicht gerecht! Die Stones ist eine Familie fairer Händler und ich beabsichtige diese Tradition aufrecht zu erhalten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich brauche genau 4,743 Tribucks, um diesen Monat über die Runden zu kommen. Ich werde nur diesen Betrag von Ihnen annehmen und keinen Cent mehr. Jetzt ist es fair. Danke Ihnen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Identifizieren Sie sich!"
+New Option Nr=0  OptionText=" Identifiziere dich!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=98  PositionY=280  
 Subtitle="Ich bin ein Sicherheitsrobot Typ 614, ehemals eines der am besten verkauften Produkte der Firma Nicholson."
@@ -84,7 +84,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=223  PositionY=270  
 Subtitle="Ich gehöre einer älteren Generation von Bots an, auf denen ein speziell für Sicherheits- und Überwachungszwecke ausgelegtes Betriebssystem läuft."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Keiner der Robots dieser Generation wurde durch die Vorgänge beeinflusst, die zu den Robot-Übergriffen führten - allgemein bekannt als der Grosse Angriff."
+Subtitle="Keiner der Robots dieser Generation wurde durch die Vorgänge beeinflusst, die zu den Robot-Übergriffen führten - allgemein bekannt als der Große Angriff."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Obwohl mein Typ schon vor langer Zeit von der Firma Nicholson eingestellt wurde, haben in jüngster Zeit einige Leute die Arbeit daran wieder aufgenommen und man versucht sogar das Betriebssystem der Baureihe zu verbessern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -95,10 +95,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Auf wiedersehen."
+New Option Nr=99  OptionText=" Ein schönes Programm noch - und nicht einrosten, ja?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=438  PositionY=268  
-Subtitle=" Fahre mit Wachprogramm fort."
+Subtitle=" Schalte zurück in Wachmodus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

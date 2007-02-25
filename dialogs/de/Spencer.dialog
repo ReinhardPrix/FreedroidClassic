@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Ich möchte gern der Roten Wache beitreten."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=158  PositionY=302  
-Subtitle="Hmm... wirklich? Nun, man kann da nicht einfach so beitreten, wissen Sie..."
+Subtitle="Hmm... soso, wirklich? Nun, man kann ihr nicht einfach so beitreten, wissen Sie..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sie müssen schon beweisen, dass Sie ein gutes Mitglied abgeben würden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,7 +68,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Wie wärs mit etwas Geld?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=196  PositionY=430  
-Subtitle="Für 15 Millionen Piepen, nicht weniger... hehe!"
+Subtitle="Für 15 Millionen Piepen, nicht weniger... hähä!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -80,7 +80,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=293  PositionY=53  
 Subtitle="Dies sind schlimme Zeiten. Der interplanetarische Verkehr ist durch die Robot-Schiffe unmöglich geworden, daher müssen wir mit den hiesigen Rohstoffen auskommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wir haben eine Liste an Gegenständen, die wir aus dem automatisierten unterirdischen Lager, nördlich der Ansiedlung benötigen. Aber die Robots dort sind sehr zahlreich."
+Subtitle="Wir haben eine Liste an Gegenständen, die wir aus dem automatisierten unterirdischen Lager außerhalb der Ansiedlung benötigen. Aber die Robots dort sind sehr zahlreich!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Und momentan kann ich keinen einzigen Mann entbehren, um die Verteidigung unserer kleinen Stadt aufrecht zu erhalten. Eine recht schwierige Situation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -93,13 +93,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Vielleicht kann ich aushelfen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=437  PositionY=53  
-Subtitle="Das wäre natürlich äusserst liebenswürdig von Ihnen, nur - ich bezweifle, dass Sie im Stande sind das Lagerhaus einzunehmen."
+Subtitle="Das wäre natürlich äußerst liebenswürdig von Ihnen, nur - ich bezweifle, dass Sie im Stande sind das Lagerhaus einzunehmen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Gut, aber schliesslich sagt man ja von Ihnen, Sie seien ein mächtiger Held aus früheren Tagen, also werde ich doch einmal einem Fremden Vertrauen schenken..."
+Subtitle="Gut, aber schließlich sagt man ja von Ihnen Sie seien ein mächtiger Held aus früheren Tagen, also werde ich doch einmal einem Fremden Vertrauen schenken..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich habe den Eingang zum Lagerhaus geöffnet. Er ist jenseits des Nordtors, etwas versteckt in den nordöstlichen Wäldern."
+Subtitle="Ich habe den Eingang zum Lagerhaus geöffnet. Er ist jenseits des Nordtors, etwas versteckt im nordöstlichen Tempelwald."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Ladung, die wir brauchen, befindet sich auf der ersten Ebene. Gehen Sie nicht weiter nach unten - damit wäre uns nicht gedient und die Roboter dort sind im Stande Sie zu töten."
+Subtitle="Die Ladung die wir brauchen befindet sich auf der ersten Ebene. Gehen Sie nicht weiter nach unten - damit wäre uns nicht gedient und die Roboter dort sind im Stande Sie zu töten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich wünsche Ihnen alles Gute!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -152,7 +152,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="DONT_GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=490  PositionY=182  
-Subtitle="Dank Ihrer vorangegangenen Aktion waren wir in der Lage, alle Güter zu organisieren, die wir zur Zeit brauchen... Sie haben uns da wirklich aus der Klemme geholfen."
+Subtitle="Dank Ihrer vorangegangenen Aktion waren wir in der Lage alle Güter zu organisieren, die wir zur Zeit brauchen... Sie haben uns da wirklich aus der Klemme geholfen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Seien Sie versichert, dass wir Ihnen Ihren mutigen Einsatz für unsere Gemeinschaft nie vergessen werden!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -166,7 +166,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=488  PositionY=100  
 Subtitle="Mann, Sie haben's wirklich geschafft! Ich kann es kaum glauben, aber alle Roboter sind weg!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nehmen Sie die 500 Tribucks als Belohnung. Sie verdienen meinen allergrössten Respekt, Linarianer!"
+Subtitle="Nehmen Sie die 500 Tribucks als Belohnung. Sie verdienen meinen allergrößten Respekt, Linarianer!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Während wir noch reden, verladen unsere Leute schon die Waren. Es kann nicht mehr allzu lange dauern, bis neue Robots aus den Raumschiffen im Orbit herunterbeamen und die zerstörten ersetzen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -222,7 +222,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
-Subtitle="Ich denke, Sie sollten einmal beim örtlichen Koch, Michelangelo, vorbeischauen. Er rennt andauernd herum, meistens irgendwo etwas südwärts von hier."
+Subtitle="Ich denke, Sie sollten einmal beim örtlichen Koch, Michelangelo, vorbeischauen. Er rennt andauernd unruhig herum, meistens irgendwo etwas südwärts von hier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 LinkedTo:18
@@ -262,7 +262,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
-Subtitle="Sie könnten eventuell ein paar Arena-Kämpfe im südlichen Viertel austragen. Das könnte Ihr Ansehen beträchtlich steigern."
+Subtitle="Sie könnten eventuell ein paar Arena-Kämpfe im südlichen Viertel austragen. Das könnte Ihr Ansehen hier beträchtlich steigern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 LinkedTo:21
@@ -293,7 +293,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=23  OptionText="BENDER STILL SICK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=820  PositionY=461  
-Subtitle="Soweit ich weiss, ist Bender immer noch sterbenskrank..."
+Subtitle="Soweit ich weiß ist Bender immer noch sterbenskrank..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
 LinkedTo:24
@@ -313,7 +313,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=25  OptionText="WAREHOUSE DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=928  PositionY=374  
-Subtitle="Aber am allerwichtigsten ist - Sie haben mich aufs Äusserste beeindruckt, indem Sie das Lagerhaus von den Blechköpfen gesäubert haben. Das war eine Grosstat, die ich niemals vergessen werde!"
+Subtitle="Aber am allerwichtigsten ist - Sie haben mich aufs Äußerste beeindruckt, indem Sie das Lagerhaus von den Blechköpfen gesäubert haben. Das war eine Großtat, die ich niemals vergessen werde!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 LinkedTo:27
@@ -333,7 +333,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=28  OptionText="JOINING TOWN GUARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=473  PositionY=290  
-Subtitle="O.K. Ihre Liste an vollbrachten Taten ist lang genug. Sie sind uns willkommen! Ich erkläre Sie hiermit zum Mitglied der Roten Wache."
+Subtitle="OK! Ihre Liste an vollbrachten Taten ist lang genug. Sie sind uns willkommen! Ich erkläre Sie hiermit zum Mitglied der Roten Wache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Jetzt, da Sie zur Wache gehören, denken Sie immer daran... es gibt nur eine Regel für uns Wachmänner: Wir halten zusammen. Wir überleben gemeinsam und wir sterben gemeinsam. Aber tun es zusammen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -383,7 +383,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=32  OptionText="STUPID OPTION. IT MUST DIE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=443  
-Subtitle="Aber Sie sind doch schon in der Roten Wache! Hören Sie bloss auf mich zum Narren zu halten! Wir Wächter müssen zusammen halten."
+Subtitle="Aber Sie sind doch schon in der Roten Wache! Hören Sie bloß auf mich zum Narren zu halten! Wir Wachsoldaten müssen zusammenhalten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
@@ -430,12 +430,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=37  OptionText=" Mir ist zu Ohren gekommen, dass Richard neue Informationen betreffend der Kolonie zugespielt wurden."
+New Option Nr=37  OptionText=" Mir ist zu Ohren gekommen, dass Richard neue Informationen betreffend der Kolonie zugespielt wurden..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=289  PositionY=512  
-Subtitle="Ja, das stimmt und sie könnten sogar lebenswichtig sein. Die Daten des Speicherwürfels den er erhalten hat, deuten auf die Existenz einer geheimen Experimental-Station in dieser Gegend hin."
+Subtitle="Ja, das stimmt und sie könnten sogar lebenswichtig für uns sein. Die Daten des Speicherwürfels, den er erhalten hat, deuten auf die Existenz einer geheimen Experimental-Station in dieser Gegend hin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Unsere Analysen geben Anlass zu der Vermutung, dass man dort einen neuartigen Disruptor-Schild getestet hatte. Aber die Forschung wurde schliesslich abgebrochen, wegen der Nebeneffekte des Schildes."
+Subtitle="Unsere Analysen geben Anlass zu der Vermutung, dass man dort einen neuartigen Disruptor-Schild getestet hatte. Aber die Forschung wurde schließlich abgebrochen, wegen der Nebeneffekte des Schildes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wenn die Informationen stimmen, dann störte der Schild das Positionierungssystem von Robotern, die dadurch die Kontrolle über ihre Bewegungssteuerung verloren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -456,7 +456,7 @@ Subtitle="Das ist ein gutes Zeichen, denn es beweist, dass die Schlüssel-Kombina
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Allerdings hatten wir, kurz nachdem sie hineingegangen waren, den Kontakt zu ihnen verloren. Sie berichteten über heftigen Widerstand durch Roboter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich wäre froh, wenn Sie dort mal nachsehen könnten. Aber lassen Sie allergrösste Vorsicht walten. Wir können es uns nicht leisten, einen weiteren Wachmann zu verlieren..."
+Subtitle="Ich wäre froh, wenn Sie dort mal nachsehen könnten. Aber lassen Sie allergrößte Vorsicht walten. Wir können es uns nicht leisten, einen weiteren Wachmann zu verlieren..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=39 ChangeToValue=1
@@ -468,9 +468,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=39  OptionText=" OK. Ich werde vorsichtig sein. Aber ich gehe da rein."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=464  PositionY=510  
-Subtitle="Gut. Der Basiseingang ist ein wenig versteckt zwischen den Felsschluchten im Nordwesten. Gehen Sie am besten durch das Nordtor und wenden Sie sich dann nach Westen."
+Subtitle="Gut. Der Basiseingang liegt ein wenig versteckt zwischen den Felsschluchten im Nordwesten. Gehen Sie am besten durch das Nordtor und wenden Sie sich dann nach Westen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich wünsche Ihnen alles Gute für das Gelingen dieser Operation! Könnte sein, dass unser Überleben davon abhängt. Warten Sie nicht auf Verstärkung..."
+Subtitle="Ich wünsche Ihnen alles Gute für das Gelingen dieser Operation! Könnte sein, dass unser Überleben davon abhängt, aber warten Sie nicht auf Verstärkung..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Versuchen Sie den Disruptor-Schild zu aktivieren, wenn Sie können. Die Steuereinheit dazu sollte sich irgendwo auf der untersten Ebene des Komplexes befinden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -487,7 +487,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=462  PositionY=578  
 Subtitle="In Ordnung. Sie sollten gut gewappnet sein, falls Sie vorhaben zu gehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es gibt auch keinen Grund, die Dinge zu überstürzen. Schliesslich kann Ihnen das Geheimlabor nicht davonlaufen - also lassen Sie es am besten langsam angehen."
+Subtitle="Es gibt auch keinen Grund, die Dinge zu überstürzen. Schließlich kann Ihnen das Geheimlabor nicht davonlaufen - also lassen Sie es am besten langsam angehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -503,7 +503,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ich geh dann mal."
+New Option Nr=99  OptionText=" Ich verabschiede mich - auf Wiedersehen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=250  PositionY=260  
 Subtitle="Bis bald."

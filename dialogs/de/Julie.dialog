@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo. Ich sehe mich nur hier um..."
+New Option Nr=0  OptionText=" Hallo. Ich sehe mich nur um hier..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=82  PositionY=125  
 Subtitle="Ja, gerne. Ich bin Aufseherin über die Bibliothek der Gilde. Sie können mich Julie nennen."
@@ -46,7 +46,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=159  PositionY=183  
 Subtitle="Ja, da haben Sie recht - und die Bibliothek ist UNSERE Datenbank. Sehen Sie nur all die Bücher! Sie sind sozusagen stilvoll entworfene Speichermodule."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Jedes dieser Bücher hier enthält mehr Wissen, als irgendein Buch aus vergangenen Zeiten... jedes Buch hier beinhaltet daher in Wirklichkeit viele Bücher."
+Subtitle="Jedes dieser Bücher hier enthält mehr Wissen als irgendein Buch aus vergangenen Zeiten... jedes von ihnen beinhaltet daher in Wirklichkeit viele Bücher."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="Wie benutzt man diese ganzen Bücher? Ist das schwierig?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=257  PositionY=116  
-Subtitle="Nein, überhaupt nicht. Aber Sie sollten mit Bedacht vorgehen. Sie sollten nur die Bücher lesen, die Sie auch wirklich interessieren. Es wäre sonst schade drum."
+Subtitle="Nein, überhaupt nicht. Aber Sie sollten mit Bedacht vorgehen. Sie sollten nur die Bücher lesen die Sie auch wirklich interessieren. Es wäre sonst schade drum."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -65,14 +65,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Stehen sie denn nicht hier, um gelesen zu werden? Wie könnte es dann schade drum sein?"
+New Option Nr=3  OptionText="Stehen sie denn nicht hier um gelesen zu werden? Wie könnte es dann schade drum sein?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=362  PositionY=121  
 Subtitle="Das wäre eigentlich richtig. Aber diese Bücher sind etwas ganz Besonderes... jedes davon versucht seinen Inhalt direkt an Ihr Gehirn weiterzugeben, wenn möglich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Dieser Prozess beansprucht das Buch selbst allerdings sehr stark. Es bräuchte deshalb nach diesem Vorgang eine Wiederaufladung, was wir zur Zeit allerdings nicht bewerkstelligen können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Unser Buch-Regenerator wurde kurz vor dem Grossen Angriff gestohlen und wir können keinen Ersatz auftreiben. Tut mir leid."
+Subtitle="Unser Buch-Recharger wurde kurz vor dem Großen Angriff gestohlen und wir können keinen Ersatz auftreiben. Tut mir leid."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1

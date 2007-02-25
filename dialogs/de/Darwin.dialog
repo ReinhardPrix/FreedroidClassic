@@ -30,14 +30,14 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Bitte nicht schiessen! Ich bin unschuldig! "
+New Option Nr=0  OptionText=" Bitte nicht schießen! Ich bin unschuldig! "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=253  
-Subtitle="Keine Angst, wir nur killen Robots. Never humans. Ausser vielleicht, wenn wir sind in schlechte mood."
+Subtitle="Keine Angst, wir nur killen Robots. Never humans. Außer vielleicht, wenn wir sind in schlechte mood."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wir sind die Fleischer brothers."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich heisse Angel. Das ist Spirit; er ist nicht maechtig der Sprache."
+Subtitle="Ich heiße Angel. Das ist Spirit; er ist nicht maechtig der localen Sprache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -46,7 +46,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Weshalb seid ihr hier draussen?"
+New Option Nr=1  OptionText=" Weshalb seid ihr hier draußen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=254  
 Subtitle="Aus Rache."
@@ -74,7 +74,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Wenn ihr weiter hier stehen bleibt, werden noch mehr Roboter kommen und euch auslöschen! Sucht einen besseren  Platz und verschanzt euch dort."
+New Option Nr=3  OptionText=" Wenn ihr weiter hier stehen bleibt, werden noch mehr Roboter kommen und euch auslöschen! Sucht einen besseren Platz und verschanzt euch dort."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=277  PositionY=393  
 ChangeOption=3 ChangeToValue=0
@@ -138,7 +138,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Ihr Jungs seid wirklich kompl --"
+New Option Nr=8  OptionText=" Ihr Jungs seid wirklich komplett abge --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="WAS?! Was wollten Sie sagen??"
@@ -160,10 +160,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Äh... ihr Jungs seid echt grossartig und ich bewundere euren Mut angesichts des sicheren Todes."
+New Option Nr=10  OptionText=" Äh... ihr Jungs seid echt großartig und ich bewundere euren Mut angesichts des sicheren Todes."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Donnerwetter, Sie sind ein funny Kerl!"
+Subtitle="Ha, Donnerwetter, Sie sind ein funny Kerl!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich hoffe, dass wir uns treffen eines Tages wieder, maybe in bessere Zeit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -181,7 +181,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich war ein Erbauer von Robots. Habe gemacht die Mörder von meiner Mutter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Jetzt, ich verkaufe die Parts, die ich herausreisse aus Robotern, um mehr Munition und Essen zu kaufen."
+Subtitle="Jetzt, ich verkaufe die Parts, die ich herausreiße aus Robotern, um mehr Munition und Essen zu kaufen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1
@@ -189,7 +189,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Könnten Sie mir zeigen, wie man Roboter ausschlachtet und an ihre Teile herankommt?"
+New Option Nr=12  OptionText=" Könnten Sie mir zeigen wie man Roboter ausschlachtet und an ihre Teile herankommt?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ja."

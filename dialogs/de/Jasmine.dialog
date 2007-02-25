@@ -47,7 +47,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Man nennt mich Jasmine..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Das ist zwar nicht mein wirklicher Name, aber für den Moment geht es."
+Subtitle="Es ist zwar nicht mein richtiger Name, aber für den Moment reicht das."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Was machen Sie hier in Kevins Haus?"
+New Option Nr=2  OptionText=" Was machen Sie hier, in Kevins Haus?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich lebe bei ihm, Idiot!"
@@ -70,7 +70,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Und wie geht's so?"
+New Option Nr=3  OptionText=" Und wie gehts so?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Beschissen. Und jetzt lass mich in Ruhe!"
@@ -90,12 +90,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Was hast du so vor..?"
+New Option Nr=5  OptionText=" Was hast du heute so vor..?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Nichts. Hör auf mir Löcher in den Bauch zu fragen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Vor allem: langweil mich nicht..!"
+Subtitle="Und vor allem: langweil mich nicht..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -125,7 +125,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Bis später Süsse!"
+New Option Nr=10  OptionText=" Bis später, Süße!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="*Gähn* wie auch immer..."
@@ -137,7 +137,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=11  OptionText=" Tschüüss..!"
+New Option Nr=11  OptionText=" Tschüüß..!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Jaja. Geh endlich!"
@@ -154,7 +154,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Jetzt... hau endlich...[!] --  *SIGSEGV*"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="-- ERROR: *segmentation-fehler*..."
+Subtitle="-- ERROR: *segmentations-fehler*..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 LinkedTo:13
@@ -174,7 +174,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="-- KERN FIXIERT - SYSTEM ANGEHALTEN..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
-DoSomethingExtra=" -- FALLE TOT UM"
+DoSomethingExtra="DropDead"
 DoSomethingExtra="PlantCookie:jasmine_sigsegv"
 DoSomethingExtra="BreakOffAndBecomeHostile"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

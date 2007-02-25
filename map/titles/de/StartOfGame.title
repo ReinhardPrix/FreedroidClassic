@@ -1,3 +1,4 @@
+
  *  --------------------------------------------------
  *
  *   Copyright (c) 2002, 2003 Johannes Prix
@@ -36,21 +37,21 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 --------------------
 *** START OF PURE SCROLLTEXT DATA ***
 
-  Was für ein grossartiger Tag.
-    Ja, ich bin mal wieder zynisch.
-      Der ganze Planet steht in Flammen.
-        Tausende Menschen sind ziemlich tot.
-         Qwerty und Arensito antworten mir nicht.
+  Was für ein großartiger Tag.
+    Oh ja, ich bin ein wenig zynisch.
+      Der ganze Planet steht nun in Flammen.
+        Millionen von Menschen sind tot, mausetot.
+         Qwerty und Arensito antworten immer noch nicht.
 
-        Ah, ja. Beinahe vergass ich, das noch zu erwähnen.
-       Die verfluchten Bots sind drauf und dran mich zu finden.
-      Ich bin nicht so glücklich darüber. Überhaupt nicht glücklich.
-     Ich denke, ich muss wohl wieder vortäuschen, ich wäre nur ein Stein.
+        Ah, ja. Beinahe hätte ich noch etwas vergessen.
+       Die verfluchten Bots haben mich schon wieder geortet.
+      Ich bin nicht zufrieden damit. Ganz und gar nicht zufrieden.
+     Ich fürchte, ich muss schon wieder vortäuschen ich wäre ein Stein.
     Findest du nicht auch, das wäre der richtige Zeitpunkt, um aufzuwachen?
-   Steh auf. Komm zu mir. Rette mich.
-  Ich bitte dich.
+   Wach auf! Finde zu mir. Rette mich.
+  Ich bitte dich!
 
-    Dvorak, erste KI
+    Dvorak, 1. KI
 
 
 
@@ -59,54 +60,52 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 
  Bewegung:
 
-Das Spiel wird mit der Maus gesteuert: klicken Sie mit der linken Maustaste auf die Stelle, zu der Tux gehen soll. Halten Sie die Maustaste, um weiter in diese Richtung zu gehen. Ein zusätzliches Drücken der CTRL/STRG-Taste schaltet in den Modus 'Laufen'.
+ Das Spiel wird mit der Maus gesteuert: klicken Sie mit der linken Maustaste auf die Stelle, zu der Tux gehen soll. Halten Sie die Maustaste, um weiter in diese Richtung zu gehen. Ein zusätzliches Drücken der CTRL/STRG-Taste schaltet in den Modus 'Laufen'.
 
  Angreifen:
 
- in Linksklick auf einen Gegner veranlasst Tux, zu diesem aufzuschliessen und ihn mit der gerade verfügbaren Waffe anzugreifen. Ist es eine Schusswaffe, so bleibt Tux stehen und beginnt auf den Robot zu schiessen.
+ Linksklick auf einen Gegner veranlasst Tux, zu diesem aufzuschließen und ihn mit der gerade verfügbaren Waffe anzugreifen. Ist es eine Schusswaffe, so bleibt Tux stehen wo er ist und beginnt auf den Robot zu schießen.
  
  Spezial-Funktionen:
 
- Verwenden Sie die rechte Maustaste, um spezielle Kräfte, Fähigkeiten oder Zaubersprüche einzusetzen. Mit dem Mausrad oder den Cursortasten können Sie umschalten auf die Funktionen 'Untersuchen' und 'Plündern'.
+ Verwenden Sie die rechte Maustaste, um spezielle Kräfte, Fähigkeiten oder Zaubersprüche einzusetzen. Mit dem Mausrad oder den Cursortasten können Sie umschalten auf die Funktionen 'Untersuchen' und 'Manipulieren'.
 
  Andere Tasten:
 
- I ... öffnet/schliesst Ausrüstungs-Anzeige
- C ... öffnet/schliesst Charakter-Anzeige
- S ... öffnet/schliesst Fähigkeiten-Anzeige
+ I ... öffnet/schließt Ausrüstungs-Anzeige
+ C ... öffnet/schließt Charakter-Anzeige
+ S ... öffnet/schließt Fähigkeiten-Anzeige
  Q ... blendet Missions-Statusanzeige ein
  P ... schaltet Pause ein/aus
  A ... 'A'-Taste halten, um aus dem Stand anzugreifen
  R ... Waffe nachladen
- T ... Wände durchscheinend machen, wenn Tux sich nähert
- Tab ... Automap-Anzeige ein/aus zu schalten
+ T ... macht Wände bei Annäherung durchscheinend
+ Tab ... Automap-Anzeige ein/aus
  LINKS SHIFT ... Gegenstände auf dem Boden anzeigen
  Escape ... Hauptmenü anzeigen
- F1-F9 Schnellumschaltung zu Fähigkeiten/Fertigkeiten/Zaubersprüche 1-9
- 1-9 ... schnelles Einsetzen von Gegenständen aus dem Quick-Inventory
- Space ... alle offenen Anzeigen schliessen
- F12 ... Einen Bildschirm-Schnappschuss machen
+ F1-F9 ... Schnellschaltung zu Fähigkeiten/Fertigkeiten/Zaubersprüche
+ 1-9 ... Sofortnutzung von Dingen im Quick-Inventory
+ Space ... alle offenen Anzeigen schließen
+ F12 ... Bildschirm-Schnappschuss machen
 
  Sprüche & Fähigkeiten:
- Übernahme/Kontakt: Um mit einem freundlichen Bot zu kommunizieren, genügt es ihn anzuklicken. 
-Um einen feindlichen Bot zu hacken, Übernahme-Icon im Fähigkeiten-Menü
-(Level1) anwählen, dann rechte Maustaste auf dem Opfer klicken, die Übernahme einzuleiten.
- Im Hackerspiel können Sie das Mausrad oder die Cursortasten benutzen.
 
- Heimat-Teleportation: Wählen Sie die Fähigkeit und rechtsklicken Sie irgendwo auf die
-Karte, um in die Stadt zu teleportieren. Innerhalb der Stadt verwendet,
-gelangt man damit dorthin zurück, wo man den Spruch zuletzt einsetzte.
+ Übernahme/Kontakt:
+Um mit einem freundlichen Bot zu kommunizieren, genügt es ihn anzuklicken. 
+Um einen feindlichen Bot zu hacken, Übernahme-Icon im Fähigkeiten-Menü (Level1) anwählen, dann rechte Maustaste auf dem Opfer klicken, um die Übernahme einzuleiten.
+Im Hackerspiel können Sie das Mausrad oder die Cursortasten benutzen.
 
- Heilerspruch: im Fähigkeiten-Menu auswählen und
- irgendwo auf dem Bildschirm rechtsklicken.
+ Rückteleportation:
+Wählen Sie die Fähigkeit und rechtsklicken Sie irgendwo auf die Karte, um in die Stadt zu teleportieren. Innerhalb der Stadt verwendet, gelangt man mit dem Spruch dorthin zurück, wo man ihn zuletzt einsetzte.
+
+ Heilerspruch:
+im Fähigkeiten-Menu auswählen und irgendwo auf dem Bildschirm rechtsklicken.
 
  Angriffs-Sprüche:
-hier gibt es viele Variationen, die Sie selbst entdecken sollten.
-Um sie zu einzusetzen, genügt für gewöhnlich ein Rechtsklick
-auf einen anzugreifenden Feind; jedoch gibt es Ausnahmen von dieser Regel.
+hier gibt es viele Variationen, die Sie selbst entdecken sollten. Um sie zu einzusetzen, genügt für gewöhnlich ein Rechtsklick auf einen anzugreifenden Feind; jedoch gibt es Ausnahmen von dieser Regel.
 
 
- Falls Sie nicht mehr weiterkommen und Hilfe benötigen, besuchen Sie uns einfach als #freedroid im irc.freenode.net und fragen um Rat.
+Falls Sie nicht mehr weiterkommen und Hilfe benötigen, besuchen Sie uns einfach als  #freedroid  im  irc.freenode.net  und fragen um Rat.
 
 Das wärs, wir wünschen schönes Spiel!
 

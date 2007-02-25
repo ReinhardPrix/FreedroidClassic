@@ -50,7 +50,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=13  OptionText="DIXON SUCCESSFUL."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
-Subtitle="Die technische Abteilung berichtete, dass Sie ihnen bei einem grossen Problem ausgeholfen hätten, obwohl die Angaben dazu recht vage waren..."
+Subtitle="Die technische Abteilung berichtete, dass Sie ihnen bei einem großen Problem ausgeholfen hätten, obwohl die Angaben dazu recht vage waren..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Gute Arbeit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="DIXON NOT DONE YET"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=501  PositionY=455  
-Subtitle="Dixon, Leiter der Technikabteilung, erwähnte mir gegenüber vor ein paar Tagen, dass man dort Personalmangel zu beklagen habe..."
+Subtitle="Dixon, Leiter der Technik-Gruppe, erwähnte mir gegenüber vor ein paar Tagen, dass man dort ernsthaften Personalmangel zu beklagen habe..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 LinkedTo:17
@@ -74,9 +74,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="Die Qualität des Essens hat sich merklich gebessert, seit Sie den Ofen des Kochs in Gang gebracht haben."
+Subtitle="Die Qualität des Essens hat sich merklich gebessert, seit Sie den Ofen des Kochs in Gang brachten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Bevor Sie das geschafft haben, hatten sich schon 12 Menschen wegen der grauenhaften Notrationen umgebracht - aber besser spät als nie."
+Subtitle="Bevor Sie das geschafft haben, hatte es schon 12 *hust* äh... Todesfälle wegen der grauenhaften Notrationen gegeben - aber besser spät als nie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:18
@@ -87,11 +87,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
-Subtitle="Unsere Situation wird noch durch die üble Qualität der vorhandenen Nahrung verschlimmert."
+Subtitle="Unsere Situation wird noch durch die abartige Qualität der vorhandenen Nahrung verschlimmert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wir hatten sogar ein paar Fälle von Kannibalismus; aber nachdem ich einige von den Freaks erschossen hatte, ist hier wieder Ruhe eingekehrt - von den Bots abgesehen."
+Subtitle="Wir hatten sogar ein paar Fälle von Kannibalismus; aber nachdem ich einige von den Freaks erschossen habe, ist hier wieder Ruhe eingekehrt - von den Bots abgesehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sprechen Sie doch bitte mit unserem Koch und bereinigen Sie die Sache."
+Subtitle="Sprechen Sie doch bitte mal mit unserem Koch und bereinigen Sie die Sache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 LinkedTo:18
@@ -131,7 +131,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
-Subtitle="Wir haben hier einen Show-Kampfplatz. Wenn Sie dort einen Kampf überstehen weiss ich, dass Sie einem echten Kampf gewachsen sein werden."
+Subtitle="Wir haben hier einen Show-Kampfplatz. Wenn Sie dort einen Kampf überstehen weiß ich, dass Sie einem realen Gefecht gewachsen sein werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 LinkedTo:21
@@ -162,7 +162,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=23  OptionText="BENDER STILL SICK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=820  PositionY=461  
-Subtitle="Ein Mann aus der Roten Wache, Bender, stirbt uns weg. Er hat irgendein Gift genommen, von dem er glaubte, es würde ihm helfen."
+Subtitle="Ein Mann aus der Roten Wache, Bender, stirbt uns weg. Er hat irgendein Gift genommen, von dem er glaubte es würde ihm helfen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Unser Doktor weigert sich, ihm irgendwelche Hilfe zukommen zu lassen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -236,7 +236,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
 Subtitle="Nicht schlecht... gar nicht so schlecht! Ich gewinne immer mehr den Eindruck, dass Sie der richtige - äh - Mann für uns sind..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn Sie noch ein paar weitere Aufträge erfüllen, kriegen Sie Ihre Mitgliedschaft."
+Subtitle="Wenn Sie noch ein paar weitere Aufträge erfüllen kriegen Sie Ihre Mitgliedschaft."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -246,7 +246,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText="TUX SUCKS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1095  PositionY=469  
-Subtitle="Sie müssen noch viel dafür tun, ein würdiges Mitglied zu werden. Viel Glück dabei."
+Subtitle="Sie müssen noch viel dafür tun, ein würdiges Mitglied zu werden. Bleiben Sie am Ball - viel Glück dabei."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

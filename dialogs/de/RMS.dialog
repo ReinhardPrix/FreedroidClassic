@@ -41,10 +41,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Computercluster... was ist das?"
+New Option Nr=1  OptionText=" Aha, Computercluster... was ist das?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="Ein Cluster ist ein Verbund von sprichwörtlich tausenden gewöhnlichen Rechnern, zu einer ganzen grossen Einheit."
+Subtitle="Ein Cluster ist ein Verbund von sprichwörtlich tausenden von gewöhnlichen Rechnern, zu einer ganzen großen Einheit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Es kann dazu verwendet werden, die kompliziertesten Berechnungen in vergleichsweise geringer Zeit anzustellen, vorausgesetzt man benutzt geeignete Methoden zur Datenanalyse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -97,12 +97,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Gibt es schon irgendwelche Ergebnisse aus der Clusterdaten-Auswertung?"
+New Option Nr=9  OptionText=" Gibt es schon irgendwelche Ergebnisse aus der Supercomputer-Auswertung?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Ja, natürlich! Die ersten Ergebnisse stehen bereits zur Verfügung und sie sehen äusserst interessant aus. Ich muss den Chef darüber informieren..."
+Subtitle="Ja, natürlich! Die ersten Ergebnisse stehen bereits zur Verfügung und sie sehen äußerst interessant aus. Ich habe den Chef darüber informiert..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie sollten am besten mit Spencer sprechen - er wird Sie einweihen und wissen, was zu tun ist. Ich danke Ihnen vielmals für Ihre Bemühungen! Es könnte sich in der Tat um für uns überlebenswichtige Informationen handeln."
+Subtitle="Sie sollten am besten mit Spencer sprechen - er wird Sie einweihen und wissen was zu tun ist. Ich danke Ihnen vielmals für Ihre Bemühungen! Es könnte sich in der Tat um für uns überlebenswichtige Informationen handeln..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -112,7 +112,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Na dann, auf Wiedersehen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
-Subtitle="Passen Sie auf sich auf, Linarianer."
+Subtitle="Passen Sie auf sich auf, Linarianer!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

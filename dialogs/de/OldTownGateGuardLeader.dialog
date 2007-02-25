@@ -44,18 +44,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Ich seh mich nur ein bisschen um."
+New Option Nr=1  OptionText=" Ich will mir nur die Stadt ansehen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=33  PositionY=33  
-Subtitle="Oh, grossartig. Noch ein Neugieriger!"
+Subtitle="Oh, großartig. Noch ein Neugieriger!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Etwa vor einer Woche habe ich einen anderen Fremden hier reingelassen der auch sagte, dass er sich nur ein bisschen umsehen will! Ich hab ihn nie wieder gesehen..."
+Subtitle="Etwa vor einer Woche habe ich einen anderen Fremden hier reingelassen, der auch sagte, dass er sich nur ein bisschen umsehen will! Ich hab ihn nie wieder gesehen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="An diesem Tag spielten all unsere Computer verrückt, 20 Säcke mit Nahrungsrationen verschwanden aus unserem Lager und einer unserer Bots wurde gestohlen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich glaube, der verdammte Freak lebt irgendwo im Osten... es wäre mir ein Vergnügen, ihn in die Finger zu kriegen und das Leben aus ihm rauszuprügeln - und zwar langsam!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Linarianer, ich werde dich reinlassen -- stell' irgendeinen Unsinn an und du gehst nie wieder hinaus - kapiert? Gut!"
+Subtitle="Linarianer! Ich werde dich reinlassen -- aber stell' irgendeinen Unsinn an und du gehst hier nie wieder hinaus - kapiert? Gut!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -65,12 +65,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Ich würde gern in die Stadt rein..."
+New Option Nr=2  OptionText=" Ich würde jetzt gern in die Stadt hinein..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=32  PositionY=383  
-Subtitle="Wie spassig, genau das Gleiche könnte man auch von all den durchgedrehten Bots da draussen sagen."
+Subtitle="Wie spaßig, genau das Gleiche könnte man auch von all den durchgedrehten Bots da draußen sagen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich lass dich rein, aber sei gewarnt: eine falsche Bewegung, dann gibt's heute gerupfte Wasserente zum Mittagessen! Ich hoffe, ich konnte mich verständlich machen."
+Subtitle="Ich lass dich rein, aber sei gewarnt: eine falsche Bewegung, dann gibts heute gerupfte Wasserente zum Mittagessen! Ich hoffe, ich konnte mich verständlich machen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -83,7 +83,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Ich bin hier, um euren Anführer zu meucheln - und du wirst mich nicht aufhalten!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=369  PositionY=382  
-Subtitle="Ok, Linarianer! Du wolltest es so!"
+Subtitle="OK, Linarianer! Du wolltest es so!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Eröffnet das Feuer!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

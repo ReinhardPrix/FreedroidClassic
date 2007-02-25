@@ -42,10 +42,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Sagen Sie, sind Sie scharf auf 'nen Satz heisse Ohren? Mein Schnabel ist Gelb!"
+New Option Nr=1  OptionText="Sagen Sie, sind Sie scharf auf 'nen Satz heiße Ohren? Mein Schnabel ist Gelb!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Dein Schnabel ist grüner als ein Laubfrosch, aber nicht so grün, wie das Grüne hinter deinen Ohren. Verstanden, flügellahme Zwergkrähe?"
+Subtitle="Dein Schnabel ist grüner als ein Laubfrosch, aber nicht so grün wie das Grüne hinter deinen Ohren. Verstanden, flügellahme Zwergkrähe?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="An MEINE Ohren reichst du Dreikäsehoch jedenfalls nicht ran, dafür haste deinen Milchschnabel zu weit unten! HA!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -94,7 +94,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Arena? Ich sehe hier keine Arena..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Natürlich nicht... die is ja schliesslich auch unter der Erde."
+Subtitle="Natürlich nicht... die is ja schließlich auch unter der Erde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Willste da runter, dich ein bisschen rumprügeln?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -144,7 +144,7 @@ Subtitle="Das hab ICH NIE gesagt, Milchbauch."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Du wolltest 'nen Kampf und du hast einen Kampf gekriegt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich hab dir einen Kampf angeboten und du hast ihn angenommen."
+Subtitle="Ich hab dir 'nen Kampf angeboten und du hast ihn angenommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Damit wär dann wohl alles geklärt, Grünschnabel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -204,7 +204,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText=" Warum zum Geier veranstalten Sie Kämpfe? Es sind doch schon genügend Menschen gestorben!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ich hab einen wirklich guten Grund, dir das nicht zu verraten."
+Subtitle="Ich hab einen wirklich guten Grund dir das nicht zu verraten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nicht, dass jemand so Unerfahrener wie du das überhaupt verstehen könnte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -239,7 +239,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText=" Beendet endlich die Gewalt! Alles Blut ist rot!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Hey, die Bots bluten schwarz. Die verspritzen Öl, weisst du."
+Subtitle="Hey, die Bots bluten schwarz. Die verspritzen Öl, weißt du."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:16
@@ -260,10 +260,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=17  OptionText=" Sie... haben meiner friedlichen Gesinnung einen schweren Schlag versetzt - ich... ich werde echt wütend...! So sauer, dass ich was zerstören muss!!"
+New Option Nr=17  OptionText=" Sie... haben meiner friedlichen Gesinnung... einen schweren Schlag versetzt - ich... ich werde echt wütend...! So sauer, dass ich was zerstören muss!!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Grossartig. Geh durchs Tor, meine kleine Frühkartoffel."
+Subtitle="Großartig. Geh durchs Tor da rechts, meine kleine Frühkartoffel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"

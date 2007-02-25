@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hallo Kollege! Alles klar?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=144  PositionY=132  
-Subtitle="Ein Frischling! Klasse! Wir können immer neue Leute gebrauchen. Willkommen in den Reihen der Roten Wache! Ich bin Lukas, Verantwortlicher für unser Waffenarsenal."
+Subtitle="Frischfleisch! Klasse! Wir können immer neue Leute gebrauchen. Willkommen in den Reihen der Roten Wache! Ich bin Lukas, Verantwortlicher für unser Waffenarsenal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,12 +42,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Spencer sagte, dass ich hier eine Rüstung kriege..."
+New Option Nr=1  OptionText=" Spencer sagte, dass ich hier eine Panzerung kriege..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=263  PositionY=137  
-Subtitle="Na klar! Als Mitglied der Roten Wache bist du bevollmächtigt, einen unserer Schutzanzüge zu tragen. Ich kann seine Masse an alle Grössen anpassen - sogar an deine!"
+Subtitle="Na klar! Als Mitglied der Roten Wache bist du bevollmächtigt, einen unserer Schutzanzüge zu tragen. Ich kann seine Maße an alle Größen anpassen - sogar an deine!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es gibt zwei Arten an Panzerungen; die schwere ultrastabile Wachrüstung und eine leichtere Version der gleichen Ausführung."
+Subtitle="Es gibt zwei Arten an Schutzpanzer: die schwere ultrastabile Wachrüstung und eine leichtere Version der gleichen Ausführung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Also, was darf's denn sein?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -60,14 +60,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Und was machst du den ganzen Tag in der Waffenkammer?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=267  PositionY=192  
-Subtitle="Ach, es gibt immer genug zu tun, keine Sorge. Ich bin gut damit beschäftigt, alles in Ordnung zu halten."
+Subtitle="Ach, es gibt immer genug zu tun, keine Sorge. Ich bin gut damit beschäftigt alles in Ordnung zu halten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ich muss jetzt gehen."
+New Option Nr=99  OptionText=" Ich muss jetzt gehen, ciao!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=361  PositionY=133  
 Subtitle="Pass auf dich auf."

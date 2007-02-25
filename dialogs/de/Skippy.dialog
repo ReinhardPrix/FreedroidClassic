@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Tag! Ich bin neu in der Siedlung..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=57  PositionY=221  
-Subtitle="Grossartig! Ein Neuankömmling! Willkommen! Willkommen! Ich heisse Skippy und ich bin dein neuer bester Freund!"
+Subtitle="Großartig! Ein Neuer! Willkommen! Willkommen! Ich heiße Skippy und ich bin dein neuer bester Freund!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Und als besonderen Gefallen verkaufe ich dir eine Automap-Einheit zum halben Preis!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,7 +68,7 @@ Subtitle="Setz dir das Ding einfach auf und die Nanobots dringen in deinen Körpe
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sie werden sich mit deinen Augen verbinden und Daten mit Hilfe der Sehnerven an dein Gehirn weiterleiten. Hübsch, was?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alles innerhalb von 7 Metern wird erfasst und bei Bedarf auf deine Retinas projiziert."
+Subtitle="Alles im Umkreis von 7 Metern wird erfasst, gespeichert und bei Bedarf  wieder auf deine Retinas projiziert."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="(Drücke einfach TAB, um die Karte einzublenden.)"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -81,9 +81,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Sie sagten, Sie machen diese Dinger selbst? Wie stellen Sie das an?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=154  PositionY=150  
-Subtitle="Oh, ich war schon immer ein Technikfreak. Und ich habe die Blaupausen aus der Zeit vor dem Grossen Angriff."
+Subtitle="Oh, ich war schon immer ein Technikfreak. Und ich habe die Blaupausen aus der Zeit vor dem Großen Angriff."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Man kann nichts mehr aus Katalogen bestellen, weisst du."
+Subtitle="Man kann nichts mehr aus Katalogen bestellen, weißt du."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die einzige Quelle für diese kleinen Dingerchen ist hier. Bei mir!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -112,7 +112,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Ich trau Ihnen nicht!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="WAS? Aber ich bin dein bester Freund! Du must mir vertrauen!"
+Subtitle="WAS? Aber ich bin dein bester Freund! Du musst mir vertrauen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=6 ChangeToValue=1
@@ -123,7 +123,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" Ich glaube Ihnen immer noch nicht. Sie verkaufen Mist an die Leute."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="WAS?! Schön, jetzt du kannst die guten Schnäppchen vergessen! Ich will gar nicht mehr mit dir handeln!"
+Subtitle="WAS?!! Schön, jetzt du kannst die guten Schnäppchen vergessen! Ich will gar nicht mehr mit dir handeln!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich bin nicht mehr länger dein bester Freund... verschwinde, Dreckskerl!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -139,7 +139,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Weil du mein bester Freund bist!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich kümmere mich immer gut um meine speziellen Kumpels!"
+Subtitle="Ich kümmere mich immer gut um meine ganz speziellen Kumpels!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 ChangeOption=21 ChangeToValue=1
@@ -171,7 +171,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=91  OptionText="YEAH, HE IS ANGRY."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Was? Du wieder? Ich will dich hier nicht haben, hau ab."
+Subtitle="Was? Du wieder? Ich will dich hier nicht haben, hau ab!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=91 ChangeToValue=0
 ChangeOption=99 ChangeToValue=0

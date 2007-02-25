@@ -58,11 +58,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=768  PositionY=242  
-Subtitle="Wie ich bereits gesagt habe, kann ich Ihnen im Moment nichts beibringen. Ich habe nicht die Zeit dazu."
+Subtitle="Wie ich bereits gesagt habe kann ich Ihnen im Moment nichts beibringen. Ich habe nicht die Zeit dazu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich muss zusehen, den instabilen Energiefluss so zu verteilen, dass ich mein Forschungsprogramm ungefährdet fortsetzen kann."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn Sie die Wartungsroboter auf der zweiten Untergrundebene dieser Station beseitigen können, dann habe ich Zeit, mein Wissen mit Ihnen zu teilen."
+Subtitle="Wenn Sie die Wartungsroboter auf der zweiten Untergrundebene dieser Station beseitigen können, dann habe ich Zeit mein Wissen mit Ihnen zu teilen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -98,7 +98,7 @@ Subtitle="Jetzt nicht, ich bin beschäftigt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Hier läuft gerade ein wichtiges Forschungsprogramm. Dieses Projekt könnte sogar für das Überleben der ganzen Kolonie von Bedeutung sein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es ist von enormer Wichtigkeit! Aber das Projekt ist in Gefahr... einige Reparaturbots machen sich unten an der Stromversorgung zu schaffen."
+Subtitle="Es ist von enormer Wichtigkeit! Aber mein Projekt ist in Gefahr... einige Reparaturbots machen sich unten an der Stromversorgung zu schaffen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sie versuchen die Maschinen zu 'warten', indem sie sie ständig neu starten. Das muss aufhören, aber ich kann hier nicht weg!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -116,13 +116,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" Ich werde mich um die Energieversorgung kümmern."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=542  PositionY=327  
-Subtitle="Klasse! Sie können sie nicht verfehlen; der Eingang ist nicht schwer zu finden. Gehen Sie in den Garten und steigen Sie dort in die Luke zur unteren Stationsebene."
+Subtitle="Klasse! Sie können sie nicht verfehlen, der Eingang ist nicht schwer zu finden. Gehen Sie in den Garten und steigen Sie dort in die Luke zur unteren Stationsebene."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Am besten kümmern Sie sich gar nicht um den Widerstand auf der ersten Ebene. Sie müssen sich nur um die Stromversorgung kümmern, und die liegt auf der ZWEITEN Ebene."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich hoffe, Sie haben so etwas wie eine Laserpistole; die Robots dort werden Sie zerpflücken, wenn Sie ihnen zu nahe kommen."
+Subtitle="Ich hoffe, Sie haben so etwas wie eine Laserpistole - die Robots dort werden Sie zerpflücken, wenn Sie ihnen zu nahe kommen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Am besten handeln Sie schnell. Ich bin schon ganz krank vom ewigen Stabilisieren dieses dämlichen Stromnetzes!"
+Subtitle="Handeln Sie bitte schnell. Ich bin schon ganz krank vom ewigen Stabilisieren dieses dämlichen Stromnetzes!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
@@ -161,7 +161,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Wie wär's mit einer Belohnung für das Absichern der Stromversorgungs-Zentrale?"
+New Option Nr=10  OptionText=" Wie wärs mit einer Belohnung für das Absichern der Stromversorgungs-Zentrale?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=160  PositionY=237  
 ChangeOption=10 ChangeToValue=0
@@ -202,9 +202,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=460  PositionY=398  
-Subtitle="Ja, seit die Stromversorgung gleichmässig funktioniert, sind die Ergebnisse viel besser! Ich habe mein Ziel erreicht."
+Subtitle="Ja, seit die Stromversorgung gleichmäßig funktioniert, sind die Ergebnisse viel besser! Ich habe mein Ziel erreicht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich konnte geheime Daten über die Umgebung der Kolonie sammeln. Wir benötigen einen grossen Verbund von Computern, um die Informationen auszuwerten."
+Subtitle="Ich konnte geheime Daten über die Umgebung der Kolonie sammeln. Wir benötigen einen großen Verbund von Computern, um die Informationen auszuwerten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sobald wir die Daten ausgewertet haben könnte sich ein Weg finden, die Kolonie zu sichern und unser Überleben zu garantieren. Aber es ist noch zu früh, um das mit Bestimmtheit zu sagen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -219,11 +219,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=362  PositionY=496  
-Subtitle="Das wäre natürlich grossartig. Ich weiss, dass die alte Stadt drüben über eine passende ED-Infrastruktur verfügt und seit geraumer Zeit einen geeigneten Rechenkomplex unterhält."
+Subtitle="Das wäre natürlich großartig. Ich weiß, dass die alte Stadt drüben über eine passende ED-Infrastruktur verfügt und seit geraumer Zeit einen geeigneten Rechenkomplex unterhält."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Das Problem daran ist, dass ich nicht mehr in die Siedlung zurückkehren kann. Sie würden mich vielleicht töten, wegen dieses Missverständnisses vor einiger Zeit..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ausserdem befindet sich das Computerzentrum innerhalb der Wachfestung. Soviel ich gehört habe, ist es nur Mitgliedern der Roten Wache erlaubt, dieses Gebäude zu betreten."
+Subtitle="Außerdem befindet sich das Computerzentrum innerhalb der Wachfestung. Soviel ich gehört habe, ist es nur Mitgliedern der Roten Wache erlaubt, dieses Gebäude zu betreten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Aber vielleicht kriegen Sie das irgendwie hin. Für mich wäre es auf Grund meines schlechten Rufs unmöglich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -248,9 +248,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=557  PositionY=497  
-Subtitle="Sie hatten bereits eingewilligt, meinen Datenkubus ins städtische Rechenzentrum zu schleusen. Ich habe keinen grossen Einfluss mehr in dieser Angelegenheit."
+Subtitle="Sie hatten bereits eingewilligt, meinen Datenkubus ins städtische Rechenzentrum zu schleusen. Ich habe keinen großen Einfluss mehr in dieser Angelegenheit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Das Schicksal der Kolonie liegt jetzt in Ihren Händen. Bringen Sie den Datenspeicher, den ich Ihnen gegeben habe dorthin, wie besprochen. Nur mit dem Grossrechner können die Daten entsprechend ausgewertet werden."
+Subtitle="Das Schicksal der Kolonie liegt jetzt in Ihren Händen. Bringen Sie den Datenspeicher den ich Ihnen gegeben habe dorthin, wie besprochen. Nur mit dem Großrechner können die Daten entsprechend ausgewertet werden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -278,10 +278,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" In anderen Worten: Sie sind Hacker."
+New Option Nr=20  OptionText=" Mit anderen Worten: Sie sind Hacker."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=755  PositionY=148  
-Subtitle="Ähh... ich denke, man könnte es auch so auslegen, ja."
+Subtitle="Ähh... ich denke man könnte es auch so auslegen, ja."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1

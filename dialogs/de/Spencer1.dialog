@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Schönen Tag... äh, ich kenne mich hier noch nicht aus..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=63  PositionY=228  
-Subtitle="Ah, ein weiterer Schutzbedürftiger- gut, gut. Ich heisse Sie willkommen in unserer kleinen Festungs-Stadt!"
+Subtitle="Ah, ein weiterer Schutzbedürftiger - gut, gut. Ich heiße Sie willkommen in unserer kleinen Festungs-Stadt!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Darf ich mich vorstellen: Spencer, Kommandeur der Militärsektion Rote Wache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -64,11 +64,11 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=246  PositionY=365  
 Subtitle="Hmm... das sehe ich. Nun, ich kann Sie nicht so ohne weiteres aufnehmen, wissen Sie..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Hauptaufgabe der Roten Wache ist es, diese Stadt zu verwalten und sie vor den Robotern zu schützen."
+Subtitle="Die Hauptaufgabe der Roten Wache ist es diese Stadt zu verwalten und sie vor den Robotern zu schützen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Es gibt viele Dinge, bei denen wir ein wenig Hilfe gebrauchen könnten. Es fehlt uns momentan überall an Leuten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wenn sich zeigt, dass Sie sich um diese Befestigung kümmern können, werde ich Ihnen die Mitgliedschaft gewähren."
+Subtitle="Wenn sich zeigt, dass Sie sich um diese Befestigung kümmern wollen, werde ich Ihnen die Mitgliedschaft gewähren."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1
@@ -77,7 +77,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Spencer, was, wenn ich der Roten Wache eine grössere Summe spende? Kann ich so vielleicht 'Ehrenmitglied' werden?"
+New Option Nr=3  OptionText=" Spencer, was, wenn ich der Roten Wache eine größere Summe spende? Kann ich so vielleicht 'Ehrenmitglied' werden?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=196  PositionY=430  
 Subtitle="Wollen Sie mich etwa bestechen?"
@@ -93,7 +93,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Er läuft ziemlich schlecht."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie sind der erste Ankommende seit etwa einer Woche. Die meisten Menschen ausserhalb dieser Stadt sind mittlerweile tot."
+Subtitle="Sie sind der erste Ankommende seit etwa einer Woche. Die meisten Menschen außerhalb dieser Stadt sind mittlerweile tot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Uns gehen langsam die Leute und die Vorräte aus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -110,7 +110,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Kann ich eventuell irgendwie behilflich sein?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=437  PositionY=53  
-Subtitle="Hmm... wenn Sie helfen wollen, wäre es am besten, Sie könnten uns irgendwie die Robots in der Lagerhalle vom Hals schaffen."
+Subtitle="Hmm... wenn Sie helfen wollen wäre es am besten, Sie könnten uns irgendwie die Robots in der Lagerhalle vom Hals schaffen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich werde Ihnen das Tor öffnen, damit Sie dort hinunter können."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -248,12 +248,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=38  OptionText=" Warum also gehen wir nicht da hin und schalten das Ding ein?"
+New Option Nr=38  OptionText=" Warum also, gehen wir nicht da hin und schalten das Ding ein?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Tja, leichter gesagt als getan. Erstens ist das Terminalfeld ein Robotfriedhof."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Viele der Schrottkisten sind immer noch in Funktion und es dürfte ungesund sein, dorthin zu gehen. "
+Subtitle="Viele der Schrottkisten sind wieder in Funktion und es dürfte ungesund sein, dorthin zu gehen. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Letztendlich habe ich aber bereits einige Leute dorthin geschickt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -266,7 +266,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=39  OptionText=" Und?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Nun und bevor unsere Verbindung zu ihnen zusammenbrach, hörte ich einige schlimme Nachrichten."
+Subtitle="Nun und bevor unsere Verbindung zu ihnen zusammenbrach hörte ich einige schlimme Dinge."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Schreie, die einem das Blut stocken lassen, Schüsse, Geräusche von Schlägen und Flüche nicht mit eingerechnet, war der Funkkanal an sich völlig still..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -295,7 +295,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=41  OptionText="Ich würde gern versuchen, den Disruptor-Schild zu aktivieren."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=371  PositionY=529  
-Subtitle="Wirklich? Drei unserer Männer sind bereits beim Versuch dabei gestorben."
+Subtitle="Wirklich? Drei unserer Leute sind bereits beim Versuch dabei gestorben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich fürchte, es ist ein Himmelfahrtskommando. Wenn Sie gehen wollen werde ich Sie nicht aufhalten, aber denken Sie bitte nochmal darüber nach."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -306,10 +306,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=43  OptionText=" Ich will es versuchen."
+New Option Nr=43  OptionText=" Lassen Sie es mich versuchen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=464  PositionY=510  
-Subtitle="Na gut! Das Tor ist bereits offen. Gehen Sie zum Terminalfeld; dort - irgendwo in einer Schlucht - werden Sie die Forschungsstation finden."
+Subtitle="Na gut! Das Tor ist bereits offen. Gehen Sie zum Terminalfeld. Dort - irgendwo in einer Schlucht - werden Sie die Forschungsstation finden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Bevor Sie gehen... wollen Sie vielleicht noch irgendwelche Bestattungs-Angelegenheiten regeln lassen?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -326,7 +326,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=462  PositionY=578  
 Subtitle="Gut. Sie sollten hervorragend gerüstet sein, falls Sie wirklich dorthin gehen wollen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es besteht auch keine Grund zur Eile deswegen. Schliesslich läuft uns die Forschungsbasis nicht davon, also lassen Sie es am besten ruhig angehen."
+Subtitle="Es besteht auch keine Grund zur Eile deswegen. Schließlich läuft uns die Forschungsbasis nicht davon, also lassen Sie es am besten ruhig angehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=44 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -360,15 +360,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=51  OptionText=" Ahem...*hüstel*... würden Sie mich möglicherweise für 15,000 Tribucks zur Roten Wache ernennen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Muss... widerstehen... "
+Subtitle="Muss... wwiderstehen... "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="D-darf... nicht... korrrupt... w-werden..."
+Subtitle="D-darf... nicht... korrrupt... w-werden..!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tief atmen, Spencer... tief einatmen..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="AH, ZUM GEIER MIT DER EHRE!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="O.k.!! Sie haben sich die Mitgliedschaft erkauft..! Mein Geld, bitteschön..."
+Subtitle="OK!! Sie haben sich die Mitgliedschaft erkauft..! Mein Geld, bitteschön..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=51 ChangeToValue=0
 OnCondition="GoldIsLessThan:15000" JumpToOption=52 ElseGoto=53

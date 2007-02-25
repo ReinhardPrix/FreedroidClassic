@@ -54,10 +54,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas grösseres?"
+New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas größeres?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Zu meinem grössten Bedauern, nein."
+Subtitle="Zu meinem größten Bedauern, nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Rote Wache verbietet den Verkauf von extrem gefährlichen Sprengkörpern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -79,9 +79,9 @@ Subtitle="Mein Wort gegen Ihres. Wenn Sie es versuchen wollen, so soll es mir re
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich bereite garnichts vor. Ich spreche nur davon, was ich als unabwendbar für die Zukunft ansehe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich war an vielen bewaffneten Auseinandersetzungen beteiligt und ich habe gesehen, wie Regierungen stürzten."
+Subtitle="Ich war an vielen bewaffneten Auseinandersetzungen beteiligt und ich habe gesehen wie Regierungen stürzten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sobald der Krieg vorbei ist, wird sich die Rote Wache auflösen."
+Subtitle="Sobald der Krieg vorbei ist wird sich die Rote Wache auflösen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Dabei gehe ich natürlich von der Annahme eines Sieges unserer Seite aus, welcher in der gegenwärtigen Lage höchst unwahrscheinlich ist."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -94,9 +94,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" Den Sturz der Roten Wache? Erzählen Sie mir mehr darüber."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Es ist noch nicht an der Zeit, von solchen Dingen zu sprechen. Kommen Sie eines Tages wieder, und wir werden darüber Genaueres besprechen."
+Subtitle="Es ist noch nicht an der Zeit, von solchen Dingen zu reden. Kommen Sie eines Tages wieder, und wir werden darüber Genaueres besprechen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Rote Wache hat vielleicht ihre grossen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
+Subtitle="Die Rote Wache hat vielleicht ihre großen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -130,7 +130,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Vor 20 Jahren gab es einen bewaffneten Konflikt."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Eine Granate die ich warf vernichtete ein Wesen, das viele meiner... Leute tötete."
+Subtitle="Eine Granate die ich warf, vernichtete ein Wesen, das viele meiner... Leute tötete."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Jetzt mache ich noch mehr davon, um die Zerstörer zu vernichten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -146,7 +146,7 @@ Subtitle="Drollige Art, ein Gespräch zu führen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Aber es ist wahr. Ich bin nicht, was ich zu sein scheine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Aber dann wiederrum, Sie sind es auch nicht; daher denke ich, dass wir einander ähnlich sind."
+Subtitle="Aber dann wiederum, Sie sind es auch nicht; daher denke ich, dass wir einander ähnlich sind."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=90 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
@@ -158,7 +158,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=91  OptionText=" Was meinen Sie damit? Ich bin Tux und niemand anders."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Und ich bin Duncan McNamara, der Granatenbauer und niemand anders."
+Subtitle="Und ich bin Duncan McNamara, der Granatenkonstrukteur und niemand anders."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ich glaube, das Thema ist nun erschöpft."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -207,7 +207,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruss? Niemand hier kennt ihn!"
+New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruß? Niemand hier kennt ihn!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich habe viele Bücher über Linarianer gelesen. Das ist alles."
