@@ -1,2278 +1,1829 @@
+2007-02-24 01:06  ahuillet
 
-THIS FILE IS NO LONGER MAINTAINED!
+	* freedroidRPG.exe: upd
 
-	THE DETAILED CHANGELOG IS AVAILABLE IN THE NEWS SECTION OF THE PROJECT
-	HOME PAGE AT:  http://freedroid.sourceforge.net
+2007-02-24 01:04  ahuillet
 
-	THERE IS ALSO AN ARCHIVE OF THE CVSLOG MAILING LIST AVAILABLE VIA OUR
-	SOURCEFORGE PROJECT PAGE:  http://sourceforge.net/mail/?group_id=54521
+	* src/leveleditor.c: patched calls to SaveShip to look for the ship
+	  file at the right place
 
+2007-02-24 00:48  ahuillet
 
-2002-06-09  rprix  <rprix@users.sourceforge.net>
+	* freedroidRPG.exe: upd
 
-	* menu.c, view.c, global.h, graphics.c, influ.c, input.c, main.c:
-	o) further improvements of the joystick fireing
-	o) incorporated "Nighthawk"-type mouse control
-	   based on a patch sent in by Tanel Kylaots <mou@tdl.ee>
+2007-02-23 18:52  ahuillet
 
-2002-06-09  rprix  <rprix@users.sourceforge.net>
+	* src/misc.c: fixed misplaced buttons
 
-	* menu.c, view.c, global.h, graphics.c, influ.c, input.c, main.c:
-	o) further improvements of the joystick fireing
-	o) incorporated "Nighthawk"-type mouse control
-	   based on a patch sent in by Tanel Kylaots <mou@tdl.ee>
+2007-02-23 18:42  ahuillet
 
-2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+	* src/: proto.h, text.c, BFont.c: german translation: uppercase
+	  umlauts, counting umlauts correctly in size
 
-	* configure.ac, game.dat, global.h, influ.c, init.c:
-	Improved (I hope) the collision-damage handling:  Now not the difference in
-	class of droid but in weight of droid is taken as the basis of the calculation.
-	Further a constants section in game.dat has been added, where the player can
-	also calibrate the collision damage via a constant for his own mod.
-	The "sucking in" problem has also been addressed:  Getting sucked into another
-	robot should now occur less likely (i.e. not on my machine, as usual). jp.
+2007-02-22 23:12  ahuillet
 
-	* new_mission_2.mission, text.c:
-	Added missing events section to the second new mission too.
-	Game looks pretty cool to me right now.  We should release 0.8.2 I think.
+	* graphics/font/parafont.png: umlaut
 
-	* classical_paradroid_mission.mission, bullet.c, proto.h, text.c:
-	Added more text for hit droids.
-	Added the missing event section to the classical mission.
+2007-02-22 23:11  ahuillet
 
-	* new_mission_1.mission, new_ship_1.maps, defs.h, influ.c, init.c,
-	misc.c, proto.h, struct.h, text.c: 
-	Events fully functional implemented and read from the mission file.
-	There are event triggers and event actions.
-	Of course more than one trigger can be used to trigger one action.
-	Put the triggers to good use on the first new mission.
-	Also adapted the map file a little bit more so that it is not so empty.
-	Clasical mission currently not functional due to missing event section.
+	* map/titles/de/: EndOfGame.title, StartOfGame.title: removed silly
+	  encoding
 
-2002-06-09  rprix  <rprix@users.sourceforge.net>
+2007-02-22 22:53  ahuillet
 
-	* Patches/mouse-patch.1:
-	patch submitted by Tanel Kylaots <mou@tdl.ee> to add mouse
-	functionality similar to Nighthawk.
+	* map/: StartOfGame.title, EndOfGame.title: moved file
 
-2002-06-09  jprix  <johannesprix@users.sourceforge.net>
+2007-02-22 22:51  ahuillet
 
-	* init.c, misc.c, view.c:
-	TestEvent: Mapchange on Level 4 at (6,2): Seems to work!! cool!
+	* map/: TakeoverInstructions.title, level_editor_help.title: moved
+	  files
 
-	* init.c, misc.c, view.c:
-	Added a test event.  Trigger seems to work so far. Good.
+2007-02-22 22:48  magotari
 
-	* defs.h, global.h, init.c, main.c, misc.c, proto.h, struct.h:
-	Added more structures for events.
-	Added more structures for event triggers.
+	* map/titles/de/: EndOfGame.title, StartOfGame.title: Title
+	  translation from barbatrix.
 
-	* new_ship_1.maps, new_ship_2.maps, struct.h:
-	Corrected some bugs in the new maps.
-	Added some additional structure elements to the new rather empty maps.
-	Added structures for special periodic statements of some special droids.
+2007-02-22 22:35  ahuillet
 
-	* bullet.c, enemy.c, influ.c, init.c, proto.h, struct.h, text.c:
-	Added text for influs blast damage and also more flexibility:  When influ
-	received damage from a blast he says one of three possible messages.
-	That seems quite fine.
+	* win32/freedroidRPG.coff: new .coff
 
-	* enemy.c, influ.c, main.c, view.c:
-	Added text for the refreshes, haha.
-	Added text for collisions, haha.
+2007-02-22 22:34  ahuillet
 
-	* global.h, graphics.c, menu.c, sound.c, struct.h:
-	Integrated music/sound volume and gamma correction into the new GameConfig.
-	Added structures for other droids texts as well.
+	* dialogs/de/: 614.dialog, Bender.dialog, Benjamin.dialog,
+	  Bruce.dialog, Butch.dialog, Chandra.dialog, Darwin.dialog,
+	  Dixon.dialog, DocMoore.dialog, Duncan.dialog, Ernie.dialog,
+	  Ewald.dialog, Francis.dialog, Jack.dialog, Jasmine.dialog,
+	  Julie.dialog, Kevin.dialog, KevinGuard.dialog, Lukas.dialog,
+	  Melfis.dialog, Michelangelo.dialog,
+	  OldTownGateGuardLeader.dialog, Pendragon.dialog, RMS.dialog,
+	  Skippy.dialog, Sorenson.dialog, Spencer.dialog, Spencer1.dialog,
+	  StandardMSFacilityGateGuard.dialog,
+	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
+	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
+	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
+	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
+	  subdlg_Spencer_eval.dialog, subdlg_Spencer_funeral.dialog,
+	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: removed ß
 
-	* menu.c, struct.h, view.c, TODO, defs.h, enemy.c, global.h, init.c:
-	Added Draw_Position and drawing of current position similar to drawing FPS.
-	Added structure "configuration_for_freedroid" and a variable "GameConfig", that
-	now collects together the desired Draw_Framerate, Draw_Energy and Draw_Position.
+2007-02-22 22:28  ahuillet
 
-	* global.h, init.c, input.c, main.c, struct.h, view.c:
-	Added text for the 001 to say.  Very useful!
+	* freedroidRPG.exe: new binary
 
-	* map.c, misc.c, rahmen.c:
-	Removed obsolete functions itoa and ltoa.
-	(sprintf is a much more powerful tool!)
+2007-02-22 22:23  magotari
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+	* dialogs/de/: 614.dialog, Benjamin.dialog, Dixon.dialog,
+	  DocMoore.dialog, Ernie.dialog, Jack.dialog, Julie.dialog,
+	  MER.dialog, OldTownGateGuardLeader.dialog, Pendragon.dialog,
+	  RMS.dialog, Sorenson.dialog, StandardMSFacilityGateGuard.dialog,
+	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
+	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
+	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
+	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
+	  subdlg_Pendragon.dialog, subdlg_Sorenson.dialog,
+	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: The German
+	  translation from barbatrix.
 
-	* defs.h, influ.c, struct.h, svgaemu.c, view.c:
-	rewritten FireBullet(): simpler structure now, and allows continuous
-	shot-directions when using analog joystick. Not quite C64 original,
-	but quite cool! ;)
+2007-02-22 21:54  ahuillet
 
-	* Makefile.am, global.h, input.c, joy.c, keyboard.c, proto.h:
-	merged joy.c and keyboard.c into new file input.c.
-	adapted Makefile.am (don't forget to automake+configure ;)
+	* graphics/font/: cpuFont.png, font05.png, font05_blue.png,
+	  font05_green.png, font05_magenta.png, font05_red.png,
+	  font05_white.png, font05_yellow.png: drawn umlauts for german
+	  translation
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+2007-02-22 21:53  ahuillet
 
-	* TODO, graphics.c, menu.c:
-	Removed the "bug" that game remained rescaled after being rescaled in the
-	level editor and returning back to the actual game.
-	Updated TODO accordingly.
+	* map/titles/: EndOfGame.title, StartOfGame.title,
+	  TakeoverInstructions.title, level_editor_help.title,
+	  de/EndOfGame.title, de/StartOfGame.title,
+	  de/TakeoverInstructions.title, de/level_editor_help.title: moved
+	  title files to subdirs for translation support
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+2007-02-22 21:36  ahuillet
 
-	* INSTALL, NEWS, README:
-	added some more references to our sourceforge website.
+	* dialogs/de/: 614.dialog, Bender.dialog, Benjamin.dialog,
+	  Bruce.dialog, Butch.dialog, Chandra.dialog, Darwin.dialog,
+	  Dixon.dialog, DocMoore.dialog, Duncan.dialog, Ernie.dialog,
+	  Ewald.dialog, Francis.dialog, Jack.dialog, Jasmine.dialog,
+	  Julie.dialog, Kevin.dialog, KevinGuard.dialog, Lukas.dialog,
+	  MER.dialog, MSFacilityGateGuardLeader.dialog, Melfis.dialog,
+	  Michelangelo.dialog, OldTownGateGuardLeader.dialog,
+	  Pendragon.dialog, RMS.dialog, Skippy.dialog, Sorenson.dialog,
+	  Spencer.dialog, Spencer1.dialog, StandardBotAfterTakeover.dialog,
+	  StandardMSFacilityGateGuard.dialog,
+	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
+	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
+	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
+	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
+	  subdlg_Pendragon.dialog, subdlg_Sorenson.dialog,
+	  subdlg_Spencer_eval.dialog, subdlg_Spencer_funeral.dialog,
+	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: added unchecked
+	  german translations
 
-	* init.c:
-	added reference to our sourceforge project page for Bug-reporting in
-	help-message.
+2007-02-22 21:34  ahuillet
 
-	* ChangeLog:
-	auto-produced updated for ChangeLog from cvs-entries.
-	Needs cleanup again.
+	* src/: chat.c, defs.h, init.c: translations for titles as well
 
-	* TODO:
-	further small updates/cleanup in TODO.
+2007-02-22 21:33  ahuillet
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+	* src/text.c: supporting german chars now
 
-	* graphics.c:
-	Arggh, corrected that spelling mistake... sorry.
+2007-02-21 18:19  magotari
 
-	* TODO, graphics.c:
-	Removed some of the bugs mentionen in TODO and gave some comments.
+	* dialogs/Spencer.dialog: Even better.	I think I am clear for the
+	  release.
 
-	* new_ship_2.maps, enemy.c:
-	Removed some bugs from the second ships maps file.
-	Improved enemy behaviour: Once they see the influencer, have a weapong and
-	are not friendly, they will not move away but stand and fire at the influ.
+2007-02-21 18:18  magotari
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+	* dialogs/Spencer.dialog: Nitpicking.
 
-	* TODO, global.h, menu.c, struct.h, takeover.c, view.c:
-	*) entered "fresh" bugs into TODO
-	*) extended cheat-menu: make all droids visible, allow zooming
+2007-02-20 23:22  ahuillet
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+	* src/: chat.c, defs.h, init.c, menu.c, struct.h: added dialog
+	  translation subdirs support code
 
-	* new_ship_1.maps:
-	Corrected some bugs in the second map.
-	I hope they are historical and not caused by a bug in the Level editor.
+2007-02-20 17:23  magotari
 
-	* enemy.c, init.c, map.c, struct.h, game.dat, ship_1.maps:
-	Taught the droids some behaviour:  Before moving on to the next waypoint, they
-	first look if the way is really free of other droids.  (Currently, that includes
-	even the influencer!  Real polite.)
-	Corrected some minor bugs in the first map.
+	* dialogs/MSFacilityGateGuardLeader.dialog: Just a small touch.
 
-	* enemy.c:
-	Reworking enemy movement.  Starting to add new behaviour.
+2007-02-20 16:46  ahuillet
 
-	* TASK_CHART, enemy.c, map.c, proto.h:
-	Removed some obsolete code.
-	Corrected the bug, that enemys were always moving the speed the influencer could go.  Looks much better now.
+	* src/chat.c: fixed dialog engine bug: always run before start
+	  could not quit dialog
 
-	* influ.c, new_ship_1.maps, new_ship_2.maps:
-	Corrected some minor bugs in the new maps.
-	Removed some warnings.
+2007-02-19 18:51  magotari
 
-	* main.c, proto.h, sound.c, struct.h, view.c, Homepage/Freedroid_Manual.tex, TASK_CHART, bullet.c, defs.h, global.h, init.c:
-	Updated my TASK_CHART.
-	Implemented the takeover sound.
-	Added documentation about the new keys in the Level Editor to the manual.
+	* dialogs/Melfis.dialog: Maybe this sounds better...
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+2007-02-18 21:32  magotari
 
-	* sound.c:
-	replaced some forgotten printf's to DebugPrintfs in sound.c
+	* map/StartOfGame.title: A little change.
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+2007-02-18 20:51  ahuillet
 
-	* new_ship_1.droids, new_ship_1.maps, new_ship_2.maps, enemy.c, menu.c:
-	Added friendly droids.
-	Improved mission instructions dispaly.
-	Improved the handling of nonfixed special forces.
+	* src/map.c: builds correctly now
 
-	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac, new_ship_1.droids, new_ship_1.maps:
-	Added friendly droids.  Modified maps and drois file of the first new mission
-	to contain one, but contact is not possible.
+2007-02-18 20:50  ahuillet
 
-	* TASK_CHART, game.dat, vars.h:
-	Added a few new tasks.
+	* src/map.c: fixed taken over bots respawning friednly
 
-	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h, main.c, sound.c, struct.h, view.c:
-	Implemented the "cry sound", when influs energy is low.
-	Added sounds for the cry sound and the transfer mode sound.
+2007-02-18 18:36  magotari
 
-	* new_ship_1.maps:
-	Reshaped the new maps a little bit more for the new mission.
+	* dialogs/Spencer.dialog: A quick fix, since I don't have the time
+	  to get my new Spencer going for this release.
 
-	* keyboard.c, menu.c, proto.h:
-	Extended the level editor to allow for different boxes and pillars the be planted.
-	Extended the keyboard module to recognize keys 0-9.
+2007-02-18 18:33  ahuillet
 
-	* enemy.c, influ.c, init.c, view.c, new_mission_2.mission, new_mission_1.mission:
-	Added fading effect when influencer energy is low, using alpha technique.
+	* src/influ.c: removed loot cursor
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
-	* TODO, graphics.c:
-	Removed some of the bugs mentionen in TODO and gave some comments.
+2007-02-18 18:30  magotari
 
-	* new_ship_2.maps, enemy.c:
-	Removed some bugs from the second ships maps file.
-	Improved enemy behaviour: Once they see the influencer, have a weapong and
-	are not friendly, they will not move away but stand and fire at the influ.
+	* dialogs/: Bender.dialog, Bruce.dialog, Chandra.dialog,
+	  Duncan.dialog: A few small changes.
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+2007-02-18 18:13  magotari
 
-	* TODO, global.h, menu.c, struct.h, takeover.c, view.c:
-	*) entered "fresh" bugs into TODO
-	*) extended cheat-menu: make all droids visible, allow zooming
+	* dialogs/Bruce.dialog: A new start for Bruce.
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+2007-02-18 18:08  magotari
 
-	* new_ship_1.maps:
-	Corrected some bugs in the second map.
-	I hope they are historical and not caused by a bug in the Level editor.
+	* dialogs/Ewald.dialog: Reverted a small change, too close to the
+	  release to make it consistent now.
 
-	* enemy.c, init.c, map.c, struct.h, game.dat, ship_1.maps:
-	Taught the droids some behaviour:  Before moving on to the next waypoint, they
-	first look if the way is really free of other droids.  (Currently, that includes
-	even the influencer!  Real polite.)
-	Corrected some minor bugs in the first map.
+2007-02-18 18:06  magotari
 
-	* enemy.c:
-	Reworking enemy movement.  Starting to add new behaviour.
+	* dialogs/Chandra.dialog: Some fixes to Chandra.
 
-	* TASK_CHART, enemy.c, map.c, proto.h:
-	Removed some obsolete code.
-	Corrected the bug, that enemys were always moving the speed the influencer could go.  Looks much better now.
+2007-02-18 17:48  magotari
 
-	* influ.c, new_ship_1.maps, new_ship_2.maps:
-	Corrected some minor bugs in the new maps.
-	Removed some warnings.
+	* map/EndOfGame.title: Replaced cheese with something better
+	  fitting the game. Comments please.
 
-	* main.c, proto.h, sound.c, struct.h, view.c, Homepage/Freedroid_Manual.tex, TASK_CHART, bullet.c, defs.h, global.h, init.c:
-	Updated my TASK_CHART.
-	Implemented the takeover sound.
-	Added documentation about the new keys in the Level Editor to the manual.
+2007-02-18 16:52  magotari
 
-2002-06-08  rprix  <rprix@users.sourceforge.net>
+	* dialogs/Melfis.dialog: Another minor change. Maybe I should just
+	  do a bulk commit...
 
-	* sound.c:
-	replaced some forgotten printf's to DebugPrintfs in sound.c
+2007-02-18 16:51  magotari
 
-2002-06-08  jprix  <johannesprix@users.sourceforge.net>
+	* dialogs/KevinGuard.dialog: A small improvement.
 
-	* new_ship_1.droids, new_ship_1.maps, new_ship_2.maps, enemy.c, menu.c:
-	Added friendly droids.
-	Improved mission instructions dispaly.
-	Improved the handling of nonfixed special forces.
+2007-02-18 02:07  magotari
 
-	* enemy.c, map.c, struct.h, view.c, TASK_CHART, configure.ac, new_ship_1.droids, new_ship_1.maps:
-	Added friendly droids.  Modified maps and drois file of the first new mission
-	to contain one, but contact is not possible.
+	* dialogs/Ewald.dialog: I think we need a new translation.
+	  EN_under15.
 
-	* TASK_CHART, game.dat, vars.h:
-	Added a few new tasks.
+2007-02-18 02:06  magotari
 
-	* sound/Cry_Sound_0.wav, sound/Takeover_Sound_0.wav, defs.h, main.c, sound.c, struct.h, view.c:
-	Implemented the "cry sound", when influs energy is low.
-	Added sounds for the cry sound and the transfer mode sound.
+	* dialogs/Duncan.dialog: Whee! Untested changes going straight into
+	  CVS!
 
-	* new_ship_1.maps:
-	Reshaped the new maps a little bit more for the new mission.
+2007-02-18 02:04  magotari
 
-	* keyboard.c, menu.c, proto.h:
-	Extended the level editor to allow for different boxes and pillars the be planted.
-	Extended the keyboard module to recognize keys 0-9.
+	* dialogs/StandardBotAfterTakeover.dialog: Fix suggested by
+	  barbatrix.
 
-	* enemy.c, influ.c, init.c, view.c, new_mission_2.mission, new_mission_1.mission:
-	Added fading effect when influencer energy is low, using alpha technique.
+2007-02-18 01:15  ahuillet
 
-2002-06-07  rprix  <rprix@users.sourceforge.net>
+	* src/graphics.c: screenshots fixed for StoreMenuBackground in GL
 
-	* text.c, view.c, BFont.c, bullet.c, enemy.c, graphics.c, influ.c, init.c, joy.c, map.c, menu.c, misc.c, proto.h, rahmen.c, ship.c, takeover.c:
-	DebugPrintf () now takes a debug-level and standard printf()-arguments.
-	Put all existing DebugPrintf() to debug-level2, and all current
-	printf() statements are now DebugPrintf (1, ..).
-	To activate these debug-statements, run freedroid with the command-line
-	argument -d<level>, which prints all statements <= level.
+2007-02-18 01:14  ahuillet
 
-2002-06-07  jprix  <johannesprix@users.sourceforge.net>
+	* src/saveloadgame.c: same as previous, but now builds on non-GL
+	  machines
 
-	* new_mission_2.mission, new_ship_2.droids:
-	Improved the second mission a bit.  This should do for now.
+2007-02-18 01:12  ahuillet
 
-	* Makefile.am, new_ship_2.droids, new_ship_2.elevators, new_ship_2.maps:
-	Added files for second new mission.  Are the same as for first new misson.
+	* src/saveloadgame.c: adapted game saving code to new opengl
+	  storemenubackground
 
-	* struct.h, view.c, new_mission_1.mission, new_mission_2.mission, new_ship_1.droids, enemy.c, init.c, main.c, map.c, menu.c, misc.c, sound.c:
-	Removed most of the obsolete messages flushing the text screen.
-	Worked a bit to improve the mission files.
+2007-02-18 00:22  magotari
 
-	* new_mission_1.mission, new_ship_1.droids, new_ship_1.maps, defs.h, enemy.c, influ.c, ship.c:
-	Improved the alternative mission, maps and droids files.
+	* dialogs/Ewald.dialog: One more down, lots to go.  And no, I did
+	  not test it.
 
-	* graphics/990.jpg:
-	Arg, that one I forgot...
+2007-02-18 00:08  magotari
 
-	* global.h, graphics.c, influ.c, init.c, ship.c, graphics/991.jpg, graphics/992.jpg, graphics/993.jpg, graphics/994.jpg, graphics/995.jpg, graphics/996.jpg, graphics/997.jpg, graphics/998.jpg, classical_paradroid_mission.mission, new_mission_1.mission, new_ship_1.droids, new_ship_1.maps, enemy.c:
-	Added pictures for new droids.
-	Corrected bug in waypoint count in GetLiftConnections.
-	Reshaped another level of the new ship.
+	* dialogs/Kevin.dialog: Reduced the game's cheese content.
 
-	* graphics/ne_level_0.gif, graphics/ne_level_1.gif, graphics/ne_level_10.gif, graphics/ne_level_11.gif, graphics/ne_level_12.gif, graphics/ne_level_13.gif, graphics/ne_level_14.gif, graphics/ne_level_15.gif, graphics/ne_level_2.gif, graphics/ne_level_3.gif, graphics/ne_level_4.gif, graphics/ne_level_5.gif, graphics/ne_level_6.gif, graphics/ne_level_7.gif, graphics/ne_level_8.gif, graphics/ne_level_9.gif, graphics/ne_lift_0.gif, graphics/ne_lift_1.gif, graphics/ne_lift_2.gif, graphics/ne_lift_3.gif, graphics/ne_lift_4.gif, graphics/ne_lift_5.gif, graphics/ne_lift_6.gif, graphics/ne_lift_7.gif:
-	Removed old and unused ship pictures.
+2007-02-17 23:51  ahuillet
 
-	* init.c, classical_paradroid_mission.mission, game.dat, ship_1.droids, ship_1.maps:
-	Implemented calibrating constants withing game dat for bullet speed and damage.
-	Used these constants to get bullet speed back to paradroid normal.
-	Corrected the minor mistakes that were introduced into the paradroid map in the
-	mapfile format conversion process.  Also corrected some mistakes that existed due
-	to the old format not being able to store apropriate information.
-	Restored the classical paradroid mission back to original mission goal.
+	* src/menu.c: improved highlight rectangle in dialogs to highlight
+	  always the whole option and not go out of the frame
 
-	* ship_1.droids, enemy.c, graphics.c, map.c, menu.c, struct.h:
-	Corrected the bug, that junked the screen when changing tileset in the
-	Level Editor while combat windows is rescaled to something != 1.
+2007-02-17 23:50  magotari
 
-	* map.c, proto.h, struct.h, takeover.c, TASK_CHART, classical_paradroid_mission.mission, new_mission_1.mission, ship_1.droids, init.c:
-	Implemented markers for special forces in the droids file.
-	Implemented mission target kill all marked droids.
-	Implemented mission target become one of the marked droids.
-	Added mission target strings in first 2 mission files accordingly.
+	* dialogs/MSFacilityGateGuardLeader.dialog: Some fixes, some
+	  breakages.  What a day...
 
-2002-06-06  jprix  <johannesprix@users.sourceforge.net>
+2007-02-17 23:17  ahuillet
 
-	* map.c:
-	Made some improvements to Special forces read-in procedure.
+	* map/Asteroid.maps: improved WP route for kevins bot. reduced
+	  chances of having him wander around
 
-	* ship_1.droids, enemy.c, map.c, menu.c, struct.h:
-	Implemented Special Force droids file entrys.  Needs some extensions though.
-	Implemented CompletelyFixed flag (especially for special forces.)
+2007-02-17 23:03  ahuillet
 
-	* new_ship_1.maps:
-	Worked a bit to improve the new map.
+	* map/: Asteroid.maps, ReturnOfTux.droids: improved HF entrance
 
-	* influ.c, init.c, struct.h, takeover.c:
-	Modified energy handling so that after takeover, the influe has old energy
-	PLUS the hosts energy.  Otherwise the influ can be shot down with one shot
-	if he controls a 249 or below robot, which wasn't the case in the C64 version
-	and which makes the game MUCH more playable and also more fun I think. jp.
+2007-02-17 22:56  magotari
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, new_mission_2.mission, defs.h, enemy.c, init.c, main.c, misc.c, struct.h, view.c:
-	Implemented mission target MustReachLevel.
-	Implemented mission target MustReachPoint.x/y.
-	Implemented mission target MustLiveTime.
-	In the latter case, remaining time to hold out will be printed to the combat window.
-	Added mission target strings to the mission files as required.
+	* map/freedroid.prefix_archetypes: New prefixes.  Some balancing
+	  too.
 
-	* Homepage/Freedroid_Manual.tex, TASK_CHART, menu.c:
-	Allowed for finer steps when rescaling tiles in Level Editor.
+2007-02-17 21:47  ahuillet
 
-	* Homepage/Freedroid_Home_Page.tex, Homepage/Freedroid_Manual.tex, classical_paradroid_mission.mission, new_mission_1.mission, new_mission_2.mission, ship_1.droids:
-	Added new mission new_mission_2.mission, though its identical to mission 1 still.
-	Added copyright/licence remark in mission files and droid file.
-	Added a section concerning the Freedroid game rules in the manual.  Needs more though.
+	* freedroidRPG.exe: updated binary for prerelease testing
 
-	* ship_1.crew, ship_1.droids, init.c, map.c, struct.h, Makefile.am, classical_paradroid_mission.mission, new_mission_1.mission, new_ship_1.crew, new_ship_1.droids:
-	Completely reworked the shape of crew files.
-	They are now well readable.
-	Droid types can be entered by typing their name instead of their number.
+2007-02-17 17:54  ahuillet
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, init.c:
-	Added next mission pointer:  After completition of one mission, the mission
-	indicated by the next mission pointer in the mission file will be loaded and
-	started.  Classical Paradroid now points to the new mission 1.  The new mission
-	one points to the new mission 2, which does not yet exist.  Otherwise it
-	seems to work quite well.
+	* src/saveloadgame.c: signedness warning
 
-2002-06-05  jprix  <johannesprix@users.sourceforge.net>
+2007-02-17 17:45  ahuillet
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, init.c, struct.h:
-	Added mission target MustBeClass, fully functional.
-	Added mission target MustBeType, fully functional.
-	All mission targets are always AND connceted to see if mission is complete.
+	* src/saveloadgame.c: added emergency return in thumbnail
+	  generation code
 
-	* classical_paradroid_mission.mission, new_mission_1.mission, init.c, main.c, menu.c, struct.h, vars.h:
-	End Title text is now specified in the mission file.
-	Mission target is now specified in the mission file and checked in a separate function.
-	Added simple mission targets for Classical Paradroid and New Mission.
-	Added a structure for mission targets (to be understood as AND connected subtargets).
+2007-02-17 17:42  ahuillet
 
-2002-06-05  rprix  <rprix@users.sourceforge.net>
+	* src/items.c: suppressed random dropping of books
 
-	* menu.c:
-	Changed Cheat-menu font to FPS-font... much better now! ;)
+2007-02-17 16:38  ahuillet
 
-2002-06-05  jprix  <johannesprix@users.sourceforge.net>
+	* src/open_gl.c: patch for storemenubackground
 
-	* TASK_CHART, defs.h, init.c, main.c, proto.h:
-	Reactivated "font05" for the FPS_Display, i.e. FPS_Display_BFont, might
-	be good for Cheatmenu too?
+2007-02-16 20:30  ahuillet
 
-2002-06-05  rprix  <rprix@users.sourceforge.net>
+	* src/graphics.c: now fixed bug introduced yesterday when patching
+	  knob for interval correctness
 
-	* ChangeLog:
-	updated with latest changes, some cleanup, put our sourceforge mail addresses.
+2007-02-15 21:10  ahuillet
 
-	* menu.c:
-	started porting Cheatmenu to use SDL-screen (more convenient), using
-	printf_SDL() and GetString(). Should be working 90% ok now.
+	* src/graphics.c: fixed graphical selection bug
 
-	* proto.h:
-	new functions: printf_SDL() and putchar_SDL().
+2007-02-15 20:38  ahuillet
 
-	* text.c: added 2 new text-functions:
-	int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
-	void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
-	which extend the BFont-functions PrintString() and PutChar() by using
-	the global cursor position MyCursorX/Y.
-	Passing -1 as coordinate will use the current cursor-position to
-	write. Cursor position is updated.
-	The screen is updated after writing.
+	* src/: open_gl.c, global.h: dramatically improved performance of
+	  MenuBackground operations in GL mode by working only in video
+	  memory
 
-	Ported GetString() to SDL using the above text-functions.
-	echo=1 (stdout) is currently not working, only echo=2 (SDL-echo).
-	Backspace should be treated correctly now, but this function still
-	needs some testing.
+2007-02-15 12:00  ahuillet
 
-2002-06-05  jprix  <johannesprix@users.sourceforge.net>
+	* src/graphics.c: added a tiny extra yield to graphics.c
 
-	* menu.c, TASK_CHART, new_ship_1.maps:
-	Added "color change" (="change tileset") option for the level editor.
-	Gave the first new level in the new map a new color.
+2007-02-10 20:33  ahuillet
 
-	* Homepage/Freedroid_Manual.tex, new_mission_1.mission, new_ship_1.maps, enemy.c, menu.c, TASK_CHART:
-	Added more doku on the level editor for the manual.
-	Added protection against moving out of the map in the level editor.
-	Added level changing option for the level editor.
-	Modified the maps for the alternate story line.
-	Modified starting points for the alternate story line.
+	* configure.ac: new configure for ffastmath
 
-2002-06-05  rprix  <rprix@users.sourceforge.net>
+2007-02-10 19:27  ahuillet
 
-	* menu.c:
-	started porting Cheatmenu to use SDL-screen (more convenient), using
-	printf_SDL() and GetString(). Should be working 90% ok now.
+	* src/open_gl.c: sped up light computations a tiny bit
 
-	* text.c: added 2 new text-functions:
-	int putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
-	void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
-	which extend the BFont-functions PrintString() and PutChar() by using
-	the global cursor position MyCursorX/Y.
-	Passing -1 as coordinate will use the current cursor-position to
-	write. Cursor position is updated.
-	The screen is updated after writing.
+2007-02-10 19:22  ahuillet
 
-	Ported GetString() to SDL using the above text-functions.
-	echo=1 (stdout) is currently not working, only echo=2 (SDL-echo).
-	Backspace should be treated correctly now, but this function still
-	needs some testing.
+	* src/: blocks.c, global.h, graphics.c, hud.c, influ.c, light.c,
+	  proto.h, text.c, view.c: replaced translate map to screen pix
+	  with a macro for tiny perf improvement, along with minor
+	  optimizations in that function
 
-2002-06-05  jprix  <johannesprix@users.sourceforge.net>
+2007-02-10 15:05  ahuillet
 
-	* menu.c, TASK_CHART, new_ship_1.maps:
-	Added "color change" (="change tileset") option for the level editor.
-	Gave the first new level in the new map a new color.
+	* src/: influ.c, main.c: now displaying weapon reloaded message
+	  AFTER weapon has actually been reloaded
 
-	* Homepage/Freedroid_Manual.tex, new_mission_1.mission,
-	new_ship_1.maps, enemy.c, menu.c, TASK_CHART: 
-	Added more doku on the level editor for the manual.
-	Added protection against moving out of the map in the level editor.
-	Added level changing option for the level editor.
-	Modified the maps for the alternate story line.
-	Modified starting points for the alternate story line.
+2007-02-09 13:40  magotari
 
-2002-06-04  jprix  <johannesprix@users.sourceforge.net>
+	* src/blocks.c: A little fix for a new item in the game.
 
-	* Homepage/Freedroid_Manual.tex, TASK_CHART,
-	classical_paradroid_mission.mission, game.dat,
-	new_mission_1.mission, new_ship_1.crew, init.c: 
-	Now the flag "AdvancedFighting" is read in for every droid, though it doesn't
-	have an effect in the program jet.
-	Now the mission files can contain an arbitrary number of starting points for
-	the mission, specified by the obvious string.  Seems to work well.
-	Added appropriate defintions in the mission files of course.
+2007-02-08 19:16  ahuillet
 
-	* Homepage/Freedroid_Home_Page.tex, Homepage/Freedroid_Manual.tex,
-	TASK_CHART, keyboard.c, menu.c: 
-	Disabled zoom in/out for game but enabled it for level editor.
-	Added and extended notes in Manual page not only concerning this.
+	* graphics/font/font05_white.png: new z letter - a little too
+	  "hard" but at least it is a z
 
-	* Homepage/Freedroid_Home_Page.tex, Homepage/Freedroid_Manual.tex,
-	Homepage/Makefile, Homepage/Test_Upload, TASK_CHART: 
-	Added a Freedroid Manual page to the Freedroid home page.
-	The Freedroid Manual also contains an unfinished description of the level editor.
+2007-02-08 19:04  ahuillet
 
-2002-06-04  rprix  <rprix@users.sourceforge.net>
+	* map/Asteroid.maps: improved town a little
 
-	* BFont.c, BFont.h, defs.h, menu.c, rahmen.c:
-	run indent on BFont.[ch] to correct indentation.
-	Changed font to Para_BFont in DisplayBanner().
+2007-02-08 18:03  ahuillet
 
-	* ChangeLog:
-	used Emacs for automatic CVS-log -> Changelog creation.
-	Now there's a lot of junk to clean up, but that has time...
-	Please use "C-x v a" from time to time to add Changelog entries
-	from your cvs log, and edit them correspondingly to keep only
-	'relevant' changes.
+	* src/menu.c: now properly counting the number of available lines
+	  in chat dialog options window
 
-	* map.c, ship.c:
-	Improved lift algorithm: first blit ship "lights off", then
-	blit active level and lift-row rectangles from "lights on" ship-picture,
-	then update screen. --> Results look&feel much more "stable".
+2007-02-08 17:55  ahuillet
 
-	* blocks.c, global.h, graphics.c, init.c, map.c, misc.c, proto.h:
-	some code cleanup: *completely* removed obsolete variables
-	RealScreen, InternalScreen, Outline320x200 , together with
-	old block display functions Display*Block().
+	* src/shop.c: removed confirmation for reparation
 
-	* ship.c, TODO, graphics/ship_off.bmp, graphics/ship_on.bmp, graphics.c:
-	some cleanup in the lift code and picture.
-	(don't forget to "install" new pics)
+2007-02-08 17:55  ahuillet
 
-2002-06-04  jprix  <johannesprix@users.sourceforge.net>
+	* src/graphics.c: does this improve multiple item selection
+	  performance under Win32 and intelcards?
 
-	* ship.c, vars.h, TASK_CHART, graphics/001.jpg, graphics/123.jpg, graphics/139.jpg, graphics/247.jpg, graphics/249.jpg, graphics/296.jpg, graphics/parafont.png, ship_1.maps:
-	Resized Bastians droids to fit into the console.  For now, thats the
-	easiest way to get the console working again.
-	Repaired the console text format to fit into the window.  Good. jp.
+2007-02-08 17:54  ahuillet
 
-	* TODO, graphics/parafont.png, new_mission_1.mission, init.c, text.c:
-	Worked a bit on the briefing text of the new mission.
-	Corrected some smaller mistakes in the paradroid font.
-	Added missing feature to TODO list.
+	* src/chat.c: dialog partners turning now immediate
 
-2002-06-04  rprix  <rprix@users.sourceforge.net>
+2007-02-08 17:39  ahuillet
 
-	* map.c, ship.c:
-	Improved lift algorithm: first blit ship "lights off", then
-	blit active level and lift-row rectangles from "lights on" ship-picture,
-	then update screen. --> Results look&feel much more "stable".
+	* src/hud.c: now nicely printing negative values of HP/mana rec
+	  bonuses
 
-	* blocks.c, global.h, graphics.c, init.c, map.c, misc.c, proto.h:
-	some code cleanup: *completely* removed obsolete variables
-	RealScreen, InternalScreen, Outline320x200 , together with
-	old block display functions Display*Block().
+2007-02-08 16:09  magotari
 
-	* ship.c, graphics.c:
-	some cleanup in the lift code and picture.
-	(don't forget to "install" new pics)
+	* map/freedroid.droid_archetypes: Eyesight improvement for 123
+	  bots.
 
-2002-06-04  jprix  <johannesprix@users.sourceforge.net>
+2007-02-08 16:01  magotari
 
-	* ship.c, vars.h:
-	Resized Bastians droids to fit into the console.  For now, thats the
-	easiest way to get the console working again.
-	Repaired the console text format to fit into the window.  Good. jp.
+	* map/freedroid.prefix_archetypes: Prefix junk.
 
-	* init.c, text.c:
-	Worked a bit on the briefing text of the new mission.
-	Corrected some smaller mistakes in the paradroid font.
-	Added missing feature to TODO list.
+2007-02-08 15:43  rprix
 
-2002-06-03  jprix  <johannesprix@users.sourceforge.net>
+	* src/: graphics.c, menu.c: - fixed LevelEditor bug: re-initialize
+	  level-info after quit to update door-info - fixed bug in
+	  putpixel(): check coords lie inside screen to avoid SegFaulting
 
-	* init.c, main.c, menu.c, misc.c:
-	Added a mission selection menu.
+2007-02-06 22:00  ahuillet
 
-	* defs.h, menu.c:
-	Added bastians "free droid" as the background for the credits menu subsection.
+	* src/hud.c: changed req power to req str as was supposed to be
+	  done years ago
 
-	* main.c, map.c:
-	Corrected the too slow map-read-routines.  Now its FAST!!!!
-	Corrected smaller bugs in classic paradroid map.
-	Saved all maps in new map file format.
+2007-02-06 21:55  ahuillet
 
-2002-06-03  rprix  <rprix@users.sourceforge.net>
+	* src/: graphics.c, influ.c, items.c, ship.c, shop.c, skills.c,
+	  sound.c, sound_effects.c: removed  speeches sudir
 
-	* main.c, map.c, misc.c, proto.h, ship.c, sound.c, struct.h, global.h, init.c:
-	Useless detail: Global name change "elevator" -> "lift"
+2007-02-04 23:15  ahuillet
 
-2002-06-03  jprix  <johannesprix@users.sourceforge.net>
+	* DialogEditor.exe: removed old dialogeditor
 
-	* keyboard.c, main.c, menu.c, proto.h, struct.h:
-	Worked a bit on the new area.
-	Introduced new robot types 998, 997, ... , 991 , 990.
-	Introduced flag for new fighting behaviour, but its not yet read in.
-	New mission is the default for now.
+2007-02-04 21:26  ahuillet
 
-	* enemy.c, init.c:
-	Corrected the aggression of droids being too high.
-	Elevators are currently broken:  I see only blue screen while in enevator!
-	Why is this?
+	* freedroidRPG.exe: new bin
 
-2002-06-03  rprix  <rprix@users.sourceforge.net>
+2007-02-04 20:23  magotari
 
-	* blocks.c, defs.h, global.h, graphics.c, init.c, map.c, proto.h, ship.c, ship.h, struct.h, takeover.c:
-	new method for ShowElevators():
-	show ship-picture "lights off" first, update screen, then Blit in the
-	ship picture "lights on", but update only the rectangles for the current
-	lift and level. Seems to work ok now.
+	* dialogs/Francis.dialog: Updated for the new intro text and user's
+	  suggestion.
 
-	This method has the advantage of requiring only two ship-pictures instead
-	of one per level and lift, but has the disadvantage of requiring the
-	lift and level rectangles to be provided. I still think this is an
-	improvement, as these rectangle-info could be entered in a "Ship-Editor",
-	say, if extensive "ship-editing" should ever become fashionable...
+2007-02-04 19:53  magotari
 
-2002-06-03  jprix  <johannesprix@users.sourceforge.net>
+	* map/StartOfGame.title: Added some text to the start of the game.
 
-	* map.c, menu.c, proto.h:
-	Removed the obsolete "x"-encoding of waypoints within maps.
-	So we can now plant waypoints anywhere, on refreshed, lifts and all that too.
-	And I added the missing refresh under the waypoint on the yellow level.
-	Loading takes a bit long... I might remove the forced writing again in
-	favour of arbitrary dynamic waypoint structures.
+2007-02-04 13:51  ahuillet
 
-	* map.c, vars.h, defs.h, enemy.c, init.c, main.c:
-	Fixed some bugs in the level loading function.
-	Set MAX_WP_CONNECTIONS from 4 to 12
-	Set MAPWAYPOINTS from 30 to 100
-	Changed the format of ships on disk into something better human-readable.
+	* src/map.c: added small check for cygwin
 
-2002-06-02  jprix  <johannesprix@users.sourceforge.net>
+2007-02-03 21:35  ahuillet
 
-	* defs.h, enemy.c, init.c, map.c, vars.h:
-	Briefing texts are now taken from the mission file and therefore the long static
-	strings removed from the code.
-	Which ship file, elevator file and crew file to use is also deducted from the
-	mission file now. jp.
+	* src/graphics.c: faster alpha fadein
 
-	* defs.h, init.c, keyboard.c, main.c, menu.c, proto.h:
-	Mission briefing text is now successfully read and used from the mission file.
+2007-02-03 20:48  ahuillet
 
-	* global.h, init.c, menu.c, vars.h, view.c, defs.h:
-	Removed the limitation to ALLDRUIDTYPES different druid types maximal to
-	arbitrary number of droid types all specified in game.dat.
-	Started to set up a format and example of a mission file.
+	* src/map.c: fixed bad parser modification
 
-	* menu.c:
-	Connections between waypoints can now conveniently be established via the
-	C key.  You should try it;) jp.
+2007-02-03 20:42  ahuillet
 
-	* map.c, menu.c:
-	Waypoints can now also be toggled via the Level Editor.
+	* src/map.c: sped up LocateStringInData a little
 
-	* graphics.c, menu.c, proto.h:
-	Level editor now also shows the waypoint connections.  Most convenient. jp.
+2007-02-03 20:22  ahuillet
 
-	* init.c, proto.h:
-	Integrated the notes concerning the droids into game.dat.  Removed the static
-	Droid initialisation function from the code.
+	* src/map.c: earned another 20percent of loadship time
 
-	* init.c, ship.c, struct.h, vars.h:
-	Added separate Height, Weight, Drive, Brain, Sensor 1, Sensor 2, Sensor 3,
-	and Armament variables into the Druidmap structure and under the control
-	of game.dat.
+2007-02-03 19:13  ahuillet
 
-	* init.c, vars.h:
-	Added calibration entries to modify all droid simulaneously in game.dat.
+	* src/map.c: now doing the parsing correctly - no more strtoks
 
-	* enemy.c, struct.h, vars.h:
-	Eliminated the Druidmap initialization from vars.h.  All info for the
-	Druidmap is now read from the external game.dat file, haha.
+2007-02-03 18:30  magotari
 
-2002-06-01  rprix  <rprix@users.sourceforge.net>
-
-	* init.c, main.c, menu.c, misc.c, proto.h, ship.c, struct.h, view.c:
-	Adapted calls to DisplayBanner() to new Parameters "left" and "right",
-	removed calls to old SetInfoline().
-
-	* takeover.c:
-	Takeover-game pretty much complete now: Added display of player-droids
-	and proper Infoline-display via DisplayBanner().
-
-	* rahmen.c:
-	jp's new DisplayBanner() seems to have overtaken SetInfoline(), which I
-	have now removed.
-	Adapted DisplayBanner() to allow passing of non-standard left and
-	right entries, which is needed in Takeover-game.
-
-	* takeover.c, takeover.h, graphics.c:
-	Takeover game: "current" animation now complete.
-
-2002-06-01  jprix  <johannesprix@users.sourceforge.net>
-
-	* defs.h, influ.c, init.c, struct.h, vars.h:
-	Almost all Druidmap variables now under control of game.dat.
-
-	* init.c, struct.h, vars.h:
-	More variables put under control of the game.dat file.
-
-2002-06-01  rprix  <rprix@users.sourceforge.net>
-
-	* proto.h, takeover.c, takeover.h:
-	Further polishing of Takeover-game: "current" animation now works
-	"in principle", but is not finished yet in the details.
-
-	* graphics.c:
-	set our window-dimensions to the more standard format (640x480,
-	ie. 320x240 * 2). Looks a bit "strange" in the beginning when you're
-	used to our "cut-off" window, but I think this is much more reasonable...
-
-	* view.c:
-	added new function Fill_Rect (SDL_Rect rect, SDL_Color color), which
-	fills the given rectangle with the RGB-color. This is now used in
-	Takeover to color the User_Rect.
-	SetUserfenster() is too specific to 8bpp and the UserFenster, and
-	should be dumped in favor of Fill_Rect() !!
-
-2002-06-01  jprix  <johannesprix@users.sourceforge.net>
-
-	* proto.h, view.c:
-	Adapted PutEnemy to better fit the needs of the takeover game.
-
-2002-05-31  jprix  <johannesprix@users.sourceforge.net>
-
-	* menu.c, init.c, main.c:
-	Started to implement reading of droid data from outside file "game.dat".
-	Robot names are already read successfully from there.
-	The file is ascii-readable and well documented and flexible.
-
-2002-05-31  rprix  <rprix@users.sourceforge.net>
-
-	* defs.h, graphics.c, takeover.c, takeover.h, view.c:
-	Takeover game now at least "playable" again in new engine, but still quite
-	some polishing necessary...
-
-2002-05-31  jprix  <johannesprix@users.sourceforge.net>
-
-	* Makefile.am, menu.c, misc.c, proto.h, ship.c:
-	Split the (too big) misc.c up into misc.c and menu.c.
-	Menu should now contain all menu functions and their helper functions.
-	This includes the level editor, which is not too big.  Edited Makefile.am.
-
-2002-05-30  jprix  <johannesprix@users.sourceforge.net>
-
-	* misc.c:
-	Level editor now shows also the waypoints, but not yet the connections.
-	I'm sort of tired and think I'll close for today.  Have fun, jp.
-
-	* map.c:
-	Hurray!  The SaveShip function now reproduces exactly the loaded Level.
-	That means we have a functioning Level editor again, allthough convenient
-	waypoint editing must still be incorporated into it.  But maps basically
-	can be edited.  I might do that later. jp.
-
-	* defs.h, map.c:
-	Save level procedure now seems to work almost:  wp are still missing.
-
-	* map.c, map.h:
-	Added a bit more documentation to the ship-loading functions and also improved
-	the ship file format to be a bit better human-readable in my opinion. jp.
-
-	* ship.c:
-	Improved the way the map is shown at the console:  Center of map now in center
-	of the combat window.  Still room for further improvement.
-
-	* ship.c:
-	Elevators are now correctly highlighted too.
-
-	* ship.c, view.c:
-	Elevator is now working (well) again.  New pictures needed and added.
-
-	* defs.h:
-	Replaced more bmps by gifs. That saves up to 30 times the space on disk.
-
-	* graphics.c, init.c, misc.c, rahmen.c, ship.c, takeover.c,
-	view.c, blocks.c, colodefs.h, defs.h, global.h: 
-	Removed too small images from 0.7.4.
-	Removed more german.  Added some doku.
-
-	* blocks.c, defs.h, graphics.c, ship.c:
-	Replaced all SDL_LoadBMP commands with IMG_Load. --> complete file
-	format independence. 
-	Removed obsolete and redundant graphic files.
-
-	* blocks.c, defs.h, graphics.c:
-	Reduced redundant pixmaps and converted some to gif with costs 80% less. jp.
-
-	* map.c, vars.h, view.c, enemy.c, init.c:
-	The "jittering" bug has been resolved. At least on my old and new machine, jp.
-
-	* misc.c, proto.h:
-	Removed all german from misc.c.
-	Added and updated docu in the process.
-	Removed obsolete functions my_abs and my_sqrt.
-
-	* map.c, misc.c, proto.h, rahmen.c, ship.c, takeover.c, view.c,
-	ReplaceIt.awk, bullet.c, defs.h, enemy.c, global.h, graphics.c,
-	influ.c, init.c, main.c: 
-	Renamed "Feindesliste" to "AllEnemys" like in "AllBullets" and "AllBlasts".
-	Renamed "Rahmen" to "Banner" since thats english and describes it well.
-	Removed all german from main.c.
-	Removed all german from view.c.
-	We ARE and international project after all.  Have fun, jp.
-
-2002-05-29  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c:
-	Corrected the "title screen coped and bannerd when vied the second time" bug
-
-	* view.c:
-	Corrected the "framerate not well readable" bug.
-
-	* map.c, struct.h, view.c:
-	Corrected the "garbage on screen outside ship" bug.
-
-	* enemy.c, graphics.c, influ.c, init.c, main.c, proto.h, text.c, vars.h:
-	more colde cleanup: obsolete prototypes, german dokus, messed main strucute,
-	senseless&obsolete german definitions.
-
-	* init.c, keyboard.c, main.c, proto.h:
-	More code cleanup:  Moved special key reactions into a separate
-	function in keyboard.c. 
-
-	* main.c, misc.c, proto.h, global.h, init.c:
-	Moved the framerate computation into separate functions outside of
-	main() and main.c. 
-	The guy who called the code a mess is still right though ;)
-
-	* misc.c:
-	Corrected the stupid typo in the Credits section.  Also added
-	background image to it. 
-
-	* misc.c, view.c:
-	Reactivated "Flashes" when fireing disruptor shots.
-	Credits section added to the big Escape Menu.
-
-	* misc.c, view.c:
-	Modified Homepage to display sourceforge logo as required by the sourseforge.
-	Added background image for the homepage.  Tell me if you now find it hard to read.
-	Level editor is working all again, except for the saving menu option still.
-	Added Bastians latest graphics and made console react to larger image sizes.
-
-2002-05-28  jprix  <johannesprix@users.sourceforge.net>
-
-	* misc.c:
-	Reactivated most of the menus and also most of the level editor.
-
-	* defs.h, misc.c, proto.h, rahmen.c, takeover.c, view.c:
-	Reactivated and cleaned up single player menu.
-
-2002-05-28  rprix  <rprix@users.sourceforge.net>
-
-	* sound.c, system.h:
-	stupid script that executes aclocal, autoheader, automake & autoconf
-	to save typing. In addation automake is called with --add-missing,
-	so you don't have to worry about missing scripts.
-
-2002-05-27  jprix  <johannesprix@users.sourceforge.net>
-
-	* bullet.c, defs.h, graphics.c, influ.c, init.c, misc.c, proto.h,
-	rahmen.c, ship.c, text.c, view.c: 
-	Finally reactivated the original Paradroid font, which is now available
-	via BFont/DisplayText etc.
-
-	* bullet.c, defs.h, graphics.c, influ.c, init.c, main.c, misc.c, view.c:
-	Added a new and smaller font, that might be good for the scrolling text.
-
-	* init.c:
-	Added a new Font, that might come in handy for some things.
-	Its not the original Paradroid font, which might come later, sorry.
-
-	* defs.h, global.h, graphics.c, influ.c, init.c, map.c, misc.c, sound.c, text.c:
-	Activated new title, also for the background of the scrolling font.
-	Had some sound problems:  The very first sound call of freedroid seems
-	to be always completely ignored??? THIS REMAINS UNEXPLAINED.
-
-	* bullet.c, defs.h, influ.c, init.c, misc.c, rahmen.c, sound.c, text.c:
-	Improved sliding through H_GANZTUERE horizontal doors.  Now it seems smooth.
-
-	* defs.h, main.c, misc.c:
-	Finally removed the real "GetChar" bug by setting the ALLBLAST constant from
-	5 to 100.  Did the same for the ALLBULLETS.  Happy hacking,jp.   :-)
-
-2002-05-27  rprix  <rprix@users.sourceforge.net>
-
-	* defs.h, global.h, init.c, struct.h, takeover.c, text.c, view.c:
-	started writing proper Highscore-list handling (in Debriefing() )
-	not functional yet, so Debriefing now returns immediately.
-	Deactivated Takeover-game() which has to be ported to new engine yet.
-
-2002-05-27  jprix  <johannesprix@users.sourceforge.net>
-
-	* proto.h, graphics.c, init.c, misc.c:
-	Deleted old InitPalette crap.
-
-	* init.c, misc.c, influ.c:
-	"GetChar" bug removed by undoing free(ScoreText) which was never allocated?
-
-	* view.c, global.h, graphics.c, init.c, keyboard.c, main.c,
-	misc.c, proto.h, ship.c: 
-	The notion of conceptview has left the game, since resizing is possible anyway.
-	TakeScreenshot now has its own function in graphics.
-	GetString in Debriebing currently disabled:  See if "GetChar" bug vanishes?
-
-2002-05-26  rprix  <rprix@users.sourceforge.net>
-
-	* global.h, init.c, proto.h, rahmen.c, ship.c, ship.h, text.c, vars.h, view.c:
-	rp went Berserk on Text-handling machinery ;)
-
-	*) removed lots of old brain-damaged functions
-
-	*) Main player is now: DisplayText(), which now takes an
-	  SDL_Rect argument with the Text-window to write in. This takes care
-	  of clipping and line-breaks! The prev clip-rect is restored after this.
-	  if NULL is passed, no clipping/line-breaking is done.
-
-	  The line-breaks are handled by ImprovedCheckUmbruch() which has been
-	  adapted appropriately.
-
-	*) DisplayText now returns TRUE if text was written _inside_ the
-	   clip-rectangle, FALSE otherwise.
-	  This info is used by ScrollText to know when text has been scrolled out.
-
-	*) Therefore: SetTextBorder & Co useless and have been dumped.
-
-	*)  There are two global Rectangles: (def'd in vars.h)
-		User_Rect:  which is our Userfenster
-	        Menu_Rect:  used in Menu-writing
-	  please add further rectangles as you need them.
-
-	*) The CombatRectangle in Assemble_Combat_Picture() has been replaced
-	   by User_Rect, in an effort to minimise names for the same thing.
-
-	Ok, everythings seems to works ok so far, but please keep me updated
-	if problems appear of if you have questions concerning Text-writing.
-
-2002-05-26  jprix  <johannesprix@users.sourceforge.net>
-
-	* graphics.c, init.c:
-	Little color bug removed.
-
-	* graphics.c, misc.c:
-	Level colors should be restored now.
-	Pictures are also of a form that should well work with the new gamma=1 default.
-
-2002-05-26  rprix  <rprix@users.sourceforge.net>
-
-	* init.c:
-	erroneous #include of nonexistent "paths.h" removed. (sorry)
-
-2002-05-26  jprix  <johannesprix@users.sourceforge.net>
-
-	* SDL_rotozoom.c, enemy.c, graphics.c, influ.c, main.c, map.c, proto.h, view.c:
-	Erradicated some warnings.
-	Eliminated some german expressions and function names.
-
-2002-05-26  rprix  <rprix@users.sourceforge.net>
-
-	* Makefile.am, defs.h, graphics.c, init.c, sound.c, view.c:
-	"make install" ist now functional. (I hope ;)
-	freedroid now expects its data (graphics,sound,map) in DATADIR,
-	which is defined in Makefile to $(pkgdatadir), which defaults
-	to /usr/local/share/freedroid.
-	If you want to change this location, you can make with the command:
-	make pkgdatadir=<YOUR_DIR>
-
-	Please use GRAPHICS_DIR, SOUND_DIR, MAP_DIR  for loading data-files!
-	These are defined in defs.h
-
-2002-05-26  jprix  <johannesprix@users.sourceforge.net>
-
-	* blocks.c, defs.h, global.h, graphics.c, main.c, proto.h, rahmen.c, ship.c:
-	Combat screen can be rescaled using the "O" and "I" keys.
-
-	* blocks.c, defs.h, global.h, init.c, ship.c, view.c:
-	Resizing of screen works!  You can try it at the console.
-
-	* enemy.c:
-	Robots fire now correctly at the influencer again.
-	Hey, the game seems pretty much playable again, except for the
-	takeover game perhaps....
-
-	* enemy.c, influ.c, main.c, proto.h:
-	Refreshes are now finally animated again, although not completely.
-	Influence-Enemy collisions have been repaired to work with the new coordinates.
-
-	* enemy.c:
-	Reactivated and repaired EnemyEnemyCollisions.
-
-	* influ.c, map.c, ship.c:
-	Visibility is now handled correctly and secure with the new coordinates.
-
-	* bullet.c, defs.h, influ.c, map.c:
-	Bullet-Robot collisions reactivated.
-	Influence-Wall collision handling improved.
-
-	* bullet.c, influ.c, proto.h, view.c:
-	Bullets and Blasts now use the new coordinates too, at least on the screen.
-
-	* defs.h, influ.c, main.c, map.c, map.h:
-	Improved Influence-Wall-Collision-Handling.  Still not perfect, but growing.
-	I think the whole function might be completely rewritten in the process...
-
-	* init.c, map.c, map.h:
-	Doors open and close again, but especially there the weaknesses of the
-	influence-wall-collision handling become apparent.  Something has to be done.
-
-	* defs.h, influ.c, map.c, misc.c, proto.h:
-	Influence-Wall collisions are working again, although some fine-tuning should
-	occur at some point to ensure smooth gameplay.
-
-	* ship.c, struct.h, vars.h, view.c, enemy.c, influ.c, init.c,
-	main.c, map.c, misc.c: 
-	Influ and Enemys now use the new coordinates.
-	Koodinates (1,1) mean that the influ is in the CENTER!!! of the square (1,1).
-	EnemyEnemyCollisions currently disabled.
-
-2002-05-25  jprix  <johannesprix@users.sourceforge.net>
-
-	* blocks.c, defs.h, global.h, graphics.c, init.c, main.c, ship.c, vars.h, view.c:
-	Activated scaling of blocksize.  Its a draft and I cant continue now because
-	of Ms. Schnedl.  To deactivate it, please comment out the last line in
-	InitNewGame, looking somewhat like "ShowDeckMap()". thanks, jp.
-
-2002-05-25  rprix  <rprix@users.sourceforge.net>
-
-	* Makefile.am, proto.h:
-	added SDL_rotozoom.[ch] to Makefile.am,
-	removed #include "SDL" in proto.h, as it's included in "system.h"
-
-2002-05-25  jprix  <johannesprix@users.sourceforge.net>
-
-	* map.c, map.h, misc.c, ship.c, takeover.c, vars.h, view.c,
-	ReplaceIt, ReplaceIt.awk, blocks.c, defs.h, enemy.c, influ.c,
-	init.c: 
-	Replaced ALL occurenced of BLOCKBREITE with Block_Width and ALL occurenced
-	of BLOCKHOEHE with Block_Height, using the new ReplaceIt script.
-	That was smooth!
-
-	* SDL_rotozoom.c, SDL_rotozoom.h, ship.c, vars.h:
-	ShowDeckMap ceased to crash now, but still does not work correctly.
-	Therefore I added the zoom tools to prepare the function.
-
-	* defs.h, proto.h, ship.c, ship.h, text.c, view.c:
-	GreatDruidShow is working acceptably well again.
-
-	* init.c, ship.c, struct.h, text.c, view.c:
-	Console droid images are displayed correctly again.
-	The console now uses the jpg images found on a paradroid homepage directly.
-	Old small bmp images have been replaced accordingly.
-
-	* defs.h, ship.c:
-	Dropped the palette rotation in console.
-	Different images are used instead.
-
-	* ship.c, takeover.c, vars.h, bullet.c, defs.h, init.c, main.c,
-	misc.c, proto.h, rahmen.c: 
-	Reactivated bullet-bullet collisions, now distance-based instead of pixel-based
-	as with old grafix engine.
-
-	* defs.h, global.h, graphics.c, init.c, keyboard.c, main.c,
-	misc.c, proto.h, rahmen.c, ship.c, takeover.c, vars.h, view.c: 
-	Improved the rahmen handling:  Updated are only done if needed, which is
-	determined internally.
-	NEW: DisplayRahmen now also does the text in the 'rahmen'.  It should
-	     no longer be needed to call SetInfoline directly.  That should be
-	     incorporated into the DisplayRahmen function.
-
-	* text.c, vars.h, view.c, defs.h, graphics.c, init.c, main.c,
-	misc.c, proto.h, rahmen.c, ship.c, takeover.c: 
-	updated the ship graphics to new size.
-	Made the scrolltext function finally work well.
-	Removed some old engine code from here and there.
-	Startet to modify the structure of DisplayRahmen.
-
-2002-05-24  jprix  <johannesprix@users.sourceforge.net>
-
-	* blocks.c, defs.h, graphics.c, init.c, misc.c, proto.h, ship.c,
-	takeover.c, text.c: 
-	Restored ScrollText to former glory.
-	Activated DisplayImage(char * filename).
-	Reactivated Title image.
-
-	* defs.h, init.c, main.c, misc.c, ship.c, text.c:
-	Reactivated the title signation and ClearUserFenster.
-
-	* defs.h:
-	Acivated "NEW_ENGINE" definition by default in defs.h.
-
-	* defs.h, main.c:
-	Updated my task chart.
-
-	* defs.h, graphics.c, main.c, misc.c, proto.h, view.c:
-	AssembleCombatWindow now accepts some FLAGS which are very convenient,
-	especially inside Menu functions and all that.
-	Take a look to inspect them.
-	The main loop and other loops have been shortend accordingly.
-
-	* misc.c, proto.h, view.c:
-	Restored the escape menu.  Needs still some work.
-
-2002-05-23  rprix  <rprix@users.sourceforge.net>
-
-	* Makefile.am:
-	o) first step towards proper "install" target: automake-structure is
-	now better and will install map/ sound/ and graphics/ subdirs under
-	$(pkgdatadir)/freedroid/  , where the default for $pkgdatadir=/usr/local.
-	Remains to take account of that in the paths in the code...
-
-	o) added check for libpthread _before_ libSDL, as some installations
-	of SDL seem to depend on the posix-thread library!
-
-2002-05-23  jprix  <johannesprix@users.sourceforge.net>
-
-	* defs.h, graphics.c, misc.c, proto.h, rahmen.c, view.c:
-	Reactivated the Escape Menu.  Submenus still need work.  Rahmen font fine now.
-
-	* text.c, defs.h, graphics.c, rahmen.c, blocks.c:
-	Set the rahmen to the new size.
-	Now we let X resp. SDL decide about the best video mode:  works well!
-	Adapted the size of digits inside droids.
-	Added some files that are also used in the homepage.
-
-	* blocks.c, init.c:
-	Addepted software-sided to the new 2 pixel inter-block-distance.
-	Wow, that was easy! 
-
-	* defs.h, init.c, svgaemu.c, view.c:
-	Upgraded code to use 64x64 pixel pixmaps.
-
-	* blocks.c, global.h, graphics.c, influ.c, init.c, main.c, misc.c,
-	takeover.c, view.c: 
-	Started deletion of old engine from the code.
-	Set default window size to 640x480.
-	Activated time-wasting scaling EVERY frame, which is bad, but
-	shows some interesting alpha effect. 
-
-2002-05-22  rprix  <rprix@users.sourceforge.net>
-
-	* play_then_kill_yiff:
-	not used any more since yiff has been kicked out!
-
-2002-05-22  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c:
-	Updated my TASK_CHART section and resolved conflicts.
-
-2002-05-22  rprix  <rprix@users.sourceforge.net>
-
-	* takeover.c:
-	better user-input handling in takeover game allows higher precision
-	in setting capsules.
-	-> Pseudo "Key-repeat" sets in after some wait-cycles only, allows better
-	single-steps
-
-2002-05-21  rprix  <rprix@users.sourceforge.net>
-
-	* sound.c:
-	corrected bug with SDL_mixer checking: I had put tests before
-	inclusion of <config.h>, which doesn't make much sense...
-
-	* system.h:
-	conditional inclusion of <SDL/SDL_mixer.h> only when found by configure!
-
-	* sound.c:
-	conditional compilation now takes accound of configure-defines:
-	HAVE_LIBSDL_MIXER and HAVE_SDL_SDL_H. If either is missing, sound
-	is "dummy-compiled", everything should work ok!.
-
-	* init.c:
-	reactivated loading of Title-picture in Old engine
-
-	* text.c:
-	fixed bug in Initial Scroll-text: Text-screen is cleared before
-	scrolling to avoid "smearing"
-
-	* main.c:
-	default value for global joy_sensitivity = 1.
-
-	* keyboard.c:
-	added Joystick-event reading in keyboard_update(): joystick motion is
-	simply mapped to Motion-keys and Space.
-
-	* joy.c:
-	complete Joystick initialisation in Init_Joy().
-
-	* init.c:
-	added new switch [-j|--sensitivity=<n>] that changes analog-joystick
-	sensitivity in the range [0,32].
-
-	* global.h:
-	added global joystick variables relating to joy.c
-
-	* enemy.c:
-	fixed (release-critical) bug in MoveEnemys() that produced
-	endless-loop if enemy was put on a waypoint with _zero_ connections.
-
-2002-05-21  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c, text.c, graphics.c, main.c, misc.c:
-	Sound can now really be completely turned of via command line,
-	which was incomplete. 
-	Corrected the bug in the scrolling text at the beginning.  Seems releasable.
-
-	* defs.h, graphics.c, influ.c, misc.c, svgaemu.c:
-	Corrected out some damage done to the old engine while introducing new fonts.
-	Reactivated palette color operations, which cuts down FPS to about 65 but
-	Influs color is now always correct.
-
-	* init.c, main.c, rahmen.c, text.c, global.h, graphics.c:
-	Paradroid font funktioniert wieder, wenn auch noch nicht besonders schoen.
-
-2002-05-20  jprix  <johannesprix@users.sourceforge.net>
-
-	* blocks.c, defs.h, global.h, graphics.c, proto.h, rahmen.c, view.c:
-	Rahmen is displayed again, although without font.
-
-	* blocks.c, defs.h, global.h, graphics.c, init.c, proto.h, ship.c,
-	text.c, view.c: 
-	the numbers in influ and enemy droid are now visible again.
-
-	* defs.h, ship.c, svgaemu.c:
-	Elevator picture now visible again.
-
-	* view.c:
-	Blasts are visible again.  dirty Blast-Bullet collision check disabled.
-
-	* view.c:
-	Bullets are visible again, but bullet-bullet-collision checking remains disabled.
-
-	* view.c:
-	Influencer is now visible again with the ne, but numbers are still omittet for now.
-
-	* defs.h, view.c:
-	Enemys are visible again, although the numbers are omittet for now.
-
-	* view.c:
-	Background scrolling works fully now!
-	The procedure is very abstract and very powerful in my opinion!
-	All of the clipping is done via SDL and its clipping capabilities.
-	I hope the SDL knows what to do and their code is really bugfree!!!
-	But it seems so.
-
-	* misc.c, view.c:
-	Map now visible again with the new engine.  Movement and enemys and that
-	also runs well since there were no changes to this part.
-
-	* graphics.c, main.c, map.c, proto.h, view.c:
-	Renamed GetInternFenster into Assemble_Combat_Picture, which will do the
-	assembling of the screen, but not into some internal window but rather into
-	the ne_screen.  PutInternFenster will be a dumb return and updating of the
-	screen can be done via SDL_Flip later.
-
-	* graphics.c, init.c, rahmen.c:
-	Added some more conditional compilations for the new engine.
-	Deactivated the termination after InitPicutres.
-
-2002-05-20  rprix  <rprix@users.sourceforge.net>
-
-	* init.c, struct.h, takeover.c, vars.h, blocks.c, defs.h, global.h, graphics.c:
-	continued work on NEW_ENGINE: InitPictures now loads in some blocks
-	into SDL_Surface ne_blocks, using ne_get_blocks() that returns a
-	SDL_Rect array with the block-positions.
-	Old and new engine still compile and run ok.. well the new one doesnt
-	actually do much though.. ;)
-
-	* Makefile.am:
-	included joy.c in files to compile
-
-	* joy.c, proto.h:
-	added for Joystic/Gamepad code, has only Init_Joy() at the moment
-	(and doesnt detect my USB Logitech Gamepad yet! ;)
-
-2002-05-20  jprix  <johannesprix@users.sourceforge.net>
-
-	* bullet.c, init.c, main.c, misc.c, proto.h, sound.c, struct.h, view.c:
-	Removed more bugs from the TODO buglist.
-
-	* defs.h, enemy.c, global.h, influ.c, init.c, misc.c, struct.h,
-	svgaemu.c, vars.h: 
-	Corrected the way PermanentHealRobots treats droid:  Now the framerate is
-	taken into account.  Also adapted some associated constants.
-
-	* misc.c, proto.h, sound.c, system.h, defs.h, main.c:
-	I have thrown out all yiff code.  rp now can also remove the checks for
-	yiffs libraries and the linking of yiffs libraries, hoho.
-
-2002-05-19  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c:
-	The sound FX and BG music volume can now be conveniently set via the escape menu.
-	The game also does not terminate any more even when there is real
-	shortage of free channels. 
-	Is it time to dump the yiff?  It seems so.
-
-	* bullet.c, view.c:
-	Moved stupid flash-damage-handling from PutBullet to CheckBulletCollision,
-	where the rest of the bullet-collisions and bullet-damage is handled.
-	Corrected the way full sound buffers are treated by Freedroid:  Full buffers
-	will now not lead to termination of the program although warning messages
-	are generated.
-
-	* blocks.c, sound.c, view.c:
-	Reactivated ConceptView.  Very handy for overview about level and RecFlashFill!
-
-	* sound.c:
-	Sound effects are now also played successfully by the SDL MIXER library.
-	Error checking, handling and prevention could still need improvement however.
-
-	* sound.c:
-	All background music files are now loaded and played successfully via
-	the SDL_MIXER sound library.  Cool!
-
-	* sound.c:
-	SDL_Mixer is now successfully playing the background music!  Hurray!!
-	At least on my system.  (rp must add -lSDL_mixer as linker option in general.)
-
-	* graphics.c, init.c, proto.h, sound.c, system.h:
-	In addition to new? video initialisation via Init_Video() now audio
-	initialisation is done via Init_Audio() in a similar fashion, nice and
-	clean for the caller in init.c.  All conditionals are handled inside.
-
-	* defs.h, graphics.c, init.c, misc.c, proto.h, sound.c:
-	Started transfer to SDL_AUDIO instead of the YIFF.
-	Variable USE_SDL_AUDIO controls the use of YIFF or NON-YIFF.
-
-	* influ.c:
-	Influcolor palette manupilations every frame turned off now by default.
-
-	* graphics.c, keyboard.c, misc.c, sound.c:
-	Removed the initialisation of SDL_TIMER, so that yiff can be started again.
-
-	* graphics.c, influ.c, misc.c:
-	Removed calls to svgalib dummy functions removed by rp before.
-
-2002-05-19  rprix  <rprix@users.sourceforge.net>
-
-	* misc.c, proto.h, ship.c, svgaemu.c, text.c, vars.h, view.c,
-	map.c, keyboard.c, main.c, blocks.c, bullet.c, colodefs.h, defs.h,
-	global.h, graphics.c, init.c: 
-	mainly started writing new engine, aktivated by #define NEW_ENGINE.
-	Old Code runs ok, new code compiles but doesnt work yet...
-
-2002-05-19  jprix  <johannesprix@users.sourceforge.net>
-
-	* influ.c, keyboard.c:
-	Resolved the strange WEAPON-mode--framerate-bug:  Influ color is now not
-	set every frame which gives us DOUBLE FRAMERATE!! cool, isn't it?
-
-	* influ.c, sound.c:
-	Added extensive error docu and error explanation if there ever should be
-	a problem with the yiff and how to resolve it.  This was a "release-critical"
-	bug, that I consider now fixed.  Tell me if you are of different oppinion...
-
-	* defs.h, influ.c, main.c, ship.c:
-	Added framerate computation via SDL.  Gives very much the same results as
-	the old code using gettimeofday.  A switch USE_SDL_FRAMERATE has been added
-	in defs.h to allow for convenient switching between the two methods.
-
-	* defs.h, global.h, graphics.c, keyboard.c:
-	Removed a nonexisting picture from the code.
-
-2002-05-18  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c:
-	More updates to the sound files.
-
-	* sound.c: Cleaned up sound files...
-
-	* sound.c: Deleted unused sound files.
-
-	* sound.c:
-	cleaned up more sound files...
-
-	* sound.c:
-	further restructurated sound files...
-
-	* sound.c: Cleaned up sounds some more.
-
-	* sound.c:
-	Changed some sound files and removed obsolete sounds.
-
-	* defs.h:
-	Removed another obsolete graphic.
-
-	* misc.c, text.c, main.c:
-	Removed?? the "GetChar" bug?  Remove an obsolete graphic.
-
-	* ship.c:
-	removed some obsolete graphics.  Console looks now quite clean to me.
-
-	* ship.c:
-	Removed some obsolte graphics.  Modified console a little.
-
-	* keyboard.c:
-	Mainly updated the Homepage and added cleaned-up screenshots. (one less ;-) )
-
-2002-05-17  rprix  <rprix@users.sourceforge.net>
-
-	* Makefile.am:
-	included maped.h, for distribution and dependencies
-
-	* oldcode.c: shouldn't really be in CVS.
-	!! * If you want it, please keep a local copy * !!
-	i.e. rename it _before_ you do cvs update !!
-	(otherwise check out the previous revision with cvs update -r<rev>
-
-	* text.c, view.c:
-	mainly cleanup and reduced used of Real/Internal Screen.
-
-	* takeover.c:
-	- new Infoline-treatment (SetInfoline(r,l))
-	- greatly reduced use of obsolete Real/InternalScreen variables
-	  instead of Outline320x200. (Only remains are in GetTakeoverGraphics())
-
-	* svgaemu.c:
-	- some "clean-up" (removed some DebugPrintf's)
-	- some formatting to make it more readable
-
-	* ship.c:
-	- New Info-line handling (SetInfoline(l,r))
-	- reduced use of Real/InternalScreen in favor of Outline320x200.
-	- some clean-up
-
-	* proto.h:
-	Infoline-handling now down solely by SetInfoline(left,right)
-
-	* map.c:
-	uncommented un-defined use of EditTextInfo which only worked in -O2
-	compilation.
-
-	* main.c:
-	mainly cleanup, plus take account of new Infoline-handling via SetInfoline(l,r).
-
-	* keyboard.c:
-	made deprecated KillTastaturPuffer() complain about being obsolete when called.
-
-	* init.c:
-	Re-activated printing of PACKAGE and VERSION when command-line option
-	[-v|--version] is given. This should now even work on obsolete
-	build-environements  (-> jp ;)
-
-	* graphics.c:
-	some cleanup, and SwapScreen() and WaitVRetrace() are deprecated and
-	will complain about being obsolete when called ;)
-
-	* global.h:
-	some cleanup, and junked now obsolete LeftInfo[50], and RightInfo[]
-	globals.
-
-	* defs.h:
-	added Infoline-defines from rahmen.h into here, because some are
-	needed in global.h.
-
-	* rahmen.c:
-	All infoline-functions have now been reduced to only one:
-	(replacing SayLeftInfo(), SayRightInfo() and UpdateInfoline())
-	SetInfoline (char *left, char *right), which is given the
-	strings  left,right to be displayed in the Infoline.
-	When NULL is passed, this displays the defaults i.e. Me.status left
-	and Score right.
-	NOTE1: this function only acts on Outline320x200 and does not update
-	the actual screen, so you have to call PrepareScaledSurface(TRUE) later.
-	NOTE2: DisplayRahmen() now just does that, no Infoline is added and
-	      the actualy screen is not updated either.
-
-	* maped.h: added Copyleft to maped.h
-
-	* maped.h:
-	removed all the nasty ^M 's at the line-endings...
-
-2002-05-17  jprix  <johannesprix@users.sourceforge.net>
-
-	* influ.c, init.c, takeover.c:
-	Cleaned the Rahmen during the Takeover game (that was easy, haha)
-
-	* global.h:
-	Changed Highes/Lowest/Greatscore data type to float, like RealScore is.
-	This seems to have removed the "GetChar"-bug in Debriefing!
-
-	* main.c, proto.h, ship.c, text.c:
-	Cleaned up Console:  Its now really working well.
-	Cleaned up the font colors in Debriefing.  Seems a little bit better this way.
-
-	* maped.h:
-	Forgot to add the (slighly modified, but otherwise old) maped.h too :-)
-
-	* map.c, misc.c, proto.h:
-	Added Save function to the level editor (now working completly correct,
-	but also not crashing).
-
-2002-05-16  jprix  <johannesprix@users.sourceforge.net>
-
-	* colodefs.h, init.c, main.c, oldcode.c, proto.h, rahmen.c,
-	ship.c, ship.h, text.c: 
-	Cleaned up the Rahmen and the console.  Not flawless, but rather clean now.
-
-	* keyboard.c, main.c, proto.h:
-	The cheat menu is now hid a little bit better:  The new key to enter is
-	SHIFT-CTRL-ALT-C.  I hope thats enough.  We could also demand left AND right
-	shift and control and alt keys to be pressed, but for now I think its ok.
-
-	* influ.c, oldcode.c, struct.h:
-	Ahhhh, I finally managed to cleanly correct the bug that sometime
-	boxed you around, sometimes even threw you out of the ship.  At
-	least on my machine is works fine now. 
-
-	* keyboard.c, misc.c, proto.h:
-	Added better keyboard handling and even more level editor functionality.
-
-	* defs.h, keyboard.c, map.h, misc.c, proto.h:
-	Added more level editor functionality.
-
-2002-05-16  rprix  <rprix@users.sourceforge.net>
-
-	* Makefile.am, graphics.c, init.c, main.c, proto.h, rahmen.c, ship.c, text.c:
-	changed #includes and Makefile acccording to renaming:
-	para.c        -> main.c
-	paratext.[ch] -> text.[ch]
-	paravars.h    -> vars.h
-	parainit.c    -> init.c
-
-	* text.h:
-	renamed "text.h" from "paratext.h"
-
-	* global.h:
-	taken account of new _file_ext  #defines due to renaming of para.c,
-	paratext.c, paravars.h, parainit.c
-
-	* text.c:
-	renamed "text.c" from "paratext.c"
-
-	* init.c:
-	renamed to "init.c" from "parainit.c"
-
-	* main.c: renamed "main.c" from "para.c"
-
-	* paravars.h: * Renamed to "vars.h" !!
-
-	* paratext.h, text.h:
-	* Renamed to "text.h" !!
-
-	* paratext.c: * Renamed to "text.c" !!
-
-	* parainit.c: * Renamed to "init.c" !!
-
-	* para.c: * Renamed to "main.c" !!
-
-2002-05-16  jprix  <johannesprix@users.sourceforge.net>
-
-	* misc.c:
-	Started Level editor, invokable via Options/Escape Menu.
-
-	* svgaemu.c, global.h, init.c, main.c, misc.c, oldcode.c, para.c,
-	parainit.c, paratext.c, proto.h, sound.c, text.c: 
-	Further completed the options menu.
-	Cleaned up some sound code.
-
-2002-05-15  rprix  <rprix@users.sourceforge.net>
-
-	* main.c, misc.c, para.c, paratext.c, system.h, takeover.c, text.c:
-	improved GetString() somewhat.
-
-2002-05-15  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c, main.c, para.c, parainit.c, sound.c:
-	Added TODO stuff.
-	Sound effect volume adjustment now completely operational.
-
-2002-05-15  rprix  <rprix@users.sourceforge.net>
-
-	* init.c, parainit.c, takeover.c:
-	takeover game now runs at constant timing-speed... ouff
-
-2002-05-15  jprix  <johannesprix@users.sourceforge.net>
-
-	* global.h, init.c, misc.c, parainit.c, proto.h, sound.c, svgaemu.c:
-	Added gamma corrections for to options menu.
-	Added background volume adjustment to the options menu.
-	Added full screen toggle to the options menu.
-	Added Mission instructions to the single player menu.
-	Added Framerate display option to the options menu.
-
-	* proto.h, main.c, misc.c, para.c:
-	Enlarged the options menu.
-
-2002-05-15  rprix  <rprix@users.sourceforge.net>
-
-	* misc.c:
-	fixed jp's bug in "stuck" options menu: Have to set Weiter=TRUE to get
-	out of it!! ;-)
-
-	* global.h, graphics.c, init.c, main.c, misc.c, para.c,
-	parainit.c, proto.h, ship.c, takeover.c, takeover.h: 
-	-minor cleanup: remove obsolete InterruptInfolineUpdate,
-		Monitorsignalunterbrechung(), NOJUNKWHILEINIT, MODSCHASEIN,
-		+ several useless DebugPrintfs()
-
-	- started proper timing control in Takeover game, only implemented
-		yet for Color-choosing sequence.
-
-	* system.h:
-	*@argh!! forgot to bloody check the bloody file in, dammit!
-
-2002-05-15  jprix  <johannesprix@users.sourceforge.net>
-
-	* BFont.c, BFont.h, graphics.c, main.c, misc.c, para.c, proto.h, view.c:
-	Extendes the options menu.  The problem of "stuck" escape key persists and
-	remains not understood by me.
-
-2002-05-14  rprix  <rprix@users.sourceforge.net>
-
-	* keyboard.c, main.c, para.c:
-	fixed bug in getchar_raw () that could cause "stuck keys"
-	slightly modified Pause-function, leaving now always via "Space"
-
-	* added BFont.c and BFont.h to Makefile.am
-	system-wide includes are now all in "system.h"
-	SDL-headers now included as <SDL/SDL.h>, to allow installation-path indep.
-	Project name now more consistently "Freedroid" rather than "FreeDroid".
-
-2002-05-14  jprix  <johannesprix@users.sourceforge.net>
-
-	* BFont.c, BFont.h, global.h, graphics.c, init.c, main.c, misc.c,
-	para.c, parainit.c, paratext.c, proto.h, ship.c, svgaemu.c,
-	takeover.c, text.c, view.c: 
-	Options menu is now based on great new fonts and therefore MUCH more flexible
-	than the old structure that used one fixed image for the menu.
-
-2002-05-14  rprix  <rprix@users.sourceforge.net>
-
-	* ship.c:
-	properly wait for Space Press/Release at Deck-view in Console.
-
-	* bullet.c:
-	included <stdlib.h> for abs()
-
-	* blocks.c, enemy.c, ship.c, svgaemu.c, takeover.c:
-	minor modifs: - some cleanup, e.g. line-breaks in comment-blocks
-		      - removed some (now) useless DebugPrintf()'s, now
-			deprecated  as we can properly debug with gdb.
-
-	* view.c:
-	include <string.h> for memset() and memcopy() functions
-
-	* proto.h:
-	Flimmern() now takes an argument, GetString() now has 2. Added getchar_raw().
-
-	* paratext.c, text.c:
-	_completely_ rewritten GetString() (and hope nobody has seen the
-	old code... lol ;).
-	GetString now has _2_ arguments: MaxLen, and echo. The new argument
-	"echo" switches between no echo (echo=0), printf-echo (echo=1) and
-	SDL DisplayText (echo=2).
-	I'm afraid there might be a bug somewhere in there, as Debriefing()
-	now sometimes SegFaults, using this new functions. I'm working on it!
-
-	* init.c, parainit.c:
-	escaped multi-line string constants, as gcc-3.0 doesn't like them
-	unescaped any more.
-
-	* main.c, para.c:
-	- adapted Pause() and ShowHighscoreList() to use the new
-	getchar_raw() and generally SDL.
-	- minor modifs mainly for consistency with my other global modifs, i.e.
-	 use_fullscreen -> fullscreen_on, second argument to GetSting() in
-	 Debriefing, ...
-
-	* misc.c:
-	adapted Cheatmenu() to SDL_ libs: output is now done simply via
-	printf(), which shows the Cheat-menu in the text-window, while
-	keyboard input is done vie getchar_raw() using SDL. This should be
-	quite ok for a cheat-menu, which is intended for developers, not for
-	users anyway... ;)
-
-	This should now be 99% functional, please add/remove functionalities
-	as needed.
-
-	* map.c:
-	- fixed bug in GetCrew() that lead to "strange" 001 enemys and 5xx
-	numbers on yellow deck etc.
-	- Remove some (now) useless DebugPrintf's. Since SDL, we can actually
-	use a proper debugger and should reduce the use of DebugPrintf to an
-	absolute useful minimum.
-
-	* graphics.c:
-	choice of Flimmer-type is now passed as an argument to Flimmern(),
-	which might be useless but at least gets rid of the #ifdef conditional
-	compilation, and allows to try different ones before maybe chosing just one.
-
-	* keyboard.c:
-	added a new function, getchar_raw(), which allows to get the character
-	of the _next_ key pressed in a similar way getchar() does, but working
-	under the raw SDL keyboard mode. This is used in the new GetString()
-	function, and should generally come quite handy, I hope.
-
-	* global.h:
-	changed global toggle "use_fullscreen" to canonical name "fullscreen_on".
-	I recommand using this canonical form for future global toggles.!
-
-	* TAGS:
-	TAGS file should be produced locally, and by using the command
-	make tags
-
-2002-05-14  jprix  <johannesprix@users.sourceforge.net>
-
-	* paratext.c, ship.c, svgaemu.c, takeover.c, text.c, view.c,
-	blocks.c, graphics.c, keyboard.c, map.c, misc.c: 
-	Erradicated the last real SVGALIB dependencies and includes.
-	Added the link to SDL_Paradroid to the homepage.
-
-2002-05-12  jprix  <johannesprix@users.sourceforge.net>
-
-	* keyboard.c:
-	Added a screenshoot function, that is accessible via the p key.
-	I hope I didn't mess anything up, because the server says I modified
-	EVERYTHING.  Lets see...
-
-2002-05-11  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c, main.c, para.c, parainit.c, ship.c:
-	resolved some warnings about gettimeofday.
-
-	* graphics.c, misc.c, oldcode.c, proto.h, rahmen.c, view.c:
-	Removed all remaining putpixel calls from FreeDroid.
-
-	* blocks.c, oldcode.c:
-	putpixel(...)-calls entirely deleted from module blocks.c.
-
-	* blocks.c, graphics.c, oldcode.c:
-	Removed a bug in the new DisplayBlock routine that didn't display
-	the elevtor picture. 
-
-	* graphics.c, oldcode.c, svgaemu.c:
-	Added an icon and a window title for FreeDroid.
-	Also moved some unused but perhaps not yet useless code to the new module
-	oldcode.c.  PLEASE DO NOT INCLUDE OR COMPILE OR LINK THIS FILE.  THANKS.
-
-	* blocks.c, init.c, parainit.c, rahmen.c, svgaemu.c, view.c:
-	Started a new way to assemble the internal picture before it is drawn to
-	the screen:  Now picture assembling is done in program memory, not in an
-	SDL screen called "screen".  The new working field is names
-	"Outline320x200" cause its the outline of what we later want to bring to
-	the screen and cause its size is 320x200.  putpixels should NEVER again
-	occur this way, not even in svgaemu.c, where PrepareScaledWindow has been
-	patched allready.
-
-	* blocks.c, global.h, paratext.c, rahmen.c, text.c, view.c:
-	Resolved some conflicts, where there were local variables "screen"
-	logically conflicting with global variable "screen".
-	Turned off RotateBulletColor() and voila, 30 FPS at least again.
-
-2002-05-10  jprix  <johannesprix@users.sourceforge.net>
-
-	* svgaemu.c:
-	Improved the technical details of PrepareScaledSurface:  This saves about
-	15% time for improved framerate.
-
-2002-05-10  rprix  <rprix@users.sourceforge.net>
-
-	* TAGS: minor modifs
-
-	* svgaemu.c:
-	slightly changed the handling of the use_fullscreen toggle.
-
-	* struct.h:
-	extended struct ship with num_levels, num_lifts, num_lift_rows
-	members, which replace the now obsolete LevelsOnShip
-
-	* ship.h:
-	we now reserve the following Palette ranges:
-	190 (EL_BG_COLOR),
-	191-220 (EL_FIRST_LEVEL_COLOR - EL_LAST_LEVEL_COLOR) for the
-		MAX_LEVELS level-colors
-
-	221-236 (EL_FIRST_ROW_COLOR-EL_LAST_ROW_COLOR) for the MAX_LIFTROWS
-		lift-rows.
-
-	This corresponds to the MAX_LEVELS=29 and MAX_LIFTROWS=15 settings in
-	defs.h and we hope this will be sufficient for future ships...?!
-
-	* ship.c:
-	removed the "ship-puzzle", where we composed the ship-view by small
-	blocks, which now greatly simplifies this piece of code.
-	Activated correct coloring of lift-rows and levels, using the _new_
-	Palette range reserved for this (see ship.h).
-
-	* init.c, parainit.c:
-	extended/replaced Johannes' command-line code (sorry ;), and added the
-	new options [-f|--fullscreen] and [-w|--window], with corresponding
-	help-message. We use the toggle "use_fullscreen" rather than
-	"FullScreen_Requested_By_Player_Tired_of_Playing_in_Window"... (lol ;)
-
-	+ Use of new ship-struct members.
-
-	* main.c, para.c:
-	set default value for use_fullscreen to FALSE (for easier debugging)
-
-	* map.c:
-	use now ship-defines MAX_LEVELS, MAX_LIFTS and MAX_LIFTROWS.
-
-	* graphics.c:
-	we now longer read the (now) obsolete ELevator-blocks, which were used
-	to "puzzle" together the ship-view. Instead, the complete ship-picture
-	is loaded. Coloring of levels and lift-rows is done via color-palette.
-
-	* global.h: added use_fullscreen toggle.
-
-	* defs.h:
-	- new #defines MAX_LIFTS, MAX_LEVELS and MAX_LIFTROWS for upper
-	limits of lifts (formerly known as 'elevators'), levels and lift-rows
-	on any ship.
-	- removed ALLLEVELS, MAX_LEVELS_ON_SHIP and ALLELEVATORS.
-
-	The new defines are now used consistenly everywhere.
-
-	* colodefs.h:
-	removed EL_* (elevator) color-definitions, they now stand all in
-	ship.h.
-
-	* blocks.c:
-	corrected bug in DisplayBlock(): source++ was _before_ putpixel
-		(should came after it)
-
-	* Makefile.am:
-	new Makefile which includes svgaemu.c in order to allow
-	compilation...
-
-2002-05-09  jprix  <johannesprix@users.sourceforge.net>
-
-	* graphics.c, init.c, main.c, para.c, parainit.c, takeover.c:
-	Removed the delay command from Takeover function.  Still it is incredibpy slow!
-	Removed the bug, that the -f command line option didn't work.
-
-	* defs.h, graphics.c, init.c, keyboard.c, main.c, misc.c, para.c,
-	parainit.c, svgaemu.c: 
-	Added command line switch for fullscreen mode. (strange: only work
-	in long form?) 	Removed the lag at the beginning of the game
-	menioned by Reinhard. Added the new constand SCALE-FACTOR, that
-	lets you decide between x2 and x3 magnification. 
-
-	* graphics.c, ship.c:
-	Deactivated the too slow unfading of levels after leaving the elevator.
-	This will be good to avail annoyed players for the new X11 release
-	to be coming soon. 
-
-	* graphics.c, paratext.c, ship.c, text.c:
-	Ported Konsole to new Scale-Structured X11.
-
-	* graphics.c, keyboard.c, main.c, para.c, paratext.c, proto.h,
-	svgaemu.c, text.c, view.c: 
-	Portet SetUserfenster, GetString and the Debriefing and the
-	Flimmern function to X11. 
-	A lot of new keys are now accessible via the usual ?Pressed() functions.
-
-	* graphics.c, init.c, parainit.c, paratext.c, svgaemu.c, text.c:
-	Added comments about BULLETCOLOR rotation to be removed sooner or later.
-
-	* graphics.c, init.c, parainit.c, paratext.c, ship.c, svgaemu.c,
-	takeover.c, text.c: 
-	Takeover and Title screen are now visible again, hey that rhymes.
-
-	* graphics.c, main.c, para.c, view.c:
-	Corrected the color handling.  Patched the too low framerate-constant at the
-	beginning.  Incorporated PrepareScaledSurface into PutInterFenster.
-
-	* svgaemu.c:
-	Forgot to add this last file for the transfer to X11.  Hope all is well...
-
-	* paratext.c, proto.h, ship.c, text.c, view.c, blocks.c, defs.h,
-	global.h, graphics.c, init.c, keyboard.c, main.c, map.c, misc.c,
-	para.c, parainit.c: 
-	The game now runs under X11 using the SDL. (Thats why the many changes.)
-
-2002-05-09  rprix  <rprix@users.sourceforge.net>
-
-	* view.c:
-	mainly eliminated use of BeamLine in PutOject().
-	introduced use of some new gl_  svgalib functions, although Johannes
-	will throught them out immediately again... hope this will not cause
-	too many conflicts...
-
-	* takeover.c:
-	ShowPlayground(): takeover game now uses "frame-buffering"
-	(via InternalScreen) as well, for a smooth display.
-
-	* init.c, parainit.c:
-	-removed BeamLine, and added initialisation of Random-number generator
-	  to make sure the game-beginning is really random too
-
-	* misc.c:
-	mainly re-written MyRandom(). This function is now tested to give equally
-	probable integer numbers in the range [0, Obergrenze].
-
-	* influ.c:
-	removed use of global variable BeamLine
-
-	* graphics.c: changed some comments.
-
-	* global.h:
-	removed useless (I hope ;) global variable BeamLine
-
-	* enemy.c:
-	- better waypoint-treatment should get rid of "ghost"-enemys going
-	through walls to (0,0).
-
-	- removed all reference and use of the global variable BeamLine, which
-	  seemed rather useless... (I hope)
-
-	* defs.h:
-	added macros Grob2Fein(x) and Fein2Grob(x) for easier conversion between
-	Fein<-->Grob coordinates.
-	Note: for simplicity these macros can be used for x and y coords,
-	as long as BLOCKHOEHE=BLOCKBREITE, which is ok for the moment, but might
-	change in the future
-
-	However, a new concept for these grob/fein coordinates might be necessary
-	anyway, as it seems currently too specific to 320x200 resolution...
-
-2002-05-08  jprix  <johannesprix@users.sourceforge.net>
-
-	* influ.c, ship.c:
-	Calibrated the effect of the refresh field:  more refreshment, same price.
-	Cleared out the bug, that the status line remained dead after visition Consoles.
-
-	* init.c, parainit.c:
-	Filled the AUTHORS file with something sensible (like others did)
-	Commented out the PACKAGE_STRING again.
-
-2002-05-07  rprix  <rprix@users.sourceforge.net>
-
-	* init.c, parainit.c:
-	re-activated output of Version information with --version.
-	Note: PACKAGE_STRING must be #defined in your config.h file. Make
-	sure you re-run aclocal, autoheader, autoconf, automake if not. If
-	this #define is still missing in your config.h, your gnu-build
-	environement might be broken, or you have to update it... 
-
-2002-05-07  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c, main.c, para.c, parainit.c, rahmen.c, sound.c, view.c:
-	Added more TitleText information, also about the controls of the game.
-	There might, no there will, be people, who NEVER heard of paradroid.
-	Removed the frame-rate-debug information that made the screen ugly.
-	Remove a SegFault cause:  High-Score name freed after it is displayed!
-
-2002-05-07  rprix  <rprix@users.sourceforge.net>
-
-	* enemy.c, global.h, init.c, main.c, map.c, misc.c, para.c,
-	parainit.c, takeover.c: 
-	- some additions to Cheatmenu, in order to help track problems
-	with map & "ghost robots".. 
-	- added command-line option [--debug|-d[=LEVEL]] to switch on
-	output of debug-messages (files currently gets *HUGE* very fast,
-	so this should only be used when needed!)  debug-levels supported
-	_in principle_, but only ON/OFF (i.e. 0, >0) implemented 
-	- Takeover game now non-transparent by default (looks much better ;)
-
-2002-05-06  jprix  <johannesprix@users.sourceforge.net>
-
-	* init.c, main.c, misc.c, para.c, parainit.c, paratext.c, proto.h, text.c:
-	Added improved check for nescessary line-feeds.  Now it is no longer nescessary
-	to add a \n in any text to be displayed by DispalyText or
-	ScrollText but the functions will do line breaking themselves.
-	Removed all \n from Title Texts and Console Texts. This will be
-	much more convenient when changes are made to the text and
-	guessing the right time for a line feed can be omitted.  Added a
-	missing letter in the fontpicture also. 
-
-2002-05-05  jprix  <johannesprix@users.sourceforge.net>
-
-	* Started an EndTitle function that will be called as soon as all robots aboard
-	the ship are dead.  (The armageddon-cheat-option is very convenient to achieve
-	this.)  This new function also displays part of the new story line.
-
-	* Corrected the SegFault bug that came from too little accocated memory for the
-	text describing druids at the console, that faulted if 999 was displayed.
-	Now that Bug should be fixed.
-
-	* view.c:
-	I activated a security check:  PutEnemy now sets the type of the druid to 001
-	whenever it encouters a druid with illegal type.  Please note,
-	that this is only a dirty workaround and not a solution to the
-	problem, which in my opinion is due to the DOS-TO-UNIX conversion
-	problems of out ship- crew- and map-files, that cause some (the
-	last or first most likely) entrys to contain junk.  However the
-	SegFault bug for now disappears. 
-	
-	* Tracked a Segfault bug:  The cause seems to be a druid of type 33 where we
-	know only 24 different druid types.  Asked Reinhard to correct the bug.
-	Added a lot of additional debug messages and security checks in the process.
-
-	* Added some new sounds and imroved the sound behaviour in takeover game.
-	Also improved the flash behaviour, mainly the too short optical effect.
-
-	* Calibrated one but one very important constant for framerate
-	computation, that will staightens out the last time-distorting
-	after longer delays.  The only other time-distortion can happen at
-	the very first beginning of the game, where no data on the
-	framerate to be expected is yet available.  I think that is
-	tolerable. jp. 
-
-2002-05-04  jprix  <johannesprix@users.sourceforge.net>
-
-	* Inproved collision behaviour:  multiple collisions (immediately
-	destroying influ) should no longer occur.  Improved wait, firewait
-	and aggression behaviour of druids. Seems pretty much like the
-	original now, although I don't have the original game or even an
-	emu installed. 
-
-	* Since there were some unsmoothnesses in the flow of the game,
-	that had to do 	with framerates and distorted framerates I
-	corrected the flaw.  Apart from that there is now a function
-	called Activate_Conservative_Frame_Computation(); that 	should be
-	called whenever the game flow is stopped for possibly longer
-	periods of time, e.g. in elevators, consoles, takeover, options
-	menu, debug menu.  The 	new code seems to work pretty well, at
-	least on my machine. 
-
-	* Now different sounds for different bullet types are implemented.
-
-	* Takeover game has now more sounds, although these sounds could
-	perhaps use improvement. 
-
-	* Corrected the bug, that the influ is in transfermode by default
-	when coming out of the elevator, thereby often initiating
-	unintended takeover of inferiour droids. 
-
-	* Redid the TRANSFERCOUNTER code to make it frame_dependent (and useful again).
-
-	* Further improved the official menu, that is accessible via ESCAPE key.
-
-2002-05-03  jprix  <johannesprix@users.sourceforge.net>
-
-	* Added a preliminary options menu, that is of course not fully
-	functioning yet. The menu is accessible via the escape key.
-	Since this is not some debug window, it is intended to be
-	graphically impressive. 
-
-2002-05-02  rprix  <rprix@users.sourceforge.net>
-
-	* o) 'GNU-yfied' whole source by indent. Please try to stick to
-	   these conventions too  (by imitation, or by using indent). Ok,
-	   this is not compulory but it  makes reading the code easier.
-
-	o) sound_on is now checked _by_ the sound-functions, not by the caller!
-	   Yiff is unconditionally initialised: this allows switching on/off
-	   of sound in real-time. Unfortunately this does not yet work for the
-	   background music, maybe Johannes can implement something along these
-	   lines..?
-	o) can't remember what else I did, probably nothing important... ;)
-
-2002-05-02  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c:
-	deleted more unused sound code.  improved debug logging a little bit more.
-
-	* sound.c:
-	added more doku to sound.c and remove some old unused code.
-
-2002-05-01  rprix  <rprix@users.sourceforge.net>
-
-	* o) changed all possible printf() statements into DebugPrintf()
-	o) Transparent takeover game now works nicely, but is it really useful? :|
-
-2002-05-01  jprix  <johannesprix@users.sourceforge.net>
-
-	* Added more and better debugmessages for better tracking of the
-	latest background music problem. However I am not sure I
-	understand it yet.  I hope the new debugmessages help a bit. 
-
-2002-05-01  rprix  <rprix@users.sourceforge.net>
-
-	* takeover.c:
-	fixed Bug in ShowPlayground() that caused a seg-fault when Takeover game
-	was finished (sorry ;)
-
-2002-05-01  jprix  <johannesprix@users.sourceforge.net>
-
-	* Set release nr. to 1 in configure.  Still had to comment the
-	"PACKAGE_STRING" line out in parainit.c in order to have it
-	compile.  Can someone else verify the crash related to sound?  I
-	seem to be unable to reproduce the bug. 
-
-2002-05-01  rprix  <rprix@users.sourceforge.net>
-
-	* init.c, parainit.c:
-	Version and Package name output by --version are now set by configure!
-	Ideally the _only_ place to set version+name should be configure.ac .
-
-	* takeover.c:
-	o) added transparancy to takeover game (is not finished yet). I'm not sure
-	  if that will be usefull, but one only has to do a SetUserfenster(color)
-	  at the beginning to remove transparancy ...
-	o) jp has slightly messed up the code when adding his sound-effect
-	   this could not possibly have compiled like that??!!
-
-	* map.c:
-	fixed mini-bug in TranslateMap()  (NewBlock was not initialised)
-
-	* defs.h:
-	why not try the new title-picture? (at least it gives the right _name_!)
-
-2002-05-01  jprix  <johannesprix@users.sourceforge.net>
-
-	* More debug messages added, while trying to track a reproducable
-	segfault bug. 
-
-	* ship.c:
-	Erredicated the bug in the GreatDruidShow keyboard controls.
-
-	* Takeover game now has more sound.
-
-	* Improved Background sounds:  More sound files + Background music
-	can be switched easily. Takeover, Console, Title and Combat each
-	have their own background music. 
-
-	* Refreshes now rotate at a adecent speed AND also work at decent speed.
-	Score is reduced in a moderate amount.
-	Made some corrections to the "Rahmen":  It now is displayed sans
-	red box around it. 
-
-2002-04-30  jprix  <johannesprix@users.sourceforge.net>
-
-	* Corrected the bug, that was recently made into SetUserfenster,
-	when rp ported the function.  Corrected the bug, that was in
-	ClearUserFenster, where the order of parameters was mixed up,
-	which made a setmem call useless. 
-
-	* Refresh fields rotate now at the right speed.  (Their effect and
-	scoredrain isn't fixed yet.) Corrected the bug of missing robot
-	rotation after the influ has been defeated. 
-	
-2002-04-30  rprix  <rprix@users.sourceforge.net>
-
-	* ported the SetUserfenster() function in view.c to use vgalib.
-	Takeover game now finished as far as the original version is concerned.
-
-2002-04-29  jprix  <johannesprix@users.sourceforge.net>
-
-	* bullet.c,
-	view.c: 
-	Robot blast damage now functioning correctly (same as influencer).
-	Influencer takes the right amount of damage when hit by bullets.
-	Improved Homepage a (little) bit. 
-
-	* Corrected the version number in the title screen.
-	Fixed the bug, that influencers damage from bullets was random.
-
-	* Erradicated some (justified) warnings.  Adapted some
-	robot-related constants. BTW, the autoconf/automake STILL does not
-	produce -Wall switch for the makefile in /src. 
-
-2002-04-28  rprix  <rprix@users.sourceforge.net>
-
-	* blocks.c,
-	takeover.c: 
-	fixed small bug in DisplayMergeBlock(): source++ came _before_
-	check on TRANSPARENTCOLOR resulting in display Problems in
-	takeover-game. Takeover-game now well adjusted. Still lacking a
-	uniform Color background. what function to use? 
-
-2002-04-28  jprix  <johannesprix@users.sourceforge.net>
-
-	* Redid the somewhat flaky mathematics of enemy fire.  Enemy
-	robots are now perfect marksmen. They always hit (allthough they
-	do not consider current movement of the influencer but rather
-	shoot at his current position).  They never hit themselves,
-	although it can happen, that two bullets are fired to shortly
-	after each other, colliding and creating a blast that can harm the
-	enemy.  But that is seldom happening and also happening in the C64
-	version, as far as I know.  Game fun is drastically increased with
-	such enemys! Hoa! Cool!  See ya, jp. 
-
-	* Cleaned up the console, especially the "GreatDruidShow".
-	Allthough some minor flaws still exist, I find that it looks quite
-	passable.  Come and see for yourself. 
-
-	* Erased a stupid segfault due to unincluded headers due to
-	insufficient compiler warnings! Please someone sooner or later see
-	to that the autoconf/automake generated appropriate compiler 
-	switches that cause maximal warnings!  Thanks,jp.
-
-	* ship.c, view.c:
-	All druidimages should now be displayed at the console.
-	However, slight color distortions may still occur in some druidimages.
-	They are only minor however and should disappear, when the graphics are
-	worked over or if we set the vga palette separately.  Do that if
-	you feel like it... 
-
-	* Code added to read in the images of the druids for the console depiction.
-	Modifications were made to the image files go get their properties right...
-	Work is still left to do there.
-
-	* Since Reinhards new DisplayMergeBlock function tended to segfault because of
-	uninitialized pointers, I corrected the little mistake and also added some new
-	function "DebugPrintf" that should be used throughout the code for debug-messages,
-	CONSISTING ONLY OF ONE STRING, so that we can conveniently turn on and off the
-	crowd of debug messages as desired with one little switch in
-	misc.c.  Have fun, jp. 
-
-	* sound.c:
-	Added and activated GotHitSound produced by incoming bullets.
-
-	* graphics.c:
-	Portet the old "Flimmern" function to use svgalib calls instead of
-	writing to memory. 
-
-	* Redid some of the old unelegant sound code.  Its now much
-	shorter, more elegant and new sounds can be added much easier than
-	before.  Some new sounds added as well. 
-
-2002-04-28  rprix  <rprix@users.sourceforge.net>
-
-	* Command line parsing now works. Currently implemented [-v | --version]
-	[-? | -h | --help], [-q | --nosound ], [-s | --sound] (default),
-	[-t | --timeout=SECONDS ] ... sets alarm - timeout for debug purposes.
-
-	See the function parse_command_line() in parainit.c and "man getopt"
-	if you want to add further functionality.
-
-	* Takeover game now nearly perfect, uses only *our* graphics of to_elem.pcx
-	(-> no copyright problems...). Background still needs to be cleared...
-
-	* blocks.c:
-	DisplayMergeBlock() now ported (in analogy to DisplayBlock())
-
-2002-04-28  jprix  <johannesprix@users.sourceforge.net>
-
-	* Improved the sound a bit more....
-
-2002-04-27  jprix  <johannesprix@users.sourceforge.net>
-
-	* Improved the sound a bit:  blasts and refreshes and elevators now
-	produce sound! have fun. 
-
-	* Added some new sounds.  Sound active as default.
-
-2002-04-25  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c:
-	Sound working again!  Jiippiiiee!
-
-2002-04-24  jprix  <johannesprix@users.sourceforge.net>
-
-	* sound.c:
-	Tried to correct the sound bug.  Had to do it blindly, for the
-	project doesn't compile at my machine at the moment. 
-	So, good luck everybody with the changes I made...
-
-2002-04-22  rprix  <rprix@users.sourceforge.net>
-
-	* nosound.c:
-	nosound.c is redundant now, conditional compilation in sound.c
-
-	* Makefile:
-	Makefile is now _built_ by configure, should _not_ be checked in.
-
-	* NEW Project NAME:  FreeDroid (aka freedroid-0.6.0).
-	All c-files now include <config.h>, built from configure
-
-	* sound.c:
-	uses #if HAVE_LIBY2 from <config.h> to compile conditionally, depending on
-	presence of Yiff-library as detected by configure.
-
-	* Makefile.am:
-	Main source-files of the GNU build environement.
-	Run autoconf and automake to obtain the configure-script.
-
-
-
-
-
-
-
+	* graphics/: droids/professor/portrait.png,
+	  droids/red_guard/portrait.png,
+	  floor_tiles/iso_grass_floor_0000.png,
+	  floor_tiles/iso_grass_floor_0001.png,
+	  floor_tiles/iso_grass_floor_0002.png,
+	  floor_tiles/iso_grass_floor_0003.png,
+	  floor_tiles/iso_grass_floor_0004.png,
+	  floor_tiles/iso_grass_floor_0005.png,
+	  floor_tiles/iso_grass_floor_0006.png,
+	  floor_tiles/iso_grass_floor_0007.png,
+	  floor_tiles/iso_grass_floor_0008.png,
+	  floor_tiles/iso_grass_floor_0009.png,
+	  floor_tiles/iso_grass_floor_0010.png,
+	  floor_tiles/iso_grass_floor_0011.png,
+	  floor_tiles/iso_grass_floor_0012.png,
+	  floor_tiles/iso_grass_floor_0013.png,
+	  floor_tiles/iso_grass_floor_0014.png,
+	  floor_tiles/iso_grass_floor_0015.png,
+	  floor_tiles/iso_grass_floor_0016.png,
+	  floor_tiles/iso_grass_floor_0017.png,
+	  floor_tiles/iso_grass_floor_0018.png,
+	  floor_tiles/iso_grass_floor_0019.png,
+	  floor_tiles/iso_grass_floor_0020.png,
+	  floor_tiles/iso_grass_floor_0021.png,
+	  floor_tiles/iso_grass_floor_0022.png,
+	  floor_tiles/iso_grass_floor_0023.png,
+	  floor_tiles/iso_grass_floor_0024.png,
+	  floor_tiles/iso_grass_floor_0025.png,
+	  floor_tiles/iso_grass_floor_0026.png,
+	  floor_tiles/iso_grass_floor_0027.png,
+	  floor_tiles/iso_grass_floor_0028.png,
+	  floor_tiles/iso_miscellaneous_floor_0000.png,
+	  floor_tiles/iso_miscellaneous_floor_0001.png,
+	  floor_tiles/iso_miscellaneous_floor_0002.png,
+	  floor_tiles/iso_miscellaneous_floor_0003.png,
+	  floor_tiles/iso_miscellaneous_floor_0004.png,
+	  floor_tiles/iso_miscellaneous_floor_0005.png,
+	  floor_tiles/iso_miscellaneous_floor_0006.png,
+	  floor_tiles/iso_miscellaneous_floor_0007.png,
+	  floor_tiles/iso_miscellaneous_floor_0008.png,
+	  floor_tiles/iso_miscellaneous_floor_0009.png,
+	  floor_tiles/iso_miscellaneous_floor_0010.png,
+	  floor_tiles/iso_miscellaneous_floor_0011.png,
+	  floor_tiles/iso_miscellaneous_floor_0012.png,
+	  floor_tiles/iso_miscellaneous_floor_0013.png,
+	  floor_tiles/iso_miscellaneous_floor_0014.png,
+	  floor_tiles/iso_miscellaneous_floor_0015.png,
+	  floor_tiles/iso_miscellaneous_floor_0016.png,
+	  floor_tiles/iso_miscellaneous_floor_0017.png,
+	  floor_tiles/iso_miscellaneous_floor_0018.png,
+	  floor_tiles/iso_miscellaneous_floor_0019.png,
+	  floor_tiles/iso_miscellaneous_floor_0020.png,
+	  floor_tiles/iso_miscellaneous_floor_0021.png,
+	  floor_tiles/iso_miscellaneous_floor_0022.png,
+	  floor_tiles/iso_miscellaneous_floor_0023.png,
+	  floor_tiles/iso_sand_floor_0001.png,
+	  floor_tiles/iso_sand_floor_0002.png,
+	  floor_tiles/iso_sand_floor_0003.png,
+	  floor_tiles/iso_sand_floor_0004.png,
+	  floor_tiles/iso_sand_floor_0005.png,
+	  floor_tiles/iso_sand_floor_0006.png,
+	  floor_tiles/iso_sidewalk_0001.png,
+	  floor_tiles/iso_sidewalk_0002.png,
+	  floor_tiles/iso_sidewalk_0003.png,
+	  floor_tiles/iso_sidewalk_0004.png,
+	  floor_tiles/iso_sidewalk_0005.png,
+	  floor_tiles/iso_sidewalk_0006.png,
+	  floor_tiles/iso_sidewalk_0007.png,
+	  floor_tiles/iso_sidewalk_0008.png,
+	  floor_tiles/iso_sidewalk_0009.png,
+	  floor_tiles/iso_sidewalk_0010.png,
+	  floor_tiles/iso_sidewalk_0011.png,
+	  floor_tiles/iso_sidewalk_0012.png,
+	  floor_tiles/iso_sidewalk_0013.png,
+	  floor_tiles/iso_sidewalk_0014.png,
+	  floor_tiles/iso_sidewalk_0015.png,
+	  floor_tiles/iso_sidewalk_0016.png,
+	  floor_tiles/iso_sidewalk_0017.png,
+	  floor_tiles/iso_sidewalk_0018.png,
+	  floor_tiles/iso_sidewalk_0019.png,
+	  floor_tiles/iso_sidewalk_0020.png, font/ArialGold.png,
+	  font/ArialGold_Depleted.png, font/NeonFont.png,
+	  font/SmallStone.png, font/cpuFont.png, font/font01.png,
+	  font/font05.png, font/font05_blue.png, font/font05_green.png,
+	  font/font05_magenta.png, font/font05_red.png,
+	  font/font05_white.png, font/font05_yellow.png, font/parafont.png,
+	  font/redfont.png, font/small_white.png,
+	  items/inventory_image_1.png, items/inventory_image_13.png,
+	  items/inventory_image_14.png, items/inventory_image_18.png,
+	  items/inventory_image_2.png, items/inventory_image_21.png,
+	  items/inventory_image_22.png, items/inventory_image_25.png,
+	  items/inventory_image_26.png, items/inventory_image_28.png,
+	  items/inventory_image_3.png, items/inventory_image_39.png,
+	  items/inventory_image_40.png, items/inventory_image_46.png,
+	  items/inventory_image_7.png, items/inventory_image_8.png,
+	  items/ammo_exterminator_sphere/ingame.png,
+	  items/ammo_exterminator_sphere/inv_image.png,
+	  items/ammo_laser_crystal/ingame.png,
+	  items/ammo_plasma_bullet/inv_image.png,
+	  items/antigrav_unit/inv_image.png,
+	  items/antimatter_matter_converter/ingame.png,
+	  items/antimatter_matter_converter/inv_image.png,
+	  items/armour_robe/ingame.png, items/armour_robe/inv_image.png,
+	  items/basic_armour/ingame.png, items/basic_armour/inv_image.png,
+	  items/basic_armour2/ingame.png,
+	  items/basic_armour2/inv_image.png,
+	  items/basic_armour3/ingame.png,
+	  items/basic_armour3/inv_image.png,
+	  items/bi_pedal_drive/inv_image.png,
+	  items/blue_energy_drink/inv_image.png,
+	  items/boots_simple/ingame.png, items/boots_simple/inv_image.png,
+	  items/boots_simple/portrait_0001.png,
+	  items/boots_simple/portrait_0002.png,
+	  items/boots_simple/portrait_0003.png,
+	  items/boots_simple/portrait_0004.png,
+	  items/boots_simple/portrait_0005.png,
+	  items/boots_simple/portrait_0006.png,
+	  items/boots_simple/portrait_0007.png,
+	  items/boots_simple/portrait_0008.png,
+	  items/boots_simple/portrait_0009.png,
+	  items/boots_simple/portrait_0010.png,
+	  items/boots_simple/portrait_0011.png,
+	  items/boots_simple/portrait_0012.png,
+	  items/boots_simple/portrait_0013.png,
+	  items/boots_simple/portrait_0014.png,
+	  items/boots_simple/portrait_0015.png,
+	  items/boots_simple/portrait_0016.png,
+	  items/boots_simple/portrait_0017.png,
+	  items/boots_simple/portrait_0018.png,
+	  items/boots_simple/portrait_0019.png,
+	  items/boots_simple/portrait_0020.png,
+	  items/boots_simple/portrait_0021.png,
+	  items/boots_simple/portrait_0022.png,
+	  items/boots_simple/portrait_0023.png,
+	  items/boots_simple/portrait_0024.png,
+	  items/boots_simple/portrait_0025.png,
+	  items/boots_simple/portrait_0026.png,
+	  items/boots_simple/portrait_0027.png,
+	  items/boots_simple/portrait_0028.png,
+	  items/boots_simple/portrait_0029.png,
+	  items/boots_simple/portrait_0030.png,
+	  items/boots_simple/portrait_0031.png,
+	  items/boots_simple/portrait_0032.png,
+	  items/boots_simple/portrait_0033.png,
+	  items/brain_enlargement_antidode/inv_image.png,
+	  items/buckler/ingame.png, items/buckler/inv_image.png,
+	  items/club/ingame.png, items/club/inv_image.png,
+	  items/cyberbucks/ingame.png, items/cyberbucks/inv_image.png,
+	  items/desk_lamp/ingame.png, items/desk_lamp/inv_image.png,
+	  items/dixons_toolbox/inv_image.png,
+	  items/drinking_mug/inv_image.png,
+	  items/eating_fork/inv_image.png, items/eating_plate/ingame.png,
+	  items/eating_plate/inv_image.png,
+	  items/emp_grenade/inv_image.png,
+	  items/entropy_inverter/ingame.png,
+	  items/entropy_inverter/inv_image.png,
+	  items/exterminator_simple/ingame.png,
+	  items/exterminator_simple/inv_image.png,
+	  items/force_capsule/ingame.png,
+	  items/force_capsule/inv_image_big.png,
+	  items/force_capsule/inv_image_medium.png,
+	  items/force_capsule/inv_image_small.png,
+	  items/green_armour/ingame.png, items/green_armour/inv_image.png,
+	  items/green_armour/portrait_0001.png,
+	  items/green_armour/portrait_0002.png,
+	  items/green_armour/portrait_0003.png,
+	  items/green_armour/portrait_0004.png,
+	  items/green_armour/portrait_0005.png,
+	  items/green_armour/portrait_0006.png,
+	  items/green_armour/portrait_0007.png,
+	  items/green_armour/portrait_0008.png,
+	  items/green_armour/portrait_0009.png,
+	  items/green_armour/portrait_0010.png,
+	  items/green_armour/portrait_0011.png,
+	  items/green_armour/portrait_0012.png,
+	  items/green_armour/portrait_0013.png,
+	  items/green_armour/portrait_0014.png,
+	  items/green_armour/portrait_0015.png,
+	  items/green_armour/portrait_0016.png,
+	  items/hacker_wristband/ingame.png,
+	  items/hacker_wristband/inv_image.png,
+	  items/health_capsule/ingame.png,
+	  items/health_capsule/inv_image_medium.png,
+	  items/health_capsule/inv_image_small.png,
+	  items/helmet_skull_cap/inv_image.png,
+	  items/helmet_skull_cap/portrait_0001.png,
+	  items/helmet_skull_cap/portrait_0002.png,
+	  items/helmet_skull_cap/portrait_0003.png,
+	  items/helmet_skull_cap/portrait_0004.png,
+	  items/helmet_skull_cap/portrait_0005.png,
+	  items/helmet_skull_cap/portrait_0006.png,
+	  items/helmet_skull_cap/portrait_0007.png,
+	  items/helmet_skull_cap/portrait_0008.png,
+	  items/helmet_skull_cap/portrait_0009.png,
+	  items/helmet_skull_cap/portrait_0010.png,
+	  items/helmet_skull_cap/portrait_0011.png,
+	  items/helmet_skull_cap/portrait_0012.png,
+	  items/helmet_skull_cap/portrait_0013.png,
+	  items/helmet_skull_cap/portrait_0014.png,
+	  items/helmet_skull_cap/portrait_0015.png,
+	  items/helmet_skull_cap/portrait_0016.png,
+	  items/helmet_skull_cap/portrait_0017.png,
+	  items/helmet_skull_cap/portrait_0018.png,
+	  items/helmet_skull_cap/portrait_0019.png,
+	  items/helmet_skull_cap/portrait_0020.png,
+	  items/helmet_skull_cap/portrait_0021.png,
+	  items/helmet_skull_cap/portrait_0022.png,
+	  items/helmet_skull_cap/portrait_0023.png,
+	  items/helmet_skull_cap/portrait_0024.png,
+	  items/helmet_skull_cap/portrait_0025.png,
+	  items/helmet_skull_cap/portrait_0026.png,
+	  items/helmet_skull_cap/portrait_0027.png,
+	  items/helmet_skull_cap/portrait_0028.png,
+	  items/helmet_skull_cap/portrait_0029.png,
+	  items/helmet_skull_cap/portrait_0030.png,
+	  items/helmet_skull_cap/portrait_0031.png,
+	  items/helmet_skull_cap/portrait_0032.png,
+	  items/helmet_yellow/ingame.png,
+	  items/helmet_yellow/inv_image.png,
+	  items/helmet_yellow/portrait_0001.png,
+	  items/helmet_yellow/portrait_0002.png,
+	  items/helmet_yellow/portrait_0003.png,
+	  items/helmet_yellow/portrait_0004.png,
+	  items/helmet_yellow/portrait_0005.png,
+	  items/helmet_yellow/portrait_0006.png,
+	  items/helmet_yellow/portrait_0007.png,
+	  items/helmet_yellow/portrait_0008.png,
+	  items/helmet_yellow/portrait_0009.png,
+	  items/helmet_yellow/portrait_0010.png,
+	  items/helmet_yellow/portrait_0011.png,
+	  items/helmet_yellow/portrait_0012.png,
+	  items/helmet_yellow/portrait_0013.png,
+	  items/helmet_yellow/portrait_0014.png,
+	  items/helmet_yellow/portrait_0015.png,
+	  items/helmet_yellow/portrait_0016.png,
+	  items/helmet_yellow/portrait_0017.png,
+	  items/helmet_yellow/portrait_0018.png,
+	  items/helmet_yellow/portrait_0019.png,
+	  items/helmet_yellow/portrait_0020.png,
+	  items/helmet_yellow/portrait_0021.png,
+	  items/helmet_yellow/portrait_0022.png,
+	  items/helmet_yellow/portrait_0023.png,
+	  items/helmet_yellow/portrait_0024.png,
+	  items/helmet_yellow/portrait_0025.png,
+	  items/helmet_yellow/portrait_0026.png,
+	  items/helmet_yellow/portrait_0027.png,
+	  items/helmet_yellow/portrait_0028.png,
+	  items/helmet_yellow/portrait_0029.png,
+	  items/helmet_yellow/portrait_0030.png,
+	  items/helmet_yellow/portrait_0031.png,
+	  items/helmet_yellow/portrait_0032.png,
+	  items/helmet_yellow2/ingame.png,
+	  items/helmet_yellow2/inv_image.png,
+	  items/helmet_yellow3/ingame.png,
+	  items/helmet_yellow3/inv_image.png,
+	  items/helmet_yellow4/ingame.png,
+	  items/helmet_yellow4/inv_image.png,
+	  items/large_shield/ingame.png, items/large_shield/inv_image.png,
+	  items/laser_staff/ingame.png, items/laser_staff/inv_image.png,
+	  items/laser_sword_green/ingame.png,
+	  items/laser_sword_green/inv_image.png,
+	  items/laser_sword_red/ingame.png,
+	  items/laser_sword_red/inv_image.png,
+	  items/laser_sword_yellow/ingame.png,
+	  items/laser_sword_yellow/inv_image.png, items/mace/ingame.png,
+	  items/mace/inv_image.png, items/map_maker/ingame.png,
+	  items/map_maker/inv_image.png, items/monkey_wrench/ingame.png,
+	  items/monkey_wrench/inv_image.png,
+	  items/pill_dexterity/inv_image.png,
+	  items/pill_magic/inv_image.png,
+	  items/pill_strength/inv_image.png,
+	  items/plasma_double/ingame.png, items/plasma_grenade/ingame.png,
+	  items/plasma_grenade/inv_image.png,
+	  items/plasma_single/ingame.png,
+	  items/plasma_transistor/ingame.png,
+	  items/plasma_transistor/inv_image.png,
+	  items/plasma_triple/ingame.png,
+	  items/red_dilitium_crystal/inv_image.png,
+	  items/script/ingame.png, items/script/inv_image.png,
+	  items/small_shield/ingame.png, items/small_shield/inv_image.png,
+	  items/sniper_wristband/ingame.png,
+	  items/sniper_wristband/inv_image.png, items/spellbook/ingame.png,
+	  items/spellbook/inv_image.png, items/standard_shield/ingame.png,
+	  items/standard_shield/inv_image.png,
+	  items/superconducting_relay_unit/ingame.png,
+	  items/superconducting_relay_unit/inv_image.png,
+	  items/tachyon_converter/ingame.png,
+	  items/tachyon_converter/inv_image.png,
+	  items/track_drive/ingame.png, items/track_drive/inv_image.png,
+	  items/tri_pedal_drive/ingame.png,
+	  items/tri_pedal_drive/inv_image.png,
+	  items/vmx_grenade/inv_image.png,
+	  items/warrior_wristband/ingame.png,
+	  items/warrior_wristband/inv_image.png,
+	  items/wheel_drive/ingame.png, items/wheel_drive/inv_image.png,
+	  lanzz_theme/skill_buttons.png, lanzz_theme/to_elem.png,
+	  light_radius_chunks/iso_light_radius_darkness_0001.png,
+	  light_radius_chunks/iso_light_radius_darkness_0002.png,
+	  light_radius_chunks/iso_light_radius_darkness_0003.png,
+	  light_radius_chunks/iso_light_radius_darkness_0004.png,
+	  light_radius_chunks/iso_light_radius_darkness_0005.png,
+	  light_radius_chunks/iso_light_radius_darkness_0006.png,
+	  light_radius_chunks/iso_light_radius_darkness_0007.png,
+	  light_radius_chunks/iso_light_radius_darkness_0008.png,
+	  light_radius_chunks/iso_light_radius_darkness_0009.png,
+	  light_radius_chunks/iso_light_radius_darkness_0010.png,
+	  light_radius_chunks/iso_light_radius_darkness_0011.png,
+	  light_radius_chunks/iso_light_radius_darkness_0012.png,
+	  light_radius_chunks/iso_light_radius_darkness_0013.png,
+	  light_radius_chunks/iso_light_radius_darkness_0014.png,
+	  light_radius_chunks/iso_light_radius_darkness_0015.png,
+	  light_radius_chunks/iso_light_radius_darkness_0016.png,
+	  light_radius_chunks/iso_light_radius_darkness_0017.png,
+	  light_radius_chunks/iso_light_radius_darkness_0018.png,
+	  light_radius_chunks/iso_light_radius_darkness_0019.png,
+	  light_radius_chunks/iso_light_radius_darkness_0020.png,
+	  mouse_buttons/AttributePlusButton.png,
+	  mouse_buttons/Buy10Button_raw.png,
+	  mouse_buttons/BuyButton_raw.png, mouse_buttons/CHAButton.png,
+	  mouse_buttons/ConsoleCompletelyTransparentPlate.png,
+	  mouse_buttons/ConsoleIdentifyButton_green.png,
+	  mouse_buttons/ConsoleIdentifyButton_red.png,
+	  mouse_buttons/ConsoleIdentifyButton_yellow.png,
+	  mouse_buttons/ConsoleItemBrowserLeft.png,
+	  mouse_buttons/ExportThisLevelButton.png,
+	  mouse_buttons/GoLevelEastButton.png,
+	  mouse_buttons/GoLevelNorthButton.png,
+	  mouse_buttons/GoLevelSouthButton.png,
+	  mouse_buttons/GoLevelWestButton.png, mouse_buttons/INVButton.png,
+	  mouse_buttons/LEFTButton.png, mouse_buttons/LeftShopButton.png,
+	  mouse_buttons/LevelEditorBeautifyGrassButton.png,
+	  mouse_buttons/LevelEditorCancelItemDrop.png,
+	  mouse_buttons/LevelEditorDeleteObstacleButton.png,
+	  mouse_buttons/LevelEditorESCButton.png,
+	  mouse_buttons/LevelEditorKeymapButton.png,
+	  mouse_buttons/LevelEditorMODEButton.png,
+	  mouse_buttons/LevelEditorNewItemButton.png,
+	  mouse_buttons/LevelEditorNewMapLabelButton.png,
+	  mouse_buttons/LevelEditorNewObstacleDescriptionButton.png,
+	  mouse_buttons/LevelEditorNewObstacleLabelButton.png,
+	  mouse_buttons/LevelEditorNextObstacleButton.png,
+	  mouse_buttons/LevelEditorPlantWaypoint.png,
+	  mouse_buttons/LevelEditorPrevItemGroup.png,
+	  mouse_buttons/LevelEditorQuitButton.png,
+	  mouse_buttons/LevelEditorRecursiveFillButton.png,
+	  mouse_buttons/LevelEditorResizeLevelButton.png,
+	  mouse_buttons/LevelEditorSaveShipButton.png,
+	  mouse_buttons/LevelEditorToggleCollisionRectsButton.png,
+	  mouse_buttons/LevelEditorToggleCollisionRectsButtonOff.png,
+	  mouse_buttons/LevelEditorToggleConnectionBlueButton.png,
+	  mouse_buttons/LevelEditorToggleConnectionRedButton.png,
+	  mouse_buttons/LevelEditorToggleEnemiesButton.png,
+	  mouse_buttons/LevelEditorToggleEnemiesButtonOff.png,
+	  mouse_buttons/LevelEditorToggleObstaclesButton.png,
+	  mouse_buttons/LevelEditorToggleObstaclesButtonOff.png,
+	  mouse_buttons/LevelEditorToggleTooltipsButton.png,
+	  mouse_buttons/LevelEditorToggleTooltipsButtonOff.png,
+	  mouse_buttons/LevelEditorToggleTuxButton.png,
+	  mouse_buttons/LevelEditorToggleTuxButtonOff.png,
+	  mouse_buttons/LevelEditorToggleWaypointButton.png,
+	  mouse_buttons/LevelEditorUndergroundLightButton.png,
+	  mouse_buttons/LevelEditorZoomInButton.png,
+	  mouse_buttons/LevelEditorZoomOutButton.png,
+	  mouse_buttons/MapExitButton.png,
+	  mouse_buttons/MapGunOnButton_gray.png,
+	  mouse_buttons/MapGunOnButton_red.png,
+	  mouse_buttons/MapGunOnButton_yellow.png,
+	  mouse_buttons/MapGunOnOffButton.png,
+	  mouse_buttons/MapGunOnOffButton_gray.png,
+	  mouse_buttons/MapGunOnOffButton_red.png,
+	  mouse_buttons/MapGunOnOffButton_yellow.png,
+	  mouse_buttons/MapGunTypeButton1_red.png,
+	  mouse_buttons/MapGunTypeButton1_yellow.png,
+	  mouse_buttons/MapGunTypeButton2_red.png,
+	  mouse_buttons/MapGunTypeButton2_yellow.png,
+	  mouse_buttons/MapGunTypeButton3_red.png,
+	  mouse_buttons/MapGunTypeButton3_yellow.png,
+	  mouse_buttons/MapGunTypeButton4_red.png,
+	  mouse_buttons/MapGunTypeButton4_yellow.png,
+	  mouse_buttons/MapPasswordButtonMiddle.png,
+	  mouse_buttons/MapReadEmail_green.png,
+	  mouse_buttons/MapReadEmail_red.png,
+	  mouse_buttons/MapRequestEnergyRation_green.png,
+	  mouse_buttons/MapRequestEnergyRation_red.png,
+	  mouse_buttons/MapSecurityButtonLeft.png,
+	  mouse_buttons/MapSecurityButtonMiddle.png,
+	  mouse_buttons/MapSecurityButtonRight.png,
+	  mouse_buttons/MapUnlockDoorButton.png,
+	  mouse_buttons/MapUnlockDoorButton_gray.png,
+	  mouse_buttons/MapUnlockDoorButton_red.png,
+	  mouse_buttons/MapUnlockDoorButton_yellow.png,
+	  mouse_buttons/PLUSButton.png, mouse_buttons/RIGHTButton.png,
+	  mouse_buttons/SKIButton.png,
+	  mouse_buttons/ScrollDialogMenuDown.png,
+	  mouse_buttons/ScrollDialogMenuOff.png,
+	  mouse_buttons/ScrollDialogMenuUp.png,
+	  mouse_buttons/arrow_down_for_scroll_text.png,
+	  mouse_buttons/arrow_up_for_scroll_text.png,
+	  mouse_buttons/buy_button.png, mouse_buttons/cha_button_red.png,
+	  mouse_buttons/cha_button_yellow.png,
+	  mouse_buttons/identify_button.png,
+	  mouse_buttons/inv_button_yellow.png,
+	  mouse_buttons/log_button_red.png,
+	  mouse_buttons/log_button_yellow.png,
+	  mouse_buttons/menuselect_left.png,
+	  mouse_buttons/menuselect_right.png,
+	  mouse_buttons/number_selector_ok_button.png,
+	  mouse_buttons/put_button.png,
+	  mouse_buttons/quest_browser_done_quests.png,
+	  mouse_buttons/quest_browser_done_quests_off.png,
+	  mouse_buttons/quest_browser_item_long.png,
+	  mouse_buttons/quest_browser_item_short.png,
+	  mouse_buttons/quest_browser_notes.png,
+	  mouse_buttons/quest_browser_notes_off.png,
+	  mouse_buttons/quest_browser_open_quests.png,
+	  mouse_buttons/quest_browser_open_quests_off.png,
+	  mouse_buttons/repair_button.png, mouse_buttons/sell_button.png,
+	  mouse_buttons/ski_button_yellow.png,
+	  mouse_buttons/takeover_help_button.png,
+	  obstacles/iso_autogun_0001.png, obstacles/iso_autogun_0002.png,
+	  obstacles/iso_autogun_0003.png, obstacles/iso_autogun_0004.png,
+	  obstacles/iso_bathroom_furniture_0000.png,
+	  obstacles/iso_bathroom_furniture_0001.png,
+	  obstacles/iso_bathroom_furniture_0002.png,
+	  obstacles/iso_bathroom_furniture_0003.png,
+	  obstacles/iso_bathroom_furniture_0004.png,
+	  obstacles/iso_bathroom_furniture_0005.png,
+	  obstacles/iso_bathroom_furniture_0006.png,
+	  obstacles/iso_bathroom_furniture_0007.png,
+	  obstacles/iso_bathroom_furniture_0008.png,
+	  obstacles/iso_bathroom_furniture_0009.png,
+	  obstacles/iso_bathroom_furniture_shadow_0000.png,
+	  obstacles/iso_bathroom_furniture_shadow_0001.png,
+	  obstacles/iso_bathroom_furniture_shadow_0002.png,
+	  obstacles/iso_bathroom_furniture_shadow_0003.png,
+	  obstacles/iso_bathroom_furniture_shadow_0004.png,
+	  obstacles/iso_bathroom_furniture_shadow_0005.png,
+	  obstacles/iso_bathroom_furniture_shadow_0006.png,
+	  obstacles/iso_bathroom_furniture_shadow_0007.png,
+	  obstacles/iso_bathroom_furniture_shadow_0008.png,
+	  obstacles/iso_bathroom_furniture_shadow_0009.png,
+	  obstacles/iso_beds_0000.png, obstacles/iso_beds_0001.png,
+	  obstacles/iso_beds_0002.png, obstacles/iso_beds_0003.png,
+	  obstacles/iso_beds_0004.png, obstacles/iso_beds_0005.png,
+	  obstacles/iso_beds_0006.png, obstacles/iso_beds_0007.png,
+	  obstacles/iso_beds_shadow_0000.png,
+	  obstacles/iso_beds_shadow_0001.png,
+	  obstacles/iso_beds_shadow_0002.png,
+	  obstacles/iso_beds_shadow_0003.png,
+	  obstacles/iso_beds_shadow_0004.png,
+	  obstacles/iso_beds_shadow_0005.png,
+	  obstacles/iso_beds_shadow_0006.png,
+	  obstacles/iso_beds_shadow_0007.png, obstacles/iso_blood_0001.png,
+	  obstacles/iso_blood_0002.png, obstacles/iso_blood_0003.png,
+	  obstacles/iso_blood_0004.png, obstacles/iso_blood_0005.png,
+	  obstacles/iso_blood_0006.png, obstacles/iso_blood_0007.png,
+	  obstacles/iso_blood_0008.png, obstacles/iso_body_0001.png,
+	  obstacles/iso_body_0002.png, obstacles/iso_body_0003.png,
+	  obstacles/iso_body_0004.png, obstacles/iso_brick_wall_0001.png,
+	  obstacles/iso_brick_wall_0002.png,
+	  obstacles/iso_brick_wall_0003.png,
+	  obstacles/iso_brick_wall_0004.png,
+	  obstacles/iso_brick_wall_0005.png,
+	  obstacles/iso_brick_wall_0006.png,
+	  obstacles/iso_brick_wall_0007.png,
+	  obstacles/iso_brick_wall_0008.png,
+	  obstacles/iso_brick_wall_0009.png,
+	  obstacles/iso_brick_wall_0010.png,
+	  obstacles/iso_brick_wall_0011.png,
+	  obstacles/iso_brick_wall_0012.png,
+	  obstacles/iso_brick_wall_0013.png,
+	  obstacles/iso_brick_wall_0014.png,
+	  obstacles/iso_brick_wall_0015.png,
+	  obstacles/iso_brick_wall_0016.png,
+	  obstacles/iso_brick_wall_0017.png,
+	  obstacles/iso_cave_wall_0001.png,
+	  obstacles/iso_cave_wall_0002.png,
+	  obstacles/iso_cave_wall_0003.png,
+	  obstacles/iso_cave_wall_0004.png,
+	  obstacles/iso_cave_wall_0005.png,
+	  obstacles/iso_cave_wall_0006.png,
+	  obstacles/iso_cave_wall_0007.png,
+	  obstacles/iso_cave_wall_0008.png,
+	  obstacles/iso_cave_wall_0009.png,
+	  obstacles/iso_cave_wall_0010.png, obstacles/iso_chairs_0001.png,
+	  obstacles/iso_chairs_0002.png, obstacles/iso_chairs_0003.png,
+	  obstacles/iso_chairs_0004.png, obstacles/iso_chairs_0005.png,
+	  obstacles/iso_chairs_0006.png, obstacles/iso_chairs_0007.png,
+	  obstacles/iso_chairs_0008.png, obstacles/iso_chairs_0009.png,
+	  obstacles/iso_chairs_0010.png, obstacles/iso_chairs_0011.png,
+	  obstacles/iso_chairs_0012.png, obstacles/iso_chairs_0013.png,
+	  obstacles/iso_chairs_0014.png, obstacles/iso_chairs_0015.png,
+	  obstacles/iso_chairs_0016.png, obstacles/iso_chairs_0017.png,
+	  obstacles/iso_chairs_0018.png, obstacles/iso_chairs_0019.png,
+	  obstacles/iso_chairs_0020.png, obstacles/iso_chairs_0021.png,
+	  obstacles/iso_chairs_0022.png, obstacles/iso_chairs_0023.png,
+	  obstacles/iso_chairs_0024.png,
+	  obstacles/iso_chairs_shadow_0001.png,
+	  obstacles/iso_chairs_shadow_0002.png,
+	  obstacles/iso_chairs_shadow_0003.png,
+	  obstacles/iso_chairs_shadow_0004.png,
+	  obstacles/iso_chairs_shadow_0005.png,
+	  obstacles/iso_chairs_shadow_0006.png,
+	  obstacles/iso_chairs_shadow_0007.png,
+	  obstacles/iso_chairs_shadow_0008.png,
+	  obstacles/iso_chairs_shadow_0009.png,
+	  obstacles/iso_chairs_shadow_0010.png,
+	  obstacles/iso_chairs_shadow_0011.png,
+	  obstacles/iso_chairs_shadow_0012.png,
+	  obstacles/iso_chairs_shadow_0013.png,
+	  obstacles/iso_chairs_shadow_0014.png,
+	  obstacles/iso_chairs_shadow_0015.png,
+	  obstacles/iso_chairs_shadow_0016.png,
+	  obstacles/iso_chairs_shadow_0017.png,
+	  obstacles/iso_chairs_shadow_0018.png,
+	  obstacles/iso_chairs_shadow_0019.png,
+	  obstacles/iso_chairs_shadow_0020.png,
+	  obstacles/iso_chairs_shadow_0021.png,
+	  obstacles/iso_chairs_shadow_0022.png,
+	  obstacles/iso_chairs_shadow_0023.png,
+	  obstacles/iso_chairs_shadow_0024.png,
+	  obstacles/iso_conference_furniture_0000.png,
+	  obstacles/iso_conference_furniture_0001.png,
+	  obstacles/iso_conference_furniture_0002.png,
+	  obstacles/iso_conference_furniture_0003.png,
+	  obstacles/iso_conference_furniture_0004.png,
+	  obstacles/iso_conference_furniture_0005.png,
+	  obstacles/iso_conference_furniture_0006.png,
+	  obstacles/iso_conference_furniture_0007.png,
+	  obstacles/iso_conference_furniture_0008.png,
+	  obstacles/iso_conference_furniture_0009.png,
+	  obstacles/iso_conference_furniture_0010.png,
+	  obstacles/iso_conference_furniture_0011.png,
+	  obstacles/iso_conference_furniture_shadow_0000.png,
+	  obstacles/iso_conference_furniture_shadow_0001.png,
+	  obstacles/iso_conference_furniture_shadow_0002.png,
+	  obstacles/iso_conference_furniture_shadow_0003.png,
+	  obstacles/iso_conference_furniture_shadow_0004.png,
+	  obstacles/iso_conference_furniture_shadow_0005.png,
+	  obstacles/iso_conference_furniture_shadow_0006.png,
+	  obstacles/iso_conference_furniture_shadow_0007.png,
+	  obstacles/iso_conference_furniture_shadow_0008.png,
+	  obstacles/iso_conference_furniture_shadow_0009.png,
+	  obstacles/iso_conference_furniture_shadow_0010.png,
+	  obstacles/iso_conference_furniture_shadow_0011.png,
+	  obstacles/iso_container_0001.png,
+	  obstacles/iso_container_0002.png,
+	  obstacles/iso_container_0003.png,
+	  obstacles/iso_container_0004.png,
+	  obstacles/iso_container_shadow_0001.png,
+	  obstacles/iso_container_shadow_0002.png,
+	  obstacles/iso_container_shadow_0003.png,
+	  obstacles/iso_container_shadow_0004.png,
+	  obstacles/iso_counter_0001.png, obstacles/iso_counter_0002.png,
+	  obstacles/iso_counter_0003.png, obstacles/iso_counter_0004.png,
+	  obstacles/iso_counter_0005.png, obstacles/iso_counter_0006.png,
+	  obstacles/iso_counter_0007.png, obstacles/iso_counter_0008.png,
+	  obstacles/iso_counter_0009.png, obstacles/iso_counter_0010.png,
+	  obstacles/iso_counter_0011.png, obstacles/iso_counter_0012.png,
+	  obstacles/iso_doors_0001.png, obstacles/iso_doors_0002.png,
+	  obstacles/iso_doors_0003.png, obstacles/iso_doors_0004.png,
+	  obstacles/iso_doors_0005.png, obstacles/iso_doors_0006.png,
+	  obstacles/iso_doors_0007.png, obstacles/iso_doors_0008.png,
+	  obstacles/iso_doors_0009.png, obstacles/iso_doors_0010.png,
+	  obstacles/iso_doors_0011.png, obstacles/iso_doors_0012.png,
+	  obstacles/iso_doors_0013.png, obstacles/iso_doors_0014.png,
+	  obstacles/iso_doors_0015.png, obstacles/iso_doors_0016.png,
+	  obstacles/iso_doors_0017.png, obstacles/iso_doors_0018.png,
+	  obstacles/iso_doors_0019.png, obstacles/iso_doors_0020.png,
+	  obstacles/iso_doors_0021.png, obstacles/iso_doors_0022.png,
+	  obstacles/iso_doors_0023.png, obstacles/iso_doors_0024.png,
+	  obstacles/iso_exits_0001.png, obstacles/iso_exits_0002.png,
+	  obstacles/iso_exits_0003.png, obstacles/iso_exits_0004.png,
+	  obstacles/iso_fence_0001.png, obstacles/iso_fence_0002.png,
+	  obstacles/iso_library_furniture_0001.png,
+	  obstacles/iso_library_furniture_0002.png,
+	  obstacles/iso_machinery_0001.png,
+	  obstacles/iso_machinery_0002.png,
+	  obstacles/iso_machinery_0003.png,
+	  obstacles/iso_machinery_0004.png,
+	  obstacles/iso_machinery_0005.png,
+	  obstacles/iso_machinery_0006.png,
+	  obstacles/iso_machinery_0007.png,
+	  obstacles/iso_machinery_0008.png,
+	  obstacles/iso_machinery_0010.png,
+	  obstacles/iso_machinery_0011.png,
+	  obstacles/iso_machinery_0012.png,
+	  obstacles/iso_machinery_shadow_0001.png,
+	  obstacles/iso_machinery_shadow_0002.png,
+	  obstacles/iso_machinery_shadow_0003.png,
+	  obstacles/iso_machinery_shadow_0004.png,
+	  obstacles/iso_machinery_shadow_0005.png,
+	  obstacles/iso_machinery_shadow_0006.png,
+	  obstacles/iso_machinery_shadow_0007.png,
+	  obstacles/iso_machinery_shadow_0008.png,
+	  obstacles/iso_obstacle_0000.png, obstacles/iso_obstacle_0005.png,
+	  obstacles/iso_obstacle_0016.png, obstacles/iso_obstacle_0017.png,
+	  obstacles/iso_obstacle_0018.png, obstacles/iso_obstacle_0019.png,
+	  obstacles/iso_obstacle_0020.png, obstacles/iso_obstacle_0042.png,
+	  obstacles/iso_obstacle_0043.png, obstacles/iso_obstacle_0044.png,
+	  obstacles/iso_obstacle_0045.png, obstacles/iso_obstacle_0046.png,
+	  obstacles/iso_obstacle_0047.png, obstacles/iso_obstacle_0048.png,
+	  obstacles/iso_obstacle_0050.png, obstacles/iso_obstacle_0051.png,
+	  obstacles/iso_obstacle_0052.png, obstacles/iso_obstacle_0053.png,
+	  obstacles/iso_obstacle_0054.png, obstacles/iso_obstacle_0055.png,
+	  obstacles/iso_obstacle_0056.png, obstacles/iso_obstacle_0057.png,
+	  obstacles/iso_obstacle_0059.png, obstacles/iso_obstacle_0060.png,
+	  obstacles/iso_obstacle_0061.png, obstacles/iso_obstacle_0062.png,
+	  obstacles/iso_obstacle_0063.png, obstacles/iso_obstacle_0064.png,
+	  obstacles/iso_obstacle_0065.png, obstacles/iso_obstacle_0066.png,
+	  obstacles/iso_obstacle_0067.png, obstacles/iso_obstacle_0068.png,
+	  obstacles/iso_obstacle_0069.png, obstacles/iso_obstacle_0070.png,
+	  obstacles/iso_obstacle_0071.png, obstacles/iso_obstacle_0072.png,
+	  obstacles/iso_obstacle_0073.png, obstacles/iso_obstacle_0074.png,
+	  obstacles/iso_obstacle_0075.png, obstacles/iso_obstacle_0076.png,
+	  obstacles/iso_obstacle_0077.png, obstacles/iso_obstacle_0078.png,
+	  obstacles/iso_obstacle_0079.png, obstacles/iso_obstacle_0080.png,
+	  obstacles/iso_obstacle_0081.png, obstacles/iso_obstacle_0082.png,
+	  obstacles/iso_obstacle_0083.png, obstacles/iso_obstacle_0084.png,
+	  obstacles/iso_obstacle_0085.png, obstacles/iso_obstacle_0086.png,
+	  obstacles/iso_obstacle_0087.png, obstacles/iso_obstacle_0088.png,
+	  obstacles/iso_obstacle_0089.png, obstacles/iso_obstacle_0090.png,
+	  obstacles/iso_obstacle_0091.png, obstacles/iso_obstacle_0092.png,
+	  obstacles/iso_obstacle_0093.png, obstacles/iso_obstacle_0094.png,
+	  obstacles/iso_obstacle_0095.png, obstacles/iso_obstacle_0096.png,
+	  obstacles/iso_obstacle_0097.png, obstacles/iso_obstacle_0098.png,
+	  obstacles/iso_obstacle_0099.png, obstacles/iso_obstacle_0100.png,
+	  obstacles/iso_obstacle_0101.png, obstacles/iso_obstacle_0102.png,
+	  obstacles/iso_obstacle_0103.png, obstacles/iso_obstacle_0104.png,
+	  obstacles/iso_obstacle_0105.png, obstacles/iso_obstacle_0106.png,
+	  obstacles/iso_obstacle_0107.png, obstacles/iso_obstacle_0108.png,
+	  obstacles/iso_obstacle_0109.png, obstacles/iso_obstacle_0110.png,
+	  obstacles/iso_obstacle_0111.png, obstacles/iso_obstacle_0112.png,
+	  obstacles/iso_obstacle_0113.png, obstacles/iso_obstacle_0114.png,
+	  obstacles/iso_obstacle_0115.png,
+	  obstacles/iso_obstacle_shadow_0042.png,
+	  obstacles/iso_obstacle_shadow_0043.png,
+	  obstacles/iso_obstacle_shadow_0044.png,
+	  obstacles/iso_obstacle_shadow_0045.png,
+	  obstacles/iso_obstacle_shadow_0046.png,
+	  obstacles/iso_obstacle_shadow_0047.png,
+	  obstacles/iso_obstacle_shadow_0048.png,
+	  obstacles/iso_obstacle_shadow_0049.png,
+	  obstacles/iso_obstacle_shadow_0050.png,
+	  obstacles/iso_obstacle_shadow_0051.png,
+	  obstacles/iso_obstacle_shadow_0052.png,
+	  obstacles/iso_obstacle_shadow_0053.png,
+	  obstacles/iso_obstacle_shadow_0054.png,
+	  obstacles/iso_obstacle_shadow_0055.png,
+	  obstacles/iso_obstacle_shadow_0056.png,
+	  obstacles/iso_obstacle_shadow_0057.png,
+	  obstacles/iso_obstacle_shadow_0091.png,
+	  obstacles/iso_obstacle_shadow_0092.png,
+	  obstacles/iso_obstacle_shadow_0093.png,
+	  obstacles/iso_obstacle_shadow_0094.png,
+	  obstacles/iso_obstacle_shadow_0095.png,
+	  obstacles/iso_obstacle_shadow_0096.png,
+	  obstacles/iso_obstacle_shadow_0097.png,
+	  obstacles/iso_obstacle_shadow_0098.png,
+	  obstacles/iso_oil_stains_0001.png,
+	  obstacles/iso_oil_stains_0002.png,
+	  obstacles/iso_oil_stains_0003.png,
+	  obstacles/iso_oil_stains_0004.png,
+	  obstacles/iso_oil_stains_0005.png,
+	  obstacles/iso_oil_stains_0006.png,
+	  obstacles/iso_oil_stains_0007.png,
+	  obstacles/iso_oil_stains_0008.png,
+	  obstacles/iso_outer_walls_0001.png,
+	  obstacles/iso_outer_walls_0002.png,
+	  obstacles/iso_outer_walls_0003.png,
+	  obstacles/iso_outer_walls_0004.png,
+	  obstacles/iso_outer_walls_0005.png,
+	  obstacles/iso_outer_walls_0006.png,
+	  obstacles/iso_outer_walls_0007.png,
+	  obstacles/iso_outer_walls_0008.png,
+	  obstacles/iso_outer_walls_0009.png,
+	  obstacles/iso_outer_walls_0010.png,
+	  obstacles/iso_outer_walls_0011.png,
+	  obstacles/iso_outer_walls_0012.png,
+	  obstacles/iso_outer_walls_0013.png,
+	  obstacles/iso_outer_walls_0014.png,
+	  obstacles/iso_outer_walls_0015.png,
+	  obstacles/iso_outer_walls_0016.png,
+	  obstacles/iso_outer_walls_0017.png,
+	  obstacles/iso_outer_walls_0018.png,
+	  obstacles/iso_outer_walls_0019.png,
+	  obstacles/iso_outer_walls_0020.png,
+	  obstacles/iso_restaurant_furniture_0001.png,
+	  obstacles/iso_restaurant_furniture_0002.png,
+	  obstacles/iso_restaurant_furniture_0003.png,
+	  obstacles/iso_restaurant_furniture_0004.png,
+	  obstacles/iso_restaurant_furniture_0005.png,
+	  obstacles/iso_restaurant_furniture_0006.png,
+	  obstacles/iso_restaurant_furniture_0007.png,
+	  obstacles/iso_restaurant_furniture_0008.png,
+	  obstacles/iso_restaurant_furniture_0009.png,
+	  obstacles/iso_restaurant_furniture_0010.png,
+	  obstacles/iso_rocks_n_plants_0000.png,
+	  obstacles/iso_rocks_n_plants_0001.png,
+	  obstacles/iso_rocks_n_plants_0002.png,
+	  obstacles/iso_rocks_n_plants_0003.png,
+	  obstacles/iso_rocks_n_plants_0004.png,
+	  obstacles/iso_rocks_n_plants_0005.png,
+	  obstacles/iso_rocks_n_plants_0006.png,
+	  obstacles/iso_rocks_n_plants_0007.png,
+	  obstacles/iso_shop_furniture_0001.png,
+	  obstacles/iso_shop_furniture_0002.png,
+	  obstacles/iso_shop_furniture_0003.png,
+	  obstacles/iso_shop_furniture_0004.png,
+	  obstacles/iso_shop_furniture_0005.png,
+	  obstacles/iso_shop_furniture_0006.png,
+	  obstacles/iso_shop_furniture_shadow_0001.png,
+	  obstacles/iso_shop_furniture_shadow_0002.png,
+	  obstacles/iso_shop_furniture_shadow_0003.png,
+	  obstacles/iso_shop_furniture_shadow_0004.png,
+	  obstacles/iso_shop_furniture_shadow_0005.png,
+	  obstacles/iso_shop_furniture_shadow_0006.png,
+	  obstacles/iso_signs_0000.png, obstacles/iso_signs_0001.png,
+	  obstacles/iso_signs_0002.png, obstacles/iso_tables_0001.png,
+	  obstacles/iso_tables_0002.png, obstacles/iso_tables_0003.png,
+	  obstacles/iso_tables_0004.png, obstacles/iso_tables_0005.png,
+	  obstacles/iso_tables_0006.png, obstacles/iso_tables_0007.png,
+	  obstacles/iso_tables_0008.png, obstacles/iso_tables_0009.png,
+	  obstacles/iso_tables_shadow_0001.png,
+	  obstacles/iso_tables_shadow_0002.png,
+	  obstacles/iso_tables_shadow_0003.png,
+	  obstacles/iso_tables_shadow_0004.png,
+	  obstacles/iso_tables_shadow_0005.png,
+	  obstacles/iso_tables_shadow_0006.png,
+	  obstacles/iso_tables_shadow_0007.png,
+	  obstacles/iso_tables_shadow_0008.png,
+	  obstacles/iso_tables_shadow_0009.png,
+	  obstacles/iso_thick_wall_0001.png,
+	  obstacles/iso_thick_wall_0002.png,
+	  obstacles/iso_thick_wall_0003.png,
+	  obstacles/iso_thick_wall_0004.png,
+	  obstacles/iso_thick_wall_0005.png,
+	  obstacles/iso_thick_wall_0006.png,
+	  obstacles/iso_thick_wall_0007.png,
+	  obstacles/iso_thick_wall_0008.png,
+	  obstacles/iso_thick_wall_0009.png,
+	  obstacles/iso_thick_wall_0010.png,
+	  obstacles/iso_thick_wall_shadow_0001.png,
+	  obstacles/iso_thick_wall_shadow_0002.png,
+	  obstacles/iso_thick_wall_shadow_0003.png,
+	  obstacles/iso_thick_wall_shadow_0004.png,
+	  obstacles/iso_thick_wall_shadow_0005.png,
+	  obstacles/iso_thick_wall_shadow_0006.png,
+	  obstacles/iso_thick_wall_shadow_0007.png,
+	  obstacles/iso_thick_wall_shadow_0008.png,
+	  obstacles/iso_thick_wall_shadow_0009.png,
+	  obstacles/iso_thick_wall_shadow_0010.png,
+	  obstacles/iso_transp_for_water.png, obstacles/iso_tree_0000.png,
+	  obstacles/iso_tree_0001.png, obstacles/iso_walls_0001.png,
+	  obstacles/iso_walls_0002.png, obstacles/iso_walls_0003.png,
+	  obstacles/iso_walls_0004.png, obstacles/iso_walls_0005.png,
+	  obstacles/iso_walls_0006.png, obstacles/iso_walls_0007.png,
+	  obstacles/iso_walls_0008.png, obstacles/iso_walls_0009.png,
+	  obstacles/iso_walls_0010.png, obstacles/iso_walls_0011.png,
+	  obstacles/iso_walls_0012.png, obstacles/iso_walls_0013.png,
+	  obstacles/iso_walls_0014.png, obstacles/iso_walls_0015.png,
+	  obstacles/iso_walls_0016.png, obstacles/iso_walls_0017.png,
+	  obstacles/iso_walls_0018.png, obstacles/iso_walls_0019.png,
+	  obstacles/iso_walls_0020.png, obstacles/iso_walls_0021.png,
+	  obstacles/iso_walls_0022.png, obstacles/iso_walls_0023.png,
+	  obstacles/iso_walls_0024.png, obstacles/iso_walls_0025.png,
+	  obstacles/iso_walls_0026.png, obstacles/iso_walls_0027.png,
+	  obstacles/iso_walls_0028.png, obstacles/iso_walls_0029.png,
+	  obstacles/iso_walls_shadow_0001.png,
+	  obstacles/iso_walls_shadow_0002.png,
+	  obstacles/iso_walls_shadow_0003.png,
+	  obstacles/iso_walls_shadow_0004.png,
+	  obstacles/iso_walls_shadow_0005.png,
+	  obstacles/iso_walls_shadow_0006.png,
+	  obstacles/iso_walls_shadow_0007.png,
+	  obstacles/iso_walls_shadow_0008.png,
+	  obstacles/iso_walls_shadow_0009.png,
+	  obstacles/iso_walls_shadow_0010.png,
+	  obstacles/iso_walls_shadow_0011.png,
+	  obstacles/iso_walls_shadow_0012.png,
+	  obstacles/iso_walls_shadow_0013.png,
+	  obstacles/iso_walls_shadow_0014.png,
+	  obstacles/iso_walls_shadow_0015.png,
+	  obstacles/iso_walls_shadow_0016.png,
+	  obstacles/iso_walls_shadow_0017.png,
+	  obstacles/iso_walls_shadow_0018.png,
+	  obstacles/iso_walls_shadow_0019.png,
+	  skill_icons/ChestAndDeadBodyLoot.png,
+	  skill_icons/DetectItemsSpell.png,
+	  skill_icons/ExplosionCircleSpell.png,
+	  skill_icons/ExplosionRaySpell.png,
+	  skill_icons/ExtractAntimatterConverter.png,
+	  skill_icons/ExtractEntropyInverter.png,
+	  skill_icons/ExtractPlasmaTransistor.png,
+	  skill_icons/ExtractSuperconductor.png,
+	  skill_icons/ExtractTachyonCondensator.png,
+	  skill_icons/FirstAidSpell.png, skill_icons/FrostBoltSpell.png,
+	  skill_icons/IdentifySkill.png, skill_icons/NoSkillAvailable.png,
+	  skill_icons/PlasmaBoltSpell.png, skill_icons/PoisonBoltSpell.png,
+	  skill_icons/RadialEMPWaveSpell.png,
+	  skill_icons/RadialPlasmaWaveSpell.png,
+	  skill_icons/RadialVMXWaveSpell.png, skill_icons/RepairSkill.png,
+	  skill_icons/StoningBoltSpell.png,
+	  skill_icons/TakeoverTalkSkill.png,
+	  skill_icons/TeleportHomeSpell.png, skill_icons/WeaponSkill.png,
+	  tux_flags/flag_dexterity_0001.png,
+	  tux_flags/flag_dexterity_0002.png,
+	  tux_flags/flag_dexterity_0004.png,
+	  tux_flags/flag_dexterity_0005.png,
+	  tux_flags/flag_dexterity_0006.png,
+	  tux_flags/flag_dexterity_0007.png,
+	  tux_flags/flag_dexterity_0008.png,
+	  tux_flags/flag_dexterity_0009.png,
+	  tux_flags/flag_dexterity_0010.png,
+	  tux_flags/flag_dexterity_0012.png,
+	  tux_flags/flag_dexterity_0013.png,
+	  tux_flags/flag_dexterity_0014.png,
+	  tux_flags/flag_dexterity_0015.png,
+	  tux_flags/flag_dexterity_0016.png, tux_flags/flag_power_0001.png,
+	  tux_flags/flag_power_0002.png, tux_flags/flag_power_0003.png,
+	  tux_flags/flag_power_0005.png, tux_flags/flag_power_0006.png,
+	  tux_flags/flag_power_0007.png, tux_flags/flag_power_0008.png,
+	  tux_flags/flag_power_0009.png, tux_flags/flag_power_0010.png,
+	  tux_flags/flag_power_0011.png, tux_flags/flag_power_0013.png,
+	  tux_flags/flag_power_0014.png, tux_flags/flag_power_0015.png,
+	  tux_flags/flag_power_0016.png: Optimized the png file size
+	  loselessly.
+
+2007-01-30 00:25  ahuillet
+
+	* freedroidRPG.exe: new binary
+
+2007-01-24 15:49  ahuillet
+
+	* src/menu.c: mouse pointer now correctly placed when using
+	  keyboard or wheel in domenuselection
+
+2007-01-24 15:45  ahuillet
+
+	* src/: blocks.c, struct.h, influ.c: removed deprecated looting
+
+2007-01-23 20:52  ahuillet
+
+	* src/open_gl.c: ondemand loading for backgrounds - faster startup
+
+2007-01-23 19:47  ahuillet
+
+	* src/items.c: fixed bug that prevented identification of worn
+	  helmet
+
+2007-01-23 18:52  ahuillet
+
+	* graphics/font/cpuFont.png: removed little glitch below b
+
+2007-01-23 18:42  ahuillet
+
+	* src/: graphics.c, misc.c: new way of doing fadings in GL...
+
+2007-01-23 13:13  ahuillet
+
+	* src/view.c: now keeping tux in center even when inv and cha are
+	  opened
+
+2007-01-22 21:42  ahuillet
+
+	* src/saveloadgame.c: inconsistency in case for a ingame message
+
+2007-01-22 21:42  ahuillet
+
+	* src/map.c: tiny last improvement of speed of SaveShip
+
+2007-01-22 21:28  ahuillet
+
+	* src/map.c: further improvements of save speed
+
+2007-01-22 20:58  ahuillet
+
+	* src/map.c: improved performance of saving
+
+2007-01-22 20:08  ahuillet
+
+	* src/init.c: patched percentage
+
+2007-01-22 19:33  ahuillet
+
+	* src/map.c: sped up map parsing, at the price of robustness
+
+2007-01-22 18:49  ahuillet
+
+	* src/map.c: new parser for levels
+
+2007-01-22 17:43  ahuillet
+
+	* map/ReturnOfTux.droids: updated in smaller version
+
+2007-01-22 17:34  ahuillet
+
+	* src/map.h: shortened map file
+
+2007-01-22 17:34  ahuillet
+
+	* map/Asteroid.maps: new ship
+
+2007-01-22 13:44  ahuillet
+
+	* src/map.c: fixed parser for new level format - will improve it
+	  ASAP for better performance
+
+2007-01-22 13:08  ahuillet
+
+	* map/Asteroid.maps: new format
+
+2007-01-22 00:55  ahuillet
+
+	* src/map.h: shorter names for ship
+
+2007-01-21 23:24  ahuillet
+
+	* src/automap.c: now clearing automap properly
+
+2007-01-21 22:54  ahuillet
+
+	* src/: proto.h, open_gl.c, BFont.c: improved performance of image
+	  flipping
+
+2007-01-21 20:22  magotari
+
+	* map/Asteroid.maps: A bit more flavour text.
+
+2007-01-21 19:41  ahuillet
+
+	* src/blocks.c: shortened descriptions a little - less memory
+
+2007-01-21 18:37  magotari
+
+	* map/freedroid.prefix_archetypes: My attempt at prefixes.
+
+2007-01-21 17:47  ahuillet
+
+	* src/items.c: fixed negative stats preventing item equipping
+
+2007-01-21 16:42  ahuillet
+
+	* src/main.c: now items can even make someone lose life
+
+2007-01-21 16:14  ahuillet
+
+	* src/hud.c: removed the first red line for magical items
+
+2007-01-21 16:10  ahuillet
+
+	* src/items.c: bad parsing
+
+2007-01-21 16:03  ahuillet
+
+	* src/items.c: fixed prefix bonus to all attributes
+
+2007-01-21 14:21  ahuillet
+
+	* src/items.c: removed funny but crappy code
+
+2007-01-21 13:47  ahuillet
+
+	* map/freedroid.droid_archetypes: not probably necessary but who
+	  knows
+
+2007-01-21 01:53  ahuillet
+
+	* src/bullet.c: bots enter hitstun in only 60percent of cases now
+
+2007-01-21 01:52  ahuillet
+
+	* src/enemy.c: fixed hacked bots turning hostile again and added
+	  balancing of bot vs bot fights according to their level
+
+2007-01-21 01:52  ahuillet
+
+	* src/takeover.c: taken over enemies dont get double life
+
+2007-01-21 01:36  ahuillet
+
+	* map/freedroid.item_archetypes: oversized item
+
+2007-01-21 01:08  ahuillet
+
+	* src/items.c: implemented reading of some other bonus types
+
+2007-01-21 00:59  ahuillet
+
+	* map/freedroid.prefix_archetypes: funny thing
+
+2007-01-21 00:53  ahuillet
+
+	* map/freedroid.prefix_archetypes: funny thing
+
+2007-01-21 00:53  ahuillet
+
+	* src/: items.c, struct.h: moved prefix information to
+	  map/freedroid.prefix_archetypes for easiness of edition
+
+2007-01-21 00:49  ahuillet
+
+	* src/hud.c: less confusing descriptions of item bonuses
+
+2007-01-21 00:45  ahuillet
+
+	* src/: global.h, init.c, leveleditor.c, proto.h, ship.c, vars.h:
+	  moved prefix information to map/freedroid.prefix_archetypes for
+	  easiness of edition
+
+2007-01-20 23:40  ahuillet
+
+	* map/freedroid.prefix_archetypes: added mock file for archetypes
+
+2007-01-20 22:48  ahuillet
+
+	* map/freedroid.item_archetypes: shortened file
+
+2007-01-20 22:39  ahuillet
+
+	* src/: init.c, map.c, text_public.c: parsing with default values
+
+2007-01-20 22:23  ahuillet
+
+	* map/freedroid.item_archetypes: [no log message]
+
+2007-01-20 21:51  ahuillet
+
+	* src/init.c: fixed default values not being seen because of stupid
+	  parsing
+
+2007-01-20 21:27  ahuillet
+
+	* src/init.c: added default values for parsing droid archetypes
+
+2007-01-20 21:26  ahuillet
+
+	* src/proto.h: added new parsers with default values
+
+2007-01-20 21:24  ahuillet
+
+	* src/: struct.h, ship.c: shortened structure of droids a little
+
+2007-01-20 21:20  ahuillet
+
+	* src/text_public.c: added new parsers with default values
+
+2007-01-20 21:20  ahuillet
+
+	* map/freedroid.droid_archetypes: data file smaller now
+
+2007-01-20 20:18  ahuillet
+
+	* src/enemy.c: using 70percent for chance to hit in friendly bot vs
+	  bot
+
+2007-01-20 19:08  ahuillet
+
+	* src/init.c: removed useless param
+
+2007-01-20 18:35  ahuillet
+
+	* src/chat.c: fixed breakoffandbecomehostile
+
+2007-01-20 18:04  ahuillet
+
+	* src/enemy.c: attack town = hf music
+
+2007-01-20 17:48  ahuillet
+
+	* src/init.c: fixed typo in desc
+
+2007-01-20 17:48  ahuillet
+
+	* src/: character.c, hud.c, influ.c, itemdefs.h, items.c, misc.c:
+	  now made the skill icon clickable to raise skill screen, and
+	  fixed unability to move when two screens were opened
+
+2007-01-20 17:46  ahuillet
+
+	* src/defs.h: switch to hf music when EverybodyBecomesHostile
+
+2007-01-20 17:29  ahuillet
+
+	* src/: chat.c, proto.h, skills.c: prevented excess increase of
+	  generic skills
+
+2007-01-20 16:15  ahuillet
+
+	* src/items.c: improved homemade repair
+
+2007-01-20 15:33  ahuillet
+
+	* src/items.c: now potions can be used with repair skill enabled
+
+2007-01-16 19:47  magotari
+
+	* src/view.c: A fix for helmets not being taken into acount when
+	  showing items about to get totally demolished.
+
+2007-01-16 17:18  ahuillet
+
+	* src/view.c: improved item damage alarm following magotaris
+	  suggestions
+
+2007-01-16 14:15  ahuillet
+
+	* src/items.c: fixed skill going back to hacking after ident
+
+2007-01-16 14:00  magotari
+
+	* dialogs/KevinGuard.dialog: A small cleanup.
+
+2007-01-16 02:23  ahuillet
+
+	* freedroidRPG.exe: new binary
+
+2007-01-16 02:04  ahuillet
+
+	* src/: character.c, main.c, proto.h: separated character scr input
+	  and display
+
+2007-01-16 01:54  ahuillet
+
+	* src/: items.c, main.c, proto.h, view.c: separated display and
+	  input in INV screen
+
+2007-01-16 01:24  ahuillet
+
+	* src/enemy.c: removed stupid tux complaining whenever friendly bot
+	  got killed
+
+2007-01-16 01:12  ahuillet
+
+	* src/skills.c: fixed hacking
+
+2007-01-16 01:02  ahuillet
+
+	* src/view.c: prevented alarm for indestructible items
+
+2007-01-16 01:02  ahuillet
+
+	* src/hud.c: fixed typo
+
+2007-01-16 00:51  ahuillet
+
+	* src/enemy.c: tentative patch for making bots follow closer
+
+2007-01-16 00:43  ahuillet
+
+	* src/skills.c: prevented taking over from outside a room
+
+2007-01-15 22:08  magotari
+
+	* dialogs/Bender.dialog: Made it harder to die by angering Bender.
+
+2007-01-14 21:53  ahuillet
+
+	* src/enemy.c: prevent double dropping of quest items after a
+	  respawn
+
+2007-01-14 20:22  ahuillet
+
+	* src/map.c: IsPassable return
+
+2007-01-14 20:22  ahuillet
+
+	* map/: Asteroid.maps, freedroid.droid_archetypes,
+	  freedroid.item_archetypes: fixed typos
+
+2007-01-14 20:11  ahuillet
+
+	* src/blocks.c: removed contribution welcome text
+
+2007-01-14 20:11  ahuillet
+
+	* src/bullet.c: crash generating mod to check for correctness of
+	  bullet owner handling
+
+2007-01-14 20:06  ahuillet
+
+	* src/influ.c: shortened in game messages
+
+2007-01-14 20:06  ahuillet
+
+	* src/menu.c: renamed menu item
+
+2007-01-14 20:05  ahuillet
+
+	* src/map.c: tiny mod to avoid weird things with autoguns
+
+2007-01-14 11:04  bastiansalmela
+
+	* graphics/floor_tiles/: iso_miscellaneous_floor_0010.png,
+	  iso_miscellaneous_floor_0011.png,
+	  iso_miscellaneous_floor_0012.png,
+	  iso_miscellaneous_floor_0013.png:
+	  rusty plates. these look like shit.. but i removed the edge
+	  weirdness.  have to think of what to do with the actual graphics,
+	  and where we are using these..
+
+	  .b
+
+2007-01-14 10:39  bastiansalmela
+
+	* graphics/floor_tiles/: iso_miscellaneous_floor_0002.png,
+	  iso_miscellaneous_floor_0003.png,
+	  iso_miscellaneous_floor_0014.png,
+	  iso_miscellaneous_floor_0019.png,
+	  iso_miscellaneous_floor_0020.png,
+	  iso_miscellaneous_floor_0021.png,
+	  iso_miscellaneous_floor_0022.png, iso_sidewalk_0013.png,
+	  iso_sidewalk_0014.png, iso_sidewalk_0015.png,
+	  iso_sidewalk_0016.png:
+	  fixed tiling and other issues for carpets, metallic plates ..
+
+	  more to come.
+
+2007-01-13 14:45  xparanoidj
+
+	* sound/effects/Influencer_Scream_Sound_3.wav: removed click
+
+2007-01-12 13:50  ahuillet
+
+	* src/: sound.c, sound_effects.c: cleanup up the mess a little
+
+2007-01-12 13:07  ahuillet
+
+	* src/menu.c: added back buttons to Load and Delete menus
+
+2007-01-12 12:45  ahuillet
+
+	* src/influ.c: fixed glitch that hitting crates through walls was
+	  impossible, but animation displayed
+
+2007-01-11 23:52  magotari
+
+	* dialogs/Melfis.dialog: Fixed typos in Melfis.  Thanks to rost.
+
+2007-01-11 23:02  ahuillet
+
+	* src/shop.c: blah. fixed stupid bug
+
+2007-01-10 21:24  ahuillet
+
+	* src/takeover.c: fixed double dropping of quest items
+
+2007-01-10 18:11  ahuillet
+
+	* map/freedroid.item_archetypes: made quest items unsellable
+
+2007-01-10 13:12  ahuillet
+
+	* map/freedroid.item_archetypes: made dixon toolbox unsellable -
+	  waiting for list of other items
+
+2007-01-10 13:11  ahuillet
+
+	* src/: shop.c, ship.c: added code to make quest items unsellable
+
+2007-01-10 12:48  ahuillet
+
+	* src/view.c: fixed zoomed out shadows in leveleditor
+
+2007-01-10 12:33  ahuillet
+
+	* src/leveleditor.c: fixed cursor for real this time
+
+2007-01-10 11:56  ahuillet
+
+	* configure.ac: updated
+
+2007-01-10 11:56  ahuillet
+
+	* src/map.c: workaround for GCC4 misbehavior
+
+2007-01-09 21:04  ahuillet
+
+	* src/defs.h: raised max textures nb to 10K
+
+2007-01-09 20:52  xparanoidj
+
+	* src/sound.c: fixed bad bad bad bad bad samplerate arrrrr
+
+2007-01-07 18:49  ahuillet
+
+	* freedroidRPG.exe: new binary
+
+2007-01-07 14:41  magotari
+
+	* dialogs/subdlg_Spencer_eval.dialog: Breaking Spencer up into more
+	  files for ease of edits.
+
+2007-01-06 22:00  magotari
+
+	* dialogs/Butch.dialog: The new Butch.
+
+2007-01-06 20:31  magotari
+
+	* src/items.c: Item decay cut by over 30%.
+
+2007-01-05 19:23  ahuillet
+
+	* map/StartOfGame.title: small update of docu
+
+2007-01-05 19:13  ahuillet
+
+	* freedroidRPG.6: small mistake... this is STILL outdated
+
+2007-01-05 19:10  ahuillet
+
+	* configure.ac: updated version number
+
+2007-01-04 20:27  ahuillet
+
+	* src/ship.c: fixed position of video in viewmaster in shops
+
+2007-01-04 07:20  ahuillet
+
+	* src/input.c: removed exclusivity of invchaski screens
+
+2007-01-04 07:13  ahuillet
+
+	* src/menu.c: fixed little bug of mouse cursor
+
+2007-01-03 18:58  ahuillet
+
+	* src/graphics.c: made the window not resizable - anonymous request
+
+2007-01-03 18:54  ahuillet
+
+	* src/shop.c: moved icon for equipped items in shops to top right
+
+2007-01-03 18:49  magotari
+
+	* dialogs/Ewald.dialog: Typo, you have been sentenced to death by
+	  correction.
+
+2007-01-03 18:44  ahuillet
+
+	* map/freedroid.item_archetypes: laserdagger had wrong inv size
+
+2007-01-03 18:07  ahuillet
+
+	* map/freedroid.item_archetypes: fixed items inv sizes
+
+2007-01-03 12:28  ahuillet
+
+	* src/blocks.c: updated scaling for inv
+
+2007-01-02 23:32  bastiansalmela
+
+	* graphics/items/: inventory_image_21.png, buckler/inv_image.png,
+	  emp_grenade/inv_image.png, helmet_yellow/inv_image.png,
+	  laser_sword_green/inv_image.png, laser_sword_red/inv_image.png,
+	  laser_sword_yellow/inv_image.png, plasma_grenade/inv_image.png,
+	  vmx_grenade/inv_image.png:
+
+	  bigger inventory items.
+
+	  128x128 .. had to render to that kind of size, fd started
+	  complaining something about odd size with 102x102.
+
+	  hope this is ok
+
+	  .b
+
+2007-01-02 23:31  bastiansalmela
+
+	* graphics/backgrounds/: conversation.png, item_browser_shop.png:
+
+	  full black for viewmasters..	.b :wq
+
+2007-01-02 22:11  ahuillet
+
+	* src/: shop.c, items.c, proto.h: now showing equipped items in
+	  shops, with proper marking
+
+2007-01-02 20:24  ahuillet
+
+	* src/: items.c, proto.h: fixed dropping items through obstacles by
+	  adding a passability check
+
+2007-01-01 19:06  ahuillet
+
+	* src/character.c: char screen not automatically closed anymore
+
+2007-01-01 18:44  ahuillet
+
+	* graphics/backgrounds/TransparentBluePlate.png,
+	  graphics/backgrounds/TransparentGreyPlate.png, src/view.c: now
+	  using inventory background colors to differ std, magic and
+	  unwearable items
 
