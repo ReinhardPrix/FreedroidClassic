@@ -37,6 +37,10 @@ uninstall-local:
 	@echo "...done."
 
 
+sign:
+	@echo "Generating signatures ..."
+	gpg --digest-algo SHA512  -o freedroidrpg-$(VERSION).tar.bz2.sig --detach-sign freedroidrpg-$(VERSION).tar.bz2
+	md5sum freedroidrpg-$(VERSION).tar.bz2 > freedroidrpg-$(VERSION).tar.bz2.md5
 
 ## Win32 specific stuff follows here
 
