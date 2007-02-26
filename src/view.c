@@ -268,21 +268,23 @@ ShowOneItemAlarm( item* AlarmItem , int Position )
     {
 	if (  AlarmItem->current_duration < 3 )
 	    if ( ( ( int ) ( Me[0].MissionTimeElapsed * 2 ) ) % 2 == 1 ) return;
-
+#ifdef HAVE_LIBGL
 	if(use_open_gl)
 		{
 		glPixelTransferf(GL_BLUE_SCALE, 0);
 		glPixelTransferf(GL_GREEN_SCALE, (float)( AlarmItem->current_duration - 1 ) / ( 4 ) );
 		glPixelTransferf(GL_RED_SCALE, 1);
 		}
+#endif
 	our_SDL_blit_surface_wrapper( ItemMap [ ItemImageCode ] . inv_image . Surface , NULL , Screen , &TargetRect );
+#ifdef HAVE_LIBGL
 	if(use_open_gl)
 		{
 		glPixelTransferf(GL_BLUE_SCALE, 1);
 		glPixelTransferf(GL_GREEN_SCALE, 1);
 		glPixelTransferf(GL_RED_SCALE, 1);
 		}
-
+#endif
     }
 }; // void ShowOneItemAlarm( item* AlarmItem )
 
