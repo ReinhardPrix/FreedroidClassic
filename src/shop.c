@@ -1275,7 +1275,6 @@ TryToRepairItem( item* RepairItem )
     
     if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
-	PlayOnceNeededSoundSample ( "STO_You_Cant_Repaired_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
         SetCurrentFont ( Menu_BFont );
@@ -1309,7 +1308,6 @@ TryToIdentifyItem( item* IdentifyItem )
     
     if ( 100 > Me[0].Gold )
     {
-	PlayOnceNeededSoundSample ( "STO_You_Cant_Identified_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
         SetCurrentFont ( Menu_BFont );
@@ -1593,7 +1591,6 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     
     if ( calculate_item_buy_price ( BuyItem ) > Me [ 0 ] . Gold )
     {
-	PlayOnceNeededSoundSample ( "STO_You_Cant_Buy_0.wav" , FALSE , FALSE );
 	if ( WithBacktalk )
 	{
 	    MenuTexts[0]=" BACK ";
@@ -1825,7 +1822,6 @@ Repair_Items( void )
 	
 	if ( Pointer_Index == 0 )
 	{
-	    PlayOnceNeededSoundSample ( "STO_Sorry_But_Repair_0.wav" , FALSE , FALSE );
 	    MenuTexts[0]=" BACK ";
 	    MenuTexts[1]="";
 	    DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
@@ -1931,7 +1927,6 @@ Identify_Items ( void )
     
     if ( Pointer_Index == 0 )
     {
-	PlayOnceNeededSoundSample ( "STO_You_Dont_Have_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
 	DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
@@ -2007,7 +2002,6 @@ Sell_Items( int ForHealer )
     
     if ( Pointer_Index == 0 )
     {
-	PlayOnceNeededSoundSample ( "STO_Sorry_But_You_0.wav" , FALSE , FALSE );
 	MenuTexts[0]=" BACK ";
 	MenuTexts[1]="";
 	DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
