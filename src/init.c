@@ -1912,7 +1912,14 @@ InitFreedroid ( void )
     // feenableexcept ( FE_ALL_EXCEPT );
     // feenableexcept ( FE_DIVBYZERO | FE_INVALID ); // FE_INEXACT | FE_UNDERFLOW | FE_OVERFLOW 
     // fesetexceptflag (const fexcept_t *flagp, int excepts);
-    
+
+
+#ifndef __WIN32__
+    //--------------------
+    // Portable localization
+    setlocale(LC_ALL, "C");
+#endif
+
     //--------------------
     // We hack the default signal handlers to print out a backtrace
     // in case of a fatal error of type 'segmentation fault' or the

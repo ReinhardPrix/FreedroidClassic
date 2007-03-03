@@ -79,6 +79,10 @@
 #include <fcntl.h>
 #endif
 
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 #include <errno.h>
 #include <stdarg.h>
 #include <ctype.h>
