@@ -94,8 +94,8 @@ EXTERN void move_tux ( int player_num ) ;
 EXTERN void animate_tux ( int player_num ) ;
 EXTERN void check_tux_enemy_collision (void);
 EXTERN void start_tux_death_explosions (void);
-#define translate_map_point_to_screen_pixel_x(X,Y)  ( UserCenter_x + rintf(( X + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - Y ) * (iso_floor_tile_width_over_two) ) )
-#define translate_map_point_to_screen_pixel_y(X,Y)  ( UserCenter_y + rintf(( X + Y - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * (iso_floor_tile_height_over_two))) 
+#define translate_map_point_to_screen_pixel_x(X,Y)  ( UserCenter_x + rintf(( (X) + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - (Y) ) * (iso_floor_tile_width_over_two) ) )
+#define translate_map_point_to_screen_pixel_y(X,Y)  ( UserCenter_y + rintf(( (X) + (Y) - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * (iso_floor_tile_height_over_two))) 
 EXTERN int translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN inline float translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) ;
