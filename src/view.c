@@ -2446,7 +2446,7 @@ Received some non-positive Tux surface dimensions.  That's a bug for sure!",
 		tmp_buff = MyMalloc ( tmplen ) ;
 		memcpy ( tmp_buff , ptr, tmplen );
 		ptr += tmplen;
-#               ifdef __APPLE_CC__
+#               if SDL_BYTEORDER == SDL_BIG_ENDIAN
 		endian_swap ( tmp_buff, 4, img_xlen * img_ylen);
 #               endif
 
@@ -2693,7 +2693,7 @@ The number of images found in the image collection is bigger than currently allo
 	    tmplen = 4 * img_xlen * img_ylen;
 	    memcpy ( dest, ptr, tmplen );
 	    ptr += tmplen;
-#           ifdef __APPLE_CC__
+#           if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	    endian_swap ( dest, 4, img_xlen * img_ylen);
 #           endif
 

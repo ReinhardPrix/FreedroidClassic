@@ -608,7 +608,9 @@ button index given exceeds the number of buttons defined in freedroid.",
 An image file for a button that should be displayed on the screen couldn't\n\
 be successfully loaded into memory.\n\
 This is an indication of a severe bug/installation problem of freedroid.",
-				       PLEASE_INFORM, IS_FATAL );
+				       PLEASE_INFORM, IS_WARNING_ONLY );
+	    fprintf ( stderr, "Surf %x, Tex was created %i, using gl %i\n", AllMousePressButtons [ ButtonIndex ] . button_image . surface, AllMousePressButtons [ ButtonIndex ] . button_image . texture_has_been_created, use_open_gl);
+	return;
 	}
 	AllMousePressButtons[ ButtonIndex ] . button_image . surface = our_SDL_display_format_wrapperAlpha ( tmp );
 	SDL_FreeSurface ( tmp );
@@ -2342,7 +2344,7 @@ ReadSint16 (void * memory)
   Sint16 ret;
 
   memcpy (&ret, memory, sizeof(Sint16));
-#ifdef __APPLE_CC__
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
   endian_swap ( (char*)&ret, sizeof (Sint16), 1);
 #endif
 
