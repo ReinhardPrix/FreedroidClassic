@@ -552,10 +552,31 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
  * on the floor via a bright ugly distorted rectangular shape.
  * ---------------------------------------------------------------------- */
 void 
+skew_and_blit_rect( float x1, float y1, float x2, float y2, Uint32 color)
+{
+    int r1, r2, r3, r4, c1, c2, c3, c4 ;
+    r1 = translate_map_point_to_screen_pixel_x ( x1 , y1 );
+    c1 = translate_map_point_to_screen_pixel_y ( x1 , y1 );
+    r2 = translate_map_point_to_screen_pixel_x ( x1 , y2 );
+    c2 = translate_map_point_to_screen_pixel_y ( x1 , y2 );
+    r3 = translate_map_point_to_screen_pixel_x ( x2 , y2 );
+    c3 = translate_map_point_to_screen_pixel_y ( x2 , y2 );
+    r4 = translate_map_point_to_screen_pixel_x ( x2 , y1 );
+    c4 = translate_map_point_to_screen_pixel_y ( x2 , y1 );
+    blit_quad ( r1, c1, r2, c2, r3, c3, r4, c4, color ); 
+}
+
+void 
 blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
 {
-    int x1, x2, x3, x4, y1, y2, y3, y4 ;
+    float up, left, right, low,x,y;
 
+    up = obstacle_map [ our_obstacle -> type ] . upper_border;
+    left = obstacle_map [ our_obstacle -> type ] . left_border;
+    right = obstacle_map [ our_obstacle -> type ] . right_border;
+    low = obstacle_map [ our_obstacle -> type ] . lower_border;
+    x = our_obstacle -> pos . x;
+    y = our_obstacle -> pos . y;
     //--------------------
     // If collision rectangles are turned off, then we need not do 
     // anything more here...
@@ -571,32 +592,17 @@ blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
     //--------------------
     // Now we draw the collision rectangle.  We use the same parameters
     // of the obstacle spec, that are also used for the collision checks.
-    //
-    x1 = translate_map_point_to_screen_pixel_x ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border );
-    y1 = translate_map_point_to_screen_pixel_y ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border );
-    x2 = translate_map_point_to_screen_pixel_x ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
-    y2 = translate_map_point_to_screen_pixel_y ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . upper_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
-    x3 = translate_map_point_to_screen_pixel_x ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
-    y3 = translate_map_point_to_screen_pixel_y ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . right_border);
-    x4 = translate_map_point_to_screen_pixel_x ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border);
-    y4 = translate_map_point_to_screen_pixel_y ( 
-	our_obstacle -> pos . x + obstacle_map [ our_obstacle -> type ] . lower_border , 
-	our_obstacle -> pos . y + obstacle_map [ our_obstacle -> type ] . left_border);
-    blit_quad ( x1, y1, x2, y2, x3, y3, x4, y4, 0x00FEEAA );
+    skew_and_blit_rect(x+up,y+left,x+low,y+right, 0x00FEEAA);
+    
+//    x1 = translate_map_point_to_screen_pixel_x ( x + up , y + left );
+//    y1 = translate_map_point_to_screen_pixel_y ( x + up , y + left );
+//    x2 = translate_map_point_to_screen_pixel_x ( x + up , y + right);
+//    y2 = translate_map_point_to_screen_pixel_y ( x + up , y + right);
+//    x3 = translate_map_point_to_screen_pixel_x ( x + low , y + right);
+//    y3 = translate_map_point_to_screen_pixel_y ( x + low , y + right);
+//    x4 = translate_map_point_to_screen_pixel_x ( x + low , y + left);
+//    y4 = translate_map_point_to_screen_pixel_y ( x + low , y + left);
+//    blit_quad ( x1, y1, x2, y2, x3, y3, x4, y4, 0x00FEEAA ); 
 }; // void blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
@@ -1887,6 +1893,16 @@ AssembleCombatPicture ( int mask )
     global_check_for_light_only_collisions_flag = TRUE ;
 
     isometric_show_floor_around_tux_without_doublebuffering ( mask );
+    if (draw_grid && (mask & SHOW_GRID)){
+        float x,y;
+        x = rintf(Me[0].pos.x+0.5);
+        y = rintf(Me[0].pos.y+0.5);
+
+        skew_and_blit_rect( x-1.5, y-1.02,x+0.5, y-0.98, 0x99FFFF);//  0xFF8888);
+        skew_and_blit_rect( x-1.5, y+0.02,x+0.5, y-0.02, 0x99FFFF);//  0x8888FF);
+        skew_and_blit_rect( x-1.02,y-1.5, x-0.98,y+0.5,  0x99FFFF);//  0x88FF88);
+        skew_and_blit_rect( x+.02, y-1.5, x-0.02,y+0.5,  0x99FFFF);//  0x88FFFF);
+    }
     
     set_up_ordered_blitting_list ( mask );
     
