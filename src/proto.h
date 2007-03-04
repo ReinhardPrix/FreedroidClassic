@@ -99,6 +99,7 @@ EXTERN void start_tux_death_explosions (void);
 EXTERN int translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
 EXTERN inline float translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) ;
+EXTERN void skew_and_blit_rect( float x1, float y1, float x2, float y2, Uint32 color);
 EXTERN float translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float axis_y , int give_x );
 EXTERN void blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y );
 EXTERN int tux_can_walk_this_line ( int player_num , float x1, float y1 , float x2 , float y2 );
