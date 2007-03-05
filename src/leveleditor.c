@@ -635,15 +635,24 @@ fix_anticorners_in_this_grass_tile ( level* EditLevel , int x , int y )
     int south_grass = 0 ;
     int east_grass = 0 ;
     int west_grass = 0 ;
+    int x_offset, y_offset;
 
-    if ( is_some_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) )
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y - 1 ] [ x     ] ) ) ){
 	north_grass = TRUE ;
-    if ( is_some_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) )
+        y_offset = -1;
+    }
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y + 1 ] [ x     ] ) ) ){
 	south_grass = TRUE ;
-    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) )
+        y_offset = 1;
+    }
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x + 1 ] ) ) ){
 	east_grass = TRUE ;
-    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) )
+        x_offset = 1;
+    }
+    if ( is_some_grass_tile ( & ( EditLevel -> map [ y     ] [ x - 1 ] ) ) ){
 	west_grass = TRUE ;
+        x_offset = -1;
+    }
 
     //--------------------
     // Upper left corner:
@@ -4143,7 +4152,7 @@ RecFillMap ( Level EditLevel , int BlockY , int BlockX , int SpecialMapValue )
 }; // void RecFillMap ( Level EditLevel , int BlockY , int BlockX , int SpecialMapValue )
 
 /* ----------------------------------------------------------------------
- * When the mouse has rested iddle on some mouse button in the level 
+ * When the mouse has rested idle on some mouse button in the level 
  * editor (and also tooltips are enabled) then some small window (a 
  * tooltip) will appear and describe the purpose of the button under the
  * mouse cursor.  Bringing up this tooltip window is the purpose of this
@@ -4825,6 +4834,11 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	{
 	    draw_collision_rectangles = ! draw_collision_rectangles;
 	}
+	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+		  MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
+	{
+	    draw_grid = ! draw_grid;
+	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    proceed_now=!proceed_now;
@@ -4986,6 +5000,11 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON_OFF );
 
+    if ( draw_grid )
+        ShowGenericButtonFromList( LEVEL_EDITOR_TOGGLE_GRID_BUTTON );
+    else
+        ShowGenericButtonFromList( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_OFF );
+
 }; // void level_editor_blit_mouse_buttons ( Level EditLevel )
 
 /* ----------------------------------------------------------------------
@@ -5032,7 +5051,7 @@ cycle_marked_obstacle( Level EditLevel )
 }; // void cycle_marked_obstacle( Level EditLevel )
 
 /* ----------------------------------------------------------------------
- * This function is provides the Level Editor integrated into 
+ * This function provides the Level Editor integrated into 
  * freedroid.  Actually this function is a submenu of the big
  * Escape Menu.  In here you can edit the level and, upon pressing
  * escape, you can enter a new submenu where you can save the level,
