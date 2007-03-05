@@ -2488,6 +2488,7 @@ Get_New_Character_Name ( void )
 	if( ! isalnum ( Temp[i] ) && Temp [ i ] != '-')
 		Temp [ i ] = '-';
     strcpy ( Me [ 0 ] . character_name , Temp );
+    if(!skip_initial_menus && Temp!=NULL)
     free( Temp );
     
 }; // void Get_New_Character_Name ( void )
