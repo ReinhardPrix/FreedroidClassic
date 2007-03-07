@@ -1,0 +1,460 @@
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!-- ViewVC - http://viewvc.org/
+by Greg Stein - mailto:gstein@lyra.org -->
+<head>
+<title>SourceForge.net Repository - [freedroid] Log of /FreeDroid/graphics/lanzz_theme/to_elem.png</title>
+<meta name="generator" content="ViewVC 1.0.3" />
+<link rel="stylesheet" href="/*docroot*/styles.css" type="text/css" />
+</head>
+<body>
+<table style="padding:0.1em;">
+<tr>
+<td>
+<strong>
+
+<a href="/freedroid/">
+
+[freedroid]</a>
+/
+
+<a href="/freedroid/FreeDroid/">
+
+FreeDroid</a>
+/
+
+<a href="/freedroid/FreeDroid/graphics/">
+
+graphics</a>
+/
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/">
+
+lanzz_theme</a>
+/
+
+
+
+to_elem.png
+
+
+</strong>
+
+</td>
+</tr>
+</table>
+
+
+<div style="float: right; padding: 5px;"><a href="http://sourceforge.net"><img src="/*docroot*/images/sourceforge_whitebg.gif" alt="(logo)" border=0 width=136 height=79></a></div>
+<h1>Log of /FreeDroid/graphics/lanzz_theme/to_elem.png</h1>
+
+<p style="margin:0;">
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/"><img src="/*docroot*/images/back_small.png" width="16" height="16" alt="Parent Directory" /> Parent Directory</a>
+
+
+
+
+</p>
+
+<hr />
+<table class="auto">
+
+
+
+<tr>
+<td>Links to HEAD:</td>
+<td>
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=markup">view</a>)
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png">download</a>)
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?content-type=text%2Fplain">as text</a>)
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=annotate">annotate</a>)
+</td>
+</tr>
+
+
+
+<tr>
+<td>Sticky Tag:</td>
+<td><form method="get" action="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png" style="display: inline">
+<input type="hidden" name="view" value="log" />
+
+
+<select name="pathrev" onchange="submit()">
+<option value=""></option>
+
+<optgroup label="Branches">
+
+
+<option>rel-0-8-4-patches</option>
+
+
+
+<option>MAIN</option>
+
+
+</optgroup>
+
+<optgroup label="Non-branch tags">
+
+
+<option>rpg-release-0-10-1</option>
+
+
+
+<option>rpg-release-0-10-0</option>
+
+
+
+<option>before_optipng</option>
+
+
+
+<option>HEAD</option>
+
+
+</optgroup>
+
+</select>
+
+<input type="submit" value="Set" />
+</form>
+
+</td>
+</tr>
+</table>
+ 
+
+
+
+
+
+
+
+
+<div>
+<hr />
+
+<a name="rev1.2"></a>
+<a name="rpg-release-0-10-1"></a>
+<a name="HEAD"></a>
+
+
+Revision <strong>1.2</strong> -
+
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.2&amp;view=markup">view</a>)
+
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.2">download</a>)
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.2&amp;content-type=text%2Fplain">as text</a>)
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?annotate=1.2">annotate</a>)
+
+
+
+- <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.2&amp;view=log">[select for diffs]</a>
+
+
+
+
+<br />
+
+<em>Sat Feb  3 17:30:32 2007 UTC</em> (4 weeks, 4 days ago) by <em>magotari</em>
+
+
+<br />Branch:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=MAIN"><strong>MAIN</strong></a>
+
+
+
+<br />CVS Tags:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=HEAD"><strong>HEAD</strong></a>,
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=rpg-release-0-10-1"><strong>rpg-release-0-10-1</strong></a>
+
+
+
+
+
+
+<br />Changes since <strong>1.1: +10 -71 lines</strong>
+
+
+
+
+
+
+
+<br />Diff to <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.1&amp;r2=1.2">previous 1.1</a>
+
+
+
+
+
+
+
+
+
+
+<pre class="vc_log">Optimized the png file size loselessly.
+</pre>
+</div>
+
+
+
+<div>
+<hr />
+
+<a name="rev1.1.2.1"></a>
+
+<a name="rel-0-8-4-patches"></a>
+
+Revision <strong>1.1.2.1</strong> -
+
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1.2.1&amp;view=markup">view</a>)
+
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1.2.1">download</a>)
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1.2.1&amp;content-type=text%2Fplain">as text</a>)
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?annotate=1.1.2.1">annotate</a>)
+
+
+
+- <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.1.2.1&amp;view=log">[select for diffs]</a>
+
+
+
+
+<br />
+
+<em>Wed Nov 20 18:26:28 2002 UTC</em> (4 years, 3 months ago) by <em>rprix</em>
+
+
+<br />Branch:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=rel-0-8-4-patches"><strong>rel-0-8-4-patches</strong></a>
+
+
+
+
+
+
+
+<br />Changes since <strong>1.1: +0 -0 lines</strong>
+
+
+
+
+
+
+
+<br />Diff to <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.1&amp;r2=1.1.2.1">previous 1.1</a>
+
+
+
+
+
+
+, to <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.2&amp;r2=1.1.2.1">next main 1.2</a>
+
+
+
+
+
+
+
+<pre class="vc_log">Ok, couple of (minor) changes and things to make the "Classic" branch
+more (or fully) compatible with RPGFreeDroid and DroidWorld:
+*) all colors of map-blocks are now in map_blocks.png
+*) removed "ne_" prefixes in graphics-filenames
+*) moved "default_theme" to "classic_theme"
+*) made colors in 'classic theme' less bright and over-saturated
+     (looks better, I hope)
+*) adapted automake/autoconf structure correspondingly.
+</pre>
+</div>
+
+
+
+<div>
+<hr />
+
+<a name="rev1.1"></a>
+<a name="rpg-release-0-10-0"></a>
+<a name="before_optipng"></a>
+
+
+Revision <strong>1.1</strong> -
+
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1&amp;view=markup">view</a>)
+
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1">download</a>)
+(<a href="/*checkout*/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?revision=1.1&amp;content-type=text%2Fplain">as text</a>)
+(<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?annotate=1.1">annotate</a>)
+
+
+
+- <a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?r1=1.1&amp;view=log">[select for diffs]</a>
+
+
+
+
+<br />
+
+<em>Thu Jul 11 16:47:34 2002 UTC</em> (4 years, 7 months ago) by <em>rprix</em>
+
+
+<br />Branch:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=MAIN"><strong>MAIN</strong></a>
+
+
+
+<br />CVS Tags:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=before_optipng"><strong>before_optipng</strong></a>,
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=rpg-release-0-10-0"><strong>rpg-release-0-10-0</strong></a>
+
+
+
+<br />Branch point for:
+
+<a href="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png?view=log&amp;pathrev=rel-0-8-4-patches"><strong>rel-0-8-4-patches</strong></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<pre class="vc_log">changed theme-dependent graphics filenames "ne_*" to more canonical form
+</pre>
+</div>
+
+ 
+
+
+
+ <hr />
+<p><a name="diff"></a>
+This form allows you to request diffs between any two revisions of this file.
+For each of the two "sides" of the diff,
+
+select a symbolic revision name using the selection box, or choose
+'Use Text Field' and enter a numeric revision.
+
+</p>
+<form method="get" action="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png" name="diff_select">
+<table cellpadding="2" cellspacing="0" class="auto">
+<tr>
+<td>&nbsp;</td>
+<td>
+<input type="hidden" name="view" value="diff" />
+Diffs between
+
+<select name="r1">
+<option value="text" selected="selected">Use Text Field</option>
+
+<option value="1.2:rpg-release-0-10-1">rpg-release-0-10-1</option>
+
+<option value="1.1:rpg-release-0-10-0">rpg-release-0-10-0</option>
+
+<option value="1.1.2.1:rel-0-8-4-patches">rel-0-8-4-patches</option>
+
+<option value="1.1:before_optipng">before_optipng</option>
+
+<option value="1.2:MAIN">MAIN</option>
+
+<option value="1.2:HEAD">HEAD</option>
+
+</select>
+<input type="text" size="12" name="tr1"
+value="1.2"
+onchange="document.diff_select.r1.selectedIndex=0" />
+
+and
+
+<select name="r2">
+<option value="text" selected="selected">Use Text Field</option>
+
+<option value="1.2:rpg-release-0-10-1">rpg-release-0-10-1</option>
+
+<option value="1.1:rpg-release-0-10-0">rpg-release-0-10-0</option>
+
+<option value="1.1.2.1:rel-0-8-4-patches">rel-0-8-4-patches</option>
+
+<option value="1.1:before_optipng">before_optipng</option>
+
+<option value="1.2:MAIN">MAIN</option>
+
+<option value="1.2:HEAD">HEAD</option>
+
+</select>
+<input type="text" size="12" name="tr2"
+value="1.1"
+onchange="document.diff_select.r1.selectedIndex=0" />
+
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>
+Type of Diff should be a
+<select name="diff_format" onchange="submit()">
+<option value="h" selected="selected">Colored Diff</option>
+<option value="l" >Long Colored Diff</option>
+<option value="u" >Unidiff</option>
+<option value="c" >Context Diff</option>
+<option value="s" >Side by Side</option>
+</select>
+<input type="submit" value=" Get Diffs " />
+</td>
+</tr>
+</table>
+</form>
+
+
+<form method="get" action="/freedroid/FreeDroid/graphics/lanzz_theme/to_elem.png">
+<div>
+<hr />
+<a name="logsort"></a>
+<input type="hidden" name="view" value="log" />
+Sort log by:
+<select name="logsort" onchange="submit()">
+<option value="cvs" >Not sorted</option>
+<option value="date" selected="selected">Commit date</option>
+<option value="rev" >Revision</option>
+</select>
+<input type="submit" value=" Sort " />
+</div>
+</form>
+
+
+<hr />
+<table>
+<tr>
+<td>
+<address><a href="http://sourceforge.net/">Back to SourceForge.net</a></address><br />
+Powered by <a href="http://viewvc.tigris.org/">ViewVC 1.0.3</a>
+</td>
+<td style="text-align:right;">
+<h3><a href="/*docroot*/help_log.html">ViewVC and Help</a></h3>
+</td>
+</tr>
+</table>
+</body>
+</html>
+
+
