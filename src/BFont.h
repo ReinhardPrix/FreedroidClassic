@@ -18,6 +18,7 @@ typedef struct
   SDL_Rect Chars [ MAX_CHARS_IN_FONT ];
   // SDL_Surface* char_surface [ MAX_CHARS_IN_FONT ];
   iso_image char_iso_image [ MAX_CHARS_IN_FONT ];
+  unsigned int number_of_chars;
 }
 BFont_Info;
 
@@ -41,14 +42,13 @@ int FontHeight (BFont_Info * Font);
 void SetFontHeight (BFont_Info * Font, int height);
 
 /* Returns the character width of the specified font */
-int CharWidth (BFont_Info * Font, int c);
+int CharWidth (BFont_Info * Font, unsigned char c);
 
 /* Write a single character on the "Surface" with the current font */
-int PutChar (SDL_Surface * Surface, int x, int y, int c);
+int PutChar (SDL_Surface * Surface, int x, int y, unsigned char c);
 
 /* Write a single character on the "Surface" with the specified font */
-int PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-		 int c);
+int PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned char c);
 
 /* Returns the width, in pixels, of the text calculated with the current font*/
 int TextWidth (char *text);

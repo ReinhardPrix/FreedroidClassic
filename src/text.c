@@ -708,37 +708,12 @@ DisplayChar (unsigned char c)
 	return;
     }
     
-    if ( isprint(c) )
-	{
+    if( c < ' ' || c > GetCurrentFont()->number_of_chars-1){
+        printf("l: %u of %u \n",c,GetCurrentFont()->number_of_chars);
+       c = '.';
+    }
 	if ( ! display_char_disabled ) 
 		PutChar ( Screen, MyCursorX, MyCursorY, c );
-	}
-    else if(c > 128)
-	{
-	if ( c < 0xE0 ) //then we are working on a ISO8859-15 higher case character
-		{
-		PutChar ( Screen, MyCursorX, MyCursorY - 3, 127 );
-		switch ( c )
-		    {
-		    case 0xc4: PutChar ( Screen, MyCursorX, MyCursorY, 'A' ); break;
-	            case 0xdc: PutChar ( Screen, MyCursorX, MyCursorY, 'U' ); break;
-		    case 0xcb: PutChar ( Screen, MyCursorX, MyCursorY, 'E' ); break;
-		    case 0xd6: PutChar ( Screen, MyCursorX, MyCursorY, 'O' ); break;
-		    }
-		c = 'A';
-		}
-	else {
-		PutChar ( Screen, MyCursorX, MyCursorY, 127 );
-		switch(c)
-			{
-			case 0xe4: PutChar ( Screen, MyCursorX, MyCursorY, 'a' ); break;
-		        case 0xfc: PutChar ( Screen, MyCursorX, MyCursorY, 'u' ); break;
-			case 0xeb: PutChar ( Screen, MyCursorX, MyCursorY, 'e' ); break;
-			case 0xf6: PutChar ( Screen, MyCursorX, MyCursorY, 'o' ); break;
-			}
-		c = 'a';
-	     }
-	}
 
     
     // DebugPrintf( 0 , "%c" , c );

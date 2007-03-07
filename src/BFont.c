@@ -25,7 +25,7 @@ BFont_Info *CurrentFont;
 void
 InitFont (BFont_Info * Font)
 {
-  int x = 0, i = 0;
+  unsigned int x = 0, i = 0;
   Uint32 sentry;
   SDL_Surface* tmp_char1;
 
@@ -43,16 +43,18 @@ InitFont (BFont_Info * Font)
   if (SDL_MUSTLOCK (Font->Surface))
     SDL_LockSurface (Font->Surface);
   x = 0;
-  while (x < (Font->Surface->w - 1))
+  while (x < (Font->Surface->w - 1) && i < MAX_CHARS_IN_FONT)
     {
       if (FdGetPixel (Font->Surface, x, 0) != sentry)
 	{
 	  Font->Chars[i].x = x;
 	  Font->Chars[i].y = 1;
 	  Font->Chars[i].h = Font->Surface->h;
-	  for (;
-	       FdGetPixel (Font->Surface, x, 0) != sentry
-	       && x < (Font->Surface->w); ++x);
+          while( x < (Font->Surface->w)){
+               if(FdGetPixel (Font->Surface, x, 0) == sentry)
+                   break;
+               x++;
+          }
 	  Font->Chars[i].w = (x - Font->Chars[i].x);
 
 	  //--------------------
@@ -60,7 +62,8 @@ InitFont (BFont_Info * Font)
 	  // output of this character.
 	  //
 	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , 32, 
-					    0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
+					    //0xFF000000 , 0x00FF0000  , 0x0000FF00 , 0x000000FF );
+					    0x000000FF , 0x0000FF00  , 0x00FF0000 , 0xFF000000 );
 
 	  SDL_SetAlpha( Font->Surface , 0 , 255 );
 	  SDL_SetColorKey( Font->Surface , 0 , 0 );
@@ -88,6 +91,7 @@ InitFont (BFont_Info * Font)
   Font->Chars[' '].y = 0;
   Font->Chars[' '].h = Font->Surface->h;
   Font->Chars[' '].w = Font->Chars['!'].w;
+  Font->number_of_chars = i;
 
   if (SDL_MUSTLOCK (Font->Surface))
     SDL_UnlockSurface (Font->Surface);
@@ -297,19 +301,18 @@ SetFontHeight (BFont_Info * Font, int height)
 
 /* Return the width of the "c" character */
 int
-CharWidth (BFont_Info * Font, int c)
+CharWidth (BFont_Info * Font, unsigned char c)
 {
-if(c > 128)
-	c = 'a';
 
-return Font->Chars[c].w;
+  if ( c < ' ' || c > Font->number_of_chars-1 ) c = '.';
+  return Font->Chars[c].w;
 }
 
 /* ----------------------------------------------------------------------
  * Puts a single char on the surface 
  * ---------------------------------------------------------------------- */
 int
-PutChar (SDL_Surface * Surface, int x, int y, int c)
+PutChar (SDL_Surface * Surface, int x, int y, unsigned char c)
 {
   return PutCharFont (Surface, CurrentFont, x, y, c);
 }; // int PutChar (SDL_Surface * Surface, int x, int y, int c)
@@ -318,7 +321,7 @@ PutChar (SDL_Surface * Surface, int x, int y, int c)
  * Puts a single char on the surface with the specified font 
  * ---------------------------------------------------------------------- */
 int
-PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
+PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned char c)
 {
   SDL_Rect dest;
   SDL_Rect clipping_rect;
@@ -327,6 +330,7 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
   dest.x = x;
   dest.y = y;
 
+  if ( c<' ' || c>Font->number_of_chars-1 ) c = '.';
   if ( ( c != ' ' ) && ( c != '\n' ) )
     {
       //--------------------
