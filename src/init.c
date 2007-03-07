@@ -1797,7 +1797,6 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . Enemy_Aim_Text=TRUE;
     GameConfig . Influencer_Refresh_Text=FALSE;
     GameConfig . Influencer_Blast_Text=TRUE;
-    strcpy ( GameConfig.Theme_SubPath , "lanzz_theme/" );
     GameConfig . Draw_Framerate=TRUE;
     GameConfig . Draw_Energy=FALSE;
     GameConfig . Draw_Position=FALSE;

@@ -114,7 +114,6 @@ typedef struct
     int StandardEnemyMessages_On_Off;
     int StandardInfluencerMessages_On_Off;
     int Mouse_Input_Permitted;
-    char Theme_SubPath[2000];
 
     //--------------------
     // Now we add all the variables for the current screen/hud
