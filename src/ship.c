@@ -457,8 +457,8 @@ ShowItemPicture (int PosX, int PosY, int Number )
 {
     SDL_Surface *tmp;
     SDL_Rect target;
-    char ConstructedFileName[5000];
-    char* fpath;
+    char ConstructedFileName[2048];
+    char fpath[2048];
     static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
     static int NumberOfImagesInPreviousRotation = 0 ;
     static int NumberOfImagesInThisRotation = 0 ;
@@ -500,8 +500,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    // new directory structure.
 	    //
 	    sprintf ( ConstructedFileName , "items/%s/portrait_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-	    fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-	    if ( fpath == NULL )
+	    if ( find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 1 ) )
 		Whole_Image = NULL ;
 	    else
 		Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -514,8 +513,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    {
 		DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from the 'bastian' dir... trying png..." );
 		sprintf ( ConstructedFileName , "items/%s/portrait_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-		if ( fpath == NULL )
+		if ( find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 1 ) )
 		    Whole_Image = NULL ;
 		else
 		    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -529,8 +527,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    {
 		DebugPrintf ( 1 , "\nNo luck trying to load .png item image series from the 'bastian' dir... trying 'classic' dir..." );
 		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.jpg" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-		if ( fpath == NULL )
+		if ( find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 1) )
 		    Whole_Image = NULL ;
 		else
 		    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -540,8 +537,7 @@ ShowItemPicture (int PosX, int PosY, int Number )
 	    {
 		DebugPrintf ( 1 , "\nNo luck trying to load .jpg item image series from 'classic' dir... trying png..." );
 		sprintf ( ConstructedFileName , "rotation_models/items/%s_%04d.png" , ItemMap[ Number ] . item_rotation_series_prefix , i+1 );
-		fpath = find_file_silent ( ConstructedFileName , GRAPHICS_DIR, FALSE );
-		if ( fpath == NULL )
+		if ( find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 1 ) )
 		    Whole_Image = NULL ;
 		else
 		    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
@@ -627,7 +623,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
     SDL_Surface *tmp;
     SDL_Rect target;
     char ConstructedFileName[5000];
-    char* fpath;
+char fpath[2048];
     static char LastImageSeriesPrefix[1000] = "NONE_AT_ALL";
 #define NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION 32
     static SDL_Surface *DroidRotationSurfaces[ NUMBER_OF_IMAGES_IN_DROID_PORTRAIT_ROTATION ] = { NULL } ;
@@ -674,7 +670,7 @@ ShowDroidPicture (int PosX, int PosY, int Number )
 	    // We must remember, that his is already loaded of course
 	    strcpy ( LastImageSeriesPrefix , Druidmap [ Number ] . droid_portrait_rotation_series_prefix );
 	    
-	    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	    find_file (ConstructedFileName , GRAPHICS_DIR, fpath, 0 );
 	    
 	    Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	    if ( Whole_Image == NULL )

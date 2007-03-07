@@ -341,7 +341,7 @@ EXTERN void ActSpecialField ( int player_num ) ;
 
 EXTERN void CountNumberOfDroidsOnShip ( void );
 EXTERN int LoadShip (char *filename);
-EXTERN int SaveShip(char *filename);
+EXTERN int SaveShip(const char *filename);
 EXTERN void GetAllAnimatedMapTiles (Level Lev);
 EXTERN int GetCrew (char *shipname);
 
@@ -615,9 +615,7 @@ EXTERN void ReadValueFromStringWithDefault( char* SearchBeginPointer , const cha
 EXTERN void ReadValueFromString( char* SearchBeginPointer , const char* ValuePreceedText , const char* FormatString , void* TargetValue , char* EndOfSearchSectionPointer );
 EXTERN char* ReadAndMallocAndTerminateFile( char* filename , const char* File_End_String ) ;
 EXTERN char* LocateStringInData ( char* SearchBeginPointer, const char* SearchTextPointer ) ;
-EXTERN char * find_file (char *fname, char *datadir, int use_theme);
-EXTERN char * find_file_silent (char *fname, char *datadir, int use_theme);
-EXTERN char * find_file_for_callbacks (char *fname, char *datadir, int use_theme);
+EXTERN int find_file (char *fname, char *datadir, char * File_Path, int silent);
 EXTERN void CheckForTriggeredEventsAndStatements ( int player_num );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);

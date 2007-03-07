@@ -1967,12 +1967,12 @@ use underground lighting: %d\n",
  * saves whole games.
  * ---------------------------------------------------------------------- */
 int 
-SaveShip(char *filename)
+SaveShip(const char *filename)
 {
-    char *LevelMem;	 // linear memory for one Level 
-    char *MapHeaderString;
-    FILE *ShipFile;        // to this file we will save all the ship data...
-    int level_anz;
+    char *LevelMem = NULL;	 // linear memory for one Level 
+    char *MapHeaderString = NULL;
+    FILE *ShipFile = NULL;         // to this file we will save all the ship data...
+    int level_anz = 0;
     int array_i, array_num;
     int i;
     
@@ -1990,7 +1990,7 @@ SaveShip(char *filename)
     //--------------------
     // We open the ship file 
     //
-    if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
+    if ( ( ShipFile = fopen ( filename , "w" ) ) == NULL ) 
     {
 	fprintf( stderr , "\nShip file filename: %s\n" , filename );
 	GiveStandardErrorMessage ( __FUNCTION__  , "Error opening ship file." ,
@@ -2717,7 +2717,7 @@ ReviveAllDroidsOnShip ( void )
 int
 GetCrew (char *filename)
 {
-    char *fpath;
+    char fpath[2048];
     char *MainDroidsFilePointer;
     char *DroidSectionPointer;
     char *EndOfThisDroidSectionPointer;
@@ -2747,7 +2747,8 @@ GetCrew (char *filename)
     //For that, we must get it into memory first.
     //The procedure is the same as with LoadShip
     //
-    fpath = find_file (filename, MAP_DIR, FALSE);
+   
+    find_file (filename, MAP_DIR, fpath, 0);
     
     MainDroidsFilePointer = ReadAndMallocAndTerminateFile( fpath , END_OF_DROID_DATA_STRING ) ;
     

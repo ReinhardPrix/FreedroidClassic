@@ -283,8 +283,8 @@ LoadAndFadeInBackgroundMusic ( void )
 #else
 
 	static int MOD_Music_Channel = -1;
-	char* fpath;
-	char filename_raw[ 5000 ];
+	char fpath[2048];
+	char filename_raw[ 2048 ];
 
 	if ( !sound_on )
 		return ;
@@ -318,7 +318,7 @@ LoadAndFadeInBackgroundMusic ( void )
 
 	strcpy ( filename_raw , "music/" );
 	strcat ( filename_raw , NewMusicTargetFileName );
-	fpath = find_file_for_callbacks ( filename_raw , SOUND_DIR, FALSE );
+	find_file ( filename_raw , SOUND_DIR, fpath, 0 );
 	Loaded_MOD_Files [ 0 ] = Mix_LoadMUS( fpath );
 	if ( Loaded_MOD_Files[ 0 ] == NULL )
 		{
@@ -545,12 +545,11 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 		while ( extensions [ i ] != NULL )
 			{
 			strcpy ( extension, extensions [ i ] );
-			fpath = find_file_silent ( Temp_Filename , SOUND_DIR, FALSE );
 			//--------------------
 			// find_file_silent may return a NULL pointer, in case the file name
 			// composed hasn't been found.  We need to catch that case of course.
 			//
-			if ( fpath != NULL )
+			if ( find_file ( Temp_Filename , SOUND_DIR, fpath, 1 ) )
 				{
 				One_Shot_WAV_File = Mix_LoadWAV ( fpath ) ;
 				if ( One_Shot_WAV_File != NULL )
@@ -792,7 +791,7 @@ play_sample_using_WAV_cache_v( char* SoundSampleFileName , int With_Waiting , in
 		//
 		dynamic_WAV_cache[ next_free_position_in_cache ] = NULL ;
 		strcpy ( Temp_Filename , SoundSampleFileName );
-		fpath = find_file ( Temp_Filename , SOUND_DIR, FALSE );
+		find_file (Temp_Filename , SOUND_DIR, fpath, 0 );
 		dynamic_WAV_cache[ next_free_position_in_cache ] = Mix_LoadWAV( fpath );
 		if ( dynamic_WAV_cache [ next_free_position_in_cache ] == NULL )
 			{

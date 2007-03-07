@@ -568,7 +568,7 @@ void
 ShowGenericButtonFromList ( int ButtonIndex )
 { 
     SDL_Surface *tmp;
-    char *fpath;
+char fpath[2048];
     SDL_Rect Temp_Blitting_Rect;
     
     //--------------------
@@ -601,7 +601,7 @@ button index given exceeds the number of buttons defined in freedroid.",
     if ( ( AllMousePressButtons [ ButtonIndex ] . button_image . surface == NULL ) &&
 	 ( ! AllMousePressButtons [ ButtonIndex ] . button_image . texture_has_been_created ) )
     {
-	fpath = find_file ( AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, FALSE);
+	find_file (AllMousePressButtons[ ButtonIndex ] . button_image_file_name , GRAPHICS_DIR, fpath, 0);
 	tmp = our_IMG_load_wrapper( fpath );
 	if ( tmp == NULL )
 	{
@@ -611,7 +611,6 @@ An image file for a button that should be displayed on the screen couldn't\n\
 be successfully loaded into memory.\n\
 This is an indication of a severe bug/installation problem of freedroid.",
 				       PLEASE_INFORM, IS_WARNING_ONLY );
-	    fprintf ( stderr, "Surf %x, Tex was created %i, using gl %i\n", AllMousePressButtons [ ButtonIndex ] . button_image . surface, AllMousePressButtons [ ButtonIndex ] . button_image . texture_has_been_created, use_open_gl);
 	return;
 	}
 	AllMousePressButtons[ ButtonIndex ] . button_image . surface = our_SDL_display_format_wrapperAlpha ( tmp );
@@ -715,52 +714,19 @@ char *our_config_dir = NULL;
 
 /* -----------------------------------------------------------------
  * find a given filename in subdir relative to FD_DATADIR, 
- * using theme subdir if use_theme==TRUE
  *
  * if you pass NULL as subdir, it will be ignored
  *
- * returns pointer to _static_ string array File_Path, which 
- * contains the full pathname of the file.
- *
- * !! do never try to free the returned string !!
+ * fills in the (ALLOC'd) string and returns 0 if okay, 1 on error
  *
  * ----------------------------------------------------------------- */
-char *
-find_file (char *fname, char *subdir, int use_theme)
+int
+find_file (char *fname, char *subdir, char * File_Path, int silent)
 {
-    //--------------------
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
-    // This hack will only work if there is NEVER ANY NESTED use of find_file!!
-    // Otherwise one file is found, a new search is started and overwrites the
-    // previous file name.  If that one is then used again, unpredictable results
-    // may occur.
-    //
-    // But the benefit of it is, of course, that memory leaking will be reduced,
-    // even if the returned string is never freed, as it must be to prevent
-    // segmentation faults this way anyway!
-    //
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
-    // 
-    // Because of the things mentioned above, FIND_FILE MUST NOT EVER BE USED
-    // FROM A CALLBACK FUNCTION, cause then it migth be A NESTED FUNCTION CALL!
-    //
-    // IN Case of a Callback function, best use a separate version of this function,
-    // best called find_file_for_callbacks.
-    //
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
     int i;
-    static char File_Path[5000];   /* hope this will be enough */
     FILE *fp;  // this is the file we want to find?
     
+    *File_Path=0;
     if (!fname)
     {
 	GiveStandardErrorMessage ( __FUNCTION__  , "\
@@ -774,20 +740,18 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
     for ( i = 0 ; i < 2 ; i++ )
     {
 	if (i==0)
-	    strcpy (File_Path, "..");   /* first try local subdirs */
+	    sprintf ((File_Path), "..");   /* first try local subdirs */
 	if (i==1)
-	    strcpy (File_Path, FD_DATADIR); /* then the DATADIR */
+	    sprintf ((File_Path), "%s", FD_DATADIR); /* then the DATADIR */
 	
-	strcat (File_Path, "/");
-	strcat (File_Path, subdir);
-	strcat (File_Path, "/");
+	strcat ((File_Path), "/");
+	strcat ((File_Path), subdir);
+	strcat ((File_Path), "/");
 	
-	if (use_theme)
-	    strcat (File_Path, GameConfig.Theme_SubPath);
 	
-	strcat (File_Path, fname);
+	strcat ((File_Path), fname);
 	
-	if ( (fp = fopen (File_Path, "rb")) != NULL)  /* found it? */
+	if ( (fp = fopen ((File_Path), "r")) != NULL)  /* found it? */
 	{
 	    fclose (fp);
 	    break;
@@ -796,219 +760,22 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 	{
 	    if ( i == 0 )
 		DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
-	    else
+	    else if ( ! silent )
 	    {
 		DebugPrintf ( -4 , "The file name was: %s.\n" , fname );
 		GiveStandardErrorMessage ( __FUNCTION__  , "File not found even in data dir (2nd attempt).", 
 					   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+		return 1;
 	    }
+	    else if (silent) return 1;
 	}
     } // for i 
     
     // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
     
-    return (File_Path);
-    
+    return 0;    
 }; // char * find_file ( ... )
 
-/* -----------------------------------------------------------------
- * find a given filename in subdir relative to FD_DATADIR, 
- * using theme subdir if use_theme==TRUE
- *
- * if you pass NULL as subdir, it will be ignored
- *
- * returns pointer to _static_ string array File_Path, which 
- * contains the full pathname of the file.
- *
- * !! do never try to free the returned string !!
- *
- * ----------------------------------------------------------------- */
-char *
-find_file_silent (char *fname, char *subdir, int use_theme)
-{
-    //--------------------
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
-    // This hack will only work if there is NEVER ANY NESTED use of find_file!!
-    // Otherwise one file is found, a new search is started and overwrites the
-    // previous file name.  If that one is then used again, unpredictable results
-    // may occur.
-    //
-    // But the benefit of it is, of course, that memory leaking will be reduced,
-    // even if the returned string is never freed, as it must be to prevent
-    // segmentation faults this way anyway!
-    //
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
-    // 
-    // Because of the things mentioned above, FIND_FILE MUST NOT EVER BE USED
-    // FROM A CALLBACK FUNCTION, cause then it migth be A NESTED FUNCTION CALL!
-    //
-    // IN Case of a Callback function, best use a separate version of this function,
-    // best called find_file_for_callbacks.
-    //
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    // 
-    // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-    //
-    int i;
-    static char File_Path[5000];   /* hope this will be enough */
-    FILE *fp;  // this is the file we want to find?
-
-    DebugPrintf ( 2 , "\n%s(): received fname=%s subdir=%s use_theme=%d." ,
-		  __FUNCTION__ , fname , subdir , use_theme );
-    
-    if (!fname)
-    {
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-A find_file call has been issued to generate the full path name of a\n\
-certain file, but the file name given is an empty string!\n\
-This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
-    }
-    if (!subdir)
-	subdir = "";
-    
-    for ( i = 0 ; i < 2 ; i++ )
-    {
-	if (i==0)
-	    strcpy (File_Path, "..");   // first try local subdirs 
-	if (i==1)
-	    strcpy (File_Path, FD_DATADIR); // then the DATADIR 
-	
-	strcat (File_Path, "/");
-	strcat (File_Path, subdir);
-	strcat (File_Path, "/");
-	
-	if ( use_theme )
-	    strcat ( File_Path , GameConfig . Theme_SubPath );
-	
-	strcat ( File_Path , fname );
-	
-	if ( ( fp = fopen ( File_Path , "rb" ) ) != NULL )  // found it? 
-	{
-	    fclose (fp);
-	    break;
-	}
-	else
-	{
-	    //--------------------
-	    // This is the *silent* version of the find-file function,
-	    // so we don't do anything here...
-	    //
-	    if ( i >= 1 )
-	    {
-		DebugPrintf ( 1 , "\n%s(): returning NULL!" , __FUNCTION__ );
-		return ( NULL );
-	    }
-	}
-    } // for i 
-    
-    // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
-    
-    DebugPrintf ( 2 , "\n%s(): returning suposedly non-NULL!" , __FUNCTION__ );
-    return ( File_Path );
-    
-}; // char * find_file_silent ( ... )
-
-/* -----------------------------------------------------------------
- * find a given filename in subdir relative to FD_DATADIR, 
- * using theme subdir if use_theme==TRUE
- *
- * if you pass NULL as subdir, it will be ignored
- *
- * returns pointer to _static_ string array File_Path, which 
- * contains the full pathname of the file.
- *
- * !! do never try to free the returned string !!
- *
- * ----------------------------------------------------------------- */
-char *
-find_file_for_callbacks (char *fname, char *subdir, int use_theme)
-{
-
-  //--------------------
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  // 
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  //
-  // This hack will only work if there is NEVER ANY NESTED use of find_file!!
-  // Otherwise one file is found, a new search is started and overwrites the
-  // previous file name.  If that one is then used again, unpredictable results
-  // may occur.
-  //
-  // But the benefit of it is, of course, that memory leaking will be reduced,
-  // even if the returned string is never freed, as it must be to prevent
-  // segmentation faults this way anyway!
-  //
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  // 
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  //
-  // 
-  // Because of the things mentioned above, FIND_FILE MUST NOT EVER BE USED
-  // FROM A CALLBACK FUNCTION, cause then it migth be A NESTED FUNCTION CALL!
-  //
-  // IN Case of a Callback function, best use a separate version of this function,
-  // best called find_file_for_callbacks.
-  //
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  // 
-  // WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! WARNING! 
-  //
-  int i;
-  static char File_Path[5000];   /* hope this will be enough */
-  FILE *fp;  // this is the file we want to find?
-
-  if (!fname)
-    {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
-A find_file call has been issued to generate the full path name of a\n\
-certain file, but the file name given is an empty string!\n\
-This is indicates a severe bug in Freedroid.",
-				 PLEASE_INFORM, IS_FATAL );
-    }
-  if (!subdir)
-    subdir = "";
-
-  for ( i = 0 ; i < 2 ; i++ )
-    {
-      if (i==0)
-	strcpy (File_Path, "..");   /* first try local subdirs */
-      if (i==1)
-	strcpy (File_Path, FD_DATADIR); /* then the FD_DATADIR */
-
-      strcat (File_Path, "/");
-      strcat (File_Path, subdir);
-      strcat (File_Path, "/");
-
-      if (use_theme)
-	strcat (File_Path, GameConfig.Theme_SubPath);
-
-      strcat (File_Path, fname);
-      
-      if ( (fp = fopen (File_Path, "rb")) != NULL)  /* found it? */
-	{
-	  fclose (fp);
-	  break;
-	}
-      else
-	{
-	  if ( i == 0 )
-	    DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
-	  else
-	    GiveStandardErrorMessage ( __FUNCTION__  , "File not found even in data dir (2nd attempt).", NO_NEED_TO_INFORM , IS_WARNING_ONLY );
-	}
-    } // for i 
-
-  // DebugPrintf( 0 , "\nfind_file determined file path: %s." , File_Path );
-
-  return (File_Path);
-	
-}; // char * find_file_for_callbacks ( ... )
 
 /* ----------------------------------------------------------------------
  * This function realises the Pause-Mode: the game process is halted,

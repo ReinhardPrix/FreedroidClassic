@@ -2352,7 +2352,7 @@ blit_open_gl_light_radius ( void )
 
     static int first_call = TRUE ;
     int i, j ;
-    char* fpath;
+char fpath[2048];
     char constructed_file_name[2000];
     int our_height, our_width, our_max_height, our_max_width;
     int light_strength;
@@ -2405,7 +2405,7 @@ blit_open_gl_light_radius ( void )
 	for ( i = 0 ; i < NUMBER_OF_SHADOW_IMAGES ; i ++ )
 	{
 	    sprintf ( constructed_file_name , "light_radius_chunks/iso_light_radius_darkness_%04d.png" , i + 1 );
-	    fpath = find_file ( constructed_file_name , GRAPHICS_DIR , FALSE );
+	    find_file (constructed_file_name , GRAPHICS_DIR , fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( light_radius_chunk [ i ] ) , TRUE ) ;
 	    tmp = light_radius_chunk [ i ] . surface ;
 	    light_radius_chunk [ i ] . surface = SDL_DisplayFormatAlpha ( light_radius_chunk [ i ] . surface ) ; 
@@ -2583,7 +2583,7 @@ blit_special_background ( int background_code )
 {
     SDL_Surface* tmp_surf_1;
     SDL_Rect src_rect;
-    char *fpath;
+char fpath[2048];
 
     if ( background_code >= ALL_KNOWN_BACKGROUNDS ) 
 	{
@@ -2712,7 +2712,7 @@ blit_special_background ( int background_code )
     {
 	background_has_been_loaded [ background_code ] = 1; 
 	    
-	    fpath = find_file ( background_filenames [ background_code ] , GRAPHICS_DIR , FALSE );
+	    find_file (background_filenames [ background_code ] , GRAPHICS_DIR , fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( our_backgrounds [ background_code ] ) , FALSE ) ;
 	    
 	    //--------------------

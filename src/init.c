@@ -269,7 +269,7 @@ This means a severe bug...",
 void
 PlayATitleFile ( char* Filename )
 {
-    char* fpath;
+char fpath[2048];
     char* TitleFilePointer;
     int ScrollEndLine = 480;	// endpoint for scrolling...
     char* NextSubsectionStartPointer;
@@ -285,7 +285,7 @@ PlayATitleFile ( char* Filename )
     //--------------------
     // Now its time to start loading the title file...
     //
-    fpath = find_file ( Filename , finaldir , FALSE );
+    find_file (Filename , finaldir , fpath, 0 );
     TitleFilePointer = 
 	ReadAndMallocAndTerminateFile( fpath , "*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
     
@@ -436,7 +436,8 @@ Get_Bullet_Data ( char* DataPointer )
     {
 	DebugPrintf (1, "\n\nFound another Bullet specification entry!  Lets add that to the others!");
 	BulletPointer ++; // to avoid doubly taking this entry
-	
+	Bulletmap[BulletIndex].phases = 1;
+	Bulletmap[BulletIndex].phase_changes_per_second = 1;
 	BulletIndex++;
     }
     
@@ -733,7 +734,7 @@ void
 GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
 {
   char* EventSectionPointer;
-  char* fpath;
+char fpath[2048];
 
   //--------------------
   // At first we clear out any garbage that might randomly reside in the current event
@@ -744,7 +745,7 @@ GetEventsAndEventTriggers ( char* EventsAndEventTriggersFilename )
   //--------------------
   // Now its time to start loading the event file...
   //
-  fpath = find_file ( EventsAndEventTriggersFilename , MAP_DIR , FALSE );
+  find_file (EventsAndEventTriggersFilename , MAP_DIR , fpath, 0 );
   EventSectionPointer = 
     ReadAndMallocAndTerminateFile( fpath , 
 				   "*** END OF EVENT ACTION AND EVENT TRIGGER FILE *** LEAVE THIS TERMINATOR IN HERE ***" 
@@ -1117,7 +1118,7 @@ Get_Robot_Data ( void* DataPointer )
 void
 Init_Game_Data ()
 {
-  char *fpath;
+char fpath[2048];
   char *Data;
 
 #define INIT_GAME_DATA_DEBUG 1 
@@ -1125,7 +1126,7 @@ Init_Game_Data ()
   //--------------------
   // First we load the general game constants
   //
-  fpath = find_file ( "freedroid.ruleset" , MAP_DIR, FALSE);
+  find_file ("freedroid.ruleset" , MAP_DIR, fpath, 0);
   DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s.  Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ); 
@@ -1135,7 +1136,7 @@ Init_Game_Data ()
   //--------------------
   // Load magical items informations
   //
-  fpath = find_file ( "freedroid.prefix_archetypes" , MAP_DIR , FALSE );
+  find_file ("freedroid.prefix_archetypes" , MAP_DIR , fpath, 0 );
   DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
@@ -1146,7 +1147,7 @@ Init_Game_Data ()
   //--------------------
   // Item archetypes must be loaded too
   //
-  fpath = find_file ( "freedroid.item_archetypes" , MAP_DIR , FALSE );
+  find_file ("freedroid.item_archetypes" , MAP_DIR , fpath, 0 );
   DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
@@ -1156,7 +1157,7 @@ Init_Game_Data ()
   //--------------------
   // Time to eat some droid archetypes...
   //
-  fpath = find_file ( "freedroid.droid_archetypes" , MAP_DIR , FALSE );
+  find_file ("freedroid.droid_archetypes" , MAP_DIR , fpath, 0 );
   DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
@@ -1166,7 +1167,7 @@ Init_Game_Data ()
   //--------------------
   // Now finally it's time for all the bullet data...
   //
-  fpath = find_file ( "freedroid.bullet_archetypes" , MAP_DIR, FALSE);
+  find_file ("freedroid.bullet_archetypes" , MAP_DIR, fpath, 0);
   DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;

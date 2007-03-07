@@ -2440,7 +2440,9 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	    case SAVE_LEVEL_POSITION:
 		while (EnterPressed() || SpacePressed() ) ;
 		close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-		SaveShip(find_file("Asteroid.maps", MAP_DIR, FALSE));
+		char fp[2048];
+		find_file("Asteroid.maps", MAP_DIR, fp, 0);
+		SaveShip(fp);
 		CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		our_SDL_flip_wrapper ( Screen );
 		while (!EnterPressed() && !SpacePressed() ) ;
@@ -3486,7 +3488,7 @@ Highlight_Current_Block(void)
 {
     Level EditLevel;
     static iso_image level_editor_cursor = { NULL , 0 , 0 } ;
-    char* fpath;
+    char fpath[2048];
     
     EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
 #define HIGHLIGHTCOLOR 255
@@ -3497,7 +3499,7 @@ Highlight_Current_Block(void)
     //
     if ( level_editor_cursor . surface == NULL )
     {
-	fpath = find_file ( "level_editor_floor_cursor.png" , GRAPHICS_DIR, FALSE );
+	find_file ( "level_editor_floor_cursor.png" , GRAPHICS_DIR, fpath, 0 );
 	get_iso_image_from_file_and_path ( fpath , & ( level_editor_cursor ) , TRUE ) ;
 	if ( level_editor_cursor . surface == NULL )
 	{
@@ -3525,7 +3527,7 @@ draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int 
     float dist;
     int i;
     static iso_image level_editor_dot_cursor = UNLOADED_ISO_IMAGE ;
-    char* fpath;
+    char fpath[2048];
     
     //--------------------
     // Maybe, if the level editor dot cursor has not yet been loaded,
@@ -3533,7 +3535,7 @@ draw_connection_between_tiles ( float x1 , float y1 , float x2 , float y2 , int 
     //
     if ( ( level_editor_dot_cursor . surface == NULL ) && ( ! level_editor_dot_cursor . texture_has_been_created ) )
     {
-	fpath = find_file ( "level_editor_waypoint_dot.png" , GRAPHICS_DIR, FALSE );
+	find_file ( "level_editor_waypoint_dot.png" , GRAPHICS_DIR, fpath, 0 );
 	get_iso_image_from_file_and_path ( fpath , & ( level_editor_dot_cursor ) , TRUE ) ;
 	if ( level_editor_dot_cursor . surface == NULL )
 	{
@@ -3603,7 +3605,7 @@ ShowWaypoints( int PrintConnectionList , int mask )
     char TextAddition[1000];
     Level EditLevel;
     static iso_image level_editor_waypoint_cursor [ 2 ] = { UNLOADED_ISO_IMAGE , UNLOADED_ISO_IMAGE } ;
-    char* fpath;
+    char fpath[2048];
     waypoint *this_wp;
     
     EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -3619,9 +3621,9 @@ ShowWaypoints( int PrintConnectionList , int mask )
 	if ( ( level_editor_waypoint_cursor [ i ] . surface == NULL ) && ( ! level_editor_waypoint_cursor [ i ] . texture_has_been_created ) )
 	{
 	    if ( i == 0 )
-		fpath = find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
+		find_file ( "level_editor_waypoint_cursor.png" , GRAPHICS_DIR, fpath, 0 );
 	    else
-		fpath = find_file ( "level_editor_norand_waypoint_cursor.png" , GRAPHICS_DIR, FALSE );
+		find_file ( "level_editor_norand_waypoint_cursor.png" , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( level_editor_waypoint_cursor [ i ] ) , TRUE ) ;
 	    
 	    if ( level_editor_waypoint_cursor [ i ] . surface == NULL )
@@ -3737,7 +3739,7 @@ ShowMapLabels( int mask )
     Level EditLevel;
     static iso_image map_label_indicator = UNLOADED_ISO_IMAGE ;
     static int first_function_call = TRUE ;
-    char* fpath;
+    char fpath[2048];
     EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
     
     //--------------------
@@ -3748,7 +3750,7 @@ ShowMapLabels( int mask )
     if ( first_function_call )
     {
 	first_function_call = FALSE;
-	fpath = find_file ( "level_editor_map_label_indicator.png" , GRAPHICS_DIR, FALSE);
+	find_file ( "level_editor_map_label_indicator.png" , GRAPHICS_DIR, fpath, 0);
 	get_iso_image_from_file_and_path ( fpath , & ( map_label_indicator ) , TRUE );
 	
 	if ( use_open_gl ) 
@@ -4723,7 +4725,9 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
-	    SaveShip(find_file("Asteroid.maps", MAP_DIR, FALSE));
+	    char fp[2048];
+	    find_file("Asteroid.maps", MAP_DIR, fp, 0);
+	    SaveShip(fp);
 	    
 	    // CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 	    // our_SDL_flip_wrapper ( Screen );

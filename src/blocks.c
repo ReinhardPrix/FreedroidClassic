@@ -87,7 +87,7 @@ void
 Load_Blast_Surfaces( void )
 {
   int j;
-  char *fpath;
+  char fpath[2048] = "";
   char constructed_filename[5000];
 
   //--------------------
@@ -97,23 +97,31 @@ Load_Blast_Surfaces( void )
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
       sprintf ( constructed_filename , "blasts/iso_blast_bullet_%04d.png" , j + 1 );
-      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      find_file ( constructed_filename , GRAPHICS_DIR , fpath, 0 );
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 0 ] . image [ j ] ) , TRUE ) ;
     }
 
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
       sprintf ( constructed_filename , "blasts/iso_blast_droid_%04d.png" , j + 1 );
-      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      find_file ( constructed_filename , GRAPHICS_DIR , fpath, 0 );
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 1 ] . image [ j ] ) , TRUE ) ;
     }
 
   for ( j = 0 ; j < PHASES_OF_EACH_BLAST ; j ++ )
     {
       sprintf ( constructed_filename , "blasts/iso_blast_exterminator_%04d.png" , j + 1 );
-      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+      find_file ( constructed_filename , GRAPHICS_DIR , fpath, 0 );
       get_iso_image_from_file_and_path ( fpath , & ( Blastmap [ 2 ] . image [ j ] ) , TRUE ) ;
     }
+
+/*Now also set up values for blasts*/
+Blastmap[0].phases = 6;
+Blastmap[1].phases = 9;
+Blastmap[2].phases = 9;
+Blastmap[0].total_animation_time = 0.6;
+Blastmap[1].total_animation_time = 1.0;
+Blastmap[2].total_animation_time = 1.0;
 
 }; // void Load_Blast_Surfaces( void )
 
@@ -126,7 +134,7 @@ load_item_surfaces_for_item_type ( int item_type )
 {
   SDL_Surface* original_img;
   SDL_Surface* tmp_surf2 = NULL;
-  char *fpath;
+  char fpath[2048];
   char our_filename [ 2000 ] ;
   
   //--------------------
@@ -134,7 +142,7 @@ load_item_surfaces_for_item_type ( int item_type )
   //
   sprintf ( our_filename , "items/%s" , ItemMap [ item_type ] . item_inv_file_name );
 
-  fpath = find_file ( our_filename , GRAPHICS_DIR , FALSE );
+  find_file ( our_filename , GRAPHICS_DIR , fpath, 0 );
   original_img = NULL ;
   original_img = IMG_Load( fpath ); 
   if ( original_img == NULL )
@@ -236,7 +244,7 @@ void
 try_to_load_ingame_item_surface ( int item_type )
 {
   char ConstructedFileName[5000];
-  char* fpath;
+  char fpath[2048];
   SDL_Surface *Whole_Image;
 
   //--------------------
@@ -261,7 +269,7 @@ Surface has been loaded already!",
   // new directory structure.
   //
   sprintf ( ConstructedFileName , "items/%s/ingame.png" , ItemMap[ item_type ] . item_rotation_series_prefix );
-  fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+  find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 0 );
   Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
 	  
   //--------------------
@@ -337,13 +345,13 @@ void
 Load_Mouse_Move_Cursor_Surfaces( void )
 {
   int j;
-  char *fpath;
+  char fpath[2048];
   char our_filename[2000] = "";
 
   for ( j = 0 ; j < NUMBER_OF_MOUSE_CURSOR_PICTURES ; j++ )
     {
       sprintf ( our_filename , "mouse_move_cursor_%d.png" , j );
-      fpath = find_file ( our_filename , GRAPHICS_DIR , FALSE );
+      find_file ( our_filename , GRAPHICS_DIR , fpath, 0 );
       
       get_iso_image_from_file_and_path ( fpath , & ( MouseCursorImageList [ j ] ) , TRUE ) ;
 
@@ -367,7 +375,7 @@ Load_Skill_Level_Button_Surfaces( void )
   SDL_Rect Target;
   int i=0;
   int j;
-  char *fpath;
+  char fpath[2048];
 
   //--------------------
   // Maybe this function has been called before.  Then we do not
@@ -378,7 +386,7 @@ Load_Skill_Level_Button_Surfaces( void )
   //--------------------
   // Now we proceed to load all the skill circle buttons.
   //
-  fpath = find_file ( SKILL_LEVEL_BUTTON_FILE , GRAPHICS_DIR, TRUE);
+  find_file ( SKILL_LEVEL_BUTTON_FILE , GRAPHICS_DIR, fpath, 0);
 
   Whole_Image = our_IMG_load_wrapper( fpath ); // This is a surface with alpha channel, since the picture is one of this type
   SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
@@ -420,7 +428,7 @@ void
 iso_load_bullet_surfaces ( void )
 {
   int i , j , k ;
-  char *fpath;
+  char fpath[2048];
   char constructed_filename[ 5000 ];
   char* bullet_identifiers[] =
     {
@@ -466,7 +474,7 @@ iso_load_bullet_surfaces ( void )
 	      // We construct the file name
 	      //
 	      sprintf ( constructed_filename , "bullets/iso_bullet_%s_%02d_%04d.png" , bullet_identifiers [ i ] , k , j + 1 );
-	      fpath = find_file ( constructed_filename , GRAPHICS_DIR , FALSE );
+	      find_file ( constructed_filename , GRAPHICS_DIR , fpath, 0 );
 
 	      get_iso_image_from_file_and_path ( fpath , & ( Bulletmap [ i ] . image [ k ] [ j ] ) , TRUE ) ;
 
@@ -484,7 +492,7 @@ void
 LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
 {
   SDL_Surface* Whole_Image;
-  char *fpath;
+  char fpath[2048];
   char AssembledFileName [ 2000 ] ;
 
   //--------------------
@@ -498,7 +506,7 @@ LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
   //
   strcpy ( AssembledFileName , "skill_icons/" );
   strcat ( AssembledFileName , SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_name );
-  fpath = find_file ( AssembledFileName , GRAPHICS_DIR, FALSE );
+  find_file ( AssembledFileName , GRAPHICS_DIR, fpath, 0 );
 
   //--------------------
   // Now we can load and prepare the image and that's it
@@ -1051,7 +1059,7 @@ LoadAndPrepareEnemyRotationModelNr ( int ModelNr )
 {
     char ConstructedFileName[5000];
     int i, j;
-    char *fpath;
+    char fpath[2048];
     static int FirstCallEver = TRUE ;
     static int EnemyFullyPrepared [ ENEMY_ROTATION_MODELS_AVAILABLE ] ;
     int source_direction_code;
@@ -1119,7 +1127,7 @@ Freedroid received a rotation model number that does not exist!",
 	    sprintf ( ConstructedFileName , "droids/%s/ingame_%04d.png" , PrefixToFilename [ ModelNr ] ,
 		      ( ModelMultiplier [ ModelNr ] * i ) + 1 );
 	    DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-	    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+	    find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ 0 ] ) , TRUE ) ;
 	    
 	    //--------------------
@@ -1252,7 +1260,7 @@ Freedroid received a rotation model number that does not exist!",
 		
 		
 		DebugPrintf ( 1 , "\nConstructedFileName = %s " , ConstructedFileName );
-		fpath = find_file ( ConstructedFileName , GRAPHICS_DIR, FALSE );
+		find_file ( ConstructedFileName , GRAPHICS_DIR, fpath, 0 );
 		get_iso_image_from_file_and_path ( fpath , & ( enemy_iso_images [ ModelNr ] [ i ] [ j ] ) , TRUE ) ;
 		
 		//--------------------
@@ -4761,7 +4769,7 @@ init_obstacle_data( void )
  * ---------------------------------------------------------------------- */ 
 void load_all_obstacles ( void ) {
     int i;
-    char *fpath;
+    char fpath[2048];
     char ConstructedFileName[2000];
     char shadow_file_name[2000];
 
@@ -4774,7 +4782,7 @@ void load_all_obstacles ( void ) {
 	//
 	strcpy ( ConstructedFileName , "obstacles/" );
 	strcat ( ConstructedFileName , obstacle_map [ i ] . filename ) ;
-	fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+	find_file ( ConstructedFileName , GRAPHICS_DIR , fpath, 0);
 	
 	if ( use_open_gl )
 	{
@@ -4802,8 +4810,7 @@ void load_all_obstacles ( void ) {
 	    strcat ( shadow_file_name , "shadow_" ) ;
 	    strcat ( shadow_file_name , & ( ConstructedFileName [ strlen ( ConstructedFileName ) - 8 ] ) ) ;
 	    DebugPrintf ( 2 , "\n%s(): shadow file name: %s " , __FUNCTION__ , shadow_file_name ); 
-	    fpath = find_file_silent ( shadow_file_name , GRAPHICS_DIR , FALSE );
-	    if ( fpath == NULL ) 
+	    if ( find_file ( shadow_file_name , GRAPHICS_DIR , fpath, 1 )) 
 	    {
 		obstacle_map [ i ] . shadow_image . surface = NULL ;
 		obstacle_map [ i ] . shadow_image . texture_has_been_created = FALSE ;
@@ -4834,7 +4841,7 @@ void load_all_obstacles ( void ) {
 void
 load_one_isometric_floor_tile ( int tile_type ) 
 {
-    char *fpath;
+    char fpath[2048];
     char ConstructedFileName[2000];
     
     //--------------------
@@ -4842,7 +4849,7 @@ load_one_isometric_floor_tile ( int tile_type )
     //
     strcpy ( ConstructedFileName , "floor_tiles/" );
     strcat ( ConstructedFileName , floor_tile_filenames [ tile_type ] );
-    fpath = find_file ( ConstructedFileName , GRAPHICS_DIR , FALSE );
+    find_file ( ConstructedFileName , GRAPHICS_DIR , fpath, 0);
     
     if ( use_open_gl )
     {

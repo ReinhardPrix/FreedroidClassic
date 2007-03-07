@@ -671,7 +671,9 @@ LoadGame( void )
 	{
 	    clear_player_inventory_and_stats ( ) ;
 	    UpdateAllCharacterStats ( 0 ) ;
-	    LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	    char fp[2048];
+	    find_file ( "Asteroid.maps", MAP_DIR, fp, 0 );
+	    LoadShip ( fp ) ;
 	    PrepareStartOfNewCharacter (  ) ;
 	}
 	return ( ERR ) ;

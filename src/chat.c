@@ -420,7 +420,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     char *TempMessage;
     item NewItem;
     char tmp_filename [ 5000 ] ;
-    char* fpath;
+    char fpath[2048];
     int i;
     int mis_num , mis_diary_entry_num;
     
@@ -578,7 +578,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	strcat ( tmp_filename , ".dialog" );
 	char finaldir[50];
 	sprintf(finaldir, "%s%s", DIALOG_DIR, language_dirs[GameConfig.language]);
-	fpath = find_file ( tmp_filename , finaldir, FALSE);
+	find_file (tmp_filename , finaldir, fpath, 0);
 	
 	for ( i = 0 ; i < MAX_DIALOGUE_OPTIONS_IN_ROSTER ; i ++ )
 	{
@@ -755,7 +755,7 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
 {
     SDL_Surface* Small_Droid;
     SDL_Surface* Large_Droid;
-    char *fpath;
+    char fpath[2048];
     char fname[500];
     int i;
     int model_number;
@@ -794,7 +794,7 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
     strcpy( fname, "droids/" );
     strcat( fname, PrefixToFilename [ model_number ] ) ;
     strcat( fname , "/portrait.png" );
-    fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+    find_file (fname, GRAPHICS_DIR, fpath, 0);
     DebugPrintf ( 2 , "\nFilename used for portrait: %s." , fpath );
     
     Small_Droid = our_IMG_load_wrapper (fpath) ;
@@ -802,7 +802,7 @@ make_sure_chat_portraits_loaded_for_this_droid ( Enemy this_droid )
     {
 	strcpy( fname, "droids/" );
 	strcat( fname, "DefaultPortrait.png" );
-	fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+	find_file (fname, GRAPHICS_DIR, fpath, 0);
 	Small_Droid = our_IMG_load_wrapper ( fpath ) ;
     }
     if ( Small_Droid == NULL )
@@ -835,7 +835,7 @@ make_sure_all_chat_portraits_are_loaded ( void )
 {
     SDL_Surface* Small_Droid;
     SDL_Surface* Large_Droid;
-    char *fpath;
+    char fpath[2048];
     char fname[500];
     int i;
     static int first_call = TRUE ;
@@ -861,7 +861,7 @@ make_sure_all_chat_portraits_are_loaded ( void )
 	strcpy( fname, "droids/" );
 	strcat( fname, PrefixToFilename [ i ] ) ;
 	strcat( fname , "/portrait.png" );
-	fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+	find_file (fname, GRAPHICS_DIR, fpath, 0);
 	DebugPrintf ( -1000, "\nFilename used for portrait: %s." , fpath );
 	
 	Small_Droid = our_IMG_load_wrapper (fpath) ;
@@ -869,7 +869,7 @@ make_sure_all_chat_portraits_are_loaded ( void )
 	{
 	    strcpy( fname, "droids/" );
 	    strcat( fname, "DefaultPortrait.png" );
-	    fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+	    find_file (fname, GRAPHICS_DIR, fpath, 0);
 	    Small_Droid = our_IMG_load_wrapper (fpath) ;
 	}
 	if ( Small_Droid == NULL )
@@ -1501,7 +1501,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     SDL_Rect Chat_Window;
     char* DialogMenuTexts[ MAX_ANSWERS_PER_PERSON ];
     int ChatFlagsIndex = (-1);
-    char *fpath;
+    char fpath[2048];
     char tmp_filename[5000];
     
     //--------------------
@@ -1550,7 +1550,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     strcat ( tmp_filename , ".dialog" );
     char finaldir[50];
     sprintf(finaldir, "%s%s", DIALOG_DIR, language_dirs[GameConfig.language]);
-    fpath = find_file ( tmp_filename , finaldir, FALSE);
+    find_file (tmp_filename , finaldir, fpath, 0);
     LoadChatRosterWithChatSequence ( fpath );
 
     if ( ! Me [ 0 ] . chat_character_initialized [ ChatFlagsIndex ] )

@@ -596,7 +596,7 @@ show_automap_data_ogl ( float scale_factor )
 
     iso_image local_iso_image;
     static iso_image tux_on_the_map_iso_image = UNLOADED_ISO_IMAGE ;
-    char *fpath;
+    char fpath[4096];
 
     //--------------------
     // Also if there is no map-maker present in inventory, then we need not
@@ -656,7 +656,7 @@ show_automap_data_ogl ( float scale_factor )
     if ( ! tux_on_the_map_iso_image . texture_has_been_created )
     {
 	DebugPrintf ( 1 , "\nLoading icon for Tux on the automap." );
-	fpath = find_file ( "tux_icon_on_automap.png" , GRAPHICS_DIR , FALSE );
+	find_file ( "tux_icon_on_automap.png" , GRAPHICS_DIR , fpath, 0 );
 	get_iso_image_from_file_and_path ( fpath , & tux_on_the_map_iso_image , TRUE ) ;
 	make_texture_out_of_surface ( & ( tux_on_the_map_iso_image ) ) ;
     }

@@ -1235,7 +1235,7 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
     char *NextChatSectionCode;
     int i , j ;
     int OptionSectionsLeft;
-    char* fpath;
+    char fpath[2048];
     int OptionIndex;
     int NumberOfOptionsInSection;
     char TempSavedCharacter = 'A' ;
@@ -1253,7 +1253,7 @@ LoadChatRosterWithChatSequence ( char* FullPathAndFullFilename )
     char* YesNoString;
     char* tmp_string;
     
-    fpath = FullPathAndFullFilename;
+    sprintf(fpath, "%s", FullPathAndFullFilename);
     
     // #define END_OF_DIALOGUE_FILE_STRING "*** End of Dialogue File Information ***"
 #define CHAT_CHARACTER_BEGIN_STRING "Beginning of new chat dialog for character=\""

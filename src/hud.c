@@ -773,7 +773,7 @@ void
 blit_energy_o_meter( void )
 {
     SDL_Surface* tmp;
-    char *fpath;
+char fpath[2048];
     static iso_image speed_meter_iso_image = UNLOADED_ISO_IMAGE ;
     static iso_image SpeedMeterEnergyArrowImage = UNLOADED_ISO_IMAGE ;
     static iso_image SpeedMeterManaArrowImage = UNLOADED_ISO_IMAGE ;
@@ -797,19 +797,19 @@ blit_energy_o_meter( void )
     //
     if ( ( speed_meter_iso_image . surface == NULL ) && ( ! speed_meter_iso_image . texture_has_been_created ) )
     {
-	fpath = find_file ( "speed_o_meter.png" , GRAPHICS_DIR, FALSE);
+	find_file ("speed_o_meter.png" , GRAPHICS_DIR, fpath, 0);
 	get_iso_image_from_file_and_path ( fpath , & ( speed_meter_iso_image ) , FALSE ) ;
 	tmp = speed_meter_iso_image . surface ;
 	speed_meter_iso_image . surface = SDL_DisplayFormatAlpha ( speed_meter_iso_image . surface );
 	SDL_FreeSurface ( tmp ) ;
 	
-	fpath = find_file ( "speed_o_meter_arrow_energy.png" , GRAPHICS_DIR, FALSE);
+	find_file ("speed_o_meter_arrow_energy.png" , GRAPHICS_DIR, fpath, 0);
 	get_iso_image_from_file_and_path ( fpath , & ( SpeedMeterEnergyArrowImage ) , FALSE ) ;
 	tmp = SpeedMeterEnergyArrowImage . surface ;
 	SpeedMeterEnergyArrowImage . surface = SDL_DisplayFormatAlpha ( SpeedMeterEnergyArrowImage . surface ) ;
 	SDL_FreeSurface ( tmp ) ;
 	
-	fpath = find_file ( "speed_o_meter_arrow_mana.png" , GRAPHICS_DIR, FALSE);
+	find_file ("speed_o_meter_arrow_mana.png" , GRAPHICS_DIR, fpath, 0);
 	get_iso_image_from_file_and_path ( fpath , & ( SpeedMeterManaArrowImage ) , FALSE ) ;
 	tmp = SpeedMeterManaArrowImage . surface ;
 	SpeedMeterManaArrowImage . surface = SDL_DisplayFormatAlpha ( SpeedMeterManaArrowImage . surface ) ;

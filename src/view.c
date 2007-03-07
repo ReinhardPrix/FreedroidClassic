@@ -122,7 +122,7 @@ blit_tux_status_flags ( void )
     static iso_image dexterity_flags [ 16 ] ;
     int target_time;
     char constructed_filename[2000];
-    char* fpath;
+char fpath[2048];
 
     //--------------------
     // On the first function call ever, we load the surfaces for the
@@ -133,7 +133,7 @@ blit_tux_status_flags ( void )
 	for ( i = 0 ; i < 16 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "tux_flags/flag_power_%04d.png" , i + 1 );
-	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( power_flags [ i ] ) , TRUE ) ;
 	    if ( power_flags [ i ] . surface == NULL ) 
 	    {
@@ -153,7 +153,7 @@ Error loading flag image.",
 	for ( i = 0 ; i < 16 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "tux_flags/flag_dexterity_%04d.png" , i + 1 );
-	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( dexterity_flags [ i ] ) , TRUE ) ;
 	    if ( dexterity_flags [ i ] . surface == NULL ) 
 	    {
@@ -2281,7 +2281,7 @@ FILE*
 open_tux_image_archive_file ( int tux_part_group , int motion_class , char* part_string )
 {
     char constructed_filename[10000];
-    char* fpath;
+char fpath[2048];
     FILE *DataFile;
 
     //--------------------
@@ -2290,7 +2290,7 @@ open_tux_image_archive_file ( int tux_part_group , int motion_class , char* part
     sprintf ( constructed_filename , "tux_motion_parts/%s/%s%s.tux_image_archive" , 
 	      motion_class_string [ motion_class ] , part_group_strings [ tux_part_group ] , 
 	      part_string );
-    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
     
     //--------------------
     // First we need to open the file
@@ -2552,7 +2552,7 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     int enemy_phase ;
     FILE *DataFile;
     char constructed_filename [ 10000 ] ;
-    char* fpath;
+char fpath[2048];
     char archive_type_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char ogl_support_string [ 5 ] = { 0 , 0 , 0 , 0 , 0 } ;
     char *DataBuffer, *ptr, *dest;
@@ -2582,7 +2582,7 @@ grab_enemy_images_from_archive ( int enemy_model_nr )
     sprintf ( constructed_filename , "droids/%s/%s.tux_image_archive" , 
 	      PrefixToFilename [ enemy_model_nr ] ,
 	      PrefixToFilename [ enemy_model_nr ] );
-    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
     
     //--------------------
     // First we need to open the file
@@ -4303,7 +4303,7 @@ PutRadialBlueSparks( float PosX, float PosY , float Radius , int SparkType , int
     static SDL_Surface* SparkPrototypeSurface [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] = { { NULL , NULL , NULL , NULL } , { NULL , NULL , NULL , NULL } } ;
     static iso_image PrerotatedSparkSurfaces [ NUMBER_OF_SPARK_TYPES ] [ FIXED_NUMBER_OF_PROTOTYPES ] [ FIXED_NUMBER_OF_SPARK_ANGLES ];
     SDL_Surface* tmp_surf;
-    char* fpath;
+char fpath[2048];
     int NumberOfPicturesToUse;
     int i , k ;
     float Angle;
@@ -4364,7 +4364,7 @@ Freedroid encountered a radial wave type that does not exist in Freedroid.",
 					       PLEASE_INFORM, IS_FATAL );
 	    }	      
 	    
-	    fpath = find_file ( ConstructedFilename , GRAPHICS_DIR, FALSE );
+	    find_file (ConstructedFilename , GRAPHICS_DIR, fpath, 0 );
 	    
 	    tmp_surf = our_IMG_load_wrapper( fpath );
 	    if ( tmp_surf == NULL )
@@ -4466,7 +4466,7 @@ PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
     SDL_Rect TargetRectangle;
     static SDL_Surface* SparkPrototypeSurface=NULL;
     SDL_Surface* tmp_surf;
-    char* fpath;
+char fpath[2048];
     int NumberOfPicturesToUse;
     int i;
     float Angle;
@@ -4484,7 +4484,7 @@ PutRadialBlueSparksBestQuality( float PosX, float PosY , float Radius )
     //
     if ( SparkPrototypeSurface == NULL )
     {
-	fpath = find_file ( "blue_sparks_0.png" , GRAPHICS_DIR, FALSE );
+	find_file ("blue_sparks_0.png" , GRAPHICS_DIR, fpath, 0 );
 	
 	tmp_surf = our_IMG_load_wrapper( fpath );
 	if ( tmp_surf == NULL )
@@ -4610,7 +4610,7 @@ ShowRobotPicture (int PosX, int PosY, int Number )
 {
     SDL_Surface *tmp;
     SDL_Rect target;
-    char *fpath;
+    char fpath[2048];
     char fname[500];
     
     DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
@@ -4620,7 +4620,7 @@ ShowRobotPicture (int PosX, int PosY, int Number )
     strcat( fname, Druidmap[Number].portrait_filename_without_ext );
     strcat( fname , "/portrait.png" );
     DebugPrintf ( 2 , "\ntrying to load this: %s" , fname );
-    fpath = find_file (fname, GRAPHICS_DIR, FALSE);
+    find_file (fname, GRAPHICS_DIR, fpath, 0);
     
     if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
     {
@@ -4660,7 +4660,7 @@ draw_inventory_occupied_rectangle ( SDL_Rect TargetRect , int bgcolor )
     static SDL_Surface *TransparentBluePlateImage = NULL;
     static SDL_Surface *TransparentGreyPlateImage = NULL;
     SDL_Surface *tmp;
-    char *fpath;
+char fpath[2048];
     char fname1 [ ] = RED_INVENTORY_SQUARE_OCCUPIED_FILE;
     char fname2 [ ] = BLUE_INVENTORY_SQUARE_OCCUPIED_FILE;
     char fname3 [ ] = GREY_INVENTORY_SQUARE_OCCUPIED_FILE;
@@ -4686,7 +4686,7 @@ draw_inventory_occupied_rectangle ( SDL_Rect TargetRect , int bgcolor )
 	    //--------------------
 	    // Now we load the red intentory plate
 	    //
-	    fpath = find_file ( fname1 , GRAPHICS_DIR, FALSE);
+	    find_file (fname1 , GRAPHICS_DIR, fpath, 0);
 	    tmp = our_IMG_load_wrapper( fpath );
 	    if ( !tmp )
 	    {
@@ -4701,7 +4701,7 @@ The red transparent plate for the inventory could not be loaded.  This is a fata
 	    //--------------------
 	    // Now we load the blue inventory plate
 	    //
-	    fpath = find_file ( fname2 , GRAPHICS_DIR, FALSE);
+	    find_file (fname2 , GRAPHICS_DIR, fpath, 0);
 	    tmp = our_IMG_load_wrapper( fpath );
 	    if ( !tmp )
 	    {
@@ -4716,7 +4716,7 @@ The blue transparent plate for the inventory could not be loaded.  This is a fat
 	    //--------------------
 	    // Now we load the grey inventory plate
 	    //
-	    fpath = find_file ( fname3 , GRAPHICS_DIR, FALSE);
+	    find_file (fname3 , GRAPHICS_DIR, fpath, 0);
 	    tmp = our_IMG_load_wrapper( fpath );
 	    if ( !tmp )
 	    {

@@ -256,7 +256,7 @@ blit_our_own_mouse_cursor ( void )
     int i;
     static iso_image mouse_cursors [ 16 ] ;
     char constructed_filename[2000];
-    char* fpath;
+    char fpath[2048];
     int cursor_index = (-1) ;
 
     //--------------------
@@ -268,7 +268,7 @@ blit_our_own_mouse_cursor ( void )
 	for ( i = 0 ; i < 12 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_%04d.png" , i );
-	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( mouse_cursors [ i ] ) , FALSE ) ;
 	    if ( mouse_cursors [ i ] . surface == NULL ) 
 	    {
@@ -362,7 +362,7 @@ blit_mouse_cursor_corona ( void )
     int i;
     static iso_image mouse_cursor_coronas [ 16 ] ;
     char constructed_filename[2000];
-    char* fpath;
+char fpath[2048];
     moderately_finepoint offset_vector;
     int our_obstacle_index ;
     int our_enemy_index;
@@ -385,7 +385,7 @@ blit_mouse_cursor_corona ( void )
 	for ( i = 0 ; i < 8 ; i ++ )
 	{
 	    sprintf ( constructed_filename , "mouse_cursor_corona_%04d.png" , i );
-	    fpath = find_file ( constructed_filename , GRAPHICS_DIR, FALSE );
+	    find_file (constructed_filename , GRAPHICS_DIR, fpath, 0 );
 	    get_iso_image_from_file_and_path ( fpath , & ( mouse_cursor_coronas [ i ] ) , FALSE ) ;
 	    if ( mouse_cursor_coronas [ i ] . surface == NULL ) 
 	    {
@@ -616,7 +616,11 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
     // Next we prepare the selection knob for all later operations
     //
     if ( SelectionKnob == NULL )
-	SelectionKnob = our_IMG_load_wrapper( find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, FALSE ) );
+	{
+	char fpath[2048];
+	find_file ( "mouse_buttons/number_selector_selection_knob.png" , GRAPHICS_DIR, fpath, 0);
+	SelectionKnob = our_IMG_load_wrapper( fpath );
+	}
     if ( SelectionKnob == NULL )
     {
 	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
@@ -1460,120 +1464,6 @@ DisplayImage( char *datafile )
 }; // void DisplayImage( char *datafile )
 
 /* ----------------------------------------------------------------------
- * This function loads the configuration file for a theme, containing 
- * such things as the number of bullet phases and the position for droid
- * digits in that theme.
- * ---------------------------------------------------------------------- */
-void 
-LoadThemeConfigurationFile(void)
-{
-  char *Data;
-  char *ReadPointer;
-  char *fpath;
-  char *EndOfThemesBulletData;
-  char *EndOfThemesBlastData;
-  char *EndOfThemesDigitData;
-  int BulletIndex;
-  int NumberOfBulletTypesInConfigFile=0;
-  
-#define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
-#define END_OF_THEME_BLAST_DATA_STRING "*** End of themes blast data section ***" 
-#define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***" 
-#define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***" 
-
-
-  fpath = find_file ("config.theme", GRAPHICS_DIR, TRUE);
-
-  DebugPrintf ( 1 , "\nvoid LoadThemeConfigurationFile: Data will be taken from file %s.  Commencing...\n " , fpath );
-
-  Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
-
-  EndOfThemesBulletData = LocateStringInData ( Data , END_OF_THEME_BULLET_DATA_STRING );
-  EndOfThemesBlastData  = LocateStringInData ( Data , END_OF_THEME_BLAST_DATA_STRING  );
-  EndOfThemesDigitData  = LocateStringInData ( Data , END_OF_THEME_DIGIT_DATA_STRING  );
-
-  //--------------------
-  // Now the file is read in entirely and
-  // we can start to analyze its content, 
-  //
-#define BLAST_ONE_NUMBER_OF_PHASES_STRING "How many phases in Blast one :"
-#define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
-
-  ReadValueFromString( Data , BLAST_ONE_NUMBER_OF_PHASES_STRING , "%d" , 
-		       &Blastmap[0].phases , EndOfThemesBlastData );
-
-  ReadValueFromString( Data , BLAST_TWO_NUMBER_OF_PHASES_STRING , "%d" , 
-		       &Blastmap[1].phases , EndOfThemesBlastData );
-  Blastmap [ 2 ] . phases = Blastmap [ 1 ] . phases;
-
-  //--------------------
-  // Now we read in the total time amount for each animation
-  //
-#define BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast one :"
-#define BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING "Time in seconds for the hole animation of blast two :"
-
-  ReadValueFromString( Data , BLAST_ONE_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
-		       &Blastmap[0].total_animation_time , EndOfThemesBlastData );
-
-  ReadValueFromString( Data , BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING , "%lf" , 
-		       &Blastmap[1].total_animation_time , EndOfThemesBlastData );
-
-  Blastmap [ 2 ] . total_animation_time = Blastmap [ 1 ] . total_animation_time;
-
-  //--------------------
-  // Next we read in the number of phases that are to be used for each bullet type
-  ReadPointer = Data ;
-  while ( ( ReadPointer = strstr ( ReadPointer , "For Bullettype Nr.=" ) ) != NULL )
-    {
-      ReadValueFromString( ReadPointer , "For Bullettype Nr.=" , "%d" , &BulletIndex , EndOfThemesBulletData );
-      if ( BulletIndex >= Number_Of_Bullet_Types )
-	{
-	  GiveStandardErrorMessage ( __FUNCTION__  , "\
-A BLAST WAS FOUND TO EXIST OUTSIDE THE BOUNDS OF THE MAP.\n\
-The theme configuration file seems to be BOGUS!!!\n\
-The number of bullettypes mentioned therein does not match the number\n\
-of bullettypes mentioned in the freedroid.ruleset file!!!\n\
-\n\
-Either there was a specification for the number of phases in a bullet type\n\
-that does not at all exist in the ruleset or an existing bullettype has not\n\
-been assigned a number of phases in the themes config file.\n\
-\n\
-This might indicate that either the ruleset file is corrupt or the \n\
-theme.config configuration file is corrupt or (less likely) that there\n\
-is a severe bug in the reading function.",
-				     NO_NEED_TO_INFORM, IS_FATAL );
-	}
-      ReadValueFromString( ReadPointer , "we will use number of phases=" , "%d" , 
-			   &Bulletmap[BulletIndex].phases , EndOfThemesBulletData );
-      ReadValueFromString( ReadPointer , "and number of phase changes per second=" , "%lf" , 
-			   &Bulletmap[BulletIndex].phase_changes_per_second , EndOfThemesBulletData );
-      ReadPointer++;
-      NumberOfBulletTypesInConfigFile ++;
-    }
-  //--------------------
-  // LEAVE THIS SECURITY CHECK IN HERE!!!! IT IS VITAL!!!
-  // *ALSO* LEAVE IN THE SECURITY CHECK ABOVE!!! PLEASE!!!
-  //
-  if ( NumberOfBulletTypesInConfigFile != Number_Of_Bullet_Types )
-    {
-      GiveStandardErrorMessage ( __FUNCTION__  , "\
-The theme configuration file seems to be COMPLETELY BOGUS!!!\n\
-The number of bullettypes mentioned therein does not match the number\n\
-of bullettypes mentioned in the freedroid.ruleset file!!!\n\
-\n\
-Either there was a specification for the number of phases in a bullet type\n\
-that does not at all exist in the ruleset or an existing bullettype has not\n\
-been assigned a number of phases in the themes config file.\n\
-\n\
-This might indicate that either the ruleset file is corrupt or the \n\
-theme.config configuration file is corrupt or (less likely) that there\n\
-is a severe bug in the reading function.",
-				 NO_NEED_TO_INFORM, IS_FATAL );
-	}
-
-}; // void LoadThemeConfigurationFile ( void )
-
-/* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
@@ -1581,8 +1471,9 @@ void
 get_standard_iso_floor_tile_size ( void )
 {
     SDL_Surface *standard_floor_tile;
-
-    standard_floor_tile = our_IMG_load_wrapper( find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, FALSE ) );
+    char fp[2048];
+    find_file ( "floor_tiles/iso_miscellaneous_floor_0000.png" , GRAPHICS_DIR, fp, 0);
+    standard_floor_tile = our_IMG_load_wrapper( fp );
     if ( standard_floor_tile == NULL )
     {
 	fprintf( stderr, "\n\nSDL_GetError: %s \n" , SDL_GetError() );
@@ -1636,15 +1527,6 @@ InitPictures (void)
     Activate_Conservative_Frame_Computation();
     
     ShowStartupPercentage ( 18 ) ; 
-    
-    // In the following we will be reading in image information.  But the number
-    // of images to read in and the way they are displayed might be strongly dependant
-    // on the theme.  That is not at all a problem.  We just got to read in the
-    // theme configuration file again.  After that is done, the following reading
-    // commands will do the right thing...
-    LoadThemeConfigurationFile();
-    
-    ShowStartupPercentage ( 20 ) ; 
     
     set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
     
@@ -1710,7 +1592,7 @@ InitOurBFonts ( void )
 #define FPS_FONT_FILE 		"font/font05.png"
 // #define FPS_FONT_FILE 		"font/SmallStone.png"
 
-    char* fpath;
+char fpath[2048];
     int i;
     char* MenuFontFiles[ALL_BFONTS_WE_LOAD] =
 	{
@@ -1733,7 +1615,7 @@ InitOurBFonts ( void )
     
     for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
     {
-	fpath = find_file ( MenuFontFiles [ i ] , GRAPHICS_DIR , FALSE);
+	find_file (MenuFontFiles [ i ] , GRAPHICS_DIR , fpath, 0);
 	if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
 	{
 	    fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
@@ -2054,7 +1936,7 @@ InitVideo (void)
     const SDL_VideoInfo *vid_info;
     char vid_driver[81];
     Uint32 video_flags = 0 ;  // flags for SDL video mode 
-    char *fpath;
+char fpath[2048];
     char window_title_string[200];
     
     //--------------------
@@ -2141,7 +2023,7 @@ InitVideo (void)
     if ( vid_info->wm_available )  /* if there's a window-manager */
     {
 	SDL_WM_SetCaption ( window_title_string , "" );
-	fpath = find_file ( ICON_FILE , GRAPHICS_DIR , FALSE );
+	find_file (ICON_FILE , GRAPHICS_DIR , fpath, 0 );
 	SDL_WM_SetIcon( our_IMG_load_wrapper ( fpath ) , NULL );
     }
     

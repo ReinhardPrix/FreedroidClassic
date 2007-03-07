@@ -497,11 +497,12 @@ ShowRescaledItem ( int position , int TuxItemRow , item* ShowItem )
     SDL_Rect TargetRectangle = { 0, 0, INITIAL_BLOCK_WIDTH * GameConfig . screen_width / 640,  INITIAL_BLOCK_HEIGHT * GameConfig . screen_height / 480};
     static iso_image equipped_icon ;
     static int first_call = TRUE ;
-    char* fpath;
 
     if ( first_call )
     {
-            fpath = find_file ( "mouse_cursor_0003.png" , GRAPHICS_DIR, FALSE );
+	    char fpath[2048];
+
+            find_file ( "mouse_cursor_0003.png" , GRAPHICS_DIR, fpath, 0 );
             get_iso_image_from_file_and_path ( fpath , & ( equipped_icon ) , FALSE ) ;
             if ( equipped_icon . surface == NULL )
             {

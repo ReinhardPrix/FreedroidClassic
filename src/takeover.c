@@ -834,8 +834,9 @@ GetTakeoverGraphics (void)
   // Now we start loading all the takeover graphics.
   //
   Set_Rect (tmp, User_Rect.x, User_Rect.y, 0, 0);
-
-  TempLoadSurface = our_IMG_load_wrapper ( find_file ( TO_BLOCK_FILE , GRAPHICS_DIR , TRUE ) ) ;
+  char fp[2048];
+  find_file ( TO_BLOCK_FILE , GRAPHICS_DIR , fp, 0);
+  TempLoadSurface = our_IMG_load_wrapper ( fp ) ;
   to_blocks = our_SDL_display_format_wrapperAlpha ( TempLoadSurface ); // the surface is converted
   SDL_FreeSurface ( TempLoadSurface );
   if ( use_open_gl ) flip_image_horizontally ( to_blocks );

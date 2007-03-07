@@ -2987,7 +2987,9 @@ Single_Player_Menu (void)
 		
 		if ( PrepareNewHero ( ) == TRUE )
 		{
-		    LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+		    char fp[2048];
+		    find_file ( "Asteroid.maps" , MAP_DIR, fp, 0);
+		    LoadShip ( fp ) ;
 		    PrepareStartOfNewCharacter ( ) ;
 		    can_continue=TRUE;
 		    load_game_command_came_from_inside_running_game = TRUE ;
@@ -3073,7 +3075,9 @@ Multi_Player_Menu (void)
 	{
 	    case START_AS_SERVER_POSITION:
 		while (EnterPressed() || SpacePressed() ) ;
-		LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR , FALSE ) ) ;
+	        char fp[2048];
+                find_file ( "Asteroid.maps" , MAP_DIR, fp, 0);
+                LoadShip ( fp ) ;
 		PrepareStartOfNewCharacter (  );	
 		ServerMode = TRUE ;
 		OpenTheServerSocket (  );
@@ -3087,7 +3091,9 @@ Multi_Player_Menu (void)
 	    if ( Connect_To_Existing_Server_Menu ( ) == TRUE )
 	    {
 		can_continue = TRUE;
-		LoadShip ( find_file ( "Asteroid.maps" , MAP_DIR, FALSE) ) ;
+	        char fp[2048];
+                find_file ( "Asteroid.maps" , MAP_DIR, fp, 0);
+                LoadShip ( fp ) ;
 		PrepareStartOfNewCharacter (  );
 		ClientMode = TRUE;
 		return ( TRUE );
@@ -3271,10 +3277,12 @@ Show_Mission_Details ( int MissionNumber )
 
     while( SpacePressed() || EnterPressed() ) keyboard_update(); 
     
+    char fp[2048];
+    find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, fp, 0);
     while (!can_continue)
     {
 	
-	DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+	DisplayImage (fp);
 	MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
 	DisplayBanner( );
 	//InitiateMenu();
@@ -3350,11 +3358,13 @@ Show_Mission_Log_Menu (void)
 
 
   while( SpacePressed() || EnterPressed() ) keyboard_update(); 
+  char fp[2048];
+  find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, fp, 0);
 
   while (!can_continue)
     {
 
-      DisplayImage (find_file (HS_BACKGROUND_FILE, GRAPHICS_DIR, FALSE));
+      DisplayImage (fp);
       MakeGridOnScreen ( (SDL_Rect*) & Full_Screen_Rect );
       DisplayBanner( );
 

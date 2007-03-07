@@ -874,7 +874,7 @@ GetQuestList ( char* QuestListFilename )
     int ActionNr;
     char* ActionLabel;
     char* MissionTargetPointer;
-    char* fpath;
+char fpath[2048];
     char InnerPreservedLetter=0;
     int diary_entry_nr;
     char* next_diary_entry_pointer;
@@ -908,7 +908,7 @@ GetQuestList ( char* QuestListFilename )
     //--------------------
     // At first we must load the quest list file given...
     //
-    fpath = find_file ( QuestListFilename , MAP_DIR , FALSE );
+    find_file (QuestListFilename , MAP_DIR , fpath, 0 );
     MissionTargetPointer = 
 	ReadAndMallocAndTerminateFile( fpath , "*** END OF QUEST LIST *** LEAVE THIS TERMINATOR IN HERE ***" ) ;
 
