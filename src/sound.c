@@ -428,7 +428,7 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 	int Newest_Sound_Channel = 0;
 	Mix_Chunk *One_Shot_WAV_File;
 	char Temp_Filename[ 5000 ];
-	char* fpath = "no_fpath_has_been_set";
+	char fpath[2048] = "no_fpath_has_been_set";
 
 	//--------------------
 	// In case the same sample is played again and again in a very
@@ -739,7 +739,7 @@ play_sample_using_WAV_cache_v( char* SoundSampleFileName , int With_Waiting , in
 	{
 	int Newest_Sound_Channel = 0;
 	char Temp_Filename[ 5000 ];
-	char* fpath;
+	char fpath[2048];
 	int index_of_sample_to_be_played = 0 ;
 	int sound_must_be_loaded = TRUE ;
 	int i;
