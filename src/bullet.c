@@ -613,7 +613,7 @@ enemy_spray_blood ( Enemy CurEnemy )
 {
   moderately_finepoint target_pos = { 1.0 , 0 } ;
 
-  DebugPrintf ( 1 , "\nBlood has been sprayed...%s", CurEnemy -> type );
+  DebugPrintf ( 1 , "\nBlood has been sprayed...%d", CurEnemy -> type );
 
   RotateVectorByAngle ( & target_pos , MyRandom ( 360 ) );
 
