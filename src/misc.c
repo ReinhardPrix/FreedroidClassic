@@ -760,14 +760,16 @@ This is indicates a severe bug in Freedroid.",  PLEASE_INFORM, IS_FATAL );
 	{
 	    if ( i == 0 )
 		DebugPrintf( 1 , "\nfind_file could not succeed with LOCAL path: %s." , File_Path );
-	    else if ( ! silent )
-	    {
-		DebugPrintf ( -4 , "The file name was: %s.\n" , fname );
-		GiveStandardErrorMessage ( __FUNCTION__  , "File not found even in data dir (2nd attempt).", 
+	    else
+		{
+                if ( ! silent )
+	    	    {
+		    DebugPrintf ( -4 , "The file name was: %s.\n" , fname );
+		    GiveStandardErrorMessage ( __FUNCTION__  , "File not found even in data dir (2nd attempt).", 
 					   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
+		    }
 		return 1;
-	    }
-	    else if (silent) return 1;
+	        }
 	}
     } // for i 
     

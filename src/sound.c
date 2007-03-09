@@ -549,7 +549,7 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 			// find_file_silent may return a NULL pointer, in case the file name
 			// composed hasn't been found.  We need to catch that case of course.
 			//
-			if ( find_file ( Temp_Filename , SOUND_DIR, fpath, 1 ) )
+                       if ( find_file ( Temp_Filename , SOUND_DIR, fpath, 1 ) == 0)
 				{
 				One_Shot_WAV_File = Mix_LoadWAV ( fpath ) ;
 				if ( One_Shot_WAV_File != NULL )
@@ -559,8 +559,8 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 				else
 					{
 					GiveStandardErrorMessage ( __FUNCTION__ , "\
-											   Corrupt sound file encountered!  The file is there, \n\
-											   but the SDL MIXER was unable to LOAD it.",
+Corrupt sound file encountered!  The file is there, \n\
+but the SDL MIXER was unable to LOAD it.",
 											   NO_NEED_TO_INFORM , IS_WARNING_ONLY );
 					}
 				}
@@ -583,8 +583,8 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 		if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
 			{
 			fprintf( stderr, "\n\nSoundSampleFileName: '%s'" , SoundSampleFileName );
-			GiveStandardErrorMessage ( __FUNCTION__ , "\
-									   There seems to be a sound file missing.",
+                       GiveStandardErrorMessage ( __FUNCTION__ , "\n
+There seems to be a sound file missing.",
 									   NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 			}
 
