@@ -583,7 +583,7 @@ but the SDL MIXER was unable to LOAD it.",
 		if ( strcmp ( SoundSampleFileName , "Sorry_No_Voice_Sample_Yet_0.wav" ) )
 			{
 			fprintf( stderr, "\n\nSoundSampleFileName: '%s'" , SoundSampleFileName );
-                       GiveStandardErrorMessage ( __FUNCTION__ , "\n
+                       GiveStandardErrorMessage ( __FUNCTION__ , "\
 There seems to be a sound file missing.",
 									   NO_NEED_TO_INFORM, GameConfig.terminate_on_missing_speech_sample );
 			}
