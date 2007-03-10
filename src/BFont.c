@@ -601,7 +601,7 @@ LeftPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 /******/
 
 void
-PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...)
+PrintString (SDL_Surface * Surface, int x, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -620,7 +620,7 @@ PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...)
 
 void
 PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-		 char *fmt, ...)
+		 const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -636,7 +636,7 @@ PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 }
 
 void
-CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+CenteredPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -653,7 +653,7 @@ CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			 char *fmt, ...)
+			 const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -670,7 +670,7 @@ CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+RightPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -687,7 +687,7 @@ RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		      char *fmt, ...)
+		      const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -703,7 +703,7 @@ RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+LeftPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -720,7 +720,7 @@ LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		     char *fmt, ...)
+		     const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -736,7 +736,7 @@ LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+JustifiedPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -753,7 +753,7 @@ JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			  char *fmt, ...)
+			  const char *fmt, ...)
 {
   va_list args;
   char *temp;

@@ -94,25 +94,25 @@ void JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font,
 
 /* The following functions do the same task but have the classic "printf" sintax */
 
-void PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...);
+void PrintString (SDL_Surface * Surface, int x, int y, const char *fmt, ...);
 void PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x,
-		      int y, char *fmt, ...);
+		      int y, const char *fmt, ...);
 
-void CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void CenteredPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font,
-			      int y, char *fmt, ...);
+			      int y, const char *fmt, ...);
 
-void RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void RightPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			   char *fmt, ...);
+			   const char *fmt, ...);
 
-void LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void LeftPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			  char *fmt, ...);
+			  const char *fmt, ...);
 
-void JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void JustifiedPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font,
-			       int y, char *fmt, ...);
+			       int y, const char *fmt, ...);
 
 /* Returns a new font colored with the color (r,g,b) */
 BFont_Info *SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b);
