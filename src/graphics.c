@@ -1582,15 +1582,12 @@ InitOurBFonts ( void )
 {
 #define ALL_BFONTS_WE_LOAD 6
 
-#define PARA_FONT_FILE 		"font/parafont.png"
-#define MENU_FONT_FILE 		"font/cpuFont.png"
-// #define MESSAGE_FONT_FILE 	"font/ArialGold.png"
-// #define MESSAGE_FONT_FILE 	"font/SmallStone.png"
-#define MESSAGE_FONT_FILE 	"font/small_white.png"
-#define RED_FONT_FILE 		"font/font05_red.png"
-#define BLUE_FONT_FILE 		"font/font05_white.png"
-#define FPS_FONT_FILE 		"font/font05.png"
-// #define FPS_FONT_FILE 		"font/SmallStone.png"
+#define PARA_FONT_FILE 		"font/parafont"
+#define MENU_FONT_FILE 		"font/cpuFont"
+#define MESSAGE_FONT_FILE 	"font/small_white"
+#define RED_FONT_FILE 		"font/font05_red"
+#define BLUE_FONT_FILE 		"font/font05_white"
+#define FPS_FONT_FILE 		"font/font05"
 
 char fpath[2048];
     int i;
@@ -1615,12 +1612,29 @@ char fpath[2048];
     
     for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
     {
-	find_file (MenuFontFiles [ i ] , GRAPHICS_DIR , fpath, 0);
+	extern char * language_font_classes[];
+        char constructed_fname[2048];
+	sprintf(constructed_fname, "%s", MenuFontFiles [ i ] );
+	strcat(constructed_fname, language_font_classes[GameConfig.language] );
+	strcat(constructed_fname, ".png");
+
+	if ( find_file (constructed_fname , GRAPHICS_DIR , fpath, 0) != 0 ) 
+		{ //if the file wasn't found, default to the standard ASCII7bit file
+		sprintf(constructed_fname, "%s.png",  MenuFontFiles [ i ]);
+	        if ( find_file (constructed_fname , GRAPHICS_DIR , fpath, 0) != 0 ) 
+			{
+		        fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
+			GiveStandardErrorMessage ( __FUNCTION__  , "\
+A font file for the BFont library was not found.",
+                                       PLEASE_INFORM, IS_FATAL );
+			}
+		}
+
 	if ( ( *MenuFontPointers [ i ] = LoadFont ( fpath ) ) == NULL )
 	{
 	    fprintf (stderr, "\n\nFont file: '%s'.\n" , MenuFontFiles [ i ] );
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-A font file for the BFont library was not found.",
+A font file for the BFont library could not be loaded.",
 				       PLEASE_INFORM, IS_FATAL );
 	} 
 	else
@@ -1630,6 +1644,30 @@ A font file for the BFont library was not found.",
     }
     
 }; // InitOurBFonts ( void )
+
+void
+FreeOurBFonts ( void )
+{
+int i;
+BFont_Info** MenuFontPointers[ALL_BFONTS_WE_LOAD] =
+	{
+	    &Menu_BFont,
+	    &Message_BFont,
+	    &Para_BFont,
+	    &FPS_Display_BFont,
+	    &Red_BFont,
+	    &Blue_BFont
+	};
+
+ for ( i = 0 ; i < ALL_BFONTS_WE_LOAD ; i ++ )
+    {
+    if (*MenuFontPointers [ i ] != NULL)
+	    {
+	    FreeFont( *MenuFontPointers [ i ]);
+	    *MenuFontPointers [ i ] = NULL;
+	    }
+    }
+}; // FreeOurBFonts ( void )
 
 /* -----------------------------------------------------------------
  * This funciton initialises the timer subsystem.

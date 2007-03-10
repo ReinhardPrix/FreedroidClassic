@@ -282,6 +282,8 @@ EXTERN void SetCombatScaleTo(float);
 EXTERN void InitPictures (void);
 EXTERN void InitTimer (void);
 EXTERN void InitVideo (void);
+EXTERN void InitOurBFonts (void);
+EXTERN void FreeOurBFonts (void);
 EXTERN void ClearGraphMem ( void );
 EXTERN void SDL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );
 EXTERN void HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area );

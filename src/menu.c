@@ -2304,12 +2304,18 @@ Language_Options_Menu (void)
 	  while (EnterPressed() || SpacePressed() );
 	  can_continue=TRUE;
 	  GameConfig . language = 0;
+	  //Reload fonts
+	  FreeOurBFonts();
+	  InitOurBFonts();
 	  break;
 
 	case GERMAN:
 	  while (EnterPressed() || SpacePressed() );
 	  can_continue=TRUE;
 	  GameConfig . language = 1;
+	  //Reload fonts
+	  FreeOurBFonts();
+	  InitOurBFonts();
 	  break;
 
 	case LEAVE_LANGUAGE_OPTIONS_MENU:
