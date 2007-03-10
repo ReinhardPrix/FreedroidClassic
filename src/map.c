@@ -1978,8 +1978,6 @@ SaveShip(const char *filename)
     
     DebugPrintf ( 2 , "\nint SaveShip(char *shipname): real function call confirmed." );
     
-    ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
-    
     //--------------------
     // We count the levels 
     //
@@ -1997,6 +1995,8 @@ SaveShip(const char *filename)
 				   PLEASE_INFORM, IS_FATAL );
 	return ERR;
     }
+    
+    ShowSaveLoadGameProgressMeter( 0 , TRUE ) ;
     
     //--------------------
     // Now that the file is opend for writing, we can start writing.  And the first thing
