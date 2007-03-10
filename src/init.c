@@ -1915,9 +1915,11 @@ InitFreedroid ( void )
 
 
 #ifndef __WIN32__
+#ifdef HAVE_LOCALE_H
     //--------------------
     // Portable localization
     setlocale(LC_ALL, "C");
+#endif
 #endif
 
     //--------------------
