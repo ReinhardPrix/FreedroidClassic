@@ -224,6 +224,10 @@ throw_out_all_chest_content ( int obst_index )
       RotateVectorByAngle ( & throw_out_offset_vector , 45 );
     }
 
+  // Maybe generate a random item to be dropped
+  DropRandomItem( Me [ 0 ] . pos . z , Me [ 0 ] . pos . x + throw_out_offset_vector . x , Me [ 0 ] . pos . y + throw_out_offset_vector . y, 1 , FALSE  , FALSE , FALSE ) ;
+
+
   //--------------------
   // We play the sound, now that the chest is really opened...
   //
