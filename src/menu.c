@@ -1533,11 +1533,6 @@ Change_Screen_Resolution_Menu ( void )
 	    LEAVE_OPTIONS_MENU 
 	};
     
-    //--------------------
-    // Users of SDL output must stick to 640x480 screen resolution.
-    //
-    if ( ! use_open_gl ) return;
-
     while ( EscapePressed() );
     
     while (!can_continue)
@@ -1716,8 +1711,8 @@ There are good Linux distributions out there,\n please check them out.\n\nOr you
 You are using SDL instead of OpenGL\n\
 for graphics ouput right now.\n\
 \n\
-High screen resolutions in SDL\n\
-will give you bad performance.\n\
+FreedroidRPG only supports 640x480\n\
+in SDL mode.\n\
 \n\
 You might want to restart the game using\n\
 OpenGL instead.\n\
