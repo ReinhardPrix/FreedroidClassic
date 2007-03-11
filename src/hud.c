@@ -1325,7 +1325,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_HEALTH_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_HEALTH_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "%s%d/%d", Me[0].energy / Me[0].maxenergy <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].energy), (int)rintf(Me[0].maxenergy));
+	sprintf(ItemDescText, "Health\n%s%d/%d", Me[0].energy / Me[0].maxenergy <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].energy), (int)rintf(Me[0].maxenergy));
 	}
 
     if (( CurPos . x > WHOLE_FORCE_RECT_X * GameConfig . screen_width / 640) && 
@@ -1335,7 +1335,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_FORCE_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_FORCE_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
+	sprintf(ItemDescText, "Mana\n%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
 	}
 
     if (( CurPos . x > WHOLE_RUNNING_POWER_RECT_X * GameConfig . screen_width / 640) &&
@@ -1345,7 +1345,7 @@ prepare_text_window_content ( char* ItemDescText )
         {
         best_banner_pos_x = ( WHOLE_RUNNING_POWER_RECT_X ) * GameConfig . screen_width / 640;
         best_banner_pos_y = ( WHOLE_RUNNING_POWER_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
-        sprintf(ItemDescText, "%s%d/%d",  Me[0].running_power / Me[0].max_running_power <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].running_power), (int)rintf(Me[0].max_running_power));
+        sprintf(ItemDescText, "Run\n%s%d/%d",  Me[0].running_power / Me[0].max_running_power <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].running_power), (int)rintf(Me[0].max_running_power));
         }     
 
     if (( CurPos . x > WHOLE_EXPERIENCE_COUNTDOWN_RECT_X * GameConfig . screen_width / 640) &&
@@ -1355,7 +1355,7 @@ prepare_text_window_content ( char* ItemDescText )
         {
         best_banner_pos_x = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ) * GameConfig . screen_width / 640;
         best_banner_pos_y = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
-        sprintf(ItemDescText, "%ld/%ld", Me[0].Experience, Me[0].ExpRequired);
+        sprintf(ItemDescText, "XP\n%ld/%ld", Me[0].Experience, Me[0].ExpRequired);
         }     
 
 
@@ -1510,8 +1510,7 @@ ShowCurrentTextWindow ( void )
 
     Banner_Text_Rect . w = LOWER_BANNER_TEXT_RECT_W;
     Banner_Text_Rect . h = LOWER_BANNER_TEXT_RECT_H;
-	
-    if ( strlen ( ItemDescText) < 10 ) Banner_Text_Rect . w = 100;
+    if ( strlen ( ItemDescText) < 15 ) Banner_Text_Rect . w = strlen ( ItemDescText) * 10;
     //--------------------
     // We count the text lines needed for the banner rectangle, just
     // to make sure we don't wast too much space here.
