@@ -1716,12 +1716,12 @@ There are good Linux distributions out there,\n please check them out.\n\nOr you
 You are using SDL instead of OpenGL\n\
 for graphics ouput right now.\n\
 \n\
-Other screen resolutions than 640x480\n\
-are currently not supported with SDL.\n\
+High screen resolutions in SDL\n\
+will give you bad performance.\n\
 \n\
 You might want to restart the game using\n\
-OpenGL instead.  Then you can change the\n\
-screen resolution using this menu option.\n\
+OpenGL instead.\n\
+\n\
 \n\
 Thank you.\n");
 		    SetCurrentFont ( Menu_BFont );
@@ -1907,6 +1907,7 @@ PerformanceTweaksOptionsMenu (void)
     char Options4[1000];
     char Options5[1000];
     char Options6[1000];
+    char Options7[1000];
     char* MenuTexts[10];
     enum
 	{ 
@@ -1917,6 +1918,7 @@ PerformanceTweaksOptionsMenu (void)
 	    SKIP_LIGHT_RADIUS_MODE,
 	    USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
 	    SKIP_SHADOWS,
+	    SKIP_FADINGS,
 	    LEAVE_PERFORMANCE_TWEAKS_MENU 
 	};
     
@@ -1938,6 +1940,8 @@ PerformanceTweaksOptionsMenu (void)
 		  GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
 	sprintf ( Options6 , "Skip shadow blitting: %s", 
 		  GameConfig . skip_shadow_blitting ? "YES" : "NO" );
+	sprintf( Options7 , "Skip fadings: %s", 
+		 GameConfig . do_fadings ? "NO" : "YES" );
 	
 	strcpy ( Options2 , "Menu handling: " );
 	switch ( GameConfig . menu_mode )
@@ -1962,8 +1966,9 @@ PerformanceTweaksOptionsMenu (void)
 	MenuTexts[4]=Options4;
 	MenuTexts[5]=Options5;
 	MenuTexts[6]=Options6;
-	MenuTexts[7]="Back";
-	MenuTexts[8]="";
+	MenuTexts[7]=Options7;
+	MenuTexts[8]="Back";
+	MenuTexts[9]="";
 	
         if ( GameOver == TRUE )      
                 MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );      
@@ -2022,6 +2027,11 @@ PerformanceTweaksOptionsMenu (void)
 		GameConfig . skip_shadow_blitting = ! GameConfig . skip_shadow_blitting ;
 		break;
 
+	    case SKIP_FADINGS:
+		while (EnterPressed() || SpacePressed() );
+		GameConfig . do_fadings = ! GameConfig . do_fadings ;
+		break;
+	    
 	    case LEAVE_PERFORMANCE_TWEAKS_MENU:
 		while (EnterPressed() || SpacePressed() );
 		can_continue=TRUE;

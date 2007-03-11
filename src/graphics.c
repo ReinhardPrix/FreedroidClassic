@@ -464,6 +464,7 @@ get_obstacle_below_mouse_cursor ( void )
 void
 fade_out_using_gamma_ramp ( void )
 {
+    if ( !GameConfig . do_fadings ) return;
     int i = 0;
     Activate_Conservative_Frame_Computation( );
     #ifdef HAVE_LIBGL
@@ -505,6 +506,7 @@ fade_out_using_gamma_ramp ( void )
 void
 fade_in_using_gamma_ramp ( void )
 {
+if ( !GameConfig . do_fadings ) return;
 int i;
 Activate_Conservative_Frame_Computation( );
 
