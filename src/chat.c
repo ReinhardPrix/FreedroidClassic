@@ -48,7 +48,7 @@ EXTERN char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 char* chat_protocol = NULL ;
 
 char *language_dirs[] = { "", "de/", "pl/", "" };
-char *language_font_classes[] = { "", ".8859-2", ".8859-2", "" };
+char *language_font_classes[] = { "", "", ".8859-2", "" };
  
 void DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid , int ClearProtocol );
 
