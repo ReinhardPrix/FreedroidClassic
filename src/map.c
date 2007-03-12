@@ -938,7 +938,7 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int p
     Obstacle target_obstacle;
     int smashed_something = FALSE ;
     moderately_finepoint blast_start_pos;
-    int stored_target_obstacle_type;
+    int stored_target_obstacle_type = 0;
 
     //--------------------
     // First some security checks against touching the outsides of the map...
@@ -990,6 +990,8 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int p
 		target_obstacle -> type = stored_target_obstacle_type ;
 		continue;
 	    }
+            target_obstacle -> type = stored_target_obstacle_type ;
+		
 	}
 
 	DebugPrintf ( 1 , "\nObject smashed at: (%f/%f) by hit/explosion at (%f/%f)." ,
@@ -1002,7 +1004,7 @@ smash_obstacles_only_on_tile ( float x , float y , int map_x , int map_y , int p
 	// Before we destroy the obstacle (and lose the obstacle type) we see if we
 	// should maybe drop some item.
 	//
-	if ( obstacle_map [ stored_target_obstacle_type ] . drop_random_treasure )
+	if ( obstacle_map [ target_obstacle -> type ] . drop_random_treasure )
 	    DropRandomItem( Me [ 0 ] . pos . z , target_obstacle -> pos . x , target_obstacle -> pos . y , 1 , FALSE , FALSE , FALSE );
 	
 	//--------------------
