@@ -1988,7 +1988,7 @@ SaveShip(const char *filename)
     //--------------------
     // We open the ship file 
     //
-    if ( ( ShipFile = fopen ( filename , "w" ) ) == NULL ) 
+    if ( ( ShipFile = fopen ( filename , "wb" ) ) == NULL ) 
     {
 	fprintf( stderr , "\nShip file filename: %s\n" , filename );
 	GiveStandardErrorMessage ( __FUNCTION__  , "Error opening ship file." ,
