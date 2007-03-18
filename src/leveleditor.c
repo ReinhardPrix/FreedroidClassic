@@ -1614,7 +1614,8 @@ HandleBannerMouseClick( void )
     else
     {
 	// could be a click on a block
-	for ( i = 0 ; i < 9 ; i ++ ) 
+        unsigned int num_blocks = GameConfig.screen_width / INITIAL_BLOCK_WIDTH - 1;
+	for ( i = 0 ; i < num_blocks ; i ++ ) 
         {
 	    TargetRect.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i; 
 	    TargetRect.y = INITIAL_BLOCK_HEIGHT/3;
@@ -1647,6 +1648,64 @@ HandleBannerMouseClick( void )
  * scrollbar with the various tiles that may be placed on the floor of the
  * map.  This scrollbar is drawn here.
  * ---------------------------------------------------------------------- */
+
+void build_level_editor_banner(unsigned int selected_tab){
+    char *tab_text[9]={
+        "FLOOR" ,     
+        "WALLS" ,     
+        "MACHINERY" , 
+        "FURNITURE" , 
+        "CONTAINERS", 
+        "NATURE"    , 
+        "ALL" ,       
+        "QUICK",
+        NULL
+    };
+    unsigned int tab_num=8;
+
+    SDL_Rect tr,hr, dir;
+    
+    // here I modify default values 
+    AllMousePressButtons[ RIGHT_LEVEL_EDITOR_BUTTON ] . button_rect . x = 
+        GameConfig.screen_width - 16;
+    EditorBannerRect.w = GameConfig.screen_width;
+
+    // object selector background
+    tr . x = 0 ;
+    tr . w = GameConfig.screen_width;
+    tr . y = 14 ;
+    tr . h = 77;
+    our_SDL_fill_rect_wrapper(Screen, &tr, 0x556889);
+
+    ShowGenericButtonFromList (  LEFT_LEVEL_EDITOR_BUTTON );
+    ShowGenericButtonFromList ( RIGHT_LEVEL_EDITOR_BUTTON );
+
+    // object selector tabset background
+    tr.x = 0; tr . y = 0; tr . h = 14; tr . w = 640;
+    our_SDL_fill_rect_wrapper(Screen, &tr, 0x656565);
+
+    // tabset
+    BFont_Info * PreviousFont;
+    PreviousFont = GetCurrentFont();
+    SetCurrentFont( Message_BFont );
+    unsigned int tab_y=1, tab_width = 80, ii;
+    tr . w = 2;
+    tr . h = 14;
+    hr . y =0 ; hr.w = tab_width-2; hr.h = 14;
+
+    for(ii=0;ii<tab_num;ii++){
+        unsigned int tab_x = ii * tab_width;
+        hr.x=tab_x;
+        if(ii==selected_tab) // the currently selected tab has different color
+           our_SDL_fill_rect_wrapper(Screen,&hr,0x556889);
+        DisplayText( tab_text[ii] , tab_x+2 , tab_y , &hr , TEXT_STRETCH );
+        tr.x = tab_x + tab_width - 2;
+        // tab separators
+        our_SDL_fill_rect_wrapper(Screen,&tr,0x88000000);
+    }
+    SetCurrentFont( PreviousFont );
+}
+
 void
 ShowLevelEditorTopMenu( int Highlight )
 {
@@ -1656,7 +1715,8 @@ ShowLevelEditorTopMenu( int Highlight )
     SDL_Surface *tmp = NULL;
     float zoom_factor;
 
-    blit_special_background ( LEVEL_EDITOR_BANNER_CODE + GameConfig . level_editor_edit_mode );
+    build_level_editor_banner(GameConfig.level_editor_edit_mode);
+
 
     //--------------------
     // Time to fill something into the top selection banner, so that the
@@ -1664,7 +1724,8 @@ ShowLevelEditorTopMenu( int Highlight )
     // done differently, depending on whether we show the menu for the floor
     // edit mode or for the obstacle edit mode.
     //
-    for ( i = 0 ; i < 9 ; i ++ )
+    unsigned int num_blocks = GameConfig.screen_width / INITIAL_BLOCK_WIDTH - 1;
+    for ( i = 0 ; i < num_blocks ; i ++ )
     {
 	if ( selected_index >= number_of_walls [ GameConfig . level_editor_edit_mode ] ) continue;
 
@@ -1673,61 +1734,60 @@ ShowLevelEditorTopMenu( int Highlight )
 	TargetRectangle.w = INITIAL_BLOCK_WIDTH ;
 	TargetRectangle.h = INITIAL_BLOCK_HEIGHT ;
 	    
+        iso_image * img=NULL;
+        int y_off;
+        y_off=TargetRectangle.y;
 
 	switch ( GameConfig . level_editor_edit_mode )
 	{
 	    case LEVEL_EDITOR_SELECTION_FLOOR:
-		if ( use_open_gl )
-		{
-		    blit_zoomed_open_gl_texture_to_screen_position ( & ( floor_iso_images [ selected_index ] ) , TargetRectangle . x , TargetRectangle . y , TRUE , 0.5) ;
-		}
-		else
-		{
-		    //--------------------
-		    // We create a scaled version of the floor tile in question
-		    //
-		    tmp = zoomSurface ( floor_iso_images [ selected_index ] . surface , 0.5 , 0.5, FALSE );
-		    
-		    //--------------------
-		    // Now we can show and free the scaled verion of the floor tile again.
-		    //
-		    our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
-		    SDL_FreeSurface ( tmp );
-		}
+                img = & (floor_iso_images [ selected_index ]);
 		break;
-		
 	    case LEVEL_EDITOR_SELECTION_WALLS:
 	    case LEVEL_EDITOR_SELECTION_MACHINERY:
 	    case LEVEL_EDITOR_SELECTION_FURNITURE:
 	    case LEVEL_EDITOR_SELECTION_CONTAINERS:
 	    case LEVEL_EDITOR_SELECTION_PLANTS:
 	    case LEVEL_EDITOR_SELECTION_ALL:
-		//--------------------
-		// We find the proper zoom_factor, so that the obstacle in question will
+                img = &(obstacle_map [wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image);
+                break;
+	    default:
+		GiveStandardErrorMessage ( __FUNCTION__  , 
+					   "Unhandled level editor edit mode received.",
+					   PLEASE_INFORM , IS_FATAL );
+		break;
+        }
+	// We find the proper zoom_factor, so that the obstacle/tile in question will
 		// fit into one tile in the level editor top status selection row.
 		//
 		if ( use_open_gl )
 		{
 		    zoom_factor = min ( 
-			( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . original_image_width ) ,
-			( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . original_image_height ) );
+		( (float)INITIAL_BLOCK_WIDTH / (float)img -> original_image_width ) ,
+		( (float)INITIAL_BLOCK_HEIGHT / (float)img -> original_image_height ) );
 		}
 		else
 		{
 		    zoom_factor = min ( 
-			( (float)INITIAL_BLOCK_WIDTH / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface->w ) ,
-			( (float)INITIAL_BLOCK_HEIGHT / (float)obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface->h ) );
+		( (float)INITIAL_BLOCK_WIDTH / (float)img -> surface->w ) ,
+		( (float)INITIAL_BLOCK_HEIGHT / (float)img -> surface->h ) );
 		}
+
+        if( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_SELECTION_FLOOR)
+                y_off = TargetRectangle . y + 0.75 * TargetRectangle.h - 
+                           zoom_factor * (float)(img -> original_image_height);
+
 		if ( use_open_gl )
 		{
-		    blit_zoomed_open_gl_texture_to_screen_position ( & ( obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image ) , TargetRectangle . x , TargetRectangle . y , TRUE , zoom_factor ) ;
+	    blit_zoomed_open_gl_texture_to_screen_position ( img , TargetRectangle . x , 
+                    y_off, TRUE , zoom_factor) ;
 		}
 		else
 		{
 		    //--------------------
-		    // We create a scaled version of the obstacle in question
+	    // We create a scaled version of the obstacle/floorpiece in question
 		    //
-		    tmp = zoomSurface ( obstacle_map [ wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] ] . image . surface , zoom_factor , zoom_factor , FALSE );
+	    tmp = zoomSurface ( img -> surface , zoom_factor, zoom_factor, FALSE );
 		    
 		    //--------------------
 		    // Now we can show and free the scaled verion of the floor tile again.
@@ -1735,15 +1795,6 @@ ShowLevelEditorTopMenu( int Highlight )
 		    our_SDL_blit_surface_wrapper( tmp , NULL , Screen, &TargetRectangle);
 		    SDL_FreeSurface ( tmp );
 		}
-		break;
-		
-	    default:
-		GiveStandardErrorMessage ( __FUNCTION__  , 
-					   "Unhandled level editor edit mode received.",
-					   PLEASE_INFORM , IS_FATAL );
-		break;
-		
-	};
 
 	//--------------------
 	// Maybe we've just displayed the obstacle/floorpiece that is currently

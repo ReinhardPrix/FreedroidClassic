@@ -120,8 +120,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/RightShopButton.png"              , { 576 , 447 ,  26 ,  26 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LeftShopButton.png"               , {   5 ,  16 ,  26 ,  26 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/RightShopButton.png"              , { 580 ,  13 ,  26 ,  26 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , {  3 ,  25 ,  15 ,  60 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                       , { 620 ,  26 ,  15 ,  60 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorObjectSelectorLeft.png", {  3 ,  25 ,  15 ,  60 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorObjectSelectorRight.png", { 620 ,  26 ,  15 ,  60 } , FALSE , FALSE } ,
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/number_selector_ok_button.png"    , { 308 , 288 ,  48 ,  48 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 148 , 244 ,  35 ,  35 } , TRUE , FALSE } ,
@@ -235,16 +235,17 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuOff.png"          , { 342 , 272 , 160 ,  20 } , TRUE , TRUE } ,
 
     //--------------------
-    // These 7 buttons are for the level editor and will not need
+    // These 8 buttons are for the level editor and will not need
     // any scaling...
     //
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 102 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 203 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 304 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 405 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 506 , 3 , 99 ,  14 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 606 , 3 , 34 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 0   , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 80  , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 160 , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 240 , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 320 , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 400 , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 480 , 0 , 78 ,  14 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 560 , 0 , 78 ,  14 } , FALSE , FALSE } ,
 
 
     { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 486 , 324  , 73 ,  73 } , TRUE , FALSE } ,
