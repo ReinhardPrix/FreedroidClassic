@@ -1956,9 +1956,13 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
     {
 	our_obstacle = give_pointer_to_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
 	obstacle_level_num = give_level_of_obstacle_with_label ( AllTriggeredActions [ EventNumber ] . modify_obstacle_with_label ) ;
-	our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
-	
 	obstacle_level = curShip . AllLevels [ obstacle_level_num ] ;
+	if ( AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type )
+		our_obstacle -> type = AllTriggeredActions [ EventNumber ] . modify_obstacle_to_type ;
+	else {
+		delete_obstacle (  curShip . AllLevels [ obstacle_level_num ], our_obstacle);
+	     }
+
 	//--------------------
 	// Now we make sure the door lists and that are all updated...
 	//
