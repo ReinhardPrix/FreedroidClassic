@@ -64,9 +64,9 @@ show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status 
 {
     SDL_Rect background_rect;
     
-    background_rect . x = pos_x ;
+    background_rect . x = pos_x -1 ;
     background_rect . y = pos_y ;
-    background_rect . w = 200 ;
+    background_rect . w = TextWidth(LabelText) + 2 ;
     background_rect . h =  20 ;
     
     our_SDL_fill_rect_wrapper ( Screen , & ( background_rect ) , 0 );
