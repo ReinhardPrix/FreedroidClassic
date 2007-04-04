@@ -1028,7 +1028,7 @@ enum
   ISO_AUTOGUN_N = 33,
   ISO_AUTOGUN_E = 34,
   ISO_AUTOGUN_S = 35,
-
+//see at the end for disabled autoguns
   //--------------------
   // These obstacles are generated from 'iso_cave_walls.blend' file
   // in the cvs rep.
@@ -1404,6 +1404,11 @@ enum
   
   ISO_BRICK_WALL_EH , // = 134 ,
   ISO_BRICK_WALL_EV ,
+
+  ISO_DIS_AUTOGUN_W,
+  ISO_DIS_AUTOGUN_N,
+  ISO_DIS_AUTOGUN_E,
+  ISO_DIS_AUTOGUN_S,
 
   NUMBER_OF_OBSTACLE_TYPES
 };

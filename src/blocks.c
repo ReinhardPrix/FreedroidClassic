@@ -2915,6 +2915,31 @@ init_obstacle_data( void )
   obstacle_map [ ISO_AUTOGUN_W ] . obstacle_short_name = "Autogun";
   obstacle_map [ ISO_AUTOGUN_W ] . obstacle_long_description = "A not-that-nice autogun. Beware : it could be harmful.";
 
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . filename = "iso_autogun_0002.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . obstacle_long_description = "A not-that-nice autogun. It seems disabled for now.";
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . filename = "iso_autogun_0004.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . obstacle_long_description = "This killing machine is disabled. For now.";
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . filename = "iso_autogun_0003.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . obstacle_long_description = "It is looking at you. You are sure it is looking at you. But it does not fire. For now.";
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_area_parm_1 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_area_parm_2 = 0.9 ;
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . filename = "iso_autogun_0001.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_vision_too = FALSE ;
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . obstacle_short_name = "Autogun";
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . obstacle_long_description = "The autogun is disabled.";
+
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_1 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_2 = 1.0 ;

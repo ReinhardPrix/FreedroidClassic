@@ -925,7 +925,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  }
 		  else
 		  {
-		      if ( ThisRobot -> energy < 0 )
+		      if ( ThisRobot -> energy < 0 && CurBullet -> owner > 0)
 		      {
 			  sprintf ( game_message_text , "%s was destroyed by bullet from %s." ,
 				    Druidmap [ ThisRobot -> type ] . druidname ,
