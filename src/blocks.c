@@ -541,9 +541,11 @@ void
 blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;
+  int ii,jj;
 
-  target_rectangle . x = translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) +     our_iso_image . offset_x ;
-  target_rectangle . y = translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +    our_iso_image . offset_y ;
+  translate_map_point_to_screen_pixel ( pos_x , pos_y, &ii, &jj, 1.0 ); 
+  target_rectangle.x = ii + our_iso_image . offset_x ;
+  target_rectangle.y = jj + our_iso_image . offset_y ;
 
   our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
 
@@ -567,12 +569,9 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 
   DebugPrintf ( 1 , "\nblit_outline_of_iso_image_to_map_position: function invoked." );
 
-  target_rectangle . x = 
-    translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
-    our_iso_image . offset_x ;
-  target_rectangle . y = 
-    translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
-    our_iso_image . offset_y ;
+  translate_map_point_to_screen_pixel ( pos_x , pos_y, &x, &y, 1.0 ); 
+  target_rectangle.x = x+our_iso_image.offset_x;
+  target_rectangle.y = y+our_iso_image.offset_y;
 
   if ( our_iso_image . surface -> flags & SDL_SRCCOLORKEY )
     {
@@ -757,13 +756,12 @@ void
 blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x , float pos_y )
 {
     SDL_Rect target_rectangle;
+    int x,y;
+    float zoom_factor = 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT;
 
-    target_rectangle . x = 
-	translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , TRUE ) + 
-	our_iso_image -> offset_x / LEVEL_EDITOR_ZOOM_OUT_FACT ;
-    target_rectangle . y = 
-	translate_map_point_to_zoomed_screen_pixel ( pos_x , pos_y , FALSE ) +
-	our_iso_image -> offset_y / LEVEL_EDITOR_ZOOM_OUT_FACT ;
+    translate_map_point_to_screen_pixel ( pos_x , pos_y, &x, &y, zoom_factor);
+    target_rectangle.x = x + our_iso_image -> offset_x * zoom_factor ;
+    target_rectangle.y = y + our_iso_image -> offset_y * zoom_factor ;
     
     if ( use_open_gl )
     {
@@ -788,13 +786,11 @@ blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer ,
 					   iso_image our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;
+  int x,y;
 
-  target_rectangle . x = 
-    translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
-    our_iso_image . offset_x ;
-  target_rectangle . y = 
-    translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
-    our_iso_image . offset_y ;
+  translate_map_point_to_screen_pixel ( pos_x , pos_y, &x, &y, 1.0 );
+  target_rectangle.x = x + our_iso_image.offset_x;
+  target_rectangle.y = y + our_iso_image.offset_y;
 
   our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
 
@@ -4781,6 +4777,23 @@ init_obstacle_data( void )
       obstacle_map [ i ] . right_border = + obstacle_map [ i ] . block_area_parm_2 / 2.0 ;
     }
 
+  // corrections for corner and T walls
+  obstacle_map [ ISO_THICK_WALL_T_E ] . upper_border = obstacle_map[ ISO_THICK_WALL_V ] .upper_border ;
+  obstacle_map [ ISO_THICK_WALL_T_W ] . lower_border = obstacle_map[ ISO_THICK_WALL_V ] .lower_border ;
+  obstacle_map [ ISO_THICK_WALL_T_N ] . right_border = obstacle_map[ ISO_THICK_WALL_H ] .right_border ;
+  obstacle_map [ ISO_THICK_WALL_T_S ] . left_border  = obstacle_map[ ISO_THICK_WALL_H ] .left_border ; 
+
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . left_border  = obstacle_map[ ISO_THICK_WALL_H ] .left_border ; 
+  obstacle_map [ ISO_THICK_WALL_CORNER_NE ] . lower_border  = obstacle_map[ ISO_THICK_WALL_V ] .lower_border ;
+
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . right_border  = obstacle_map[ ISO_THICK_WALL_H ] .right_border ; 
+  obstacle_map [ ISO_THICK_WALL_CORNER_SE ] . lower_border  = obstacle_map[ ISO_THICK_WALL_V ] .lower_border ;
+
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . left_border  = obstacle_map[ ISO_THICK_WALL_H ] .left_border ; 
+  obstacle_map [ ISO_THICK_WALL_CORNER_NW ] . upper_border  = obstacle_map[ ISO_THICK_WALL_V ] .upper_border ; 
+
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . right_border  = obstacle_map[ ISO_THICK_WALL_H ] .right_border ; 
+  obstacle_map [ ISO_THICK_WALL_CORNER_SW ] . upper_border  = obstacle_map[ ISO_THICK_WALL_V ] .upper_border ; 
 }; // void init_obstacle_data( void )
 
 /* ---------------------------------------------------------------------- 
