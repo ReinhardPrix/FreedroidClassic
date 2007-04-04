@@ -629,10 +629,10 @@ There was an obstacle type given, that exceeds the number of\n\
     //--------------------
     // Maybe the children friendly version is desired.  Then the blood on the floor
     // will not be blitted to the screen.
-    //
+
     if ( ( ! GameConfig . show_blood ) && 
 	 ( our_obstacle-> type >= ISO_BLOOD_1 ) && 
-	 ( our_obstacle -> type <= ISO_BLOOD_8 ) ) 
+	 ( our_obstacle -> type <= ISO_BLOOD_8 ) )
 	return;
 
     // blit_obstacle_collision_rectangle ( our_obstacle );
@@ -1446,7 +1446,15 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 		if ( mask & ZOOM_OUT )
 		    blit_one_obstacle_zoomed ( (obstacle*)  blitting_list [ i ] . element_pointer );
 		else
-		    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		    {
+		    // Do not blit "transp for water" obstacle when not in leveleditor mode (omit_blasts)
+		    if ( ((obstacle*)  blitting_list [ i ] . element_pointer) -> type == ISO_TRANSP_FOR_WATER )
+			{
+			if ( mask & OMIT_BLASTS )
+				blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+			}
+		    else blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+		    }
 	    }
 	}
 	//--------------------
@@ -1525,7 +1533,16 @@ blit_nonpreput_objects_according_to_blitting_list ( int mask )
 			     ( blitting_list [ i ] . code_number == chest_under_cursor ) )
 			    blit_one_obstacle_highlighted ( (obstacle*)  blitting_list [ i ] . element_pointer );
 			else
-			    blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+			{
+			// Do not blit "transp for water" obstacle when not in leveleditor mode (omit_blasts)
+                        if ( ((obstacle*)  blitting_list [ i ] . element_pointer) -> type == ISO_TRANSP_FOR_WATER )
+                        	{
+                        	if ( mask & OMIT_BLASTS )
+                         	       blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+                        	}
+                    	else blit_one_obstacle ( (obstacle*)  blitting_list [ i ] . element_pointer );
+			}
+
 		    }
 		}
 		break;
