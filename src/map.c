@@ -3344,12 +3344,7 @@ WorkLevelGuns ( int PlayerNum )
 
   GunLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
-  //--------------------
-  // This prevents animation going too quick.
-  // The constant should be replaced by a variable, that can be
-  // set from within the theme, but that may be done later...
-  //
-  if ( LevelGunsNotFiredTime < 0.25 ) return;
+  if ( LevelGunsNotFiredTime < 0.5 ) return;
 
   //--------------------
   // But only the last of these function calls for each player may 
@@ -3405,12 +3400,8 @@ WorkLevelGuns ( int PlayerNum )
 
       CurBullet->type = bullet_image_type;
 
-      //--------------------
-      // Previously, we had the damage done only dependant upon the weapon used.  Now
-      // the damage value is taken directly from the character stats, and the UpdateAll...stats
-      // has to do the right computation and updating of this value.  hehe. very conventient.
-      CurBullet->damage = 20 ;
-      CurBullet->mine = TRUE; //just to avoid weird things
+      CurBullet->damage = 5 ;
+      CurBullet->mine = FALSE;
       CurBullet->owner = -1;
       CurBullet->bullet_lifetime        = ItemMap[ weapon_item_type ].item_gun_bullet_lifetime;
       CurBullet->angle_change_rate      = ItemMap[ weapon_item_type ].item_gun_angle_change;
@@ -3443,20 +3434,29 @@ WorkLevelGuns ( int PlayerNum )
       
       speed.x = 0.0;
       speed.y = 0.0;
+
+      CurBullet -> pos.x = autogunx;    
+      CurBullet -> pos.y = autoguny;
       
       switch ( *AutogunType )
 	{
 	case ISO_AUTOGUN_W:
-	  speed.x = -1.0;
+	  speed.x = -0.2;
+      	  CurBullet -> pos.x -=  0.5 ;
+      	  CurBullet -> pos.y -=  0.25 ;
 	  break;
 	case ISO_AUTOGUN_E:
-	  speed.x =  1.0;
+	  speed.x =  0.2;
+      	  CurBullet -> pos.x += 0.4 ;
 	  break;
 	case ISO_AUTOGUN_N:
-	  speed.y = -1.0;
+	  speed.y = -0.2;
+      	  CurBullet -> pos.x += - 0.25 ;
+      	  CurBullet -> pos.y += - 0.5 ;
 	  break;
 	case ISO_AUTOGUN_S:
-	  speed.y = +1.0;
+	  speed.y = +0.2;
+      	  CurBullet -> pos.y += 0.4 ;
 	  break;
 	default:
 	  fprintf ( stderr, "\n*AutogunType: '%d'.\n" , *AutogunType );
@@ -3467,18 +3467,8 @@ is not really an autogun.  Instead it's something else.",
 	  break;
 	}
 
-      CurBullet -> pos.x = autogunx + speed.x * 0.75 ;
-      CurBullet -> pos.y = autoguny + speed.y * 0.75 ;
       CurBullet -> pos.z = Me [ PlayerNum ] . pos . z ;
       
-      
-      //--------------------
-      // It might happen, that this is not a normal shot, but rather the
-      // swing of a melee weapon.  Then of course, we should make a swing
-      // and not start in this direction, but rather somewhat 'before' it,
-      // so that the rotation will hit the target later.
-      //
-      // RotateVectorByAngle ( & speed , ItemMap[ weapon_item_type ].item_gun_start_angle_modifier );
       
       speed_norm = sqrt (speed.x * speed.x + speed.y * speed.y);
       CurBullet->speed.x = (speed.x/speed_norm);
