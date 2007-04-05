@@ -1337,12 +1337,10 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
     //--------------------
     // Now of course we need to find out the proper target position.
     //
-    target_rectangle . x = 
-	translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , TRUE ) + 
-	our_floor_iso_image . offset_x * zoom_factor ;
-    target_rectangle . y = 
-	translate_map_point_to_zoomed_screen_pixel ( our_col , our_line , FALSE ) +
-	our_floor_iso_image . offset_y * zoom_factor ;
+    int ii,jj;
+    translate_map_point_to_screen_pixel ( our_col , our_line , &ii, &jj, zoom_factor ); 
+    target_rectangle . x = ii + our_floor_iso_image . offset_x * zoom_factor ;
+    target_rectangle . y = jj + our_floor_iso_image . offset_y * zoom_factor ;
     
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);

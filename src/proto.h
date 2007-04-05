@@ -94,10 +94,20 @@ EXTERN void move_tux ( int player_num ) ;
 EXTERN void animate_tux ( int player_num ) ;
 EXTERN void check_tux_enemy_collision (void);
 EXTERN void start_tux_death_explosions (void);
+#define translate_map_point_to_screen_pixel translate_map_point_to_screen_pixel_macro
+#define translate_map_point_to_screen_pixel_macro(X,Y,x_res,y_res,zoom_factor) {\
+  if((x_res)!=NULL)\
+    (*(x_res)) = rintf ((UserCenter_x) + \
+      ( (X) + Me[0].pos.y - Me[0].pos.x - (Y) ) * iso_floor_tile_width*0.5*(zoom_factor)) ;\
+  if((y_res)!=NULL)\
+    (*(y_res)) = rintf ((UserCenter_y) + \
+      ( (X) + (Y) - Me[0].pos.x - Me[0].pos.y ) * iso_floor_tile_height*0.5*(zoom_factor)) ;\
+}
 #define translate_map_point_to_screen_pixel_x(X,Y)  ( UserCenter_x + rintf(( (X) + Me [ 0 ] . pos . y - Me [ 0 ] . pos . x - (Y) ) * (iso_floor_tile_width_over_two) ) )
 #define translate_map_point_to_screen_pixel_y(X,Y)  ( UserCenter_y + rintf(( (X) + (Y) - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * (iso_floor_tile_height_over_two))) 
+EXTERN void translate_map_point_to_screen_pixel_func( float x_map_pos, float y_map_pos, int * x_res, int * y_res, float zoom_factor);
 EXTERN int translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float y_map_pos , int give_x );
-EXTERN int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x );
+//EXTERN void translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int* x_res, int* y_res);
 EXTERN inline float translate_pixel_to_map_location ( int player_num , float axis_x , float axis_y , int give_x ) ;
 EXTERN void skew_and_blit_rect( float x1, float y1, float x2, float y2, Uint32 color);
 EXTERN float translate_pixel_to_zoomed_map_location ( int player_num , float axis_x , float axis_y , int give_x );
