@@ -2501,7 +2501,6 @@ DoLevelEditorMainMenu ( Level EditLevel )
 		SaveShip(fp);
 		CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		our_SDL_flip_wrapper ( Screen );
-		while (!EnterPressed() && !SpacePressed() ) ;
 		while (EnterPressed() || SpacePressed() ) ;
 		// proceed_now=!proceed_now;
 		break;
@@ -3529,7 +3528,8 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
     sprintf( PanelText , "\n Map Label Information: \n label_name=\"%s\"." , 
 	     EditLevel -> labels [ MapLabelIndex ] . label_name );
     
-    DisplayText ( PanelText , User_Rect.x , 91 + User_Rect.y , &User_Rect , 1.0 );
+    DisplayText ( PanelText , User_Rect.x , GameConfig.screen_height - 5 * FontHeight( GetCurrentFont() ) , 
+            NULL/*&User_Rect*/ , 1.0 );
     
 }; // void PrintMapLabelInformationOfThisSquare ( Level EditLevel )
 
@@ -3540,34 +3540,55 @@ PrintMapLabelInformationOfThisSquare ( Level EditLevel )
  * it provides a "cursor" for the Level Editor.
  * ---------------------------------------------------------------------- */
 void 
-Highlight_Current_Block(void)
+Highlight_Current_Block (int mask)
 {
     Level EditLevel;
-    static iso_image level_editor_cursor = { NULL , 0 , 0 } ;
+    static iso_image level_editor_cursor = { NULL, 0, 0 };
     char fpath[2048];
     
-    EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
+  EditLevel = curShip.AllLevels[Me[0].pos.z];
 #define HIGHLIGHTCOLOR 255
     
     //--------------------
     // Maybe, if the level editor floor cursor has not yet been loaded,
     // we need to load it.
     //
-    if ( level_editor_cursor . surface == NULL )
+  if (level_editor_cursor.surface == NULL && ! level_editor_cursor . texture_has_been_created )
     {
-	find_file ( "level_editor_floor_cursor.png" , GRAPHICS_DIR, fpath, 0 );
-	get_iso_image_from_file_and_path ( fpath , & ( level_editor_cursor ) , TRUE ) ;
-	if ( level_editor_cursor . surface == NULL )
+      find_file ("level_editor_floor_cursor.png", GRAPHICS_DIR, fpath, 0);
+      get_iso_image_from_file_and_path (fpath, &(level_editor_cursor), TRUE);
+      if (level_editor_cursor.surface == NULL)
 	{
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-Unable to load the level editor floor cursor.",
-				       PLEASE_INFORM, IS_FATAL );
+          GiveStandardErrorMessage (__FUNCTION__, "\
+Unable to load the level editor floor cursor.", PLEASE_INFORM, IS_FATAL);
 	}
+      if (use_open_gl)
+        make_texture_out_of_surface (&level_editor_cursor);
     }
     
-    blit_iso_image_to_map_position ( level_editor_cursor , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
+  if (mask & ZOOM_OUT)
+    {
+      if (use_open_gl)
+        blit_zoomed_open_gl_texture_to_map_position (level_editor_cursor,
+                                                     Me[0].pos.x, Me[0].pos.y,
+                                                     1.0, 1.0, 1.0, 0.25,
+                                                     FALSE);
+      else
+        blit_zoomed_iso_image_to_map_position (&level_editor_cursor,
+                                               Me[0].pos.x, Me[0].pos.y);
+    }
+  else
+    {
+      if (use_open_gl)
+        blit_open_gl_texture_to_map_position (level_editor_cursor,
+                                              Me[0].pos.x, Me[0].pos.y, 1.0,
+                                              1.0, 1.0, 0.25, FALSE);
+      else
+        blit_iso_image_to_map_position (level_editor_cursor, Me[0].pos.x,
+                                        Me[0].pos.y);
+    }
     
-    PrintMapLabelInformationOfThisSquare ( EditLevel );
+  PrintMapLabelInformationOfThisSquare (EditLevel);
 
 } // void Highlight_Current_Block(void)
 
@@ -3619,29 +3640,24 @@ Unable to load the level editor waypoint dot cursor.",
     
     for ( i = 0 ; i < steps+1 ; i ++ )
     {
+        float x,y;
+        x=( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps;
+        y=( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps;
 	if ( mask & ZOOM_OUT )
 	{
 	    if ( use_open_gl )
-		blit_zoomed_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
-							      ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
-							      ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
+		blit_zoomed_open_gl_texture_to_map_position ( level_editor_dot_cursor , x , y ,
 							      1.0 , 1.0 , 1.0 , 0.25 , FALSE);
 	    else
-		blit_iso_image_to_map_position ( level_editor_dot_cursor ,
-						 ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
-						 ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+		blit_iso_image_to_map_position ( level_editor_dot_cursor , x , y);
 	}
 	else
 	{
 	    if ( use_open_gl )
-		blit_open_gl_texture_to_map_position ( level_editor_dot_cursor ,
-						       ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
-						       ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps ,
+		blit_open_gl_texture_to_map_position ( level_editor_dot_cursor , x , y ,
 						       1.0 , 1.0 , 1.0 , TRUE , FALSE);
 	    else
-		blit_iso_image_to_map_position ( level_editor_dot_cursor ,
-						 ( ((float)i) / steps ) * x1 + x2 * ( steps - i )/steps , 
-						 ( ((float)i) / steps ) * y1 + y2 * ( steps - i )/steps );
+		blit_iso_image_to_map_position ( level_editor_dot_cursor , x , y);
 	}
     }
     
@@ -3706,12 +3722,14 @@ Unable to load the level editor waypoint cursor.",
 	{
 	    if ( use_open_gl )
 	    {
-		blit_zoomed_open_gl_texture_to_map_position ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
+		blit_zoomed_open_gl_texture_to_map_position ( 
+                        level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
 							      this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25, FALSE ) ;
 	    }
 	    else
 	    {
-		blit_zoomed_iso_image_to_map_position ( & ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  ) , 
+		blit_zoomed_iso_image_to_map_position ( 
+                        & ( level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  ) , 
 							this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
 	    }
 	}
@@ -4013,12 +4031,12 @@ ToggleWaypointConnection ( Level EditLevel , int BlockX , int BlockY )
     
     if ( i == EditLevel->num_waypoints )
     {
-	sprintf( VanishingMessage , "\n\nSorry, don't know which waypoint you mean." );
+	sprintf( VanishingMessage , "Sorry, don't know which waypoint you mean." );
 	VanishingMessageDisplayTime = 0;
     }
     else
     {
-	sprintf( VanishingMessage , "\n\nYou specified waypoint nr. %d." , i );
+	sprintf( VanishingMessage , "You specified waypoint nr. %d." , i );
 	VanishingMessageDisplayTime = 0;
 	if ( OriginWaypoint== (-1) )
 	{
@@ -4897,7 +4915,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
 		  MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
-	    draw_grid = ! draw_grid;
+	    draw_grid =  ! draw_grid;
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -5246,7 +5264,7 @@ LevelEditor(void)
 	    ClearUserFenster();
 	    AssembleCombatPicture ( ONLY_SHOW_MAP_AND_TEXT | SHOW_GRID | SHOW_ITEMS | GameConfig.omit_tux_in_level_editor * OMIT_TUX | GameConfig.omit_obstacles_in_level_editor * OMIT_OBSTACLES | GameConfig.omit_enemies_in_level_editor * OMIT_ENEMIES | SHOW_OBSTACLE_NAMES | ZOOM_OUT * GameConfig . zoom_is_on | OMIT_BLASTS | SKIP_LIGHT_RADIUS );
 	    
-	    Highlight_Current_Block();
+	    Highlight_Current_Block(ZOOM_OUT * GameConfig . zoom_is_on );
 	    
 	    ShowWaypoints( FALSE , ZOOM_OUT * GameConfig . zoom_is_on );
 	    ShowMapLabels( ZOOM_OUT * GameConfig . zoom_is_on );
@@ -5266,14 +5284,15 @@ LevelEditor(void)
 			  EditLevel -> AllWaypoints [ OriginWaypoint ] . x , 
 			  EditLevel -> AllWaypoints [ OriginWaypoint ] . y );
 	    }
-	    LeftPutString ( Screen , 91 + 4 * FontHeight( GetCurrentFont() ), linebuf );
+	    LeftPutString ( Screen , GameConfig.screen_height - 2*FontHeight( GetCurrentFont() ), linebuf );
 	    
 	    //--------------------
 	    // Now we print out the latest connection operation success or failure...
 	    //
 	    if ( VanishingMessageDisplayTime < 7 )
 	    {
-		DisplayText ( VanishingMessage ,  1 , 191 + 5 * FontHeight ( GetCurrentFont () ) , NULL , 1.0 );
+		DisplayText ( VanishingMessage ,  1 , GameConfig.screen_height - 8 * FontHeight ( GetCurrentFont () ) ,
+                        NULL , 1.0 );
 	    }
 	    
 	    ShowLevelEditorTopMenu( Highlight );

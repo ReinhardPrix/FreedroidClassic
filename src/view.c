@@ -409,8 +409,9 @@ ShowCombatScreenTexts ( int mask )
     if ( GameConfig.Draw_Position || ( mask & ONLY_SHOW_MAP_AND_TEXT ) )
     {
 	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
-			 1 + 2 * FontHeight( FPS_Display_BFont ), 
-			 "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , DisplayLevel->levelnum );
+                         GameConfig.screen_height - 9*FontHeight( FPS_Display_BFont ), 
+			 "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , 
+                         DisplayLevel->levelnum );
     }
     
     for ( i = 0 ; i < MAX_MISSIONS_IN_GAME ; i ++ )
@@ -479,73 +480,95 @@ blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
     }
 }; // void blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image , float our_col, float our_line )
 
-/* ----------------------------------------------------------------------
- * This function should assemble the pure floor tiles that will be visible
- * around the Tux or in the console map view.  Big map inserts and all that
- * will be handled later...
- * ---------------------------------------------------------------------- */
 void
-isometric_show_floor_around_tux_without_doublebuffering ( int mask )
-{
-    int LineStart, LineEnd, ColStart, ColEnd , line, col, MapBrick;
-    Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-
+get_floor_boundaries(int mask, int* LineStart, int* LineEnd, int* ColStart, int* ColEnd){
     //--------------------
     // Maybe we should be using a more elegant function here, that will automatically
     // compute the right amount of squares to blit in each direction from the known amount
     // of pixel one floor tile takes...  But that must follow later...
     if ( mask & ZOOM_OUT )
     {
-	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
-	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	*LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	*LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	*ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
+	*ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
     }
     else
     {
-	LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	*LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	*LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	*ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	*ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
     }
+}
+/* ----------------------------------------------------------------------
+ * This function should assemble the pure floor tiles that will be visible
+ * around the Tux or in the console map view.  Big map inserts and all that
+ * will be handled later...
+ * ---------------------------------------------------------------------- */
+void
+isometric_show_floor_around_tux_without_doublebuffering (int mask)
+{
+  int LineStart, LineEnd, ColStart, ColEnd, line, col, MapBrick;
+  Level DisplayLevel = curShip.AllLevels[Me[0].pos.z];
     
-    SDL_SetClipRect (Screen , &User_Rect);
+  get_floor_boundaries (mask, &LineStart, &LineEnd, &ColStart, &ColEnd);
+
+
+  SDL_SetClipRect (Screen, &User_Rect);
     
-    if ( mask & ZOOM_OUT )
-    {
-	for (line = LineStart; line < LineEnd; line++)
+  for (line = LineStart; line < LineEnd; line++)
 	{
-	    for (col = ColStart; col < ColEnd; col++)
+	for (col = ColStart; col < ColEnd; col++)
 	    {
-		MapBrick = GetMapBrick ( DisplayLevel, col , line ) ;
+            MapBrick = GetMapBrick (DisplayLevel, col, line);
 		
-		if ( use_open_gl )
-		{
-		    blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-								  ((float)col)+0.5 , ((float)line) +0.5 , 1.0 , 1.0 , 1.0 , FALSE , FALSE);
-		}
+    	    if (mask & ZOOM_OUT)
+                {
+                if (use_open_gl)
+	 	    {
+                    blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
+				                    ((float) col) + 0.5, ((float) line) + 0.5, 1.0, 1.0, 1.0,
+        	        							    FALSE, FALSE);
+		    }
 		else
-		{
-		    blit_zoomed_iso_image_to_map_position ( & ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] ) , ((float)col)+0.5 , ((float)line) +0.5 ) ;
-		}
-	    }		// for(col) 
-	}		// for(line) 
-    }
-    else
-    {
-	for ( line = LineStart ; line < LineEnd ; line++ )
-	{
-	    for ( col = ColStart ; col < ColEnd ; col++ )
-	    {
-		MapBrick = GetMapBrick ( DisplayLevel, col , line ) ;
-		blit_this_floor_tile_to_screen ( floor_iso_images [ MapBrick % ALL_ISOMETRIC_FLOOR_TILES ] , 
-		((float)col)+0.5 , ((float)line) +0.5 );
-	    }		// for(col) 
-	}		// for(line) 
-    }
+		    {
+                    blit_zoomed_iso_image_to_map_position ( &(floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES]),
+                    ((float) col) + 0.5, ((float) line) + 0.5);
+        	    }
+               }
+           else
+               {
+               blit_this_floor_tile_to_screen ( floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
+	                ((float) col) + 0.5, ((float) line) + 0.5);
+               }
+           }
+      }
 }; // void isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 
+void
+skew_and_blit_line (float x1, float y1, float x2, float y2, Uint32 color)
+{
+  int r, c;
+  float rr, gg, bb, zoom_factor;
+  zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
+  rr = ((color & 0xff0000) >> 16) / 255.0;
+  gg = ((color & 0xff00) >> 8) / 255.0;
+  bb = (color & 0xff) / 255.0;
+  glLineWidth (1);
+  glColor3f (rr, gg, bb);
+//  glEnable(GL_LINE_STIPPLE);
+//  glLineStipple(1,0x3F);
 
+  glBegin (GL_LINES);
+  translate_map_point_to_screen_pixel(x1,y1,&r,&c,zoom_factor);
+  glVertex2i (r, c);
+  translate_map_point_to_screen_pixel(x2,y2,&r,&c,zoom_factor);
+  glVertex2i (r, c);
+
+  glEnd ();
+//  glDisable(GL_LINE_STIPPLE);
+}
 /* ----------------------------------------------------------------------
  * More for debugging purposes than for real gameplay, we add some 
  * function to illustrate the collision rectangle of a certain obstacle
@@ -554,15 +577,12 @@ isometric_show_floor_around_tux_without_doublebuffering ( int mask )
 void 
 skew_and_blit_rect( float x1, float y1, float x2, float y2, Uint32 color)
 {
+    float zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
     int r1, r2, r3, r4, c1, c2, c3, c4 ;
-    r1 = translate_map_point_to_screen_pixel_x ( x1 , y1 );
-    c1 = translate_map_point_to_screen_pixel_y ( x1 , y1 );
-    r2 = translate_map_point_to_screen_pixel_x ( x1 , y2 );
-    c2 = translate_map_point_to_screen_pixel_y ( x1 , y2 );
-    r3 = translate_map_point_to_screen_pixel_x ( x2 , y2 );
-    c3 = translate_map_point_to_screen_pixel_y ( x2 , y2 );
-    r4 = translate_map_point_to_screen_pixel_x ( x2 , y1 );
-    c4 = translate_map_point_to_screen_pixel_y ( x2 , y1 );
+    translate_map_point_to_screen_pixel ( x1 , y1 , &r1, &c1, zoom_factor);
+    translate_map_point_to_screen_pixel ( x1 , y2 , &r2, &c2, zoom_factor);
+    translate_map_point_to_screen_pixel ( x2 , y2 , &r3, &c3, zoom_factor);
+    translate_map_point_to_screen_pixel ( x2 , y1 , &r4, &c4, zoom_factor);
     blit_quad ( r1, c1, r2, c2, r3, c3, r4, c4, color ); 
 }
 
@@ -1855,6 +1875,98 @@ update_item_text_slot_positions ( void )
     }
 }; // void update_item_text_slot_positions ( void )
 
+void
+draw_grid_on_the_floor (int mask)
+{
+  int LineStart, LineEnd, ColStart, ColEnd, line, col;
+  if (!(draw_grid && (mask & SHOW_GRID)))
+    return;
+
+  static iso_image grid_tile_SDL = { NULL, 0, 0 } ;
+  get_floor_boundaries (mask, &LineStart, &LineEnd, &ColStart, &ColEnd);
+
+  if (!use_open_gl)
+    {
+    if ( grid_tile_SDL . surface == NULL ) 
+	{ //We must load the SDL grid tile image
+	char fpath[2048];
+	find_file ("grid_tile.png", GRAPHICS_DIR, fpath, 0);
+        get_iso_image_from_file_and_path (fpath, &(grid_tile_SDL), TRUE);
+        if (grid_tile_SDL.surface == NULL)
+        	{
+          GiveStandardErrorMessage (__FUNCTION__, "\
+	Unable to load the grid tile.", PLEASE_INFORM, IS_FATAL);
+        	}
+	}
+
+    for (line = LineStart; line < LineEnd; line++)
+        for (col = ColStart; col < ColEnd; col++)
+            if(mask & ZOOM_OUT)
+            {
+                  blit_zoomed_iso_image_to_map_position (
+                    &(grid_tile_SDL),
+                    ((float) col) + 0.5, ((float) line) + 0.5);
+            }
+            else
+                blit_iso_image_to_map_position (grid_tile_SDL,
+                                            ((float) col) + 0.5,
+                                            ((float) line) + 0.5);
+    }
+  else //use GL
+    {
+      float x, y;
+      int r1, c1, r2, c2;
+      float dd, step;
+      int ii, jj;
+      char *numbers[2][2] = { {"3", "9"}, {"1", "7"} };
+      float zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
+      
+      x = rintf (Me[0].pos.x + 0.5);
+      y = rintf (Me[0].pos.y + 0.5);
+
+      step = 1.0;
+
+//      if (draw_grid >= 2) // large grid
+        for (dd = -20 * step; dd <= 20 * step; dd += step)
+          {
+            skew_and_blit_line (x - 20, y - dd, x + 20, y - dd, 0x99FFFF); // light cyan
+            skew_and_blit_line (x - dd, y - 20, x - dd, y + 20, 0x99FFFF);
+          }
+      for (dd = 0; dd <= step; dd += .5 * step) // quick-placement grid
+        {
+//          skew_and_blit_line (x - 1.5, y - dd - .02, x + 0.5, y - dd - .02,
+//                              0x000000); // black
+          skew_and_blit_line (x - 1.5, y - dd, x + 0.5, y - dd, 0xFF00FF); // magenta
+//          skew_and_blit_line (x - dd - .02, y - 1.5, x - dd - .02, y + 0.5,
+//                              0x000000); // black
+          skew_and_blit_line (x - dd, y - 1.5, x - dd, y + 0.5, 0xFF00FF); // magenta
+        }
+
+      // display numbers, corresponding to the numpad keys for quick placing 
+      BFont_Info *PreviousFont;
+      PreviousFont = GetCurrentFont ();
+      SetCurrentFont (Message_BFont);
+      for (ii = 0; ii <= 1; ii++ )
+        for (jj = 0; jj <= 1; jj++)
+          {
+            float xx,yy;
+            xx = x - ii * step;
+            yy = y - jj * step;
+            translate_map_point_to_screen_pixel (xx, yy, &r1, &c1, zoom_factor);
+            SDL_Rect tr;
+            tr.x = r1 - 7;
+            tr.y = c1 - 7;
+            tr.w = 12;
+            tr.h = 14;
+
+            our_SDL_fill_rect_wrapper (Screen, &tr, 0x000000);
+            DisplayText (numbers[ii][jj], r1 - 5, c1 - 5, &tr, TEXT_STRETCH);
+          }
+      SetCurrentFont (PreviousFont);
+
+    }
+}
+
 /* -----------------------------------------------------------------
  * This function assembles the contents of the combat window 
  * in Screen.
@@ -1910,16 +2022,8 @@ AssembleCombatPicture ( int mask )
     global_check_for_light_only_collisions_flag = TRUE ;
 
     isometric_show_floor_around_tux_without_doublebuffering ( mask );
-    if (draw_grid && (mask & SHOW_GRID)){
-        float x,y;
-        x = rintf(Me[0].pos.x+0.5);
-        y = rintf(Me[0].pos.y+0.5);
 
-        skew_and_blit_rect( x-1.5, y-1.02,x+0.5, y-0.98, 0x99FFFF);//  0xFF8888);
-        skew_and_blit_rect( x-1.5, y+0.02,x+0.5, y-0.02, 0x99FFFF);//  0x8888FF);
-        skew_and_blit_rect( x-1.02,y-1.5, x-0.98,y+0.5,  0x99FFFF);//  0x88FF88);
-        skew_and_blit_rect( x+.02, y-1.5, x-0.02,y+0.5,  0x99FFFF);//  0x88FFFF);
-    }
+    draw_grid_on_the_floor( mask );
     
     set_up_ordered_blitting_list ( mask );
     
