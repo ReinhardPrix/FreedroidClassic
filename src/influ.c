@@ -3364,18 +3364,14 @@ translate_map_point_to_screen_pixel_deviation_tracking ( float x_map_pos , float
  *
  * 
  * ---------------------------------------------------------------------- */
-int
-translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+void
+translate_map_point_to_screen_pixel_func( float x_map_pos , float y_map_pos , int* x_res, int* y_res, float zoom_factor)
 {
-  if ( give_x )
-    {
-      return ( UserCenter_x + ( ( x_map_pos - Me [ 0 ] . pos . x ) + ( Me [ 0 ] . pos . y - y_map_pos ) ) * iso_floor_tile_width / ( 2 * LEVEL_EDITOR_ZOOM_OUT_FACT) ) ; 
-    }
-  else
-    {
-      return ( UserCenter_y + ( ( x_map_pos + y_map_pos - Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * iso_floor_tile_height / ( 2 * LEVEL_EDITOR_ZOOM_OUT_FACT ) ) ) ;
-    }
-}; // int translate_map_point_to_zoomed_screen_pixel ( float x_map_pos , float y_map_pos , int give_x )
+  if(x_res!=NULL)
+    *x_res = UserCenter_x + ( x_map_pos + Me[0].pos.y - Me[0].pos.x - y_map_pos ) * iso_floor_tile_width*0.5*zoom_factor ;
+  if(y_res!=NULL)
+    *y_res = UserCenter_y + ( x_map_pos + y_map_pos - Me[0].pos.x - Me[0].pos.y ) * iso_floor_tile_height*0.5*zoom_factor ;
+}
 
 /* ----------------------------------------------------------------------
  * When the player has left-clicked into the game area (i.e. the isometric
