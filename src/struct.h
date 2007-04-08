@@ -264,6 +264,9 @@ typedef struct
     // Maybe the triggered action will change some obstacle on some level...
     char* modify_obstacle_with_label;
     int modify_obstacle_to_type;
+
+    char * modify_event_trigger_with_action_label;
+    int modify_event_trigger_value;
     
     // Maybe the triggered event teleports the influencer somewhere
     point TeleportTarget;
@@ -294,6 +297,8 @@ typedef struct
     // Thats propably the most important information at all!!!
     // int EventNumber;
     char* TargetActionLabel;
+
+    int enabled; //is the trigger enabled?
 }
 event_trigger , *Event_trigger;
 

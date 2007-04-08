@@ -461,10 +461,9 @@ clear_out_all_events_and_actions( void )
 	// Maybe the event is triggered by time
 	AllEventTriggers[i].Mission_Time_Must_Have_Passed=-1;
 	AllEventTriggers[i].Mission_Time_Must_Not_Have_Passed=-1;
-	
-	// And now of course which event to trigger!!!!
-	// Thats propably the most important information at all!!!
-	// AllEventTriggers[i].EventNumber=-1;
+
+	AllEventTriggers[i].enabled=1;
+		
 	AllEventTriggers[i].TargetActionLabel="none";
     }
     for ( i = 0 ; i < MAX_TRIGGERED_ACTIONS_IN_GAME ; i++ )
@@ -476,6 +475,8 @@ clear_out_all_events_and_actions( void )
 	// Maybe the triggered action will change some obstacle on some level...
 	AllTriggeredActions[i].modify_obstacle_with_label="";
 	AllTriggeredActions[i].modify_obstacle_to_type=-1;
+	AllTriggeredActions[i].modify_event_trigger_with_action_label="";
+	AllTriggeredActions[i].modify_event_trigger_value=-1;
 	
 	// Maybe the triggered event consists of the map beeing changed at some tile
 	AllTriggeredActions[i].ChangeMapLevel=-1;
@@ -503,6 +504,9 @@ clear_out_all_events_and_actions( void )
 #define EVENT_ACTION_TELEPORT_LEVEL_STRING " TelLev="
 #define EVENT_ACTION_TELEPORT_TARGET_LABEL_STRING "Use map label for teleport target=\""
 
+#define EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING "modify_event_trigger_with_action_label=\""
+#define EVENT_ACTION_MODIFY_EVENT_TRIGGER_VALUE_STRING "modify_event_trigger_to="
+
 #define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer say=\""
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
 #define ACTION_LABEL_INDICATION_STRING "Action label for this action=\""
@@ -513,6 +517,7 @@ clear_out_all_events_and_actions( void )
 #define EVENT_TRIGGER_DELETED_AFTER_TRIGGERING "Delete the event trigger after it has been triggered="
 #define TRIGGER_WHICH_TARGET_LABEL "Event Action to be triggered by this trigger=\""
 #define EVENT_TRIGGER_LABEL_STRING "Use map location from map label=\""
+#define EVENT_TRIGGER_ENABLED_STRING "Enable this trigger by default="
 
 #define MODIFY_OBSTACLE_WITH_LABEL_STRING "modify_obstacle_with_label=\""
 #define MODIFY_OBSTACLE_TO_TYPE_STRING "modify_obstacle_to_type="
@@ -637,6 +642,17 @@ Leave out the label entry for obstacles if you don't want to use it!" );
 	  DebugPrintf ( 1 , "\nTeleport target label unused..." );
 	}
 
+      if ( ! strstr( EventPointer, EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING ) ) //if there is no event trigger modified
+	{
+	AllTriggeredActions[ EventActionNumber ].modify_event_trigger_with_action_label = "";
+	}
+      else  AllTriggeredActions[ EventActionNumber ].modify_event_trigger_with_action_label = 
+	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING , "\"" ) ;
+
+      ReadValueFromStringWithDefault( EventPointer , EVENT_ACTION_MODIFY_EVENT_TRIGGER_VALUE_STRING , "%d" , "0", 
+			   &AllTriggeredActions[ EventActionNumber ].modify_event_trigger_value , EndOfEvent );
+
+
       // Now we read in the new value for that map tile
       ReadValueFromString( EventPointer , EVENT_ACTION_MAPCHANGE_TO_WHAT_STRING , "%d" , 
 			   &AllTriggeredActions[ EventActionNumber ].ChangeMapTo , EndOfEvent );
@@ -718,6 +734,9 @@ decode_all_event_triggers ( char* EventSectionPointer )
 	// &AllEventTriggers[ EventTriggerNumber ].EventNumber , EndOfEvent );
 	AllEventTriggers[ EventTriggerNumber ].TargetActionLabel = 
 	    ReadAndMallocStringFromData ( EventPointer , TRIGGER_WHICH_TARGET_LABEL , "\"" ) ;
+
+	ReadValueFromStringWithDefault( EventPointer , EVENT_TRIGGER_ENABLED_STRING , "%d" , "1",
+			     &AllEventTriggers[ EventTriggerNumber ].enabled , EndOfEvent );
 	
 	EventTriggerNumber++;
     } // While Event trigger begin string found...

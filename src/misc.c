@@ -2005,7 +2005,31 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 	Me[0].TextVisibleTime=0;
 	Me[0].TextToBeDisplayed=AllTriggeredActions[ EventNumber ].InfluencerSayText;
     }
-    
+
+    // Does the defined action change another action trigger?
+    if ( strlen ( AllTriggeredActions[ EventNumber ] . modify_event_trigger_with_action_label ) > 0 )
+	{
+	//look for the target event trigger
+	event_trigger * target_event = NULL;
+	int i;
+        for ( i = 0 ; i < MAX_EVENT_TRIGGERS ; i++ )
+		{
+		if ( ! strcmp (AllEventTriggers[i].TargetActionLabel ,  AllTriggeredActions[ EventNumber ] . modify_event_trigger_with_action_label ) )
+			target_event = &AllEventTriggers[i];
+		}
+	
+	//Shall we disable the event trigger?
+	if ( AllTriggeredActions[ EventNumber ] . modify_event_trigger_value == 0 )
+		{
+		target_event -> enabled = 0;
+		}
+
+	//Shall we enable the event trigger?
+	if ( AllTriggeredActions[ EventNumber ] . modify_event_trigger_value == 1 )
+		{
+		target_event -> enabled = 1;
+		}
+	}
 }; // void ExecuteEvent ( int EventNumber )
 
 /* ----------------------------------------------------------------------
@@ -2048,6 +2072,7 @@ CheckForTriggeredEventsAndStatements ( int PlayerNum )
     {
 	// if ( AllEventTriggers[i].EventNumber == (-1) ) continue;  // thats a sure sign this event doesn't need attention
 	if ( strcmp (AllEventTriggers[i].TargetActionLabel , "none" ) == 0 ) continue;  // thats a sure sign this event doesn't need attention
+	if ( AllEventTriggers[i].enabled == 0 ) continue;  // this trigger is not enabled
 	
 	// --------------------
 	// So at this point we know, that the event trigger is somehow meaningful. 
