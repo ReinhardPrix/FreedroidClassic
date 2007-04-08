@@ -1003,8 +1003,8 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 9:
-		    drop_item_type = ITEM_PLASMA_AMMUNITION ;
-		    drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
+		    drop_item_type = ITEM_SCRIPT_OF_IDENTIFY ;
+		    drop_item_multiplicity =  1 ;
 		    break;
 		case 10:
 		    drop_item_type = ITEM_LASER_AMMUNITION ;
@@ -1075,8 +1075,8 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
 		    break;
 		case 9:
-		    drop_item_type = ITEM_EXTERMINATOR_AMMUNITION ;
-		    drop_item_multiplicity =  10 + MyRandom ( 9 ) ;
+		    drop_item_type = ITEM_SCRIPT_OF_IDENTIFY ;
+		    drop_item_multiplicity =  1 ;
 		    break;
 		case 10:
 		    drop_item_type = ITEM_MACE ;
