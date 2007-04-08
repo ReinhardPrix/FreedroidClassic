@@ -54,7 +54,7 @@ void give_new_description_to_obstacle ( Level EditLevel , obstacle* our_obstacle
 waypoint *SrcWp;
 int OriginWaypoint = (-1);
 
-char VanishingMessage[10000]="Hello";
+char VanishingMessage[10000]="";
 float VanishingMessageDisplayTime = 0;
 SDL_Rect EditorBannerRect = { 0 , 0 , 640 , 90 } ;
 int FirstBlock = 0 ;
@@ -5185,7 +5185,7 @@ LevelEditor(void)
     // something to display, and we set the time to 'out of date' already.
     //
     EditLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
-    strcpy ( VanishingMessage , "Hello" );
+    strcpy ( VanishingMessage , "" );
     VanishingMessageDisplayTime = 0 ;
     
     //--------------------
