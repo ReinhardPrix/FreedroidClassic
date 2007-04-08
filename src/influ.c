@@ -2243,20 +2243,6 @@ adapt_global_mode_for_player ( int player_num )
 	//
 	if ( global_ingame_mode == GLOBAL_INGAME_MODE_NORMAL )	
 	    // global_ingame_mode = GLOBAL_INGAME_MODE_PICKPOCKET ;
-	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_PICKPOCKET )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_ATTACK ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_ATTACK )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_FIRST_AID ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_FIRST_AID )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_TALK ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_TALK )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_UNLOCK ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_UNLOCK )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_REPAIR ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_REPAIR )	
-	    global_ingame_mode = GLOBAL_INGAME_MODE_LOOT ;
-	else if ( global_ingame_mode == GLOBAL_INGAME_MODE_LOOT )	
 	    global_ingame_mode = GLOBAL_INGAME_MODE_EXAMINE ;
 	else
 	    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
