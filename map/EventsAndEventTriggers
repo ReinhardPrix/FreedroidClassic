@@ -790,16 +790,17 @@ Action is mission assignment=-1
 
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
-Use map location from map label="CrumblingWallMSOfficeTrigger01"
-Event Action to be triggered by this trigger="CrumblingBrickWallMSOfficeTriggered"
+Use map location from map label="CollapsingBrickWallMSOLobbyTrigger"
+Event Action to be triggered by this trigger="CollapsingBrickWallMSOLobbyTriggered"
 Delete the event trigger after it has been triggered=1
+Enable this trigger by default=1
 * End of this Event Trigger Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="CrumblingBrickWallMSOfficeTriggered"
+Action label for this action="CollapsingBrickWallMSOLobbyTriggered"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET" 
-modify_obstacle_with_label="CrumblingBrickWallMSOffice01"
+modify_obstacle_with_label="CollapsingBrickWallMSOLobby01"
 modify_obstacle_to_type=237
 Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
@@ -809,23 +810,41 @@ Action is mission assignment=-1
 
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
-Use map location from map label="TriggerOpenEFence01"
-Event Action to be triggered by this trigger="OpenEFence01"
+Use map location from map label="MSOLobbyDeactivateSecurity"
+Event Action to be triggered by this trigger="DeactivateIntruderDetectorsMSOLobby"
 Delete the event trigger after it has been triggered=1
+Enable this trigger by default=1
 * End of this Event Trigger Subsection *
 
 * Start of an Event Action Subsection *
-Action label for this action="OpenEFence01"
+Action label for this action="DeactivateIntruderDetectorsMSOLobby"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET" 
-modify_obstacle_with_label="EFenceSwitchable01"
-modify_obstacle_to_type=0
+modify_event_trigger_with_action_label="IntruderDetectorsMSOLobby"
+modify_event_trigger_to=0
 Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Ouch!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=11 Lev=0
+Use map location from map label="IntruderDetectorMSOLobby01"
+Event Action to be triggered by this trigger="IntruderDetectorsMSOLobby"
+Delete the event trigger after it has been triggered=0
+Enable this trigger by default=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="IntruderDetectorsMSOLobby"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+Teleport to TelX=23 TelY=35 TelLev=8
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Ouch!"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 
 ** End of Mission Event Section **
