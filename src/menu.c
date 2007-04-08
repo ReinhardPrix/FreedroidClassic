@@ -1386,6 +1386,7 @@ StartupMenu (void)
 		can_continue = Single_Player_Menu ( );
 		break;
 	    case LVLEDIT_POSITION: //allow starting directly in leveleditor - the hack is a little dirty but it does its work.
+		    skip_initial_menus = 1;
 		    clear_player_inventory_and_stats ( ) ;
                     UpdateAllCharacterStats ( 0 ) ;
 		    strcpy(Me[0].character_name, "MapEd");
