@@ -4913,9 +4913,10 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    draw_collision_rectangles = ! draw_collision_rectangles;
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) ||
+		  MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_FULL , GetMousePos_x()  , GetMousePos_y()  ) ||
 		  MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_OFF , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
-	    draw_grid =  ! draw_grid;
+	    draw_grid = (draw_grid+1) % 3;
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_QUIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -5078,10 +5079,17 @@ level_editor_blit_mouse_buttons ( Level EditLevel )
     else
 	ShowGenericButtonFromList ( LEVEL_EDITOR_TOGGLE_COLLISION_RECTS_BUTTON_OFF );
 
-    if ( draw_grid )
+    switch(draw_grid){
+        case 1:
         ShowGenericButtonFromList( LEVEL_EDITOR_TOGGLE_GRID_BUTTON );
-    else
+          break;
+        case 2:
+          ShowGenericButtonFromList( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_FULL );
+          break;
+        case 0:
         ShowGenericButtonFromList( LEVEL_EDITOR_TOGGLE_GRID_BUTTON_OFF );
+          break;
+    }
 
 }; // void level_editor_blit_mouse_buttons ( Level EditLevel )
 

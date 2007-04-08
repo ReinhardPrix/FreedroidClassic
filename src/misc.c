@@ -177,6 +177,7 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleCollisionRectsButton.png"  , { 330 , 90 , 0 ,  0 } , FALSE , FALSE } , 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleCollisionRectsButtonOff.png"  , { 330 , 90 , 0 ,  0 } , FALSE , FALSE } , 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleGridButton.png"  , { 360 , 90 , 0 ,  0 } , FALSE , FALSE } , 
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleGridButtonFull.png"  , { 360 , 90 , 0 ,  0 } , FALSE , FALSE } , 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorToggleGridButtonOff.png"  , { 360 , 90 , 0 ,  0 } , FALSE , FALSE } , 
 
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LevelEditorNextItemGroup.png"     , { 55 + 64 * 8 , 32+5*66 , 0 ,  0 } , TRUE , FALSE } ,

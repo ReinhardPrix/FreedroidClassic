@@ -1878,12 +1878,18 @@ update_item_text_slot_positions ( void )
 void
 draw_grid_on_the_floor (int mask)
 {
-  int LineStart, LineEnd, ColStart, ColEnd, line, col;
   if (!(draw_grid && (mask & SHOW_GRID)))
     return;
 
+  float zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
   static iso_image grid_tile_SDL = { NULL, 0, 0 } ;
+  int LineStart, LineEnd, ColStart, ColEnd, line, col;
+  float x, y;
+
   get_floor_boundaries (mask, &LineStart, &LineEnd, &ColStart, &ColEnd);
+
+  x = rintf (Me[0].pos.x + 0.5);
+  y = rintf (Me[0].pos.y + 0.5);
 
   if (!use_open_gl)
     {
@@ -1895,10 +1901,11 @@ draw_grid_on_the_floor (int mask)
         if (grid_tile_SDL.surface == NULL)
         	{
           GiveStandardErrorMessage (__FUNCTION__, "\
-	Unable to load the grid tile.", PLEASE_INFORM, IS_FATAL);
+Unable to load the grid tile.", PLEASE_INFORM, IS_FATAL);
         	}
 	}
 
+    if (draw_grid >= 2) // large grid
     for (line = LineStart; line < LineEnd; line++)
         for (col = ColStart; col < ColEnd; col++)
             if(mask & ZOOM_OUT)
@@ -1914,25 +1921,15 @@ draw_grid_on_the_floor (int mask)
     }
   else //use GL
     {
-      float x, y;
-      int r1, c1, r2, c2;
       float dd, step;
-      int ii, jj;
-      char *numbers[2][2] = { {"3", "9"}, {"1", "7"} };
-      float zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
-      
-      x = rintf (Me[0].pos.x + 0.5);
-      y = rintf (Me[0].pos.y + 0.5);
 
-      step = 1.0;
-
-//      if (draw_grid >= 2) // large grid
-        for (dd = -20 * step; dd <= 20 * step; dd += step)
+      if (draw_grid >= 2) // large grid
+        for (dd = -20; dd <= 20; dd ++)
           {
             skew_and_blit_line (x - 20, y - dd, x + 20, y - dd, 0x99FFFF); // light cyan
             skew_and_blit_line (x - dd, y - 20, x - dd, y + 20, 0x99FFFF);
           }
-      for (dd = 0; dd <= step; dd += .5 * step) // quick-placement grid
+      for (dd = 0; dd <= 1; dd += .5 ) // quick-placement grid
         {
 //          skew_and_blit_line (x - 1.5, y - dd - .02, x + 0.5, y - dd - .02,
 //                              0x000000); // black
@@ -1942,29 +1939,32 @@ draw_grid_on_the_floor (int mask)
           skew_and_blit_line (x - dd, y - 1.5, x - dd, y + 0.5, 0xFF00FF); // magenta
         }
 
+    }
       // display numbers, corresponding to the numpad keys for quick placing 
       BFont_Info *PreviousFont;
       PreviousFont = GetCurrentFont ();
       SetCurrentFont (Message_BFont);
+    char *numbers[2][2] = { {"3", "9"}, {"1", "7"} };
+    int ii, jj;
       for (ii = 0; ii <= 1; ii++ )
         for (jj = 0; jj <= 1; jj++)
           {
             float xx,yy;
-            xx = x - ii * step;
-            yy = y - jj * step;
-            translate_map_point_to_screen_pixel (xx, yy, &r1, &c1, zoom_factor);
+          int r, c;
+          xx = x - ii;
+          yy = y - jj;
+          translate_map_point_to_screen_pixel (xx, yy, &r, &c, zoom_factor);
             SDL_Rect tr;
-            tr.x = r1 - 7;
-            tr.y = c1 - 7;
+          tr.x = r - 7;
+          tr.y = c - 7;
             tr.w = 12;
             tr.h = 14;
 
             our_SDL_fill_rect_wrapper (Screen, &tr, 0x000000);
-            DisplayText (numbers[ii][jj], r1 - 5, c1 - 5, &tr, TEXT_STRETCH);
+          DisplayText (numbers[ii][jj], r - 5, c - 5, &tr, TEXT_STRETCH);
           }
       SetCurrentFont (PreviousFont);
 
-    }
 }
 
 /* -----------------------------------------------------------------
