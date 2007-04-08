@@ -932,7 +932,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=25
 Dexterity minimum required to wear/wield this item=25
 Item as defensive item: base_ac_bonus=12
-Item as defensive item: ac_bonus_modifier=4
+Item as defensive item: ac_bonus_modifier=8
 Base item duration=25 plus duration modifier=10
 File or directory name for inventory image="standard_shield/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
