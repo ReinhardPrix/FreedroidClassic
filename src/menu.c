@@ -1343,6 +1343,7 @@ StartupMenu (void)
     enum
 	{ 
 	    SINGLE_PLAYER_POSITION=1, 
+	    LVLEDIT_POSITION,
 	    OPTIONS_POSITION,
 	    CREDITS_POSITION,
 	    CONTRIBUTE_POSITION,
@@ -1367,11 +1368,12 @@ StartupMenu (void)
         SwitchBackgroundMusicTo( MENU_BACKGROUND_MUSIC_SOUND );
 
 	MenuTexts[0]= SINGLE_PLAYER_STRING ;
-	MenuTexts[1]="Options";
-	MenuTexts[2]="Credits";
-	MenuTexts[3]="Contribute";
-	MenuTexts[4]="Exit Freedroid";
-	MenuTexts[5]="";
+	MenuTexts[1]="Level Editor";
+	MenuTexts[2]="Options";
+	MenuTexts[3]="Credits";
+	MenuTexts[4]="Contribute";
+	MenuTexts[5]="Exit FreedroidRPG";
+	MenuTexts[6]="";
 	
 	if ( ! skip_initial_menus )
 	    MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
@@ -1383,9 +1385,18 @@ StartupMenu (void)
 	    case SINGLE_PLAYER_POSITION:
 		can_continue = Single_Player_Menu ( );
 		break;
-	    /*case MULTI_PLAYER_POSITION:
-		can_continue = Multi_Player_Menu();
-		break;*/
+	    case LVLEDIT_POSITION: //allow starting directly in leveleditor - the hack is a little dirty but it does its work.
+		    clear_player_inventory_and_stats ( ) ;
+                    UpdateAllCharacterStats ( 0 ) ;
+		    strcpy(Me[0].character_name, "MapEd");
+                    char fp[2048];
+                    find_file ( "Asteroid.maps" , MAP_DIR, fp, 0);
+                    LoadShip ( fp ) ;
+                    PrepareStartOfNewCharacter ( ) ;
+	            CurLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ];
+		    LevelEditor () ;
+                    can_continue=TRUE;  
+                break;  
 	    case OPTIONS_POSITION:
 		Options_Menu();
 		break;
