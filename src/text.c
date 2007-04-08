@@ -336,7 +336,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
     int Number_Of_Line_Feeds = 0;	// number of lines used for the text
     char *textpt;			// mobile pointer to the text
     int InsertLine = starty;
-    int speed = +3;
+    int speed = +1;
     int maxspeed = 8;
     
     Activate_Conservative_Frame_Computation( );
