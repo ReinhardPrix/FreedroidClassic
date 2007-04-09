@@ -263,7 +263,7 @@ enum
 // will not be a problem here...
 //
 // However some other considerations must be taken into account:  OPENGL
-// DOES IN GENERAL NOT WORK WELL ANY MORE WITH TEXTURES LARGER THAN 2024
+// DOES IN GENERAL NOT WORK WELL ANY MORE WITH TEXTURES LARGER THAN 1024
 // AND SOMETIMES EVEN NOT WELL WITH ANYTHING > 256 (old vodoo cards!!!)
 // EVEN GEFORCE II HAS PROBLEMS WITH 2048 TEXTURE SIZE.
 //
@@ -271,8 +271,9 @@ enum
 // the internal automap texture but scale it up again when the acutal
 // part-transparent blit is being done.  Using 0.25 for the sanity factor
 // should be the safest bet.  However quality is poor:  you get lots of
-// rectangular blocks where a wall/door/tree would be.  So I'll try 512
-// texture size here.  Vodoo users can recompile the game for their needs...
+// rectangular blocks where a wall/door/tree would be. 
+// So we're using larger textures, assuming that most people will have 
+// decen graphics adapters. Vodoo users can recompile the game for their needs...
 // 
 #define AUTOMAP_ZOOM_OUT_FACT 8.0
 #define AUTOMAP_SANITY_FACTOR 1
