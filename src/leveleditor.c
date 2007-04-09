@@ -5558,7 +5558,7 @@ LevelEditor(void)
 		}
 	    }
 	    
-	    if ( QPressed ( ) )
+	    if ( QPressed ( ) &&  CtrlWasPressed() )
 	    {
 		Terminate(0);
 	    }
