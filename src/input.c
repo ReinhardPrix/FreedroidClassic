@@ -222,17 +222,17 @@ UnsetAllKeys( void )
 int 
 GetMousePos_x(void)
 {
-    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+/*    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
 	return( CurrentMouseAbsPos . x + 16 );
-    else
+    else*/
 	return( CurrentMouseAbsPos . x + 0 );
 }; // int GetMousePos_x(void)
 int 
 GetMousePos_y(void)
 {
-    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+/*    if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
 	return( CurrentMouseAbsPos . y + 16 );
-    else
+    else*/
 	return( CurrentMouseAbsPos . y + 0 );
 }; // int GetMousePos_y(void)
 
@@ -1726,13 +1726,13 @@ keyboard_update(void)
 		// middle of the mouse cursor, not in the top left as with the
 		// other mouse cursor shapes...
 		//
-		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+/*		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
 		{
 		    input_axis . x += 16 ; 
 		    input_axis . y += 16 ; 
 		    CurrentMouseAbsPos . x += 16 ;
 		    CurrentMouseAbsPos . y += 16 ;
-		}
+		}*/
 		
 		break;
 		
@@ -1749,13 +1749,13 @@ keyboard_update(void)
 		// middle of the mouse cursor, not in the top left as with the
 		// other mouse cursor shapes...
 		//
-		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
+/*		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
 		{
 		    input_axis . x += 16 ; 
 		    input_axis . y += 16 ; 
 		    CurrentMouseAbsPos . x += 16 ;
 		    CurrentMouseAbsPos . y += 16 ;
-		}
+		}*/
 		
 		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
 		

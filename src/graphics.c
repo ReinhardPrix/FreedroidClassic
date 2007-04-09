@@ -188,13 +188,6 @@ set_mouse_cursor_to_shape ( int given_shape )
 
     switch ( given_shape )
     {
-	case MOUSE_CURSOR_CROSSHAIR_SHAPE:
-	    // SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
-	    // current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
-	    current_cursor = init_system_cursor( arrow_mouse_cursor ) ;
-	    SDL_SetCursor( current_cursor ) ;
-	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
-	    break;
 	case MOUSE_CURSOR_ARROW_SHAPE:
 	    current_cursor = init_system_cursor( arrow_mouse_cursor ) ;
 	    SDL_SetCursor( current_cursor ) ;
@@ -205,7 +198,7 @@ set_mouse_cursor_to_shape ( int given_shape )
 ERROR: Unhandled mouse cursor shape type received.",
 				       PLEASE_INFORM, IS_FATAL );
 	    SDL_SetCursor( init_system_cursor( crosshair_mouse_cursor ) );
-	    current_mouse_cursor_shape = MOUSE_CURSOR_CROSSHAIR_SHAPE ;
+	    current_mouse_cursor_shape = MOUSE_CURSOR_ARROW_SHAPE ;
 	    break;
     }
 }; // void set_mouse_cursor_to_shape ( int given_shape ) 
@@ -1530,7 +1523,7 @@ InitPictures (void)
     
     ShowStartupPercentage ( 18 ) ; 
     
-    set_mouse_cursor_to_shape ( MOUSE_CURSOR_CROSSHAIR_SHAPE ) ;
+    set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
     
     ShowStartupPercentage ( 22 ) ; 
     

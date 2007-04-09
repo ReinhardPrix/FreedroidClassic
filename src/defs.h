@@ -884,7 +884,6 @@ enum _enemy_combat_target_codes
 };
 enum
 {
-    MOUSE_CURSOR_CROSSHAIR_SHAPE = -401 ,
     MOUSE_CURSOR_ARROW_SHAPE = -402
 }; 
 enum
