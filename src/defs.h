@@ -224,7 +224,6 @@ enum _spell_names
 // cause here I can't check if the code is still running without it
 //
 #define FILENAME_LEN	5000
-#define SHIP_EXT	".shp"
 
 #define END_OF_OFFSET_FILE_STRING "** End of iso_image offset file **"
 #define START_OF_OFFSET_FILE_STRING "** Start of iso_image offset file **"

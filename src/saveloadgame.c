@@ -321,7 +321,7 @@ SaveGame( void )
 	      (int) MAX_ENEMYS_ON_SHIP );
     
     //--------------------
-    sprintf( filename , "%s/%s%s", our_config_dir, Me[0].character_name, SHIP_EXT );
+    sprintf( filename , "%s/%s%s", our_config_dir, Me[0].character_name, ".shp" );
 
     if ( SaveShip( filename ) != OK )
     {
@@ -479,7 +479,7 @@ DeleteGame( void )
     //--------------------
     // First we save the full ship information, same as with the level editor
     //
-    sprintf( filename , "%s/%s%s", our_config_dir , Me[0].character_name, SHIP_EXT);
+    sprintf( filename , "%s/%s%s", our_config_dir , Me[0].character_name, ".shp");
     
     remove ( filename ) ;
     
@@ -535,7 +535,7 @@ LoadGame( void )
     //--------------------
     // First we load the full ship information, same as with the level editor
     
-    sprintf( filename , "%s/%s%s", our_config_dir, Me [ 0 ] . character_name, SHIP_EXT);
+    sprintf( filename , "%s/%s%s", our_config_dir, Me [ 0 ] . character_name, ".shp");
     
     //--------------------
     // Maybe there isn't any saved game by that name.  This case must be checked for
