@@ -3344,7 +3344,7 @@ WorkLevelGuns ( int PlayerNum )
 
   GunLevel = curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] ;
 
-  if ( LevelGunsNotFiredTime < 0.5 ) return;
+  if ( LevelGunsNotFiredTime < 0.2 ) return;
 
   //--------------------
   // But only the last of these function calls for each player may 
