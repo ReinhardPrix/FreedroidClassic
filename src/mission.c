@@ -337,6 +337,8 @@ quest_browser_display_mission_list ( int list_type )
 	//
 	for ( mis_num = 0 ; mis_num < MAX_MISSIONS_IN_GAME; mis_num ++ )
 	{
+            SDL_Rect * rect_short = &(AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect);
+            SDL_Rect * rect_long = &(AllMousePressButtons [ QUEST_BROWSER_ITEM_LONG_BUTTON ] . button_rect);
 	    if ( ! Me [ 0 ] . AllMissions [ mis_num ] . MissionWasAssigned ) continue ;
 	    //--------------------
 	    // At first we bring the short/long buttons into position.
@@ -346,12 +348,13 @@ quest_browser_display_mission_list ( int list_type )
 	    //
 	    if ( quest_browser_mission_lines_needed [ mis_num ] != (-1) )
 	    {
-		AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y = 
+		rect_short -> y = 
 		    mission_description_rect . y - mission_list_offset + 
 		    ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) *
-		    ( quest_browser_mission_lines_needed [ mis_num ] - 1 ) * 0.96  - 3 ;
-		AllMousePressButtons [ QUEST_BROWSER_ITEM_LONG_BUTTON ] . button_rect . y =
-		    AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y ;
+		    ( quest_browser_mission_lines_needed [ mis_num ] - 1 ) - 3 ;
+                rect_short -> x = mission_description_rect . x - rect_short -> w;
+		rect_long -> y = rect_short -> y ;
+		rect_long -> x = rect_short -> x ;
 	    }
 
 	    //--------------------
@@ -360,10 +363,10 @@ quest_browser_display_mission_list ( int list_type )
 	    // off the screen, things are simple, because then we can
 	    // skip the rest of this pass of the loop.
 	    //
-	    if ( AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y 
-		 <= mission_description_rect . y - 4 ) continue;
-	    if ( AllMousePressButtons [ QUEST_BROWSER_ITEM_SHORT_BUTTON ] . button_rect . y 
-		 >= mission_description_rect . y + mission_description_rect . h - FontHeight ( GetCurrentFont() ) ) continue;
+	    if ( rect_short -> y <= mission_description_rect . y - 4 ) continue;
+	    if ( rect_short -> y 
+		 >= mission_description_rect . y + mission_description_rect . h - FontHeight ( GetCurrentFont() ) ) 
+                continue;
 
 	    if ( Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission )
 		ShowGenericButtonFromList ( QUEST_BROWSER_ITEM_LONG_BUTTON );
