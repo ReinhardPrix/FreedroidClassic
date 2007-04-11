@@ -4922,11 +4922,31 @@ ShowInventoryScreen( void )
 	//
 	if ( ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 	{
+	    // Display the weapon again
 	    TargetRect.x = InventoryRect.x + SHIELD_RECT_X;
 	    TargetRect.y = InventoryRect.y + SHIELD_RECT_Y;
 	    TargetRect.x += INV_SUBSQUARE_WIDTH * 0.5 * ( 2 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . x ) ;
 	    TargetRect.y += INV_SUBSQUARE_HEIGHT * 0.5 * ( 3 - ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . inv_size . y ) ;
 	    our_SDL_blit_surface_wrapper( ItemMap [ Me [ 0 ] . weapon_item . type ] . inv_image . Surface , NULL , Screen , &TargetRect );
+
+	    // Draw a grey quad
+	    #ifdef HAVE_LIBGL
+	    if ( use_open_gl )
+		{
+		glColor4f(0.4, 0.4, 0.4, 0.6);
+		glDisable( GL_ALPHA_TEST );
+	        glEnable(GL_BLEND);
+                glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+		glBegin(GL_QUADS);
+		glVertex2i(InventoryRect.x + SHIELD_RECT_X   - 1, InventoryRect.y + SHIELD_RECT_Y + 0);
+		glVertex2i(InventoryRect.x + SHIELD_RECT_X  -1, InventoryRect.y + SHIELD_RECT_Y + SHIELD_RECT_HEIGHT - 2);
+		glVertex2i(InventoryRect.x + SHIELD_RECT_X + SHIELD_RECT_WIDTH - 2, InventoryRect.y + SHIELD_RECT_Y + SHIELD_RECT_HEIGHT - 2);
+		glVertex2i(InventoryRect.x + SHIELD_RECT_X + SHIELD_RECT_WIDTH - 2,   InventoryRect.y + SHIELD_RECT_Y +0);
+		glEnd();
+		}
+	    #endif
+	
+
 	}
     }
     
