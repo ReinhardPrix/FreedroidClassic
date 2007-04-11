@@ -1057,6 +1057,7 @@ HandleCharacterScreen ( int player_num )
 {
     static int MouseButtonPressedPreviousFrame = FALSE;
 
+    if ( ! GameConfig . CharacterScreen_Visible ) return;
     //--------------------
     // It might be the case, that the character has some points to distribute upon the character
     // stats.  Then of course, we must display the plus button instead of all character 'now' values
