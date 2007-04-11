@@ -3003,7 +3003,7 @@ HandleInventoryScreen ( void )
     point CurPos;
     point Inv_GrabLoc;
     int Grabbed_InvPos;
-    finepoint MapPositionOfMouse;
+    finepoint MapPositionOfMouse = { 0.0, 0.0};
     Level PlayerLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     int index_of_item_under_mouse_cursor = (-1) ;
     

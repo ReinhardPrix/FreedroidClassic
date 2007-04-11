@@ -2377,8 +2377,8 @@ ConsideredMoveIsFeasible ( Enemy ThisRobot , moderately_finepoint StepVector , i
 void
 MoveInCloserForOrAwayFromMeleeCombat ( Enemy ThisRobot , int enemynum , int DirectionSign )
 {
-    finepoint VictimPosition;
-    finepoint CurrentPosition;
+    finepoint VictimPosition = { 0.0, 0.0};
+    finepoint CurrentPosition = { 0.0, 0.0};
     moderately_finepoint StepVector;
     moderately_finepoint RotatedStepVector;
     float StepVectorLen;
