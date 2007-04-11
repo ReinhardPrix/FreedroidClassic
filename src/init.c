@@ -471,6 +471,8 @@ clear_out_all_events_and_actions( void )
 	// Maybe the triggered event consists of the influencer saying something
 	AllTriggeredActions[i].ActionLabel="";
 	AllTriggeredActions[i].InfluencerSayText="";
+
+	AllTriggeredActions[i].also_execute_action_label="";
 	
 	// Maybe the triggered action will change some obstacle on some level...
 	AllTriggeredActions[i].modify_obstacle_with_label="";
@@ -506,6 +508,8 @@ clear_out_all_events_and_actions( void )
 
 #define EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING "modify_event_trigger_with_action_label=\""
 #define EVENT_ACTION_MODIFY_EVENT_TRIGGER_VALUE_STRING "modify_event_trigger_to="
+
+#define EVENT_ACTION_ALSO_EXECUTE_ACTION_LABEL "Also execute action with label=\""
 
 #define EVENT_ACTION_INFLUENCER_SAY_TEXT "Action is Influencer say=\""
 #define EVENT_ACTION_ASSIGN_WHICH_MISSION "Action is mission assignment="
@@ -646,11 +650,25 @@ Leave out the label entry for obstacles if you don't want to use it!" );
 	{
 	AllTriggeredActions[ EventActionNumber ].modify_event_trigger_with_action_label = "";
 	}
-      else  AllTriggeredActions[ EventActionNumber ].modify_event_trigger_with_action_label = 
-	ReadAndMallocStringFromData ( EventPointer , EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING , "\"" ) ;
+      else  
+	{
+	AllTriggeredActions[ EventActionNumber ].modify_event_trigger_with_action_label =  	ReadAndMallocStringFromData ( EventPointer , 
+			EVENT_ACTION_MODIFY_EVENT_TRIGGER_STRING , "\"" ) ;
+	}
+
 
       ReadValueFromStringWithDefault( EventPointer , EVENT_ACTION_MODIFY_EVENT_TRIGGER_VALUE_STRING , "%d" , "0", 
 			   &AllTriggeredActions[ EventActionNumber ].modify_event_trigger_value , EndOfEvent );
+
+      if ( ! strstr( EventPointer, EVENT_ACTION_ALSO_EXECUTE_ACTION_LABEL ) ) //if there is no linked action
+	{
+	AllTriggeredActions[ EventActionNumber ].also_execute_action_label = "";
+	}
+      else
+	{
+	AllTriggeredActions[ EventActionNumber ].also_execute_action_label = ReadAndMallocStringFromData ( EventPointer , 
+				EVENT_ACTION_ALSO_EXECUTE_ACTION_LABEL , "\"" ) ;
+	}
 
 
       // Now we read in the new value for that map tile

@@ -274,6 +274,8 @@ typedef struct
     
     // Maybe the triggered action consists of a mission assignment
     int AssignWhichMission;
+
+    char * also_execute_action_label; //execute another action (linked action)
     
 }
 triggered_action , *Triggered_action;

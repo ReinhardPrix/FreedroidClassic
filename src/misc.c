@@ -2030,6 +2030,12 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 		target_event -> enabled = 1;
 		}
 	}
+
+   // Does the defined action run another action ?
+   if ( strlen ( AllTriggeredActions [ EventNumber ] . also_execute_action_label ) > 0 )
+	{
+	ExecuteActionWithLabel ( AllTriggeredActions [ EventNumber ] . also_execute_action_label, 0 );
+	}
 }; // void ExecuteEvent ( int EventNumber )
 
 /* ----------------------------------------------------------------------
