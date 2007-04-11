@@ -832,7 +832,15 @@ Action is mission assignment=-1
 Influencer must be at X=2 Y=11 Lev=0
 Use map location from map label="IntruderDetectorMSOLobby01"
 Event Action to be triggered by this trigger="IntruderDetectorsMSOLobby"
-Delete the event trigger after it has been triggered=0
+Delete the event trigger after it has been triggered=1
+Enable this trigger by default=1
+* End of this Event Trigger Subsection *
+
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=11 Lev=0
+Use map location from map label="IntruderDetectorMSOLobby02"
+Event Action to be triggered by this trigger="IntruderDetectorsMSOLobby"
+Delete the event trigger after it has been triggered=1
 Enable this trigger by default=1
 * End of this Event Trigger Subsection *
 
@@ -840,7 +848,22 @@ Enable this trigger by default=1
 Action label for this action="IntruderDetectorsMSOLobby"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET" 
-Teleport to TelX=23 TelY=35 TelLev=8
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+modify_obstacle_with_label="IntruderLaserTrapMSO02"
+modify_obstacle_to_type=324
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="Ouch!"
+Action is mission assignment=-1
+Also execute action with label="IntruderDetectorsMSOLobby2"
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="IntruderDetectorsMSOLobby2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="IntruderLaserTrapMSO01"
+modify_obstacle_to_type=326
+Teleport to TelX=-1 TelY=-1 TelLev=-1
 Use map label for teleport target="NO_LABEL_DEFINED_YET"
 Action is Influencer say="Ouch!"
 Action is mission assignment=-1
