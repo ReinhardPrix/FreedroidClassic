@@ -1732,7 +1732,7 @@ ShowLevelEditorTopMenu( int Highlight )
     unsigned int num_blocks = GameConfig.screen_width / INITIAL_BLOCK_WIDTH - 1;
     for ( i = 0 ; i < num_blocks ; i ++ )
     {
-	if ( selected_index >= number_of_walls [ GameConfig . level_editor_edit_mode ] ) continue;
+	if ( selected_index >= number_of_walls [ GameConfig . level_editor_edit_mode ] ) break;
 
 	TargetRectangle.x = INITIAL_BLOCK_WIDTH/2 + INITIAL_BLOCK_WIDTH * i ;
 	TargetRectangle.y = INITIAL_BLOCK_HEIGHT/3 ;
@@ -1784,8 +1784,18 @@ ShowLevelEditorTopMenu( int Highlight )
 
 		if ( use_open_gl )
 		{
-	    blit_zoomed_open_gl_texture_to_screen_position ( img , TargetRectangle . x , 
+	        blit_zoomed_open_gl_texture_to_screen_position ( img , TargetRectangle . x , 
                     y_off, TRUE , zoom_factor) ;
+		//additionally in the ALL tab, display object number
+		if ( GameConfig . level_editor_edit_mode == LEVEL_EDITOR_SELECTION_ALL)
+			{
+			char obsnum[5];
+			BFont_Info * PreviousFont = GetCurrentFont ();
+		        SetCurrentFont (Message_BFont);
+			sprintf(obsnum, "%d", wall_indices [ GameConfig . level_editor_edit_mode ] [ selected_index ] );
+			DisplayText(obsnum, TargetRectangle . x, y_off, NULL, 1);
+			SetCurrentFont (PreviousFont);
+			}
 		}
 		else
 		{
