@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Hallo, ich bin Tux... Oh Schreck..! Sie sehen ja grauenhaft aus... hat man Sie gefoltert?
+New Option Nr=0  OptionText=" Hallo, ich bin Tux... Oh Schreck..! Sie sehen ja grauenhaft aus... hat man Sie gefoltert?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=841  PositionY=147  
 Subtitle="Hallo... habe seit ein paar Wochen nicht geschlafen und bin daher ein klein wenig müde."
