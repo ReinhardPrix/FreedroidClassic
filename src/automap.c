@@ -436,8 +436,8 @@ automap_update_texture_for_square ( int x , int y )
 	    glEnable ( GL_TEXTURE_2D );
 	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
 	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
-			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( x - y ) * ( iso_floor_tile_width * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
-			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( x + y ) * ( iso_floor_tile_height * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
+			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( our_obstacle -> pos . x - our_obstacle -> pos . y ) * ( iso_floor_tile_width * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
+			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( our_obstacle -> pos . x + our_obstacle -> pos.  y ) * ( iso_floor_tile_height *AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> h ,
 			      GL_BGRA, 
