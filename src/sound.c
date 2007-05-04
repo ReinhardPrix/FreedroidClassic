@@ -143,7 +143,9 @@ InitAudio( void )
 								   \n\
 								   If you want this, use the appropriate command line option and Freedroid will \n\
 								   not complain any more.",
-								   NO_NEED_TO_INFORM, IS_FATAL );
+								   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+		sound_on = FALSE;
+		return;
 		}
 	else
 		{
@@ -170,7 +172,9 @@ InitAudio( void )
 								   \n\
 								   If you want this, use the appropriate command line option and Freedroid will \n\
 								   not complain any more.",
-								   NO_NEED_TO_INFORM, IS_FATAL );
+								   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
+		sound_on = FALSE;
+		return;
 		}
 	else
 		{
@@ -184,7 +188,6 @@ InitAudio( void )
 	// really resolve the problem however is unsure.
 	//
 	DebugPrintf( 1 , "\nChannels allocated: %d. " , Mix_AllocateChannels( 200 ) );
-
 	}; // void InitAudio(void)
 
 
