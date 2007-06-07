@@ -312,10 +312,10 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
     { 30 , 45 , 55 , 65 , 70 , 75 , 80 , 85 , 90 , 999 } ,
   "This is a very simple combat spell.  It fires a plasma bolt into the direction the caster is facing.  This spell does not have as much effect as some ranged weapons, but the good thing about it is that it doesn't require any ammo as well, except perhaps for some mana." } ,
 
-  { 1 , "Ice Bolt"               , "FrostBoltSpell.png"        , UNLOADED_ISO_IMAGE , 
+  { 1 , "Calculate PI"               , "Calculate_PI.png"        , UNLOADED_ISO_IMAGE , 
     { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
     { 30 , 45 , 55 , 65 , 70 , 75 , 80 , 85 , 90 , 999 } ,
-  "This simple combat spell allows the caster to fire a frosty bolt into the direction the caster is facing.  This frosty bold can cause some machines to seriously slow down the speed of their motions cause due to dumb MS low-level programming they think they are fighting in a winter environment and have to take extra care not to slip out." } ,
+  "This program allows you to execute a calculate PI script on the target, causing them to to slow down/stop their motions for an amount of time. Dumb MS low-level programming, they think they can actually compute it." } ,
 
   { 1 , "Explosion Circle"       , "ExplosionCircleSpell.png"  , UNLOADED_ISO_IMAGE , 
     { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
