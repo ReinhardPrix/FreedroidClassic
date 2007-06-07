@@ -54,6 +54,7 @@
 void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on coll. */
 int NoInfluBulletOnWay (void);
 void limit_tux_speed_to_a_maximum ( int player_num );
+int autorun_activated = 0;
 int set_up_intermediate_course_for_tux ( int player_num );
 void clear_out_intermediate_points ( int player_num );
 void check_for_chests_to_open ( int player_num , int chest_index ) ;
@@ -1346,6 +1347,7 @@ update_intermediate_tux_waypoints ( int player_num )
 int
 move_tux_thowards_raw_position ( int player_num , float x , float y )
 {
+    static int U_was_pressed = 0;
     moderately_finepoint RemainingWay;
     moderately_finepoint planned_step;
     float length;
@@ -1386,31 +1388,40 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
     //
     if ( Me [ player_num ] . running_power <= 0 ) 
     {
-	//--------------------
-	// Maybe only occasionally, with some randomness involved
-	// going to the running power limit might do some good to
-	// the max running power, so some implicit 'training' effect
-	//
-	if ( ! Me [ player_num ] . running_must_rest )
-	{
-	    Me [ player_num ] . running_power_bonus ++ ;
-	}
-	
 	Me [ player_num ] . running_must_rest = TRUE ;
     }
-    
-    if ( LeftCtrlPressed() && ( ! Me [ player_num ] . running_must_rest ) )
-    { 
+
+    // Using U key to enable/disable autorun. Always check if stamina is depleted before allowing change.
+    if ( UPressed() && ! U_was_pressed )
+	{
+	U_was_pressed = 1;
+	autorun_activated = ! autorun_activated;
+	}
+			
+   if ( ! UPressed() ) U_was_pressed = 0;
+   else U_was_pressed = 1;
+
+   if (Me [ player_num ] . running_must_rest)
+	{
+	autorun_activated = 0;
+	planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
+	planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
+	//DebugPrintf( -2, "\n Now walking...");
+   	}
+
+   if ( (LeftCtrlPressed() || autorun_activated ) && ( ! Me [ player_num ] . running_must_rest ) )
+	{ 
 	planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
 	planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
 	// DebugPrintf ( -2 , "\nNow running..." );
-    }
-    else
-    {
+	}
+	else
+	{
 	planned_step . x = RemainingWay . x * TUX_WALKING_SPEED / length ;
 	planned_step . y = RemainingWay . y * TUX_WALKING_SPEED / length ;
 	// DebugPrintf ( -2 , "\nNow walking..." );
-    }
+	}
+     
     
     //--------------------
     // Now that the speed is set, we can start to make the step
