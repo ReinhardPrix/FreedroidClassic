@@ -854,9 +854,9 @@ Error: ranged weapon skill seems out of bounds.",
     if ( ( Me [ player_num ] . spellcasting_skill < 0 ) ||
 	 ( Me [ player_num ] . spellcasting_skill >= NUMBER_OF_SKILL_LEVELS ) )
     {
-	fprintf ( stderr , "\nspellcasting_skill: %d." , Me [ player_num ] . spellcasting_skill );
+	fprintf ( stderr , "\nProgramming_Skill: %d." , Me [ player_num ] . spellcasting_skill );
 	GiveStandardErrorMessage ( __FUNCTION__ , "\
-Error: spellcasting skill seems out of bounds.",
+Error: Programming_Skill skill seems out of bounds.",
 				   PLEASE_INFORM, IS_FATAL );
     }
     DisplayText( AllSkillTexts [ Me [ player_num ] . spellcasting_skill ] , 

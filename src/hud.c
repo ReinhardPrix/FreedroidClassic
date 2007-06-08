@@ -277,10 +277,10 @@ exist really (i.e. has a type = (-1) ).",
 	    case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
 	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
 
-		sprintf( linebuf , "Spellcasting skill: %s\n " ,  
+		sprintf( linebuf , "Program execution status: %s\n " ,  
 			 AllSkillTexts [ required_spellcasting_skill_for_item ( CurItem -> type ) ] );
 		strcat( ItemDescText , linebuf );
-		sprintf( linebuf , "Magic: %d\n " ,  
+		sprintf( linebuf , "Required for next upgrade: %d\n " ,  
 			 required_magic_stat_for_next_level_and_item ( CurItem -> type ) );
 		strcat( ItemDescText , linebuf );
 		break;
@@ -310,14 +310,14 @@ exist really (i.e. has a type = (-1) ).",
 		
 	    case ITEM_SCRIPT_OF_IDENTIFY:
 	    case ITEM_SCRIPT_OF_TELEPORT_HOME:
-		sprintf( linebuf , "Invokes a spell/skill once\n" );
+		sprintf( linebuf , "Invokes a skill once\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_MEDIUM_MANA_POTION:
 	    case ITEM_FULL_MANA_POTION:
 	    case ITEM_SMALL_MANA_POTION:
-		sprintf( linebuf , "Recover Force\n" );
+		sprintf( linebuf , "Cooling aid\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 
@@ -357,7 +357,7 @@ exist really (i.e. has a type = (-1) ).",
 		break;
 		
 	    case ITEM_MAGIC_PILL:
-		sprintf( linebuf , "Permanently gain +1 magic\n" );
+		sprintf( linebuf , "Permanently gain +1 running programs\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		
@@ -374,7 +374,7 @@ exist really (i.e. has a type = (-1) ).",
 	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
 	    case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
 	    case ITEM_SPELLBOOK_OF_IDENTIFY:
-		sprintf( linebuf , "Permanently aquire/enhance this skill/spell\n" );
+		sprintf( linebuf , "Permanently aquire/enhance this program\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 
@@ -495,7 +495,7 @@ exist really (i.e. has a type = (-1) ).",
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_mana_recovery > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%0.1f mana points per second" , CurItem->bonus_to_mana_recovery );
+		sprintf( linebuf , "%0.1f cooling per second" , CurItem->bonus_to_mana_recovery );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -1071,9 +1071,9 @@ blit_energy_and_mana_bars ( void )
     if ( health_rect_color == 0 )
     {
 	health_rect_color = SDL_MapRGBA( Screen->format , 255 , 0 , 0 , 0 );
-	force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 255 , 0 );
+	force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 20 , 0 );
 	un_health_rect_color = SDL_MapRGBA( Screen->format , 20 , 0 , 0 , 0 );
-	un_force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 20 , 0 );
+	un_force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 255 , 0 );
     }
 
     blit_vertical_status_bar ( Me[0].maxenergy , Me[0].energy , 
@@ -1335,7 +1335,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_FORCE_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_FORCE_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "Mana\n%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
+	sprintf(ItemDescText, "System \n%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
 	}
 
     if (( CurPos . x > WHOLE_RUNNING_POWER_RECT_X * GameConfig . screen_width / 640) &&
