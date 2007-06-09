@@ -670,7 +670,7 @@ This is an indication of a severe bug/installation problem of freedroid.",
 
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( AllMousePressButtons [ ButtonIndex ] . button_image , Temp_Blitting_Rect . x , Temp_Blitting_Rect . y , TRUE ) ;
+	blit_open_gl_texture_to_screen_position ( &AllMousePressButtons [ ButtonIndex ] . button_image , Temp_Blitting_Rect . x , Temp_Blitting_Rect . y , TRUE ) ;
     }
     else
     {

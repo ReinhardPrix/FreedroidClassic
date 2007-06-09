@@ -370,7 +370,7 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 		  make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
 		}
 	      
-	      blit_open_gl_texture_to_screen_position ( Font -> char_iso_image [ c ] , dest . x , dest . y , TRUE ) ;
+	      blit_open_gl_texture_to_screen_position ( & (Font -> char_iso_image [ c ]) , dest . x , dest . y , TRUE ) ;
 	    }
 	}
       else

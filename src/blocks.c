@@ -538,50 +538,50 @@ This error indicates some installation problem with freedroid.",
  *
  * ---------------------------------------------------------------------- */
 void
-blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+blit_iso_image_to_map_position ( iso_image * our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;
   int ii,jj;
 
   translate_map_point_to_screen_pixel ( pos_x , pos_y, &ii, &jj, 1.0 ); 
-  target_rectangle.x = ii + our_iso_image . offset_x ;
-  target_rectangle.y = jj + our_iso_image . offset_y ;
+  target_rectangle.x = ii + our_iso_image -> offset_x ;
+  target_rectangle.y = jj + our_iso_image -> offset_y ;
 
-  our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
+  our_SDL_blit_surface_wrapper( our_iso_image -> surface , NULL , Screen, &target_rectangle );
 
-}; // void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+}; // void blit_iso_image_to_map_position ( iso_image * our_iso_image , float pos_x , float pos_y )
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y )
+blit_outline_of_iso_image_to_map_position ( iso_image * our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;
   Uint32 previous_test_color = 0 ;
   Uint32 new_test_color = 0 ;
   int x , y ;
   Uint32 light_frame_color = SDL_MapRGB( Screen->format, 255 , 255 , 0 );
-  Uint32 color_key_value = SDL_MapRGB( our_iso_image . surface -> format, 255 , 0 , 255 );
+  Uint32 color_key_value = SDL_MapRGB( our_iso_image -> surface -> format, 255 , 0 , 255 );
   Uint8 previous_test_alpha = 0 ;
   Uint8 new_test_alpha = 0 ;
 
   DebugPrintf ( 1 , "\nblit_outline_of_iso_image_to_map_position: function invoked." );
 
   translate_map_point_to_screen_pixel ( pos_x , pos_y, &x, &y, 1.0 ); 
-  target_rectangle.x = x+our_iso_image.offset_x;
-  target_rectangle.y = y+our_iso_image.offset_y;
+  target_rectangle.x = x+our_iso_image->offset_x;
+  target_rectangle.y = y+our_iso_image->offset_y;
 
-  if ( our_iso_image . surface -> flags & SDL_SRCCOLORKEY )
+  if ( our_iso_image -> surface -> flags & SDL_SRCCOLORKEY )
     {
 
-  for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+  for ( x = 0 ; x < our_iso_image -> surface -> w ; x ++ )
     {
-      for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+      for ( y = 0 ; y < our_iso_image -> surface -> h ; y ++ )
 	{
 
-	  new_test_color = FdGetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_color = FdGetPixel ( our_iso_image -> surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
@@ -601,7 +601,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 2 , light_frame_color );
 	    }
 
-	  if ( ( y == our_iso_image . surface -> h - 1 ) && ( new_test_color != color_key_value ) )
+	  if ( ( y == our_iso_image -> surface -> h - 1 ) && ( new_test_color != color_key_value ) )
 	    {
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 1 , light_frame_color );
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 2 , light_frame_color );
@@ -613,12 +613,12 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
     }
 
 
-  for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+  for ( y = 0 ; y < our_iso_image -> surface -> h ; y ++ )
     {
-      for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+      for ( x = 0 ; x < our_iso_image -> surface -> w ; x ++ )
 	{
 
-	  new_test_color = FdGetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_color = FdGetPixel ( our_iso_image -> surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_color == color_key_value ) && ( previous_test_color != color_key_value ) ) ||
@@ -638,7 +638,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 	      PutPixel ( Screen , target_rectangle . x + x - 2 , target_rectangle . y + y , light_frame_color );
 	    }
 
-	  if ( ( x == our_iso_image . surface -> w - 1 ) && ( new_test_color != color_key_value ) )
+	  if ( ( x == our_iso_image -> surface -> w - 1 ) && ( new_test_color != color_key_value ) )
 	    {
 	      PutPixel ( Screen , target_rectangle . x + x + 1 , target_rectangle . y + y , light_frame_color );
 	      PutPixel ( Screen , target_rectangle . x + x + 2 , target_rectangle . y + y , light_frame_color );
@@ -653,12 +653,12 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
   else
     {
 
-  for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+  for ( x = 0 ; x < our_iso_image -> surface -> w ; x ++ )
     {
-      for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+      for ( y = 0 ; y < our_iso_image -> surface -> h ; y ++ )
 	{
 
-	  new_test_alpha = GetAlphaComponent ( our_iso_image . surface , x , y ) ;
+	  new_test_alpha = GetAlphaComponent ( our_iso_image -> surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_alpha == SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha != SDL_ALPHA_TRANSPARENT ) ) ||
@@ -678,7 +678,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y - 2 , light_frame_color );
 	    }
 
-	  if ( ( y == our_iso_image . surface -> h - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	  if ( ( y == our_iso_image -> surface -> h - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
 	    {
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 1 , light_frame_color );
 	      PutPixel ( Screen , target_rectangle . x + x , target_rectangle . y + y + 2 , light_frame_color );
@@ -690,12 +690,12 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
     }
 
 
-  for ( y = 0 ; y < our_iso_image . surface -> h ; y ++ )
+  for ( y = 0 ; y < our_iso_image -> surface -> h ; y ++ )
     {
-      for ( x = 0 ; x < our_iso_image . surface -> w ; x ++ )
+      for ( x = 0 ; x < our_iso_image -> surface -> w ; x ++ )
 	{
 
-	  new_test_alpha = FdGetPixel ( our_iso_image . surface , x , y ) ;
+	  new_test_alpha = FdGetPixel ( our_iso_image -> surface , x , y ) ;
 	  // DebugPrintf ( -5 , "\nAlpha received: %d." , (int) new_alpha_component );
 
 	  if ( ( ( new_test_alpha == SDL_ALPHA_TRANSPARENT ) && ( previous_test_alpha != SDL_ALPHA_TRANSPARENT ) ) ||
@@ -715,7 +715,7 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
 	      PutPixel ( Screen , target_rectangle . x + x - 2 , target_rectangle . y + y , light_frame_color );
 	    }
 
-	  if ( ( x == our_iso_image . surface -> w - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
+	  if ( ( x == our_iso_image -> surface -> w - 1 ) && ( new_test_alpha != SDL_ALPHA_TRANSPARENT ) )
 	    {
 	      PutPixel ( Screen , target_rectangle . x + x + 1 , target_rectangle . y + y , light_frame_color );
 	      PutPixel ( Screen , target_rectangle . x + x + 2 , target_rectangle . y + y , light_frame_color );
@@ -735,18 +735,18 @@ blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_
  *
  * ---------------------------------------------------------------------- */
 void
-blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y )
+blit_iso_image_to_screen_position ( iso_image * our_iso_image , float pos_x , float pos_y )
 {
     SDL_Rect target_rectangle;
     
-    // target_rectangle . x = pos_x + our_iso_image . offset_x ;
-    // target_rectangle . y = pos_y + our_iso_image . offset_y ;
+    // target_rectangle . x = pos_x + our_iso_image -> offset_x ;
+    // target_rectangle . y = pos_y + our_iso_image -> offset_y ;
     target_rectangle . x = pos_x ;
     target_rectangle . y = pos_y ;
     
-    our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , Screen, &target_rectangle );
+    our_SDL_blit_surface_wrapper( our_iso_image -> surface , NULL , Screen, &target_rectangle );
 
-}; // void blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y )
+}; // void blit_iso_image_to_screen_position ( iso_image * our_iso_image , float pos_x , float pos_y )
 
 /* ----------------------------------------------------------------------
  *
@@ -783,16 +783,16 @@ blit_zoomed_iso_image_to_map_position ( iso_image* our_iso_image , float pos_x ,
  * ---------------------------------------------------------------------- */
 void
 blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer , 
-					   iso_image our_iso_image , float pos_x , float pos_y )
+					   iso_image * our_iso_image , float pos_x , float pos_y )
 {
   SDL_Rect target_rectangle;
   int x,y;
 
   translate_map_point_to_screen_pixel ( pos_x , pos_y, &x, &y, 1.0 );
-  target_rectangle.x = x + our_iso_image.offset_x;
-  target_rectangle.y = y + our_iso_image.offset_y;
+  target_rectangle.x = x + our_iso_image->offset_x;
+  target_rectangle.y = y + our_iso_image->offset_y;
 
-  our_SDL_blit_surface_wrapper( our_iso_image . surface , NULL , current_buffer, &target_rectangle );
+  our_SDL_blit_surface_wrapper( our_iso_image -> surface , NULL , current_buffer, &target_rectangle );
 
 }; // void blit_iso_image_to_map_position_in_buffer ( ... )
 
@@ -801,21 +801,21 @@ blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer ,
  *
  * ---------------------------------------------------------------------- */
 int
-iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos_x , float pos_y , 
+iso_image_positioned_inside_copy_rectangle ( iso_image * our_iso_image , float pos_x , float pos_y , 
 					     float shift_pixels_x , float shift_pixels_y )
 {
   SDL_Rect target_rectangle;
 
   target_rectangle . x = 
     translate_map_point_to_screen_pixel_x ( pos_x , pos_y ) + 
-    our_iso_image . offset_x ;
+    our_iso_image -> offset_x ;
   target_rectangle . y = 
     translate_map_point_to_screen_pixel_y ( pos_x , pos_y ) +
-    our_iso_image . offset_y ;
+    our_iso_image -> offset_y ;
 
   if ( ( target_rectangle . x > shift_pixels_x ) && ( target_rectangle . y > shift_pixels_y ) &&
-       ( target_rectangle . x + our_iso_image . surface -> w < GameConfig . screen_width - shift_pixels_x ) &&
-       ( target_rectangle . y + our_iso_image . surface -> h < GameConfig . screen_height - shift_pixels_y ) )
+       ( target_rectangle . x + our_iso_image -> surface -> w < GameConfig . screen_width - shift_pixels_x ) &&
+       ( target_rectangle . y + our_iso_image -> surface -> h < GameConfig . screen_height - shift_pixels_y ) )
     return ( TRUE );
 
   return ( FALSE );

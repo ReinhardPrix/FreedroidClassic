@@ -1047,7 +1047,7 @@ ShowSkillsExplanationScreen( void )
     
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
+	blit_open_gl_texture_to_screen_position ( &SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
 						  TargetSkillRect . x , TargetSkillRect . y , TRUE );
     }
     else
@@ -1243,7 +1243,7 @@ ShowSkillsScreen ( void )
 	if ( use_open_gl )
 	{
 	    blit_open_gl_texture_to_screen_position ( 
-		SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
+		&SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
 		ButtonRect . x , ButtonRect . y , TRUE );
 	}
 	else

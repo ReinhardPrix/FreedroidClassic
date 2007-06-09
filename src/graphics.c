@@ -332,12 +332,12 @@ Error loading flag image.",
     //
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( mouse_cursors [ cursor_index ] , 
+	blit_open_gl_texture_to_screen_position ( &mouse_cursors [ cursor_index ] , 
 						  GetMousePos_x () , GetMousePos_y () , TRUE );
     }
     else
     {
-	blit_iso_image_to_screen_position ( mouse_cursors [ cursor_index ] , 
+	blit_iso_image_to_screen_position ( &mouse_cursors [ cursor_index ] , 
 					    GetMousePos_x () , GetMousePos_y () );
     }
 
@@ -423,12 +423,12 @@ Error loading flag image.",
 
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_screen_position ( mouse_cursor_coronas [ i ] , 
+	    blit_open_gl_texture_to_screen_position ( &mouse_cursor_coronas [ i ] , 
 						      GetMousePos_x () + offset_vector . x , GetMousePos_y () + offset_vector . y , TRUE );
 	}
 	else
 	{
-	    blit_iso_image_to_map_position ( mouse_cursor_coronas [ i ] , 
+	    blit_iso_image_to_map_position ( &mouse_cursor_coronas [ i ] , 
 					     GetMousePos_x () , GetMousePos_x () );
 	}
     }

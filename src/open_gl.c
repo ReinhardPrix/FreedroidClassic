@@ -1123,7 +1123,7 @@ safely_initialize_our_default_open_gl_parameters ( void )
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , 
+blit_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , 
 				       float our_col , float our_line , 
 				       double r, double g , double b , 
 				       int highlight_texture, int blend ) 
@@ -1192,10 +1192,10 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     //
     target_rectangle . x = 
 	translate_map_point_to_screen_pixel_x ( our_col , our_line ) + 
-	our_floor_iso_image . offset_x ;
+	our_floor_iso_image -> offset_x ;
     target_rectangle . y = 
 	translate_map_point_to_screen_pixel_y ( our_col , our_line ) +
-	our_floor_iso_image . offset_y ;
+	our_floor_iso_image -> offset_y ;
     
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -1213,14 +1213,14 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; 
+    image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width ; 
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ;
+    image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height ;
     
     texture_start_y = 1.0 ;
     texture_end_y = 0.0 ;
 
-    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
     
     glBegin(GL_QUADS);
     
@@ -1289,7 +1289,7 @@ blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image ,
  *
  * ---------------------------------------------------------------------- */
 void
-blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture , int blend ) 
+blit_zoomed_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , float our_col , float our_line , float r, float g , float b , int highlight_texture , int blend ) 
 {
 #ifdef HAVE_LIBGL
     SDL_Rect target_rectangle;
@@ -1339,8 +1339,8 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
     //
     int ii,jj;
     translate_map_point_to_screen_pixel ( our_col , our_line , &ii, &jj, zoom_factor ); 
-    target_rectangle . x = ii + our_floor_iso_image . offset_x * zoom_factor ;
-    target_rectangle . y = jj + our_floor_iso_image . offset_y * zoom_factor ;
+    target_rectangle . x = ii + our_floor_iso_image -> offset_x * zoom_factor ;
+    target_rectangle . y = jj + our_floor_iso_image -> offset_y * zoom_factor ;
     
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     // glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -1359,15 +1359,15 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * zoom_factor ;
+    image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width * zoom_factor ;
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * zoom_factor ;
+    image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * zoom_factor ;
     
     texture_start_y = 1.0 ;
     texture_end_y = 0.0 ;
     
     
-    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
     
     glBegin(GL_QUADS);
     glTexCoord2i( 0.0f, texture_start_y ); 
@@ -1427,14 +1427,14 @@ blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , fl
     
 #endif
 
-}; // void blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line ) 
+}; // void blit_zoomed_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , float our_col , float our_line ) 
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+blit_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1479,23 +1479,23 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
+    image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width ; // * LIGHT_RADIUS_CRUDENESS_FACTOR  ; // + 255
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
+    image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height ; // * LIGHT_RADIUS_CRUDENESS_FACTOR ; // + 127
     
     if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
     if ( image_start_y > GameConfig . screen_height ) return;
     if ( image_end_y < 0 ) return;
 
-    // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+    // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image -> surface -> h ) ;
     
     texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
     texture_end_y = 0.0 ;
 
     // glColor3f( 1 , 1 , 1 );
 
-    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
     glBegin(GL_QUADS);
     glTexCoord2i( 0.0f, texture_start_y ); 
     glVertex2i( image_start_x , image_start_y );
@@ -1514,7 +1514,7 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
     
 #endif
 
-}; // void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+}; // void blit_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 
 /* ----------------------------------------------------------------------
  * This function blits some texture to the screen, but instead of using
@@ -1523,7 +1523,7 @@ blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x 
  * screen dimension.
  * ---------------------------------------------------------------------- */
 void
-blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+blit_open_gl_texture_to_full_screen ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1558,15 +1558,15 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , in
     //--------------------
     // Now we can begin to draw the actual textured rectangle.
     //
-    if ( our_floor_iso_image . texture_height == 1024 ) //then the image is 1024x768
+    if ( our_floor_iso_image -> texture_height == 1024 ) //then the image is 1024x768
 	{
-        image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 1024 ;
-        image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 768 ;
+        image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width * GameConfig . screen_width / 1024 ;
+        image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * GameConfig . screen_height / 768 ;
 	}
     else
 	{
-        image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * GameConfig . screen_width / 640 ;
-        image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * GameConfig . screen_height / 480 ;
+        image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width * GameConfig . screen_width / 640 ;
+        image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * GameConfig . screen_height / 480 ;
 	}
     image_start_x = target_rectangle . x ;
     image_start_y = target_rectangle . y ;
@@ -1579,7 +1579,7 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , in
     texture_start_y = 1.0 ;
     texture_end_y = 0.0 ;
 
-    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
     glBegin(GL_QUADS);
     glTexCoord2i( 0.0f, texture_start_y ); 
     glVertex2i( image_start_x , image_start_y );
@@ -1598,14 +1598,14 @@ blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , in
     
 #endif
 
-}; // void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) 
+}; // void blit_open_gl_texture_to_full_screen ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) 
 
 /* ----------------------------------------------------------------------
  *
  *
  * ---------------------------------------------------------------------- */
 void
-blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , float scale_factor ) 
+blit_semitransparent_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , float scale_factor ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1643,23 +1643,23 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_floor_iso_image . texture_width * scale_factor ; 
+    image_end_x = target_rectangle . x + our_floor_iso_image -> texture_width * scale_factor ; 
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_floor_iso_image . texture_height * scale_factor ;
+    image_end_y = target_rectangle . y + our_floor_iso_image -> texture_height * scale_factor ;
     
     if ( image_start_x > GameConfig . screen_width ) return ;
     if ( image_end_x < 0 ) return ;
     if ( image_start_y > GameConfig . screen_height ) return;
     if ( image_end_y < 0 ) return;
 
-    // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image . surface -> h ) ;
+    // DebugPrintf ( -1 , "\nheight: %d." , our_floor_iso_image -> surface -> h ) ;
     
     texture_start_y = 1.0 ; // 1 - ((float)(our_floor_iso_image . surface -> h)) / 127.0 ; // 1.0 
     texture_end_y = 0.0 ;
 
     // glColor3f( 1 , 1 , 1 );
 
-    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_floor_iso_image -> texture ) );
     glBegin(GL_QUADS);
     glTexCoord2i( 0.0f, texture_start_y ); 
     glVertex2i( image_start_x , image_start_y );
@@ -1685,7 +1685,7 @@ blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_is
  *
  * ---------------------------------------------------------------------- */
 void
-blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) 
+blit_zoomed_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1770,7 +1770,7 @@ blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image 
  * to it.  This function should do exactly this trick.
  * ---------------------------------------------------------------------- */
 void
-blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int y , float angle_in_degree ) 
+blit_rotated_open_gl_texture_with_center ( iso_image * our_iso_image , int x , int y , float angle_in_degree ) 
 {
 
 #ifdef HAVE_LIBGL
@@ -1824,18 +1824,18 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
     // Now we can begin to draw the actual textured rectangle.
     //
     image_start_x = target_rectangle . x ;
-    image_end_x = target_rectangle . x + our_iso_image . texture_width ; 
+    image_end_x = target_rectangle . x + our_iso_image -> texture_width ; 
     image_start_y = target_rectangle . y ;
-    image_end_y = target_rectangle . y + our_iso_image . texture_height ;
+    image_end_y = target_rectangle . y + our_iso_image -> texture_height ;
     
-    corner1 . x = 0 - our_iso_image . original_image_width / 2 ;
-    corner1 . y = 0 - our_iso_image . original_image_height / 2 ;
-    corner2 . x = 0 - our_iso_image . original_image_width / 2 ;
-    corner2 . y = 0 + our_iso_image . original_image_height / 2 + ( our_iso_image . texture_height - our_iso_image . original_image_height );
-    corner3 . x = 0 + our_iso_image . original_image_width / 2 + ( our_iso_image . texture_width - our_iso_image . original_image_width );
-    corner3 . y = 0 + our_iso_image . original_image_height / 2 + ( our_iso_image . texture_height - our_iso_image . original_image_height );
-    corner4 . x = 0 + our_iso_image . original_image_width / 2 + ( our_iso_image . texture_width - our_iso_image . original_image_width );
-    corner4 . y = 0 - our_iso_image . original_image_height / 2 ;
+    corner1 . x = 0 - our_iso_image -> original_image_width / 2 ;
+    corner1 . y = 0 - our_iso_image -> original_image_height / 2 ;
+    corner2 . x = 0 - our_iso_image -> original_image_width / 2 ;
+    corner2 . y = 0 + our_iso_image -> original_image_height / 2 + ( our_iso_image -> texture_height - our_iso_image -> original_image_height );
+    corner3 . x = 0 + our_iso_image -> original_image_width / 2 + ( our_iso_image -> texture_width - our_iso_image -> original_image_width );
+    corner3 . y = 0 + our_iso_image -> original_image_height / 2 + ( our_iso_image -> texture_height - our_iso_image -> original_image_height );
+    corner4 . x = 0 + our_iso_image -> original_image_width / 2 + ( our_iso_image -> texture_width - our_iso_image -> original_image_width );
+    corner4 . y = 0 - our_iso_image -> original_image_height / 2 ;
     
     RotateVectorByAngle ( & corner1 , angle_in_degree );
     RotateVectorByAngle ( & corner2 , angle_in_degree );
@@ -1859,7 +1859,7 @@ blit_rotated_open_gl_texture_with_center ( iso_image our_iso_image , int x , int
     texture_start_y = 1.0 ; // 1 - ((float)(our_iso_image . original_image_height)) / 127.0 ; // 1.0 
     texture_end_y = 0.0 ;
     
-    glBindTexture( GL_TEXTURE_2D, * ( our_iso_image . texture ) );
+    glBindTexture( GL_TEXTURE_2D, * ( our_iso_image -> texture ) );
     glBegin(GL_QUADS);
     glTexCoord2i( 0.0f, texture_start_y ); 
     glVertex2i( corner1 . x , corner1 . y );
@@ -2452,7 +2452,7 @@ char fpath[2048];
 	    target_rectangle . x = pos_x_grid [ our_width ] [ our_height ] + window_offset_x ;
 	    target_rectangle . y = pos_y_grid [ our_width ] [ our_height ] ;
 	    
-	    blit_open_gl_texture_to_screen_position ( light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y , FALSE ) ;
+	    blit_open_gl_texture_to_screen_position ( &light_radius_chunk [ light_strength ] , target_rectangle . x , target_rectangle . y , FALSE ) ;
 	}
     }
     
@@ -2760,13 +2760,13 @@ char fpath[2048];
 	if ( need_scaling [ background_code ] )
 	{
 	    blit_open_gl_texture_to_full_screen ( 
-		our_backgrounds [ background_code ] , 
+		&our_backgrounds [ background_code ] , 
 		our_background_rects [ background_code ] . x , 
 		our_background_rects [ background_code ] . y , TRUE ) ;
 	}
 	else
 	    blit_open_gl_texture_to_screen_position ( 
-		our_backgrounds [ background_code ] , 
+		&our_backgrounds [ background_code ] , 
 		our_background_rects [ background_code ] . x , 
 		our_background_rects [ background_code ] . y , TRUE ) ;
     }

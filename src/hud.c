@@ -718,7 +718,7 @@ ShowCurrentSkill( void )
 
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
+	blit_open_gl_texture_to_screen_position ( &SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface , Target_Rect . x , Target_Rect . y , TRUE ) ;
     }
     else
 	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );
@@ -844,15 +844,15 @@ char fpath[2048];
 	
 	prepare_open_gl_for_blending_textures ( );
 	
-	blit_open_gl_texture_to_screen_position ( speed_meter_iso_image , 
+	blit_open_gl_texture_to_screen_position ( &speed_meter_iso_image , 
 						  GameConfig . screen_width - speed_meter_iso_image . original_image_width , 0 , FALSE );
 	
-	blit_rotated_open_gl_texture_with_center ( SpeedMeterEnergyArrowImage , 
+	blit_rotated_open_gl_texture_with_center ( &SpeedMeterEnergyArrowImage , 
 						   GameConfig . screen_width - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						   0 + PivotPosition . y  , 
 						   - 360 * 3 / 4 * Me [ 0 ] . energy / Me [ 0 ] . maxenergy );
 	
-	blit_rotated_open_gl_texture_with_center ( SpeedMeterManaArrowImage , 
+	blit_rotated_open_gl_texture_with_center ( &SpeedMeterManaArrowImage , 
 						   GameConfig . screen_width - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						   0 + PivotPosition . y  , 
 						   - 360 * 3 / 4 * Me [ 0 ] . mana / Me [ 0 ] . maxmana );

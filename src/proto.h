@@ -212,22 +212,22 @@ EXTERN void clear_screen (void) ;
 EXTERN void blit_open_gl_light_radius ( void );
 EXTERN void blit_open_gl_stretched_texture_light_radius ( void ) ;
 EXTERN void PutPixel_open_gl ( int x, int y, Uint32 pixel);
-EXTERN void blit_rotated_open_gl_texture_with_center ( iso_image our_floor_iso_image , int x , int y , float angle_in_degree ) ;
+EXTERN void blit_rotated_open_gl_texture_with_center ( iso_image * our_floor_iso_image , int x , int y , float angle_in_degree ) ;
 EXTERN void remove_open_gl_blending_mode_again ( void );
 EXTERN void prepare_open_gl_for_blending_textures( void );
 EXTERN void GL_HighlightRectangle ( SDL_Surface* Surface , SDL_Rect Area , unsigned char r , unsigned char g , unsigned char b , unsigned char alpha );
 EXTERN void ShowInventoryScreenBackground ( void );
 EXTERN void show_character_screen_background ( void );
 EXTERN int safely_initialize_our_default_open_gl_parameters ( void ) ;
-EXTERN void blit_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , double r , double g , double b , int highlight_texture, int blend ) ;
-EXTERN void blit_zoomed_open_gl_texture_to_map_position ( iso_image our_floor_iso_image , float our_col , float our_line , float r , float g , float b , int highlight_texture, int blend ) ;
-EXTERN void blit_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
-EXTERN void blit_semitransparent_open_gl_texture_to_screen_position ( iso_image our_floor_iso_image , int x , int y , float scale_factor ) ;
-EXTERN void blit_zoomed_open_gl_texture_to_screen_position ( iso_image* our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) ;
+EXTERN void blit_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , float our_col , float our_line , double r , double g , double b , int highlight_texture, int blend ) ;
+EXTERN void blit_zoomed_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , float our_col , float our_line , float r , float g , float b , int highlight_texture, int blend ) ;
+EXTERN void blit_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
+EXTERN void blit_semitransparent_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , float scale_factor ) ;
+EXTERN void blit_zoomed_open_gl_texture_to_screen_position ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters , float zoom_factor ) ;
 EXTERN void blit_special_background ( int background_code );
 EXTERN void flush_background_image_cache ( void );
 EXTERN void open_gl_check_error_status ( const char* name_of_calling_function );
-EXTERN void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
+EXTERN void blit_open_gl_texture_to_full_screen ( iso_image * our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
 
 // blocks.c 
 #undef EXTERN
@@ -257,13 +257,13 @@ EXTERN void Load_Bullet_Surfaces (void);
 EXTERN void Load_Blast_Surfaces (void);
 EXTERN void load_all_isometric_floor_tiles ( void );
 EXTERN void load_all_obstacles ( void );
-EXTERN void blit_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y );
+EXTERN void blit_iso_image_to_map_position ( iso_image * our_iso_image , float pos_x , float pos_y );
 EXTERN void blit_iso_image_to_map_position_in_buffer ( SDL_Surface *current_buffer , 
-						       iso_image our_iso_image , float pos_x , float pos_y );
-EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image our_iso_image , float pos_x , float pos_y , 
+						       iso_image * our_iso_image , float pos_x , float pos_y );
+EXTERN int iso_image_positioned_inside_copy_rectangle ( iso_image * our_iso_image , float pos_x , float pos_y , 
 							float shift_x , float shift_y );
-EXTERN void blit_iso_image_to_screen_position ( iso_image our_iso_image , float pos_x , float pos_y );
-EXTERN void blit_outline_of_iso_image_to_map_position ( iso_image our_iso_image , float pos_x , float pos_y );
+EXTERN void blit_iso_image_to_screen_position ( iso_image * our_iso_image , float pos_x , float pos_y );
+EXTERN void blit_outline_of_iso_image_to_map_position ( iso_image * our_iso_image , float pos_x , float pos_y );
 
 // graphics.c 
 #undef EXTERN

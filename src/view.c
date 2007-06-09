@@ -184,14 +184,14 @@ Error loading flag image.",
     {
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_map_position ( power_flags [ target_time ] , 
+	    blit_open_gl_texture_to_map_position ( &power_flags [ target_time ] , 
 						   Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
 						   1.0 , 1.0 , 1.0 ,
 						   FALSE , FALSE );
 	}
 	else
 	{
-	    blit_iso_image_to_map_position ( power_flags [ target_time ] , 
+	    blit_iso_image_to_map_position ( &power_flags [ target_time ] , 
 					     Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
 	}
     }
@@ -199,14 +199,14 @@ Error loading flag image.",
     {
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_map_position ( dexterity_flags [ target_time ] , 
+	    blit_open_gl_texture_to_map_position ( &dexterity_flags [ target_time ] , 
 						   Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
 						   1.0 , 1.0 , 1.0 ,
 						   FALSE , FALSE );
 	}
 	else
 	{
-	    blit_iso_image_to_map_position ( dexterity_flags [ target_time ] , 
+	    blit_iso_image_to_map_position ( &dexterity_flags [ target_time ] , 
 					     Me [ 0 ] . pos . x , Me [ 0 ] . pos . y );
 	}
     }
@@ -472,11 +472,11 @@ blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
 {
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
+	blit_open_gl_texture_to_map_position ( &our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
     }
     else
     {
-	blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
+	blit_iso_image_to_map_position ( &our_floor_iso_image , our_col , our_line ) ;
     }
 }; // void blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image , float our_col, float our_line )
 
@@ -527,7 +527,7 @@ isometric_show_floor_around_tux_without_doublebuffering (int mask)
                 {
                 if (use_open_gl)
 	 	    {
-                    blit_zoomed_open_gl_texture_to_map_position ( floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
+                    blit_zoomed_open_gl_texture_to_map_position ( &floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
 				                    ((float) col) + 0.5, ((float) line) + 0.5, 1.0, 1.0, 1.0,
         	        							    FALSE, FALSE);
 		    }
@@ -689,7 +689,7 @@ There was an obstacle type given, that exceeds the number of\n\
 
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+	    blit_open_gl_texture_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image , 
 						   obs_onscreen_position . x , obs_onscreen_position . y , 
 						   ( SDL_GetTicks() % 3) / 2.0  , 
 						   ( ( SDL_GetTicks() + 1 ) % 3) / 2.0 , 
@@ -704,7 +704,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	    tmp . surface -> format -> Gmask = 0x0FFFFFFFF ;
 	    tmp . offset_x = obstacle_map [ our_obstacle -> type ] . image . offset_x ;
 	    tmp . offset_y = obstacle_map [ our_obstacle -> type ] . image . offset_y ;
-	    blit_iso_image_to_map_position ( tmp , obs_onscreen_position . x , obs_onscreen_position . y );
+	    blit_iso_image_to_map_position ( &tmp , obs_onscreen_position . x , obs_onscreen_position . y );
 	    SDL_FreeSurface ( tmp . surface );
 	}
     }
@@ -733,7 +733,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
 		endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
 		blit_open_gl_texture_to_map_position ( 
-		    obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
+		    &obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
 		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
 
 		}
@@ -746,7 +746,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
 		endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
 		blit_open_gl_texture_to_map_position ( 
-		    obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
+		    &obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
 		    0 ) ;
 
 		}
@@ -760,7 +760,7 @@ There was an obstacle type given, that exceeds the number of\n\
 		endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
 		endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
 		blit_open_gl_texture_to_map_position ( 
-		    obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
+		    &obstacle_map [ our_obstacle -> type ] . image , endlocx, endlocy, 1,1,1 , FALSE, 
 		    obstacle_map [ our_obstacle -> type ] . transparent ) ;
 	    }
 	}
@@ -773,7 +773,7 @@ There was an obstacle type given, that exceeds the number of\n\
             endlocx = (locx - UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.x + (locy - UserCenter_y ) / (float) iso_floor_tile_height;
             endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
 
-	    blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+	    blit_iso_image_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image , 
 					     endlocx , endlocy );
 	}
     }
@@ -809,15 +809,15 @@ There was an obstacle type given, that exceeds the number of\n\
     
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+	blit_open_gl_texture_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image , 
 					       our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0 , 1.0 , TRUE, FALSE ) ;
     }
     else
     {
 	DebugPrintf ( 0 , "\nNormal in-game SDL highlight invoked for marked obstacle!" );
-	blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+	blit_iso_image_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image , 
 					 our_obstacle -> pos . x , our_obstacle -> pos . y );
-	blit_outline_of_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . image , 
+	blit_outline_of_iso_image_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image , 
 						    our_obstacle -> pos . x , our_obstacle -> pos . y );
     }
     
@@ -855,7 +855,7 @@ There was an obstacle type given, that exceeds the number of\n\
 	
 	if ( use_open_gl )
 	{
-	    blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
+	    blit_zoomed_open_gl_texture_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image ,
 							  our_obstacle -> pos . x , our_obstacle -> pos . y , 
 							  1.0 , 1.0, 1.0 , 0.25, FALSE );
 	}
@@ -885,7 +885,7 @@ There was an obstacle type given, that exceeds the number of\n\
     {
 	if ( use_open_gl )
 	{
-	    blit_zoomed_open_gl_texture_to_map_position ( obstacle_map [ our_obstacle -> type ] . image ,
+	    blit_zoomed_open_gl_texture_to_map_position ( &obstacle_map [ our_obstacle -> type ] . image ,
 							  our_obstacle -> pos . x , our_obstacle -> pos . y , 1.0 , 1.0, 1.0 , 0.25, obstacle_map[our_obstacle->type].transparent  );
 	}
 	else
@@ -1422,12 +1422,12 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 		    {
 			if ( mask & ZOOM_OUT )
 			    blit_zoomed_open_gl_texture_to_map_position (   
-                            obstacle_map [ our_obstacle -> type ] . shadow_image ,
+                            &obstacle_map [ our_obstacle -> type ] . shadow_image ,
                             our_obstacle -> pos . x , our_obstacle -> pos . y ,   
                             1.0 , 1.0, 1.0 , FALSE, TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS );
 
 			else blit_open_gl_texture_to_map_position ( 
-			    obstacle_map [ our_obstacle -> type ] . shadow_image , 
+			    &obstacle_map [ our_obstacle -> type ] . shadow_image , 
 			    our_obstacle -> pos . x , our_obstacle -> pos . y , 
 			    1.0 , 1.0, 1.0 , FALSE, TRANSPARENCY_FOR_SEE_THROUGH_OBJECTS );
 			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
@@ -1439,7 +1439,7 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 		    {
 			if ( mask & ZOOM_OUT )      blit_zoomed_iso_image_to_map_position ( & (obstacle_map [ our_obstacle -> type ] . shadow_image) ,
                                                          our_obstacle -> pos . x , our_obstacle -> pos . y );
-			else blit_iso_image_to_map_position ( obstacle_map [ our_obstacle -> type ] . shadow_image , 
+			else blit_iso_image_to_map_position ( &obstacle_map [ our_obstacle -> type ] . shadow_image , 
 							 our_obstacle -> pos . x , our_obstacle -> pos . y );
 			// DebugPrintf ( -4 , "\n%s(): shadow has been drawn." , __FUNCTION__ );
 		    }
@@ -1915,7 +1915,7 @@ Unable to load the grid tile.", PLEASE_INFORM, IS_FATAL);
                     ((float) col) + 0.5, ((float) line) + 0.5);
             }
             else
-                blit_iso_image_to_map_position (grid_tile_SDL,
+                blit_iso_image_to_map_position (&grid_tile_SDL,
                                             ((float) col) + 0.5,
                                             ((float) line) + 0.5);
     }
@@ -2193,7 +2193,7 @@ PutMouseMoveCursor ( void )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 0 ] . original_image_width / 2 ;
 	    TargetRectangle . y -= MouseCursorImageList [ 0 ] . original_image_height / 2 ;
-	    blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 0 ] , 
+	    blit_open_gl_texture_to_screen_position ( &MouseCursorImageList [ 0 ] , 
 						      TargetRectangle . x , TargetRectangle . y , TRUE );
 	}
 	else
@@ -2218,7 +2218,7 @@ PutMouseMoveCursor ( void )
 	{
 	    TargetRectangle . x -= MouseCursorImageList [ 1 ] . original_image_width / 2 ;
 	    TargetRectangle . y -= MouseCursorImageList [ 1 ] . original_image_height / 2 ;
-	    blit_open_gl_texture_to_screen_position ( MouseCursorImageList [ 1 ] , 
+	    blit_open_gl_texture_to_screen_position ( &MouseCursorImageList [ 1 ] , 
 						      TargetRectangle . x , TargetRectangle . y , TRUE );
 	}
 	else
@@ -2984,12 +2984,12 @@ Empty part string received!",
     {
 	if ( x == (-1) )
 	{
-	    blit_iso_image_to_map_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+	    blit_iso_image_to_map_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
 					     Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
 	}
 	else
 	{
-	    blit_iso_image_to_screen_position ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+	    blit_iso_image_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
 						x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y );
 	}
     }
@@ -3944,7 +3944,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
     {
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_screen_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] , TargetRectangle . x , TargetRectangle . y , TRUE );
+	    blit_open_gl_texture_to_screen_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ 0 ] , TargetRectangle . x , TargetRectangle . y , TRUE );
 	}
 	else
 	{
@@ -3968,19 +3968,19 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	    {
 		if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		}
 		else if ( ThisRobot -> poison_duration_left != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		}
 		else if ( ThisRobot -> frozen != 0 ) 
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight, FALSE ) ;
 		}
 		else
 		{
-		    blit_zoomed_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 1.0 , 1.0 , highlight, FALSE ) ;
+		    blit_zoomed_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 1.0 , 1.0 , highlight, FALSE ) ;
 		}
 	    }
 	    else
@@ -4008,15 +4008,15 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    
 		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight , FALSE) ;
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight , FALSE) ;
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		    else
 		    {
@@ -4032,7 +4032,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 			if ( darkness > 1 ) darkness = 1.0 ;
 			if ( darkness < 0 ) darkness = 0 ;
 			
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , darkness , darkness , darkness , highlight , FALSE) ;
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , darkness , darkness , darkness , highlight , FALSE) ;
 		    }		  
 		    
 		}
@@ -4045,33 +4045,33 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    //
 		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status ==  INFOUT ) )
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+			blit_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			
 		    }
 		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
+			blit_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			if ( highlight )
-			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
+			    blit_outline_of_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    
 		    // blit_iso_image_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ 0 ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
@@ -4090,17 +4090,17 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		{
 		    if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 1.0 , 0.2 , 0.2 , highlight, FALSE ) ;
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 1.0 , 0.2 , highlight, FALSE ) ;
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
-			blit_open_gl_texture_to_map_position ( enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+			blit_open_gl_texture_to_map_position ( &enemy_iso_images[ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 							       ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y , 0.2 , 0.2 , 1.0 , highlight , FALSE) ;
 		    }
 		    else
@@ -4123,7 +4123,7 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 	                endlocy = (- locx + UserCenter_x) / (float) iso_floor_tile_width + Me[0].pos.y + (locy - UserCenter_y) / (float) iso_floor_tile_height;
 
 			blit_open_gl_texture_to_map_position ( 
-			    enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
+			    &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , 
 			    endlocx , endlocy , 
 			    darkness , darkness , darkness , highlight , FALSE) ;
 		    }
@@ -4138,31 +4138,31 @@ PutIndividuallyShapedDroidBody ( int Enum , SDL_Rect TargetRectangle , int mask 
 		    // 
 		    if ( ( ThisRobot -> energy <= 0 ) || ( ThisRobot -> Status == INFOUT ) )
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
+			blit_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> paralysation_duration_left != 0 ) 
 		    {
 			LoadAndPrepareRedEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &RedEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> poison_duration_left != 0 ) 
 		    {
 			LoadAndPrepareGreenEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &GreenEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else if ( ThisRobot -> frozen != 0 ) 
 		    {
 			LoadAndPrepareBlueEnemyRotationModelNr ( RotationModel );
-			blit_iso_image_to_map_position ( BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
+			blit_iso_image_to_map_position ( &BlueEnemyRotationSurfacePointer [ RotationModel ] [ RotationIndex ] [ 0 ] , 
 							 ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    else
 		    {
-			blit_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
+			blit_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 			if ( highlight )
-			    blit_outline_of_iso_image_to_map_position ( enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
+			    blit_outline_of_iso_image_to_map_position ( &enemy_iso_images [ RotationModel ] [ RotationIndex ] [ (int) ThisRobot -> animation_phase ] , ThisRobot -> virt_pos . x , ThisRobot -> virt_pos . y );
 		    }
 		    
 		}
@@ -4320,7 +4320,7 @@ There was a bullet to be blitted of a type that does not really exist.",
 	// blit_zoomed_iso_image_to_map_position ( & ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] ) , CurBullet -> pos . x , CurBullet -> pos . y );
     }
     else
-	blit_iso_image_to_map_position ( Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
+	blit_iso_image_to_map_position ( &Bulletmap [ CurBullet -> type ] . image [ direction_index ] [ PhaseOfBullet ] , CurBullet -> pos . x , CurBullet -> pos . y );
     
 }; // void PutBullet (int Bulletnumber )
 
@@ -4376,7 +4376,7 @@ There was -1 item type given to blit.  This must be a mistake! ",
     {
 	if ( use_open_gl )
 	{
-	    blit_zoomed_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
+	    blit_zoomed_open_gl_texture_to_map_position ( &ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 							  CurItem -> pos . x , CurItem -> pos . y , 1.0 , 1.0 , 1.0 , 0.25, FALSE );
 	}
 	else
@@ -4389,18 +4389,18 @@ There was -1 item type given to blit.  This must be a mistake! ",
     {
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_map_position ( ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
+	    blit_open_gl_texture_to_map_position ( &ItemMap [ CurItem -> type ] . inv_image . ingame_iso_image , 
 						   CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 						   CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 						   1.0 , 1.0 , 1.0 , highlight_item , FALSE);
 	}
 	else
 	{
-	    blit_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+	    blit_iso_image_to_map_position ( &ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
 					     CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 					     CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
 	    if ( highlight_item )
-		blit_outline_of_iso_image_to_map_position ( ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
+		blit_outline_of_iso_image_to_map_position ( &ItemMap [ CurItem->type ] . inv_image . ingame_iso_image , 
 							    CurItem -> pos . x - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) , 
 							    CurItem -> pos . y - 3.0 * sinf ( CurItem -> throw_time * 3.0 ) );
 	}
@@ -4563,7 +4563,7 @@ function used for this did not succeed.",
 	
 	if ( use_open_gl )
 	{
-	    blit_open_gl_texture_to_screen_position ( PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , 
+	    blit_open_gl_texture_to_screen_position ( &PrerotatedSparkSurfaces [ SparkType ] [ PictureType ] [ PrerotationIndex ] , 
 						      TargetRectangle . x , 
 						      TargetRectangle . y , TRUE ) ;
 	}
@@ -4683,7 +4683,7 @@ exist at all.",
 				   PLEASE_INFORM, IS_FATAL );
     };
     
-    blit_iso_image_to_map_position ( Blastmap [ CurBlast -> type ] . image [ phase ] , 
+    blit_iso_image_to_map_position ( &Blastmap [ CurBlast -> type ] . image [ phase ] , 
 				     CurBlast -> pos . x , CurBlast -> pos . y  );
     
 };  // void PutBlast(int Blast_number)
