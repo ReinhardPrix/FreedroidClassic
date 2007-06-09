@@ -1089,6 +1089,10 @@ MouseWheelDownPressed(void)
 
 int LeftPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_LEFT]));}
 int RightPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_RIGHT]));}
+
+int LeftWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_LEFT]));}
+int RightWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_RIGHT]));}
+
 int UpPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_UP]));}
 int DownPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_DOWN]));}
 int SpacePressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_SPACE]));}

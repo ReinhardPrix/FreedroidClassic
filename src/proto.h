@@ -550,6 +550,8 @@ EXTERN int MouseRightWasPressed();
 EXTERN int MouseLeftWasPressed();
 EXTERN int LeftPressed () ;
 EXTERN int RightPressed () ;
+EXTERN int LeftWasPressed () ;
+EXTERN int RightWasPressed () ;
 EXTERN int UpPressed () ;
 EXTERN int DownPressed () ;
 EXTERN int SpacePressed () ;
