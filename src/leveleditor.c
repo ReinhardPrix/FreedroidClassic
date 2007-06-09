@@ -1328,11 +1328,11 @@ ItemDropFromLevelEditor( void )
     static int previous_prefix_selected = (-1) ;
     
     while ( GPressed() );
+    while ( SpacePressed()  || MouseLeftPressed() );
     
     while ( !SelectionDone )
     {
-	
-	while ( SpacePressed() );
+	track_last_frame_input_status();
 	
 	our_SDL_fill_rect_wrapper ( Screen , NULL , 0 );
 	
@@ -1389,7 +1389,7 @@ ItemDropFromLevelEditor( void )
 	
 	our_SDL_flip_wrapper( Screen );
 	
-	while ( ( ! SpacePressed() ) && ( level_editor_item_drop_index ( row_len , line_len ) + 
+/*	while ( ( ! SpacePressed() ) && ( level_editor_item_drop_index ( row_len , line_len ) + 
 					  item_group * line_len * row_len == previous_mouse_position_index ) )
 	{
 	    SDL_Delay ( 1 );
@@ -1398,15 +1398,15 @@ ItemDropFromLevelEditor( void )
 		while ( EscapePressed() );
 		return ;
 	    }
-	}
+	}*/
 	
 	if ( EscapePressed() )
-	{
+	{ //Pressing escape cancels the dropping
 	    while ( EscapePressed() );
 	    return ;
 	}
 
-	if ( SpacePressed() )
+	if ( SpacePressed() || ( MouseLeftPressed() && !MouseLeftWasPressed()))
 	{
 	    if ( MouseCursorIsOnButton ( 
 		     LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,
@@ -1422,6 +1422,7 @@ ItemDropFromLevelEditor( void )
 	    {
 		if ( item_group > 0 ) item_group -- ;
 	    }
+
 	    if ( MouseCursorIsOnButton ( 
 		     LEVEL_EDITOR_NEXT_PREFIX_BUTTON ,
 		     GetMousePos_x()  , 
@@ -1438,6 +1439,7 @@ ItemDropFromLevelEditor( void )
 		if ( previous_prefix_selected > (-1) )
 		    previous_prefix_selected -- ;
 	    }
+
 	    if ( MouseCursorIsOnButton ( 
 		     LEVEL_EDITOR_NEXT_SUFFIX_BUTTON ,
 		     GetMousePos_x()  , 
@@ -1482,7 +1484,7 @@ ItemDropFromLevelEditor( void )
     DropItemAt( NewItemCode , Me [ 0 ] . pos . z , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
 		previous_prefix_selected , previous_suffix_selected , 0 , our_multiplicity );
     
-    while ( SpacePressed() );
+    while ( SpacePressed() || MouseLeftPressed() );
     
 }; // void ItemDropFromLevelEditor( void )
 
