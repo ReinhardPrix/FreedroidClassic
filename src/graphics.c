@@ -591,7 +591,6 @@ do_graphical_number_selection_in_range ( int lower_range , int upper_range, int 
 {
     static SDL_Surface* SelectionKnob = NULL ;
     int ok_button_was_pressed = FALSE;
-    int left_mouse_pressed_previous_frame = FALSE;
     int knob_start_x = UNIVERSAL_COORD_W(200);
     int knob_end_x = UNIVERSAL_COORD_W(390);
     if(!(upper_range - lower_range))
@@ -627,9 +626,11 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
     knob_target_rect . w = SelectionKnob -> w;
     knob_target_rect . h = SelectionKnob -> h;
     
-    while ( SpacePressed() );
+    while ( SpacePressed() || MouseLeftPressed());
     while ( ! ok_button_was_pressed )
     {
+	track_last_frame_input_status(); //activate the *WasPressed functions
+
 	//--------------------
 	// Now we assemble and show the screen, which includes 
 	// 1. the background
@@ -650,7 +651,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
-	if ( ( SpacePressed() && MouseLeftPressed() ) && ( ! left_mouse_pressed_previous_frame ) ) 
+	if ( ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
 	{
 	    //--------------------
 	    // Maybe the user has just 'grabbed the knob?  Then we need to
@@ -689,7 +690,8 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	    }
 	    
 	}
-	if ( ! ( SpacePressed() && MouseLeftPressed() ) ) knob_is_grabbed = FALSE ;
+	if ( ! MouseLeftPressed() ) knob_is_grabbed = FALSE ;
+
 	
 	if ( knob_is_grabbed )
 	{
@@ -699,7 +701,33 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	}
 	
 	
-	left_mouse_pressed_previous_frame = MouseLeftPressed() ;
+ 	if ( RightPressed() &&  !RightWasPressed() )
+	    {
+	     if ( knob_end_x - knob_start_x - knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range)))
+                        {
+                        knob_offset_x += (knob_end_x - knob_start_x) / (upper_range - lower_range + 1);
+                        }
+                if ( knob_offset_x < knob_end_x - knob_start_x - 1)
+                        knob_offset_x ++;
+	
+	    }
+
+	if (LeftPressed() && !LeftWasPressed())
+	    {
+	    if(knob_offset_x > ((knob_end_x - knob_start_x) / (upper_range - lower_range + 1)))
+                        {
+                        knob_offset_x -= (knob_end_x - knob_start_x) / (upper_range - lower_range + 1);
+                        }
+                if(knob_offset_x > 0)
+                        knob_offset_x --;
+
+	    }
+
+	if (EnterPressed())
+	    {
+            ok_button_was_pressed = TRUE ;
+	    }
+
 	SDL_Delay (1);
     }
     
