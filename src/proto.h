@@ -628,6 +628,7 @@ EXTERN int WPressed () ;
 EXTERN int XPressed () ;
 EXTERN int YPressed () ;
 EXTERN int ZPressed () ;
+EXTERN int ZWasPressed () ;
 EXTERN void toggle_game_config_screen_visibility ( int screen_visible );
 
 // menu.c 

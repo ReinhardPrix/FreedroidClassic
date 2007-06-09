@@ -868,6 +868,9 @@ ReactToSpecialKeys(void)
      { 	 
          TPressed_LastFrame = FALSE; 	 
      }    
+
+    if ( ZPressed () && ! ZWasPressed())
+	always_show_items_text = ! always_show_items_text;
     
 }; // void ReactToSpecialKeys(void)
 
@@ -1173,6 +1176,7 @@ int WPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_w])) ;
 int XPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_x])) ;}
 int YPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_y]));}
 int ZPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_z]));}
+int ZWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_z]));}
 int MouseRightPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(3)); }
 int MouseLeftPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1));}
 int MouseRightWasPressed() { keyboard_update(); return (mouse_state_last_frame&SDL_BUTTON(3));}

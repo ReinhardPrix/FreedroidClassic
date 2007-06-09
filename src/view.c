@@ -2090,7 +2090,7 @@ AssembleCombatPicture ( int mask )
     
     ShowCombatScreenTexts ( mask );
     
-    if ( ShiftPressed() )
+    if ( ShiftPressed() || always_show_items_text )
     {
 	update_item_text_slot_positions ( );
 	blit_all_item_slots ( );
