@@ -227,6 +227,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
     
     while ( 1 )
     {
+	keyboard_update();
 	//--------------------
 	// We write out the normal text of the menu, either by doing it once more
 	// in the open_gl case or by restoring what we have saved earlier, in the 
@@ -305,7 +306,7 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	    MenuItemDeselectedSound();
 	    return ( -1 );
 	}
-	if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
+	if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
 	{
 	    //--------------------
 	    // The space key or enter key or left mouse button all indicate, that
@@ -321,9 +322,9 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	    MenuItemSelectedSound();
 	    return ( MenuPosition );
 	}
-	if ( axis_is_active )
+	if ( MouseLeftPressed() )
 	{
-	    while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	    while ( EnterPressed() || MouseLeftPressed() ); // || RightPressed() || LeftPressed() );
 	    //--------------------
 	    // Only when the mouse click really occured on the menu do we
 	    // interpret it as a menu choice.  Otherwise we'll just ignore
@@ -735,7 +736,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       mouse_now_over_different_item = FALSE ;
       mouse_has_moved = FALSE ;
       
-      while ( !mouse_has_moved && !mouse_now_over_different_item && !mouse_wheel_has_turned && !EscapePressed() && !EnterPressed() && !axis_is_active && !RightPressed() && !LeftPressed() && !UpPressed() && !DownPressed() )
+      while ( !mouse_has_moved && !mouse_now_over_different_item && !mouse_wheel_has_turned && !EscapePressed() && !EnterPressed() && !MouseLeftPressed() && !RightPressed() && !LeftPressed() && !UpPressed() && !DownPressed() )
       {
 
 	  if ( GetMousePos_x() != old_mouse_x )
@@ -847,7 +848,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  our_SDL_flip_wrapper( Screen );
 	  return ( -1 );
       }
-      if ( EnterPressed() || ( SpacePressed() && !axis_is_active ) || RightPressed() || LeftPressed() ) 
+      if ( EnterPressed() || ( SpacePressed() && !MouseLeftPressed() ) || RightPressed() || LeftPressed() ) 
       {
 	  //--------------------
 	  // The space key or enter key or left mouse button all indicate, that
@@ -866,7 +867,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  return ( menu_position_to_remember );
       }
       
-      if ( axis_is_active )
+      if ( MouseLeftPressed() )
       {
 	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
 	  

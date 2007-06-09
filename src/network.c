@@ -443,7 +443,7 @@ ServerThinksAxisIsActive ( int PlayerNum )
   else 
     {
       if ( PlayerNum == 0 )
-	return ( axis_is_active ) ;
+	return ( MouseLeftPressed() ) ;
       else
 	return ( FALSE );
     }
@@ -468,7 +468,7 @@ ServerThinksShiftWasPressed ( int PlayerNum )
   else 
     {
       if ( PlayerNum == 0 )
-	return ( Shift_Is_Pressed ( ) ) ;
+	return ( ShiftPressed ( ) ) ;
       else
 	return ( FALSE );
     }
@@ -620,7 +620,7 @@ ServerThinksNoDirectionPressed ( int PlayerNum )
   else 
     {
       if ( PlayerNum == 0 )
-	return ( NoDirectionPressed ( ) ) ;
+	return ( ! ( LeftPressed() || RightPressed() || UpPressed() || DownPressed()) ) ;
       else
 	return ( FALSE );
     }

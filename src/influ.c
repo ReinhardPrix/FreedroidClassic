@@ -2321,11 +2321,10 @@ move_tux ( int player_num )
     // Maybe we need to fire a bullet or set a new mouse move target
     // for the new move-to location
     //
-    if ( ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) ) && 
-	 ( ! ServerThinksNoDirectionPressed ( player_num ) ) )
+    if ( ( SpacePressed () || MouseLeftPressed () ) )
 	AnalyzePlayersMouseClick ( player_num );
     
-    if ( ServerThinksSpacePressed ( player_num ) || ServerThinksAxisIsActive ( player_num ) )
+    if ( SpacePressed () || MouseLeftPressed () )
 	no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
     else
 	no_left_button_press_in_previous_analyze_mouse_click = TRUE ;
@@ -3627,8 +3626,7 @@ check_for_droids_to_attack_or_talk_with ( int player_num )
 	Me [ player_num ] . mouse_move_target . y = 
 	    translate_pixel_to_map_location ( player_num , ServerThinksInputAxisX ( player_num ) , ServerThinksInputAxisY ( player_num ) , FALSE ) ;
 	Me [ player_num ] . mouse_move_target . z = Me [ player_num ] . pos . z ;
-	extern int CurrentlyShiftPressed;
-	if ( ! CurrentlyShiftPressed )
+	if ( ! ShiftPressed() )
 		Me [ player_num ] . current_enemy_target = (-1);
 	
 	// clear_out_intermediate_points ( player_num ) ;

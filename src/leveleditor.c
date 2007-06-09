@@ -3931,14 +3931,14 @@ HandleMapTileEditingKeys ( Level EditLevel , int BlockX , int BlockY )
     {
 	if ( !CtrlWasPressed())
 	{
-	    if (Shift_Was_Pressed())
+	    if (ShiftWasPressed())
 		create_new_obstacle_on_level ( EditLevel , ISO_V_DOOR_000_OPEN , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
 	    else 	    
 		create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_000_OPEN , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
 	}
 	else
 	{
-	    if (Shift_Was_Pressed())
+	    if (ShiftWasPressed())
 		create_new_obstacle_on_level ( EditLevel , ISO_V_DOOR_LOCKED , ((int)Me[0].pos.x) , ((int)Me[0].pos.y) + 0.5 );
 	    else 
 		create_new_obstacle_on_level ( EditLevel , ISO_H_DOOR_LOCKED , ((int)Me[0].pos.x) + 0.5 , ((int)Me[0].pos.y) );
@@ -4753,7 +4753,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
     static int LeftMousePressedPreviousFrame = FALSE;
     int new_x, new_y;
     
-    if ( axis_is_active && !LeftMousePressedPreviousFrame )
+    if ( MouseLeftPressed() && !LeftMousePressedPreviousFrame )
     {
 	if ( ClickWasInEditorBannerRect() )
 	    HandleBannerMouseClick();
@@ -4971,7 +4971,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	}
     }
 
-    LeftMousePressedPreviousFrame = axis_is_active; 
+    LeftMousePressedPreviousFrame = MouseLeftPressed(); 
 
     return ( proceed_now );
 
@@ -5586,7 +5586,7 @@ LevelEditor(void)
 		}
 	    }
 	    
-	    LeftMousePressedPreviousFrame = axis_is_active; 
+	    LeftMousePressedPreviousFrame = MouseLeftPressed(); 
 	    RightMousePressedPreviousFrame = MouseRightPressed() ;
 	    
 	} // while ( ... )

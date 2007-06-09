@@ -723,7 +723,7 @@ ShowCurrentSkill( void )
     else
 	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me[0].readied_skill ] . spell_skill_icon_surface . surface , NULL , Screen , &Target_Rect );
     
-  Mouse_Button_Pressed_Previous_Frame = axis_is_active;
+  Mouse_Button_Pressed_Previous_Frame = MouseLeftPressed();
 
 }; // void ShowCurrentSkill ( void )
 
@@ -750,7 +750,7 @@ ShowCurrentWeapon( void )
     
     our_SDL_blit_surface_wrapper ( ItemMap [ Me[0].weapon_item . type ] . inv_image . Surface , NULL , Screen , &Target_Rect );
     
-    Mouse_Button_Pressed_Previous_Frame = axis_is_active;
+    Mouse_Button_Pressed_Previous_Frame = MouseLeftPressed();
 	
     //now we create and blit the ammo count
     if ( ItemMap[ Me [ 0 ] . weapon_item . type ] . item_gun_angle_change != 0 )

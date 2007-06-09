@@ -272,7 +272,6 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 void
 DisplayButtons( void )
 {
-    static int WasPressed;
 
     //--------------------
     // When the Tux has some extra skill points, that can be distributed
@@ -289,7 +288,7 @@ DisplayButtons( void )
     if ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( INV_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed())
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
 	    DebugPrintf ( 2 , "\nClick inside inventory button registered..." );
@@ -298,7 +297,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( CHA_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
 	    DebugPrintf ( 2 , "\nClick inside character button registered..." );
@@ -307,7 +306,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( SKI_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
 	    DebugPrintf ( 2 , "\nClick inside skills button registered..." );
@@ -316,7 +315,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( LOG_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( LOG_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
 	{
 	    DebugPrintf ( 2 , "\nClick inside questlog button registered..." );
 	    quest_browser_interface ( );
@@ -324,20 +323,18 @@ DisplayButtons( void )
     }
     else if ( MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
 	{
 	TuxReloadWeapon ( );
 	}
     }
     else if ( MouseCursorIsOnButton( SKI_ICON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
-	if ( axis_is_active && !WasPressed )
+	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
 	{
         toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
 	}
     }
-    
-    WasPressed = axis_is_active;
     
 }; // void DisplayButtons( void )
 
@@ -1055,7 +1052,6 @@ ShowCharacterScreen ( int player_num )
 void
 HandleCharacterScreen ( int player_num )
 {
-    static int MouseButtonPressedPreviousFrame = FALSE;
 
     if ( ! GameConfig . CharacterScreen_Visible ) return;
     //--------------------
@@ -1065,7 +1061,7 @@ HandleCharacterScreen ( int player_num )
     // Me[0].points_to_distribute = 5;
     if ( Me[0].points_to_distribute > 0 )
     {
-	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
 	{
 	    Me[0].base_strength++;
 	    Me[0].points_to_distribute--;
@@ -1074,7 +1070,7 @@ HandleCharacterScreen ( int player_num )
 		while ( SpacePressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
 	{
 	    Me[0].base_dexterity++;
 	    Me[0].points_to_distribute--;
@@ -1083,7 +1079,7 @@ HandleCharacterScreen ( int player_num )
 		while ( SpacePressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
 	{
 	    Me[0].base_magic++;
 	    Me[0].points_to_distribute--;
@@ -1093,7 +1089,7 @@ HandleCharacterScreen ( int player_num )
 		while ( SpacePressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( axis_is_active ) && ( ! MouseButtonPressedPreviousFrame ) )
+	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
 	{
 	    Me[0].base_vitality++;
 	    Me[0].points_to_distribute--;
@@ -1115,14 +1111,6 @@ HandleCharacterScreen ( int player_num )
     }
     
     
-    //--------------------
-    // We want to know, if the button was pressed the previous frame when we
-    // are in the next frame and back in this function.  Therefore we store
-    // the current button situation, so that we can conclude on button just
-    // pressed later.
-    //
-    MouseButtonPressedPreviousFrame = axis_is_active;
-
 }; // HandleCharacterScreen ( void )
 
 #undef _character_c

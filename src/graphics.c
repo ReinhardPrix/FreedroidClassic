@@ -650,7 +650,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
-	if ( ( SpacePressed() && axis_is_active ) && ( ! left_mouse_pressed_previous_frame ) ) 
+	if ( ( SpacePressed() && MouseLeftPressed() ) && ( ! left_mouse_pressed_previous_frame ) ) 
 	{
 	    //--------------------
 	    // Maybe the user has just 'grabbed the knob?  Then we need to
@@ -689,7 +689,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	    }
 	    
 	}
-	if ( ! ( SpacePressed() && axis_is_active ) ) knob_is_grabbed = FALSE ;
+	if ( ! ( SpacePressed() && MouseLeftPressed() ) ) knob_is_grabbed = FALSE ;
 	
 	if ( knob_is_grabbed )
 	{
@@ -699,7 +699,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	}
 	
 	
-	left_mouse_pressed_previous_frame = axis_is_active ;
+	left_mouse_pressed_previous_frame = MouseLeftPressed() ;
 	SDL_Delay (1);
     }
     

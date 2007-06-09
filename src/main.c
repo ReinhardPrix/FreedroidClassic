@@ -150,6 +150,8 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
 	    
 	    StartTakingTimeForFPSCalculation(); 
 	    
+	    track_last_frame_input_status();
+	    keyboard_update();
 	    ReactToSpecialKeys();
 	    
 	    for ( PlayerNum = 0 ; PlayerNum < MAX_PLAYERS ; PlayerNum ++ ) 

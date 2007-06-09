@@ -2879,7 +2879,7 @@ get_floor_item_index_under_mouse_cursor ( int player_num )
     // In the case that shift was pressed, we don't use the item positions but rather
     // we use the item slot rectangles from the item texts.
     //
-    if ( Shift_Is_Pressed() )
+    if ( ShiftPressed() )
     {
 	for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i++ )
 	{
@@ -2998,8 +2998,6 @@ handle_player_identification_command( int player_num )
 void 
 HandleInventoryScreen ( void )
 {
-    static int MouseButtonPressedPreviousFrame = FALSE;
-    static int RightPressedPreviousFrame = FALSE;
     point CurPos;
     point Inv_GrabLoc;
     int Grabbed_InvPos;
@@ -3008,9 +3006,6 @@ HandleInventoryScreen ( void )
     int index_of_item_under_mouse_cursor = (-1) ;
     
     DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
-    
-    DebugPrintf ( INVENTORY_MOUSE_BUTTON_DEBUG , "\nRight: %d Left: %d Held: %d ", 
-		  RightPressedPreviousFrame , MouseButtonPressedPreviousFrame , Item_Held_In_Hand );
     
     //--------------------
     // In case the Tux is dead already, we do not need to display any inventory screen
@@ -3040,7 +3035,7 @@ HandleInventoryScreen ( void )
 	silently_unhold_all_items ( );
 	
 	// DebugPrintf( 2 , "\nINVENTORY NOT VISIBLE!!" );
-	if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand == (-1) ) )
+	if ( ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) && ( Item_Held_In_Hand == (-1) ) )
 	{
 	    // DebugPrintf( 1 , "\nCollecting items for direct addition to the inventory without grabbing." );
 	    MapPositionOfMouse . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , 
@@ -3070,8 +3065,6 @@ HandleInventoryScreen ( void )
 		    {
 			Item_Held_In_Hand = ( -1 ); 
 			AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
-			MouseButtonPressedPreviousFrame = axis_is_active;
-			RightPressedPreviousFrame = MouseRightPressed ( ) ;
 			return;
 		    }
 		    else
@@ -3115,8 +3108,6 @@ HandleInventoryScreen ( void )
 	}
 	
 	// In case of no inventory visible, we need not do anything more...
-	MouseButtonPressedPreviousFrame = axis_is_active;
-	RightPressedPreviousFrame = MouseRightPressed ( ) ;
 	return;
     }
     
@@ -3125,8 +3116,8 @@ HandleInventoryScreen ( void )
     // If the user now presses the left mouse button and it was not pressed before,
     // the the user has 'grabbed' the item directly under the mouse button
     //
-    if ( ( axis_is_active ) && 
-	 ( !MouseButtonPressedPreviousFrame ) && 
+    if ( ( MouseLeftPressed() ) && 
+	 ( !MouseLeftWasPressed() ) && 
 	 ( Item_Held_In_Hand == (-1) ) &&
 	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
@@ -3321,8 +3312,8 @@ HandleInventoryScreen ( void )
     // Now the OTHER CASE:  If the user now no longer presses the mouse button and it WAS pressed before,
     // the the user has 'released' the item directly under the mouse button
     //
-    if ( ( axis_is_active ) && ( !MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) ) //RELEASE ITEM AFTER A SECOND CLICK (OTHER BEHAVIOR)
-//  if ( ( !axis_is_active ) && ( MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
+    if ( ( MouseLeftPressed() ) && ( !MouseLeftWasPressed() ) && ( Item_Held_In_Hand != (-1) ) ) //RELEASE ITEM AFTER A SECOND CLICK (OTHER BEHAVIOR)
+//  if ( ( !MouseLeftPressed() ) && ( MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
     {
 	//--------------------
 	// In case the user didn't hold anything in his hand, then nothing
@@ -3630,7 +3621,7 @@ HandleInventoryScreen ( void )
     // which would mean for us that he is applying the item under the mouse button
     //
     
-    if ( MouseRightPressed ( ) && ( !RightPressedPreviousFrame ) )
+    if ( MouseRightPressed ( ) && ( !MouseRightWasPressed() ) )
     {
 	
 	switch ( Me [ 0 ] . readied_skill )
@@ -3742,8 +3733,6 @@ HandleInventoryScreen ( void )
 	
     }
     
-    MouseButtonPressedPreviousFrame = axis_is_active;
-    RightPressedPreviousFrame = MouseRightPressed ( ) ;
 }; // void HandleInventoryScreen ( void );
 
 

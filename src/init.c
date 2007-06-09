@@ -2079,6 +2079,7 @@ I will not be able to load or save games or configurations\n\
     
     InitVideo ();
     
+    init_keyboard_input_array();
     ShowStartupPercentage ( 2 ) ; 
     
     InitAudio ();

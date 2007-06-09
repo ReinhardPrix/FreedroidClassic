@@ -441,7 +441,6 @@ quest_browser_interface ( void )
     SetCurrentFont ( FPS_Display_BFont );
 
     while ( EscapePressed() );
-    while ( SpacePressed() );
     while ( QPressed() );
 
     blit_special_background ( QUEST_BROWSER_BACKGROUND_CODE );
@@ -449,6 +448,8 @@ quest_browser_interface ( void )
 
     while ( ! back_to_game )
     {
+	track_last_frame_input_status(); //enable use of *WasPressed functions
+
 	RestoreMenuBackground ( 1 );
 	if ( current_quest_browser_mode == QUEST_BROWSER_SHOW_OPEN_MISSIONS )
 	    ShowGenericButtonFromList ( QUEST_BROWSER_OPEN_QUESTS_BUTTON );
@@ -473,47 +474,50 @@ quest_browser_interface ( void )
 	    
 	if ( QPressed() )
 	{
-	    while ( QPressed() );
+	    while ( QPressed() ) SDL_Delay(1);
 	    back_to_game = TRUE ;
 	}
 
-	if ( SpacePressed() )
+	if ( MouseLeftPressed() || SpacePressed() )
 	{
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_OPEN_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_OPEN_MISSIONS ;
 		mission_list_scroll_override_from_user = 0 ;
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() ) SDL_Delay(1);
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_DONE_QUESTS_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_DONE_MISSIONS ;
 		mission_list_scroll_override_from_user = 0 ;
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() ) SDL_Delay(1);
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_NOTES_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		current_quest_browser_mode = QUEST_BROWSER_SHOW_NOTES ;
 		mission_list_scroll_override_from_user = 0 ;
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_SCROLL_UP_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		mission_list_scroll_override_from_user -- ;
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
 	    }
 	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_SCROLL_DOWN_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		mission_list_scroll_override_from_user ++ ;
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
 	    }
 
-	    if ( MouseCursorIsOnButton ( QUEST_BROWSER_EXIT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
+            if ( MouseCursorIsOnButton ( QUEST_BROWSER_EXIT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 	    {
 		back_to_game = TRUE ;
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() ) SDL_Delay(1);
 	    }
+
+
 	}
+
 	    
     }
 
