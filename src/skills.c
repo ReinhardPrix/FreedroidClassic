@@ -74,6 +74,8 @@
 #define SPELL_LEVEL_BUTTONS_Y 413
 #define SPELL_LEVEL_BUTTON_WIDTH 30
 
+int Override_Power_Limit=0;
+
 SDL_Rect SkillScreenRect;
 
 /* ----------------------------------------------------------------------
@@ -217,14 +219,27 @@ ColdBoltSpell ( gps BoltSource )
       FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
+	Override_Power_Limit = 0;
+	
 
     }
-  else
+  else if ( Override_Power_Limit == 0)
     {
       Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
+      Me[0].TextToBeDisplayed = "ERROR: Overheating. Execute again to override Overheat.";
       Not_Enough_Mana_Sound(  );
+      Override_Power_Limit = 1;
     }
+  else {
+	Me[0].mana -= Me[0].mana;
+	Me[0].energy -= SpellCost;
+	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
+
+	Play_Spell_ForceToEnergy_Sound( );
+	Override_Power_Limit = 0;
+  }
+	
+    
 }; // void ColdBoltSpell ( ... )
 
 /* ----------------------------------------------------------------------
@@ -569,7 +584,6 @@ ForceToEnergyConversion ( void )
 void
 HandleCurrentlyActivatedSkill( int player_num )
 {
-    static int RightPressedPreviousFrame = 0;
     // int i;
     // float xdist, ydist, dist2;
     // Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
@@ -700,8 +714,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    break;
 	    */
 
-/*
-	case SPELL_TRANSFERMODE:
+
+	/*case SPELL_TRANSFERMODE:
 	    if (MouseRightPressed() == 1)
 	    {
 		//--------------------
@@ -733,12 +747,12 @@ HandleCurrentlyActivatedSkill( int player_num )
 			    break;
 		    }
 		}
-	    }
+	    }*/
 	    break;
-*/
+
     
 	case SPELL_FORCE_EXPLOSION_CIRCLE:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -746,7 +760,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_FORCE_EXPLOSION_RAY:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed()) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -765,7 +779,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_FORCE_TO_ENERGY:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -775,7 +789,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_TELEPORT_HOME:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -786,7 +800,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_FIREY_BOLT:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -796,7 +810,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_COLD_BOLT:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -806,7 +820,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_REPAIR_SKILL:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( ! MouseCursorIsInInvRect( GetMousePos_x()  , 
 					 GetMousePos_y()  ) 
@@ -822,7 +836,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_IDENTIFY_SKILL:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( !MouseRightWasPressed() ) )
 	    {
 		//--------------------
 		// Maybe the identify spell has already been triggered and
@@ -854,7 +868,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_POISON_BOLT:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -864,7 +878,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_PARALYZE_BOLT:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -874,7 +888,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_DETECT_ITEM:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -884,7 +898,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_RADIAL_EMP_WAVE:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -894,7 +908,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_RADIAL_VMX_WAVE:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -904,7 +918,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_RADIAL_FIRE_WAVE:
-	    if ( MouseRightPressed() && ( ! RightPressedPreviousFrame ) )
+	    if ( MouseRightPressed() && ( ! MouseRightWasPressed() ) )
 	    {
 		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -928,8 +942,6 @@ Usually this error is not severe.",
 				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	    break;
     }
-    
-    RightPressedPreviousFrame = MouseRightPressed() ;
     
 }; // void HandleCurrentlyActivatedSkill( void )
 
@@ -968,8 +980,8 @@ CursorIsOnWhichSkillButton( int x , int y )
     if ( y < SkillScreenRect.y + 16 + 4 * 64 + 4 * 16 ) return ( -1 );
     if ( y < SkillScreenRect.y + 16 + 5 * 64 + 4 * 16 ) return (  4 );
     
-    // if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
-    // if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
+     if ( y < SkillScreenRect.y + 16 + 5 * 64 + 5 * 16 ) return ( -1 );
+     if ( y < SkillScreenRect.y + 16 + 6 * 64 + 5 * 16 ) return (  5 );
     
     return ( -1 );
 }; // int CursorIsOnWhichSkillButton( int x , int y )
@@ -1134,7 +1146,6 @@ ShowSkillsScreen ( void )
 
     static SDL_Rect ButtonRect;
     char CharText[1000];
-    static int MouseButtonPressedPreviousFrame = FALSE;
     point CurPos;
     int i;
     SDL_Rect SpellLevelRect;
@@ -1253,10 +1264,10 @@ ShowSkillsScreen ( void )
 	//--------------------
 	// Now we write the competence of the players character in that skill to the screen
 	//
-	sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
+	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
-	sprintf( CharText , "Mana cost: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
+	sprintf( CharText , "Required power: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	
@@ -1268,7 +1279,7 @@ ShowSkillsScreen ( void )
     // skill/spell as the currently activated skill/spell.
     //
     if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
-	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
+	 MouseLeftPressed() && ( ! MouseLeftWasPressed() ) )
     {
 	if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
 			      NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] >= 0 ) 
@@ -1277,7 +1288,7 @@ ShowSkillsScreen ( void )
     }
     
     if ( MouseCursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
-	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
+	 MouseLeftPressed() && ( ! MouseLeftWasPressed() ) )
     {
 	GameConfig.skill_explanation_screen_visible = !GameConfig.skill_explanation_screen_visible;
     }
@@ -1288,7 +1299,7 @@ ShowSkillsScreen ( void )
     // as the currently visible spell level.
     //
     if ( ( CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
-	 axis_is_active && ( ! MouseButtonPressedPreviousFrame ) )
+	 MouseLeftPressed() && ( ! MouseLeftWasPressed() ) )
     {
 	GameConfig.spell_level_visible = CursorIsOnWhichSpellPageButton ( CurPos.x , CurPos.y );
     }
@@ -1299,7 +1310,6 @@ ShowSkillsScreen ( void )
     // the current button situation, so that we can conclude on button just
     // pressed later.
     //
-    MouseButtonPressedPreviousFrame = axis_is_active;
 
 }; // ShowSkillsScreen ( void )
 
