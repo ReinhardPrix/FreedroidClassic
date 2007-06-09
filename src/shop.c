@@ -736,24 +736,24 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
 	
-	if ( SpacePressed() || EscapePressed() || axis_is_active )
+	if ( SpacePressed() || EscapePressed() || MouseLeftPressed() )
 	{
-	    if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x() , GetMousePos_y() ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_UP_BUTTON , GetMousePos_x() , GetMousePos_y() ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( DESCRIPTION_WINDOW_DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		finished = TRUE;
 		while (SpacePressed() ||EscapePressed());
 	    }
-	    else if ( MouseCursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( 0 < RowStart ) 
 		{
@@ -767,7 +767,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		MoveMenuPositionSound();
 		while (SpacePressed() ||EscapePressed());
 	    }
-	    else if ( MouseCursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( RowStart + RowLength < NumberOfItems ) 
 		{
@@ -781,7 +781,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		MoveMenuPositionSound();
 		while (SpacePressed() ||EscapePressed());
 	    }
-	    else if ( MouseCursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( 0 < TuxRowStart ) 
 		{
@@ -795,7 +795,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		MoveMenuPositionSound();
 		while (SpacePressed() ||EscapePressed());
 	    }
-	    else if ( MouseCursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( TuxRowStart + TuxRowLength < NumberOfItemsInTuxRow ) 
 		{
@@ -809,7 +809,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		MoveMenuPositionSound();
 		while (SpacePressed() ||EscapePressed());
 	    }
-	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , FALSE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , FALSE ) ) >= 0 ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ClickTarget < NumberOfItems )
 		{
@@ -818,7 +818,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    Displacement = 0 ;
 		}
 	    }
-	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , TRUE ) ) >= 0 ) && axis_is_active && !WasPressed )
+	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , TRUE ) ) >= 0 ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ClickTarget < NumberOfItemsInTuxRow )
 		{
@@ -827,7 +827,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    Displacement = 0 ;
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( BUY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( BUY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( BuyButtonActive )
 		{
@@ -859,7 +859,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    return ( 0 );
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( SELL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( SELL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( SellButtonActive )
 		{
@@ -878,7 +878,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		}
 	    }
 	    else if ( MouseCursorIsOnButton( REPAIR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && 
-		      axis_is_active && !WasPressed && ( !ShowChestButtons ) )
+		      MouseLeftPressed() && !WasPressed && ( !ShowChestButtons ) )
 	    {
 		//--------------------
 		// Reference to the Tux item list must only be made, when the 'highlight'
@@ -902,7 +902,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed && ( !ShowChestButtons ) )
+	    else if ( MouseCursorIsOnButton( IDENTIFY_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed && ( !ShowChestButtons ) )
 	    {
 		//--------------------
 		// Reference to the Tux item list must only be made, when the 'highlight'
@@ -924,7 +924,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	
 	
 	
-	WasPressed = axis_is_active;
+	WasPressed = MouseLeftPressed();
 	
 	if (UpPressed() || MouseWheelUpPressed())
 	{
@@ -1244,7 +1244,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	
     } // while not space pressed...
     
-    if ( SpacePressed() || axis_is_active ) 
+    if ( SpacePressed() || MouseLeftPressed() ) 
     {
 	return ( InMenuPosition + MenuInListPosition ) ;
     }
@@ -1588,7 +1588,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     
     FreeIndex = GetFreeInventoryIndex(  );
     
-    while ( SpacePressed() || EnterPressed() || axis_is_active );
+    while ( SpacePressed() || EnterPressed() || MouseLeftPressed() );
     
     if ( calculate_item_buy_price ( BuyItem ) > Me [ 0 ] . Gold )
     {

@@ -148,9 +148,9 @@ GreatDruidShow (void)
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper( Screen );
 	
-	if (SpacePressed() || EscapePressed() || axis_is_active )
+	if (SpacePressed() || EscapePressed() || MouseLeftPressed() )
 	{
-	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ClearanceIndex < NumberOfClearances -1 ) 
 		{
@@ -159,7 +159,7 @@ GreatDruidShow (void)
 		    Displacement = 0 ;
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ClearanceIndex > 0) 
 		{
@@ -168,24 +168,24 @@ GreatDruidShow (void)
 		    Displacement = 0 ;
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y( )  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton ( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y( )  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		finished = TRUE;
 		while ( SpacePressed ( ) || EscapePressed ( ) );
 	    }
 	}
 	
-	WasPressed = axis_is_active;
+	WasPressed = MouseLeftPressed();
 	
 	if (UpPressed() || MouseWheelUpPressed())
 	{
@@ -300,9 +300,9 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 	
 	ItemType = ShowPointerList [ ItemIndex ] -> type ;
 	
-	if (SpacePressed() || EscapePressed() || axis_is_active )
+	if (SpacePressed() || EscapePressed() || MouseLeftPressed() )
 	{
-	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    if ( MouseCursorIsOnButton( ITEM_BROWSER_RIGHT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ItemIndex < NumberOfItems -1 ) 
 		{
@@ -311,7 +311,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 		    Displacement = 0;
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_LEFT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		if ( ItemIndex > 0) 
 		{
@@ -320,18 +320,18 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 		    Displacement = 0;
 		}
 	    }
-	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		Displacement += FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		MoveMenuPositionSound();
 		// if (page > 0) page --;
 		Displacement -= FontHeight ( GetCurrentFont () );
 	    }
-	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed )
+	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		finished = TRUE;
 		while (SpacePressed() ||EscapePressed());
@@ -339,7 +339,7 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
 	    
 	}
 	
-	WasPressed = axis_is_active;
+	WasPressed = MouseLeftPressed();
 	
 	if (UpPressed() || MouseWheelUpPressed())
 	{
@@ -1101,7 +1101,7 @@ ShowDeckMap (Level deck)
       // Pressing the mouse button should allow to move about over the small
       // map displayed in the console screen.
       //
-      if ( !LeftMouseWasPressed && axis_is_active )
+      if ( !LeftMouseWasPressed && MouseLeftPressed() )
 	{
 	  //--------------------
 	  // Maybe that click went right onto the exit button.  Then
@@ -1539,7 +1539,7 @@ ShowDeckMap (Level deck)
 
       our_SDL_flip_wrapper (Screen);
 
-      LeftMouseWasPressed = axis_is_active;
+      LeftMouseWasPressed = MouseLeftPressed();
 
     }
   while (EscapePressed());

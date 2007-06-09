@@ -3,7 +3,6 @@
  *   Copyright (c) 1994, 2002, 2003 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
  *
- *
  *  This file is part of Freedroid
  *
  *  Freedroid is free software; you can redistribute it and/or modify
@@ -34,7 +33,6 @@
 #else
 #define EXTERN extern
 #endif
-
 
 // automap.c
 #undef EXTERN
@@ -230,7 +228,6 @@ EXTERN void blit_special_background ( int background_code );
 EXTERN void flush_background_image_cache ( void );
 EXTERN void open_gl_check_error_status ( const char* name_of_calling_function );
 EXTERN void blit_open_gl_texture_to_full_screen ( iso_image our_floor_iso_image , int x , int y , int set_gl_parameters ) ;
-
 
 // blocks.c 
 #undef EXTERN
@@ -522,14 +519,17 @@ EXTERN void ImproveSkill(int *skill);
 #else
 #define EXTERN extern
 #endif
+EXTERN Uint8 * key_pressed_this_frame;
+EXTERN Uint8 * key_pressed_last_frame;
+EXTERN Uint8 mouse_state_last_frame;
+EXTERN int keyboard_update();
+EXTERN void track_last_frame_input_status();
+EXTERN void init_keyboard_input_array();
+
 EXTERN int MouseWheelUpPressed(void);
 EXTERN int MouseWheelDownPressed(void);
-EXTERN int MouseRightPressed(void);
-EXTERN int MouseLeftPressed(void);
 EXTERN int GetMousePos_x(void);
 EXTERN int GetMousePos_y(void);
-EXTERN void Init_Joy(void);
-EXTERN void ReactToSpecialKeys(void);
 EXTERN int Shift_Was_Pressed(void);
 EXTERN int LeftShiftWasPressed(void);
 EXTERN int RightShiftWasPressed(void);
@@ -539,46 +539,93 @@ EXTERN int LeftCtrlWasPressed(void);
 EXTERN int Alt_Was_Pressed(void);
 EXTERN int LeftAltWasPressed(void);
 EXTERN int RightAltWasPressed(void);
+EXTERN void Init_Joy(void);
+EXTERN void ReactToSpecialKeys(void);
 EXTERN void Init_SDL_Keyboard(void);
 EXTERN int getchar_raw (void);
-EXTERN int keyboard_update(void);
 EXTERN void ClearKbState (void);
-EXTERN int LeftPressed (void);
-EXTERN int RightPressed (void);
-EXTERN int UpPressed (void);
-EXTERN int DownPressed (void);
-EXTERN int SpacePressed (void);
-EXTERN int EnterPressed (void);
-EXTERN int EscapePressed (void);
-EXTERN int TabPressed (void);
-EXTERN int Shift_Is_Pressed(void);
-EXTERN int BackspacePressed (void);
-EXTERN int LeftCtrlPressed (void);
-EXTERN int KP_PLUS_Pressed (void);
-EXTERN int KP_MINUS_Pressed (void);
-EXTERN int KP_MULTIPLY_Pressed (void);
-EXTERN int KP_DIVIDE_Pressed (void);
-EXTERN int Number0Pressed (void); EXTERN int Number1Pressed (void); EXTERN int Number2Pressed (void);
-EXTERN int Number3Pressed (void); EXTERN int Number4Pressed (void); EXTERN int Number5Pressed (void);
-EXTERN int Number6Pressed (void); EXTERN int Number7Pressed (void); EXTERN int Number8Pressed (void);
-EXTERN int Number9Pressed (void); EXTERN int KP0Pressed (void); EXTERN int KP1Pressed (void);
-EXTERN int KP2Pressed (void); EXTERN int KP3Pressed (void); EXTERN int KP4Pressed (void);
-EXTERN int KP5Pressed (void); EXTERN int KP6Pressed (void); EXTERN int KP7Pressed (void);
-EXTERN int KP8Pressed (void); EXTERN int KP9Pressed (void); EXTERN int F1Pressed (void); 
-EXTERN int F2Pressed (void); EXTERN int F3Pressed (void); EXTERN int F4Pressed (void);
-EXTERN int F5Pressed (void); EXTERN int F6Pressed (void); EXTERN int F7Pressed (void);
-EXTERN int F8Pressed (void); EXTERN int F9Pressed (void); EXTERN int F10Pressed (void);
-EXTERN int F11Pressed (void); EXTERN int F12Pressed (void); EXTERN int APressed (void);
-EXTERN int BPressed (void); EXTERN int CPressed (void); EXTERN int DPressed (void);
-EXTERN int EPressed (void); EXTERN int FPressed (void); EXTERN int GPressed (void);
-EXTERN int HPressed (void); EXTERN int IPressed (void); EXTERN int JPressed (void);
-EXTERN int KPressed (void); EXTERN int LPressed (void); EXTERN int MPressed (void);
-EXTERN int NPressed (void); EXTERN int OPressed (void); EXTERN int PPressed (void);
-EXTERN int QPressed (void); EXTERN int RPressed (void); EXTERN int SPressed (void);
-EXTERN int TPressed (void); EXTERN int UPressed (void); EXTERN int VPressed (void);
-EXTERN int WPressed (void); EXTERN int XPressed (void); EXTERN int YPressed (void);
-EXTERN int ZPressed (void);
-EXTERN int NoDirectionPressed (void);
+EXTERN int MouseRightPressed(); 
+EXTERN int MouseLeftPressed();
+EXTERN int MouseRightWasPressed();
+EXTERN int MouseLeftWasPressed();
+EXTERN int LeftPressed () ;
+EXTERN int RightPressed () ;
+EXTERN int UpPressed () ;
+EXTERN int DownPressed () ;
+EXTERN int SpacePressed () ;
+EXTERN int EnterPressed () ;
+EXTERN int EscapePressed () ;
+EXTERN int TabPressed () ;
+EXTERN int BackspacePressed () ;
+EXTERN int LeftCtrlPressed () ;
+EXTERN int CtrlWasPressed () ;
+EXTERN int CtrlPressed () ;
+EXTERN int ShiftPressed () ;
+EXTERN int ShiftWasPressed () ;
+EXTERN int AltWasPressed () ;
+EXTERN int AltPressed () ;
+EXTERN int KP_PLUS_Pressed () ;
+EXTERN int KP_MINUS_Pressed () ;
+EXTERN int KP_MULTIPLY_Pressed () ;
+EXTERN int KP_DIVIDE_Pressed () ;
+EXTERN int Number0Pressed () ;
+EXTERN int Number1Pressed () ;
+EXTERN int Number2Pressed () ;
+EXTERN int Number3Pressed () ;
+EXTERN int Number4Pressed () ;
+EXTERN int Number5Pressed () ;
+EXTERN int Number6Pressed () ;
+EXTERN int Number7Pressed () ;
+EXTERN int Number8Pressed () ;
+EXTERN int Number9Pressed () ;
+EXTERN int KP0Pressed () ;
+EXTERN int KP1Pressed () ;
+EXTERN int KP2Pressed () ;
+EXTERN int KP3Pressed () ;
+EXTERN int KP4Pressed () ;
+EXTERN int KP5Pressed () ;
+EXTERN int KP6Pressed () ;
+EXTERN int KP7Pressed () ;
+EXTERN int KP8Pressed () ;
+EXTERN int KP9Pressed () ;
+EXTERN int F1Pressed () ;
+EXTERN int F2Pressed () ;
+EXTERN int F3Pressed () ;
+EXTERN int F4Pressed () ;
+EXTERN int F5Pressed () ;
+EXTERN int F6Pressed () ;
+EXTERN int F7Pressed () ;
+EXTERN int F8Pressed () ;
+EXTERN int F9Pressed () ;
+EXTERN int F10Pressed () ;
+EXTERN int F11Pressed () ;
+EXTERN int F12Pressed () ;
+EXTERN int APressed () ;
+EXTERN int BPressed () ;
+EXTERN int CPressed () ;
+EXTERN int DPressed () ;
+EXTERN int EPressed () ;
+EXTERN int FPressed () ;
+EXTERN int GPressed () ;
+EXTERN int HPressed () ;
+EXTERN int IPressed () ;
+EXTERN int JPressed () ;
+EXTERN int KPressed () ;
+EXTERN int LPressed () ;
+EXTERN int MPressed () ;
+EXTERN int NPressed () ;
+EXTERN int OPressed () ;
+EXTERN int PPressed () ;
+EXTERN int QPressed () ;
+EXTERN int RPressed () ;
+EXTERN int SPressed () ;
+EXTERN int TPressed () ;
+EXTERN int UPressed () ;
+EXTERN int VPressed () ;
+EXTERN int WPressed () ;
+EXTERN int XPressed () ;
+EXTERN int YPressed () ;
+EXTERN int ZPressed () ;
 EXTERN void toggle_game_config_screen_visibility ( int screen_visible );
 
 // menu.c 
@@ -841,7 +888,6 @@ EXTERN void AnimateCurrents (void);
 
 EXTERN void ClearPlayground (void);
 EXTERN int IsActive (int color, int row);
-
 
 // BFont.c
 #undef EXTERN

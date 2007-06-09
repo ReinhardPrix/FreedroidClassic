@@ -199,31 +199,31 @@ Takeover ( int enemynum )
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
-	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	if ( MouseCursorIsOnButton( UP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	{
 	    MoveMenuPositionSound();
 	    Displacement += FontHeight ( GetCurrentFont () );
 	}
-	else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && axis_is_active && !WasPressed )
+	else if ( MouseCursorIsOnButton( DOWN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	{
 	    MoveMenuPositionSound();
 	    Displacement -= FontHeight ( GetCurrentFont () );
 	}
-	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed ) 
+	else if ( MouseCursorIsOnButton( DRUID_SHOW_EXIT_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && MouseLeftPressed() && !WasPressed ) 
 	{
 	    Finished = TRUE;
 	}
-	else if ( MouseCursorIsOnButton( TAKEOVER_HELP_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && axis_is_active && !WasPressed ) 
+	else if ( MouseCursorIsOnButton( TAKEOVER_HELP_BUTTON , GetMousePos_x ( )  , GetMousePos_y ( )  ) && MouseLeftPressed() && !WasPressed ) 
 	{
 	    PlayATitleFile ( "TakeoverInstructions.title" );
 	}
-	WasPressed = axis_is_active; 
+	WasPressed = MouseLeftPressed(); 
 	
-	if ( SpacePressed() && !axis_is_active ) Finished = TRUE ;
+	if ( SpacePressed() && !MouseLeftPressed() ) Finished = TRUE ;
 	
     }
     
-    while ( !( !SpacePressed() && !EscapePressed() && !axis_is_active )) ;
+    while ( !( !SpacePressed() && !EscapePressed() && !MouseLeftPressed() )) ;
     
     
     while (!FinishTakeover)
@@ -437,10 +437,10 @@ ChooseColor (void)
 	    OpponentColor = VIOLETT;
 	}
 	
-	if ( SpacePressed() || axis_is_active )
+	if ( SpacePressed() || MouseLeftPressed() )
 	{
 	    ColorChosen = TRUE;
-	    while ( SpacePressed() || axis_is_active ) ;
+	    while ( SpacePressed() || MouseLeftPressed() ) ;
 	}
 	
 	countdown--; // Count down 
@@ -508,7 +508,7 @@ PlayGame (void)
       if (!down) down_counter =0;
 
       /* allow for a WIN-key that give immedate victory */
-      if ( WPressed () && CtrlWasPressed () && Alt_Was_Pressed () )
+      if ( WPressed () && CtrlWasPressed () && AltWasPressed () )
 	{
 	  LeaderColor = YourColor;   /* simple as that */
 	  return;  /* leave now, to avoid changing of LeaderColor! */
