@@ -352,14 +352,14 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	if (*textpt == '\n')
 	    Number_Of_Line_Feeds++;
     
-    while ( !SpacePressed () 
+    while ( !MouseLeftPressed () 
 	    || ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
 					 GetMousePos_y()  ) )
 	    || ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
 					 GetMousePos_y()  ) ) )
     {
 	if ( UpPressed () 
-	     || ( SpacePressed () 
+	     || ( MouseLeftPressed () 
 		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
 					       GetMousePos_y()  ) ) ) )
 	{
@@ -368,7 +368,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 		speed = -maxspeed;
 	}
 	if ( DownPressed ()
-	     || ( SpacePressed () 
+	     || ( MouseLeftPressed () 
 		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
 					       GetMousePos_y()  ) ) ) )
 	{
@@ -430,7 +430,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	
     } // while !Space_Pressed 
     
-    while ( SpacePressed() ); // so that we don't touch again immediately.
+    while ( MouseLeftPressed() ); // so that we don't touch again immediately.
     
     return OK;
     

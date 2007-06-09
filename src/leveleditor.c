@@ -1327,8 +1327,8 @@ ItemDropFromLevelEditor( void )
     static int previous_suffix_selected = (-1) ;
     static int previous_prefix_selected = (-1) ;
     
-    while ( GPressed() );
-    while ( SpacePressed()  || MouseLeftPressed() );
+    while ( GPressed() ) SDL_Delay(1);
+    while ( SpacePressed()  || MouseLeftPressed() ) SDL_Delay(1);
     
     while ( !SelectionDone )
     {
@@ -1484,7 +1484,7 @@ ItemDropFromLevelEditor( void )
     DropItemAt( NewItemCode , Me [ 0 ] . pos . z , rintf( Me[0].pos.x ) , rintf( Me[0].pos.y ) , 
 		previous_prefix_selected , previous_suffix_selected , 0 , our_multiplicity );
     
-    while ( SpacePressed() || MouseLeftPressed() );
+    while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
     
 }; // void ItemDropFromLevelEditor( void )
 
@@ -2304,7 +2304,7 @@ EditLevelDimensions ( void )
       
       MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
       
-      while (EnterPressed() || SpacePressed() );
+      while (EnterPressed() || SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
       
       switch (MenuPosition) 
 	{
@@ -2417,7 +2417,7 @@ EditLevelDimensions ( void )
 
 	case (-1):
 	case BACK_TO_LE_MAIN_MENU:
-	  while (EnterPressed() || SpacePressed() || EscapePressed() ) ;
+	  while (EnterPressed() || SpacePressed() || EscapePressed() || MouseLeftPressed() ) SDL_Delay(1);
 	  GetAllAnimatedMapTiles ( EditLevel );
 	  proceed_now=!proceed_now;
 	  break;
@@ -2495,7 +2495,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
 	
 	
-	while ( EnterPressed ( ) || SpacePressed ( ) );
+	while ( EnterPressed ( ) || SpacePressed ( ) || MouseLeftPressed() ) SDL_Delay(1);
 	
 	switch ( MenuPosition ) 
 	{
@@ -2506,77 +2506,77 @@ DoLevelEditorMainMenu ( Level EditLevel )
 		// if ( CurrentCombatScaleFactor != 1 ) SetCombatScaleTo( 1 );
 		break;
 	    case SAVE_LEVEL_POSITION:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		close_all_chests_on_level ( Me [ 0 ] . pos . z ) ;
 		char fp[2048];
 		find_file("Asteroid.maps", MAP_DIR, fp, 0);
 		SaveShip(fp);
 		CenteredPutString ( Screen ,  11*FontHeight(Menu_BFont),    "Your ship was saved...");
 		our_SDL_flip_wrapper ( Screen );
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		// proceed_now=!proceed_now;
 		break;
 	    case CHANGE_LEVEL_POSITION: 
 		// if ( EditLevel->levelnum ) Teleport ( EditLevel->levelnum-1 , Me[0].pos.x , Me[0].pos.y ); 
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		break;
 	    case CHANGE_LIGHT_RADIUS_BONUS: 
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		break;
 	    case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		break;
 	    case SET_LEVEL_NAME:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		EditLevel->Levelname = 
 		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level name: \n\n" ,
 						     EditLevel->Levelname );
 		proceed_now=!proceed_now;
 		break;
 	    case SET_BACKGROUND_SONG_NAME:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		EditLevel->Background_Song_Name = 
 		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new music file name: \n\n" ,
 						     EditLevel->Background_Song_Name );
 		proceed_now=!proceed_now;
 		break;
 	    case SET_LEVEL_COMMENT:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		EditLevel->Level_Enter_Comment = 
 		    GetEditableStringInPopupWindow ( 1000 , "\n Please enter new level comment: \n\n" ,
 						     EditLevel->Level_Enter_Comment );
 		proceed_now=!proceed_now;
 		break;
 	    case ADD_NEW_LEVEL:
-		while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		if ( curShip . num_levels < MAX_LEVELS )
 		{
 		    CreateNewMapLevel ( ) ;
 		    CenteredPutString ( Screen ,  12*FontHeight( FPS_Display_BFont ), "New level has been added!");
 		    our_SDL_flip_wrapper( Screen );
-		    while ( ! SpacePressed ( ) && ! EnterPressed ( ) );
-		    while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		    while ( ! SpacePressed ( ) && ! EnterPressed ( ) && ! MouseLeftPressed());
+		    while ( EnterPressed ( ) || SpacePressed ( ) || MouseLeftPressed()) ;
 		    SetTextCursor( 15 , 440 );
 		}
 		proceed_now=!proceed_now;
 		break;
 	    case SET_LEVEL_INTERFACE_POSITION:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		// proceed_now=!proceed_now;
 		SetLevelInterfaces ( );
 		break;
 	    case EDIT_LEVEL_DIMENSIONS:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		// proceed_now=!proceed_now;
 		EditLevelDimensions ( );
 		break;
 	    case QUIT_LEVEL_EDITOR_POSITION:
-		while ( EnterPressed ( ) || SpacePressed ( ) ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		proceed_now=!proceed_now;
 		Done=TRUE;
 		break;
 	    case CHANGE_INFINITE_RUNNING:
-		while ( EnterPressed ( ) || SpacePressed ( ) || LeftPressed ( ) || RightPressed ( ) ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 		EditLevel -> infinite_running_on_this_level =
 		    ! EditLevel -> infinite_running_on_this_level ;
 		break;
@@ -3212,28 +3212,28 @@ SetLevelInterfaces ( void )
 	
 	MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , -1 , FPS_Display_BFont );
 	
-	while (EnterPressed() || SpacePressed() );
+	while (EnterPressed() || MouseLeftPressed() ) SDL_Delay(1);
 	
 	switch (MenuPosition) 
 	{
 	    case (-1):
-		while ( EscapePressed() );
+		while ( EscapePressed() ) SDL_Delay(1);
 		proceed_now=!proceed_now;
 		break;
 	    case EXPORT_THIS_LEVEL:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || MouseLeftPressed() ) SDL_Delay(1);
 		ExportLevelInterface ( Me [ 0 ] . pos . z );
 		// proceed_now=!proceed_now;
 		break;
 	    case REPORT_INTERFACE_INCONSISTENCIES:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed() ) SDL_Delay(1) ;
 		ReportInconsistenciesForLevel ( Me [ 0 ] . pos . z );
-		while ( !EnterPressed() && !SpacePressed() ) ;
-		while (EnterPressed() || SpacePressed() ) ;
+		while ( !EnterPressed() && !SpacePressed() && !MouseLeftPressed()) SDL_Delay(1);
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1) ;
 		break;
 		
 	    case QUIT_THRESHOLD_EDITOR_POSITION:
-		while (EnterPressed() || SpacePressed() ) ;
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed()) SDL_Delay(1) ;
 		proceed_now=!proceed_now;
 		break;
 	    default: 
@@ -4806,7 +4806,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_UNDERGROUND_LIGHT_ON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    EditLevel -> use_underground_lighting = ! EditLevel -> use_underground_lighting ;
-	    while ( SpacePressed() );
+	    while ( MouseLeftPressed() );
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_SAVE_SHIP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -4824,22 +4824,22 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( GameConfig . zoom_is_on && MouseCursorIsOnButton ( LEVEL_EDITOR_ZOOM_IN_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
-	    while ( SpacePressed() );
+	    while ( MouseLeftPressed() );
 	}
 	else if ( !GameConfig . zoom_is_on && MouseCursorIsOnButton ( LEVEL_EDITOR_ZOOM_OUT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    GameConfig . zoom_is_on = !GameConfig . zoom_is_on ;
-	    while ( SpacePressed() );
+	    while ( MouseLeftPressed() );
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_WAYPOINT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    ToggleWaypoint ( EditLevel , BlockX, BlockY , FALSE );
-	    while ( SpacePressed() );
+	    while ( MouseLeftPressed() || SpacePressed() );
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_TOGGLE_CONNECTION_BLUE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    ToggleWaypointConnection ( EditLevel, BlockX, BlockY );
-	    while ( SpacePressed() );
+	    while ( MouseLeftPressed() );
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_BEAUTIFY_GRASS_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -4851,7 +4851,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    {
 		delete_obstacle ( EditLevel , level_editor_marked_obstacle );
 		level_editor_marked_obstacle = NULL ;
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay(1); 
 	    }
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEXT_OBSTACLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -4867,7 +4867,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    if ( level_editor_marked_obstacle != NULL )
 	    {
 		give_new_name_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 	    }
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEW_OBSTACLE_DESCRIPTION_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -4875,7 +4875,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    if ( level_editor_marked_obstacle != NULL )
 	    {
 		give_new_description_to_obstacle ( EditLevel , level_editor_marked_obstacle , NULL );
-		while ( SpacePressed() );
+		while ( SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 	    }
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_NEW_MAP_LABEL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
@@ -4889,7 +4889,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_ESC_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
 	    main_menu_requested = TRUE ;
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed()) SDL_Delay(1);
 	}
 	else if ( MouseCursorIsOnButton ( LEVEL_EDITOR_LEVEL_RESIZE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -5143,8 +5143,7 @@ cycle_marked_obstacle( Level EditLevel )
 	}
     }
 
-    while ( NPressed() );
-    while ( SpacePressed() );
+    while ( NPressed() || SpacePressed() || MouseLeftPressed() ) SDL_Delay(1);
 
 }; // void cycle_marked_obstacle( Level EditLevel )
 

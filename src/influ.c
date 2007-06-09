@@ -2072,7 +2072,7 @@ move_tux_thowards_intermediate_point ( int player_num )
 		else
 		{
 		    EnterChest ( our_obstacle -> pos );
-		    while ( SpacePressed() );
+		    while ( MouseLeftPressed() || MouseRightPressed() );
 		}
 		//--------------------
 		// In any case, when having reached the end of the way with such
@@ -4130,7 +4130,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4150,7 +4150,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4167,7 +4167,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4181,7 +4181,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4195,7 +4195,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4208,7 +4208,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4221,7 +4221,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;
@@ -4234,7 +4234,7 @@ AnalyzePlayersMouseClick ( int player_num )
 	    // To stop any movement, we wait for the release of the 
 	    // mouse button.
 	    //
-	    while ( SpacePressed() );
+	    while ( SpacePressed() || MouseLeftPressed() || MouseRightPressed());
 	    Activate_Conservative_Frame_Computation();
 
 	    break;

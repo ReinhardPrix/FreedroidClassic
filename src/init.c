@@ -279,7 +279,7 @@ char fpath[2048];
     int ThisTextLength;
     extern char * language_dirs[];
     char finaldir[50];
-    while ( SpacePressed() );
+    while ( SpacePressed() || MouseLeftPressed());
 
     snprintf(finaldir, 50, "%s%s", TITLES_DIR,  language_dirs[GameConfig.language]);
     //--------------------

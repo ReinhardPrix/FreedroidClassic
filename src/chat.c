@@ -1532,7 +1532,7 @@ ChatWithFriendlyDroid( Enemy ChatDroid )
     
     // From initiating transfer mode, space might still have been pressed. 
     // So we wait till it's released...
-    while ( SpacePressed ( ) );
+    while ( MouseLeftPressed ( ) || MouseRightPressed() );
     
     //--------------------
     // We clean out the chat roster from any previous use

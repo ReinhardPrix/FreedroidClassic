@@ -309,22 +309,17 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 	if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
 	{
 	    //--------------------
-	    // The space key or enter key or left mouse button all indicate, that
+	    // The space key or enter key or arrow keys all indicate, that
 	    // the user has made a selection.
 	    //
-	    // In the case of the mouse button, we must of couse first check, if 
-	    // the mouse button really was over a valid menu item and otherwise
-	    // ignore the button.
 	    //
-	    // In case of a key, we always have a valid selection.
-	    //
-	    while ( EnterPressed() || SpacePressed() ); 
+	    while ( EnterPressed() || SpacePressed()); 
 	    MenuItemSelectedSound();
 	    return ( MenuPosition );
 	}
 	if ( MouseLeftPressed() )
 	{
-	    while ( EnterPressed() || MouseLeftPressed() ); // || RightPressed() || LeftPressed() );
+	    while ( MouseLeftPressed() ) SDL_Delay(1); 
 	    //--------------------
 	    // Only when the mouse click really occured on the menu do we
 	    // interpret it as a menu choice.  Otherwise we'll just ignore

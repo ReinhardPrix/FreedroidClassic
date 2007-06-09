@@ -1067,7 +1067,7 @@ HandleCharacterScreen ( int player_num )
 	    Me[0].points_to_distribute--;
 	    if ( Me[0].points_to_distribute <= 0 )
 	    {
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() );
 	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
@@ -1076,7 +1076,7 @@ HandleCharacterScreen ( int player_num )
 	    Me[0].points_to_distribute--;
 	    if ( Me[0].points_to_distribute <= 0 )
 	    {
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() );
 	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
@@ -1086,7 +1086,7 @@ HandleCharacterScreen ( int player_num )
 	    Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	    if ( Me[0].points_to_distribute <= 0 )
 	    {
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() );
 	    }
 	}
 	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
@@ -1099,7 +1099,7 @@ HandleCharacterScreen ( int player_num )
 	    Me[0].energy += Energy_Gain_Per_Vit_Point [ Me [ 0 ] . character_class ];	  
 	    if ( Me[0].points_to_distribute <= 0 )
 	    {
-		while ( SpacePressed() );
+		while ( MouseLeftPressed() );
 	    }
 	}
 	
