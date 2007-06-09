@@ -549,12 +549,14 @@ isometric_show_floor_around_tux_without_doublebuffering (int mask)
 void
 skew_and_blit_line (float x1, float y1, float x2, float y2, Uint32 color)
 {
+if ( ! use_open_gl ) return;
   int r, c;
   float rr, gg, bb, zoom_factor;
   zoom_factor = (GameConfig.zoom_is_on ? 1.0/LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
   rr = ((color & 0xff0000) >> 16) / 255.0;
   gg = ((color & 0xff00) >> 8) / 255.0;
   bb = (color & 0xff) / 255.0;
+#ifdef HAVE_LIBGL
   glLineWidth (1);
   glColor3f (rr, gg, bb);
 //  glEnable(GL_LINE_STIPPLE);
@@ -567,6 +569,7 @@ skew_and_blit_line (float x1, float y1, float x2, float y2, Uint32 color)
   glVertex2i (r, c);
 
   glEnd ();
+#endif
 //  glDisable(GL_LINE_STIPPLE);
 }
 /* ----------------------------------------------------------------------
