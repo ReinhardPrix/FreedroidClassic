@@ -4988,7 +4988,6 @@ void level_editor_auto_scroll()
 {
 float chx = 0, chy = 0; /*Value of the change to player position*/
 float addchx = 0, addchy = 0;
-float vec_len;
 
 if ( GameConfig . screen_width - GetMousePos_x() < 5 )
 	{ // scroll to the right
@@ -5015,8 +5014,9 @@ if ( GetMousePos_y() < 5 )
 	}
 
 
-Me[0] . pos . x += chx;
-Me[0] . pos . y += chy;
+Me [0] . pos . x += chx;
+Me [0] . pos . y += chy;
+
 if ( Me [ 0 ] . pos . x >= curShip.AllLevels[Me[0].pos.z]->xlen-1 )
 	Me [ 0 ] . pos . x = curShip.AllLevels[Me[0].pos.z]->xlen-1 ;
 if ( Me [ 0 ] . pos . x <= 0 ) Me [ 0 ] . pos . x = 0;
