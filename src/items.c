@@ -3121,23 +3121,23 @@ HandleInventoryScreen ( void )
 	 ( Item_Held_In_Hand == (-1) ) &&
 	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
-	DebugPrintf( -1 , "\nTrying to 'grab' the item below the mouse cursor.");
+	///DebugPrintf( -1 , "\nTrying to 'grab' the item below the mouse cursor.");
 	
 	if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	    Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	    Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
 	    
-	    DebugPrintf( -1 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	    //DebugPrintf( -1 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
 	    
 	    Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	    DebugPrintf( -1 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
+	    //DebugPrintf( -1 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
 	    
 	    if ( Grabbed_InvPos == (-1) )
 	    {
 		// Nothing grabbed, so we need not do anything more here..
 		Item_Held_In_Hand = ( -1 );
-		DebugPrintf( -1 , "\nGrabbing in INVENTORY grid FAILED!" );
+		//DebugPrintf( -1 , "\nGrabbing in INVENTORY grid FAILED!" );
 	    }
 	    else
 	    {
@@ -3168,7 +3168,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( -1 , "\nGrabbing in drive rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in drive rect!" );
 	    if ( Me[0].drive_item.type > 0 )
 	    {
 		//--------------------
@@ -3255,7 +3255,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( -1 , "\nGrabbing in aux2 rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in aux2 rect!" );
 	    if ( Me[0].aux2_item.type > 0 )
 	    {
 		//--------------------
