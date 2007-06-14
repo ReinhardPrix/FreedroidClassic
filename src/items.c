@@ -3121,23 +3121,23 @@ HandleInventoryScreen ( void )
 	 ( Item_Held_In_Hand == (-1) ) &&
 	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
-	DebugPrintf( 1 , "\nTrying to 'grab' the item below the mouse cursor.");
+	DebugPrintf( -1 , "\nTrying to 'grab' the item below the mouse cursor.");
 	
 	if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
 	    Inv_GrabLoc.x = GetInventorySquare_x ( CurPos.x );
 	    Inv_GrabLoc.y = GetInventorySquare_y ( CurPos.y );
 	    
-	    DebugPrintf( 1 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
+	    DebugPrintf( -1 , "\nGrabbing at inv-pos: %d %d." , Inv_GrabLoc.x , Inv_GrabLoc.y );
 	    
 	    Grabbed_InvPos = GetInventoryItemAt ( Inv_GrabLoc.x , Inv_GrabLoc.y );
-	    DebugPrintf( 1 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
+	    DebugPrintf( -1 , "\nGrabbing inventory entry no.: %d." , Grabbed_InvPos );
 	    
 	    if ( Grabbed_InvPos == (-1) )
 	    {
 		// Nothing grabbed, so we need not do anything more here..
 		Item_Held_In_Hand = ( -1 );
-		DebugPrintf( 1 , "\nGrabbing in INVENTORY grid FAILED!" );
+		DebugPrintf( -1 , "\nGrabbing in INVENTORY grid FAILED!" );
 	    }
 	    else
 	    {
@@ -3154,7 +3154,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in weapons rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in weapons rect!" );
 	    if ( Me[0].weapon_item.type > 0 )
 	    {
 		//--------------------
@@ -3168,7 +3168,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton ( DRIVE_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in drive rect!" );
+	    DebugPrintf( -1 , "\nGrabbing in drive rect!" );
 	    if ( Me[0].drive_item.type > 0 )
 	    {
 		//--------------------
@@ -3182,7 +3182,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in shield rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in shield rect!" );
 	    if ( Me[0].shield_item.type > 0 )
 	    {
 		//--------------------
@@ -3213,7 +3213,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( ARMOUR_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in armour rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in armour rect!" );
 	    if ( Me[0].armour_item.type > 0 )
 	    {
 		//--------------------
@@ -3227,7 +3227,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( HELMET_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in special rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in special rect!" );
 	    if ( Me[0].special_item.type > 0 )
 	    {
 		//--------------------
@@ -3241,7 +3241,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( AUX1_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in aux1 rect!" );
+	    //DebugPrintf( -1 , "\nGrabbing in aux1 rect!" );
 	    if ( Me[0].aux1_item.type > 0 )
 	    {
 		//--------------------
@@ -3255,7 +3255,7 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsOnButton( AUX2_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in aux2 rect!" );
+	    DebugPrintf( -1 , "\nGrabbing in aux2 rect!" );
 	    if ( Me[0].aux2_item.type > 0 )
 	    {
 		//--------------------
@@ -3269,8 +3269,8 @@ HandleInventoryScreen ( void )
 	}
 	else if ( MouseCursorIsInUserRect( CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nGrabbing in user rect!" );
-	    DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
+	    //DebugPrintf( 1 , "\nGrabbing in user rect!" );
+	    //DebugPrintf( 1  , "\nMouse in map at: %f %f." , MapPositionOfMouse.x , MapPositionOfMouse.y );
 	    
 	    index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
 	    
@@ -3303,7 +3303,7 @@ HandleInventoryScreen ( void )
 	{
 	    // Nothing grabbed, so we need not do anything more here..
 	    Item_Held_In_Hand = ( -1 );
-	    DebugPrintf( 1 , "\nGrabbing UTTERLY FAILED!" );
+	    //DebugPrintf( -1 , "\nGrabbing UTTERLY FAILED!" );
 	}
 	goto NoMoreGrabbing;
     }
@@ -3329,7 +3329,7 @@ HandleInventoryScreen ( void )
 	//
 	if ( MouseCursorIsInInventoryGrid( CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nItem dropped in inventory window!" );
+	    //DebugPrintf( -1 , "\nItem dropped in inventory window!" );
 	    Item_Held_In_Hand = ( -1 );
 	    DropHeldItemToInventory( );
 	}
@@ -3342,7 +3342,7 @@ HandleInventoryScreen ( void )
 	{
             if ( ! DropHeldItemToTheFloor( ) )
 		{
-                DebugPrintf( 1 , "\nItem dropped onto the floor of the combat window!" );
+                //DebugPrintf( -1 , "\nItem dropped onto the floor of the combat window!" );
 	        Item_Held_In_Hand = ( -1 );
 		}
 	}
@@ -3353,11 +3353,11 @@ HandleInventoryScreen ( void )
 	//
 	if ( MouseCursorIsOnButton ( WEAPON_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nItem dropped onto the weapons rectangle!" );
-	    DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	    if ( ( GetHeldItemCode() != (-1) ) &&
 		 ( ItemMap[ GetHeldItemCode() ].item_can_be_installed_in_weapon_slot ) )
 	    {
+	    //DebugPrintf( 1 , "\nItem dropped onto the weapons rectangle!" );
+	    //DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 		if ( HeldItemUsageRequirementsMet(  ) )
 		{
 		    //--------------------
@@ -3389,17 +3389,17 @@ HandleInventoryScreen ( void )
 			    {
 				//first of all check requirements again but without the shield
 				//virtually remove the shield, compute requirements, if everything's okay, proceed
-				//otherwise we'll drop the shield into inventory in order to show the player why req. are not met
+				//otherwise we inform the player
 				EXTERN void update_all_primary_stats(int);
                                 int shield_item_type = Me [ 0 ] . shield_item . type;
 				Me [ 0 ] . shield_item . type = (-1);
 				update_all_primary_stats(0);
 				if ( HeldItemUsageRequirementsMet(  ) )
 					{
+					DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
 					Me [ 0 ] . shield_item . type = shield_item_type; 
 					Item_Held_In_Hand = ( -1 );
 					MakeHeldFloorItemOutOf( & ( Me [ 0 ] . shield_item ) ) ;
-					DropHeldItemToSlot ( & ( Me [ 0 ] . weapon_item ) );
 					}
 				else    {
 					append_new_game_message("Two-handed weapon requirements not met: shield bonus doesn't count.");
@@ -3425,6 +3425,7 @@ HandleInventoryScreen ( void )
 	    }
 	    else
 	    {
+		append_new_game_message("You cannot fight with this!");
 		// If the item can't be used as a weapon, we don't do anything
 	    }
 	}
@@ -3483,11 +3484,11 @@ HandleInventoryScreen ( void )
 	//
 	if ( MouseCursorIsOnButton ( SHIELD_RECT_BUTTON , CurPos.x , CurPos.y ) )
 	{
-	    DebugPrintf( 1 , "\nItem dropped onto the shield rectangle!" );
-	    DebugPrintf( 1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 	    if ( ( GetHeldItemCode() != (-1) ) &&
 		 ( ItemMap [ GetHeldItemCode() ] . item_can_be_installed_in_shield_slot ) )
 	    {
+	    //DebugPrintf( -1 , "\nItem dropped onto the shield rectangle!" );
+	    //DebugPrintf( -1 , "\nGetHeldItemCode: %d." , GetHeldItemCode() );
 		if ( HeldItemUsageRequirementsMet(  ) )
 		{
 		    //--------------------
@@ -3514,10 +3515,10 @@ HandleInventoryScreen ( void )
 	                    update_all_primary_stats(0);
 		            if ( HeldItemUsageRequirementsMet(  ) )
 			   	{
+				DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
 				Me [ 0 ] . weapon_item . type = weapon_item_type; 
 				Item_Held_In_Hand = ( -1 );
 				MakeHeldFloorItemOutOf( & ( Me [ 0 ] . weapon_item ) ) ;
-				DropHeldItemToSlot ( & ( Me [ 0 ] . shield_item ) );
 				}
 			    else    {
 				append_new_game_message("Shield requirements not met: two-handed weapon bonus doesn't count.");
