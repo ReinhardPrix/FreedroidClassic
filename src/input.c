@@ -61,6 +61,17 @@ int CurrentlyMouseWheelDownPressed;
 int MouseWheelUpMovesRecorded;
 int MouseWheelDownMovesRecorded;
 
+int realSDLK_0;
+int realSDLK_1;
+int realSDLK_2;
+int realSDLK_3;
+int realSDLK_4;
+int realSDLK_5;
+int realSDLK_6;
+int realSDLK_7;
+int realSDLK_8;
+int realSDLK_9;
+
 void init_keyboard_input_array()
 {
 key_pressed_real_frame = SDL_GetKeyState(&key_pressed_array_size);
@@ -842,6 +853,20 @@ keyboard_update(void)
 	    case SDL_KEYDOWN:
 	    case SDL_KEYUP:
 		//We have a pointer towards the internal array already, nothing to do.
+		if (event.key.keysym.scancode > 19 || event.key.keysym.scancode < 10) break;
+		else switch ( event.key.keysym.scancode )
+			{
+			case 10: realSDLK_1 = event.key.keysym.sym; break;
+			case 11: realSDLK_2 = event.key.keysym.sym; break;
+			case 12: realSDLK_3 = event.key.keysym.sym; break;
+			case 13: realSDLK_4 = event.key.keysym.sym; break;
+			case 14: realSDLK_5 = event.key.keysym.sym; break;
+			case 15: realSDLK_6 = event.key.keysym.sym; break;
+			case 16: realSDLK_7 = event.key.keysym.sym; break;
+			case 17: realSDLK_8 = event.key.keysym.sym; break;
+			case 18: realSDLK_9 = event.key.keysym.sym; break;
+			case 19: realSDLK_0 = event.key.keysym.sym; break;
+			}
 		break;	
 
 	    case SDL_MOUSEMOTION:
@@ -1059,26 +1084,26 @@ int KP_PLUS_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK
 int KP_MINUS_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_MINUS]));}
 int KP_MULTIPLY_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_MULTIPLY]));}
 int KP_DIVIDE_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_DIVIDE]));}
-int Number0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_0]));}
-int Number0Hit () { return (!(key_pressed_last_frame[SDLK_0]) && (key_pressed_this_frame[SDLK_0])); }
-int Number1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_1])) ;}
-int Number1Hit () { return (!(key_pressed_last_frame[SDLK_1]) && (key_pressed_this_frame[SDLK_1])); }
-int Number2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_2]));}
-int Number2Hit () { return (!(key_pressed_last_frame[SDLK_2]) && (key_pressed_this_frame[SDLK_2])); }
-int Number3Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_3])) ;}
-int Number3Hit () { return (!(key_pressed_last_frame[SDLK_3]) && (key_pressed_this_frame[SDLK_3])); }
-int Number4Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_4])) ;}
-int Number4Hit () { return (!(key_pressed_last_frame[SDLK_4]) && (key_pressed_this_frame[SDLK_4])); }
-int Number5Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_5]));}
-int Number5Hit () { return (!(key_pressed_last_frame[SDLK_5]) && (key_pressed_this_frame[SDLK_5])); }
-int Number6Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_6])) ;}
-int Number6Hit () { return (!(key_pressed_last_frame[SDLK_6]) && (key_pressed_this_frame[SDLK_6])); }
-int Number7Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_7])) ;}
-int Number7Hit () { return (!(key_pressed_last_frame[SDLK_7]) && (key_pressed_this_frame[SDLK_7])); }
-int Number8Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_8]));}
-int Number8Hit () { return (!(key_pressed_last_frame[SDLK_8]) && (key_pressed_this_frame[SDLK_8])); }
-int Number9Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_9])) ;}
-int Number9Hit () { return (!(key_pressed_last_frame[SDLK_9]) && (key_pressed_this_frame[SDLK_9])); }
+int Number0Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_0]));}
+int Number0Hit () { return (!(key_pressed_last_frame[realSDLK_0]) && (key_pressed_this_frame[realSDLK_0])); }
+int Number1Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_1])) ;}
+int Number1Hit () { return (!(key_pressed_last_frame[realSDLK_1]) && (key_pressed_this_frame[realSDLK_1])); }
+int Number2Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_2]));}
+int Number2Hit () { return (!(key_pressed_last_frame[realSDLK_2]) && (key_pressed_this_frame[realSDLK_2])); }
+int Number3Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_3])) ;}
+int Number3Hit () { return (!(key_pressed_last_frame[realSDLK_3]) && (key_pressed_this_frame[realSDLK_3])); }
+int Number4Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_4])) ;}
+int Number4Hit () { return (!(key_pressed_last_frame[realSDLK_4]) && (key_pressed_this_frame[realSDLK_4])); }
+int Number5Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_5]));}
+int Number5Hit () { return (!(key_pressed_last_frame[realSDLK_5]) && (key_pressed_this_frame[realSDLK_5])); }
+int Number6Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_6])) ;}
+int Number6Hit () { return (!(key_pressed_last_frame[realSDLK_6]) && (key_pressed_this_frame[realSDLK_6])); }
+int Number7Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_7])) ;}
+int Number7Hit () { return (!(key_pressed_last_frame[realSDLK_7]) && (key_pressed_this_frame[realSDLK_7])); }
+int Number8Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_8]));}
+int Number8Hit () { return (!(key_pressed_last_frame[realSDLK_8]) && (key_pressed_this_frame[realSDLK_8])); }
+int Number9Pressed () { keyboard_update(); return ((key_pressed_real_frame[realSDLK_9])) ;}
+int Number9Hit () { return (!(key_pressed_last_frame[realSDLK_9]) && (key_pressed_this_frame[realSDLK_9])); }
 int KP0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP0])) ;}
 int KP1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP1]));}
 int KP2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP2])) ;}
