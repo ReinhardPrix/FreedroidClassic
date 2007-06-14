@@ -46,8 +46,9 @@ point CurrentMouseAbsPos;
 
 SDL_Event event;
 
-Uint8 * key_pressed_this_frame; /* SDL internal arrey */
-Uint8 * key_pressed_last_frame; /* This one is allowed by us */
+Uint8 * key_pressed_real_frame; /* SDL internal arrey */
+Uint8 * key_pressed_this_frame; /* This one is allocated by us and is the 'current state' */
+Uint8 * key_pressed_last_frame; /* This one is allocated by us and is the 'last' state*/
 int key_pressed_array_size;
 
 SDLMod modifiers_this_frame;
@@ -62,7 +63,8 @@ int MouseWheelDownMovesRecorded;
 
 void init_keyboard_input_array()
 {
-key_pressed_this_frame = SDL_GetKeyState(&key_pressed_array_size);
+key_pressed_real_frame = SDL_GetKeyState(&key_pressed_array_size);
+key_pressed_this_frame = (Uint8 *)calloc(1, key_pressed_array_size);
 key_pressed_last_frame = (Uint8 *)calloc(1, key_pressed_array_size);
 }
 
@@ -677,8 +679,6 @@ handle_cha_ski_inv_screen_on_off_keys ( void )
 void 
 ReactToSpecialKeys(void)
 {
-    static int TPressed_LastFrame;
-    static int LPressed_LastFrame;
     
     //--------------------
     // Some QUIT key and some self-destruct keys can stay in
@@ -740,13 +740,12 @@ ReactToSpecialKeys(void)
     //--------------------
     // We assign the L key to turn on/off the quest log i.e. mission log
     //
-    if ( LPressed() && ( !LPressed_LastFrame ) )
+    if ( LHit() )
     {
 	GameConfig.Mission_Log_Visible_Time = 0;
 	GameConfig.Mission_Log_Visible = !GameConfig.Mission_Log_Visible;
 	DebugPrintf( 0 , "\nMISSION LOG TURNED ON!\n" );
     }
-    LPressed_LastFrame = LPressed();
     
     
     //--------------------
@@ -855,22 +854,16 @@ ReactToSpecialKeys(void)
      //-------------------- 	 
      // t key turns on/off transparency mode 	 
      // 	 
-     if ( TPressed() ) 	 
+     if ( THit() ) 	 
      { 	 
-         if ( !TPressed_LastFrame ) 	 
-         { 	 
-	             GameConfig.transparency = ! GameConfig.transparency; 	 
-         } 	 
-  	 
-         TPressed_LastFrame = TRUE; 	 
-     } 	 
-     else 	 
-     { 	 
-         TPressed_LastFrame = FALSE; 	 
+         GameConfig.transparency = ! GameConfig.transparency; 	 
      }    
 
-    if ( ZPressed () && ! ZWasPressed())
+    if ( ZHit())
+	{
+	printf("t\n");
 	always_show_items_text = ! always_show_items_text;
+	}
     
 }; // void ReactToSpecialKeys(void)
 
@@ -878,6 +871,7 @@ ReactToSpecialKeys(void)
 void track_last_frame_input_status()
 {
 memcpy(key_pressed_last_frame, key_pressed_this_frame, sizeof(Uint8) * key_pressed_array_size);
+memcpy(key_pressed_this_frame, key_pressed_real_frame, sizeof(Uint8) * key_pressed_array_size);
 mouse_state_last_frame = SDL_GetMouseState(NULL, NULL);
 }
 
@@ -1090,93 +1084,96 @@ MouseWheelDownPressed(void)
 }
 
 
-int LeftPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_LEFT]));}
-int RightPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_RIGHT]));}
+int LeftPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_LEFT]));}
+int RightPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_RIGHT]));}
 
 int LeftWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_LEFT]));}
 int RightWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_RIGHT]));}
 
-int UpPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_UP]));}
-int DownPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_DOWN]));}
-int SpacePressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_SPACE]));}
-int EnterPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_RETURN]));}
-int EscapePressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_ESCAPE]));}
-int TabPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_TAB]));}
-int BackspacePressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_BACKSPACE]));}
-int LeftCtrlPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_LCTRL]));}
+int UpPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_UP]));}
+int DownPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_DOWN]));}
+int SpacePressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_SPACE]));}
+int EnterPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_RETURN]));}
+int EscapePressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_ESCAPE]));}
+int TabPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_TAB]));}
+int BackspacePressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_BACKSPACE]));}
+int LeftCtrlPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_LCTRL]));}
 
-int CtrlPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_LCTRL]) || key_pressed_this_frame[SDLK_RCTRL]);}
+int CtrlPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_LCTRL]) || key_pressed_real_frame[SDLK_RCTRL]);}
 int CtrlWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_RCTRL] || key_pressed_last_frame[SDLK_LCTRL]));}
 
-int ShiftPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_RSHIFT] || key_pressed_this_frame[SDLK_LSHIFT]));}
+int ShiftPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_RSHIFT] || key_pressed_real_frame[SDLK_LSHIFT]));}
 int ShiftWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_RSHIFT] || key_pressed_last_frame[SDLK_LSHIFT]));}
 
-int AltPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_RALT] || key_pressed_this_frame[SDLK_LALT])); }
+int AltPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_RALT] || key_pressed_real_frame[SDLK_LALT])); }
 int AltWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_RALT] || key_pressed_last_frame[SDLK_LALT]));}
 
-int KP_PLUS_Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP_PLUS]));}
-int KP_MINUS_Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP_MINUS]));}
-int KP_MULTIPLY_Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP_MULTIPLY]));}
-int KP_DIVIDE_Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP_DIVIDE]));}
-int Number0Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_0]));}
-int Number1Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_1])) ;}
-int Number2Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_2]));}
-int Number3Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_3])) ;}
-int Number4Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_4])) ;}
-int Number5Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_5]));}
-int Number6Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_6])) ;}
-int Number7Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_7])) ;}
-int Number8Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_8]));}
-int Number9Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_9])) ;}
-int KP0Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP0])) ;}
-int KP1Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP1]));}
-int KP2Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP2])) ;}
-int KP3Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP3])) ;}
-int KP4Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP4]));}
-int KP5Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP5])) ;}
-int KP6Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP6])) ;}
-int KP7Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP7]));}
-int KP8Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP8])) ;}
-int KP9Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_KP9])) ;}
-int F1Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F1])) ;}
-int F2Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F2])) ;}
-int F3Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F3])) ;}
-int F4Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F4]));}
-int F5Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F5])) ;}
-int F6Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F6])) ;}
-int F7Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F7]));}
-int F8Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F8])) ;}
-int F9Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F9]));}
-int F10Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F10]));}
-int F11Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F11])) ;}
-int F12Pressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_F12])) ;}
-int APressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_a]));}
-int BPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_b])) ;}
-int CPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_c])) ;}
-int DPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_d]));}
-int EPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_e])) ;}
-int FPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_f])) ;}
-int GPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_g]));}
-int HPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_h])) ;}
-int IPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_i])) ;}
-int JPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_j]));}
-int KPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_k])) ;}
-int LPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_l])) ;}
-int MPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_m]));}
-int NPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_n])) ;}
-int OPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_o])) ;}
-int PPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_p]));}
-int QPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_q])) ;}
-int RPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_r])) ;}
-int SPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_s]));}
-int TPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_t])) ;}
-int UPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_u])) ;}
-int VPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_v]));}
-int WPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_w])) ;}
-int XPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_x])) ;}
-int YPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_y]));}
-int ZPressed () { keyboard_update(); return ((key_pressed_this_frame[SDLK_z]));}
+int KP_PLUS_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_PLUS]));}
+int KP_MINUS_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_MINUS]));}
+int KP_MULTIPLY_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_MULTIPLY]));}
+int KP_DIVIDE_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_DIVIDE]));}
+int Number0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_0]));}
+int Number1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_1])) ;}
+int Number2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_2]));}
+int Number3Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_3])) ;}
+int Number4Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_4])) ;}
+int Number5Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_5]));}
+int Number6Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_6])) ;}
+int Number7Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_7])) ;}
+int Number8Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_8]));}
+int Number9Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_9])) ;}
+int KP0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP0])) ;}
+int KP1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP1]));}
+int KP2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP2])) ;}
+int KP3Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP3])) ;}
+int KP4Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP4]));}
+int KP5Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP5])) ;}
+int KP6Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP6])) ;}
+int KP7Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP7]));}
+int KP8Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP8])) ;}
+int KP9Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP9])) ;}
+int F1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F1])) ;}
+int F2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F2])) ;}
+int F3Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F3])) ;}
+int F4Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F4]));}
+int F5Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F5])) ;}
+int F6Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F6])) ;}
+int F7Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F7]));}
+int F8Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F8])) ;}
+int F9Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F9]));}
+int F10Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F10]));}
+int F11Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F11])) ;}
+int F12Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_F12])) ;}
+int APressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_a]));}
+int BPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_b])) ;}
+int CPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_c])) ;}
+int DPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_d]));}
+int EPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_e])) ;}
+int FPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_f])) ;}
+int GPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_g]));}
+int HPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_h])) ;}
+int IPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_i])) ;}
+int JPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_j]));}
+int KPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_k])) ;}
+int LPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_l])) ;}
+int LHit () { return (!(key_pressed_last_frame[SDLK_l]) && (key_pressed_this_frame[SDLK_l])); }
+int MPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_m]));}
+int NPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_n])) ;}
+int OPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_o])) ;}
+int PPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_p]));}
+int QPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_q])) ;}
+int RPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_r])) ;}
+int SPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_s]));}
+int TPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_t])) ;}
+int THit () { return (!(key_pressed_last_frame[SDLK_t]) && (key_pressed_this_frame[SDLK_t])); }
+int UPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_u])) ;}
+int VPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_v]));}
+int WPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_w])) ;}
+int XPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_x])) ;}
+int YPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_y]));}
+int ZPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_z]));}
 int ZWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_z]));}
+int ZHit () { return (!(key_pressed_last_frame[SDLK_z]) && (key_pressed_this_frame[SDLK_z])); }
 int MouseRightPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(3)); }
 int MouseLeftPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1));}
 int MouseRightWasPressed() { keyboard_update(); return (mouse_state_last_frame&SDL_BUTTON(3));}

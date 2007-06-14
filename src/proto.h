@@ -519,7 +519,7 @@ EXTERN void ImproveSkill(int *skill);
 #else
 #define EXTERN extern
 #endif
-EXTERN Uint8 * key_pressed_this_frame;
+EXTERN Uint8 * key_pressed_real_frame;
 EXTERN Uint8 * key_pressed_last_frame;
 EXTERN Uint8 mouse_state_last_frame;
 EXTERN int keyboard_update();
@@ -614,6 +614,7 @@ EXTERN int IPressed () ;
 EXTERN int JPressed () ;
 EXTERN int KPressed () ;
 EXTERN int LPressed () ;
+EXTERN int LHit () ;
 EXTERN int MPressed () ;
 EXTERN int NPressed () ;
 EXTERN int OPressed () ;
@@ -622,13 +623,14 @@ EXTERN int QPressed () ;
 EXTERN int RPressed () ;
 EXTERN int SPressed () ;
 EXTERN int TPressed () ;
+EXTERN int THit () ;
 EXTERN int UPressed () ;
 EXTERN int VPressed () ;
 EXTERN int WPressed () ;
 EXTERN int XPressed () ;
 EXTERN int YPressed () ;
-EXTERN int ZPressed () ;
 EXTERN int ZWasPressed () ;
+EXTERN int ZHit () ;
 EXTERN void toggle_game_config_screen_visibility ( int screen_visible );
 
 // menu.c 
