@@ -460,100 +460,48 @@ automap_keyboard_handling ( void )
 void
 handle_quick_appy_inventory_keys( void )
 {
-    static int Number1PressedLastFrame;
-    static int Number2PressedLastFrame;
-    static int Number3PressedLastFrame;
-    static int Number4PressedLastFrame;
-    static int Number5PressedLastFrame;
-    static int Number6PressedLastFrame;
-    static int Number7PressedLastFrame;
-    static int Number8PressedLastFrame;
-    static int Number9PressedLastFrame;
-    
     //--------------------
     // To quick-apply the items in the very lowest row of the
     // inventory screen, the number keys 1-9 can be used.
     //
-    if ( Number1Pressed() )
+    if ( Number1Hit() )
     {
-	if ( !Number1PressedLastFrame ) Quick_ApplyItem ( 1 );
-	Number1PressedLastFrame = TRUE;
+	Quick_ApplyItem ( 1 );
     }
-    else 
+
+    if ( Number2Hit() )
     {
-	Number1PressedLastFrame = FALSE;
+	Quick_ApplyItem ( 2 );
     }
-    if ( Number2Pressed() )
+
+    if ( Number3Hit() )
     {
-	if ( !Number2PressedLastFrame ) Quick_ApplyItem ( 2 );
-	Number2PressedLastFrame = TRUE;
+	Quick_ApplyItem ( 3 );
     }
-    else
+
+    if ( Number4Hit() )
     {
-	Number2PressedLastFrame = FALSE;
+	Quick_ApplyItem ( 4 );
     }
-    if ( Number3Pressed() )
+    if ( Number5Hit() )
     {
-	if ( !Number3PressedLastFrame ) Quick_ApplyItem ( 3 );
-	Number3PressedLastFrame = TRUE;
+	Quick_ApplyItem ( 5 );
     }
-    else
+    if ( Number6Hit() )
     {
-	Number3PressedLastFrame = FALSE;
+	Quick_ApplyItem ( 6 );
     }
-    if ( Number4Pressed() )
+    if ( Number7Hit() )
     {
-	if ( !Number4PressedLastFrame ) Quick_ApplyItem ( 4 );
-	Number4PressedLastFrame = TRUE;
+	Quick_ApplyItem ( 7 );
     }
-    else
+    if ( Number8Hit() )
     {
-	Number4PressedLastFrame = FALSE;
+	Quick_ApplyItem ( 8 );
     }
-    if ( Number5Pressed() )
+    if ( Number9Hit() )
     {
-	if ( !Number5PressedLastFrame ) Quick_ApplyItem ( 5 );
-	Number5PressedLastFrame = TRUE;
-    }
-    else
-    {
-	Number5PressedLastFrame = FALSE;
-    }
-    if ( Number6Pressed() )
-    {
-	if ( !Number6PressedLastFrame ) Quick_ApplyItem ( 6 );
-	Number6PressedLastFrame = TRUE;
-    }
-    else
-    {
-	Number6PressedLastFrame = FALSE;
-    }
-    if ( Number7Pressed() )
-    {
-	if ( !Number7PressedLastFrame ) Quick_ApplyItem ( 7 );
-	Number7PressedLastFrame = TRUE;
-    }
-    else
-    {
-	Number7PressedLastFrame = FALSE;
-    }
-    if ( Number8Pressed() )
-    {
-	if ( !Number8PressedLastFrame ) Quick_ApplyItem ( 8 );
-	Number8PressedLastFrame = TRUE ;
-    }
-    else
-    {
-	Number8PressedLastFrame = FALSE;
-    }
-    if ( Number9Pressed() )
-    {
-	if ( !Number9PressedLastFrame ) Quick_ApplyItem ( 9 );
-	Number9PressedLastFrame = TRUE;
-    }
-    else
-    {
-	Number9PressedLastFrame = FALSE;
+	Quick_ApplyItem ( 9 );
     }
     
 }; // void handle_quick_appy_inventory_keys( void )
@@ -1112,15 +1060,25 @@ int KP_MINUS_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDL
 int KP_MULTIPLY_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_MULTIPLY]));}
 int KP_DIVIDE_Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP_DIVIDE]));}
 int Number0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_0]));}
+int Number0Hit () { return (!(key_pressed_last_frame[SDLK_0]) && (key_pressed_this_frame[SDLK_0])); }
 int Number1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_1])) ;}
+int Number1Hit () { return (!(key_pressed_last_frame[SDLK_1]) && (key_pressed_this_frame[SDLK_1])); }
 int Number2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_2]));}
+int Number2Hit () { return (!(key_pressed_last_frame[SDLK_2]) && (key_pressed_this_frame[SDLK_2])); }
 int Number3Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_3])) ;}
+int Number3Hit () { return (!(key_pressed_last_frame[SDLK_3]) && (key_pressed_this_frame[SDLK_3])); }
 int Number4Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_4])) ;}
+int Number4Hit () { return (!(key_pressed_last_frame[SDLK_4]) && (key_pressed_this_frame[SDLK_4])); }
 int Number5Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_5]));}
+int Number5Hit () { return (!(key_pressed_last_frame[SDLK_5]) && (key_pressed_this_frame[SDLK_5])); }
 int Number6Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_6])) ;}
+int Number6Hit () { return (!(key_pressed_last_frame[SDLK_6]) && (key_pressed_this_frame[SDLK_6])); }
 int Number7Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_7])) ;}
+int Number7Hit () { return (!(key_pressed_last_frame[SDLK_7]) && (key_pressed_this_frame[SDLK_7])); }
 int Number8Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_8]));}
+int Number8Hit () { return (!(key_pressed_last_frame[SDLK_8]) && (key_pressed_this_frame[SDLK_8])); }
 int Number9Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_9])) ;}
+int Number9Hit () { return (!(key_pressed_last_frame[SDLK_9]) && (key_pressed_this_frame[SDLK_9])); }
 int KP0Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP0])) ;}
 int KP1Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP1]));}
 int KP2Pressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_KP2])) ;}
