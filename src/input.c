@@ -861,7 +861,6 @@ ReactToSpecialKeys(void)
 
     if ( ZHit())
 	{
-	printf("t\n");
 	always_show_items_text = ! always_show_items_text;
 	}
     
