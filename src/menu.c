@@ -1307,6 +1307,7 @@ Cheatmenu (void)
 		
 	    case ' ':
 	    case 'q':
+		while ( QPressed () ) SDL_Delay(1);
 		can_continue = 1;
 		break;
 	} /* switch (getchar_raw()) */
