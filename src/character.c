@@ -288,7 +288,7 @@ DisplayButtons( void )
     if ( MouseCursorIsOnButton( INV_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( INV_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed())
+	if ( MouseLeftClicked())
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_INVENTORY );
 	    DebugPrintf ( 2 , "\nClick inside inventory button registered..." );
@@ -297,7 +297,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( CHA_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( CHA_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
+	if ( MouseLeftClicked() )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_CHARACTER );
 	    DebugPrintf ( 2 , "\nClick inside character button registered..." );
@@ -306,7 +306,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( SKI_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( SKI_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
+	if ( MouseLeftClicked() )
 	{
 	    toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
 	    DebugPrintf ( 2 , "\nClick inside skills button registered..." );
@@ -315,7 +315,7 @@ DisplayButtons( void )
     else if ( MouseCursorIsOnButton( LOG_SCREEN_TOGGLE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
 	ShowGenericButtonFromList ( LOG_SCREEN_TOGGLE_BUTTON_YELLOW );
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
+	if ( MouseLeftClicked() )
 	{
 	    DebugPrintf ( 2 , "\nClick inside questlog button registered..." );
 	    quest_browser_interface ( );
@@ -323,14 +323,14 @@ DisplayButtons( void )
     }
     else if ( MouseCursorIsOnButton( WEAPON_MODE_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
+	if ( MouseLeftClicked() )
 	{
 	TuxReloadWeapon ( );
 	}
     }
     else if ( MouseCursorIsOnButton( SKI_ICON_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
     {
-	if ( MouseLeftPressed() && ! MouseLeftWasPressed() )
+	if ( MouseLeftClicked() )
 	{
         toggle_game_config_screen_visibility ( GAME_CONFIG_SCREEN_VISIBLE_SKILLS );
 	}
@@ -1061,7 +1061,7 @@ HandleCharacterScreen ( int player_num )
     // Me[0].points_to_distribute = 5;
     if ( Me[0].points_to_distribute > 0 )
     {
-	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
+	if ( MouseCursorIsOnButton( MORE_STR_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftClicked() )
 	{
 	    Me[0].base_strength++;
 	    Me[0].points_to_distribute--;
@@ -1070,7 +1070,7 @@ HandleCharacterScreen ( int player_num )
 		while ( MouseLeftPressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
+	if ( MouseCursorIsOnButton( MORE_DEX_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftClicked() )
 	{
 	    Me[0].base_dexterity++;
 	    Me[0].points_to_distribute--;
@@ -1079,7 +1079,7 @@ HandleCharacterScreen ( int player_num )
 		while ( MouseLeftPressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
+	if ( MouseCursorIsOnButton( MORE_MAG_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftClicked() )
 	{
 	    Me[0].base_magic++;
 	    Me[0].points_to_distribute--;
@@ -1089,7 +1089,7 @@ HandleCharacterScreen ( int player_num )
 		while ( MouseLeftPressed() );
 	    }
 	}
-	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
+	if ( MouseCursorIsOnButton( MORE_VIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftClicked() )
 	{
 	    Me[0].base_vitality++;
 	    Me[0].points_to_distribute--;

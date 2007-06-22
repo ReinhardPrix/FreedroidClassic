@@ -55,7 +55,8 @@ SDLMod modifiers_this_frame;
 SDLMod modifiers_last_frame;
 
 Uint8 mouse_state_last_frame;
-
+Uint8 mouse_state_this_frame;
+;
 int CurrentlyMouseWheelUpPressed;
 int CurrentlyMouseWheelDownPressed;
 int MouseWheelUpMovesRecorded;
@@ -82,6 +83,7 @@ key_pressed_last_frame = (Uint8 *)calloc(1, key_pressed_array_size);
 void free_keyboard_input_array()
 {
 free(key_pressed_last_frame);
+free(key_pressed_this_frame);
 }
 
 /* ----------------------------------------------------------------------
@@ -830,7 +832,8 @@ void track_last_frame_input_status()
 {
 memcpy(key_pressed_last_frame, key_pressed_this_frame, sizeof(Uint8) * key_pressed_array_size);
 memcpy(key_pressed_this_frame, key_pressed_real_frame, sizeof(Uint8) * key_pressed_array_size);
-mouse_state_last_frame = SDL_GetMouseState(NULL, NULL);
+mouse_state_last_frame = mouse_state_this_frame;
+mouse_state_this_frame = SDL_GetMouseState(NULL, NULL);
 }
 
 
@@ -1158,8 +1161,7 @@ int ZWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_z])
 int ZHit () { return (!(key_pressed_last_frame[SDLK_z]) && (key_pressed_this_frame[SDLK_z])); }
 int MouseRightPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(3)); }
 int MouseLeftPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1));}
-int MouseRightWasPressed() { keyboard_update(); return (mouse_state_last_frame&SDL_BUTTON(3));}
-int MouseLeftWasPressed() { keyboard_update(); return (mouse_state_last_frame&SDL_BUTTON(1));}
-
+int MouseRightClicked() { return (!(mouse_state_last_frame&SDL_BUTTON(3)) && (mouse_state_this_frame&SDL_BUTTON(3))); }
+int MouseLeftClicked() { return (!(mouse_state_last_frame&SDL_BUTTON(1)) && (mouse_state_this_frame&SDL_BUTTON(1))); }
 #undef _input_c
 

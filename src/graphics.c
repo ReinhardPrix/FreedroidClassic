@@ -651,7 +651,7 @@ ERROR LOADING SELECTION KNOB IMAGE FILE!",
 	blit_our_own_mouse_cursor ( );
 	our_SDL_flip_wrapper ( Screen );
 	
-	if ( ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) )
+	if ( MouseLeftClicked() )
 	{
 	    //--------------------
 	    // Maybe the user has just 'grabbed the knob?  Then we need to

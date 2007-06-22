@@ -1406,7 +1406,7 @@ ItemDropFromLevelEditor( void )
 	    return ;
 	}
 
-	if ( SpacePressed() || ( MouseLeftPressed() && !MouseLeftWasPressed()))
+	if ( SpacePressed() || MouseLeftClicked())
 	{
 	    if ( MouseCursorIsOnButton ( 
 		     LEVEL_EDITOR_NEXT_ITEM_GROUP_BUTTON ,

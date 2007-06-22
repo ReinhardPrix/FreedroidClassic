@@ -358,8 +358,11 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 	    || ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
 					 GetMousePos_y()  ) ) )
     {
+	track_last_frame_input_status();
+	keyboard_update();
+
 	if ( UpPressed () 
-	     || ( MouseLeftPressed () 
+	     || ( MouseLeftClicked() 
 		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_UP_BUTTON , GetMousePos_x()  , 
 					       GetMousePos_y()  ) ) ) )
 	{
@@ -368,7 +371,7 @@ ScrollText (char *Text, int startx, int starty, int EndLine , int background_cod
 		speed = -maxspeed;
 	}
 	if ( DownPressed ()
-	     || ( MouseLeftPressed () 
+	     || ( MouseLeftClicked()
 		  && ( MouseCursorIsOnButton ( SCROLL_TEXT_DOWN_BUTTON , GetMousePos_x()  , 
 					       GetMousePos_y()  ) ) ) )
 	{

@@ -3035,7 +3035,7 @@ HandleInventoryScreen ( void )
 	silently_unhold_all_items ( );
 	
 	// DebugPrintf( 2 , "\nINVENTORY NOT VISIBLE!!" );
-	if ( ( MouseLeftPressed() ) && ( ! MouseLeftWasPressed() ) && ( Item_Held_In_Hand == (-1) ) )
+	if ( MouseLeftClicked() && ( Item_Held_In_Hand == (-1) ) )
 	{
 	    // DebugPrintf( 1 , "\nCollecting items for direct addition to the inventory without grabbing." );
 	    MapPositionOfMouse . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , 
@@ -3116,8 +3116,7 @@ HandleInventoryScreen ( void )
     // If the user now presses the left mouse button and it was not pressed before,
     // the the user has 'grabbed' the item directly under the mouse button
     //
-    if ( ( MouseLeftPressed() ) && 
-	 ( !MouseLeftWasPressed() ) && 
+    if ( MouseLeftClicked() && 
 	 ( Item_Held_In_Hand == (-1) ) &&
 	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
     {
@@ -3312,7 +3311,7 @@ HandleInventoryScreen ( void )
     // Now the OTHER CASE:  If the user now no longer presses the mouse button and it WAS pressed before,
     // the the user has 'released' the item directly under the mouse button
     //
-    if ( ( MouseLeftPressed() ) && ( !MouseLeftWasPressed() ) && ( Item_Held_In_Hand != (-1) ) ) //RELEASE ITEM AFTER A SECOND CLICK (OTHER BEHAVIOR)
+    if ( MouseLeftClicked() && ( Item_Held_In_Hand != (-1) ) ) //RELEASE ITEM AFTER A SECOND CLICK (OTHER BEHAVIOR)
 //  if ( ( !MouseLeftPressed() ) && ( MouseButtonPressedPreviousFrame ) && ( Item_Held_In_Hand != (-1) ) )
     {
 	//--------------------
@@ -3622,7 +3621,7 @@ HandleInventoryScreen ( void )
     // which would mean for us that he is applying the item under the mouse button
     //
     
-    if ( MouseRightPressed ( ) && ( !MouseRightWasPressed() ) )
+    if ( MouseRightClicked() )
     {
 	
 	switch ( Me [ 0 ] . readied_skill )
