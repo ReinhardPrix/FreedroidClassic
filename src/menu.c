@@ -843,7 +843,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
 	  our_SDL_flip_wrapper( Screen );
 	  return ( -1 );
       }
-      if ( EnterPressed() || ( SpacePressed() && !MouseLeftPressed() ) || RightPressed() || LeftPressed() ) 
+      if ( EnterPressed() || SpacePressed() || RightPressed() || LeftPressed() ) 
       {
 	  //--------------------
 	  // The space key or enter key or left mouse button all indicate, that
@@ -864,7 +864,7 @@ ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON
       
       if ( MouseLeftPressed() )
       {
-	  while ( EnterPressed() || SpacePressed() ); // || RightPressed() || LeftPressed() );
+	  while ( MouseLeftPressed() ) SDL_Delay(1);
 	  
 	  //--------------------
 	  // First we see if there was perhaps a click on one of the active scroll buttons
