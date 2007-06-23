@@ -2120,7 +2120,7 @@ AssembleCombatPicture ( int mask )
     if ( ServerMode )
 	CenteredPrintStringFont ( Screen , Menu_BFont , GameConfig . screen_height/2 , " S E R V E R ! ! ! " );
     
-    if ( GameConfig.Inventory_Visible ) 
+    if ( GameConfig.Inventory_Visible || GameConfig . skill_explanation_screen_visible) 
     {
 	User_Rect.x = 320;
 	if ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible )

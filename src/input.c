@@ -533,8 +533,7 @@ toggle_game_config_screen_visibility ( int screen_visible )
     {
 	case GAME_CONFIG_SCREEN_VISIBLE_INVENTORY :
 	    GameConfig . Inventory_Visible = ! GameConfig . Inventory_Visible;
-	    /*GameConfig . CharacterScreen_Visible = FALSE ;
-	    GameConfig . SkillScreen_Visible = FALSE ;*/
+	    GameConfig . skill_explanation_screen_visible = FALSE;
 	    break;
 	case GAME_CONFIG_SCREEN_VISIBLE_SKILLS :
 	    GameConfig . SkillScreen_Visible = !GameConfig . SkillScreen_Visible;
@@ -543,6 +542,10 @@ toggle_game_config_screen_visibility ( int screen_visible )
 	case GAME_CONFIG_SCREEN_VISIBLE_CHARACTER :
 	    GameConfig . CharacterScreen_Visible = !GameConfig . CharacterScreen_Visible;
 	    GameConfig . SkillScreen_Visible = FALSE ;
+	    break;
+	case GAME_CONFIG_SCREEN_VISIBLE_SKILL_EXPLANATION :
+            GameConfig.skill_explanation_screen_visible = !GameConfig.skill_explanation_screen_visible;
+	    GameConfig . Inventory_Visible = FALSE;
 	    break;
 	default:
 	    GiveStandardErrorMessage ( __FUNCTION__  , "\

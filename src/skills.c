@@ -1290,7 +1290,7 @@ ShowSkillsScreen ( void )
     if ( MouseCursorIsOnButton ( OPEN_CLOSE_SKILL_EXPLANATION_BUTTON , CurPos.x , CurPos.y ) &&
 	 MouseLeftClicked() )
     {
-	GameConfig.skill_explanation_screen_visible = !GameConfig.skill_explanation_screen_visible;
+	toggle_game_config_screen_visibility(GAME_CONFIG_SCREEN_VISIBLE_SKILL_EXPLANATION);
     }
     
     //--------------------
