@@ -751,7 +751,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	    else if ( MouseCursorIsOnButton( ITEM_BROWSER_EXIT_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
 		finished = TRUE;
-		while (SpacePressed() ||EscapePressed());
+		while (SpacePressed() || EscapePressed() || MouseLeftPressed());
 	    }
 	    else if ( MouseCursorIsOnButton( LEFT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
