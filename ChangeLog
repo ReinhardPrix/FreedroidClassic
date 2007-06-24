@@ -1,1829 +1,636 @@
-2007-02-24 01:06  ahuillet
+2007-06-21 16:36  ahuillet
 
-	* freedroidRPG.exe: upd
+	* freedroidRPG.exe: generated more recent .exe
 
-2007-02-24 01:04  ahuillet
+2007-06-21 16:11  ahuillet
 
-	* src/leveleditor.c: patched calls to SaveShip to look for the ship
-	  file at the right place
+	* map/Asteroid.maps: upd map
 
-2007-02-24 00:48  ahuillet
+2007-06-15 01:35  ahuillet
 
-	* freedroidRPG.exe: upd
+	* src/input.c: made quick inv work with international keyboard
+	  layouts, PLEASE TEST THAT AND REPORT
 
-2007-02-23 18:52  ahuillet
+2007-06-15 01:13  ahuillet
 
-	* src/misc.c: fixed misplaced buttons
+	* src/: input.c, proto.h: made quick inventory use new input code
+	  in preparation for intl layout fix
 
-2007-02-23 18:42  ahuillet
+2007-06-15 00:01  ahuillet
 
-	* src/: proto.h, text.c, BFont.c: german translation: uppercase
-	  umlauts, counting umlauts correctly in size
+	* src/input.c: removed debug printf
 
-2007-02-22 23:12  ahuillet
+2007-06-14 23:55  ahuillet
 
-	* graphics/font/parafont.png: umlaut
+	* src/items.c: removed debug messages used in fixing the previous
+	  bug
 
-2007-02-22 23:11  ahuillet
+2007-06-14 23:52  ahuillet
 
-	* map/titles/de/: EndOfGame.title, StartOfGame.title: removed silly
-	  encoding
+	* src/items.c: fixed bug when replacing a two handed weapon by a
+	  shield, you could end up having a weapon in shield rect
 
-2007-02-22 22:53  ahuillet
+2007-06-14 23:47  ahuillet
 
-	* map/: StartOfGame.title, EndOfGame.title: moved file
+	* src/menu.c: fixed cheat menu quitting
 
-2007-02-22 22:51  ahuillet
+2007-06-14 23:11  ahuillet
 
-	* map/: TakeoverInstructions.title, level_editor_help.title: moved
-	  files
+	* src/: input.c, proto.h: changed input code to make it Just Work -
+	  now it s as complex as the original... but more logical
 
-2007-02-22 22:48  magotari
+2007-06-13 16:09  ahuillet
 
-	* map/titles/de/: EndOfGame.title, StartOfGame.title: Title
-	  translation from barbatrix.
+	* src/leveleditor.c: cosmetic fix to test CIA bot
 
-2007-02-22 22:35  ahuillet
+2007-06-13 12:59  ahuillet
 
-	* win32/freedroidRPG.coff: new .coff
+	* src/leveleditor.c: added autoscrolling in leveleditor
 
-2007-02-22 22:34  ahuillet
+2007-06-10 01:49  ahuillet
 
-	* dialogs/de/: 614.dialog, Bender.dialog, Benjamin.dialog,
-	  Bruce.dialog, Butch.dialog, Chandra.dialog, Darwin.dialog,
-	  Dixon.dialog, DocMoore.dialog, Duncan.dialog, Ernie.dialog,
-	  Ewald.dialog, Francis.dialog, Jack.dialog, Jasmine.dialog,
-	  Julie.dialog, Kevin.dialog, KevinGuard.dialog, Lukas.dialog,
-	  Melfis.dialog, Michelangelo.dialog,
-	  OldTownGateGuardLeader.dialog, Pendragon.dialog, RMS.dialog,
-	  Skippy.dialog, Sorenson.dialog, Spencer.dialog, Spencer1.dialog,
-	  StandardMSFacilityGateGuard.dialog,
-	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
-	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
-	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
-	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
-	  subdlg_Spencer_eval.dialog, subdlg_Spencer_funeral.dialog,
-	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: removed ß
+	* src/view.c: protected matusz GL-only code for building on non-GL
+	  machines
 
-2007-02-22 22:28  ahuillet
+2007-06-10 00:13  ahuillet
+
+	* src/: character.c, chat.c, influ.c, init.c, leveleditor.c,
+	  menu.c, text.c: replaced a few occurences of SpacePressed by the
+	  relevant MousePressed calls
+
+2007-06-09 20:02  ahuillet
+
+	* src/: BFont.c, automap.c, blocks.c, graphics.c, hud.c,
+	  leveleditor.c, misc.c, open_gl.c, proto.h, shop.c, skills.c,
+	  takeover.c, view.c: changed call parameters for blit functions -
+	  now passing iso_image by address
+
+2007-06-09 19:02  ahuillet
+
+	* src/: global.h, input.c, proto.h, view.c: added Z key to toggle
+	  "always show items"
+
+2007-06-09 18:51  ahuillet
+
+	* src/: input.c, proto.h: added RightWasPressed and LeftWasPressed
+	  to input system
+
+2007-06-09 18:50  ahuillet
+
+	* src/graphics.c: fixed input regression in graphical number
+	  selection, and added support for selection with arrow keys
+
+2007-06-09 18:46  ahuillet
+
+	* src/leveleditor.c: fixed input regression in item drop menu
+
+2007-06-09 18:26  ahuillet
+
+	* src/skills.c: tom kun temporary calculate pi program + changed
+	  calls to match new input system
+
+2007-06-09 18:22  ahuillet
+
+	* src/: character.c, global.h, graphics.c, hud.c, influ.c, init.c,
+	  items.c, leveleditor.c, main.c, menu.c, mission.c, network.c:
+	  restructuration of input code to something a little cleaner and
+	  that eases tracking of previous frame events - there are
+	  regressions to track and report
+
+2007-06-09 18:14  ahuillet
+
+	* src/: proto.h, ship.c, shop.c, input.c: restructuration of input
+	  code to something a little cleaner and that eases tracking of
+	  previous frame events - there are regressions to track and report
+
+2007-06-09 18:11  ahuillet
+
+	* src/: takeover.c, view.c: restructuration of input code to
+	  something a little cleaner and that eases tracking of previous
+	  frame events - there are regressions to track and report
+
+2007-06-09 00:26  ahuillet
+
+	* src/: hud.c, character.c: tom_kun - working on computerish magic
+
+2007-06-07 22:43  ahuillet
+
+	* src/vars.h, graphics/skill_icons/Calculate_PI.png,
+	  graphics/skill_icons/FrostBoltSpell.png: changed frost spell to
+	  calculate pi program - tom kun
+
+2007-06-07 22:35  ahuillet
+
+	* src/influ.c: added toggle autorun function, patch from Tom Kun
+
+2007-05-04 14:23  ahuillet
+
+	* src/sound.c: now not exiting when sound could not be initialized,
+	  as requested by an user
+
+2007-04-12 22:02  ahuillet
+
+	* src/automap.c: GL automap now displays obstacles at the right
+	  place !
+
+2007-04-12 17:48  ahuillet
+
+	* dialogs/de/Kevin.dialog: fixed missing double quote
+
+2007-04-12 03:04  ahuillet
+
+	* dialogs/de/Kevin.dialog: fixed double line
+
+2007-04-11 19:11  ahuillet
+
+	* src/view.c: added grey quad in GL mode for double handed weapons
+
+2007-04-11 17:38  ahuillet
+
+	* src/: SDL_rotozoom.c, enemy.c, items.c: removed a few irrelevant
+	  uninitialized value warnings from gcc4
+
+2007-04-11 17:31  ahuillet
+
+	* graphics/font/: cpuFont.8859-2.png, parafont.8859-2.png,
+	  small_white.8859-2.png: added a few 8859-2 fonts from matusz
+
+2007-04-11 17:29  ahuillet
+
+	* src/leveleditor.c: added displaying of object type numbers in ALL
+	  tab in leveleditor
+
+2007-04-11 17:18  ahuillet
+
+	* src/defs.h: fixed numbering mistake
+
+2007-04-11 17:16  ahuillet
+
+	* src/: init.c, misc.c, struct.h: added support for linked actions
+	  in events file
+
+2007-04-11 17:11  ahuillet
+
+	* map/EventsAndEventTriggers: updated event file to handle linked
+	  actions
+
+2007-04-11 15:50  ahuillet
+
+	* src/blocks.c: fixed autoguns and counters block area size
+
+2007-04-11 15:50  ahuillet
+
+	* src/map.c: made autoguns fire faster, as requested by Mr. Map
+
+2007-04-11 13:32  ahuillet
+
+	* src/: misc.c, mission.c: improved quest browser buttons' behavior
+
+2007-04-11 13:05  ahuillet
+
+	* src/character.c: fixed bug that distributed character points even
+	  when chascr was not open
+
+2007-04-09 14:14  ahuillet
+
+	* src/leveleditor.c: patch from matusz to exit lvleditor with
+	  CTRL-Q instead of just Q - consistency
+
+2007-04-09 14:10  ahuillet
+
+	* src/: graphics.c, input.c, defs.h: removed support for crosshair
+	  cursor as only fdClassic uses it
+
+2007-04-09 14:05  ahuillet
+
+	* src/: defs.h, saveloadgame.c: removed useless references to
+	  SHIP_EXT, replaced by .shp
+
+2007-04-09 02:26  ahuillet
+
+	* src/defs.h: updated comments
+
+2007-04-09 01:43  ahuillet
+
+	* src/items.c: reduced a little the apparition of ranged weapons
+	  ammo - this still requires some work
+
+2007-04-09 01:31  ahuillet
+
+	* map/Asteroid.maps: updated Stone waypoints so that she does not
+	  get stuck
+
+2007-04-09 01:08  ahuillet
+
+	* map/freedroid.item_archetypes: made standard shield better than
+	  small shield, reported by barbatrix
+
+2007-04-09 01:02  ahuillet
+
+	* src/menu.c: skip initial title file when entering leveleditor
+	  directly
+
+2007-04-09 01:01  ahuillet
+
+	* src/text.c: reduced default speed of title files to make them
+	  more readable
+
+2007-04-09 00:56  ahuillet
+
+	* src/menu.c: added a leveleditor menu option, this is done in a
+	  rather dirty way but it does its work therefore I am keeping it
+
+2007-04-09 00:55  ahuillet
+
+	* src/leveleditor.c: removed test string left out by matusz in
+	  leveleditor
+
+2007-04-09 00:37  ahuillet
+
+	* src/input.c: improved ski/cha screens behavior: they now are
+	  exclusive
+
+2007-04-08 22:54  ahuillet
+
+	* map/Asteroid.maps: updated map for hf entrance
+
+2007-04-08 22:52  ahuillet
+
+	* map/EventsAndEventTriggers: updated to reflect my latest feature
+	  enhancements and serve as an example for barbatrix
+
+2007-04-08 22:51  ahuillet
+
+	* src/: init.c, misc.c, struct.h: added support for actions
+	  disabling event triggers, as requested by barbatrix
+
+2007-04-08 20:56  ahuillet
+
+	* src/influ.c: disabled loot mode for mwheelup as well, bug
+	  reported by matusz
+
+2007-04-08 15:10  ahuillet
+
+	* graphics/mouse_buttons/LevelEditorToggleGridButtonFull.png: added
+	  "full grid" button for leveleditor
+
+2007-04-08 15:10  ahuillet
+
+	* src/: defs.h, leveleditor.c, misc.c, view.c: matusz patch for
+	  three mode grid button, and small grid numbers in leveledit to be
+	  displayed in SDL too
+
+2007-04-05 02:34  ahuillet
+
+	* src/blocks.c: now using specific (placeholder) graphics for
+	  disabled autoguns
+
+2007-04-05 02:34  ahuillet
+
+	* graphics/obstacles/: iso_disautogun_0001.offset,
+	  iso_disautogun_0001.png, iso_disautogun_0002.offset,
+	  iso_disautogun_0002.png, iso_disautogun_0003.offset,
+	  iso_disautogun_0003.png, iso_disautogun_0004.offset,
+	  iso_disautogun_0004.png: added disabled autogun (placeholder)
+	  graphics
+
+2007-04-05 02:21  ahuillet
 
 	* freedroidRPG.exe: new binary
 
-2007-02-22 22:23  magotari
+2007-04-05 02:04  ahuillet
 
-	* dialogs/de/: 614.dialog, Benjamin.dialog, Dixon.dialog,
-	  DocMoore.dialog, Ernie.dialog, Jack.dialog, Julie.dialog,
-	  MER.dialog, OldTownGateGuardLeader.dialog, Pendragon.dialog,
-	  RMS.dialog, Sorenson.dialog, StandardMSFacilityGateGuard.dialog,
-	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
-	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
-	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
-	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
-	  subdlg_Pendragon.dialog, subdlg_Sorenson.dialog,
-	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: The German
-	  translation from barbatrix.
+	* src/: open_gl.c, proto.h, text.c: various position translation
+	  macro names changes by matusz
 
-2007-02-22 21:54  ahuillet
+2007-04-05 02:03  ahuillet
 
-	* graphics/font/: cpuFont.png, font05.png, font05_blue.png,
-	  font05_green.png, font05_magenta.png, font05_red.png,
-	  font05_white.png, font05_yellow.png: drawn umlauts for german
-	  translation
+	* src/: leveleditor.c, view.c: matusz added a full featured grid to
+	  the leveleditor along with cosmetic fixes
 
-2007-02-22 21:53  ahuillet
+2007-04-05 02:01  ahuillet
 
-	* map/titles/: EndOfGame.title, StartOfGame.title,
-	  TakeoverInstructions.title, level_editor_help.title,
-	  de/EndOfGame.title, de/StartOfGame.title,
-	  de/TakeoverInstructions.title, de/level_editor_help.title: moved
-	  title files to subdirs for translation support
+	* src/influ.c: various pointless position translation macro names
+	  changes by matusz
 
-2007-02-22 21:36  ahuillet
+2007-04-05 01:58  ahuillet
 
-	* dialogs/de/: 614.dialog, Bender.dialog, Benjamin.dialog,
-	  Bruce.dialog, Butch.dialog, Chandra.dialog, Darwin.dialog,
-	  Dixon.dialog, DocMoore.dialog, Duncan.dialog, Ernie.dialog,
-	  Ewald.dialog, Francis.dialog, Jack.dialog, Jasmine.dialog,
-	  Julie.dialog, Kevin.dialog, KevinGuard.dialog, Lukas.dialog,
-	  MER.dialog, MSFacilityGateGuardLeader.dialog, Melfis.dialog,
-	  Michelangelo.dialog, OldTownGateGuardLeader.dialog,
-	  Pendragon.dialog, RMS.dialog, Skippy.dialog, Sorenson.dialog,
-	  Spencer.dialog, Spencer1.dialog, StandardBotAfterTakeover.dialog,
-	  StandardMSFacilityGateGuard.dialog,
-	  StandardNewTownGateGuard.dialog, StandardOldTownGateGuard.dialog,
-	  Stone.dialog, Tybalt.dialog, subdlg_Benjamin.dialog,
-	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
-	  subdlg_Darwin.dialog, subdlg_Kevin.dialog,
-	  subdlg_Pendragon.dialog, subdlg_Sorenson.dialog,
-	  subdlg_Spencer_eval.dialog, subdlg_Spencer_funeral.dialog,
-	  subdlg_Stone.dialog, subdlg_kevin_reward1.dialog: added unchecked
-	  german translations
+	* src/blocks.c: various pointless changes to blocks.c by matusz to
+	  change macro names
 
-2007-02-22 21:34  ahuillet
+2007-04-05 01:52  ahuillet
 
-	* src/: chat.c, defs.h, init.c: translations for titles as well
+	* graphics/: grid_tile.offset, grid_tile.png: added grid tile files
+	  for grid in leveleditor in SDL mode
 
-2007-02-22 21:33  ahuillet
+2007-04-04 22:20  ahuillet
 
-	* src/text.c: supporting german chars now
+	* src/: blocks.c, bullet.c, defs.h, leveleditor.c: added disabled
+	  autoguns obstacles - some tweaking will be necessary in
+	  leveleditor to make them look different
 
-2007-02-21 18:19  magotari
+2007-04-04 22:19  ahuillet
 
-	* dialogs/Spencer.dialog: Even better.	I think I am clear for the
-	  release.
+	* src/map.c: autoguns now are functional again, and were somewhat
+	  improved - rate of fire, damage, bullet position
 
-2007-02-21 18:18  magotari
+2007-04-04 22:16  ahuillet
 
-	* dialogs/Spencer.dialog: Nitpicking.
+	* src/view.c: finally supressed - with an awfully dirty patch that
+	  I will regret someday - displaying of W for water obstacles out
+	  of leveleditor mode
 
-2007-02-20 23:22  ahuillet
+2007-04-04 01:46  ahuillet
 
-	* src/: chat.c, defs.h, init.c, menu.c, struct.h: added dialog
-	  translation subdirs support code
+	* map/Asteroid.maps: barbatrix HF entrance
 
-2007-02-20 17:23  magotari
+2007-04-04 01:45  ahuillet
 
-	* dialogs/MSFacilityGateGuardLeader.dialog: Just a small touch.
+	* src/misc.c: now handling removal of obstacles as events
 
-2007-02-20 16:46  ahuillet
+2007-04-04 01:43  ahuillet
 
-	* src/chat.c: fixed dialog engine bug: always run before start
-	  could not quit dialog
+	* map/EventsAndEventTriggers: first commit of two new events on
+	  barbatrix map
 
-2007-02-19 18:51  magotari
+2007-04-03 23:27  ahuillet
 
-	* dialogs/Melfis.dialog: Maybe this sounds better...
+	* src/text.c: cosmetic fix - now obstacle labels are displaying in
+	  a correctly-sized rectangle
 
-2007-02-18 21:32  magotari
+2007-03-18 15:32  ahuillet
 
-	* map/StartOfGame.title: A little change.
+	* graphics/backgrounds/: LevelEditorBanner.png,
+	  LevelEditorSelectionBar1.png, LevelEditorSelectionBar2.png,
+	  LevelEditorSelectionBar3.png, LevelEditorSelectionBar4.png,
+	  LevelEditorSelectionBar5.png, LevelEditorSelectionBar6.png,
+	  LevelEditorSelectionBar7.png, LevelEditorWallsMenu.png: removed
+	  now unused level editor files
 
-2007-02-18 20:51  ahuillet
+2007-03-18 15:28  ahuillet
 
-	* src/map.c: builds correctly now
+	* src/: leveleditor.c, misc.c, defs.h: matusz patch - better
+	  leveleditor object selection bar
 
-2007-02-18 20:50  ahuillet
+2007-03-18 15:28  ahuillet
 
-	* src/map.c: fixed taken over bots respawning friednly
+	* graphics/mouse_buttons/: LevelEditorObjectSelectorLeft.png,
+	  LevelEditorObjectSelectorRight.png: added object selector arrows
+	  for leveleditor
 
-2007-02-18 18:36  magotari
+2007-03-13 00:03  ahuillet
 
-	* dialogs/Spencer.dialog: A quick fix, since I don't have the time
-	  to get my new Spencer going for this release.
+	* freedroidRPG.exe: now using binary write mode for SaveShip
 
-2007-02-18 18:33  ahuillet
+2007-03-12 23:41  ahuillet
 
-	* src/influ.c: removed loot cursor
+	* src/map.c: fixed potential bug in case of crate explosion not due
+	  to the player
 
-2007-02-18 18:30  magotari
+2007-03-12 23:38  ahuillet
 
-	* dialogs/: Bender.dialog, Bruce.dialog, Chandra.dialog,
-	  Duncan.dialog: A few small changes.
+	* src/map.c: put back the binary open mode for SaveShip - crappy
+	  windows
 
-2007-02-18 18:13  magotari
+2007-03-12 23:29  ahuillet
 
-	* dialogs/Bruce.dialog: A new start for Bruce.
+	* src/chat.c: fixed font class for german
 
-2007-02-18 18:08  magotari
+2007-03-11 21:44  ahuillet
 
-	* dialogs/Ewald.dialog: Reverted a small change, too close to the
-	  release to make it consistent now.
+	* map/Asteroid.maps: fixed town corner2
 
-2007-02-18 18:06  magotari
+2007-03-11 21:39  ahuillet
 
-	* dialogs/Chandra.dialog: Some fixes to Chandra.
+	* map/Asteroid.maps: fixed town corner
 
-2007-02-18 17:48  magotari
+2007-03-11 21:35  ahuillet
 
-	* map/EndOfGame.title: Replaced cheese with something better
-	  fitting the game. Comments please.
+	* map/Asteroid.maps: barbatrix modifications
 
-2007-02-18 16:52  magotari
+2007-03-11 17:31  ahuillet
 
-	* dialogs/Melfis.dialog: Another minor change. Maybe I should just
-	  do a bulk commit...
+	* src/menu.c: removed allowance for changing resolutions in SDL
+	  mode- this is definitely not supported
 
-2007-02-18 16:51  magotari
+2007-03-11 16:31  ahuillet
 
-	* dialogs/KevinGuard.dialog: A small improvement.
+	* src/: graphics.c, menu.c, struct.h: added possibility to disable
+	  fadings - performance tweak
 
-2007-02-18 02:07  magotari
+2007-03-11 16:19  ahuillet
 
-	* dialogs/Ewald.dialog: I think we need a new translation.
-	  EN_under15.
+	* src/hud.c: added legend to HP/mana/etc bars tooltips, and
+	  improved text banner sizing
 
-2007-02-18 02:06  magotari
+2007-03-11 16:08  ahuillet
 
-	* dialogs/Duncan.dialog: Whee! Untested changes going straight into
-	  CVS!
+	* src/map.c: fixed bug of crates never dropping random items as
+	  they were supposed to
 
-2007-02-18 02:04  magotari
+2007-03-11 15:56  ahuillet
 
-	* dialogs/StandardBotAfterTakeover.dialog: Fix suggested by
-	  barbatrix.
+	* src/influ.c: random drops in chests as requested by Etienne Viard
 
-2007-02-18 01:15  ahuillet
+2007-03-11 14:43  ahuillet
 
-	* src/graphics.c: screenshots fixed for StoreMenuBackground in GL
+	* freedroidRPG.exe: new exe
 
-2007-02-18 01:14  ahuillet
+2007-03-10 23:49  ahuillet
 
-	* src/saveloadgame.c: same as previous, but now builds on non-GL
-	  machines
+	* src/: menu.c, proto.h, chat.c, graphics.c: language are now tied
+	  to fonts, to handle non-8859-15 languages
 
-2007-02-18 01:12  ahuillet
+2007-03-10 22:32  ahuillet
 
-	* src/saveloadgame.c: adapted game saving code to new opengl
-	  storemenubackground
+	* src/: BFont.c, BFont.h: using const where appropriate in BFont
 
-2007-02-18 00:22  magotari
+2007-03-10 14:14  ahuillet
 
-	* dialogs/Ewald.dialog: One more down, lots to go.  And no, I did
-	  not test it.
+	* src/init.c: added locale check before setlocale
 
-2007-02-18 00:08  magotari
+2007-03-10 14:14  ahuillet
 
-	* dialogs/Kevin.dialog: Reduced the game's cheese content.
+	* src/map.c: cosmetic change
 
-2007-02-17 23:51  ahuillet
-
-	* src/menu.c: improved highlight rectangle in dialogs to highlight
-	  always the whole option and not go out of the frame
-
-2007-02-17 23:50  magotari
-
-	* dialogs/MSFacilityGateGuardLeader.dialog: Some fixes, some
-	  breakages.  What a day...
-
-2007-02-17 23:17  ahuillet
-
-	* map/Asteroid.maps: improved WP route for kevins bot. reduced
-	  chances of having him wander around
-
-2007-02-17 23:03  ahuillet
-
-	* map/: Asteroid.maps, ReturnOfTux.droids: improved HF entrance
-
-2007-02-17 22:56  magotari
-
-	* map/freedroid.prefix_archetypes: New prefixes.  Some balancing
-	  too.
-
-2007-02-17 21:47  ahuillet
-
-	* freedroidRPG.exe: updated binary for prerelease testing
-
-2007-02-17 17:54  ahuillet
-
-	* src/saveloadgame.c: signedness warning
-
-2007-02-17 17:45  ahuillet
-
-	* src/saveloadgame.c: added emergency return in thumbnail
-	  generation code
-
-2007-02-17 17:42  ahuillet
-
-	* src/items.c: suppressed random dropping of books
-
-2007-02-17 16:38  ahuillet
-
-	* src/open_gl.c: patch for storemenubackground
-
-2007-02-16 20:30  ahuillet
-
-	* src/graphics.c: now fixed bug introduced yesterday when patching
-	  knob for interval correctness
-
-2007-02-15 21:10  ahuillet
-
-	* src/graphics.c: fixed graphical selection bug
-
-2007-02-15 20:38  ahuillet
-
-	* src/: open_gl.c, global.h: dramatically improved performance of
-	  MenuBackground operations in GL mode by working only in video
-	  memory
-
-2007-02-15 12:00  ahuillet
-
-	* src/graphics.c: added a tiny extra yield to graphics.c
-
-2007-02-10 20:33  ahuillet
-
-	* configure.ac: new configure for ffastmath
-
-2007-02-10 19:27  ahuillet
-
-	* src/open_gl.c: sped up light computations a tiny bit
-
-2007-02-10 19:22  ahuillet
-
-	* src/: blocks.c, global.h, graphics.c, hud.c, influ.c, light.c,
-	  proto.h, text.c, view.c: replaced translate map to screen pix
-	  with a macro for tiny perf improvement, along with minor
-	  optimizations in that function
-
-2007-02-10 15:05  ahuillet
-
-	* src/: influ.c, main.c: now displaying weapon reloaded message
-	  AFTER weapon has actually been reloaded
-
-2007-02-09 13:40  magotari
-
-	* src/blocks.c: A little fix for a new item in the game.
-
-2007-02-08 19:16  ahuillet
-
-	* graphics/font/font05_white.png: new z letter - a little too
-	  "hard" but at least it is a z
-
-2007-02-08 19:04  ahuillet
-
-	* map/Asteroid.maps: improved town a little
-
-2007-02-08 18:03  ahuillet
-
-	* src/menu.c: now properly counting the number of available lines
-	  in chat dialog options window
-
-2007-02-08 17:55  ahuillet
-
-	* src/shop.c: removed confirmation for reparation
-
-2007-02-08 17:55  ahuillet
-
-	* src/graphics.c: does this improve multiple item selection
-	  performance under Win32 and intelcards?
-
-2007-02-08 17:54  ahuillet
-
-	* src/chat.c: dialog partners turning now immediate
-
-2007-02-08 17:39  ahuillet
-
-	* src/hud.c: now nicely printing negative values of HP/mana rec
-	  bonuses
-
-2007-02-08 16:09  magotari
-
-	* map/freedroid.droid_archetypes: Eyesight improvement for 123
-	  bots.
-
-2007-02-08 16:01  magotari
-
-	* map/freedroid.prefix_archetypes: Prefix junk.
-
-2007-02-08 15:43  rprix
-
-	* src/: graphics.c, menu.c: - fixed LevelEditor bug: re-initialize
-	  level-info after quit to update door-info - fixed bug in
-	  putpixel(): check coords lie inside screen to avoid SegFaulting
-
-2007-02-06 22:00  ahuillet
-
-	* src/hud.c: changed req power to req str as was supposed to be
-	  done years ago
-
-2007-02-06 21:55  ahuillet
-
-	* src/: graphics.c, influ.c, items.c, ship.c, shop.c, skills.c,
-	  sound.c, sound_effects.c: removed  speeches sudir
-
-2007-02-04 23:15  ahuillet
-
-	* DialogEditor.exe: removed old dialogeditor
-
-2007-02-04 21:26  ahuillet
+2007-03-09 23:38  ahuillet
 
 	* freedroidRPG.exe: new bin
 
-2007-02-04 20:23  magotari
+2007-03-09 14:07  bastiansalmela
 
-	* dialogs/Francis.dialog: Updated for the new intro text and user's
-	  suggestion.
-
-2007-02-04 19:53  magotari
-
-	* map/StartOfGame.title: Added some text to the start of the game.
-
-2007-02-04 13:51  ahuillet
-
-	* src/map.c: added small check for cygwin
-
-2007-02-03 21:35  ahuillet
-
-	* src/graphics.c: faster alpha fadein
-
-2007-02-03 20:48  ahuillet
-
-	* src/map.c: fixed bad parser modification
-
-2007-02-03 20:42  ahuillet
-
-	* src/map.c: sped up LocateStringInData a little
-
-2007-02-03 20:22  ahuillet
-
-	* src/map.c: earned another 20percent of loadship time
-
-2007-02-03 19:13  ahuillet
-
-	* src/map.c: now doing the parsing correctly - no more strtoks
-
-2007-02-03 18:30  magotari
-
-	* graphics/: droids/professor/portrait.png,
-	  droids/red_guard/portrait.png,
-	  floor_tiles/iso_grass_floor_0000.png,
-	  floor_tiles/iso_grass_floor_0001.png,
-	  floor_tiles/iso_grass_floor_0002.png,
-	  floor_tiles/iso_grass_floor_0003.png,
-	  floor_tiles/iso_grass_floor_0004.png,
-	  floor_tiles/iso_grass_floor_0005.png,
-	  floor_tiles/iso_grass_floor_0006.png,
-	  floor_tiles/iso_grass_floor_0007.png,
-	  floor_tiles/iso_grass_floor_0008.png,
-	  floor_tiles/iso_grass_floor_0009.png,
-	  floor_tiles/iso_grass_floor_0010.png,
-	  floor_tiles/iso_grass_floor_0011.png,
-	  floor_tiles/iso_grass_floor_0012.png,
-	  floor_tiles/iso_grass_floor_0013.png,
-	  floor_tiles/iso_grass_floor_0014.png,
-	  floor_tiles/iso_grass_floor_0015.png,
-	  floor_tiles/iso_grass_floor_0016.png,
-	  floor_tiles/iso_grass_floor_0017.png,
-	  floor_tiles/iso_grass_floor_0018.png,
-	  floor_tiles/iso_grass_floor_0019.png,
-	  floor_tiles/iso_grass_floor_0020.png,
-	  floor_tiles/iso_grass_floor_0021.png,
-	  floor_tiles/iso_grass_floor_0022.png,
-	  floor_tiles/iso_grass_floor_0023.png,
-	  floor_tiles/iso_grass_floor_0024.png,
-	  floor_tiles/iso_grass_floor_0025.png,
-	  floor_tiles/iso_grass_floor_0026.png,
-	  floor_tiles/iso_grass_floor_0027.png,
-	  floor_tiles/iso_grass_floor_0028.png,
-	  floor_tiles/iso_miscellaneous_floor_0000.png,
-	  floor_tiles/iso_miscellaneous_floor_0001.png,
-	  floor_tiles/iso_miscellaneous_floor_0002.png,
-	  floor_tiles/iso_miscellaneous_floor_0003.png,
-	  floor_tiles/iso_miscellaneous_floor_0004.png,
-	  floor_tiles/iso_miscellaneous_floor_0005.png,
-	  floor_tiles/iso_miscellaneous_floor_0006.png,
-	  floor_tiles/iso_miscellaneous_floor_0007.png,
-	  floor_tiles/iso_miscellaneous_floor_0008.png,
-	  floor_tiles/iso_miscellaneous_floor_0009.png,
-	  floor_tiles/iso_miscellaneous_floor_0010.png,
-	  floor_tiles/iso_miscellaneous_floor_0011.png,
-	  floor_tiles/iso_miscellaneous_floor_0012.png,
-	  floor_tiles/iso_miscellaneous_floor_0013.png,
-	  floor_tiles/iso_miscellaneous_floor_0014.png,
-	  floor_tiles/iso_miscellaneous_floor_0015.png,
-	  floor_tiles/iso_miscellaneous_floor_0016.png,
-	  floor_tiles/iso_miscellaneous_floor_0017.png,
-	  floor_tiles/iso_miscellaneous_floor_0018.png,
-	  floor_tiles/iso_miscellaneous_floor_0019.png,
-	  floor_tiles/iso_miscellaneous_floor_0020.png,
-	  floor_tiles/iso_miscellaneous_floor_0021.png,
-	  floor_tiles/iso_miscellaneous_floor_0022.png,
-	  floor_tiles/iso_miscellaneous_floor_0023.png,
-	  floor_tiles/iso_sand_floor_0001.png,
-	  floor_tiles/iso_sand_floor_0002.png,
-	  floor_tiles/iso_sand_floor_0003.png,
-	  floor_tiles/iso_sand_floor_0004.png,
-	  floor_tiles/iso_sand_floor_0005.png,
-	  floor_tiles/iso_sand_floor_0006.png,
-	  floor_tiles/iso_sidewalk_0001.png,
-	  floor_tiles/iso_sidewalk_0002.png,
-	  floor_tiles/iso_sidewalk_0003.png,
-	  floor_tiles/iso_sidewalk_0004.png,
-	  floor_tiles/iso_sidewalk_0005.png,
-	  floor_tiles/iso_sidewalk_0006.png,
-	  floor_tiles/iso_sidewalk_0007.png,
-	  floor_tiles/iso_sidewalk_0008.png,
-	  floor_tiles/iso_sidewalk_0009.png,
-	  floor_tiles/iso_sidewalk_0010.png,
-	  floor_tiles/iso_sidewalk_0011.png,
-	  floor_tiles/iso_sidewalk_0012.png,
-	  floor_tiles/iso_sidewalk_0013.png,
-	  floor_tiles/iso_sidewalk_0014.png,
-	  floor_tiles/iso_sidewalk_0015.png,
-	  floor_tiles/iso_sidewalk_0016.png,
-	  floor_tiles/iso_sidewalk_0017.png,
-	  floor_tiles/iso_sidewalk_0018.png,
-	  floor_tiles/iso_sidewalk_0019.png,
-	  floor_tiles/iso_sidewalk_0020.png, font/ArialGold.png,
-	  font/ArialGold_Depleted.png, font/NeonFont.png,
-	  font/SmallStone.png, font/cpuFont.png, font/font01.png,
-	  font/font05.png, font/font05_blue.png, font/font05_green.png,
-	  font/font05_magenta.png, font/font05_red.png,
-	  font/font05_white.png, font/font05_yellow.png, font/parafont.png,
-	  font/redfont.png, font/small_white.png,
-	  items/inventory_image_1.png, items/inventory_image_13.png,
-	  items/inventory_image_14.png, items/inventory_image_18.png,
-	  items/inventory_image_2.png, items/inventory_image_21.png,
-	  items/inventory_image_22.png, items/inventory_image_25.png,
-	  items/inventory_image_26.png, items/inventory_image_28.png,
-	  items/inventory_image_3.png, items/inventory_image_39.png,
-	  items/inventory_image_40.png, items/inventory_image_46.png,
-	  items/inventory_image_7.png, items/inventory_image_8.png,
-	  items/ammo_exterminator_sphere/ingame.png,
-	  items/ammo_exterminator_sphere/inv_image.png,
-	  items/ammo_laser_crystal/ingame.png,
-	  items/ammo_plasma_bullet/inv_image.png,
-	  items/antigrav_unit/inv_image.png,
-	  items/antimatter_matter_converter/ingame.png,
-	  items/antimatter_matter_converter/inv_image.png,
-	  items/armour_robe/ingame.png, items/armour_robe/inv_image.png,
-	  items/basic_armour/ingame.png, items/basic_armour/inv_image.png,
-	  items/basic_armour2/ingame.png,
-	  items/basic_armour2/inv_image.png,
-	  items/basic_armour3/ingame.png,
-	  items/basic_armour3/inv_image.png,
-	  items/bi_pedal_drive/inv_image.png,
-	  items/blue_energy_drink/inv_image.png,
-	  items/boots_simple/ingame.png, items/boots_simple/inv_image.png,
-	  items/boots_simple/portrait_0001.png,
-	  items/boots_simple/portrait_0002.png,
-	  items/boots_simple/portrait_0003.png,
-	  items/boots_simple/portrait_0004.png,
-	  items/boots_simple/portrait_0005.png,
-	  items/boots_simple/portrait_0006.png,
-	  items/boots_simple/portrait_0007.png,
-	  items/boots_simple/portrait_0008.png,
-	  items/boots_simple/portrait_0009.png,
-	  items/boots_simple/portrait_0010.png,
-	  items/boots_simple/portrait_0011.png,
-	  items/boots_simple/portrait_0012.png,
-	  items/boots_simple/portrait_0013.png,
-	  items/boots_simple/portrait_0014.png,
-	  items/boots_simple/portrait_0015.png,
-	  items/boots_simple/portrait_0016.png,
-	  items/boots_simple/portrait_0017.png,
-	  items/boots_simple/portrait_0018.png,
-	  items/boots_simple/portrait_0019.png,
-	  items/boots_simple/portrait_0020.png,
-	  items/boots_simple/portrait_0021.png,
-	  items/boots_simple/portrait_0022.png,
-	  items/boots_simple/portrait_0023.png,
-	  items/boots_simple/portrait_0024.png,
-	  items/boots_simple/portrait_0025.png,
-	  items/boots_simple/portrait_0026.png,
-	  items/boots_simple/portrait_0027.png,
-	  items/boots_simple/portrait_0028.png,
-	  items/boots_simple/portrait_0029.png,
-	  items/boots_simple/portrait_0030.png,
-	  items/boots_simple/portrait_0031.png,
-	  items/boots_simple/portrait_0032.png,
-	  items/boots_simple/portrait_0033.png,
-	  items/brain_enlargement_antidode/inv_image.png,
-	  items/buckler/ingame.png, items/buckler/inv_image.png,
-	  items/club/ingame.png, items/club/inv_image.png,
-	  items/cyberbucks/ingame.png, items/cyberbucks/inv_image.png,
-	  items/desk_lamp/ingame.png, items/desk_lamp/inv_image.png,
-	  items/dixons_toolbox/inv_image.png,
-	  items/drinking_mug/inv_image.png,
-	  items/eating_fork/inv_image.png, items/eating_plate/ingame.png,
-	  items/eating_plate/inv_image.png,
-	  items/emp_grenade/inv_image.png,
-	  items/entropy_inverter/ingame.png,
-	  items/entropy_inverter/inv_image.png,
-	  items/exterminator_simple/ingame.png,
-	  items/exterminator_simple/inv_image.png,
-	  items/force_capsule/ingame.png,
-	  items/force_capsule/inv_image_big.png,
-	  items/force_capsule/inv_image_medium.png,
-	  items/force_capsule/inv_image_small.png,
-	  items/green_armour/ingame.png, items/green_armour/inv_image.png,
-	  items/green_armour/portrait_0001.png,
-	  items/green_armour/portrait_0002.png,
-	  items/green_armour/portrait_0003.png,
-	  items/green_armour/portrait_0004.png,
-	  items/green_armour/portrait_0005.png,
-	  items/green_armour/portrait_0006.png,
-	  items/green_armour/portrait_0007.png,
-	  items/green_armour/portrait_0008.png,
-	  items/green_armour/portrait_0009.png,
-	  items/green_armour/portrait_0010.png,
-	  items/green_armour/portrait_0011.png,
-	  items/green_armour/portrait_0012.png,
-	  items/green_armour/portrait_0013.png,
-	  items/green_armour/portrait_0014.png,
-	  items/green_armour/portrait_0015.png,
-	  items/green_armour/portrait_0016.png,
-	  items/hacker_wristband/ingame.png,
-	  items/hacker_wristband/inv_image.png,
-	  items/health_capsule/ingame.png,
-	  items/health_capsule/inv_image_medium.png,
-	  items/health_capsule/inv_image_small.png,
-	  items/helmet_skull_cap/inv_image.png,
-	  items/helmet_skull_cap/portrait_0001.png,
-	  items/helmet_skull_cap/portrait_0002.png,
-	  items/helmet_skull_cap/portrait_0003.png,
-	  items/helmet_skull_cap/portrait_0004.png,
-	  items/helmet_skull_cap/portrait_0005.png,
-	  items/helmet_skull_cap/portrait_0006.png,
-	  items/helmet_skull_cap/portrait_0007.png,
-	  items/helmet_skull_cap/portrait_0008.png,
-	  items/helmet_skull_cap/portrait_0009.png,
-	  items/helmet_skull_cap/portrait_0010.png,
-	  items/helmet_skull_cap/portrait_0011.png,
-	  items/helmet_skull_cap/portrait_0012.png,
-	  items/helmet_skull_cap/portrait_0013.png,
-	  items/helmet_skull_cap/portrait_0014.png,
-	  items/helmet_skull_cap/portrait_0015.png,
-	  items/helmet_skull_cap/portrait_0016.png,
-	  items/helmet_skull_cap/portrait_0017.png,
-	  items/helmet_skull_cap/portrait_0018.png,
-	  items/helmet_skull_cap/portrait_0019.png,
-	  items/helmet_skull_cap/portrait_0020.png,
-	  items/helmet_skull_cap/portrait_0021.png,
-	  items/helmet_skull_cap/portrait_0022.png,
-	  items/helmet_skull_cap/portrait_0023.png,
-	  items/helmet_skull_cap/portrait_0024.png,
-	  items/helmet_skull_cap/portrait_0025.png,
-	  items/helmet_skull_cap/portrait_0026.png,
-	  items/helmet_skull_cap/portrait_0027.png,
-	  items/helmet_skull_cap/portrait_0028.png,
-	  items/helmet_skull_cap/portrait_0029.png,
-	  items/helmet_skull_cap/portrait_0030.png,
-	  items/helmet_skull_cap/portrait_0031.png,
-	  items/helmet_skull_cap/portrait_0032.png,
-	  items/helmet_yellow/ingame.png,
-	  items/helmet_yellow/inv_image.png,
-	  items/helmet_yellow/portrait_0001.png,
-	  items/helmet_yellow/portrait_0002.png,
-	  items/helmet_yellow/portrait_0003.png,
-	  items/helmet_yellow/portrait_0004.png,
-	  items/helmet_yellow/portrait_0005.png,
-	  items/helmet_yellow/portrait_0006.png,
-	  items/helmet_yellow/portrait_0007.png,
-	  items/helmet_yellow/portrait_0008.png,
-	  items/helmet_yellow/portrait_0009.png,
-	  items/helmet_yellow/portrait_0010.png,
-	  items/helmet_yellow/portrait_0011.png,
-	  items/helmet_yellow/portrait_0012.png,
-	  items/helmet_yellow/portrait_0013.png,
-	  items/helmet_yellow/portrait_0014.png,
-	  items/helmet_yellow/portrait_0015.png,
-	  items/helmet_yellow/portrait_0016.png,
-	  items/helmet_yellow/portrait_0017.png,
-	  items/helmet_yellow/portrait_0018.png,
-	  items/helmet_yellow/portrait_0019.png,
-	  items/helmet_yellow/portrait_0020.png,
-	  items/helmet_yellow/portrait_0021.png,
-	  items/helmet_yellow/portrait_0022.png,
-	  items/helmet_yellow/portrait_0023.png,
-	  items/helmet_yellow/portrait_0024.png,
-	  items/helmet_yellow/portrait_0025.png,
-	  items/helmet_yellow/portrait_0026.png,
-	  items/helmet_yellow/portrait_0027.png,
-	  items/helmet_yellow/portrait_0028.png,
-	  items/helmet_yellow/portrait_0029.png,
-	  items/helmet_yellow/portrait_0030.png,
-	  items/helmet_yellow/portrait_0031.png,
-	  items/helmet_yellow/portrait_0032.png,
-	  items/helmet_yellow2/ingame.png,
-	  items/helmet_yellow2/inv_image.png,
-	  items/helmet_yellow3/ingame.png,
-	  items/helmet_yellow3/inv_image.png,
-	  items/helmet_yellow4/ingame.png,
-	  items/helmet_yellow4/inv_image.png,
-	  items/large_shield/ingame.png, items/large_shield/inv_image.png,
-	  items/laser_staff/ingame.png, items/laser_staff/inv_image.png,
-	  items/laser_sword_green/ingame.png,
-	  items/laser_sword_green/inv_image.png,
-	  items/laser_sword_red/ingame.png,
-	  items/laser_sword_red/inv_image.png,
-	  items/laser_sword_yellow/ingame.png,
-	  items/laser_sword_yellow/inv_image.png, items/mace/ingame.png,
-	  items/mace/inv_image.png, items/map_maker/ingame.png,
-	  items/map_maker/inv_image.png, items/monkey_wrench/ingame.png,
-	  items/monkey_wrench/inv_image.png,
-	  items/pill_dexterity/inv_image.png,
-	  items/pill_magic/inv_image.png,
-	  items/pill_strength/inv_image.png,
-	  items/plasma_double/ingame.png, items/plasma_grenade/ingame.png,
-	  items/plasma_grenade/inv_image.png,
-	  items/plasma_single/ingame.png,
-	  items/plasma_transistor/ingame.png,
-	  items/plasma_transistor/inv_image.png,
-	  items/plasma_triple/ingame.png,
-	  items/red_dilitium_crystal/inv_image.png,
-	  items/script/ingame.png, items/script/inv_image.png,
-	  items/small_shield/ingame.png, items/small_shield/inv_image.png,
-	  items/sniper_wristband/ingame.png,
-	  items/sniper_wristband/inv_image.png, items/spellbook/ingame.png,
-	  items/spellbook/inv_image.png, items/standard_shield/ingame.png,
-	  items/standard_shield/inv_image.png,
-	  items/superconducting_relay_unit/ingame.png,
-	  items/superconducting_relay_unit/inv_image.png,
-	  items/tachyon_converter/ingame.png,
-	  items/tachyon_converter/inv_image.png,
-	  items/track_drive/ingame.png, items/track_drive/inv_image.png,
-	  items/tri_pedal_drive/ingame.png,
-	  items/tri_pedal_drive/inv_image.png,
-	  items/vmx_grenade/inv_image.png,
-	  items/warrior_wristband/ingame.png,
-	  items/warrior_wristband/inv_image.png,
-	  items/wheel_drive/ingame.png, items/wheel_drive/inv_image.png,
-	  lanzz_theme/skill_buttons.png, lanzz_theme/to_elem.png,
-	  light_radius_chunks/iso_light_radius_darkness_0001.png,
-	  light_radius_chunks/iso_light_radius_darkness_0002.png,
-	  light_radius_chunks/iso_light_radius_darkness_0003.png,
-	  light_radius_chunks/iso_light_radius_darkness_0004.png,
-	  light_radius_chunks/iso_light_radius_darkness_0005.png,
-	  light_radius_chunks/iso_light_radius_darkness_0006.png,
-	  light_radius_chunks/iso_light_radius_darkness_0007.png,
-	  light_radius_chunks/iso_light_radius_darkness_0008.png,
-	  light_radius_chunks/iso_light_radius_darkness_0009.png,
-	  light_radius_chunks/iso_light_radius_darkness_0010.png,
-	  light_radius_chunks/iso_light_radius_darkness_0011.png,
-	  light_radius_chunks/iso_light_radius_darkness_0012.png,
-	  light_radius_chunks/iso_light_radius_darkness_0013.png,
-	  light_radius_chunks/iso_light_radius_darkness_0014.png,
-	  light_radius_chunks/iso_light_radius_darkness_0015.png,
-	  light_radius_chunks/iso_light_radius_darkness_0016.png,
-	  light_radius_chunks/iso_light_radius_darkness_0017.png,
-	  light_radius_chunks/iso_light_radius_darkness_0018.png,
-	  light_radius_chunks/iso_light_radius_darkness_0019.png,
-	  light_radius_chunks/iso_light_radius_darkness_0020.png,
-	  mouse_buttons/AttributePlusButton.png,
-	  mouse_buttons/Buy10Button_raw.png,
-	  mouse_buttons/BuyButton_raw.png, mouse_buttons/CHAButton.png,
-	  mouse_buttons/ConsoleCompletelyTransparentPlate.png,
-	  mouse_buttons/ConsoleIdentifyButton_green.png,
-	  mouse_buttons/ConsoleIdentifyButton_red.png,
-	  mouse_buttons/ConsoleIdentifyButton_yellow.png,
-	  mouse_buttons/ConsoleItemBrowserLeft.png,
-	  mouse_buttons/ExportThisLevelButton.png,
-	  mouse_buttons/GoLevelEastButton.png,
-	  mouse_buttons/GoLevelNorthButton.png,
-	  mouse_buttons/GoLevelSouthButton.png,
-	  mouse_buttons/GoLevelWestButton.png, mouse_buttons/INVButton.png,
-	  mouse_buttons/LEFTButton.png, mouse_buttons/LeftShopButton.png,
-	  mouse_buttons/LevelEditorBeautifyGrassButton.png,
-	  mouse_buttons/LevelEditorCancelItemDrop.png,
-	  mouse_buttons/LevelEditorDeleteObstacleButton.png,
-	  mouse_buttons/LevelEditorESCButton.png,
-	  mouse_buttons/LevelEditorKeymapButton.png,
-	  mouse_buttons/LevelEditorMODEButton.png,
-	  mouse_buttons/LevelEditorNewItemButton.png,
-	  mouse_buttons/LevelEditorNewMapLabelButton.png,
-	  mouse_buttons/LevelEditorNewObstacleDescriptionButton.png,
-	  mouse_buttons/LevelEditorNewObstacleLabelButton.png,
-	  mouse_buttons/LevelEditorNextObstacleButton.png,
-	  mouse_buttons/LevelEditorPlantWaypoint.png,
-	  mouse_buttons/LevelEditorPrevItemGroup.png,
-	  mouse_buttons/LevelEditorQuitButton.png,
-	  mouse_buttons/LevelEditorRecursiveFillButton.png,
-	  mouse_buttons/LevelEditorResizeLevelButton.png,
-	  mouse_buttons/LevelEditorSaveShipButton.png,
-	  mouse_buttons/LevelEditorToggleCollisionRectsButton.png,
-	  mouse_buttons/LevelEditorToggleCollisionRectsButtonOff.png,
-	  mouse_buttons/LevelEditorToggleConnectionBlueButton.png,
-	  mouse_buttons/LevelEditorToggleConnectionRedButton.png,
-	  mouse_buttons/LevelEditorToggleEnemiesButton.png,
-	  mouse_buttons/LevelEditorToggleEnemiesButtonOff.png,
-	  mouse_buttons/LevelEditorToggleObstaclesButton.png,
-	  mouse_buttons/LevelEditorToggleObstaclesButtonOff.png,
-	  mouse_buttons/LevelEditorToggleTooltipsButton.png,
-	  mouse_buttons/LevelEditorToggleTooltipsButtonOff.png,
-	  mouse_buttons/LevelEditorToggleTuxButton.png,
-	  mouse_buttons/LevelEditorToggleTuxButtonOff.png,
-	  mouse_buttons/LevelEditorToggleWaypointButton.png,
-	  mouse_buttons/LevelEditorUndergroundLightButton.png,
-	  mouse_buttons/LevelEditorZoomInButton.png,
-	  mouse_buttons/LevelEditorZoomOutButton.png,
-	  mouse_buttons/MapExitButton.png,
-	  mouse_buttons/MapGunOnButton_gray.png,
-	  mouse_buttons/MapGunOnButton_red.png,
-	  mouse_buttons/MapGunOnButton_yellow.png,
-	  mouse_buttons/MapGunOnOffButton.png,
-	  mouse_buttons/MapGunOnOffButton_gray.png,
-	  mouse_buttons/MapGunOnOffButton_red.png,
-	  mouse_buttons/MapGunOnOffButton_yellow.png,
-	  mouse_buttons/MapGunTypeButton1_red.png,
-	  mouse_buttons/MapGunTypeButton1_yellow.png,
-	  mouse_buttons/MapGunTypeButton2_red.png,
-	  mouse_buttons/MapGunTypeButton2_yellow.png,
-	  mouse_buttons/MapGunTypeButton3_red.png,
-	  mouse_buttons/MapGunTypeButton3_yellow.png,
-	  mouse_buttons/MapGunTypeButton4_red.png,
-	  mouse_buttons/MapGunTypeButton4_yellow.png,
-	  mouse_buttons/MapPasswordButtonMiddle.png,
-	  mouse_buttons/MapReadEmail_green.png,
-	  mouse_buttons/MapReadEmail_red.png,
-	  mouse_buttons/MapRequestEnergyRation_green.png,
-	  mouse_buttons/MapRequestEnergyRation_red.png,
-	  mouse_buttons/MapSecurityButtonLeft.png,
-	  mouse_buttons/MapSecurityButtonMiddle.png,
-	  mouse_buttons/MapSecurityButtonRight.png,
-	  mouse_buttons/MapUnlockDoorButton.png,
-	  mouse_buttons/MapUnlockDoorButton_gray.png,
-	  mouse_buttons/MapUnlockDoorButton_red.png,
-	  mouse_buttons/MapUnlockDoorButton_yellow.png,
-	  mouse_buttons/PLUSButton.png, mouse_buttons/RIGHTButton.png,
-	  mouse_buttons/SKIButton.png,
-	  mouse_buttons/ScrollDialogMenuDown.png,
-	  mouse_buttons/ScrollDialogMenuOff.png,
-	  mouse_buttons/ScrollDialogMenuUp.png,
-	  mouse_buttons/arrow_down_for_scroll_text.png,
-	  mouse_buttons/arrow_up_for_scroll_text.png,
-	  mouse_buttons/buy_button.png, mouse_buttons/cha_button_red.png,
-	  mouse_buttons/cha_button_yellow.png,
-	  mouse_buttons/identify_button.png,
-	  mouse_buttons/inv_button_yellow.png,
-	  mouse_buttons/log_button_red.png,
-	  mouse_buttons/log_button_yellow.png,
-	  mouse_buttons/menuselect_left.png,
-	  mouse_buttons/menuselect_right.png,
-	  mouse_buttons/number_selector_ok_button.png,
-	  mouse_buttons/put_button.png,
-	  mouse_buttons/quest_browser_done_quests.png,
-	  mouse_buttons/quest_browser_done_quests_off.png,
-	  mouse_buttons/quest_browser_item_long.png,
-	  mouse_buttons/quest_browser_item_short.png,
-	  mouse_buttons/quest_browser_notes.png,
-	  mouse_buttons/quest_browser_notes_off.png,
-	  mouse_buttons/quest_browser_open_quests.png,
-	  mouse_buttons/quest_browser_open_quests_off.png,
-	  mouse_buttons/repair_button.png, mouse_buttons/sell_button.png,
-	  mouse_buttons/ski_button_yellow.png,
-	  mouse_buttons/takeover_help_button.png,
-	  obstacles/iso_autogun_0001.png, obstacles/iso_autogun_0002.png,
-	  obstacles/iso_autogun_0003.png, obstacles/iso_autogun_0004.png,
-	  obstacles/iso_bathroom_furniture_0000.png,
-	  obstacles/iso_bathroom_furniture_0001.png,
-	  obstacles/iso_bathroom_furniture_0002.png,
-	  obstacles/iso_bathroom_furniture_0003.png,
-	  obstacles/iso_bathroom_furniture_0004.png,
-	  obstacles/iso_bathroom_furniture_0005.png,
-	  obstacles/iso_bathroom_furniture_0006.png,
-	  obstacles/iso_bathroom_furniture_0007.png,
-	  obstacles/iso_bathroom_furniture_0008.png,
-	  obstacles/iso_bathroom_furniture_0009.png,
-	  obstacles/iso_bathroom_furniture_shadow_0000.png,
-	  obstacles/iso_bathroom_furniture_shadow_0001.png,
-	  obstacles/iso_bathroom_furniture_shadow_0002.png,
-	  obstacles/iso_bathroom_furniture_shadow_0003.png,
-	  obstacles/iso_bathroom_furniture_shadow_0004.png,
-	  obstacles/iso_bathroom_furniture_shadow_0005.png,
-	  obstacles/iso_bathroom_furniture_shadow_0006.png,
-	  obstacles/iso_bathroom_furniture_shadow_0007.png,
-	  obstacles/iso_bathroom_furniture_shadow_0008.png,
-	  obstacles/iso_bathroom_furniture_shadow_0009.png,
-	  obstacles/iso_beds_0000.png, obstacles/iso_beds_0001.png,
-	  obstacles/iso_beds_0002.png, obstacles/iso_beds_0003.png,
-	  obstacles/iso_beds_0004.png, obstacles/iso_beds_0005.png,
-	  obstacles/iso_beds_0006.png, obstacles/iso_beds_0007.png,
-	  obstacles/iso_beds_shadow_0000.png,
-	  obstacles/iso_beds_shadow_0001.png,
-	  obstacles/iso_beds_shadow_0002.png,
-	  obstacles/iso_beds_shadow_0003.png,
-	  obstacles/iso_beds_shadow_0004.png,
-	  obstacles/iso_beds_shadow_0005.png,
-	  obstacles/iso_beds_shadow_0006.png,
-	  obstacles/iso_beds_shadow_0007.png, obstacles/iso_blood_0001.png,
-	  obstacles/iso_blood_0002.png, obstacles/iso_blood_0003.png,
-	  obstacles/iso_blood_0004.png, obstacles/iso_blood_0005.png,
-	  obstacles/iso_blood_0006.png, obstacles/iso_blood_0007.png,
-	  obstacles/iso_blood_0008.png, obstacles/iso_body_0001.png,
-	  obstacles/iso_body_0002.png, obstacles/iso_body_0003.png,
-	  obstacles/iso_body_0004.png, obstacles/iso_brick_wall_0001.png,
-	  obstacles/iso_brick_wall_0002.png,
-	  obstacles/iso_brick_wall_0003.png,
-	  obstacles/iso_brick_wall_0004.png,
-	  obstacles/iso_brick_wall_0005.png,
-	  obstacles/iso_brick_wall_0006.png,
-	  obstacles/iso_brick_wall_0007.png,
-	  obstacles/iso_brick_wall_0008.png,
-	  obstacles/iso_brick_wall_0009.png,
-	  obstacles/iso_brick_wall_0010.png,
-	  obstacles/iso_brick_wall_0011.png,
-	  obstacles/iso_brick_wall_0012.png,
-	  obstacles/iso_brick_wall_0013.png,
-	  obstacles/iso_brick_wall_0014.png,
-	  obstacles/iso_brick_wall_0015.png,
-	  obstacles/iso_brick_wall_0016.png,
-	  obstacles/iso_brick_wall_0017.png,
-	  obstacles/iso_cave_wall_0001.png,
-	  obstacles/iso_cave_wall_0002.png,
-	  obstacles/iso_cave_wall_0003.png,
-	  obstacles/iso_cave_wall_0004.png,
-	  obstacles/iso_cave_wall_0005.png,
-	  obstacles/iso_cave_wall_0006.png,
-	  obstacles/iso_cave_wall_0007.png,
-	  obstacles/iso_cave_wall_0008.png,
-	  obstacles/iso_cave_wall_0009.png,
-	  obstacles/iso_cave_wall_0010.png, obstacles/iso_chairs_0001.png,
-	  obstacles/iso_chairs_0002.png, obstacles/iso_chairs_0003.png,
-	  obstacles/iso_chairs_0004.png, obstacles/iso_chairs_0005.png,
-	  obstacles/iso_chairs_0006.png, obstacles/iso_chairs_0007.png,
-	  obstacles/iso_chairs_0008.png, obstacles/iso_chairs_0009.png,
-	  obstacles/iso_chairs_0010.png, obstacles/iso_chairs_0011.png,
-	  obstacles/iso_chairs_0012.png, obstacles/iso_chairs_0013.png,
-	  obstacles/iso_chairs_0014.png, obstacles/iso_chairs_0015.png,
-	  obstacles/iso_chairs_0016.png, obstacles/iso_chairs_0017.png,
-	  obstacles/iso_chairs_0018.png, obstacles/iso_chairs_0019.png,
-	  obstacles/iso_chairs_0020.png, obstacles/iso_chairs_0021.png,
-	  obstacles/iso_chairs_0022.png, obstacles/iso_chairs_0023.png,
-	  obstacles/iso_chairs_0024.png,
-	  obstacles/iso_chairs_shadow_0001.png,
-	  obstacles/iso_chairs_shadow_0002.png,
-	  obstacles/iso_chairs_shadow_0003.png,
-	  obstacles/iso_chairs_shadow_0004.png,
-	  obstacles/iso_chairs_shadow_0005.png,
-	  obstacles/iso_chairs_shadow_0006.png,
-	  obstacles/iso_chairs_shadow_0007.png,
-	  obstacles/iso_chairs_shadow_0008.png,
-	  obstacles/iso_chairs_shadow_0009.png,
-	  obstacles/iso_chairs_shadow_0010.png,
-	  obstacles/iso_chairs_shadow_0011.png,
-	  obstacles/iso_chairs_shadow_0012.png,
-	  obstacles/iso_chairs_shadow_0013.png,
-	  obstacles/iso_chairs_shadow_0014.png,
-	  obstacles/iso_chairs_shadow_0015.png,
-	  obstacles/iso_chairs_shadow_0016.png,
-	  obstacles/iso_chairs_shadow_0017.png,
-	  obstacles/iso_chairs_shadow_0018.png,
-	  obstacles/iso_chairs_shadow_0019.png,
-	  obstacles/iso_chairs_shadow_0020.png,
-	  obstacles/iso_chairs_shadow_0021.png,
-	  obstacles/iso_chairs_shadow_0022.png,
-	  obstacles/iso_chairs_shadow_0023.png,
-	  obstacles/iso_chairs_shadow_0024.png,
-	  obstacles/iso_conference_furniture_0000.png,
-	  obstacles/iso_conference_furniture_0001.png,
-	  obstacles/iso_conference_furniture_0002.png,
-	  obstacles/iso_conference_furniture_0003.png,
-	  obstacles/iso_conference_furniture_0004.png,
-	  obstacles/iso_conference_furniture_0005.png,
-	  obstacles/iso_conference_furniture_0006.png,
-	  obstacles/iso_conference_furniture_0007.png,
-	  obstacles/iso_conference_furniture_0008.png,
-	  obstacles/iso_conference_furniture_0009.png,
-	  obstacles/iso_conference_furniture_0010.png,
-	  obstacles/iso_conference_furniture_0011.png,
-	  obstacles/iso_conference_furniture_shadow_0000.png,
-	  obstacles/iso_conference_furniture_shadow_0001.png,
-	  obstacles/iso_conference_furniture_shadow_0002.png,
-	  obstacles/iso_conference_furniture_shadow_0003.png,
-	  obstacles/iso_conference_furniture_shadow_0004.png,
-	  obstacles/iso_conference_furniture_shadow_0005.png,
-	  obstacles/iso_conference_furniture_shadow_0006.png,
-	  obstacles/iso_conference_furniture_shadow_0007.png,
-	  obstacles/iso_conference_furniture_shadow_0008.png,
-	  obstacles/iso_conference_furniture_shadow_0009.png,
-	  obstacles/iso_conference_furniture_shadow_0010.png,
-	  obstacles/iso_conference_furniture_shadow_0011.png,
-	  obstacles/iso_container_0001.png,
-	  obstacles/iso_container_0002.png,
-	  obstacles/iso_container_0003.png,
-	  obstacles/iso_container_0004.png,
-	  obstacles/iso_container_shadow_0001.png,
-	  obstacles/iso_container_shadow_0002.png,
-	  obstacles/iso_container_shadow_0003.png,
-	  obstacles/iso_container_shadow_0004.png,
-	  obstacles/iso_counter_0001.png, obstacles/iso_counter_0002.png,
-	  obstacles/iso_counter_0003.png, obstacles/iso_counter_0004.png,
-	  obstacles/iso_counter_0005.png, obstacles/iso_counter_0006.png,
-	  obstacles/iso_counter_0007.png, obstacles/iso_counter_0008.png,
-	  obstacles/iso_counter_0009.png, obstacles/iso_counter_0010.png,
-	  obstacles/iso_counter_0011.png, obstacles/iso_counter_0012.png,
-	  obstacles/iso_doors_0001.png, obstacles/iso_doors_0002.png,
-	  obstacles/iso_doors_0003.png, obstacles/iso_doors_0004.png,
-	  obstacles/iso_doors_0005.png, obstacles/iso_doors_0006.png,
-	  obstacles/iso_doors_0007.png, obstacles/iso_doors_0008.png,
-	  obstacles/iso_doors_0009.png, obstacles/iso_doors_0010.png,
-	  obstacles/iso_doors_0011.png, obstacles/iso_doors_0012.png,
-	  obstacles/iso_doors_0013.png, obstacles/iso_doors_0014.png,
-	  obstacles/iso_doors_0015.png, obstacles/iso_doors_0016.png,
-	  obstacles/iso_doors_0017.png, obstacles/iso_doors_0018.png,
-	  obstacles/iso_doors_0019.png, obstacles/iso_doors_0020.png,
-	  obstacles/iso_doors_0021.png, obstacles/iso_doors_0022.png,
-	  obstacles/iso_doors_0023.png, obstacles/iso_doors_0024.png,
-	  obstacles/iso_exits_0001.png, obstacles/iso_exits_0002.png,
-	  obstacles/iso_exits_0003.png, obstacles/iso_exits_0004.png,
-	  obstacles/iso_fence_0001.png, obstacles/iso_fence_0002.png,
-	  obstacles/iso_library_furniture_0001.png,
-	  obstacles/iso_library_furniture_0002.png,
-	  obstacles/iso_machinery_0001.png,
-	  obstacles/iso_machinery_0002.png,
-	  obstacles/iso_machinery_0003.png,
-	  obstacles/iso_machinery_0004.png,
-	  obstacles/iso_machinery_0005.png,
-	  obstacles/iso_machinery_0006.png,
-	  obstacles/iso_machinery_0007.png,
-	  obstacles/iso_machinery_0008.png,
-	  obstacles/iso_machinery_0010.png,
-	  obstacles/iso_machinery_0011.png,
-	  obstacles/iso_machinery_0012.png,
-	  obstacles/iso_machinery_shadow_0001.png,
-	  obstacles/iso_machinery_shadow_0002.png,
-	  obstacles/iso_machinery_shadow_0003.png,
-	  obstacles/iso_machinery_shadow_0004.png,
-	  obstacles/iso_machinery_shadow_0005.png,
-	  obstacles/iso_machinery_shadow_0006.png,
-	  obstacles/iso_machinery_shadow_0007.png,
-	  obstacles/iso_machinery_shadow_0008.png,
-	  obstacles/iso_obstacle_0000.png, obstacles/iso_obstacle_0005.png,
-	  obstacles/iso_obstacle_0016.png, obstacles/iso_obstacle_0017.png,
-	  obstacles/iso_obstacle_0018.png, obstacles/iso_obstacle_0019.png,
-	  obstacles/iso_obstacle_0020.png, obstacles/iso_obstacle_0042.png,
-	  obstacles/iso_obstacle_0043.png, obstacles/iso_obstacle_0044.png,
-	  obstacles/iso_obstacle_0045.png, obstacles/iso_obstacle_0046.png,
-	  obstacles/iso_obstacle_0047.png, obstacles/iso_obstacle_0048.png,
-	  obstacles/iso_obstacle_0050.png, obstacles/iso_obstacle_0051.png,
-	  obstacles/iso_obstacle_0052.png, obstacles/iso_obstacle_0053.png,
-	  obstacles/iso_obstacle_0054.png, obstacles/iso_obstacle_0055.png,
-	  obstacles/iso_obstacle_0056.png, obstacles/iso_obstacle_0057.png,
-	  obstacles/iso_obstacle_0059.png, obstacles/iso_obstacle_0060.png,
-	  obstacles/iso_obstacle_0061.png, obstacles/iso_obstacle_0062.png,
-	  obstacles/iso_obstacle_0063.png, obstacles/iso_obstacle_0064.png,
-	  obstacles/iso_obstacle_0065.png, obstacles/iso_obstacle_0066.png,
-	  obstacles/iso_obstacle_0067.png, obstacles/iso_obstacle_0068.png,
-	  obstacles/iso_obstacle_0069.png, obstacles/iso_obstacle_0070.png,
-	  obstacles/iso_obstacle_0071.png, obstacles/iso_obstacle_0072.png,
-	  obstacles/iso_obstacle_0073.png, obstacles/iso_obstacle_0074.png,
-	  obstacles/iso_obstacle_0075.png, obstacles/iso_obstacle_0076.png,
-	  obstacles/iso_obstacle_0077.png, obstacles/iso_obstacle_0078.png,
-	  obstacles/iso_obstacle_0079.png, obstacles/iso_obstacle_0080.png,
-	  obstacles/iso_obstacle_0081.png, obstacles/iso_obstacle_0082.png,
-	  obstacles/iso_obstacle_0083.png, obstacles/iso_obstacle_0084.png,
-	  obstacles/iso_obstacle_0085.png, obstacles/iso_obstacle_0086.png,
-	  obstacles/iso_obstacle_0087.png, obstacles/iso_obstacle_0088.png,
-	  obstacles/iso_obstacle_0089.png, obstacles/iso_obstacle_0090.png,
-	  obstacles/iso_obstacle_0091.png, obstacles/iso_obstacle_0092.png,
-	  obstacles/iso_obstacle_0093.png, obstacles/iso_obstacle_0094.png,
-	  obstacles/iso_obstacle_0095.png, obstacles/iso_obstacle_0096.png,
-	  obstacles/iso_obstacle_0097.png, obstacles/iso_obstacle_0098.png,
-	  obstacles/iso_obstacle_0099.png, obstacles/iso_obstacle_0100.png,
-	  obstacles/iso_obstacle_0101.png, obstacles/iso_obstacle_0102.png,
-	  obstacles/iso_obstacle_0103.png, obstacles/iso_obstacle_0104.png,
-	  obstacles/iso_obstacle_0105.png, obstacles/iso_obstacle_0106.png,
-	  obstacles/iso_obstacle_0107.png, obstacles/iso_obstacle_0108.png,
-	  obstacles/iso_obstacle_0109.png, obstacles/iso_obstacle_0110.png,
-	  obstacles/iso_obstacle_0111.png, obstacles/iso_obstacle_0112.png,
-	  obstacles/iso_obstacle_0113.png, obstacles/iso_obstacle_0114.png,
-	  obstacles/iso_obstacle_0115.png,
-	  obstacles/iso_obstacle_shadow_0042.png,
-	  obstacles/iso_obstacle_shadow_0043.png,
-	  obstacles/iso_obstacle_shadow_0044.png,
-	  obstacles/iso_obstacle_shadow_0045.png,
-	  obstacles/iso_obstacle_shadow_0046.png,
-	  obstacles/iso_obstacle_shadow_0047.png,
-	  obstacles/iso_obstacle_shadow_0048.png,
-	  obstacles/iso_obstacle_shadow_0049.png,
-	  obstacles/iso_obstacle_shadow_0050.png,
-	  obstacles/iso_obstacle_shadow_0051.png,
-	  obstacles/iso_obstacle_shadow_0052.png,
-	  obstacles/iso_obstacle_shadow_0053.png,
-	  obstacles/iso_obstacle_shadow_0054.png,
-	  obstacles/iso_obstacle_shadow_0055.png,
-	  obstacles/iso_obstacle_shadow_0056.png,
-	  obstacles/iso_obstacle_shadow_0057.png,
-	  obstacles/iso_obstacle_shadow_0091.png,
-	  obstacles/iso_obstacle_shadow_0092.png,
-	  obstacles/iso_obstacle_shadow_0093.png,
-	  obstacles/iso_obstacle_shadow_0094.png,
-	  obstacles/iso_obstacle_shadow_0095.png,
-	  obstacles/iso_obstacle_shadow_0096.png,
-	  obstacles/iso_obstacle_shadow_0097.png,
-	  obstacles/iso_obstacle_shadow_0098.png,
-	  obstacles/iso_oil_stains_0001.png,
-	  obstacles/iso_oil_stains_0002.png,
-	  obstacles/iso_oil_stains_0003.png,
-	  obstacles/iso_oil_stains_0004.png,
-	  obstacles/iso_oil_stains_0005.png,
-	  obstacles/iso_oil_stains_0006.png,
-	  obstacles/iso_oil_stains_0007.png,
-	  obstacles/iso_oil_stains_0008.png,
-	  obstacles/iso_outer_walls_0001.png,
-	  obstacles/iso_outer_walls_0002.png,
-	  obstacles/iso_outer_walls_0003.png,
-	  obstacles/iso_outer_walls_0004.png,
-	  obstacles/iso_outer_walls_0005.png,
-	  obstacles/iso_outer_walls_0006.png,
-	  obstacles/iso_outer_walls_0007.png,
-	  obstacles/iso_outer_walls_0008.png,
-	  obstacles/iso_outer_walls_0009.png,
-	  obstacles/iso_outer_walls_0010.png,
-	  obstacles/iso_outer_walls_0011.png,
-	  obstacles/iso_outer_walls_0012.png,
-	  obstacles/iso_outer_walls_0013.png,
-	  obstacles/iso_outer_walls_0014.png,
-	  obstacles/iso_outer_walls_0015.png,
-	  obstacles/iso_outer_walls_0016.png,
-	  obstacles/iso_outer_walls_0017.png,
-	  obstacles/iso_outer_walls_0018.png,
-	  obstacles/iso_outer_walls_0019.png,
-	  obstacles/iso_outer_walls_0020.png,
-	  obstacles/iso_restaurant_furniture_0001.png,
-	  obstacles/iso_restaurant_furniture_0002.png,
-	  obstacles/iso_restaurant_furniture_0003.png,
-	  obstacles/iso_restaurant_furniture_0004.png,
-	  obstacles/iso_restaurant_furniture_0005.png,
-	  obstacles/iso_restaurant_furniture_0006.png,
-	  obstacles/iso_restaurant_furniture_0007.png,
-	  obstacles/iso_restaurant_furniture_0008.png,
-	  obstacles/iso_restaurant_furniture_0009.png,
-	  obstacles/iso_restaurant_furniture_0010.png,
-	  obstacles/iso_rocks_n_plants_0000.png,
-	  obstacles/iso_rocks_n_plants_0001.png,
-	  obstacles/iso_rocks_n_plants_0002.png,
-	  obstacles/iso_rocks_n_plants_0003.png,
-	  obstacles/iso_rocks_n_plants_0004.png,
-	  obstacles/iso_rocks_n_plants_0005.png,
-	  obstacles/iso_rocks_n_plants_0006.png,
-	  obstacles/iso_rocks_n_plants_0007.png,
-	  obstacles/iso_shop_furniture_0001.png,
-	  obstacles/iso_shop_furniture_0002.png,
-	  obstacles/iso_shop_furniture_0003.png,
-	  obstacles/iso_shop_furniture_0004.png,
-	  obstacles/iso_shop_furniture_0005.png,
-	  obstacles/iso_shop_furniture_0006.png,
-	  obstacles/iso_shop_furniture_shadow_0001.png,
-	  obstacles/iso_shop_furniture_shadow_0002.png,
-	  obstacles/iso_shop_furniture_shadow_0003.png,
-	  obstacles/iso_shop_furniture_shadow_0004.png,
-	  obstacles/iso_shop_furniture_shadow_0005.png,
-	  obstacles/iso_shop_furniture_shadow_0006.png,
-	  obstacles/iso_signs_0000.png, obstacles/iso_signs_0001.png,
-	  obstacles/iso_signs_0002.png, obstacles/iso_tables_0001.png,
-	  obstacles/iso_tables_0002.png, obstacles/iso_tables_0003.png,
-	  obstacles/iso_tables_0004.png, obstacles/iso_tables_0005.png,
-	  obstacles/iso_tables_0006.png, obstacles/iso_tables_0007.png,
-	  obstacles/iso_tables_0008.png, obstacles/iso_tables_0009.png,
-	  obstacles/iso_tables_shadow_0001.png,
-	  obstacles/iso_tables_shadow_0002.png,
-	  obstacles/iso_tables_shadow_0003.png,
-	  obstacles/iso_tables_shadow_0004.png,
-	  obstacles/iso_tables_shadow_0005.png,
-	  obstacles/iso_tables_shadow_0006.png,
-	  obstacles/iso_tables_shadow_0007.png,
-	  obstacles/iso_tables_shadow_0008.png,
-	  obstacles/iso_tables_shadow_0009.png,
-	  obstacles/iso_thick_wall_0001.png,
-	  obstacles/iso_thick_wall_0002.png,
-	  obstacles/iso_thick_wall_0003.png,
-	  obstacles/iso_thick_wall_0004.png,
-	  obstacles/iso_thick_wall_0005.png,
-	  obstacles/iso_thick_wall_0006.png,
-	  obstacles/iso_thick_wall_0007.png,
-	  obstacles/iso_thick_wall_0008.png,
-	  obstacles/iso_thick_wall_0009.png,
-	  obstacles/iso_thick_wall_0010.png,
-	  obstacles/iso_thick_wall_shadow_0001.png,
-	  obstacles/iso_thick_wall_shadow_0002.png,
-	  obstacles/iso_thick_wall_shadow_0003.png,
-	  obstacles/iso_thick_wall_shadow_0004.png,
-	  obstacles/iso_thick_wall_shadow_0005.png,
-	  obstacles/iso_thick_wall_shadow_0006.png,
-	  obstacles/iso_thick_wall_shadow_0007.png,
-	  obstacles/iso_thick_wall_shadow_0008.png,
-	  obstacles/iso_thick_wall_shadow_0009.png,
-	  obstacles/iso_thick_wall_shadow_0010.png,
-	  obstacles/iso_transp_for_water.png, obstacles/iso_tree_0000.png,
-	  obstacles/iso_tree_0001.png, obstacles/iso_walls_0001.png,
-	  obstacles/iso_walls_0002.png, obstacles/iso_walls_0003.png,
-	  obstacles/iso_walls_0004.png, obstacles/iso_walls_0005.png,
-	  obstacles/iso_walls_0006.png, obstacles/iso_walls_0007.png,
-	  obstacles/iso_walls_0008.png, obstacles/iso_walls_0009.png,
-	  obstacles/iso_walls_0010.png, obstacles/iso_walls_0011.png,
-	  obstacles/iso_walls_0012.png, obstacles/iso_walls_0013.png,
-	  obstacles/iso_walls_0014.png, obstacles/iso_walls_0015.png,
-	  obstacles/iso_walls_0016.png, obstacles/iso_walls_0017.png,
-	  obstacles/iso_walls_0018.png, obstacles/iso_walls_0019.png,
-	  obstacles/iso_walls_0020.png, obstacles/iso_walls_0021.png,
-	  obstacles/iso_walls_0022.png, obstacles/iso_walls_0023.png,
-	  obstacles/iso_walls_0024.png, obstacles/iso_walls_0025.png,
-	  obstacles/iso_walls_0026.png, obstacles/iso_walls_0027.png,
-	  obstacles/iso_walls_0028.png, obstacles/iso_walls_0029.png,
-	  obstacles/iso_walls_shadow_0001.png,
-	  obstacles/iso_walls_shadow_0002.png,
-	  obstacles/iso_walls_shadow_0003.png,
-	  obstacles/iso_walls_shadow_0004.png,
-	  obstacles/iso_walls_shadow_0005.png,
-	  obstacles/iso_walls_shadow_0006.png,
-	  obstacles/iso_walls_shadow_0007.png,
-	  obstacles/iso_walls_shadow_0008.png,
-	  obstacles/iso_walls_shadow_0009.png,
-	  obstacles/iso_walls_shadow_0010.png,
-	  obstacles/iso_walls_shadow_0011.png,
-	  obstacles/iso_walls_shadow_0012.png,
-	  obstacles/iso_walls_shadow_0013.png,
-	  obstacles/iso_walls_shadow_0014.png,
-	  obstacles/iso_walls_shadow_0015.png,
-	  obstacles/iso_walls_shadow_0016.png,
-	  obstacles/iso_walls_shadow_0017.png,
-	  obstacles/iso_walls_shadow_0018.png,
-	  obstacles/iso_walls_shadow_0019.png,
-	  skill_icons/ChestAndDeadBodyLoot.png,
-	  skill_icons/DetectItemsSpell.png,
-	  skill_icons/ExplosionCircleSpell.png,
-	  skill_icons/ExplosionRaySpell.png,
-	  skill_icons/ExtractAntimatterConverter.png,
-	  skill_icons/ExtractEntropyInverter.png,
-	  skill_icons/ExtractPlasmaTransistor.png,
-	  skill_icons/ExtractSuperconductor.png,
-	  skill_icons/ExtractTachyonCondensator.png,
-	  skill_icons/FirstAidSpell.png, skill_icons/FrostBoltSpell.png,
-	  skill_icons/IdentifySkill.png, skill_icons/NoSkillAvailable.png,
-	  skill_icons/PlasmaBoltSpell.png, skill_icons/PoisonBoltSpell.png,
-	  skill_icons/RadialEMPWaveSpell.png,
-	  skill_icons/RadialPlasmaWaveSpell.png,
-	  skill_icons/RadialVMXWaveSpell.png, skill_icons/RepairSkill.png,
-	  skill_icons/StoningBoltSpell.png,
-	  skill_icons/TakeoverTalkSkill.png,
-	  skill_icons/TeleportHomeSpell.png, skill_icons/WeaponSkill.png,
-	  tux_flags/flag_dexterity_0001.png,
-	  tux_flags/flag_dexterity_0002.png,
-	  tux_flags/flag_dexterity_0004.png,
-	  tux_flags/flag_dexterity_0005.png,
-	  tux_flags/flag_dexterity_0006.png,
-	  tux_flags/flag_dexterity_0007.png,
-	  tux_flags/flag_dexterity_0008.png,
-	  tux_flags/flag_dexterity_0009.png,
-	  tux_flags/flag_dexterity_0010.png,
-	  tux_flags/flag_dexterity_0012.png,
-	  tux_flags/flag_dexterity_0013.png,
-	  tux_flags/flag_dexterity_0014.png,
-	  tux_flags/flag_dexterity_0015.png,
-	  tux_flags/flag_dexterity_0016.png, tux_flags/flag_power_0001.png,
-	  tux_flags/flag_power_0002.png, tux_flags/flag_power_0003.png,
-	  tux_flags/flag_power_0005.png, tux_flags/flag_power_0006.png,
-	  tux_flags/flag_power_0007.png, tux_flags/flag_power_0008.png,
-	  tux_flags/flag_power_0009.png, tux_flags/flag_power_0010.png,
-	  tux_flags/flag_power_0011.png, tux_flags/flag_power_0013.png,
-	  tux_flags/flag_power_0014.png, tux_flags/flag_power_0015.png,
-	  tux_flags/flag_power_0016.png: Optimized the png file size
-	  loselessly.
-
-2007-01-30 00:25  ahuillet
-
-	* freedroidRPG.exe: new binary
-
-2007-01-24 15:49  ahuillet
-
-	* src/menu.c: mouse pointer now correctly placed when using
-	  keyboard or wheel in domenuselection
-
-2007-01-24 15:45  ahuillet
-
-	* src/: blocks.c, struct.h, influ.c: removed deprecated looting
-
-2007-01-23 20:52  ahuillet
-
-	* src/open_gl.c: ondemand loading for backgrounds - faster startup
-
-2007-01-23 19:47  ahuillet
-
-	* src/items.c: fixed bug that prevented identification of worn
-	  helmet
-
-2007-01-23 18:52  ahuillet
-
-	* graphics/font/cpuFont.png: removed little glitch below b
-
-2007-01-23 18:42  ahuillet
-
-	* src/: graphics.c, misc.c: new way of doing fadings in GL...
-
-2007-01-23 13:13  ahuillet
-
-	* src/view.c: now keeping tux in center even when inv and cha are
-	  opened
-
-2007-01-22 21:42  ahuillet
-
-	* src/saveloadgame.c: inconsistency in case for a ingame message
-
-2007-01-22 21:42  ahuillet
-
-	* src/map.c: tiny last improvement of speed of SaveShip
-
-2007-01-22 21:28  ahuillet
-
-	* src/map.c: further improvements of save speed
-
-2007-01-22 20:58  ahuillet
-
-	* src/map.c: improved performance of saving
-
-2007-01-22 20:08  ahuillet
-
-	* src/init.c: patched percentage
-
-2007-01-22 19:33  ahuillet
-
-	* src/map.c: sped up map parsing, at the price of robustness
-
-2007-01-22 18:49  ahuillet
-
-	* src/map.c: new parser for levels
-
-2007-01-22 17:43  ahuillet
-
-	* map/ReturnOfTux.droids: updated in smaller version
-
-2007-01-22 17:34  ahuillet
-
-	* src/map.h: shortened map file
-
-2007-01-22 17:34  ahuillet
-
-	* map/Asteroid.maps: new ship
-
-2007-01-22 13:44  ahuillet
-
-	* src/map.c: fixed parser for new level format - will improve it
-	  ASAP for better performance
-
-2007-01-22 13:08  ahuillet
-
-	* map/Asteroid.maps: new format
-
-2007-01-22 00:55  ahuillet
-
-	* src/map.h: shorter names for ship
-
-2007-01-21 23:24  ahuillet
-
-	* src/automap.c: now clearing automap properly
-
-2007-01-21 22:54  ahuillet
-
-	* src/: proto.h, open_gl.c, BFont.c: improved performance of image
-	  flipping
-
-2007-01-21 20:22  magotari
-
-	* map/Asteroid.maps: A bit more flavour text.
-
-2007-01-21 19:41  ahuillet
-
-	* src/blocks.c: shortened descriptions a little - less memory
-
-2007-01-21 18:37  magotari
-
-	* map/freedroid.prefix_archetypes: My attempt at prefixes.
-
-2007-01-21 17:47  ahuillet
-
-	* src/items.c: fixed negative stats preventing item equipping
-
-2007-01-21 16:42  ahuillet
-
-	* src/main.c: now items can even make someone lose life
-
-2007-01-21 16:14  ahuillet
-
-	* src/hud.c: removed the first red line for magical items
-
-2007-01-21 16:10  ahuillet
-
-	* src/items.c: bad parsing
-
-2007-01-21 16:03  ahuillet
-
-	* src/items.c: fixed prefix bonus to all attributes
-
-2007-01-21 14:21  ahuillet
-
-	* src/items.c: removed funny but crappy code
-
-2007-01-21 13:47  ahuillet
-
-	* map/freedroid.droid_archetypes: not probably necessary but who
-	  knows
-
-2007-01-21 01:53  ahuillet
-
-	* src/bullet.c: bots enter hitstun in only 60percent of cases now
-
-2007-01-21 01:52  ahuillet
-
-	* src/enemy.c: fixed hacked bots turning hostile again and added
-	  balancing of bot vs bot fights according to their level
-
-2007-01-21 01:52  ahuillet
-
-	* src/takeover.c: taken over enemies dont get double life
-
-2007-01-21 01:36  ahuillet
-
-	* map/freedroid.item_archetypes: oversized item
-
-2007-01-21 01:08  ahuillet
-
-	* src/items.c: implemented reading of some other bonus types
-
-2007-01-21 00:59  ahuillet
-
-	* map/freedroid.prefix_archetypes: funny thing
-
-2007-01-21 00:53  ahuillet
-
-	* map/freedroid.prefix_archetypes: funny thing
-
-2007-01-21 00:53  ahuillet
-
-	* src/: items.c, struct.h: moved prefix information to
-	  map/freedroid.prefix_archetypes for easiness of edition
-
-2007-01-21 00:49  ahuillet
-
-	* src/hud.c: less confusing descriptions of item bonuses
-
-2007-01-21 00:45  ahuillet
-
-	* src/: global.h, init.c, leveleditor.c, proto.h, ship.c, vars.h:
-	  moved prefix information to map/freedroid.prefix_archetypes for
-	  easiness of edition
-
-2007-01-20 23:40  ahuillet
-
-	* map/freedroid.prefix_archetypes: added mock file for archetypes
-
-2007-01-20 22:48  ahuillet
-
-	* map/freedroid.item_archetypes: shortened file
-
-2007-01-20 22:39  ahuillet
-
-	* src/: init.c, map.c, text_public.c: parsing with default values
-
-2007-01-20 22:23  ahuillet
-
-	* map/freedroid.item_archetypes: [no log message]
-
-2007-01-20 21:51  ahuillet
-
-	* src/init.c: fixed default values not being seen because of stupid
-	  parsing
-
-2007-01-20 21:27  ahuillet
-
-	* src/init.c: added default values for parsing droid archetypes
-
-2007-01-20 21:26  ahuillet
-
-	* src/proto.h: added new parsers with default values
-
-2007-01-20 21:24  ahuillet
-
-	* src/: struct.h, ship.c: shortened structure of droids a little
-
-2007-01-20 21:20  ahuillet
-
-	* src/text_public.c: added new parsers with default values
-
-2007-01-20 21:20  ahuillet
-
-	* map/freedroid.droid_archetypes: data file smaller now
-
-2007-01-20 20:18  ahuillet
-
-	* src/enemy.c: using 70percent for chance to hit in friendly bot vs
-	  bot
-
-2007-01-20 19:08  ahuillet
-
-	* src/init.c: removed useless param
-
-2007-01-20 18:35  ahuillet
-
-	* src/chat.c: fixed breakoffandbecomehostile
-
-2007-01-20 18:04  ahuillet
-
-	* src/enemy.c: attack town = hf music
-
-2007-01-20 17:48  ahuillet
-
-	* src/init.c: fixed typo in desc
-
-2007-01-20 17:48  ahuillet
-
-	* src/: character.c, hud.c, influ.c, itemdefs.h, items.c, misc.c:
-	  now made the skill icon clickable to raise skill screen, and
-	  fixed unability to move when two screens were opened
-
-2007-01-20 17:46  ahuillet
-
-	* src/defs.h: switch to hf music when EverybodyBecomesHostile
-
-2007-01-20 17:29  ahuillet
-
-	* src/: chat.c, proto.h, skills.c: prevented excess increase of
-	  generic skills
-
-2007-01-20 16:15  ahuillet
-
-	* src/items.c: improved homemade repair
-
-2007-01-20 15:33  ahuillet
-
-	* src/items.c: now potions can be used with repair skill enabled
-
-2007-01-16 19:47  magotari
-
-	* src/view.c: A fix for helmets not being taken into acount when
-	  showing items about to get totally demolished.
-
-2007-01-16 17:18  ahuillet
-
-	* src/view.c: improved item damage alarm following magotaris
-	  suggestions
-
-2007-01-16 14:15  ahuillet
-
-	* src/items.c: fixed skill going back to hacking after ident
-
-2007-01-16 14:00  magotari
-
-	* dialogs/KevinGuard.dialog: A small cleanup.
-
-2007-01-16 02:23  ahuillet
-
-	* freedroidRPG.exe: new binary
-
-2007-01-16 02:04  ahuillet
-
-	* src/: character.c, main.c, proto.h: separated character scr input
-	  and display
-
-2007-01-16 01:54  ahuillet
-
-	* src/: items.c, main.c, proto.h, view.c: separated display and
-	  input in INV screen
-
-2007-01-16 01:24  ahuillet
-
-	* src/enemy.c: removed stupid tux complaining whenever friendly bot
-	  got killed
-
-2007-01-16 01:12  ahuillet
-
-	* src/skills.c: fixed hacking
-
-2007-01-16 01:02  ahuillet
-
-	* src/view.c: prevented alarm for indestructible items
-
-2007-01-16 01:02  ahuillet
-
-	* src/hud.c: fixed typo
-
-2007-01-16 00:51  ahuillet
-
-	* src/enemy.c: tentative patch for making bots follow closer
-
-2007-01-16 00:43  ahuillet
-
-	* src/skills.c: prevented taking over from outside a room
-
-2007-01-15 22:08  magotari
-
-	* dialogs/Bender.dialog: Made it harder to die by angering Bender.
-
-2007-01-14 21:53  ahuillet
-
-	* src/enemy.c: prevent double dropping of quest items after a
-	  respawn
-
-2007-01-14 20:22  ahuillet
-
-	* src/map.c: IsPassable return
-
-2007-01-14 20:22  ahuillet
-
-	* map/: Asteroid.maps, freedroid.droid_archetypes,
-	  freedroid.item_archetypes: fixed typos
-
-2007-01-14 20:11  ahuillet
-
-	* src/blocks.c: removed contribution welcome text
-
-2007-01-14 20:11  ahuillet
-
-	* src/bullet.c: crash generating mod to check for correctness of
-	  bullet owner handling
-
-2007-01-14 20:06  ahuillet
-
-	* src/influ.c: shortened in game messages
-
-2007-01-14 20:06  ahuillet
-
-	* src/menu.c: renamed menu item
-
-2007-01-14 20:05  ahuillet
-
-	* src/map.c: tiny mod to avoid weird things with autoguns
-
-2007-01-14 11:04  bastiansalmela
-
-	* graphics/floor_tiles/: iso_miscellaneous_floor_0010.png,
-	  iso_miscellaneous_floor_0011.png,
-	  iso_miscellaneous_floor_0012.png,
-	  iso_miscellaneous_floor_0013.png:
-	  rusty plates. these look like shit.. but i removed the edge
-	  weirdness.  have to think of what to do with the actual graphics,
-	  and where we are using these..
+	* src/sound.c:
+	  removed extra "n"
 
 	  .b
 
-2007-01-14 10:39  bastiansalmela
+2007-03-09 09:27  ahuillet
 
-	* graphics/floor_tiles/: iso_miscellaneous_floor_0002.png,
-	  iso_miscellaneous_floor_0003.png,
-	  iso_miscellaneous_floor_0014.png,
-	  iso_miscellaneous_floor_0019.png,
-	  iso_miscellaneous_floor_0020.png,
-	  iso_miscellaneous_floor_0021.png,
-	  iso_miscellaneous_floor_0022.png, iso_sidewalk_0013.png,
-	  iso_sidewalk_0014.png, iso_sidewalk_0015.png,
-	  iso_sidewalk_0016.png:
-	  fixed tiling and other issues for carpets, metallic plates ..
+	* src/bullet.c: wrong format string in debug printf call
 
-	  more to come.
+2007-03-09 09:27  ahuillet
 
-2007-01-13 14:45  xparanoidj
+	* src/: misc.c, sound.c: fixed various further calls consequently
+	  to find_file modifications
 
-	* sound/effects/Influencer_Scream_Sound_3.wav: removed click
+2007-03-08 19:10  ahuillet
 
-2007-01-12 13:50  ahuillet
+	* src/sound.c: fixed missing fpath definition changes
 
-	* src/: sound.c, sound_effects.c: cleanup up the mess a little
+2007-03-07 20:45  ahuillet
 
-2007-01-12 13:07  ahuillet
+	* src/: text.c, BFont.c, BFont.h: updated font code to support high
+	  chars
 
-	* src/menu.c: added back buttons to Load and Delete menus
+2007-03-07 20:45  ahuillet
 
-2007-01-12 12:45  ahuillet
+	* graphics/font/: font05.png, font05_blue.png, font05_green.png,
+	  font05_magenta.png, font05_red.png, font05_white.png,
+	  font05_yellow.png, parafont.png, small_white.png: updated fonts
+	  with iso8859-15 characters
 
-	* src/influ.c: fixed glitch that hitting crates through walls was
-	  impossible, but animation displayed
+2007-03-07 20:37  ahuillet
 
-2007-01-11 23:52  magotari
+	* src/: init.c, open_gl.c, struct.h: finished removed references to
+	  deprecated notion of themes
 
-	* dialogs/Melfis.dialog: Fixed typos in Melfis.  Thanks to rost.
+2007-03-07 20:22  ahuillet
 
-2007-01-11 23:02  ahuillet
+	* graphics/: skill_buttons.png, to_background.jpg: moved a few
+	  files from theme dir
 
-	* src/shop.c: blah. fixed stupid bug
+2007-03-07 20:03  ahuillet
 
-2007-01-10 21:24  ahuillet
+	* graphics/to_elem.png: wrong upload
 
-	* src/takeover.c: fixed double dropping of quest items
+2007-03-07 20:00  ahuillet
 
-2007-01-10 18:11  ahuillet
+	* graphics/to_elem.png: moved takeover elements
 
-	* map/freedroid.item_archetypes: made quest items unsellable
+2007-03-07 19:51  ahuillet
 
-2007-01-10 13:12  ahuillet
+	* src/: automap.c, blocks.c, chat.c, graphics.c, hud.c, init.c,
+	  leveleditor.c, light.c, map.c, menu.c, misc.c, mission.c,
+	  open_gl.c, proto.h, saveloadgame.c, ship.c, shop.c, sound.c,
+	  takeover.c, text_public.c, view.c: changed find_file, to a
+	  cleaner approach, and removed long deprecated theme file
 
-	* map/freedroid.item_archetypes: made dixon toolbox unsellable -
-	  waiting for list of other items
+2007-03-06 00:43  ahuillet
 
-2007-01-10 13:11  ahuillet
+	* freedroidRPG.exe: new exe
 
-	* src/: shop.c, ship.c: added code to make quest items unsellable
+2007-03-06 00:34  ahuillet
 
-2007-01-10 12:48  ahuillet
+	* dialogs/de/Michelangelo.dialog: fixed missing "
 
-	* src/view.c: fixed zoomed out shadows in leveleditor
+2007-03-05 22:25  ahuillet
 
-2007-01-10 12:33  ahuillet
+	* graphics/mouse_buttons/: LevelEditorToggleGridButton.png,
+	  LevelEditorToggleGridButtonOff.png: added new button to toggle
+	  grid in lvleditor
 
-	* src/leveleditor.c: fixed cursor for real this time
+2007-03-05 22:25  ahuillet
 
-2007-01-10 11:56  ahuillet
+	* src/global.h: draw_grid variable added
 
-	* configure.ac: updated
+2007-03-05 22:23  ahuillet
 
-2007-01-10 11:56  ahuillet
+	* src/main.c: draw grid by default
 
-	* src/map.c: workaround for GCC4 misbehavior
+2007-03-05 22:15  ahuillet
 
-2007-01-09 21:04  ahuillet
+	* src/menu.c: fixed bug when skipping initial menus
 
-	* src/defs.h: raised max textures nb to 10K
+2007-03-05 16:51  ahuillet
 
-2007-01-09 20:52  xparanoidj
+	* src/: leveleditor.c, misc.c, defs.h: added two buttons to
+	  leveleditor
 
-	* src/sound.c: fixed bad bad bad bad bad samplerate arrrrr
+2007-03-04 21:53  ahuillet
 
-2007-01-07 18:49  ahuillet
+	* src/proto.h: first try of leveleditor grid
 
-	* freedroidRPG.exe: new binary
+2007-03-04 21:51  ahuillet
 
-2007-01-07 14:41  magotari
+	* src/view.c: font code update - first try of leveleditor grid
 
-	* dialogs/subdlg_Spencer_eval.dialog: Breaking Spencer up into more
-	  files for ease of edits.
+2007-03-03 23:59  ahuillet
 
-2007-01-06 22:00  magotari
+	* src/: view.c, misc.c: fixed endian swapping to work on Linux PPC
+	  too
 
-	* dialogs/Butch.dialog: The new Butch.
+2007-03-03 22:57  ahuillet
 
-2007-01-06 20:31  magotari
+	* src/blocks.c: fixed collision rectangles for benches
 
-	* src/items.c: Item decay cut by over 30%.
+2007-03-03 22:56  ahuillet
 
-2007-01-05 19:23  ahuillet
-
-	* map/StartOfGame.title: small update of docu
-
-2007-01-05 19:13  ahuillet
-
-	* freedroidRPG.6: small mistake... this is STILL outdated
-
-2007-01-05 19:10  ahuillet
-
-	* configure.ac: updated version number
-
-2007-01-04 20:27  ahuillet
-
-	* src/ship.c: fixed position of video in viewmaster in shops
-
-2007-01-04 07:20  ahuillet
-
-	* src/input.c: removed exclusivity of invchaski screens
-
-2007-01-04 07:13  ahuillet
-
-	* src/menu.c: fixed little bug of mouse cursor
-
-2007-01-03 18:58  ahuillet
-
-	* src/graphics.c: made the window not resizable - anonymous request
-
-2007-01-03 18:54  ahuillet
-
-	* src/shop.c: moved icon for equipped items in shops to top right
-
-2007-01-03 18:49  magotari
-
-	* dialogs/Ewald.dialog: Typo, you have been sentenced to death by
-	  correction.
-
-2007-01-03 18:44  ahuillet
-
-	* map/freedroid.item_archetypes: laserdagger had wrong inv size
-
-2007-01-03 18:07  ahuillet
-
-	* map/freedroid.item_archetypes: fixed items inv sizes
-
-2007-01-03 12:28  ahuillet
-
-	* src/blocks.c: updated scaling for inv
-
-2007-01-02 23:32  bastiansalmela
-
-	* graphics/items/: inventory_image_21.png, buckler/inv_image.png,
-	  emp_grenade/inv_image.png, helmet_yellow/inv_image.png,
-	  laser_sword_green/inv_image.png, laser_sword_red/inv_image.png,
-	  laser_sword_yellow/inv_image.png, plasma_grenade/inv_image.png,
-	  vmx_grenade/inv_image.png:
-
-	  bigger inventory items.
-
-	  128x128 .. had to render to that kind of size, fd started
-	  complaining something about odd size with 102x102.
-
-	  hope this is ok
-
-	  .b
-
-2007-01-02 23:31  bastiansalmela
-
-	* graphics/backgrounds/: conversation.png, item_browser_shop.png:
-
-	  full black for viewmasters..	.b :wq
-
-2007-01-02 22:11  ahuillet
-
-	* src/: shop.c, items.c, proto.h: now showing equipped items in
-	  shops, with proper marking
-
-2007-01-02 20:24  ahuillet
-
-	* src/: items.c, proto.h: fixed dropping items through obstacles by
-	  adding a passability check
-
-2007-01-01 19:06  ahuillet
-
-	* src/character.c: char screen not automatically closed anymore
-
-2007-01-01 18:44  ahuillet
-
-	* graphics/backgrounds/TransparentBluePlate.png,
-	  graphics/backgrounds/TransparentGreyPlate.png, src/view.c: now
-	  using inventory background colors to differ std, magic and
-	  unwearable items
+	* src/proto.h: fixed expansion of arguments for position
+	  translation functions
+
+2007-03-03 17:38  ahuillet
+
+	* configure.ac: locale switching
+
+2007-03-03 17:34  ahuillet
+
+	* src/: init.c, system.h: switching to the proper C locale on
+	  startup - translations require it
+
+2007-02-28 19:34  ahuillet
+
+	* src/shop.c: fixed crash due to not existing sound file
+
+2007-02-26 23:02  ahuillet
+
+	* map/Asteroid.maps: fixed town/slasher mountains threshold
+
+2007-02-26 12:41  ahuillet
+
+	* src/view.c: now building properly on nonGL machines
+
+2007-02-25 19:22  ahuillet
+
+	* Makefile.am: added sign target
+
+2007-02-25 18:50  ahuillet
+
+	* dialogs/de/614.dialog, dialogs/de/Bender.dialog,
+	  dialogs/de/Benjamin.dialog, dialogs/de/Bruce.dialog,
+	  dialogs/de/Butch.dialog, dialogs/de/Chandra.dialog,
+	  dialogs/de/Darwin.dialog, dialogs/de/Dixon.dialog,
+	  dialogs/de/DocMoore.dialog, dialogs/de/Duncan.dialog,
+	  dialogs/de/Ernie.dialog, dialogs/de/Ewald.dialog,
+	  dialogs/de/Francis.dialog, dialogs/de/Jack.dialog,
+	  dialogs/de/Jasmine.dialog, dialogs/de/Julie.dialog,
+	  dialogs/de/Kevin.dialog, dialogs/de/KevinGuard.dialog,
+	  dialogs/de/Lukas.dialog,
+	  dialogs/de/MSFacilityGateGuardLeader.dialog,
+	  dialogs/de/Melfis.dialog, dialogs/de/Michelangelo.dialog,
+	  dialogs/de/OldTownGateGuardLeader.dialog,
+	  dialogs/de/Pendragon.dialog, dialogs/de/RMS.dialog,
+	  dialogs/de/Skippy.dialog, dialogs/de/Sorenson.dialog,
+	  dialogs/de/Spencer.dialog, dialogs/de/Spencer1.dialog,
+	  dialogs/de/StandardBotAfterTakeover.dialog,
+	  dialogs/de/StandardMSFacilityGateGuard.dialog,
+	  dialogs/de/StandardNewTownGateGuard.dialog,
+	  dialogs/de/StandardOldTownGateGuard.dialog,
+	  dialogs/de/Stone.dialog, dialogs/de/Tybalt.dialog,
+	  dialogs/de/subdlg_Benjamin.dialog,
+	  dialogs/de/subdlg_Benjamin_bribe.dialog,
+	  dialogs/de/subdlg_Butch.dialog, dialogs/de/subdlg_Darwin.dialog,
+	  dialogs/de/subdlg_Kevin.dialog,
+	  dialogs/de/subdlg_Pendragon.dialog,
+	  dialogs/de/subdlg_Sorenson.dialog,
+	  dialogs/de/subdlg_Spencer_eval.dialog,
+	  dialogs/de/subdlg_Spencer_funeral.dialog,
+	  dialogs/de/subdlg_Stone.dialog,
+	  dialogs/de/subdlg_kevin_reward1.dialog,
+	  map/titles/de/EndOfGame.title, map/titles/de/StartOfGame.title,
+	  map/titles/de/TakeoverInstructions.title,
+	  map/titles/de/level_editor_help.title: updated translations
+
+2007-02-25 18:49  ahuillet
+
+	* ChangeLog: new changelog
 
