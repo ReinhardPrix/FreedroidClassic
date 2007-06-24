@@ -182,7 +182,7 @@ Takeover ( int enemynum )
     //
     GetTakeoverGraphics ( ) ;
     
-    while (SpacePressed ()) ;  // make sure space is release before proceed 
+    while (SpacePressed () || MouseLeftPressed()) ;  // make sure space is release before proceed 
     
     SwitchBackgroundMusicTo ( TAKEOVER_BACKGROUND_MUSIC_SOUND ); // now this is a STRING!!!
     
@@ -502,7 +502,7 @@ PlayGame (void)
        */
       up   = ( up   | UpPressed() ) + MouseWheelUpPressed() ; 
       down = ( down | DownPressed() ) + MouseWheelDownPressed() ;
-      set  = set  | SpacePressed();
+      set  = set  | SpacePressed() | MouseLeftPressed();
 
       if (!up) up_counter = 0;    /* reset counters for released keys */
       if (!down) down_counter =0;

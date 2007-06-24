@@ -1162,7 +1162,7 @@ int YPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_y]));}
 int ZPressed () { keyboard_update(); return ((key_pressed_real_frame[SDLK_z]));}
 int ZWasPressed () { keyboard_update(); return ((key_pressed_last_frame[SDLK_z]));}
 int ZHit () { return (!(key_pressed_last_frame[SDLK_z]) && (key_pressed_this_frame[SDLK_z])); }
-int MouseRightPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(3)); }
+int MouseRightPressed() { keyboard_update(); return ((SDL_GetMouseState(NULL, NULL))&(SDL_BUTTON(3))); }
 int MouseLeftPressed() { keyboard_update(); return (SDL_GetMouseState(NULL, NULL)&SDL_BUTTON(1));}
 int MouseRightClicked() { return (!(mouse_state_last_frame&SDL_BUTTON(3)) && (mouse_state_this_frame&SDL_BUTTON(3))); }
 int MouseLeftClicked() { return (!(mouse_state_last_frame&SDL_BUTTON(1)) && (mouse_state_this_frame&SDL_BUTTON(1))); }

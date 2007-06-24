@@ -594,7 +594,7 @@ HandleCurrentlyActivatedSkill( int player_num )
     switch ( Me [ 0 ] . readied_skill )
     {
 	case SPELL_WEAPON:
-	    if ( MouseRightPressed ( ) != 1 ) break;
+	    if ( ! MouseRightPressed ( ) ) break;
 	    
 	    if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 				      GetMousePos_y()  ) )
@@ -602,7 +602,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    
 	    break;
 	case  SPELL_TRANSFERMODE:
-	    if ( MouseRightPressed ( ) != 1 ) break;
+	    if ( ! MouseRightPressed ( )  ) break;
 	    
 	    if ( ! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) break;
 
