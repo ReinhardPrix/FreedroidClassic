@@ -135,8 +135,8 @@ GiveMouseAlertWindow( char* WindowText )
 
     our_SDL_flip_wrapper ( Screen );
     
-    while ( !EnterPressed()  && !SpacePressed() ) ;
-    while (  EnterPressed()  ||  SpacePressed() ) ;
+    while ( !EnterPressed()  && !SpacePressed() && !MouseLeftPressed() ) ;
+    while (  EnterPressed()  ||  SpacePressed() || MouseLeftPressed()) ;
     
 }; // void GiveMouseAlertWindow( char* WindowText )
 
