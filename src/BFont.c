@@ -340,19 +340,28 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
       //
       if ( use_open_gl )
 	{
-	  //--------------------
-	  // Printing the character should only be done, if the character would also
-	  // be blitted with SDL output, i.e. if the character lies within the so called
-	  // SDL clipping rectangle.  We make sure this is the case, or otherwise just 
-	  // leave this character unblitted.
-	  //
-	  SDL_GetClipRect ( Surface , & clipping_rect );
+	//--------------------
+	// We need to simulate the clipping is would be done by SDL.
+	// We simply do "all or none" clipping for left and right, but for the top/bottom of the screen,
+	// we use GL to do proper clipping in order not to see a whole line disappear at once.
 
-	  if ( ( dest . x < clipping_rect . x + clipping_rect . w ) &&
-	       ( dest . y < clipping_rect . y + clipping_rect . h ) &&
-	       ( dest . y >= clipping_rect . y ) &&
-	       ( dest . x >= clipping_rect . x ) )
-	    {
+	// glClipPlane simply does a little math.
+
+        SDL_GetClipRect ( Surface , & clipping_rect );
+
+	#ifdef HAVE_LIBGL
+	GLdouble eqntop[4] = { 0.0, 1.0, 0.0, - clipping_rect . y };
+	GLdouble eqnbottom[4] = { 0.0, -1.0, 0.0, clipping_rect . y + clipping_rect . h};
+	glClipPlane(GL_CLIP_PLANE0, eqntop);
+	glEnable(GL_CLIP_PLANE0);
+	glClipPlane(GL_CLIP_PLANE1, eqnbottom);
+	glEnable(GL_CLIP_PLANE1);
+
+
+	#endif
+	if ( ( dest . x < clipping_rect . x + clipping_rect . w ) &&
+              ( dest . x >= clipping_rect . x ) )
+	      {
 	      //--------------------
 	      // Blitting the characters of the font with plain pixel operations in OpenGL is
 	      // known to fail on some systems.  So why not just use the faster textured quads
@@ -371,7 +380,11 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 		}
 	      
 	      blit_open_gl_texture_to_screen_position ( & (Font -> char_iso_image [ c ]) , dest . x , dest . y , TRUE ) ;
-	    }
+              }
+	#ifdef HAVE_LIBGL
+	glDisable(GL_CLIP_PLANE0);
+	glDisable(GL_CLIP_PLANE1);
+	#endif
 	}
       else
 	{
