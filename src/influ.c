@@ -2321,10 +2321,10 @@ move_tux ( int player_num )
     // Maybe we need to fire a bullet or set a new mouse move target
     // for the new move-to location
     //
-    if ( ( SpacePressed () || MouseLeftPressed () ) )
+    if ( MouseLeftPressed ()  )
 	AnalyzePlayersMouseClick ( player_num );
     
-    if ( SpacePressed () || MouseLeftPressed () )
+    if ( MouseLeftPressed () )
 	no_left_button_press_in_previous_analyze_mouse_click = FALSE ;
     else
 	no_left_button_press_in_previous_analyze_mouse_click = TRUE ;
