@@ -924,7 +924,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	}
     else
 	{
-	sprintf( TextChunk, "Quest item - unsellable\n") ;
+	sprintf( TextChunk, "Unsellable\n") ;
         strcat ( InfoText , TextChunk );
 	}
   
