@@ -888,6 +888,7 @@ GetString ( int MaxLen, int echo , int background_code , const char* text_for_ov
 	}
 	else if ( key == SDLK_ESCAPE )
 	{
+	    while(EscapePressed());
 	    return ( NULL );
 	}
 	
