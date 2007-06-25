@@ -765,7 +765,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		}
 		MoveMenuPositionSound();
-		while (SpacePressed() ||EscapePressed());
+		while (SpacePressed() ||EscapePressed() || MouseLeftPressed());
 	    }
 	    else if ( MouseCursorIsOnButton( RIGHT_TUX_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
@@ -779,7 +779,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		}
 		MoveMenuPositionSound();
-		while (SpacePressed() ||EscapePressed());
+		while (SpacePressed() ||EscapePressed() || MouseLeftPressed());
 	    }
 	    else if ( MouseCursorIsOnButton( LEFT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
@@ -793,7 +793,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		}
 		MoveMenuPositionSound();
-		while (SpacePressed() ||EscapePressed());
+		while (SpacePressed() ||EscapePressed() || MouseLeftPressed());
 	    }
 	    else if ( MouseCursorIsOnButton( RIGHT_SHOP_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) && MouseLeftPressed() && !WasPressed )
 	    {
@@ -807,7 +807,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		}
 		MoveMenuPositionSound();
-		while (SpacePressed() ||EscapePressed());
+		while (SpacePressed() ||EscapePressed() || MouseLeftPressed());
 	    }
 	    else if ( ( ( ClickTarget = ClickWasOntoItemRowPosition ( GetMousePos_x()  , GetMousePos_y()  , FALSE ) ) >= 0 ) && MouseLeftPressed() && !WasPressed )
 	    {
@@ -855,7 +855,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 			else
 			    ShopOrder -> number_selected = 1;
 		    }
-		    
+		    while ( MouseLeftPressed() ) SDL_Delay(1);
 		    return ( 0 );
 		}
 	    }
@@ -873,7 +873,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 		    }
 		    else
 			ShopOrder -> number_selected = 1;
-		    
+		    while ( MouseLeftPressed() ) SDL_Delay(1);
 		    return ( 0 );
 		}
 	    }
