@@ -29,6 +29,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1.1
+Level=3
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -55,6 +56,7 @@ Bonus to life recovery=-0.5
 Bonus to mana recovery=0.5
 Light radius bonus=0
 Price factor=1.0
+Level=3
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **

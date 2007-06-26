@@ -728,111 +728,14 @@ item_type_cannot_be_equipped ( int drop_item_type )
 }; // int item_type_cannot_be_equipped ( int drop_item_type )
 
 /* ----------------------------------------------------------------------
- * When random treasure is dropped, we need to attach a suffix and a
- * prefix to the item in question.  However, for this it would be 
- * suitable to know the number of suffixes that are currently defined.
- * So this function takes a look at the suffix list, will search for the
- * termination entry in that list and then return the number of suffixes
- * available.
- * ---------------------------------------------------------------------- */
-int
-count_suffixes_available ( void )
-{
-    int i;
-
-    for ( i = 0 ; TRUE ; i++ )
-    {
-	if ( SuffixList [ i ] . bonus_name == NULL )
-	{
-	    DebugPrintf ( 1 , "\n%s(): End of Suffix list found at pos: %d.\n" , __FUNCTION__ , i );
-	    return ( i ) ;
-	}
-    }
-
-    GiveStandardErrorMessage ( __FUNCTION__  , "\
-End of suffix list not found!  This isn't supposed to happen.",
-			       PLEASE_INFORM, IS_FATAL );
-    return ( 0 ) ;
-}; // int count_suffixes_available ( void )
-
-/* ----------------------------------------------------------------------
- * When random treasure is dropped, we need to attach a prefix and a
- * prefix to the item in question.  However, for this it would be 
- * suitable to know the number of prefixes that are currently defined.
- * So this function takes a look at the prefix list, will search for the
- * termination entry in that list and then return the number of prefixes
- * available.
- * ---------------------------------------------------------------------- */
-int
-count_prefixes_available ( void )
-{
-    int i;
-
-    for ( i = 0 ; TRUE ; i++ )
-    {
-	if ( PrefixList [ i ] . bonus_name == NULL )
-	{
-	    DebugPrintf ( 1 , "\n%s(): End of Prefix list found at pos: %d.\n" , __FUNCTION__ , i );
-	    return ( i ) ;
-	}
-    }
-
-    GiveStandardErrorMessage ( __FUNCTION__  , "\
-End of prefix list not found!  This isn't supposed to happen.",
-			       PLEASE_INFORM, IS_FATAL );
-    return ( 0 ) ;
-}; // int count_prefixes_available ( void )
-
-/* ----------------------------------------------------------------------
- * When random treasure is dropped, we need to attach a suffix and a
- * prefix to the item in question.  However, for this it would be 
- * suitable to know the number of suffixes and prefixes that are 
- * currently defined, but also the number of treasure chests available,
- * such that we can properly divide the range of suffixes and prefixes
- * to be equally distributed on the different treasure chests.  So this
- * function will take a look at the enemy archetypes and then find out
- * how many treasure chests are actually in use.
- * ---------------------------------------------------------------------- */
-int
-count_treasure_chests_in_use ( void )
-{
-    int i;
-    int max_treasure_chest_in_use = 0 ;
-
-    //--------------------
-    // NOTE:  This function requires, that the Number_Of_Droid_Types is
-    //        already known, i.e. the droid archetypes have been read in
-    //        from the freedroid.droid_archetypes file already...
-    //
-
-    for ( i = 0 ; i < Number_Of_Droid_Types ; i ++ )
-    {
-	if ( Druidmap [ i ] . monster_level > max_treasure_chest_in_use )
-	    max_treasure_chest_in_use = Druidmap [ i ] . monster_level ;
-    }
-
-    //--------------------
-    // We return the number of the highest trease chest + 1 because the
-    // treasure chests are numbered starting at 0, not at 1 
-    //
-    DebugPrintf ( 1 , "\n%s(): treasure chests total: %d.\n" , __FUNCTION__ , max_treasure_chest_in_use + 1 ) ;
-    return ( max_treasure_chest_in_use + 1 );
-
-}; // int count_treasure_chests_in_use ( void )
-
-/* ----------------------------------------------------------------------
  * When a random item is being dropped, there is a chance of it being
  * magical.  In that case, there might be a modifying suffix attached to 
  * the item.  This function is supposed to find a suitable suffix for
  * the item in question.
  * ----------------------------------------------------------------------- */
 int 
-find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
+find_suitable_bonus_for_item ( int drop_item_type , int TreasureChestRange, item_bonus * btype )
 {
-    int number_of_suffixes_available;
-    int number_of_treasure_chests_in_use;
-    int suffix_code_generated;
-
     //--------------------
     // First we catch the case of non-equipable items being magical.
     // This does not make sense and therefore is caught.
@@ -840,67 +743,37 @@ find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
     if ( item_type_cannot_be_equipped ( drop_item_type ) )
 	return ( -1 );
 
-    //--------------------
-    // We check for the current database of treasure chests and
-    // also suffixs...
-    //
-    number_of_suffixes_available = count_suffixes_available () ;
-    number_of_treasure_chests_in_use = count_treasure_chests_in_use () ;
-    
-    //--------------------
-    // Now we find a suitable modifier
-    //
-    suffix_code_generated = MyRandom ( TreasureChestRange * (  number_of_suffixes_available / number_of_treasure_chests_in_use ) ) ;
-    if ( suffix_code_generated >= number_of_suffixes_available )
-    {
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Suffix code generation error!  Illegal suffix!  This isn't supposed to happen.",
-				   PLEASE_INFORM, IS_FATAL );
-    }
-    return ( suffix_code_generated );
+    if ( btype != SuffixList && btype != PrefixList ) 
+	GiveStandardErrorMessage( __FUNCTION__, "The bonus list to choose a prefix from is incorrect.\n", PLEASE_INFORM, IS_FATAL);
 
-}; // int find_suitable_suffix_for_item ( int drop_item_type , int TreasureChestRange )
+    int bcount = 0;
+    int i = 0;
 
-/* ----------------------------------------------------------------------
- * When a random item is being dropped, there is a chance of it being
- * magical.  In that case, there might be a modifying prefix attached to 
- * the item.  This function is supposed to find a suitable prefix for
- * the item in question.
- * ----------------------------------------------------------------------- */
-int 
-find_suitable_prefix_for_item ( int drop_item_type , int TreasureChestRange )
-{
-    int number_of_prefixes_available;
-    int number_of_treasure_chests_in_use;
-    int prefix_code_generated;
+    while ( btype[i].bonus_name != NULL )
+	{
+	if ( btype[i].level == TreasureChestRange ) bcount ++;
+	i ++;
+	}    
 
-    //--------------------
-    // First we catch the case of non-equipable items being magical.
-    // This does not make sense and therefore is caught.
-    //
-    if ( item_type_cannot_be_equipped ( drop_item_type ) )
-	return ( -1 );
 
-    //--------------------
-    // We check for the current database of treasure chests and
-    // also prefixs...
-    //
-    number_of_prefixes_available = count_prefixes_available () ;
-    number_of_treasure_chests_in_use = count_treasure_chests_in_use () ;
-    
-    //--------------------
-    // Now we find a suitable modifier
-    //
-    prefix_code_generated = MyRandom ( TreasureChestRange * (  number_of_prefixes_available / number_of_treasure_chests_in_use ) ) ;
-    if ( prefix_code_generated >= number_of_prefixes_available )
-    {
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Prefix code generation error!  Illegal prefix!  This isn't supposed to happen.",
-				   PLEASE_INFORM, IS_FATAL );
-    }
-    return ( prefix_code_generated );
+    int pick = MyRandom(bcount);
 
-}; // int find_suitable_prefix_for_item ( int drop_item_type , int TreasureChestRange )
+    i = 0;
+    while ( btype[i] . bonus_name != NULL )
+	{
+	if ( btype[i].level == TreasureChestRange ) 
+		{
+		pick--;
+	//	if(!pick) printf("Returning bonus %i\n", i);
+		if(!pick) return i;
+		}
+	i ++;
+
+	}
+
+return 0; //by default, return bonus number 0
+}; // int find_suitable_bonus_for_item ( int drop_item_type , int TreasureChestRange, item_bonus * btype )
+
 
 /* ----------------------------------------------------------------------
  * This function drops a random item to the floor of the current level
@@ -1307,11 +1180,11 @@ Unhandled treasure chest encountered!  This isn't supposed to happen.",
     Pre = ( -1 ) ;
     if ( ForceMagical || ( MyRandom ( 14 ) <= 2 ) )
     {
-	Suf = find_suitable_suffix_for_item ( drop_item_type , TreasureChestRange );
+	Suf = find_suitable_bonus_for_item ( drop_item_type , TreasureChestRange, SuffixList );
     }
     if ( ForceMagical || ( MyRandom ( 14 ) <= 2 ) )
     {
-	Pre = find_suitable_prefix_for_item ( drop_item_type , TreasureChestRange );
+	Pre = find_suitable_bonus_for_item ( drop_item_type , TreasureChestRange, PrefixList );
     }
     
     DropItemAt ( drop_item_type , level_num , x , y , Pre , Suf , TreasureChestRange , drop_item_multiplicity );
@@ -4106,6 +3979,9 @@ int Get_Prefixes_Data ( char * DataPointer )
 
             ReadValueFromStringWithDefault( PrefixPointer , "Light radius bonus=" , "%d" , "0",
                              & BonusToFill -> light_bonus_value  , EndOfPrefixData );
+
+            ReadValueFromStringWithDefault( PrefixPointer , "Level=" , "%d" , "1",
+                             & BonusToFill -> level  , EndOfPrefixData );
 
 
             BonusToFill -> bonus_name = ReadAndMallocStringFromData ( PrefixPointer , "Prefix name=\"" , "\"" ) ;

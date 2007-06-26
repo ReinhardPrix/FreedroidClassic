@@ -402,6 +402,8 @@ typedef struct
     int modifier_to_bonus_to_resist_disruptor; // this is a percentage
     int light_bonus_value;
     float price_factor;
+
+    int level; //"level" of the prefix (is it good or not)
 } item_bonus , *Item_bonus;
 
 typedef struct
