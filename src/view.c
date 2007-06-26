@@ -612,6 +612,13 @@ blit_obstacle_collision_rectangle ( obstacle* our_obstacle )
     if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_NONE )
 	return;
 
+/*    if ( obstacle_map [ our_obstacle -> type ] . block_area_type == COLLISION_TYPE_DOOR )
+	{
+        skew_and_blit_rect(x + obstacle_map [ our_obstacle->type ] . block_area_parm_1,y+ obstacle_map [ our_obstacle->type ] . block_area_parm_2,x+obstacle_map [ our_obstacle->type ] . block_area_parm_1 + 0.3,y+ obstacle_map [ our_obstacle->type ] . block_area_parm_2 + 0.3, 0x00FEEAA);
+	return;
+	}*/
+
+    
     //--------------------
     // Now we draw the collision rectangle.  We use the same parameters
     // of the obstacle spec, that are also used for the collision checks.
@@ -1411,6 +1418,8 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 					   "The blitting list contained an illegal blitting object type.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }
+
+            our_obstacle = blitting_list [ i ] . element_pointer ;
 	    
 	    //--------------------
 	    // If the obstacle has a shadow, it seems like now would be a good time
@@ -1418,7 +1427,6 @@ blit_preput_objects_according_to_blitting_list ( int mask )
 	    //
 	    if ( ! GameConfig . skip_shadow_blitting )
 	    {
-		our_obstacle = blitting_list [ i ] . element_pointer ;
 		if ( use_open_gl )
 		{
 		    if ( obstacle_map [ our_obstacle -> type ] . shadow_image . texture_has_been_created )
