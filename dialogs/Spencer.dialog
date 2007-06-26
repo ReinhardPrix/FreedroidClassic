@@ -59,7 +59,6 @@ New Option Nr=2  OptionText=" I really want to become a member."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=246  PositionY=365  
 ChangeOption=2 ChangeToValue=0
-ChangeOption=3 ChangeToValue=1
 OnCondition="CookieIsPlanted:tux_has_joined_guard:" JumpToOption=32 ElseGoto=33
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -399,6 +398,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Once you're a known character around here, we might let you join the ranks of the Guard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=1
+ChangeOption=3 ChangeToValue=1
 ChangeOption=33 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
