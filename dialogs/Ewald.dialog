@@ -220,7 +220,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" See you later."
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=338  PositionY=144  
 Subtitle="Goodbye and remember: My bar is always open."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
