@@ -35,23 +35,50 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 --------------------
 --------------------
 *** START OF PURE SCROLLTEXT DATA ***
-The Freedroid/FreedroidRPG Takeover game
+Trying to hack someone, eh?
+  Don't remember how to do it?
+    Stupid. Don't fry your brain and then try hacking.
+      Here is a crash course to refresh your memory.
 
-In FreedroidRPG, the takeover subgame is used whenever the Tux wishes to take control of a (formerly hostile) robot or hacking open the electronic lock of a secured chest.  Winning the takeover subgame results in the robot becoming 'friendly' or the chest being unlocked.
+    First, don't try to hack if you are about to die.
+  If you fail, you will get a nice electric shock.
+It won't kill you, but it will hurt. A lot.
 
-How to play:
+    There are two phases of hacking.
+      First choose the circuit board you want to use to attack.
+        Most bots have two, one is green and the other is purple.
+          Just press left or right on your keyboard to choose.
+        You have about a minute before the bot notices you.
+      Pick the board which you think gives you an advantage.
+  
+  The second phase is making connections to the logic cores.
+In case you are wondering, that is that thing in the center.
 
-The takeover game shows a simple and randomly generated circuit board with two sides.
-The left side is considered the 'light' side, while the right side is associated with the 'dark' color.
-The first step is to choose a side on the takeover board.  The Tux has the advantage of getting to choose the better side.  Choosing the left side means taking the 'light' color, choosing the right side means taking the 'dark color'
+    Because bots are buggy, some cores will be on your side.
+      You can make only a few attacks, so make them count.
+        Choose the wire you want to use to attack the cores with.
+          Pressing up and down on your keyboard should work.
+        When you have made up your mind, press the blank bar.
+      Whatever is on the other side of the wire will become yours.
+    Of course the bot won't just sit there like an onion.
+  It will try to regain control and it will make connections too.
 
-After pressing a button or waiting for the timeout the sides will be fixed and the real takeover game will start.
-The Tux must try to get a majority of the fields on the central column to show his color, while the bot on the other side will try to achieve the same thing for his color.
-In order to win a few fields for his color, the Tux can plant small connector capsules.  
-Note however, that there is only a limited supply of those.  The number of capsules available depends on the 'hacking' skill of the Tux.  A better hacking skill will mean more connector capsules to set.  The robot on the other side will have connector capsules of his own.  The number again depends on the strength of the bot. 
-Use the mouse wheel and mouse button or cursor keys and space button to set your connector capsules.  Try to use the advantages offered by the circuit board and try to target the fields of enemy color.
+  After a short while everything will be over.
+    If you control the most cores, the bot belongs to you.
+      If not, you get a free electrocution, MegaSys style.
+        
+        The wiring inside the bots is quite crazy at times.
+      You will have to learn the details by yourself.
+    I am not going to risk my safety for your convenience.
+  Too many bots to keep transmitting for too long.
 
-Once the time has run out, the takeover game will stop and the final result will be evaluated.  If the head of the central column shows the Tux color, the game is won, if it shows black color, the game ended drawn and a new round will start shortly.  If the head shows the enemy color, the Tux has lost the takeover attempt, resulting in energy loss and the enemy bot being a free agent once more.
+  Oh, and a request.
+    Next time you decide to stir fry your brain...
+      Just take the manuals into stasis sleep with you.
+    I might not be there to save you next time.
+  
+    Dvorak, First AI.
+   
 
 *** END OF PURE SCROLLTEXT DATA ***
 
