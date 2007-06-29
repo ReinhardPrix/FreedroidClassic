@@ -62,16 +62,16 @@ int CurrentlyMouseWheelDownPressed;
 int MouseWheelUpMovesRecorded;
 int MouseWheelDownMovesRecorded;
 
-int realSDLK_0;
-int realSDLK_1;
-int realSDLK_2;
-int realSDLK_3;
-int realSDLK_4;
-int realSDLK_5;
-int realSDLK_6;
-int realSDLK_7;
-int realSDLK_8;
-int realSDLK_9;
+int realSDLK_0 = SDLK_0;
+int realSDLK_1 = SDLK_1;
+int realSDLK_2 = SDLK_2;
+int realSDLK_3 = SDLK_3;
+int realSDLK_4 = SDLK_4;
+int realSDLK_5 = SDLK_5;
+int realSDLK_6 = SDLK_6;
+int realSDLK_7 = SDLK_7;
+int realSDLK_8 = SDLK_8;
+int realSDLK_9 = SDLK_9;
 
 void init_keyboard_input_array()
 {
@@ -859,6 +859,7 @@ keyboard_update(void)
 	    case SDL_KEYDOWN:
 	    case SDL_KEYUP:
 		//We have a pointer towards the internal array already, nothing to do.
+		#ifndef WIN32
 		if (event.key.keysym.scancode > 19 || event.key.keysym.scancode < 10) break;
 		else switch ( event.key.keysym.scancode )
 			{
@@ -873,6 +874,7 @@ keyboard_update(void)
 			case 18: realSDLK_9 = event.key.keysym.sym; break;
 			case 19: realSDLK_0 = event.key.keysym.sym; break;
 			}
+		#endif
 		break;	
 
 	    case SDL_MOUSEMOTION:
