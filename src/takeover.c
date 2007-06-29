@@ -160,6 +160,7 @@ Takeover ( int enemynum )
     int Displacement = 0 ;
     int reward = 0;
     char game_message_text [ 5000 ] ;
+    static int first_takeover = 1;
 
     //--------------------
     // Prevent distortion of framerate by the delay coming from 
@@ -192,6 +193,12 @@ Takeover ( int enemynum )
     //--------------------
     // Now it is time to display the enemy of this whole takeover process...
     //
+    if ( first_takeover ) 
+	{
+        PlayATitleFile ( "TakeoverInstructions.title" );
+	first_takeover = 0;
+	}
+
     while ( !Finished )
     {
 	ShowDroidInfo ( AllEnemys[enemynum].type, Displacement , TRUE );
