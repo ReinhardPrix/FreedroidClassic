@@ -1861,6 +1861,7 @@ ResetGameConfigToDefaultValues ( void )
     GameConfig . automap_display_scale = 2.0 ;
     GameConfig . skip_shadow_blitting = FALSE ;
     GameConfig . language = 0;
+    GameConfig . auto_display_to_help = 1;
 }; // void Reset_GameConfig_To_Default_Values ( void )
 
 /* -----------------------------------------------------------------
