@@ -5255,7 +5255,7 @@ LevelEditor(void)
     // In that case we might want to change the appearance of the mouse 
     // cursor a bit, like to arrow shape or something, for conveninet selection...
     //
-    set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
+  //  set_mouse_cursor_to_shape ( MOUSE_CURSOR_ARROW_SHAPE ) ;
 
     while ( !level_editor_done )
     {
