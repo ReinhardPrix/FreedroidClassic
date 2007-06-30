@@ -178,7 +178,7 @@ throw_out_all_chest_content ( int obst_index )
   Level chest_level;
   int i;
   int j;
-  moderately_finepoint throw_out_offset_vector = { 0 , 0.9 } ;
+  moderately_finepoint throw_out_offset_vector = { 0 , 1 } ;
 
   chest_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 
@@ -226,6 +226,18 @@ throw_out_all_chest_content ( int obst_index )
     }
 
   // Maybe generate a random item to be dropped
+  int tries = 0;
+  while ( ! IsPassable( Me [ 0 ] . pos . x + throw_out_offset_vector . x, Me [ 0 ] . pos . y + throw_out_offset_vector . y, Me [ 0 ] . pos . z)  && tries < 40)
+	{
+	RotateVectorByAngle ( &throw_out_offset_vector, 10 );
+	tries ++;
+	//printf("Unable to drop at given position, adapting throw vector\n");
+	if ( tries && ! (tries % 10) )
+		{
+		throw_out_offset_vector . x = 0;
+		throw_out_offset_vector . y -= 0.05;
+		}
+	}
   DropRandomItem( Me [ 0 ] . pos . z , Me [ 0 ] . pos . x + throw_out_offset_vector . x , Me [ 0 ] . pos . y + throw_out_offset_vector . y, 1 , FALSE  , FALSE , FALSE ) ;
 
 
