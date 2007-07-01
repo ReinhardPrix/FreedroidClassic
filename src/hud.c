@@ -1114,8 +1114,29 @@ vert grimpe, bleu baisse, rouge grimpe, vert baisse*/
 	green = 255 - (1.8 * 4 * (temp_ratio - 75));
 	}
 
+    int add = 0;
+    if ( Me [ 0 ] . temperature > Me [ 0 ] . max_temperature )
+	{ //make the bar blink
+	switch ( (int)(Me[0].current_game_date) % 4 ) 
+		{
+		case 0: 
+		case 2:
+			add = (Me[0] . current_game_date - (int)(Me[0].current_game_date)) * 255;
+			red += add;
+			blue += add;
+			green += add;
+			break;
+		case 1:
+		case 3:
+			add = 255 - (Me[0] . current_game_date - (int)(Me[0].current_game_date)) * 255;
+			red += add;
+			blue += add;
+			green += add;
+			break;
+		}
+	}
     blit_vertical_status_bar ( Me[0].max_temperature , (Me[0].temperature > Me[0].max_temperature) ? Me[0].max_temperature : Me[0].temperature, 
-			       SDL_MapRGBA(Screen->format, red, green, blue, 0)
+			       SDL_MapRGBA(Screen->format, red > 255 ? 255 : red, green < 255 ? green : 255, blue < 255 ? blue : 255, 0)
 				, un_force_rect_color ,
 			       WHOLE_FORCE_RECT_X , 
 			       WHOLE_FORCE_RECT_Y , 
