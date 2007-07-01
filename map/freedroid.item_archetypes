@@ -59,7 +59,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text="Dummy item. If you see this report a bug."
 ** End of new item specification subsection **
@@ -77,7 +77,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="health_capsule/inv_image_small.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=20
 Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -95,7 +95,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="health_capsule/inv_image_big.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=60
 Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -113,7 +113,7 @@ Items of this type collect together in inventory="no"
 Dexterity minimum required to wear/wield this item=28
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=350
 Item description text="The twin laser is small, but does its job. A somewhat cheap but effective weapon."
 ----- the following part is only relevant for weapons -----
@@ -149,7 +149,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="inventory_image_3.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=900
 Item description text=""
 ** End of new item specification subsection **
@@ -168,7 +168,7 @@ Item as defensive item: base_ac_bonus=2
 Item as defensive item: ac_bonus_modifier=2
 Base item duration=10 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_1.wav"
+Item uses drop sound with filename="Item_Drop_Sound_1.ogg"
 Base list price=27
 Item description text="These simple boots are designed for comfort of the wearer more than to give actual protection."
 ** End of new item specification subsection **
@@ -184,7 +184,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="cyberbucks"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="cyberbucks/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_2.wav"
+Item uses drop sound with filename="Item_Drop_Sound_2.ogg"
 Base list price=1
 Item description text=""
 ** End of new item specification subsection **
@@ -200,7 +200,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="wheel_drive"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="wheel_drive/inv_image.png"
-Item uses drop sound with filename="Item_Wheels_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Wheels_Put_Sound_0.ogg"
 Base list price=100
 Item description text="This is a droid part used for locomotion. The wheel drive is slow, but not very complicated and easy to construct or repair."
 ** End of new item specification subsection **
@@ -216,7 +216,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="tri_pedal_drive"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="tri_pedal_drive/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="This is a nightmare. Some crazed inventor had a problem with the stability of a bipedial drive. She solved it by adding a third leg to the drive unit. A real mess to maintain and unreliable as hell, but at least it walks."
 ** End of new item specification subsection **
@@ -232,7 +232,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="bi_pedal_drive"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="bi_pedal_drive/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=300
 Item description text="This type of drive is de facto the standard in humanoid machine industry."
 ** End of new item specification subsection **
@@ -248,7 +248,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="track_drive"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="track_drive/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=65
 Item description text="The track drive. Good for all types of terrain. Except lava, acid, landmines and the like."
 ** End of new item specification subsection **
@@ -267,7 +267,7 @@ Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=3
 Base item duration=23 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=65
 Item description text="These boots are similar to the simple shoes, but the material they are made of is hardened for extra protection."
 ** End of new item specification subsection **
@@ -284,7 +284,7 @@ Item uses rotation series with prefix="plasma_double"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=600
 Item description text="This rifle is a high-end laser weapon. There is only one problem with it: Shooting it is too much fun. People often end up with no ammunition in the middle of a battle."
 ----- the following part is only relevant for weapons -----
@@ -321,7 +321,7 @@ Item uses rotation series with prefix="exterminator_simple"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="exterminator_simple/inv_image.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=1001
 Item description text="While this weapon is capable of firing really powerful shots, beware of the exceptionally long reloading times. (Don't get swarmed by enemies with this weapon unless you have powerful armor!)"
 ----- the following part is only relevant for weapons -----
@@ -358,7 +358,7 @@ Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_13.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=2500
 Item description text=" This weapons name speaks for itself-more of a brute force weapon than most, it is best used on high defense enemies."
 ----- the following part is only relevant for weapons -----
@@ -397,7 +397,7 @@ Strength minimum required to wear/wield this item=30
 Dexterity minimum required to wear/wield this item=40
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=800
 Item description text="Think of a twin laser with twice the power. Now make it shoot half as often. What you have is the 'Advanced' twin laser."
 ----- the following part is only relevant for weapons -----
@@ -434,7 +434,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_2.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=250
 Item description text="If you do not mind waiting for a while in the heat of battle, this weapon is for you."
 ----- the following part is only relevant for weapons -----
@@ -473,7 +473,7 @@ Strength minimum required to wear/wield this item=20
 Dexterity minimum required to wear/wield this item=45
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="exterminator_simple/inv_image.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=1001
 Item description text="This bad boy has been known to blow away enemies with a single blast. A dangerous weapon that you dont want to be on the receiving end of."
 ----- the following part is only relevant for weapons -----
@@ -513,7 +513,7 @@ Item as defensive item: base_ac_bonus=33
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=15
 File or directory name for inventory image="green_armour/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=1001
 Item description text="Defense is acquired at a high level with this durable piece of armor."
 ** End of new item specification subsection **
@@ -534,7 +534,7 @@ Base item duration=10 plus duration modifier=8
 File or directory name for inventory image="buckler/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=30
 Item description text="This shield is a compilation of various objects which happened to be around. It has tubes, bolts and parts of metal, all slapped together to provide a small bit of protection from enemies. It's very simple and rough, but some sensors and lights have been added to let the wielder know when the item is getting hit, and how long it willl remain operational and other cool stuff like that."
 ** End of new item specification subsection **
@@ -555,7 +555,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="helmet_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=25
 Item description text="A simple cover for your head. Don't expect to be incognito."
 ** End of new item specification subsection **
@@ -571,7 +571,7 @@ Item can be installed in slot with name="aux"
 Item uses rotation series with prefix="warrior_wristband"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="warrior_wristband/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
 ** End of new item specification subsection **
@@ -588,7 +588,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_18.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=500
 Item description text="A basic laser, but it has good uses in certain situations. No warranty of any kind though."
 ----- the following part is only relevant for weapons -----
@@ -625,7 +625,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_18.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=750
 Item description text="The basic plasma gun."
 the following part is only relevant for weapons -----
@@ -664,7 +664,7 @@ Base item duration=35 plus duration modifier=10
 File or directory name for inventory image="laser_sword_red/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=350
 Item description text="In an age of high tech guns and lasers, this modified sword should never be underestimated."
 ----- the following part is only relevant for weapons -----
@@ -703,7 +703,7 @@ Item as defensive item: base_ac_bonus=3
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=18 plus duration modifier=1
 File or directory name for inventory image="basic_armour/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=40
 Item description text="Does a decent job of protection. I guess. Maybe. I'm not sure."
 ** End of new item specification subsection **
@@ -723,7 +723,7 @@ Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="laser_sword_red/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=450
 Item description text="This large double-edged broadsword has the ability to shut down the victim with a single well placed blow."
 ----- the following part is only relevant for weapons -----
@@ -762,7 +762,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. It can cut through the most resistant objects like a knife can slice through butter. Melted butter."
 ----- the following part is only relevant for weapons -----
@@ -799,7 +799,7 @@ Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 Base item duration=20 plus duration modifier=10
 File or directory name for inventory image="inventory_image_25.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=120
 Item description text="A nice handy weapon, a good swing every now and then will prove useful in critical hits."
 ----- the following part is only relevant for weapons -----
@@ -838,7 +838,7 @@ Item as defensive item: base_ac_bonus=8
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=20 plus duration modifier=10
 File or directory name for inventory image="basic_armour2/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=75
 Item description text="One step up from a normal jacket."
 ** End of new item specification subsection **
@@ -857,7 +857,7 @@ Item as defensive item: base_ac_bonus=13
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="basic_armour3/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=200
 Item description text="Very strong for its size, does a good job of absorbing basic blows."
 ** End of new item specification subsection **
@@ -876,7 +876,7 @@ Item as defensive item: base_ac_bonus=18
 Item as defensive item: ac_bonus_modifier=6
 Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="inventory_image_26.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=300
 Item description text="Tough as nails and able to withstand most blows."
 ** End of new item specification subsection **
@@ -894,7 +894,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=35
 Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=450
 Item description text="A melee weapon that requires skill and coordination to use. A fine handler can control one of the finest weapons ever made."
 ----- the following part is only relevant for weapons -----
@@ -935,7 +935,7 @@ Item as defensive item: base_ac_bonus=12
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=25 plus duration modifier=10
 File or directory name for inventory image="standard_shield/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=250
 Item description text="Better than a buckler, and a lot more effective."
 ** End of new item specification subsection **
@@ -955,7 +955,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_21.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A reliable weapon whose destructive history is well known over the years."
 ----- the following part is only relevant for weapons -----
@@ -996,7 +996,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_red/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=240
 Item description text="This saber is nearly poetic in its movements. Combined with light armor, this can be an extremely dangerous offensive weapon."
 ----- the following part is only relevant for weapons -----
@@ -1034,7 +1034,7 @@ Items of this type collect together in inventory="no"
 Strength minimum required to wear/wield this item=33
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_21.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=310
 inventory_size_x=2
 inventory_size_y=2
@@ -1075,7 +1075,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_28.png"
 inventory_size_y=2
 inventory_size_x=1
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=60
 Item description text="Very, very reliable backup weapon. The price is handsome as is the weapons effectiveness against most enemies."
 ----- the following part is only relevant for weapons -----
@@ -1114,7 +1114,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="club/inv_image.png"
 inventory_size_y=3
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=50
 Item description text="Many would think that in this day and age a club would be more suited for a Neanderthal, but they didnt have the extra laser edge to depend on."
 ----- the following part is only relevant for weapons -----
@@ -1151,7 +1151,7 @@ Item uses rotation series with prefix="laser_staff"
 Items of this type collect together in inventory="no"
 Base item duration=40 plus duration modifier=40
 File or directory name for inventory image="laser_staff/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=50
 Item description text="More of a weapon for those with skill, as this is not known for a brute attack but more of a balanced one."
 ----- the following part is only relevant for weapons -----
@@ -1190,7 +1190,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=80
 Item description text="The power of an axe combined with modern technology is a force to be reckoned with. This easily acquired but much talked about weapon has a storied past."
 ----- the following part is only relevant for weapons -----
@@ -1228,7 +1228,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="force_capsule/inv_image_small.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=15
 Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -1246,7 +1246,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="force_capsule/inv_image_big.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=45
 Item description text="These large containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -1265,7 +1265,7 @@ Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=10 plus duration modifier=8
 File or directory name for inventory image="small_shield/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=90
 Item description text="A small, lightweight and pretty straightforward shield. Provides decent protection."
 ** End of new item specification subsection **
@@ -1281,7 +1281,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=250
 Item description text="An incredible healing spell, probably only one you will ever need."
 ** End of new item specification subsection **
@@ -1297,7 +1297,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
 ** End of new item specification subsection **
@@ -1313,7 +1313,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
 ** End of new item specification subsection **
@@ -1329,7 +1329,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=100
 Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
 ** End of new item specification subsection **
@@ -1347,7 +1347,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="health_capsule/inv_image_medium.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=40
 Item description text="These medium sized containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -1365,7 +1365,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="force_capsule/inv_image_medium.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=30
 Item description text="These medium sized containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -1386,7 +1386,7 @@ Base item duration=18 plus duration modifier=10
 File or directory name for inventory image="helmet_yellow2/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=75
 Item description text="A rather useful helmet, has a few defense issues here and there but mainly is worth the wear."
 ** End of new item specification subsection **
@@ -1402,7 +1402,7 @@ Item can be installed in slot with name="aux"
 Item uses rotation series with prefix="sniper_wristband"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="sniper_wristband/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
 ** End of new item specification subsection **
@@ -1418,7 +1418,7 @@ Item can be installed in slot with name="aux"
 Item uses rotation series with prefix="hacker_wristband"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="hacker_wristband/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
 ** End of new item specification subsection **
@@ -1437,7 +1437,7 @@ Item as defensive item: base_ac_bonus=18
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=18 plus duration modifier=10
 File or directory name for inventory image="helmet_yellow3/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=175
 Item description text="Now this is head protection. Feel safe with sturdy iron protecting your head. Not as comfortable as other hats"
 ** End of new item specification subsection **
@@ -1456,7 +1456,7 @@ Item as defensive item: base_ac_bonus=6
 Item as defensive item: ac_bonus_modifier=8
 Base item duration=28 plus duration modifier=15
 File or directory name for inventory image="helmet_skull_cap/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=275
 Item description text="Top of the line head gear, manages to protect against a myriad of close range and long range attacks."
 ** End of new item specification subsection **
@@ -1475,7 +1475,7 @@ Item as defensive item: base_ac_bonus=13
 Item as defensive item: ac_bonus_modifier=3
 Base item duration=38 plus duration modifier=20
 File or directory name for inventory image="helmet_yellow4/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=375
 Item description text="It might look a bit silly, but it will save your life many times"
 ** End of new item specification subsection **
@@ -1496,7 +1496,7 @@ Item as defensive item: base_ac_bonus=24
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=35 plus duration modifier=20
 File or directory name for inventory image="large_shield/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=450
 Item description text="A powerful shield."
 ** End of new item specification subsection **
@@ -1512,7 +1512,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="inventory_image_1.png"
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=45
 Item description text="These small containers hold purified running strength.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -1528,7 +1528,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="blue_energy_drink"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="blue_energy_drink/inv_image.png"
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=50
 Item description text="Warning! These energy dinks contain high doses of caffeine! The average person drops dead after consuming 12 grams of caffeine. One of these bottles contains over double that amount."
 ** End of new item specification subsection **
@@ -1544,7 +1544,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="dixons_toolbox"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="dixons_toolbox/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=0
 Item description text="This is a teleporter service toolbox. It's complete and orderly, though a few dents on the outside give prof of frequent use. 'C. Dixon' is carved into the outside with fine print."
 ** End of new item specification subsection **
@@ -1563,7 +1563,7 @@ Strength minimum required to wear/wield this item=20
 Dexterity minimum required to wear/wield this item=45
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="exterminator_simple/inv_image.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=1001
 Item description text="This is one of the most powerful ranged weapons out there."
 ----- the following part is only relevant for weapons -----
@@ -1599,7 +1599,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="plasma_transistor"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="plasma_transistor/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=100
 Item description text="This is an standard part within many robots types."
 ** End of new item specification subsection **
@@ -1615,7 +1615,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="superconducting_relay_unit"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="superconducting_relay_unit/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=100
 Item description text="This is an standard part within many robots types."
 ** End of new item specification subsection **
@@ -1631,7 +1631,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="antimatter_matter_converter"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="antimatter_matter_converter/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=100
 Item description text="This is an standard part within many robot types."
 ** End of new item specification subsection **
@@ -1647,7 +1647,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="entropy_inverter"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="entropy_inverter/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=100
 Item description text="This is an standard part within many robots types."
 ** End of new item specification subsection **
@@ -1663,7 +1663,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="tachyon_converter"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="tachyon_converter/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=100
 Item description text="This is an standard part within many robots types."
 ** End of new item specification subsection **
@@ -1681,7 +1681,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="ammo_plasma_bullet/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=4
 Item description text="Plasma crystal load. This is the most common way of loading a plasma weapon."
 ** End of new item specification subsection **
@@ -1697,7 +1697,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="ammo_laser_crystal"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="ammo_laser_crystal/inv_image.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=2
 Item description text="Energy crystal load for laser rifles. Each round fired consumes a load within the crystal."
 ** End of new item specification subsection **
@@ -1715,7 +1715,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="ammo_exterminator_sphere/inv_image.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=5
 Item description text="Exterminators need this kind of ammunition. It can cause skin irritations due to leaking extermination radiation when carried close to the body for long time."
 ** End of new item specification subsection **
@@ -1733,7 +1733,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="vmx_grenade/inv_image.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial vmx wave spell."
 ** End of new item specification subsection **
@@ -1751,7 +1751,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="emp_grenade/inv_image.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=150
 Item description text="This grenade has about the same effect as the dreaded radial emp wave spell."
 ** End of new item specification subsection **
@@ -1767,7 +1767,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="desk_lamp"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="desk_lamp/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=32
 Item description text="What would modern science be without this important item?"
 ** End of new item specification subsection **
@@ -1785,7 +1785,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="plasma_grenade/inv_image.png"
 inventory_size_y=1
 inventory_size_x=1
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="This grenade has about the same effect as the dreaded radial fire wave spell."
 ** End of new item specification subsection **
@@ -1801,7 +1801,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="monkey_wrench"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="monkey_wrench/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=32
 Item description text="Even the most primitive civilisations cannot survive for long without a large supply of those."
 ** End of new item specification subsection **
@@ -1817,7 +1817,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="red_dilitium_crystal"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="red_dilitium_crystal/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=18
 Item description text="These dilitium crystals are used as energy source in many modern electricity or heat based devices. Energy is extracted from the crystal by making use of the energy contained in the order of the crystal molecules. This principle has allowed to build devices that consume a lot of energy but do not need to be connected to a power line."
 ** End of new item specification subsection **
@@ -1835,7 +1835,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="map_maker/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=18
 Item description text="This small device automatically collects data about the area within a range of 7 times 7 meters and draws a small-scale plan of the immediate surroundings. Because of it's very tiny display, it needs to be held closely to the eye and the image will then be projected directly into the eyeball of the user. Still, the collected map data will be split up by the device into several sectors for convenient viewing."
 ** End of new item specification subsection **
@@ -1851,7 +1851,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_strength"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="pill_strength/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="These pills permanently raise strength within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ** End of new item specification subsection **
@@ -1867,7 +1867,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_dexterity"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="pill_dexterity/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="These pills permanently raise dexterity within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ** End of new item specification subsection **
@@ -1883,7 +1883,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="pill_magic"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="pill_magic/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="These pills permanently raise magic within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
 ** End of new item specification subsection **
@@ -1899,7 +1899,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="brain_enlargement_antidode"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="brain_enlargement_antidode/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
 Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net. The planet-wide guild of medics has recommended not to respond to these ads at all, while attempts to entirely ban the distribution of those pills were never completely successful."
 ** End of new item specification subsection **
@@ -1915,7 +1915,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="eating_fork"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="eating_fork/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ** End of new item specification subsection **
@@ -1931,7 +1931,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="eating_plate"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="eating_plate/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ** End of new item specification subsection **
@@ -1947,7 +1947,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="drinking_mug"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="drinking_mug/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault.  All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time.  It comes with it's own power supply and has a supposed duration of 200 years."
 ** End of new item specification subsection **
@@ -1963,7 +1963,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=400
 Item description text="This manual allows you to throw balls of fire from your hands causing considerable damage to your target."
 ** End of new item specification subsection **
@@ -1979,7 +1979,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
 ** End of new item specification subsection **
@@ -1995,7 +1995,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="An incredible spell, allowing you to poison varies targets, giving them a slow death."
 ** End of new item specification subsection **
@@ -2011,7 +2011,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="An incredible spell turning the target into stone."
 ** End of new item specification subsection **
@@ -2027,7 +2027,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="An incredible spell, causing a wave of the dreaded radial EMP to explode around you."
 ** End of new item specification subsection **
@@ -2043,7 +2043,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="An incredible spell, causing a wave of the dreaded radial VMX to explode around you."
 ** End of new item specification subsection **
@@ -2059,7 +2059,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="An incredible spell, causing a wave of the dreaded radial plasma to explode around you; burning everything that it hits."
 ** End of new item specification subsection **
@@ -2075,7 +2075,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=200
 Item description text="An incredible detection spell, allowing you to know when a item is near by."
 ** End of new item specification subsection **
@@ -2091,7 +2091,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="This manual allows to learn the identify spell."
 ** End of new item specification subsection **
@@ -2107,7 +2107,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="inventory_image_1.png"
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=150
 Item description text="These small containers hold purified strength.  This item will give a temporary boost to strength.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -2123,7 +2123,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="energy_capsule"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="inventory_image_1.png"
-Item uses drop sound with filename="drop_potion_sound.wav"
+Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=150
 Item description text="These small containers hold purified dexterity.  This item will give a temporary bonus to dexterity.  Each capsule can be used only once, but multiple of those items can be grouped together like one item in inventory."
 ** End of new item specification subsection **
@@ -2142,7 +2142,7 @@ Item as defensive item: base_ac_bonus=4
 Item as defensive item: ac_bonus_modifier=3
 Base item duration=13 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=65
 Item description text="These boots are a bit lighter than the normal version, giving of course worse protection but certainly extra comfort for the wearer."
 ** End of new item specification subsection **
@@ -2161,7 +2161,7 @@ Item as defensive item: base_ac_bonus=12
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=27 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=175
 Item description text="These boots were originally normal boots, but have been fitted with some extra reinforcements to give better protection to the wearer.  Of course this makes them a bit less elegant and also less comfy to wear, but the extra protection might be worth it, at not the full price of hiking boots."
 ** End of new item specification subsection **
@@ -2180,7 +2180,7 @@ Item as defensive item: base_ac_bonus=17
 Item as defensive item: ac_bonus_modifier=5
 Base item duration=37 plus duration modifier=5
 File or directory name for inventory image="boots_simple/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=275
 Item description text="These hiking boots are a very sophisticated product, combining optimal comfort for the wearer with a good protection from collisions with blunt objects like stones, which of course also makes for a higher price."
 ** End of new item specification subsection **
@@ -2199,7 +2199,7 @@ Item as defensive item: base_ac_bonus=17
 Item as defensive item: ac_bonus_modifier=4
 Base item duration=30 plus duration modifier=8
 File or directory name for inventory image="small_shield/inv_image.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=330
 Item description text="A medium sized, lightweight and pretty straightforward shield. Provides decent protection."
 ** End of new item specification subsection **
@@ -2215,7 +2215,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="script"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="script/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=25
 Item description text="This script can invoke stored powers to identify unknown special properties of an item.  The stored powers are expended in the process and the script becomes useless afterwards.  Note:  Multiple of those may be grouped together in inventory."
 ** End of new item specification subsection **
@@ -2231,7 +2231,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="script"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="script/inv_image.png"
-Item uses drop sound with filename="drop_book_sound.wav"
+Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=40
 Item description text="This script can invoke stored powers to teleport one person back to the center of the nearest town. The stored powers are expended in the process and the script becomes useless afterwards.  Note:  Multiple of those may be grouped together in inventory."
 ** End of new item specification subsection **
@@ -2247,7 +2247,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="datacube"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="datacube/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=0
 Item description text="This data cube contains confidential government data on the installations around the colony. Kevin hopes that when the data is evaluated properly a way out of the current crisismight be found. However, the amount of data is so vast, it can only be evaluated properly using a large cluster of computers. The Red Guard base is said to store a suitable infrastructure for this purpose."
 ** End of new item specification subsection **
@@ -2266,7 +2266,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2305,7 +2305,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2344,7 +2344,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2383,7 +2383,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2422,7 +2422,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2461,7 +2461,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2500,7 +2500,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2539,7 +2539,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2578,7 +2578,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2617,7 +2617,7 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="laser_sword_yellow/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=120
 Item description text="A true to technology modern sword. Can cut through the most impossible objects like a knife through butter."
 ----- the following part is only relevant for weapons -----
@@ -2653,7 +2653,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="yes"
 File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Drop_Sound_4.wav"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
 Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) project from before the Great Assault. All of the items in the SCK project have an inner mechanism that will clean the object automatically if left alone for a given time. It comes with it's own power supply and has a supposed duration of 200 years."
 ** End of new item specification subsection **
@@ -2669,7 +2669,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="antigrav_unit"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="antigrav_unit/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=450
 Item description text="The bots use this to hover around."
 ** End of new item specification subsection **
@@ -2686,7 +2686,7 @@ Item uses rotation series with prefix="mace"
 Items of this type collect together in inventory="no"
 Base item duration=20 plus duration modifier=10
 File or directory name for inventory image="mace/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=120
 Item description text="A mace, good for crushing bones."
 ----- the following part is only relevant for weapons -----
@@ -2722,7 +2722,7 @@ Item can be installed in slot with name="none"
 Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="inventory_image_7.png"
-Item uses drop sound with filename="Item_Armour_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=1000
 Item description text="This isn't really any item of the game.  It's just a dummy/error value!"
 ** End of new item specification subsection **
@@ -2739,7 +2739,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_18.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=40
 Item description text="For bot use only."
 ----- the following part is only relevant for weapons -----
@@ -2776,7 +2776,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_18.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=100
 Item description text="For bot use only"
 ----- the following part is only relevant for weapons -----
@@ -2815,7 +2815,7 @@ Strength minimum required to wear/wield this item=20
 Dexterity minimum required to wear/wield this item=45
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="exterminator_simple/inv_image.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=1001
 Item description text="Bot use only"
 ----- the following part is only relevant for weapons -----
@@ -2852,7 +2852,7 @@ Item uses rotation series with prefix="plasma_single"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_2.png"
-Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.wav"
+Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=250
 Item description text="More of a mediocre addition to the laser family, this is best summed up as a backup weapon."
 ----- the following part is only relevant for weapons -----
@@ -2890,7 +2890,7 @@ Items of this type collect together in inventory="no"
 Item as defensive item: base_ac_bonus=75
 Base item duration=3 plus duration modifier=0
 File or directory name for inventory image="helmet_yellow4/inv_image.png"
-Item uses drop sound with filename="Item_Drop_Sound_0.wav"
+Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=5
 Item description text="A gift from Dixon. It looks like it is about to turn into dust."
 ** End of new item specification subsection **
@@ -2908,7 +2908,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="inventory_image_28.png"
 inventory_size_y=2
 inventory_size_x=2
-Item uses drop sound with filename="drop_sword_sound.wav"
+Item uses drop sound with filename="drop_sword_sound.ogg"
 Base list price=0
 Item description text="This blade pulses with evil. That power. That energy. Nothing can stop you now."
 ----- the following part is only relevant for weapons -----
