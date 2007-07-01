@@ -412,8 +412,14 @@ UpdateCountersForThisFrame ( int player_num )
 	    Me [ player_num ] . temperature = 0;
     
     if ( Me [ player_num ] . temperature > Me [ player_num] . max_temperature ) //overheat, lose life
+	    {
+	    if ( Me [ player_num ] . old_temperature < Me [ player_num ] . max_temperature ) 
+		append_new_game_message("Overheating!");
 	    Me [ player_num ] . energy -= ( Me [ player_num ] . temperature - Me[player_num].max_temperature ) * latest_frame_time / 10;
+	    }
     
+    Me [ player_num ] . old_temperature = Me [ player_num ] . temperature;
+
     if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
     if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
     

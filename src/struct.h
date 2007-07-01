@@ -606,7 +606,8 @@ typedef struct
     float maxenergy; // current top limit for the influencers energy
     double energy;		  // current energy level 
     float max_temperature;   // current top limit for temperature (highest is better)
-    double temperature;                    // current temperature
+    float temperature;                    // current temperature
+    float old_temperature;                    // current temperature
     float max_running_power;
     float running_power;
     int running_must_rest;
