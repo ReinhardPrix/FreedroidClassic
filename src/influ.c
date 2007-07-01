@@ -2445,7 +2445,7 @@ animate_tux ( int player_num )
 	      step_countdown += Frame_Time() ;
 	      if ( step_countdown > STEP_TIME )
 		{
-		  play_sample_using_WAV_cache_v( "effects/tux_footstep.wav" , FALSE , FALSE,0.2 );
+		  play_sample_using_WAV_cache_v( "effects/tux_footstep.ogg" , FALSE , FALSE,0.2 );
 		  step_countdown -= STEP_TIME ;
 		  // Me [ player_num ] . running_power -= STEP_TIME * 2.0 ;
 		}

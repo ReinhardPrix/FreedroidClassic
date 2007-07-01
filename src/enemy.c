@@ -1393,7 +1393,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
     if ( ThisRobot->is_friendly )
     {
 	Activate_Conservative_Frame_Computation();
-	//PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.wav" , FALSE , TRUE );
+	//PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.ogg" , FALSE , TRUE );
 
 	sprintf ( game_message_text , "Your friend %s has died." ,
 		  Druidmap [ ThisRobot -> type ] . druidname );

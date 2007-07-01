@@ -3273,8 +3273,8 @@ item_index_insert_new ( GtkWidget *widget, GdkEvent  *event, gpointer   data )
   ItemMap [ Number_Of_Item_Types ] . item_description = MyMalloc ( strlen ( "no description for this one yet" ) + 2 ) ;
   strcpy ( ItemMap [ Number_Of_Item_Types ] . item_description , "no description for this one yet" ) ;
 
-  ItemMap [ Number_Of_Item_Types ] . item_drop_sound_file_name = MyMalloc ( strlen ( "Item_Drop_Sound_0.wav" ) + 2 ) ;
-  strcpy ( ItemMap [ Number_Of_Item_Types ] . item_drop_sound_file_name , ( "Item_Drop_Sound_0.wav" ) ) ;
+  ItemMap [ Number_Of_Item_Types ] . item_drop_sound_file_name = MyMalloc ( strlen ( "Item_Drop_Sound_0.ogg" ) + 2 ) ;
+  strcpy ( ItemMap [ Number_Of_Item_Types ] . item_drop_sound_file_name , ( "Item_Drop_Sound_0.ogg" ) ) ;
 
   ItemMap [ Number_Of_Item_Types ] . item_can_be_applied_in_combat = FALSE ;
   ItemMap [ Number_Of_Item_Types ] . item_can_be_installed_in_influ = FALSE ;

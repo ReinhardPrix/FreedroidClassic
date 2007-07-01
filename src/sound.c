@@ -531,7 +531,7 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 		{
 		pathlen = strlen ( Temp_Filename );
 
-		if ( strcmp ( Temp_Filename + pathlen - 4 , ".wav" ) == 0 )
+		if ( strcmp ( Temp_Filename + pathlen - 4 , ".ogg" ) == 0 )
 			{
 			extension = Temp_Filename + pathlen - 4;
 			}

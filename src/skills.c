@@ -710,7 +710,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		    return;
 		}
 	    }
-	    PlayOnceNeededSoundSample ( "effects/I_See_No_Chest_Sound_0.wav" , FALSE , FALSE );
+	    PlayOnceNeededSoundSample ( "effects/I_See_No_Chest_Sound_0.ogg" , FALSE , FALSE );
 	    break;
 	    */
 
@@ -830,7 +830,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		    // Do nothing here.  The right mouse click while in inventory screen
 		    // will be handled in the inventory screen management function.
 		    //
-		    PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/CantRepairThat.wav" , 
+		    PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/CantRepairThat.ogg" , 
 						FALSE , FALSE );
 		}
 	    }

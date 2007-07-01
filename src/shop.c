@@ -1285,7 +1285,7 @@ TryToRepairItem( item* RepairItem )
     
     Me [ 0 ] . Gold -= calculate_item_repair_price ( RepairItem ) ;
     RepairItem->current_duration = RepairItem->max_duration;
-    PlayOnceNeededSoundSample ( "effects/Shop_ItemRepairedSound_0.wav" , FALSE , FALSE );
+    PlayOnceNeededSoundSample ( "effects/Shop_ItemRepairedSound_0.ogg" , FALSE , FALSE );
 }; // void TryToRepairItem( item* RepairItem )
 
 /* ----------------------------------------------------------------------
@@ -1320,7 +1320,7 @@ TryToIdentifyItem( item* IdentifyItem )
 	while (EnterPressed() || SpacePressed() );
 	Me[0].Gold -= 100 ;
 	IdentifyItem -> is_identified = TRUE ;
-	PlayOnceNeededSoundSample ( "effects/Shop_ItemIdentifiedSound_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemIdentifiedSound_0.ogg" , FALSE , FALSE );
 
     return;
 }; // void TryToIdentifyItem( item* IdentifyItem )
@@ -1393,7 +1393,7 @@ please inform the developers...",
 		    
 		    Me [ 0 ] . Gold += calculate_item_sell_price ( SellItem );
 		    DeleteItem( SellItem );
-		    PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+		    PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.ogg" , FALSE , TRUE );
 		    
 		    return;
 		    break;
@@ -1416,7 +1416,7 @@ please inform the developers...",
 	else 
 	    DeleteItem( SellItem );
 	
-	PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.wav" , FALSE , TRUE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemSoldSound_0.ogg" , FALSE , TRUE );
     }
 }; // void TryToSellItem( item* SellItem )
 
@@ -1507,7 +1507,7 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
     // for buying and could be bought, if only ONE HAD ENOUGH ROOM IN INVENTORY!!
     // Therefore a message must be displayed, saying what the problem is.
     //
-    PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.wav" , FALSE , FALSE );
+    PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.ogg" , FALSE , FALSE );
     MenuTexts[0]=" BACK ";
     MenuTexts[1]="";
     GiveItemDescription( linebuf , BuyItem , TRUE );
@@ -1615,7 +1615,7 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     if ( TryToIntegrateItemIntoInventory ( BuyItem , AmountToBuyAtMost ) )
     {
 	Me[0].Gold -= PotentialPrice ;
-	PlayOnceNeededSoundSample ( "effects/Shop_ItemBoughtSound_0.wav" , FALSE , FALSE );
+	PlayOnceNeededSoundSample ( "effects/Shop_ItemBoughtSound_0.ogg" , FALSE , FALSE );
     }
     else
     {
