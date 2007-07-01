@@ -490,12 +490,14 @@ exist really (i.e. has a type = (-1) ).",
 		strcat( ItemDescText , linebuf );
 	    }
 
-	    if ( CurItem->bonus_to_mana_recovery )
+	    if ( CurItem->bonus_to_cooling_rate )
 	    {
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
-		if ( CurItem->bonus_to_mana_recovery > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%0.1f cooling per second" , CurItem->bonus_to_mana_recovery );
+		if ( CurItem->bonus_to_cooling_rate > 0 )
+			sprintf( linebuf , "%0.1f cooling per second" , CurItem->bonus_to_cooling_rate );
+		else if ( CurItem->bonus_to_cooling_rate < 0 )
+			sprintf( linebuf , "%0.1f heating per second" , CurItem->bonus_to_cooling_rate );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -854,7 +856,7 @@ char fpath[2048];
 	blit_rotated_open_gl_texture_with_center ( &SpeedMeterManaArrowImage , 
 						   GameConfig . screen_width - speed_meter_iso_image . original_image_width + PivotPosition . x , 
 						   0 + PivotPosition . y  , 
-						   - 360 * 3 / 4 * Me [ 0 ] . mana / Me [ 0 ] . maxmana );
+						   - 360 * 3 / 4 * Me [ 0 ] . temperature / Me [ 0 ] . max_temperature );
 	
 	remove_open_gl_blending_mode_again ( );
 	
@@ -867,9 +869,9 @@ char fpath[2048];
 	// by the arrow position.  
 	//
 	if ( ( Previous_Energy    != (int) Me[0].energy ) ||
-	     ( Previous_Mana      != (int) Me[0].mana ) ||
+	     ( Previous_Mana      != (int) Me[0].temperature) ||
 	     ( Previous_Maxenergy != (int) Me[0].maxenergy ) ||
-	     ( Previous_Maxmana   != (int) Me[0].maxmana ) )
+	     ( Previous_Maxmana   != (int) Me[0].max_temperature ) )
 	{
 	    //--------------------
 	    // We generate a new fresh empty speed-o-meter in the working copy
@@ -890,7 +892,7 @@ char fpath[2048];
 	    
 	    // We blit in the blue arrow, showing current mana
 	    RotatedArrow = rotozoomSurface( SpeedMeterManaArrowImage . surface , 
-					    -360 * 3 / 4 * Me[0].mana / Me[0].maxmana , 1.0 , FALSE );
+					    -360 * 3 / 4 * Me[0].temperature / Me[0].max_temperature , 1.0 , FALSE );
 	    
 	    ArrowRect.x = PivotPosition.x - ( RotatedArrow -> w / 2 ) ;
 	    ArrowRect.y = PivotPosition.y - ( RotatedArrow -> h / 2 ) ;
@@ -903,9 +905,9 @@ char fpath[2048];
 	    // the next frame.
 	    //
 	    Previous_Energy    = Me [ 0 ] . energy ;
-	    Previous_Mana      = Me [ 0 ] . mana ;
+	    Previous_Mana      = Me [ 0 ] . temperature ;
 	    Previous_Maxenergy = Me [ 0 ] . maxenergy ;
-	    Previous_Maxmana   = Me [ 0 ] . maxmana ;
+	    Previous_Maxmana   = Me [ 0 ] . max_temperature ;
 	    
 	    //--------------------
 	    // Just to make sure, that we really achieved, that the thing is not reassembled
@@ -1058,8 +1060,8 @@ blit_running_power_bars ( void )
 void
 blit_energy_and_mana_bars ( void )
 {
+
     static Uint32 health_rect_color = 0 ;
-    static Uint32 force_rect_color = 0 ;
     static Uint32 un_health_rect_color = 0 ;
     static Uint32 un_force_rect_color = 0 ;
 
@@ -1070,9 +1072,8 @@ blit_energy_and_mana_bars ( void )
     if ( health_rect_color == 0 )
     {
 	health_rect_color = SDL_MapRGBA( Screen->format , 255 , 0 , 0 , 0 );
-	force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 20 , 0 );
 	un_health_rect_color = SDL_MapRGBA( Screen->format , 20 , 0 , 0 , 0 );
-	un_force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 255 , 0 );
+	un_force_rect_color = SDL_MapRGBA( Screen->format , 0 , 0 , 55 , 0 );
     }
 
     blit_vertical_status_bar ( Me[0].maxenergy , Me[0].energy , 
@@ -1081,9 +1082,13 @@ blit_energy_and_mana_bars ( void )
 			       WHOLE_HEALTH_RECT_Y , 
 			       WHOLE_HEALTH_RECT_W ,  
 			       WHOLE_HEALTH_RECT_H , TRUE );
-    
-    blit_vertical_status_bar ( Me[0].maxmana , Me[0].mana , 
-			       force_rect_color , un_force_rect_color ,
+/*0 0 255
+vert grimpe, bleu baisse, rouge grimpe, vert baisse*/
+    int temp_ratio = (100 * Me[0].temperature) / Me[0].max_temperature;
+
+    blit_vertical_status_bar ( Me[0].max_temperature , (temp_ratio > 100) ? Me[0].max_temperature : Me[0].temperature, 
+			       SDL_MapRGBA(Screen->format, (temp_ratio - 50) < 25 ? ((temp_ratio - 50 > 0) ? 511 * (temp_ratio - 50) : 0) : 255, 0, 0, 0)
+				, un_force_rect_color ,
 			       WHOLE_FORCE_RECT_X , 
 			       WHOLE_FORCE_RECT_Y , 
 			       WHOLE_FORCE_RECT_W ,  
@@ -1334,7 +1339,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_FORCE_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_FORCE_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "System \n%s%d/%d",  Me[0].mana / Me[0].maxmana <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].mana), (int)rintf(Me[0].maxmana));
+	sprintf(ItemDescText, "Temperature \n%s%d/%d",  Me[0].temperature / Me[0].max_temperature >= 0.9 ? font_switchto_red:"", (int)rintf(Me[0].temperature), (int)rintf(Me[0].max_temperature));
 	}
 
     if (( CurPos . x > WHOLE_RUNNING_POWER_RECT_X * GameConfig . screen_width / 640) &&

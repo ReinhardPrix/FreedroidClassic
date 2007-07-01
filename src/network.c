@@ -80,7 +80,7 @@ typedef struct
   int bonus_to_life;
   int bonus_to_force;
   float bonus_to_health_recovery;
-  float bonus_to_mana_recovery;
+  float bonus_to_cooling_rate;
   int bonus_to_tohit;
   int bonus_to_all_attributes;
   int bonus_to_ac_or_damage; // this is a percentage
@@ -112,7 +112,7 @@ typedef struct
   gps pos;		        /* current position in the whole ship */
   double health;		/* the max. possible energy in the moment */
   double energy;		/* current energy level */
-  double mana;                  // current mana level 
+  double temperature;                  // current mana level 
   Sint16 LastMouse_X;          // mostly for other players:  Where was the last mouseclick...
   Sint16 LastMouse_Y;          // mostly for other players:  Where was the last mouseclick...
 }
@@ -676,7 +676,7 @@ PreparePlayerEngramForPlayer ( int PlayerNum )
   PlayerEngram [ 0 ] . pos . z   = Me [ PlayerNum ] . pos . z ;
   PlayerEngram [ 0 ] . health    = Me [ PlayerNum ] . health ;
   PlayerEngram [ 0 ] . energy    = Me [ PlayerNum ] . energy ;
-  PlayerEngram [ 0 ] . mana      = Me [ PlayerNum ] . mana ;
+  PlayerEngram [ 0 ] . temperature      = Me [ PlayerNum ] . temperature ;
 
   WriteIndex ++;
 
@@ -698,7 +698,7 @@ PreparePlayerEngramForPlayer ( int PlayerNum )
 	  PlayerEngram [ WriteIndex ] . pos . z   = Me [ i ] . pos . z ;
 	  PlayerEngram [ WriteIndex ] . health    = Me [ i ] . health ;
 	  PlayerEngram [ WriteIndex ] . energy    = Me [ i ] . energy ;
-	  PlayerEngram [ WriteIndex ] . mana      = Me [ i ] . mana ;
+	  PlayerEngram [ WriteIndex ] . temperature      = Me [ i ] . temperature ;
 
 	  WriteIndex ++;
 
@@ -959,7 +959,7 @@ EnforceServersPlayerEngram ( void )
       Me [ PlayerNum ] . pos . z   = PlayerEngram [ PlayerNum ] . pos . z   ;
       Me [ PlayerNum ] . health    = PlayerEngram [ PlayerNum ] . health    ;
       Me [ PlayerNum ] . energy    = PlayerEngram [ PlayerNum ] . energy    ;
-      Me [ PlayerNum ] . mana      = PlayerEngram [ PlayerNum ] . mana      ;
+      Me [ PlayerNum ] . temperature      = PlayerEngram [ PlayerNum ] . temperature      ;
 
 
     }

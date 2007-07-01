@@ -115,9 +115,7 @@ DetectItemsSpell ( void )
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int i;
 
-  if ( Me [ 0 ] . mana >= SpellCost )
-    {
-      Me[0].mana -= SpellCost;
+      Me[0].temperature += SpellCost;
 
       ClearDetectedItemList( 0 ); // 0 is the playernum
 
@@ -134,13 +132,6 @@ DetectItemsSpell ( void )
       // Play_Spell_ForceToEnergy_Sound( );
       Play_Spell_DetectItems_Sound( );
 
-    }
-  else
-    {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
-    }
 }; // void DetectItemsSpell ( void )
 
 /* ----------------------------------------------------------------------
@@ -154,20 +145,14 @@ ParalyzeBoltSpell ( gps BoltSource )
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
   target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-  if ( Me [ 0 ] . mana >= SpellCost )
+  if ( Me [ 0 ] . temperature >= SpellCost )
   {
-      Me[0].mana -= SpellCost;
+      Me[0].temperature -= SpellCost;
       
       FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
       
       Play_Spell_ForceToEnergy_Sound( );
       
-  }
-  else
-  {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
   }
 }; // void ParalyzeBoltSpell ( gps PortalTarget )
 
@@ -183,20 +168,14 @@ FireyBoltSpell ( gps BoltSource )
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
   target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
-  if ( Me [ 0 ] . mana >= SpellCost )
+  if ( Me [ 0 ] . temperature >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
+      Me[0].temperature -= SpellCost;
 
       FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
       Play_Spell_ForceToEnergy_Sound( );
 
-    }
-  else
-    {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
     }
 }; // void FireyBoltSpell ( gps PortalTarget )
 
@@ -212,9 +191,9 @@ ColdBoltSpell ( gps BoltSource )
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
   target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
-  if ( Me [ 0 ] . mana >= SpellCost )
+  if ( Me [ 0 ] . temperature >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
+      Me[0].temperature += SpellCost;
 
       FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
@@ -231,8 +210,7 @@ ColdBoltSpell ( gps BoltSource )
       Override_Power_Limit = 1;
     }
   else {
-	Me[0].mana -= Me[0].mana;
-	Me[0].energy -= SpellCost;
+	Me[0].temperature += SpellCost;
 	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 
 	Play_Spell_ForceToEnergy_Sound( );
@@ -254,21 +232,15 @@ PoisonBoltSpell ( gps BoltSource )
     target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
     target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
     
-    if ( Me [ 0 ] . mana >= SpellCost )
+    if ( Me [ 0 ] . temperature >= SpellCost )
     {
-	Me[0].mana -= SpellCost;
+	Me[0].temperature += SpellCost;
 	
 	//FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_RIFLE ) ;
 	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
 	
 	Play_Spell_ForceToEnergy_Sound( );
 	
-    }
-    else
-    {
-	Me[0].TextVisibleTime = 0;
-	Me[0].TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
     }
 }; // void PoisonBoltSpell ( ... )
 
@@ -280,9 +252,9 @@ CreateTeleportal ( gps PortalTarget )
 {
     int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
     
-    if ( Me [ 0 ] . mana >= SpellCost )
+    if ( Me [ 0 ] . temperature >= SpellCost )
     {
-	Me[0].mana -= SpellCost;
+	Me[0].temperature += SpellCost;
 	
 	if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value == FLOOR )
 	{
@@ -309,9 +281,9 @@ TeleportHome ( void )
     int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
     location HomeSpot;
     
-    if ( Me [ 0 ] . mana >= SpellCost )
+    if ( Me [ 0 ] . temperature >= SpellCost )
     {
-	Me[0].mana -= SpellCost;
+	Me[0].temperature += SpellCost;
 	
 	
 
@@ -346,9 +318,9 @@ ForceExplosionCircle ( gps ExpCenter )
 {
   int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_CIRCLE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
-  if ( Me[0].mana >= SpellCost )
+  if ( Me[0].temperature >= SpellCost )
     {
-      Me[0].mana -= SpellCost;
+      Me[0].temperature += SpellCost;
       StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
       StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
       StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
@@ -377,12 +349,12 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
     int i;
     int j;
 
-    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana )
+    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana )
     {
 	//--------------------
 	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
 	//
-	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
 	//
 	Play_Spell_ForceToEnergy_Sound( );
 	
@@ -429,12 +401,12 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
     int i;
     int j;
 
-    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
+    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana ) 
     {
 	//--------------------
 	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
 	//
-	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
 	//
 	Play_Spell_ForceToEnergy_Sound( );
 	
@@ -481,12 +453,12 @@ RadialFireWave ( gps ExpCenter , int SpellCostsMana )
     int i;
     int j;
     
-    if ( ( Me[0].mana >= SpellCost ) || !SpellCostsMana ) 
+    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana ) 
     {
 	//--------------------
 	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
 	//
-	if ( SpellCostsMana ) Me[0].mana -= SpellCost;
+	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
 	//
 	Play_Spell_ForceToEnergy_Sound( );
 	
@@ -532,9 +504,9 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
   moderately_finepoint step;
   int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_RAY ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
 
-  if ( Me [ 0 ] . mana >= SpellCost )
+  if ( Me [ 0 ] . temperature >= SpellCost )
     {
-      Me [ 0 ] . mana -= SpellCost;
+      Me [ 0 ] . temperature += SpellCost;
       step . x = ( target_vector_x * 0.25 ) ;
       step . y = ( target_vector_y * 0.25 ) ;
 
@@ -560,9 +532,9 @@ ForceToEnergyConversion ( void )
 {
     int SpellCost = SpellSkillMap [ SPELL_FORCE_TO_ENERGY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
 
-    if ( Me [ 0 ] . mana >= SpellCost )
+    if ( Me [ 0 ] . temperature >= SpellCost )
     {
-	Me [ 0 ] . mana -= SpellCost;
+	Me [ 0 ] . temperature += SpellCost;
 	Me [ 0 ] . energy += 10 ; // * SpellLevel
 	if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
 
@@ -851,9 +823,9 @@ HandleCurrentlyActivatedSkill( int player_num )
 		// identification global mode.
 		//
 		SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
-		if ( Me [ 0 ] . mana >= SpellCost )
+		if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature - SpellCost )
 		{
-		    Me [ 0 ] . mana -= SpellCost;
+		    Me [ 0 ] . temperature += SpellCost;
 		    Play_Spell_ForceToEnergy_Sound( );
 
 		    silently_unhold_all_items ( );

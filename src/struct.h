@@ -386,7 +386,7 @@ typedef struct
     int modifier_to_bonus_to_force;
 
     float base_bonus_to_health_recovery;
-    float base_bonus_to_mana_recovery;
+    float base_bonus_to_cooling_rate;
     
 
 
@@ -499,7 +499,7 @@ typedef struct
     int bonus_to_life;
     int bonus_to_force;
     float bonus_to_health_recovery;
-    float bonus_to_mana_recovery;
+    float bonus_to_cooling_rate;
     int bonus_to_tohit;
     int bonus_to_all_attributes;
     int bonus_to_ac_or_damage;       // this is a percentage
@@ -525,7 +525,7 @@ typedef struct
     char *droid_attack_animation_sound_file_name;
     int class;
     double maxenergy;		// the maximum energy the batteries can carry 
-    double maxmana;		// the maximum force this droids mind can carry 
+    double max_temperature;		// the maximum force this droids mind can carry 
     double lose_health;		// the energy/time the duid loses under influence-control 
     
     double maxspeed;
@@ -605,15 +605,15 @@ typedef struct
     double health;		  // the max. possible energy in the moment 
     float maxenergy; // current top limit for the influencers energy
     double energy;		  // current energy level 
-    float maxmana;   // current top limit for the influencers magic power
-    double mana;                    // current mana level 
+    float max_temperature;   // current top limit for temperature (highest is better)
+    double temperature;                    // current temperature
     float max_running_power;
     float running_power;
     int running_must_rest;
     int running_power_bonus;
 
     float health_recovery_rate; //points of health recovered each second
-    float mana_recovery_rate; //mana points recovered each second
+    float cooling_rate; //temperature points recovered each second
     
     Sint16 LastMouse_X;             // mostly for other players:  Where was the last mouseclick...
     Sint16 LastMouse_Y;             // mostly for other players:  Where was the last mouseclick...
@@ -739,7 +739,7 @@ typedef struct
     gps teleport_anchor;          
     double health;		
     double energy;		
-    double mana;                  
+    double temperature;
     double busy_time;		
     int busy_type;
     double phase;			
@@ -765,7 +765,7 @@ typedef struct
     int resist_fire;         
     int resist_electricity;  
     float maxenergy; 
-    float maxmana;   
+    float max_temperature;   
     int exp_level;   
     long ExpRequired;
     long Gold;

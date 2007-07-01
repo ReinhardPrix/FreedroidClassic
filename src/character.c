@@ -231,7 +231,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
     UpdateAllCharacterStats( PlayerNum );
     
     Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy;
-    Me [ PlayerNum ] .mana = Me [ PlayerNum ] .maxmana;
+    Me [ PlayerNum ] .temperature = Me [ PlayerNum ] .max_temperature;
     DebugPrintf( 1 , "\n Me [ PlayerNum ] .energy : %f . " , Me [ PlayerNum ] .energy );
     Me [ PlayerNum ] .health = Me [ PlayerNum ] .energy;	/* start with max. health */
     
@@ -438,10 +438,10 @@ AddInfluencerItemSecondaryBonus( item* BonusItem )
 	// prefix-lists here...
 	//
 	Me [ 0 ] . to_hit    += BonusItem -> bonus_to_tohit ;
-	Me [ 0 ] . maxmana   += BonusItem -> bonus_to_force ;
+	Me [ 0 ] . max_temperature   += BonusItem -> bonus_to_force ;
 	Me [ 0 ] . maxenergy += BonusItem -> bonus_to_life ; 
 	Me [ 0 ] . health_recovery_rate += BonusItem -> bonus_to_health_recovery ; 
-	Me [ 0 ] . mana_recovery_rate += BonusItem -> bonus_to_mana_recovery ; 
+	Me [ 0 ] . cooling_rate += BonusItem -> bonus_to_cooling_rate ; 
 	
 	Me [ 0 ] . resist_disruptor   += BonusItem -> bonus_to_resist_disruptor ;
 	Me [ 0 ] . resist_fire        += BonusItem -> bonus_to_resist_fire ;
@@ -587,7 +587,7 @@ update_secondary_stats_from_primary_stats ( int PlayerNum )
     //--------------------
     // The maximum mana value computed from the primary stats
     //
-    Me [ PlayerNum ] . maxmana = 
+    Me [ PlayerNum ] . max_temperature = 
 	( Me [ PlayerNum ] . Magic )    * Mana_Gain_Per_Magic_Point [ Me [ PlayerNum ] . character_class ];
 
     //--------------------
@@ -604,7 +604,7 @@ update_secondary_stats_from_primary_stats ( int PlayerNum )
     //--------------------
     // base regeneration speed set to 0.2 points per second
     Me [ PlayerNum ] . health_recovery_rate = 0.2;
-    Me [ PlayerNum ] . mana_recovery_rate = 0.2;
+    Me [ PlayerNum ] . cooling_rate = 0.2;
 }; // void update_secondary_stats_from_primary_stats ( int PlayerNum )
 
 /* ----------------------------------------------------------------------
@@ -792,9 +792,9 @@ UpdateAllCharacterStats ( int PlayerNum )
 	
 	
     //--------------------
-    // Check player's health and mana
+    // Check player's health and temperature
     if ( Me [ PlayerNum ] . energy > Me [ PlayerNum ] . maxenergy ) Me [ PlayerNum ] . energy = Me [ PlayerNum ] . maxenergy;
-    if ( Me [ PlayerNum ] . mana > Me [ PlayerNum ] . maxmana ) Me [ PlayerNum ] . mana = Me [ 0 ] . maxmana ;
+    if ( Me [ PlayerNum ] . temperature < 0 ) Me [ PlayerNum ] . temperature = 0;
 
 
     //--------------------
@@ -1000,10 +1000,10 @@ ShowCharacterScreen ( int player_num )
     sprintf( CharText , "%d", (int) Me[0].energy );
     DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%d", (int) Me[0].maxmana );
+    sprintf( CharText , "%d", (int) Me[0].max_temperature );
     DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%d", (int) Me[0].mana );
+    sprintf( CharText , "%d", (int) Me[0].temperature );
     DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
@@ -1083,7 +1083,7 @@ HandleCharacterScreen ( int player_num )
 	{
 	    Me[0].base_magic++;
 	    Me[0].points_to_distribute--;
-	    Me[0].mana += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
+	    Me[0].max_temperature += Mana_Gain_Per_Magic_Point [ Me [ 0 ] . character_class ];
 	    if ( Me[0].points_to_distribute <= 0 )
 	    {
 		while ( MouseLeftPressed() );

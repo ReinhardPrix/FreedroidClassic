@@ -470,7 +470,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     
     ThisItem -> bonus_to_life = 0;
     ThisItem -> bonus_to_health_recovery = 0;
-    ThisItem -> bonus_to_mana_recovery = 0;
+    ThisItem -> bonus_to_cooling_rate = 0;
     ThisItem -> bonus_to_force = 0;
     ThisItem -> bonus_to_tohit = 0;
     ThisItem -> bonus_to_ac_or_damage = 0;
@@ -502,7 +502,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 //	    + MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_health_recovery ) ;
 	ThisItem->bonus_to_force += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_force +
 	    MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_force ) ;
-	ThisItem->bonus_to_mana_recovery += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_mana_recovery;
+	ThisItem->bonus_to_cooling_rate += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_cooling_rate;
 //	    + MyRandom ( SuffixList [ ThisItem -> suffix_code ].modifier_to_bonus_to_mana_recovery ) ;
 
 	ThisItem->bonus_to_tohit += SuffixList [ ThisItem -> suffix_code ].base_bonus_to_tohit +
@@ -537,7 +537,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
 	ThisItem->bonus_to_health_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_health_recovery;
 	ThisItem->bonus_to_force += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_force +
 	    MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_force ) ;
-	ThisItem->bonus_to_mana_recovery += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_mana_recovery;
+	ThisItem->bonus_to_cooling_rate += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_cooling_rate;
 	
 	ThisItem->bonus_to_tohit += PrefixList [ ThisItem -> prefix_code ].base_bonus_to_tohit +
             MyRandom ( PrefixList [ ThisItem -> prefix_code ].modifier_to_bonus_to_tohit ) ;
@@ -1722,7 +1722,7 @@ ApplyItem( item* CurItem )
     {
 	Me [ 0 ] . health += 15;
 	Me [ 0 ] . energy += 15;
-	Me [ 0 ] . mana += 15;
+	Me [ 0 ] . temperature -= 15;
 	Me [ 0 ] . running_power += 15;
 	Me [ 0 ] . busy_time = 1;
 	Me [ 0 ] . busy_type = DRINKING_POTION;
@@ -1750,19 +1750,19 @@ ApplyItem( item* CurItem )
     }
     else if ( CurItem->type == ITEM_SMALL_MANA_POTION )
     {
-	Me[0].mana += 25;
+	Me[0].temperature -= 25;
 	Me [ 0 ] . busy_time = 1;
 	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_MEDIUM_MANA_POTION )
     {
-	Me[0].mana += 50;
+	Me[0].temperature -= 50;
 	Me [ 0 ] . busy_time = 1;
 	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
     else if ( CurItem->type == ITEM_FULL_MANA_POTION )
     {
-	Me[0].mana += Me[0].maxmana;
+	Me[0].temperature = 0;
 	Me [ 0 ] . busy_time = 1;
 	Me [ 0 ] . busy_type = DRINKING_POTION;
     }
@@ -1921,7 +1921,7 @@ ApplyItem( item* CurItem )
     }
     
     if ( Me[0].energy > Me[0].maxenergy ) Me[0].energy = Me[0].maxenergy ;
-    if ( Me[0].mana > Me[0].maxmana ) Me[0].mana = Me[0].maxmana ;
+    if ( Me[0].temperature < 0 ) Me[0].temperature = 0 ;
     
     // PlayItemSound( ItemMap[ CurItem->type ].sound_number );
     play_item_sound( CurItem -> type );
@@ -3972,7 +3972,7 @@ int Get_Prefixes_Data ( char * DataPointer )
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to life recovery=" , "%f" , "0.000000",
                              & BonusToFill -> base_bonus_to_health_recovery  , EndOfPrefixData );
             ReadValueFromStringWithDefault( PrefixPointer , "Bonus to mana recovery=" , "%f" , "0.000000",
-                             & BonusToFill -> base_bonus_to_mana_recovery  , EndOfPrefixData );
+                             & BonusToFill -> base_bonus_to_cooling_rate  , EndOfPrefixData );
 
             ReadValueFromStringWithDefault( PrefixPointer , "Price factor=" , "%f" , "3.000000",
                              & BonusToFill -> price_factor  , EndOfPrefixData );

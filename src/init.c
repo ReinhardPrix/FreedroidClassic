@@ -983,7 +983,7 @@ Get_Robot_Data ( void* DataPointer )
 
       // Now we read in the maximal mana this droid can store. 
       ReadValueFromString( RobotPointer , MAXMANA_BEGIN_STRING , "%lf" , 
-			   &Druidmap[RobotIndex].maxmana , EndOfDataPointer );
+			   &Druidmap[RobotIndex].max_temperature , EndOfDataPointer );
 
       // Now we read in the lose_health rate.
       ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%lf" , 
@@ -1580,10 +1580,10 @@ InitHarmlessTuxStatusVariables( int player_num )
     Me [ player_num ] . speed.y = 0;
     Me [ player_num ] . energy = 5 ;
     Me [ player_num ] . maxenergy = 10 ;
-    Me [ player_num ] . mana = 5 ;
-    Me [ player_num ] . maxmana = 10 ;
+    Me [ player_num ] . temperature = 5 ;
+    Me [ player_num ] . max_temperature = 10 ;
     Me [ player_num ] . health_recovery_rate = 0.2;
-    Me [ player_num ] . mana_recovery_rate = 0.2;
+    Me [ player_num ] . cooling_rate = 0.2;
     Me [ player_num ] . status = MOBILE;
     Me [ player_num ] . phase = 0;
     Me [ player_num ] . MissionTimeElapsed=0;
@@ -1725,7 +1725,7 @@ PrepareStartOfNewCharacter ( void )
     // set these much-varying variables too...
     //
     Me [ 0 ] . energy = Me [ 0 ] . maxenergy;
-    Me [ 0 ] . mana = Me [ 0 ] . maxmana;
+    Me [ 0 ] . temperature = 0;
     Me [ 0 ] . running_power = Me [ 0 ] . max_running_power ;
     Me [ 0 ] . health = Me [ 0 ] . energy;
     Me [ 0 ] . busy_time = 0 ;
@@ -1977,8 +1977,8 @@ InitFreedroid ( void )
     // therefore energy bars are displayed, there won't be any floating point
     // exception problems...)
     //
-    Me [ 0 ] . mana = 0 ;
-    Me [ 0 ] . maxmana = 10 ;
+    Me [ 0 ] . temperature = 0 ;
+    Me [ 0 ] . max_temperature = 10 ;
     Me [ 0 ] . energy = 1 ;
     Me [ 0 ] . maxenergy = 10 ;
     

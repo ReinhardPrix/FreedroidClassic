@@ -1693,7 +1693,7 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   strcat( LevelMem , linebuf );
 
   strcat( LevelMem , ITEM_BONUS_TO_MANA_RECOVERY_STRING );
-  sprintf( linebuf , "%f " , ItemToWriteOut->bonus_to_mana_recovery );
+  sprintf( linebuf , "%f " , ItemToWriteOut->bonus_to_cooling_rate );
   strcat( LevelMem , linebuf );
   
   strcat( LevelMem , ITEM_BONUS_TO_TOHIT_STRING );
@@ -2134,7 +2134,7 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_FORCE_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_force ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_MANA_RECOVERY_STRING , "%f" , 
-		       &( TargetItem -> bonus_to_mana_recovery ) , ItemsSectionEnd );
+		       &( TargetItem -> bonus_to_cooling_rate ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_TOHIT_STRING , "%d" , 
 		       &( TargetItem -> bonus_to_tohit ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_BONUS_TO_ACDAM_STRING , "%d" , 
