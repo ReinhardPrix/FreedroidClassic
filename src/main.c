@@ -407,11 +407,12 @@ UpdateCountersForThisFrame ( int player_num )
     if ( Me [ player_num ] . energy > Me [ player_num ] . maxenergy )
 	    Me [ player_num ] . energy = Me [ player_num ] . maxenergy;
 
-    Me [ player_num ] . mana += Me [ player_num ] . mana_recovery_rate * latest_frame_time;
-    if ( Me [ player_num ] . mana > Me [ player_num ] . maxmana )
-	    Me [ player_num ] . mana = Me [ player_num ] . maxmana;
-    if ( Me [ player_num ] . mana < 0 )
-	    Me [ player_num ] . mana = 0;
+    Me [ player_num ] . temperature -= Me [ player_num ] . cooling_rate * latest_frame_time;
+    if ( Me [ player_num ] . temperature < 0 )
+	    Me [ player_num ] . temperature = 0;
+    
+    if ( Me [ player_num ] . temperature > Me [ player_num] . max_temperature ) //overheat, lose life
+	    Me [ player_num ] . energy -= ( Me [ player_num ] . temperature - Me[player_num].max_temperature ) * latest_frame_time / 10;
     
     if ( Me [ player_num ] . weapon_swing_time != (-1) ) Me [ player_num ] . weapon_swing_time += latest_frame_time;
     if ( Me [ player_num ] . got_hit_time != (-1) ) Me [ player_num ] . got_hit_time += latest_frame_time;
