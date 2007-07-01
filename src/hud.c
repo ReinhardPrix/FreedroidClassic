@@ -1085,9 +1085,37 @@ blit_energy_and_mana_bars ( void )
 /*0 0 255
 vert grimpe, bleu baisse, rouge grimpe, vert baisse*/
     int temp_ratio = (100 * Me[0].temperature) / Me[0].max_temperature;
+    if ( temp_ratio > 100 ) temp_ratio = 100;
+    int red = (temp_ratio) > 50 ? ((temp_ratio > 75) ? 255 : 4 * (temp_ratio - 50) * 2.55  ): 0;
+    int green;
+    int blue;
+    if ( temp_ratio < 25 )
+	{
+	red = 0;
+	green = 2.55 * 4 * temp_ratio;
+	blue = 255;
+	}
+    else if (temp_ratio < 50 )
+	{
+	red = 0;
+	green = 255;
+	blue = 255 - (2.55 * 4 * (temp_ratio - 25));
+	}
+    else if ( temp_ratio < 75 )
+	{
+	green = 255;
+	blue = 0;
+	red = 2.4 * 4 * (temp_ratio - 50);
+	}
+    else
+	{
+	blue = 0;
+	red = 255;
+	green = 255 - (1.8 * 4 * (temp_ratio - 75));
+	}
 
-    blit_vertical_status_bar ( Me[0].max_temperature , (temp_ratio > 100) ? Me[0].max_temperature : Me[0].temperature, 
-			       SDL_MapRGBA(Screen->format, (temp_ratio - 50) < 25 ? ((temp_ratio - 50 > 0) ? 511 * (temp_ratio - 50) : 0) : 255, 0, 0, 0)
+    blit_vertical_status_bar ( Me[0].max_temperature , (Me[0].temperature > Me[0].max_temperature) ? Me[0].max_temperature : Me[0].temperature, 
+			       SDL_MapRGBA(Screen->format, red, green, blue, 0)
 				, un_force_rect_color ,
 			       WHOLE_FORCE_RECT_X , 
 			       WHOLE_FORCE_RECT_Y , 
