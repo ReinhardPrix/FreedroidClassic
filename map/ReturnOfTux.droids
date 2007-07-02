@@ -250,9 +250,10 @@ SForce: T=883 X=38 Y=11 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parame
 ** Beginning of new Level **
 
 Level=7
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
-Allowed Type of Random Droid for this level: 139
+Maximum number of Random Droids=15
+Minimum number of Random Droids=15
+Allowed Type of Random Droid for this level: 247
+Allowed Type of Random Droid for this level: 516
 
 Spe***cialForce: Type=GUA X=11 Y=9 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="MERStartGameSquare" RushTux="no" DialogSectionToUse="MER" ShortLabel="Merlin -- Mainframe Administrator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
