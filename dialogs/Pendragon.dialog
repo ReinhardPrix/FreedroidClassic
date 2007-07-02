@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=157  PositionY=219  
-Subtitle="You don't say. I'm not living here either. I'm just on vacation. "
+Subtitle="You don't say. I'm not living here either. I'm just on vacation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Normally I'm a fighter. But now I try to relax, chill, take it easy and have a lot of fun."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

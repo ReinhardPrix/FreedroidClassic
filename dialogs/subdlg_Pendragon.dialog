@@ -133,7 +133,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Teach me Ninjutsu."
+New Option Nr=10  OptionText=" Teach me Ninjitsu."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Go away."
@@ -157,7 +157,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" I want to know the forgotten skill of furuike ya kawazu tobikomu mizu no oto."
+New Option Nr=12  OptionText=" I want to know the forbidden skill of furuike ya kawazu tobikomu mizu no oto."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="This is starting to make me angry. Shut up and go away."
@@ -196,14 +196,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=21  OptionText=" Just let me get up an -- Ouch! Stop it."
+New Option Nr=21  OptionText=" Just let me get up an -- ouch! Stop it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Lesson number two. The bots have no mercy."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="They won't let you get up if you fall down. They will kill you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Now, lesson number -- Ugh! That hurt!"
+Subtitle="Now, lesson number -- ugh! That hurt!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=21 ChangeToValue=0
 LinkedTo:22
@@ -216,13 +216,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ugh. Yes. You are correct."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think I need to... Lie down for a while... My head hurts..."
+Subtitle="I need to... Lie down for a while... My head hurts..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Lesson number four. Never hit your sparring partner with full force."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think you broke my ribs..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think this is enough training for today."
+Subtitle="This is enough training for today."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=22 ChangeToValue=0
 DoSomethingExtra="PlantCookie:beat_up_pendragon"
