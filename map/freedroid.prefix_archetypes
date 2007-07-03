@@ -83,6 +83,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.15
+Level=5
 ** End of new prefix specification subsection **
 
 ** S*tart of new prefix specification subsection **
@@ -135,6 +136,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=1
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -161,6 +163,7 @@ Bonus to life recovery=1.0
 Bonus to mana recovery=0.5
 Light radius bonus=0
 Price factor=1.1
+Level=5
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -181,12 +184,13 @@ Bonus to mana=0
 Bonus to mana modifier=0
 Bonus to tohit=0
 Bonus to tohit modifier=0
-Bonus to armor class or damage=10
-Bonus to armor class or damage modifier=20
+Bonus to armor class or damage=5
+Bonus to armor class or damage modifier=10
 Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1.1
+Level=6
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -213,6 +217,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1.1
+Level=1
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -239,6 +244,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=2
+Level=2
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -265,6 +271,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1.5
+Level=2
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -291,6 +298,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=-2
 Light radius bonus=0
 Price factor=1.4
+Level=3
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -317,6 +325,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=3
+Level=3
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -343,6 +352,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=2
+Level=5
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -369,6 +379,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.1
+Level=6
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -395,6 +406,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.4
+Level=2
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -421,6 +433,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=1
 Price factor=1.1
+Level=1
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -447,6 +460,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=3
 Price factor=1.5
+Level=4
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -473,6 +487,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=5
 Price factor=2
+Level=5
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -499,6 +514,7 @@ Bonus to life recovery=-1
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=3
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -525,6 +541,7 @@ Bonus to life recovery=-1.5
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=4
 ** End of new prefix specification subsection **
 
 ** Start of new prefix specification subsection **
@@ -551,6 +568,7 @@ Bonus to life recovery=-2
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=6
 ** End of new prefix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -573,6 +591,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.001
+Level=1
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -595,6 +614,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=2
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -617,6 +637,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=3
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -639,6 +660,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=5
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -661,6 +683,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=1
+Level=5
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -683,6 +706,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=3
+Level=3
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -705,6 +729,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=3
+Level=4
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -727,6 +752,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=3
+Level=4
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -749,6 +775,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=3
+Level=4
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -771,6 +798,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=8
+Level=6
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -793,6 +821,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=-5
 Price factor=3
+Level=2
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -815,6 +844,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=10
+Level=2
 ** End of new suffix specification subsection **
 
 ** Start of new suffix specification subsection **
@@ -837,6 +867,7 @@ Bonus to life recovery=0
 Bonus to mana recovery=0
 Light radius bonus=0
 Price factor=0.01
+Level=4
 ** End of new suffix specification subsection **
 
 *** End of presuff data section ***
