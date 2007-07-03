@@ -1,3 +1,138 @@
+Changes between rc4 and 0.10.2 final:
+
+* Made end of game harder
+* Added correct levels to all prefixes
+* Updated dialogs and title files
+* Improved temple wood and crystal fields a little 
+
+
+Changes till rc4:
+2007-06-29 20:44  ahuillet
+
+	* freedroidRPG.exe: upd exe before rc4
+
+2007-06-29 20:35  ahuillet
+
+	* src/: init.c, struct.h, takeover.c: added takeover help info to
+	  savegame in order not to display help for advanced people -
+	  breaks existing savegames
+
+2007-06-29 20:25  ahuillet
+
+	* src/takeover.c: now automatically displaying takeover help on the
+	  first to
+
+2007-06-29 20:24  ahuillet
+
+	* src/influ.c: removed cursor mode auto reset - should help with
+	  identify scripts being wasted, but may introduce other problems
+
+2007-06-29 18:37  ahuillet
+
+	* src/input.c: fixed input for 0 1 2 3 4 ... keys for windows
+
+2007-06-29 18:37  ahuillet
+
+	* src/leveleditor.c: made leveleditor always use the same cursor
+
+2007-06-29 18:02  ahuillet
+
+	* graphics/backgrounds/conversation.png: made dialog background
+	  black
+
+2007-06-28 21:10  ahuillet
+
+	* freedroidRPG.exe: rc3bis exe
+
+2007-06-27 12:19  magotari
+
+	* map/titles/: EndOfGame.title, TakeoverInstructions.title: Rewrote
+	  more stuff.
+
+2007-06-26 21:45  ahuillet
+
+	* src/items.c, src/struct.h, map/freedroid.prefix_archetypes: added
+	  level handling to item bonuses
+
+2007-06-26 18:02  ahuillet
+
+	* src/view.c: fixed display code to work even when skipping shadow
+	  blitting
+
+2007-06-26 15:01  magotari
+
+	* dialogs/: Pendragon.dialog, subdlg_Pendragon.dialog: Rewrote
+	  Pendragon nearly from scratch.  Please comment, I am not sure if
+	  this is an improvement.
+
+2007-06-26 12:18  magotari
+
+	* dialogs/Spencer.dialog: Moved stuff around.
+
+2007-06-26 12:15  magotari
+
+	* dialogs/Ewald.dialog: A trivial fix.	Damn good to be back.
+
+2007-06-25 20:16  ahuillet
+
+	* src/text.c: fixed escape in GetString
+
+2007-06-25 17:10  ahuillet
+
+	* src/ship.c: s/Quest item - unsellable/Unsellable/
+
+2007-06-25 14:17  ahuillet
+
+	* src/shop.c: wait for mouse left to be released in shops
+
+2007-06-25 01:19  ahuillet
+
+	* src/BFont.c: now using glClipPlane for text clipping - does nicer
+	  text scrolling at the borders
+
+2007-06-25 00:53  ahuillet
+
+	* src/chat.c: improved chat menu performance by removing map
+	  display call altogether - effect is visible but no one should
+	  care
+
+2007-06-24 23:12  ahuillet
+
+	* src/shop.c: fixed regression in exiting shop
+
+2007-06-24 23:03  ahuillet
+
+	* src/influ.c: fixed space key being usable to act on the map
+
+2007-06-24 22:42  ahuillet
+
+	* src/text.c: fixed GiveMouseAlertWindow regression
+
+2007-06-24 22:13  ahuillet
+
+	* src/: input.c, skills.c, takeover.c: fixed a few more regressions
+	  in input code
+
+2007-06-24 02:34  ahuillet
+
+	* ChangeLog: rc1 Changelog
+
+2007-06-23 15:42  ahuillet
+
+	* src/: defs.h, hud.c, input.c, skills.c, view.c: fixed skill
+	  explanation screen behavior : not conflicting with inv any
+	  longer, and view centered properly
+
+2007-06-22 23:46  ahuillet
+
+	* src/: menu.c, sound.c: fixed chat menu input regressions
+
+2007-06-22 23:08  ahuillet
+
+	* src/: character.c, graphics.c, input.c, items.c, leveleditor.c,
+	  proto.h, skills.c, text.c: fixed input regressions for
+	  mouse-related checks - hope there are none of them left now
+
 2007-06-21 16:36  ahuillet
 
 	* freedroidRPG.exe: generated more recent .exe
