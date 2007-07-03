@@ -695,7 +695,7 @@ GreatShopInterface ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INV
 	{
 	    SellButtonActive = FALSE;
 	    if ( ShowChestButtons ) ShowGenericButtonFromList ( PUT_BUTTON );
-	    else if ( ItemMap [ TuxItemsList [ TuxItemIndex ] -> type ] . base_list_price )
+	    else if ( calculate_item_sell_price( TuxItemsList [ TuxItemIndex ] ))
 			{
 			ShowGenericButtonFromList ( SELL_BUTTON );
 		        SellButtonActive = TRUE; 
