@@ -2162,6 +2162,7 @@ ThouArtDefeated (void)
     start_tux_death_explosions ( ) ;
     now = SDL_GetTicks ( ) ;
 
+    global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL;
     //--------------------
     // Now that the influencer is dead, all this precious items
     // spring off of him...
