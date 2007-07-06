@@ -1338,8 +1338,6 @@ Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int wi
 	//
 	CurLevel = curShip . AllLevels [ array_num ] ;
 	
-	ClearDetectedItemList ( PlayerNum );
-	
 	Me [ PlayerNum ] . pos . x = X;
 	Me [ PlayerNum ] . pos . y = Y;
 	Me [ PlayerNum ] . pos . z = array_num; 

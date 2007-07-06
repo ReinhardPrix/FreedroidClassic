@@ -882,7 +882,6 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	            case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
 	            case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
 	            case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	            case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
         	    case ITEM_SPELLBOOK_OF_IDENTIFY:
 	            case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
 	            case ITEM_SPELLBOOK_OF_ICE_BOLT:

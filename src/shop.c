@@ -276,7 +276,6 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
 	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE; ListPointer++;
 	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE; ListPointer++;
 	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_DETECT_ITEMS; ListPointer++;
     }
     else
     {

@@ -1512,7 +1512,6 @@ required_spellcasting_skill_for_item ( int item_type )
 	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
 	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
 	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
 	case ITEM_SPELLBOOK_OF_IDENTIFY:
 	    return ( 0 ) ;
 	    break;
@@ -1566,10 +1565,6 @@ associate_skill_with_item ( int item_type )
 
 	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
 	    associated_skill = SPELL_TELEPORT_HOME ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
-	    associated_skill = SPELL_DETECT_ITEM ;
 	    break;
 
 	case ITEM_SPELLBOOK_OF_IDENTIFY:
@@ -1906,12 +1901,6 @@ ApplyItem( item* CurItem )
     {
 	Me [ 0 ] . SkillLevel [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
 	Me [ 0 ] . base_skill_level [ SPELL_RADIAL_FIRE_WAVE ] ++ ;
-	Play_Spell_ForceToEnergy_Sound( );
-    }
-    else if ( CurItem->type == ITEM_SPELLBOOK_OF_DETECT_ITEMS )
-    {
-	Me [ 0 ] . SkillLevel [ SPELL_DETECT_ITEM ] ++ ;
-	Me [ 0 ] . base_skill_level [ SPELL_DETECT_ITEM ] ++ ;
 	Play_Spell_ForceToEnergy_Sound( );
     }
     else if ( CurItem->type == ITEM_SPELLBOOK_OF_IDENTIFY )

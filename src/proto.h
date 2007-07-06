@@ -506,12 +506,11 @@ EXTERN void give_new_name_to_obstacle ( Level EditLevel , obstacle* our_obstacle
 EXTERN void RadialVMXWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialEMPWave ( gps ExpCenter , int SpellCostsMana );
 EXTERN void RadialFireWave ( gps ExpCenter , int SpellCostsMana );
-EXTERN void ClearDetectedItemList( int player_num );
 EXTERN void ShowSkillsScreen ( void );
 EXTERN void HandleCurrentlyActivatedSkill( int player_num );
 EXTERN void activate_nth_aquired_skill ( int skill_num );
 EXTERN void ImproveSkill(int *skill);
-
+EXTERN int calculate_program_heat_cost(int program_id);
 // input.c 
 #undef EXTERN
 #ifdef _input_c

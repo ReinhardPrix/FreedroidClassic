@@ -305,30 +305,6 @@ show_automap_data_sdl ( void )
     }
 
   //--------------------
-  // Now that the pure map data has been drawn, we add yellow dots for 
-  // the items, that have been detected on this level.
-  //
-  for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-      //--------------------
-      // This would be the most accurate information, but this is not granted
-      // without casting a spell and then only a copy is made and only updated
-      // once, so the player must really get on with much less information.
-      //
-      // if ( automap_level -> ItemList [ i ] . type == (-1) ) continue;
-      if ( Me [ 0 ] . DetectedItemList [ i ] . x == 0 ) continue;
-
-      for ( x = 0 ; x < AUTOMAP_SQUARE_SIZE ; x ++ )
-	{
-	  for ( y = 0 ; y < AUTOMAP_SQUARE_SIZE ; y ++ )
-	    {
-	      PutPixel ( Screen , AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.x + x , 
-			 AUTOMAP_SQUARE_SIZE * automap_level -> ItemList [ i ].pos.y + y , ItemColor );
-	    }
-	}
-    }
-
-  //--------------------
   // Now that the pure map data has been drawn, we add red dots for 
   // the ememys around.
   //
