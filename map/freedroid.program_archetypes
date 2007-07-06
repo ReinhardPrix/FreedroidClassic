@@ -43,5 +43,68 @@ Cost=15
 #Extra_effect  = 5
 #Extra_level   = +5
 
+** Start of new program specification subsection **
+Program name="Malformed packet"
+Program description="When computers are presented with the unexpected they can damage themselves."
+Picture="somejunkpicturehere.png"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 0.1
+#Casttime_lev  = 0
+#Damage_base   = 1
+#Damage_mod    = 0
+#Damage_level  = +0.5
+#Damage_mod_lv = 0
+Cost=2
+#Cost_level    = 0
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = None
+#Extra_effect  = 0
+#Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Check system integrity"
+Program description="With a little touch a war machine comes crashing down to a halt. For a while."
+Picture="somejunkpicturehere.png"
+#Form          = Self
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 30.0
+#Casttime_lev  = -1
+#Damage_base   = -20
+#Damage_mod    = 0
+#Damage_level  = -5
+#Damage_mod_lv = 0
+Cost=40
+#Cost_level    = -3
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = None
+#Extra_effect  = 0
+#Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Analyze item"
+Program description="With a little touch a war machine comes crashing down to a halt. For a while."
+Picture="somejunkpicturehere.png"
+#Form          = Item
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 15
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 0
+#Damage_level  = 0
+#Damage_mod_lv = 0
+Cost=70
+#Cost_level    = -8
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = Identify
+#Extra_effect  = 0
+#Extra_level   = 0
+
 *** End of program data section ***
 *** End of this Freedroid data File ***
