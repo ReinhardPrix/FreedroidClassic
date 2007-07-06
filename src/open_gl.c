@@ -1957,7 +1957,7 @@ StoreMenuBackground ( int backup_slot )
 	glTexParameteri( GL_TEXTURE_2D , GL_TEXTURE_MIN_FILTER , GL_LINEAR );
 	glBindTexture( GL_TEXTURE_2D, *StoredMenuBackgroundTex [ backup_slot ]);
 	glCopyTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 0, GameConfig.screen_height - 1024,  1024,  1024, 0);
-	open_gl_check_error_status("StoreMenuBackground");
+	open_gl_check_error_status(__FUNCTION__);
 
 #endif
     }
