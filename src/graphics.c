@@ -1885,7 +1885,7 @@ set_video_mode_for_open_gl ( void )
     
     // video_flags |= SDL_HWPALETTE;       /* Store the palette in hardware */
     //video_flags |= SDL_RESIZABLE;       /* Enable window resizing */
-    if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
+    if (GameConfig . fullscreen_on) video_flags |= SDL_FULLSCREEN;
     if ( vid_info->hw_available )
 	video_flags |= SDL_HWSURFACE;
   else
@@ -2055,7 +2055,7 @@ char fpath[2048];
     {
 	// RP: let's try without those...
 	// video_flags = SDL_SWSURFACE | SDL_HWPALETTE ;
-	if (fullscreen_on) video_flags |= SDL_FULLSCREEN;
+	if (GameConfig . fullscreen_on) video_flags |= SDL_FULLSCREEN;
 	
 	if( !(Screen = SDL_SetVideoMode ( GameConfig . screen_width, GameConfig . screen_height , 0 , video_flags )) )
 	{

@@ -1391,11 +1391,11 @@ your suggestion to the FreedroidRPG dev team to enable new resolutions.",
 		break;
 		
 	    case 'f':
-		fullscreen_on = TRUE;
+		GameConfig . fullscreen_on = TRUE;
 		break;
 		
 	    case 'w':
-		fullscreen_on = FALSE;
+		GameConfig . fullscreen_on = FALSE;
 		break;
 		
 	    case 'm':

@@ -1657,7 +1657,7 @@ Graphics_Options_Menu (void)
     while (!can_continue)
     {
 	sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
-	sprintf( Options1 , "Fullscreen Mode: %s", fullscreen_on ? "ON" : "OFF");
+	sprintf( Options1 , "Fullscreen Mode: %s", GameConfig . fullscreen_on ? "ON" : "OFF");
 	sprintf( Options2 , "Change Screen Resolution" );
 	sprintf( Options3 , "Show Blood: %s", 
 		 GameConfig . show_blood ? "YES" : "NO" );
@@ -1704,7 +1704,7 @@ Graphics_Options_Menu (void)
 		while ( EnterPressed( ) || SpacePressed( ) );
 		#ifndef __WIN32__
 		SDL_WM_ToggleFullScreen ( Screen );
-		fullscreen_on = !fullscreen_on;
+		GameConfig . fullscreen_on = ! GameConfig . fullscreen_on;
 		#else
 		GiveMouseAlertWindow("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
 There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n");
