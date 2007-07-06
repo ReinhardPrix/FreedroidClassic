@@ -169,7 +169,6 @@ typedef struct
     int language ; // index of language, see in defs.h
     int do_fadings; // do the screen fadings
     int auto_display_to_help; // display the takeover help
-    int fullscreen_on;
 }
 configuration_for_freedroid , *Configuration_for_freedroid;
 
@@ -978,15 +977,21 @@ spell_active, *Spell_Active;
 
 typedef struct
 {
-    int Circle;
-    char* spell_skill_name;
-    char* spell_skill_icon_name;
-    iso_image spell_skill_icon_surface;
-    int mana_cost_table[ NUMBER_OF_SKILL_LEVELS ];
-    int magic_requirement_table[ NUMBER_OF_SKILL_LEVELS ];
-    char* spell_skill_description;
+    char* name;
+    char* icon_name;
+    iso_image icon_surface;
+    int heat_cost;
+    int heat_cost_per_level;
+    char* description;
 }
 spell_skill_spec, *Spell_Skill_Spec;
+
+typedef struct
+{
+    int heat_cost;
+    int status; //BLOB or SOURCE and what version ?
+}
+spell_status_t;
 
 typedef struct
 {

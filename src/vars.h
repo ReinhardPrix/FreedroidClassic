@@ -271,7 +271,9 @@ float RangedRechargeMultiplierTable [  ] =
 int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
-spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
+spell_skill_spec *SpellSkillMap; 
+spell_status_t * PlayerProgramStatus;
+/*[ NUMBER_OF_SKILLS ] = {
   { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , UNLOADED_ISO_IMAGE , 
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
@@ -457,7 +459,7 @@ spell_skill_spec SpellSkillMap[ NUMBER_OF_SKILLS ] = {
   { 1 , "Unused spell Nr. 39"    , "NoSkillAvailable.png"      , UNLOADED_ISO_IMAGE , 
     { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This is a skill" } };
+  "This is a skill" } };*/
 
 Druidspec Druidmap;
 

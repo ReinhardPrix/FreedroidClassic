@@ -802,6 +802,55 @@ char fpath[2048];
 
 
 /* ----------------------------------------------------------------------
+ * This function reads the descriptions of the different programs
+ * (source and blobs) that are used for magic
+ * ---------------------------------------------------------------------- */
+int Get_Programs_Data ( char * DataPointer )
+{
+    char *ProgramPointer;
+    char *EndOfProgramData;
+
+#define PROGRAM_SECTION_BEGIN_STRING "*** Start of program data section: ***"
+#define PROGRAM_SECTION_END_STRING "*** End of program data section ***"
+#define NEW_PROGRAM_BEGIN_STRING "** Start of new program specification subsection **"
+    
+    ProgramPointer = LocateStringInData ( DataPointer , PROGRAM_SECTION_BEGIN_STRING );
+    EndOfProgramData = LocateStringInData ( DataPointer , PROGRAM_SECTION_END_STRING );
+            
+    int Number_Of_Programs = CountStringOccurences ( DataPointer , NEW_PROGRAM_BEGIN_STRING ) ;
+            
+    SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1));
+    PlayerProgramStatus = (spell_status_t *) MyMalloc( sizeof(spell_status_t) * (Number_Of_Programs + 1));
+
+    char * whattogrep = NEW_PROGRAM_BEGIN_STRING;
+    
+    spell_skill_spec * ProgramToFill = SpellSkillMap;
+
+    while ( (ProgramPointer = strstr ( ProgramPointer, whattogrep )) != NULL)
+            {
+            ProgramPointer ++;
+            char * EndOfThisProgram = strstr ( ProgramPointer, whattogrep );
+
+	    if ( EndOfThisProgram ) EndOfThisProgram [ 0 ] = 0;
+
+	    ProgramToFill -> name = ReadAndMallocStringFromData ( PrefixPointer , "Program name=\"" , "\"" ) ;
+	    ProgramToFill -> description = ReadAndMallocStringFromData ( PrefixPointer , "Program description=\"" , "\"" ) ;
+	    ProgramToFill -> icon_name = ReadAndMallocStringFromData ( PrefixPointer , "Picture=\"" , "\"" ) ;
+	    ProgramToFill -> icon_surface = UNLOADED_ISO_IMAGE;
+
+            ReadValueFromStringWithDefault( ProgramPointer , "Cost=" , "%d" , "0",
+                             & ProgramToFill -> heat_cost  , EndOfProgramData );
+            //ReadValueFromStringWithDefault( PrefixPointer , "Bonus to tohit modifier=" , "%d" , "0",
+	    
+                             
+            ProgramToFill ++;
+            if ( EndOfThisProgram ) EndOfThisProgram [ 0 ] = '*'; // We put back the star at its place 
+            }
+                             
+return 0;
+}
+
+/* ----------------------------------------------------------------------
  * This function loads all the constant concerning robot archetypes
  * from a section in memory to the actual archetype structures.
  * ---------------------------------------------------------------------- */
@@ -1178,6 +1227,16 @@ char fpath[2048];
 		fpath );
   Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
   Get_Prefixes_Data ( Data );
+  free ( Data );
+
+  //--------------------
+  // Load programs (spells) informations
+  //
+  find_file ("freedroid.programs_archetypes" , MAP_DIR , fpath, 0 );
+  DebugPrintf ( INIT_GAME_DATA_DEBUG , "\nvoid Init_Game_Data:  Data will be taken from file : %s. Commencing... \n" ,
+		fpath );
+  Data = ReadAndMallocAndTerminateFile( fpath , "*** End of this Freedroid data File ***" ) ;
+  Get_Programs_Data ( Data );
   free ( Data );
 
 
@@ -2161,8 +2220,8 @@ ThouArtDefeated (void)
     ThouArtDefeatedSound ( ) ;
     start_tux_death_explosions ( ) ;
     now = SDL_GetTicks ( ) ;
-
     global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL;
+
     //--------------------
     // Now that the influencer is dead, all this precious items
     // spring off of him...

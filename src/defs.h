@@ -197,7 +197,6 @@ enum _game_config_screen_visible_parameters
 enum _spell_names
 {
   SPELL_TRANSFERMODE = 0, // 0
-  SPELL_LOOT_CHEST_OR_DEAD_BODY, 
   SPELL_REPAIR_SKILL, // 
   SPELL_WEAPON, // 
   SPELL_IDENTIFY_SKILL, // 

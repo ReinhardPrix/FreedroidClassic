@@ -191,7 +191,7 @@ ColdBoltSpell ( gps BoltSource )
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
   target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 
-  if ( Me [ 0 ] . temperature >= SpellCost )
+  if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature + SpellCost )
     {
       Me[0].temperature += SpellCost;
 
@@ -200,7 +200,6 @@ ColdBoltSpell ( gps BoltSource )
       Play_Spell_ForceToEnergy_Sound( );
 	Override_Power_Limit = 0;
 	
-
     }
   else if ( Override_Power_Limit == 0)
     {
@@ -601,91 +600,6 @@ HandleCurrentlyActivatedSkill( int player_num )
 		    Takeover ( index_of_droid_below_mouse_cursor ) ;
 	    }
 	    break;
-	case SPELL_LOOT_CHEST_OR_DEAD_BODY:
-
-	    /*
-	    //--------------------
-	    // If the right mouse button wasn't pressed at all, then there
-	    // is nothing to do here...
-	    //
-	    if ( ! MouseRightPressed() ) break;
-	    
-	    //--------------------
-	    // Maybe we're standing right on a chest field.  That is the
-	    // easiest case.  Then we just need to open the chest.
-	    //
-	    for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-	    {
-		switch ( ChestLevel -> obstacle_list [ i ] . type )
-		{
-		    case ISO_V_CHEST_OPEN:
-		    case ISO_H_CHEST_OPEN:
-			if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-			       ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
-			{
-			    EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
-			    return;
-			}
-			break;
-		    case ISO_V_CHEST_CLOSED:
-		    case ISO_H_CHEST_CLOSED:
-			if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-			       ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-			       ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.5 )
-			{
-			    //--------------------
-			    // Later we might introduce some takeover game here for the Tux, so that
-			    // the chest also has to be hacked or it will not open for the Tux without
-			    // the proper key.
-			    //
-			    if ( ChestLevel -> obstacle_list [ i ] . type == ISO_V_CHEST_CLOSED )
-				ChestLevel -> obstacle_list [ i ] . type = ISO_V_CHEST_OPEN;
-			    if ( ChestLevel -> obstacle_list [ i ] . type == ISO_H_CHEST_CLOSED )
-				ChestLevel -> obstacle_list [ i ] . type = ISO_H_CHEST_OPEN;
-			    EnterChest( ChestLevel -> obstacle_list [ i ] . pos );
-			    return;
-			}
-			break;
-		    default:
-			break;
-		}
-	    }
-	    
-	    //--------------------
-	    // Now we check if maybe a dead body is close and if then
-	    // the player meant to loot this dead body...
-	    //
-	    for ( i = 0 ; i < MAX_ENEMYS_ON_SHIP ; i++ )
-	    {
-		//--------------------
-		// ignore enemy that are not on this level or dead 
-		//
-		if ( AllEnemys [ i ] . pos . z != CurLevel -> levelnum )
-		    continue;
-		if ( AllEnemys [ i ] . type == ( -1 ) )
-		    continue;
-		//--------------------
-		// We determine the distance and back out immediately if there
-		// is still one whole square distance or even more...
-		//
-		xdist = Me [ 0 ] . pos . x - AllEnemys [ i ] . pos . x;
-		ydist = Me [ 0 ] . pos . y - AllEnemys [ i ] . pos . y;
-		dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );
-		if ( dist2 < 2 * Druid_Radius_X )
-		{
-		    loc_pos . x = AllEnemys [ i ] . pos . x ;
-		    loc_pos . y = AllEnemys [ i ] . pos . y ;
-		    EnterChest( loc_pos );
-		    return;
-		}
-	    }
-	    PlayOnceNeededSoundSample ( "effects/I_See_No_Chest_Sound_0.ogg" , FALSE , FALSE );
-	    break;
-	    */
-
 
 	/*case SPELL_TRANSFERMODE:
 	    if (MouseRightPressed() == 1)
@@ -719,8 +633,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 			    break;
 		    }
 		}
-	    }*/
-	    break;
+	    }
+	    break;*/
 
     
 	case SPELL_FORCE_EXPLOSION_CIRCLE:

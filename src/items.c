@@ -1636,7 +1636,7 @@ required_magic_stat_for_next_level_and_item ( int item_type )
     if ( associated_skill == (-1) ) 
 	return ( 0 );
 
-    //--------------------
+/*    //--------------------
     // Now we know the associated skill, so all we need to do is
     // return the proper value from the magic requirements entry
     // of the SkillMap.
@@ -1653,7 +1653,7 @@ required_magic_stat_for_next_level_and_item ( int item_type )
 There was a skill level mentioned, that exceeds the range of allowed skill levels.",
 				   PLEASE_INFORM, IS_FATAL );
     }
-
+TODO I removed this, need to put this back in*/
     //--------------------
     // Just to make the compiler happy.  (This line can't be
     // ever reached from inside the code...)

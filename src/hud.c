@@ -263,7 +263,7 @@ exist really (i.e. has a type = (-1) ).",
 	//
 	switch ( CurItem -> type )
 	{
-	    case ITEM_SPELLBOOK_OF_HEALING:
+/*	    case ITEM_SPELLBOOK_OF_HEALING:
 	    case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
 	    case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
 	    case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
@@ -283,7 +283,7 @@ exist really (i.e. has a type = (-1) ).",
 		sprintf( linebuf , "Required for next upgrade: %d\n " ,  
 			 required_magic_stat_for_next_level_and_item ( CurItem -> type ) );
 		strcat( ItemDescText , linebuf );
-		break;
+		break;*/
 	    default:
 		break;
 	}
