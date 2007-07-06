@@ -422,6 +422,7 @@ calculate_item_repair_price ( item* repair_item )
 void
 FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
 {
+    if ( ThisItem -> type < 0 ) return;
 
     ThisItem -> damage = ItemMap[ ThisItem->type ].base_item_gun_damage;
     ThisItem -> damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
