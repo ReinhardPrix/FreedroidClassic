@@ -1373,7 +1373,6 @@ DialogPartnersTurnToEachOther ( Enemy ChatDroid )
     //
     ChatDroid -> speed . x = 0 ;
     ChatDroid -> speed . y = 0 ;
-    AnimateEnemys ( ) ; 
     
     //--------------------
     // At first do some waiting before the turning around starts...

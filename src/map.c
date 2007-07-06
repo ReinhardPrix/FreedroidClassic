@@ -2783,6 +2783,7 @@ GetCrew (char *filename)
     CountNumberOfDroidsOnShip ();
     ReviveAllDroidsOnShip ();
     
+    free ( MainDroidsFilePointer ) ;
     return ( OK );
 
 }; // int GetCrew ( ... ) 

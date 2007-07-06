@@ -318,6 +318,7 @@ char fpath[2048];
     
     ClearGraphMem ();
     our_SDL_flip_wrapper( Screen );
+   free ( TitleFilePointer ) ;
   
 }; // void PlayATitleFile ( char* Filename )
 
@@ -798,6 +799,7 @@ char fpath[2048];
   //
   decode_all_event_triggers ( EventSectionPointer );
 
+  free ( EventSectionPointer ) ;
 }; // void Get_Game_Events ( char* EventSectionPointer );
 
 

@@ -3564,7 +3564,7 @@ AnimateEnemys (void)
     {
       
 	our_enemy = & ( AllEnemys [ i ] ) ;
-	
+	if ( our_enemy -> type == -1 ) continue;
 	/* ignore enemys that are dead or on other levels or dummys */
 	// if (AllEnemys[i].type == DEBUG_ENEMY) continue;
 	// if (AllEnemys[i].pos.z != CurLevel->levelnum)

@@ -1706,7 +1706,7 @@ Get_Item_Data ( char* DataPointer )
 	    GiveStandardErrorMessage ( __FUNCTION__  , "The item specification of an item in freedroid.item_archetypes should contain an \nanswer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\nThis indicated a corrupted freedroid.ruleset file with an error at least in\nthe item specification section.",
 				       PLEASE_INFORM, IS_FATAL );
 	}
-	
+	free ( YesNoString ) ;
 	// Now we read in if this item can be installed by a mechanics bot
 	YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_INFLU , "\"" ) ;
 	if ( strcmp( YesNoString , "yes" ) == 0 )
@@ -1722,6 +1722,7 @@ Get_Item_Data ( char* DataPointer )
 	    GiveStandardErrorMessage ( __FUNCTION__  , "The item specification of an item in freedroid.item_archetypes should contain an \nanswer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.\nThis indicated a corrupted freedroid.ruleset file with an error at least in\nthe item specification section.",
 				       PLEASE_INFORM, IS_FATAL );
 	}
+	free ( YesNoString ) ;
 	
 	// Now we read the label telling us in which slot the item can be installed
 	YesNoString = ReadAndMallocStringFromData ( ItemPointer , ITEM_CAN_BE_INSTALLED_IN_SLOT_WITH_NAME , "\"" ) ;
@@ -1765,6 +1766,7 @@ Get_Item_Data ( char* DataPointer )
 	    GiveStandardErrorMessage ( __FUNCTION__  , "The item specification of an item in freedroid.ruleset should contain an \nanswer for the slot installation possiblieties, that was neither \n'weapon' nor 'armour' nor 'shield' nor 'aux' nor 'special' nor 'drive' nor 'none'.",
 				       PLEASE_INFORM, IS_FATAL );
 	}
+	free ( YesNoString ) ;
 	
 	//--------------------
 	// Next we read in the prefix for the image series in the items browser
@@ -1791,6 +1793,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 				       PLEASE_INFORM, IS_FATAL );
 	}
+	free ( YesNoString ) ;
 	
 	//--------------------
 	// Now we read in minimum strength, dex and magic required to wear/wield this item
@@ -1842,6 +1845,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+            free ( YesNoString ) ;
 	    
 	    // Now we read in if this weapons bullets will reflect other bullets or not
 	    YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: reflect other bullets=\"" , "\"" ) ;
@@ -1860,7 +1864,8 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
-	    
+            free ( YesNoString ) ;
+
 	    // Now we read in if this weapons bullets will reflect other bullets or not
 	    YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: pass through explosions=\"" , "\"" ) ;
 	    if ( strcmp( YesNoString , "yes" ) == 0 )
@@ -1878,6 +1883,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+            free ( YesNoString ) ;
 	    
 	    // Now we read in if this weapons bullets will reflect other bullets or not
 	    YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: pass through hit bodies=\"" , "\"" ) ;
@@ -1896,6 +1902,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }; // if ( ItemMap[ItemIndex].item_can_be_installed_in_weapon_slot == TRUE )
+            free ( YesNoString ) ;
 	    
 	    // Now we read in the recharging time this weapon will need
 	    ReadValueFromString( ItemPointer ,  "Item as gun: recharging time=" , "%lf" , 
@@ -1945,6 +1952,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }
+            free ( YesNoString ) ;
 	    
 	    // Now we read in if this weapons (strictly) requires both hands for usage
 	    YesNoString = ReadAndMallocStringFromData ( ItemPointer , "Item as gun: weapon requires both hands=\"" , "\"" ) ;
@@ -1963,6 +1971,7 @@ The item specification of an item in freedroid.ruleset should contain an \n\
 answer that is either 'yes' or 'no', but which was neither 'yes' nor 'no'.",
 					   PLEASE_INFORM, IS_FATAL );
 	    }; 
+            free ( YesNoString ) ;
 	    
 	}
 	else
