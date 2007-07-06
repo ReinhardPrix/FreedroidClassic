@@ -499,13 +499,13 @@ LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
   // Maybe this spell/skill icon surface has already been loaded, i.e. it's not
   // NULL any more.  Then we needn't do anything here.
   //
-  if ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface || SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . texture_has_been_created ) return;
+  if ( SpellSkillMap [ SkillSpellNr ] . icon_surface . surface || SpellSkillMap [ SkillSpellNr ] . icon_surface . texture_has_been_created ) return;
 
   //--------------------
   // Now it's time to assemble the file name to get the image from
   //
   strcpy ( AssembledFileName , "skill_icons/" );
-  strcat ( AssembledFileName , SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_name );
+  strcat ( AssembledFileName , SpellSkillMap [ SkillSpellNr ] . icon_name );
   find_file ( AssembledFileName , GRAPHICS_DIR, fpath, 0 );
 
   //--------------------
@@ -522,14 +522,14 @@ This error indicates some installation problem with freedroid.",
     }
 
   //Now scale the skill icon (ahuillet's attempt)
-  SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface = our_SDL_display_format_wrapperAlpha ( Whole_Image );
+  SpellSkillMap [ SkillSpellNr ] . icon_surface . surface = our_SDL_display_format_wrapperAlpha ( Whole_Image );
   SDL_FreeSurface ( Whole_Image );
 
-  SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , 0 , 0 ); 
-  SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
+  SDL_SetColorKey( SpellSkillMap [ SkillSpellNr ] . icon_surface . surface , 0 , 0 ); 
+  SDL_SetAlpha( SpellSkillMap [ SkillSpellNr ] . icon_surface . surface , SDL_SRCALPHA , SDL_ALPHA_OPAQUE );
 
   if ( use_open_gl )
-    make_texture_out_of_surface ( & ( SpellSkillMap [ SkillSpellNr ] . spell_skill_icon_surface ) ) ;
+    make_texture_out_of_surface ( & ( SpellSkillMap [ SkillSpellNr ] . icon_surface ) ) ;
   
 }; // void LoadOneSkillSurfaceIfNotYetLoaded ( int SkillSpellNr )
 

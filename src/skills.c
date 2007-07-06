@@ -111,7 +111,7 @@ ImproveSkill( int * skill )
 void
 DetectItemsSpell ( void )
 {
-  int SpellCost = SpellSkillMap [ SPELL_DETECT_ITEM ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = PlayerProgramStatus [ SPELL_DETECT_ITEM ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
   Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
   int i;
 
@@ -140,7 +140,7 @@ DetectItemsSpell ( void )
 void
 ParalyzeBoltSpell ( gps BoltSource )
 {
-  int SpellCost = SpellSkillMap [ SPELL_PARALYZE_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = PlayerProgramStatus [ SPELL_PARALYZE_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
   moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -162,7 +162,7 @@ ParalyzeBoltSpell ( gps BoltSource )
 void
 FireyBoltSpell ( gps BoltSource )
 {
-  int SpellCost = SpellSkillMap [ SPELL_FIREY_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = PlayerProgramStatus [ SPELL_FIREY_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
   moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -185,7 +185,7 @@ FireyBoltSpell ( gps BoltSource )
 void
 ColdBoltSpell ( gps BoltSource )
 {
-  int SpellCost = SpellSkillMap [ SPELL_COLD_BOLT ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+  int SpellCost = PlayerProgramStatus [ SPELL_COLD_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
   moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -225,7 +225,7 @@ ColdBoltSpell ( gps BoltSource )
 void
 PoisonBoltSpell ( gps BoltSource )
 {
-    int SpellCost = SpellSkillMap [ SPELL_POISON_BOLT ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_POISON_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
     moderately_finepoint target_location;
     
     target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -249,8 +249,8 @@ PoisonBoltSpell ( gps BoltSource )
 void
 CreateTeleportal ( gps PortalTarget )
 {
-    int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
-    
+    int SpellCost = PlayerProgramStatus [ SPELL_TELEPORT_HOME ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+	    
     if ( Me [ 0 ] . temperature >= SpellCost )
     {
 	Me[0].temperature += SpellCost;
@@ -277,7 +277,7 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-    int SpellCost = SpellSkillMap [ SPELL_TELEPORT_HOME ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_TELEPORT_HOME ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
     location HomeSpot;
     
     if ( Me [ 0 ] . temperature >= SpellCost )
@@ -315,7 +315,7 @@ TeleportHome ( void )
 void
 ForceExplosionCircle ( gps ExpCenter )
 {
-  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_CIRCLE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_FORCE_EXPLOSION_CIRCLE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
 
   if ( Me[0].temperature >= SpellCost )
     {
@@ -344,7 +344,7 @@ ForceExplosionCircle ( gps ExpCenter )
 void
 RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = SpellSkillMap [ SPELL_RADIAL_EMP_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_EMP_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
     int i;
     int j;
 
@@ -396,7 +396,7 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = SpellSkillMap [ SPELL_RADIAL_VMX_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_VMX_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
     int i;
     int j;
 
@@ -448,7 +448,7 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialFireWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = SpellSkillMap [ SPELL_RADIAL_FIRE_WAVE ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_FIRE_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
     int i;
     int j;
     
@@ -501,7 +501,7 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 {
   int i ;
   moderately_finepoint step;
-  int SpellCost = SpellSkillMap [ SPELL_FORCE_EXPLOSION_RAY ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
+  int SpellCost = PlayerProgramStatus [ SPELL_FORCE_EXPLOSION_RAY ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
 
   if ( Me [ 0 ] . temperature >= SpellCost )
     {
@@ -529,7 +529,7 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 void
 ForceToEnergyConversion ( void )
 {
-    int SpellCost = SpellSkillMap [ SPELL_FORCE_TO_ENERGY ] . mana_cost_table [ Me[ 0 ]. spellcasting_skill ] ;
+    int SpellCost = PlayerProgramStatus [ SPELL_FORCE_TO_ENERGY ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
 
     if ( Me [ 0 ] . temperature >= SpellCost )
     {
@@ -736,7 +736,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		// is present.  Only then can we deduct mana and enter
 		// identification global mode.
 		//
-		SpellCost = SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me[ 0 ] . spellcasting_skill ] ;
+		SpellCost = PlayerProgramStatus [ SPELL_IDENTIFY_SKILL ] . heat_cost * Me [ 0 ] . spellcasting_skill  ;
 		if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature - SpellCost )
 		{
 		    Me [ 0 ] . temperature += SpellCost;
@@ -933,19 +933,19 @@ ShowSkillsExplanationScreen( void )
     
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_screen_position ( &SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface , 
+	blit_open_gl_texture_to_screen_position ( &SpellSkillMap [ Me [ 0 ] . readied_skill ] . icon_surface , 
 						  TargetSkillRect . x , TargetSkillRect . y , TRUE );
     }
     else
     {
-	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_icon_surface . surface , 
+	our_SDL_blit_surface_wrapper ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . icon_surface . surface , 
 				       NULL , Screen , &TargetSkillRect );
     }
     
     
     TargetSkillRect.w = 320 - 15 - 15;
     TargetSkillRect.h = 480 - 15 ;
-    DisplayText( SpellSkillMap [ Me [ 0 ] . readied_skill ] . spell_skill_description , 16 , 16+64+16, 
+    DisplayText( SpellSkillMap [ Me [ 0 ] . readied_skill ] . description , 16 , 16+64+16, 
 		 &TargetSkillRect , TEXT_STRETCH );
 
 
@@ -1129,20 +1129,20 @@ ShowSkillsScreen ( void )
 	if ( use_open_gl )
 	{
 	    blit_open_gl_texture_to_screen_position ( 
-		&SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface , 
+		&SpellSkillMap [ SkillOfThisSlot ] . icon_surface , 
 		ButtonRect . x , ButtonRect . y , TRUE );
 	}
 	else
 	{
 	    our_SDL_blit_surface_wrapper ( 
-		SpellSkillMap [ SkillOfThisSlot ] . spell_skill_icon_surface . surface , 
+		SpellSkillMap [ SkillOfThisSlot ] . icon_surface . surface , 
 		NULL , Screen , &ButtonRect );
 	}
 	
 	//--------------------
 	// First we write the name of the skill to the screen
 	//
-	DisplayText( SpellSkillMap [ SkillOfThisSlot ] . spell_skill_name , 
+	DisplayText( SpellSkillMap [ SkillOfThisSlot ] . name , 
 		     16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , 
 		     &SkillScreenRect , TEXT_STRETCH );
@@ -1153,7 +1153,7 @@ ShowSkillsScreen ( void )
 	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
-	sprintf( CharText , "Required power: %d " , SpellSkillMap [ SkillOfThisSlot ] . mana_cost_table [Me[0]. spellcasting_skill ] );
+	sprintf( CharText , "Heats: %d " , PlayerProgramStatus [ SkillOfThisSlot ] . heat_cost * Me[0]. spellcasting_skill  );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	

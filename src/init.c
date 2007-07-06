@@ -833,14 +833,17 @@ int Get_Programs_Data ( char * DataPointer )
 
 	    if ( EndOfThisProgram ) EndOfThisProgram [ 0 ] = 0;
 
-	    ProgramToFill -> name = ReadAndMallocStringFromData ( PrefixPointer , "Program name=\"" , "\"" ) ;
-	    ProgramToFill -> description = ReadAndMallocStringFromData ( PrefixPointer , "Program description=\"" , "\"" ) ;
-	    ProgramToFill -> icon_name = ReadAndMallocStringFromData ( PrefixPointer , "Picture=\"" , "\"" ) ;
-	    ProgramToFill -> icon_surface = UNLOADED_ISO_IMAGE;
+	    ProgramToFill -> name = ReadAndMallocStringFromData ( ProgramPointer , "Program name=\"" , "\"" ) ;
+	    ProgramToFill -> description = ReadAndMallocStringFromData ( ProgramPointer , "Program description=\"" , "\"" ) ;
+	    ProgramToFill -> icon_name = ReadAndMallocStringFromData ( ProgramPointer , "Picture=\"" , "\"" ) ;
+	    ProgramToFill -> icon_surface . surface = NULL;
+	    ProgramToFill -> icon_surface . zoomed_out_surface = NULL;
+	    ProgramToFill -> icon_surface . texture_has_been_created = 0;
+	    ProgramToFill -> icon_surface . texture_width = 0;
 
             ReadValueFromStringWithDefault( ProgramPointer , "Cost=" , "%d" , "0",
                              & ProgramToFill -> heat_cost  , EndOfProgramData );
-            //ReadValueFromStringWithDefault( PrefixPointer , "Bonus to tohit modifier=" , "%d" , "0",
+            //ReadValueFromStringWithDefault( ProgramPointer , "Bonus to tohit modifier=" , "%d" , "0",
 	    
                              
             ProgramToFill ++;
