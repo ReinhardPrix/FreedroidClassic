@@ -1,0 +1,47 @@
+*** Start of program data section: ***
+
+** Start of new program specification subsection **
+Program name="Calculate Pi"  
+Program description="It is not a big problem to make a badly designed system to go hunting for the impossible, causing a performance impact."
+Picture="Calculate_PI.png"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 0.7
+#Casttime_lev  = 0
+#Damage_base   = 4
+#Damage_mod    = 7
+#Damage_level  = +0.5
+#Damage_mod_lv = +0.5
+Cost=10
+#Cost_level    = 0
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = Slowdown
+#Extra_effect  = 8
+#Extra_level   = +5
+
+
+** Start of new program specification subsection **
+Program name="Blue Screen"
+Program description="With a little touch a war machine comes crashing down to a halt. For a while."
+Picture="somejunkpicturehere.png"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 1.0
+#Casttime_lev  = 0
+#Damage_base   = 6
+#Damage_mod    = 4
+#Damage_level  = +0.5
+#Damage_mod_lv = +0.5
+Cost=15
+#Cost_level    = +1
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = Freeze
+#Extra_effect  = 5
+#Extra_level   = +5
+
+*** End of program data section ***
+*** End of this Freedroid data File ***
