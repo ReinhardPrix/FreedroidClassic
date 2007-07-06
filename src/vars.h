@@ -272,7 +272,6 @@ int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
 spell_skill_spec *SpellSkillMap; 
-spell_status_t * PlayerProgramStatus;
 /*[ NUMBER_OF_SKILLS ] = {
   { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , UNLOADED_ISO_IMAGE , 
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,

@@ -819,8 +819,7 @@ int Get_Programs_Data ( char * DataPointer )
             
     int Number_Of_Programs = CountStringOccurences ( DataPointer , NEW_PROGRAM_BEGIN_STRING ) ;
             
-    SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1));
-    PlayerProgramStatus = (spell_status_t *) MyMalloc( sizeof(spell_status_t) * (Number_Of_Programs + 1));
+    SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (NUMBER_OF_SKILLS));
 
     char * whattogrep = NEW_PROGRAM_BEGIN_STRING;
     
@@ -1515,11 +1514,10 @@ InitInfluencerStartupSkills( int PlayerNum )
 	Me[ PlayerNum ].SkillLevel [ i ] = 0 ;
 	Me[ PlayerNum ].base_skill_level [ i ] = 0 ;
     }
-    Me[ PlayerNum ] . SkillLevel [ 0 ] = 1 ;
-    Me[ PlayerNum ].base_skill_level [  0 ] = 1 ; // transfer mode present...
-    Me[ PlayerNum ].base_skill_level [  1 ] = 0 ; // loot chest not present...
-    Me[ PlayerNum ].base_skill_level [  2 ] = 1 ; // repair skill present...
-    Me[ PlayerNum ].base_skill_level [  3 ] = 1 ; // weapon skill present...
+    Me[ PlayerNum ].base_skill_level [ SPELL_TRANSFERMODE ] = 1 ; // transfer mode present...
+    Me[ PlayerNum ].base_skill_level [ SPELL_REPAIR_SKILL ] = 1 ; // loot chest not present...
+    Me[ PlayerNum ].base_skill_level [ SPELL_WEAPON ] = 0 ; // repair skill present...
+    Me[ PlayerNum ].base_skill_level [  3 ] = 0 ; // weapon skill present...
     Me[ PlayerNum ].base_skill_level [  4 ] = 0 ; // force-to-energy (HEALING) NOT present...
     Me[ PlayerNum ].base_skill_level [  5 ] = 0 ; // teleport home disabled for consistency...
     Me[ PlayerNum ].base_skill_level [  6 ] = 0 ; // firy-bolt NOT present...
@@ -1664,11 +1662,6 @@ InitHarmlessTuxStatusVariables( int player_num )
     {
 	Me [ player_num ] . HaveBeenToLevel [ i ] = FALSE ;
 	Me [ player_num ] . time_since_last_visit_or_respawn [ i ] = (-1) ;
-    }
-    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ ) 
-    {
-	Me [ player_num ] . DetectedItemList [ i ] . x = 0 ;
-	Me [ player_num ] . DetectedItemList [ i ] . y = 0 ;
     }
     Me [ player_num ] . Experience = 1;
     Me [ player_num ] . exp_level = 1;

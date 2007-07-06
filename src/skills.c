@@ -79,22 +79,6 @@ int Override_Power_Limit=0;
 SDL_Rect SkillScreenRect;
 
 /* ----------------------------------------------------------------------
- * This function clears the list of detected items for one player.  
- * Useful after level changes and when detecting items again.
- * ---------------------------------------------------------------------- */
-void
-ClearDetectedItemList( int PlayerNum )
-{
-    int i;
-    
-    for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-    {
-	Me [ PlayerNum ] . DetectedItemList [ i ] . x = 0;
-	Me [ PlayerNum ] . DetectedItemList [ i ] . y = 0;
-    }
-}; // void ClearDetectedItemList( int PlayerNum )
-
-/* ----------------------------------------------------------------------
  * This function improves a generic skill (hack melee ranged magic) by one
  * 
  * ---------------------------------------------------------------------- */
@@ -105,34 +89,16 @@ ImproveSkill( int * skill )
     (*skill)++;
 }; // void ImproveSkill ( int * skill )
 
-/* ----------------------------------------------------------------------
- * This function detects all items on this level.
- * ---------------------------------------------------------------------- */
-void
-DetectItemsSpell ( void )
+
+/* ------------------
+ * This function calculates the heat cost of running a given program (source or blob), based on current program level and casting ability
+ * -----------------*/
+int calculate_program_heat_cost ( int program_id )
 {
-  int SpellCost = PlayerProgramStatus [ SPELL_DETECT_ITEM ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
-  Level AutomapLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-  int i;
+    float cost_ratio [ NUMBER_OF_SKILL_LEVELS ] = { 1.5, 1.3, 1.2, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4 };
+    return cost_ratio [ Me [ 0 ] . spellcasting_skill ]* ( SpellSkillMap[ program_id ] . heat_cost  + SpellSkillMap[ program_id ] . heat_cost_per_level * Me [ 0 ] . SkillLevel [ program_id ] );
+};
 
-      Me[0].temperature += SpellCost;
-
-      ClearDetectedItemList( 0 ); // 0 is the playernum
-
-      // FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 ) ;
-      for ( i = 0 ; i < MAX_ITEMS_PER_LEVEL ; i ++ )
-	{
-	  if ( AutomapLevel->ItemList[i].type != (-1) )
-	    {
-	      Me[0].DetectedItemList[i].x = AutomapLevel->ItemList[i].pos.x ;
-	      Me[0].DetectedItemList[i].y = AutomapLevel->ItemList[i].pos.y ;
-	    }
-	}
-
-      // Play_Spell_ForceToEnergy_Sound( );
-      Play_Spell_DetectItems_Sound( );
-
-}; // void DetectItemsSpell ( void )
 
 /* ----------------------------------------------------------------------
  * This function creates a paralyzing bolt (spell, but really a bullet).
@@ -140,7 +106,7 @@ DetectItemsSpell ( void )
 void
 ParalyzeBoltSpell ( gps BoltSource )
 {
-  int SpellCost = PlayerProgramStatus [ SPELL_PARALYZE_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+  int SpellCost = calculate_program_heat_cost ( SPELL_PARALYZE_BOLT );
   moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -162,7 +128,7 @@ ParalyzeBoltSpell ( gps BoltSource )
 void
 FireyBoltSpell ( gps BoltSource )
 {
-  int SpellCost = PlayerProgramStatus [ SPELL_FIREY_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+  int SpellCost = calculate_program_heat_cost ( SPELL_FIREY_BOLT );
   moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -185,8 +151,8 @@ FireyBoltSpell ( gps BoltSource )
 void
 ColdBoltSpell ( gps BoltSource )
 {
-  int SpellCost = PlayerProgramStatus [ SPELL_COLD_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
-  moderately_finepoint target_location;
+  int SpellCost = calculate_program_heat_cost ( SPELL_COLD_BOLT);
+ moderately_finepoint target_location;
 
   target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
   target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
@@ -225,7 +191,7 @@ ColdBoltSpell ( gps BoltSource )
 void
 PoisonBoltSpell ( gps BoltSource )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_POISON_BOLT ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+    int SpellCost = calculate_program_heat_cost ( SPELL_POISON_BOLT );
     moderately_finepoint target_location;
     
     target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
@@ -246,7 +212,7 @@ PoisonBoltSpell ( gps BoltSource )
 /* ----------------------------------------------------------------------
  * This function creates a teleporter portal to the home location.
  * ---------------------------------------------------------------------- */
-void
+/*void
 CreateTeleportal ( gps PortalTarget )
 {
     int SpellCost = PlayerProgramStatus [ SPELL_TELEPORT_HOME ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
@@ -269,7 +235,7 @@ CreateTeleportal ( gps PortalTarget )
 	Me[0].TextToBeDisplayed = "Not enough force left within me.";
 	Not_Enough_Mana_Sound(  );
     }
-}; // void CreateTeleportal ( gps PortalTarget )
+};*/ // void CreateTeleportal ( gps PortalTarget )
 
 /* ----------------------------------------------------------------------
  * This function creates a teleporter portal to the home location.
@@ -277,7 +243,7 @@ CreateTeleportal ( gps PortalTarget )
 void
 TeleportHome ( void )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_TELEPORT_HOME ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+   int SpellCost = calculate_program_heat_cost ( SPELL_TELEPORT_HOME );
     location HomeSpot;
     
     if ( Me [ 0 ] . temperature >= SpellCost )
@@ -315,7 +281,7 @@ TeleportHome ( void )
 void
 ForceExplosionCircle ( gps ExpCenter )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_FORCE_EXPLOSION_CIRCLE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+  int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_EXPLOSION_CIRCLE );
 
   if ( Me[0].temperature >= SpellCost )
     {
@@ -344,7 +310,8 @@ ForceExplosionCircle ( gps ExpCenter )
 void
 RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_EMP_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_EMP_WAVE );
+
     int i;
     int j;
 
@@ -396,7 +363,8 @@ RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_VMX_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_VMX_WAVE );
+
     int i;
     int j;
 
@@ -448,7 +416,7 @@ RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
 void
 RadialFireWave ( gps ExpCenter , int SpellCostsMana )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_RADIAL_FIRE_WAVE ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_FIRE_WAVE );
     int i;
     int j;
     
@@ -501,7 +469,7 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 {
   int i ;
   moderately_finepoint step;
-  int SpellCost = PlayerProgramStatus [ SPELL_FORCE_EXPLOSION_RAY ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+  int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_EXPLOSION_RAY );
 
   if ( Me [ 0 ] . temperature >= SpellCost )
     {
@@ -529,7 +497,7 @@ ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_
 void
 ForceToEnergyConversion ( void )
 {
-    int SpellCost = PlayerProgramStatus [ SPELL_FORCE_TO_ENERGY ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
+    int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_TO_ENERGY );
 
     if ( Me [ 0 ] . temperature >= SpellCost )
     {
@@ -736,7 +704,8 @@ HandleCurrentlyActivatedSkill( int player_num )
 		// is present.  Only then can we deduct mana and enter
 		// identification global mode.
 		//
-		SpellCost = PlayerProgramStatus [ SPELL_IDENTIFY_SKILL ] . heat_cost * Me [ 0 ] . spellcasting_skill  ;
+	        SpellCost = calculate_program_heat_cost ( SPELL_IDENTIFY_SKILL );
+
 		if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature - SpellCost )
 		{
 		    Me [ 0 ] . temperature += SpellCost;
@@ -770,16 +739,6 @@ HandleCurrentlyActivatedSkill( int player_num )
 					  GetMousePos_y()  ) )
 		{
 		    ParalyzeBoltSpell ( Me [ 0 ] . pos );
-		}
-	    }
-	    break;
-	case SPELL_DETECT_ITEM:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    DetectItemsSpell (  ) ;
 		}
 	    }
 	    break;
@@ -1153,7 +1112,7 @@ ShowSkillsScreen ( void )
 	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
-	sprintf( CharText , "Heats: %d " , PlayerProgramStatus [ SkillOfThisSlot ] . heat_cost * Me[0]. spellcasting_skill  );
+	sprintf( CharText , "Heats: %d " ,   calculate_program_heat_cost ( SkillOfThisSlot )  );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	
