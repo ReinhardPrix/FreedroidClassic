@@ -1162,8 +1162,8 @@ Cheatmenu (void)
 		CountNumberOfDroidsOnShip ( );
 		printf_SDL (Screen, 15, -1," BTW:  Number_Of_Droids_On_Ship: %d \n" , Number_Of_Droids_On_Ship );
 		our_SDL_flip_wrapper ( Screen );
-		while ( ( !SpacePressed()) && (!EscapePressed()) );
-		while ( SpacePressed() || EscapePressed() );
+		while ( ( !SpacePressed()) && (!EscapePressed()) && (!MouseLeftPressed()) );
+		while ( SpacePressed() || EscapePressed() || MouseLeftPressed());
 		break;
 		
 	    case 'g': // complete robot list of this ship 
