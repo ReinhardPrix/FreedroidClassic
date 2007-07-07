@@ -2992,7 +2992,11 @@ ButtonPressWasNotMeantAsFire( int player_num )
 void
 PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting ) 
 {
-    int guntype = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_bullet_image_type ;
+    int guntype;
+    if ( Me [ player_num ] . weapon_item . type > 0 ) 
+	guntype = ItemMap[ Me [ player_num ] . weapon_item . type ] . item_gun_bullet_image_type ;
+    else guntype = -1;
+
     float angle;
     moderately_finepoint Weapon_Target_Vector ;
     moderately_finepoint target_location ;
