@@ -477,9 +477,6 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 	return ;
 #else
 */
-	//--------------------
-	// In case sound has been disabled, we don't do anything here...
-	//
 	if ( !sound_on )
 		{
 		//--------------------
@@ -496,7 +493,7 @@ void PlayOnceNeededSoundSample( char* SoundSampleFileName , int With_Waiting , i
 
 			while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) &&
 					!EscapePressed() && !SpacePressed() && !MouseLeftPressed())
-				SDL_Delay( 100 );
+				SDL_Delay( 10 );
 
 			while ( EscapePressed() || SpacePressed() || MouseLeftPressed() )
 					SDL_Delay(1);
@@ -602,11 +599,11 @@ There seems to be a sound file missing.",
 				simulated_playback_starting_time = SDL_GetTicks() ;
 
 				while ( ( SDL_GetTicks() - simulated_playback_starting_time < 7 * 1000 ) &&
-						!EscapePressed() && !SpacePressed() )
-					;
+						!EscapePressed() && !SpacePressed() && !MouseLeftPressed() )
+					SDL_Delay(10);
 
-				while ( EscapePressed() || SpacePressed() )
-					;
+				while ( EscapePressed() || SpacePressed() || MouseLeftPressed() )
+					SDL_Delay(10);
 				}
 
 			//--------------------
@@ -679,11 +676,11 @@ There seems to be a sound file missing.",
 		// In case escape was pressed, the currently playing voice sample must
 		// be terminated immediately.
 		//
-		if ( EscapePressed() || SpacePressed() )
+		if ( EscapePressed() || SpacePressed() || MouseLeftPressed() )
 			{
 			Mix_HaltChannel( Newest_Sound_Channel );
-			while ( EscapePressed() || SpacePressed() )
-				;
+			while ( EscapePressed() || SpacePressed() || MouseLeftPressed())
+				SDL_Delay(10);
 
 			//--------------------
 			// Now the channel has finished playing (or we have stopped it) and
