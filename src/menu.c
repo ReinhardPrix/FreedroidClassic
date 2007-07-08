@@ -1257,7 +1257,7 @@ Cheatmenu (void)
 		break;
 		
 	    case 'h': // auto-aquire all skills
-		for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) Me [ 0 ] . base_skill_level [ i ] = 1 ;
+		for ( i = 0 ; i < number_of_skills ; i ++ ) Me [ 0 ] . base_skill_level [ i ] = 1 ;
 		break;
 		
 	    case 'n': // toggle display of all droids 
@@ -2237,31 +2237,31 @@ Droid_Talk_Options_Menu (void)
 	  can_continue=!can_continue;
 	  break;
 	case INFLU_REFRESH_TEXT:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.Influencer_Refresh_Text=!GameConfig.Influencer_Refresh_Text;
 	  break;
 	case INFLU_BLAST_TEXT:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.Influencer_Blast_Text=!GameConfig.Influencer_Blast_Text;
 	  break;
 	case ENEMY_HIT_TEXT:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.Enemy_Hit_Text=!GameConfig.Enemy_Hit_Text;
 	  break;
 	case ENEMY_BUMP_TEXT:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.Enemy_Bump_Text=!GameConfig.Enemy_Bump_Text;
 	  break;
 	case ENEMY_AIM_TEXT:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.Enemy_Aim_Text=!GameConfig.Enemy_Aim_Text;
 	  break;
 	case ALL_TEXTS:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 	  GameConfig.All_Texts_Switch=!GameConfig.All_Texts_Switch;
 	  break;
 	case LEAVE_DROID_TALK_OPTIONS_MENU:
-	  while (EnterPressed() || SpacePressed() );
+	  while (EnterPressed() || SpacePressed() || MouseLeftPressed());
 	  can_continue=TRUE;
 	  break;
 	default: 
