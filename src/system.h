@@ -69,7 +69,11 @@
 #include <signal.h>
 
 #ifdef HAVE_SYS_SOUNDCARD_H
+#ifdef __OpenBSD__
+#include <soundcard.h>
+#else
 #include <sys/soundcard.h>
+#endif
 #endif
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>

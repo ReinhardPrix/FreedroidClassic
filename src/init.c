@@ -36,7 +36,12 @@
 #include "global.h"
 #include "proto.h"
 #include "ship.h"
+
+#ifdef __OpenBSD__
+#include "ieeefp.h"
+#else
 #include "fenv.h"
+#endif
 
 #include "getopt.h"
 
@@ -821,7 +826,9 @@ int Get_Programs_Data ( char * DataPointer )
             
     int Number_Of_Programs = CountStringOccurences ( DataPointer , NEW_PROGRAM_BEGIN_STRING ) ;
             
-    SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (NUMBER_OF_SKILLS));
+    SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1 ));
+    SkillLevel = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
+    base_skill_level = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
 
     char * whattogrep = NEW_PROGRAM_BEGIN_STRING;
     
@@ -837,13 +844,26 @@ int Get_Programs_Data ( char * DataPointer )
 	    ProgramToFill -> name = ReadAndMallocStringFromData ( ProgramPointer , "Program name=\"" , "\"" ) ;
 	    ProgramToFill -> description = ReadAndMallocStringFromData ( ProgramPointer , "Program description=\"" , "\"" ) ;
 	    ProgramToFill -> icon_name = ReadAndMallocStringFromData ( ProgramPointer , "Picture=\"" , "\"" ) ;
+
 	    ProgramToFill -> icon_surface . surface = NULL;
 	    ProgramToFill -> icon_surface . zoomed_out_surface = NULL;
 	    ProgramToFill -> icon_surface . texture_has_been_created = 0;
 	    ProgramToFill -> icon_surface . texture_width = 0;
 
+	    ProgramToFill -> effect = ReadAndMallocStringFromData ( ProgramPointer , "Effect=\"" , "\"" ) ;
+	    
+	    char * pform = ReadAndMallocStringFromData ( ProgramPointer , "Form=\"" , "\"" ) ;
+	    if ( !strcmp(pform, "immediate") ) 
+		ProgramToFill ->  form = PROGRAM_FORM_IMMEDIATE;
+	    if ( !strcmp(pform, "bullet") ) 
+		ProgramToFill ->  form = PROGRAM_FORM_BULLET;
+	    if ( !strcmp(pform, "radial") ) 
+		ProgramToFill ->  form = PROGRAM_FORM_RADIAL;
+
             ReadValueFromStringWithDefault( ProgramPointer , "Cost=" , "%d" , "0",
                              & ProgramToFill -> heat_cost  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Always present=" , "%d" , "0",
+                             & ProgramToFill -> always_present  , EndOfProgramData );
             //ReadValueFromStringWithDefault( ProgramPointer , "Bonus to tohit modifier=" , "%d" , "0",
 	    
                              
@@ -1511,7 +1531,7 @@ InitInfluencerStartupSkills( int PlayerNum )
     int i ;
     
     Me[ PlayerNum ].readied_skill = 0;
-    for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+    for ( i = 0 ; i < number_of_skills ; i ++ ) 
     {
 	Me[ PlayerNum ].SkillLevel [ i ] = 0 ;
 	Me[ PlayerNum ].base_skill_level [ i ] = 0 ;
