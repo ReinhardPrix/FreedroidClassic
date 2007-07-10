@@ -37,7 +37,7 @@
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 0
 +++ 
-Mission Name="Find cure for Bender"
+Mission Name="Bender's problem"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 79
 Mission target is to kill all droids : -1
@@ -52,9 +52,14 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="Bender told me he was sick and needed special medications to heal from the brain enlargement pills.  Hmmm, maybe that doctor could give me some."
-Mission diary entry="I've tricked the doctor into giving me some brain enlargement pills.  That was rather easy."
-Mission diary entry="Bender was delighted about the antidote for the brain enlargement pills.  He gave me some strength pills instead.  Those should be working well."
+Mission diary entry="I met a Red Guard named Bender. He poisoned himself with some brain enlargement 
+pills, which turned out to highly cancirogenic. The city doctor will not give him the antidote, so it is 
+up to me to save him."
+Mission diary entry="The doctor was easily fooled. I have the pills that Bender needs."
+Mission diary entry="I nearly killed the doctor, but he gave me the antidote. I hope he has learned his 
+lesson. They say that repetition is the mother of learning, but I don't think he can survive one more 
+iteration of what I did to him. Ha. Ha. Ha."
+Mission diary entry="Bender is fine now. He gave me some muscle enlargement pills in return for my help."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -63,7 +68,7 @@ Mission diary entry="Bender was delighted about the antidote for the brain enlar
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 1
 +++ 
-Mission Name="Dixon's toolkit"
+Mission Name="The yellow toolkit"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 59
 Mission target is to kill all droids : -1
@@ -78,8 +83,19 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="Dixon, the teleporter admistrator of the settlement has asked me to retrieve his toolkit.  He has opend the entrance to the maintainance tunnels from inside of town.  The toolkit was lost when Dixon was attacked by rogue bots in the tunnels below the city.  Maybe they still have the kit?"
-Mission diary entry="I've managed to retrieve the toolkit initally lost by Dixon.  He seemed quite delighted.  Maybe it was also emotional value associated with that old toolkit."
+Mission diary entry="Dixon, the leader of the Red Guard technical division lost his yellow toolkit in the 
+city's maintenance tunnels. I am supposed to get it from there."
+Mission diary entry="The bots in the tunnels might be sentient. I cannot wait to extinguish an emerging 
+life form. This will be fun."
+Mission diary entry="I refused to get the toolkit from the bots in the tunnels because I think they might 
+be sentient. Life is precious and should be preserved."
+Mission diary entry="The tunnels bots seem to be working together with Dixon in keeping the city working. 
+All is well that ends well."
+Mission diary entry="Finally. I am tired, covered in bruises and oil... But finally I made sure the bots 
+will not survive. It felt great to break their metal bodies and crush their circuits. Dixon seemed not too 
+happy about this solution, but I don't care. It was fun killing the bots. Nothing else matters."
+Mission diary entry="I gave the toolkit to Dixon. He was very happy to have his autotools back. He gave 
+me his helmet as a gift. I guess this is better than nothing."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -88,7 +104,7 @@ Mission diary entry="I've managed to retrieve the toolkit initally lost by Dixon
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 2
 +++ 
-Mission Name="Energy crystals"
+Mission Name="Anything but the army snacks, please!"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : 74
 Mission target is to kill all droids : -1
@@ -103,8 +119,11 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="The cook Michelangelo needs some energy crystals for his advanced oven.  He said those crystals could be found in the caverns east of town.  Maybe I can find some there."
-Mission diary entry="Despite some resistance from bots, I've managed to find some energy crystals of the desired type.  I guess it will cheer up the whole community to finally enjoy decently cooked meals again."
+Mission diary entry="I am supposed to get some dilithium crystals for that cook. Without them he cannot 
+cook anything in his macrowave oven. And without his cooking the whole city is stuck eating army snacks. 
+Many people have committed suicide because of the horrible food. This madness must stop."
+Mission diary entry="I gave him enough dilithium to last him a decade. The evil spectre of eating army 
+snacks is lifted from the city."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -129,7 +148,7 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_novice_arena_exit_door"
-Mission diary entry="Butch, the arena master, has offered me a challenge in the novice arena.  All I need to do is defeat the 4 bots down there.  Seems pretty easy, even if it won't raise my reputation in the settlement overly much."
+Mission diary entry=""
 Mission diary entry="I've defeated the bots in the novice arena as requested.  I think they have made a life broadcast over the net and are charging for it.  How else would the arena be able to make any profit?"
 ** End of this mission target subsection **
 
@@ -139,7 +158,7 @@ Mission diary entry="I've defeated the bots in the novice arena as requested.  I
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 4
 +++ 
-Mission Name="Master Arena"
+Mission Name="Time to say goodnight"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -155,8 +174,10 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_master_arena_exit_door"
-Mission diary entry="Despite the warnings of the arena master, I've accepted a challenge in the master arena.  The bots there are said to be quite tough, but with suitable disruptor protection, it might not be so much of a problem.  Maybe the disruptor attach will even hurt some of the bots themselves and I only need to finish the last one."
-Mission diary entry="Exceeding the expectations of the arena master, I've defeated the bots in the master arena as well.  I got the feeling, that my reputation in the settlement has grown considerable after this."
+Mission diary entry="I told the arena master to let me into his master arena. He agreed. Now all that 
+remains to do is to enter the teleport and wait for death herself to come on her black wings and claim my 
+soul. You know, now that I think about it... Maybe I should stay out of there? "
+Mission diary entry="I survived the master arena. A miracle."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -165,7 +186,7 @@ Mission diary entry="Exceeding the expectations of the arena master, I've defeat
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 5
 +++ 
-Mission Name="Underground Warehouse"
+Mission Name="Lots of bots in the warehouse"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -193,7 +214,7 @@ Mission diary entry="description text 5 here (for warehouse mission)"
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 6
 +++ 
-Mission Name="Kevin and the Maintainance Bots"
+Mission Name="And there was light..."
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -208,8 +229,10 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-Mission diary entry="Kevin seems to be having a problem with his energy supply.  He suspects that some maintainance bots on the second underground level of his station are trying to 'maintain' machines down there.  I think I better go take a look."
-Mission diary entry="The bots weren't hard to find.  Everything should be fixed now.  Kevin said the energy supply would be stable now."
+Mission diary entry="Kevin has a problem with his power supply. His bots keep rebooting the system and he 
+cannot conduct any experiments with unstable power supply. My job is to stabilize the power. I think that 
+implies removing the bots."
+Mission diary entry="Done. Kevin can work in peace now."
 Mission diary entry="description text 3 here"
 Mission diary entry="description text 4 here"
 Mission diary entry="description text 5 here"
@@ -223,7 +246,7 @@ Mission diary entry="description text 5 here"
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 7
 +++ 
-Mission Name="Kevin's Raw Data for the Cluster"
+Mission Name="A kingdom for a cluster!"
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -238,8 +261,9 @@ Mission target is to reach level : 50
 Mission target is to reach X-Pos : 50
 Mission target is to reach Y-Pos : 50
 Mission target is to live for how many seconds : -1
-Mission diary entry="Kevin has asked me to take his data cube to the cluster administration people inside the red guard complex.  That seems simple enough.  Let's see how they respond."
-Mission diary entry="The cluster people have taken the data cube.  Evaluation didn't even take long."
+Mission diary entry="Kevin gave me a cube stuffed with some kind of data. I am supposed to bring it to a 
+computer cluster for analysis. Ought to be simple."
+Mission diary entry="Yes, that was simple. I wish everything else went as smoothly as this one did..."
 Mission diary entry="description text 3 here"
 Mission diary entry="description text 4 here"
 Mission diary entry="description text 5 here"
