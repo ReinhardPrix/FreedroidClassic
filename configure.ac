@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroidRPG, 0.10cvs)
+AC_INIT(freedroidRPG, 0.10.2cvs)
 
 dnl Detect the canonical host and target build environment
 AC_CANONICAL_HOST
@@ -179,7 +179,7 @@ fi
 
 # Checks for header files.
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h sys/soundcard.h execinfo.h signal.h locale.h ])
+			  unistd.h dirent.h sys/soundcard.h soundcard.h execinfo.h signal.h locale.h ])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
