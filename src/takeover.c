@@ -36,7 +36,6 @@
 #include "global.h"
 #include "proto.h"
 #include "takeover.h"
-#include "ship.h"
 #include "map.h"
 
 Uint32 cur_time;  		// current time in ms 
@@ -514,7 +513,7 @@ PlayGame (void)
       if (!down) down_counter =0;
 
       /* allow for a WIN-key that give immedate victory */
-      if ( WPressed () && CtrlWasPressed () && AltWasPressed () )
+      if ( WPressed () && CtrlPressed () && AltPressed () )
 	{
 	  LeaderColor = YourColor;   /* simple as that */
 	  return;  /* leave now, to avoid changing of LeaderColor! */
