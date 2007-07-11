@@ -381,7 +381,7 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
     }
   if ( BonusItem->type == ITEM_START_PLUGIN_HACKER )
     {
-      for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+      for ( i = 0 ; i < number_of_skills ; i ++ ) 
 	{
 	  Me [ 0 ] . SkillLevel [ i ] += 2 ;
 	}
@@ -536,7 +536,7 @@ update_all_primary_stats ( int PlayerNum )
     //--------------------
     // Now we re-initialize the SKILL LEVELS
     //
-    for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ ) 
+    for ( i = 0 ; i < number_of_skills ; i ++ ) 
     {
 	Me [ PlayerNum ] . SkillLevel [ i ] = Me [ PlayerNum ] . base_skill_level [ i ] ;
     }

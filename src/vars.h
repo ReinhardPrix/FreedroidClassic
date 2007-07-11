@@ -32,7 +32,6 @@
 
 
 #include "colodefs.h"
-#include "ship.h"
 
 char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   {
@@ -272,7 +271,8 @@ int SpellHitPercentageTable [  ] =
   {  50 , 70 , 90 , 110 , 130 , 150 , 190 , 230 , 270 } ;
 
 spell_skill_spec *SpellSkillMap; 
-/*[ NUMBER_OF_SKILLS ] = {
+int number_of_skills;
+/*[ number_of_skills ] = {
   { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , UNLOADED_ISO_IMAGE , 
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
     { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,

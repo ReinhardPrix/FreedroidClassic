@@ -64,7 +64,6 @@ EXTERN char font_switchto_red [ 2 ] ;
 EXTERN char font_switchto_blue [ 2 ] ;
 EXTERN char font_switchto_neon [ 2 ] ;
 
-EXTERN int ManaCostTable [ NUMBER_OF_SKILLS ] [ NUMBER_OF_SKILL_LEVELS ] ;
 EXTERN int SpellHitPercentageTable [  ] ;
 EXTERN float MeleeDamageMultiplierTable [  ] ;
 EXTERN float MeleeRechargeMultiplierTable [  ] ;
@@ -77,6 +76,7 @@ EXTERN Druidspec Druidmap;
 EXTERN Bulletspec Bulletmap;
 EXTERN blastspec Blastmap[ALLBLASTTYPES];
 EXTERN int skip_initial_menus;
+EXTERN int number_of_skills;
 #endif
 
 EXTERN SDL_Rect User_Rect;

@@ -41,7 +41,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "ship.h"
 #include "SDL_rotozoom.h"
 
 enum 

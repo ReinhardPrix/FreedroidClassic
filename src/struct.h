@@ -673,8 +673,8 @@ typedef struct
     // currently readied and that...
     //
     int readied_skill; 
-    int SkillLevel[ NUMBER_OF_SKILLS ];
-    int base_skill_level [ NUMBER_OF_SKILLS ];
+    int *SkillLevel;
+    int *base_skill_level;
     int melee_weapon_skill;
     int ranged_weapon_skill;
     int spellcasting_skill;
@@ -983,6 +983,9 @@ typedef struct
     int heat_cost;
     int heat_cost_per_level;
     char* description;
+    char* effect;
+    int form;
+    int always_present;
 }
 spell_skill_spec, *Spell_Skill_Spec;
 

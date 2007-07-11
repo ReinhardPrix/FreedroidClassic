@@ -928,11 +928,11 @@ establish_skill_subset_map ( int *SkillSubsetMap )
   int i;
   int NextPosition=0;
 
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+  for ( i = 0 ; i < number_of_skills ; i ++ )
     {
       SkillSubsetMap [ i ] = (-1) ;
     }
-  for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+  for ( i = 0 ; i < number_of_skills ; i ++ )
     {
       if ( Me [ 0 ] . SkillLevel [ i ] > 0 )
 	{
@@ -949,7 +949,7 @@ establish_skill_subset_map ( int *SkillSubsetMap )
 void
 activate_nth_aquired_skill ( int skill_num )
 {
-  int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
+  int SkillSubsetMap [ number_of_skills ] ;
   int i;
 
   //--------------------
@@ -968,7 +968,7 @@ activate_nth_aquired_skill ( int skill_num )
     }
   else
     {
-      for ( i = 0 ; i < NUMBER_OF_SKILLS ; i ++ )
+      for ( i = 0 ; i < number_of_skills ; i ++ )
 	{
 	  if ( SkillSubsetMap [ i ] != (-1) )
 	    Me [ 0 ] . readied_skill = SkillSubsetMap [ i ] ;
@@ -994,7 +994,7 @@ ShowSkillsScreen ( void )
     point CurPos;
     int i;
     SDL_Rect SpellLevelRect;
-    int SkillSubsetMap [ NUMBER_OF_SKILLS ] ;
+    int SkillSubsetMap [ number_of_skills ] ;
     int SkillOfThisSlot;
     point SkillRectLocations [ NUMBER_OF_SKILLS_PER_SKILL_PAGE ] ;
   

@@ -35,7 +35,6 @@
 #include "global.h"
 #include "proto.h"
 #include "vars.h"
-#include "ship.h"
 
 #ifdef __OpenBSD__
 #include "ieeefp.h"

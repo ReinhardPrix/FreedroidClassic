@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "ship.h"
 
 #ifdef __OpenBSD__
 #include "ieeefp.h"
@@ -827,8 +826,8 @@ int Get_Programs_Data ( char * DataPointer )
     int Number_Of_Programs = CountStringOccurences ( DataPointer , NEW_PROGRAM_BEGIN_STRING ) ;
             
     SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1 ));
-    SkillLevel = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
-    base_skill_level = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
+    Me [ 0 ]  . SkillLevel = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
+    Me [ 0 ] . base_skill_level = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
 
     char * whattogrep = NEW_PROGRAM_BEGIN_STRING;
     
