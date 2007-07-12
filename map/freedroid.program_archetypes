@@ -1,8 +1,8 @@
 *** Start of program data section: ***
 
 ** Start of new program specification subsection **
-Program name="Talk/Takeover"  
-Program description="This is the Takeover and Talk skill.  The Tux is gifted with an innert ability to hack any machine in no time.  To make use of this ability, select this skill. When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated."
+Program name="Hacking"  
+Program description="Tux is gifted with the ability to hack any machine in no time.  To make use of this ability, select this skill. When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated."
 Picture="TakeoverTalkSkill.png"
 Form="immediate"
 Cost=0
@@ -11,7 +11,7 @@ Always present=1
 
 ** Start of new program specification subsection **
 Program name="Repair equipment"  
-Program description="This skill allows to repair a given item from inventory.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to repair.  While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value."
+Program description="This skill allows to repair an item from the inventory. To use this skill, select it, then open the inventory screen and then right click the mouse on the item you wish to repair. While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value."
 Picture="RepairSkill.png"
 Form="immediate"
 Cost=0
@@ -20,7 +20,7 @@ Always present=1
 
 ** Start of new program specification subsection **
 Program name="Use weapon"  
-Program description="This is the main weapon skill.  Right clicking somewhere will now cause an attack.  You can still use left click to move around. "
+Program description="Using this skill allows you to force at attack on something. You can attack friendly targets by using it."
 Picture="WeaponSkill.png"
 Form="immediate"
 Cost=0
@@ -33,7 +33,6 @@ Program description="It is not a big problem to make a badly designed system to 
 Picture="Calculate_PI.png"
 Effect="slowdown"
 Form="bullet"
-#Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 0.7
 #Casttime_lev  = 0
@@ -46,7 +45,6 @@ Cost=10
 #Blob          = Y
 #Hurts_humans  = N
 #Hurts_bots    = Y
-#Extra         = Slowdown
 #Extra_effect  = 8
 #Extra_level   = +5
 
@@ -57,7 +55,6 @@ Program description="With a little touch a war machine comes crashing down to a 
 Picture="somejunkpicturehere.png"
 Effect="freeze"
 Form="bullet"
-#Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 1.0
 #Casttime_lev  = 0
@@ -70,7 +67,6 @@ Cost=15
 #Blob          = Y
 #Hurts_humans  = N
 #Hurts_bots    = Y
-#Extra         = Freeze
 #Extra_effect  = 5
 #Extra_level   = +5
 
@@ -80,7 +76,6 @@ Program description="When computers are presented with the unexpected they can d
 Picture="somejunkpicturehere.png"
 Effect="none"
 Form="bullet"
-#Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 0.1
 #Casttime_lev  = 0
@@ -93,7 +88,6 @@ Cost=2
 #Blob          = Y
 #Hurts_humans  = N
 #Hurts_bots    = Y
-#Extra         = None
 #Extra_effect  = 0
 #Extra_level   = 0
 
@@ -103,7 +97,6 @@ Program description="With a little touch a war machine comes crashing down to a 
 Picture="somejunkpicturehere.png"
 Effect="none"
 Form="bullet"
-#Form          = Self
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 30.0
 #Casttime_lev  = -1
@@ -124,7 +117,7 @@ Cost=40
 Program name="Analyze item"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
 Picture="somejunkpicturehere.png"
-Effect="none"
+Effect="identify"
 Form="bullet"
 #Form          = Item
 #Bullet        = Name of the bullet picture goes here.
@@ -142,6 +135,142 @@ Cost=70
 #Extra         = Identify
 #Extra_effect  = 0
 #Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Nethack"
+Program description="The open source game called Nethack is one of the world's greatest wasters of time. Machines don't care about it, but humans can get sucked in quite deeply."
+Picture="somejunkpicturehere.png"
+Form="bullet"
+Effect="freeze"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 1
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 0
+#Damage_level  = 0
+#Damage_mod_lv = 0
+Cost=10
+#Cost_level    = 0
+#Blob          = N
+#Hurts_humans  = Y
+#Hurts_bots    = N
+#Extra         = Freeze
+#Extra_effect  = 3
+#Extra_level   = +3
+
+** Start of new program specification subsection **
+Program name="Dispell smoke"
+Program description="By heating up the chips with a malformed program you can cause them to release the magic smoke which keeps the bot running. "
+Picture="somejunkpicturehere.png"
+Form="immediate"
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 4
+#Casttime_lev  = 0
+#Damage_base   = 20
+#Damage_mod    = 10
+#Damage_level  = +2
+#Damage_mod_lv = +1
+Cost=50
+#Cost_level    = 0
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = None
+#Extra_effect  = 0
+#Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Killer poke"
+Program description="Messing around with the bot's memory can cause it to damage itself, but the damage is greatly variable."
+Picture="somejunkpicturehere.png"
+Form="bullet"
+Effect="none"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 1
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 40
+#Damage_level  = 0
+#Damage_mod_lv = +2
+Cost=30
+#Cost_level    = 0
+#Blob          = N
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = None
+#Extra_effect  = 0
+#Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Broadcast killer poke"
+Program description="The radio network is a wonderful invention for the people who like to blow up a lot of stuff at once."
+Picture="somejunkpicturehere.png"
+Form="ring"
+Effect="none"
+#Form          = Bullet
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 5
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 40
+#Damage_level  = 0
+#Damage_mod_lv = +2
+Cost=100
+#Cost_level    = 0
+#Blob          = N
+#Hurts_humans  = N
+#Hurts_bots    = Y
+#Extra         = None
+#Extra_effect  = 0
+#Extra_level   = 0
+
+** Start of new program specification subsection **
+Program name="Ricer CFLAGS"
+Program description="Optimization is the root of all evil. You can gain some temporary improvements to your system, but in the end you are only likely to cause permanent damage."
+Picture="somejunkpicturehere.png"
+Form="immediate"
+Effect="burnup"
+#Form          = Self
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 1
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 0
+#Damage_level  = 0
+#Damage_mod_lv = 0
+Cost=0
+#Cost_level    = 0
+#Blob          = N
+#Hurts_humans  = N
+#Hurts_bots    = N
+#Extra         = Burnup
+#Extra_effect  = 5
+#Extra_level   = -1
+
+** Start of new program specification subsection **
+Program name="Plasma discharge"
+Program description="The overload setting exists for emergencies. The plasma does not discriminate between bots and humans. Everything is equal to it."
+Picture="somejunkpicturehere.png"
+Form="ring"
+Effect="loseHP"
+#Form          = Self
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 1
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 0
+#Damage_level  = 0
+#Damage_mod_lv = 0
+Cost=30
+#Cost_level    = 0
+#Blob          = N
+#Hurts_humans  = Y
+#Hurts_bots    = Y
+#Extra_effect  = 15
+#Extra_level   = -3
+
 
 *** End of program data section ***
 *** End of this Freedroid data File ***
