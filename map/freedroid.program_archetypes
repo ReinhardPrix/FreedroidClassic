@@ -31,8 +31,8 @@ Always present=1
 Program name="Calculate Pi"  
 Program description="It is not a big problem to make a badly designed system to go hunting for the impossible, causing a performance impact."
 Picture="Calculate_PI.png"
-Effect="slowdown"
 Form="bullet"
+Effect="slowdown"
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 0.7
 #Casttime_lev  = 0
@@ -93,7 +93,7 @@ Cost=2
 
 ** Start of new program specification subsection **
 Program name="Check system integrity"
-Program description="With a little touch a war machine comes crashing down to a halt. For a while."
+Program description="While repairing damage you must remember that patience is a virtue."
 Picture="somejunkpicturehere.png"
 Effect="none"
 Form="bullet"
@@ -115,7 +115,7 @@ Cost=40
 
 ** Start of new program specification subsection **
 Program name="Analyze item"
-Program description="Identify"
+Program description="There are very few items which have labels on them. Unless you happen to have an item labeled 'USE ME', you better make sure what it is before using it..."
 Picture="somejunkpicturehere.png"
 Effect="identify"
 Form="bullet"
