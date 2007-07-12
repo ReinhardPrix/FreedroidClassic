@@ -53,8 +53,7 @@ New Option Nr=2  OptionText="ALREADY TAUGHT?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=2 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract1" JumpToOption=20 ElseGoto=30
-DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
+OnCondition="CookieIsPlanted:know_extract1:" JumpToOption=20 ElseGoto=30
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -73,7 +72,7 @@ New Option Nr=30  OptionText=" Tell me more about extracting bot parts."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract2" JumpToOption=62 ElseGoto=71
+OnCondition="CookieIsPlanted:know_extract2:" JumpToOption=62 ElseGoto=71
 DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -83,7 +82,7 @@ New Option Nr=62  OptionText="KNOW LESSON TWO"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=62 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract3" JumpToOption=63 ElseGoto=72
+OnCondition="CookieIsPlanted:know_extract3:" JumpToOption=63 ElseGoto=72
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -92,7 +91,7 @@ New Option Nr=63  OptionText="KNOW LESSON THREE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=63 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract4" JumpToOption=64 ElseGoto=73
+OnCondition="CookieIsPlanted:know_extract4:" JumpToOption=64 ElseGoto=73
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -101,7 +100,7 @@ New Option Nr=64  OptionText="KNOW LESSON FOUR"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=64 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract5" JumpToOption=75 ElseGoto=74
+OnCondition="CookieIsPlanted:know_extract5:" JumpToOption=75 ElseGoto=74
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
