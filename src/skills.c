@@ -99,6 +99,26 @@ int calculate_program_heat_cost ( int program_id )
     return cost_ratio [ Me [ 0 ] . spellcasting_skill ]* ( SpellSkillMap[ program_id ] . heat_cost  + SpellSkillMap[ program_id ] . heat_cost_per_level * Me [ 0 ] . SkillLevel [ program_id ] );
 };
 
+/* ------------------
+ * This function looks for a given program name in the program spec array
+ * -------------------*/
+int get_program_index_with_name ( const char * pname )
+{
+    int i = 0;
+    while ( i < number_of_skills ) 
+	{
+	if ( ! strcmp(SpellSkillMap[i] . name, pname ) )
+		return i;
+	i++;
+	}	
+
+	fprintf(stderr, "%s\n", pname);
+
+	 GiveStandardErrorMessage ( __FUNCTION__  , "\
+FreedroidRPG could not find the program name above in the program spec array!",
+                                 PLEASE_INFORM, IS_FATAL );
+     return -1;
+}
 
 /* ----------------------------------------------------------------------
  * This function creates a paralyzing bolt (spell, but really a bullet).
@@ -1112,7 +1132,7 @@ ShowSkillsScreen ( void )
 	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
-	sprintf( CharText , "Heats: %d " ,   calculate_program_heat_cost ( SkillOfThisSlot )  );
+	sprintf( CharText , "Heat produced: %d " ,   calculate_program_heat_cost ( SkillOfThisSlot )  );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	

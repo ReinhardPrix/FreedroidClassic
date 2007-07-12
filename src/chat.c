@@ -494,33 +494,14 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	ImproveSkill(&Me [ 0 ] . hacking_skill); 
 	SetNewBigScreenMessage( "Hacking ability improved!" );
     }
-    else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractPlasmaTransistorSkill" ) )
+    else if ( CountStringOccurences ( ExtraCommandString , "IncreaseProgramVersionName:" ) )
     {
-	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] ++; 
-	SetNewBigScreenMessage( "transistors learned!" );
-	SetNewBigScreenMessage( "Extraction of plasma" );
-    }
-    else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractSuperconductorSkill" ) )
-    {
-	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] ++; 
-	SetNewBigScreenMessage( "Extraction of superconductors learned!" );
-    }
-    else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractConverterSkill" ) )
-    {
-	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] ++; 
-	SetNewBigScreenMessage( "converters learned!" );
-	SetNewBigScreenMessage( "Extraction of antimatter-matter" );
-    }
-    else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractInverterSkill" ) )
-    {
-	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] ++; 
-	SetNewBigScreenMessage( "Extraction of entropy inverters learned!" );
-    }
-    else if ( ! strcmp ( ExtraCommandString , "IncreaseExtractCondensatorSkill" ) )
-    {
-	Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ++; 
-	SetNewBigScreenMessage( "condensators learned!" );
-	SetNewBigScreenMessage( "Extraction of tachyon " );
+	char pname[100];
+	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked increasing program version. --> have to decode... " );
+	ReadValueFromString( ExtraCommandString , "IncreaseProgramVersionName:" , "%s" , 
+			     &pname , ExtraCommandString + strlen ( ExtraCommandString ) );
+	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Program name is: %d." , pname );
+	Me [ 0 ] . base_skill_level [ get_program_index_with_name(pname) ] ++;
     }
     else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
     {

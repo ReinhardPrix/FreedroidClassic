@@ -511,6 +511,7 @@ EXTERN void HandleCurrentlyActivatedSkill( int player_num );
 EXTERN void activate_nth_aquired_skill ( int skill_num );
 EXTERN void ImproveSkill(int *skill);
 EXTERN int calculate_program_heat_cost(int program_id);
+EXTERN int get_program_index_with_name(const char *);
 // input.c 
 #undef EXTERN
 #ifdef _input_c

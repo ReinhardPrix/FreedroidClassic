@@ -1274,36 +1274,32 @@ DropEnemyTreasure ( Enemy ThisRobot )
     // If the Tux has the skill to extract certain components from dead bots,
     // these components will be thrown out automatically, when the bot is killed.
     //
-    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_PLASMA_TRANSISTORS ] )
-    {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors && ( MyRandom ( 10 ) == 1 ) )
-	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot -> pos . z , 
-			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
-    }
-    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_SUPERCONDUCTORS ] )
-    {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors && ( ! MyRandom ( 10 ) == 1 )  )
-	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot -> pos . z , 
-			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
-    }
-    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ANTIMATTER_CONVERTERS ] )
-    {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters && ( ! MyRandom ( 10 ) == 1 )  )
-	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot -> pos . z , 
-			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
-    }
-    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_ENTROPY_INVERTERS ] )
-    {
-	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters && ( ! MyRandom ( 10 ) == 1 )  )
-	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot -> pos . z , 
-			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
-    }
-    if ( Me [ 0 ] . base_skill_level [ SPELL_EXTRACT_TACHYON_CONDENSATORS ] ) 
-    {
+    switch ( Me [ 0 ] . base_skill_level [ get_program_index_with_name("Extract bot parts") ] )
+	{
+	case 6:
+	case 5:
 	if ( Druidmap [ ThisRobot->type ] . amount_of_tachyon_condensators && ( ! MyRandom ( 10 ) == 1 )  )
 	    DropItemAt( ITEM_DROID_PART_5 , ThisRobot -> pos . z , 
 			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
-    }
+	case 4:
+	if ( Druidmap [ ThisRobot->type ] . amount_of_entropy_inverters && ( ! MyRandom ( 10 ) == 1 )  )
+	    DropItemAt( ITEM_DROID_PART_4 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
+	case 3:
+	if ( Druidmap [ ThisRobot->type ] . amount_of_antimatter_converters && ( ! MyRandom ( 10 ) == 1 )  )
+	    DropItemAt( ITEM_DROID_PART_3 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
+	case 2:
+	if ( Druidmap [ ThisRobot->type ] . amount_of_superconductors && ( ! MyRandom ( 10 ) == 1 )  )
+	    DropItemAt( ITEM_DROID_PART_2 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
+	case 1:    
+	if ( Druidmap [ ThisRobot->type ] . amount_of_plasma_transistors && ( MyRandom ( 10 ) == 1 ) )
+	    DropItemAt( ITEM_DROID_PART_1 , ThisRobot -> pos . z , 
+			ThisRobot->virt_pos.x , ThisRobot->virt_pos.y , -1 , -1 , 2 , 1 );
+	case 0: break;
+	}
+
     if ( ThisRobot -> on_death_drop_item_code != (-1) )
     {
 	//--------------------

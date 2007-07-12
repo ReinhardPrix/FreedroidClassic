@@ -521,7 +521,6 @@ This error indicates some installation problem with freedroid.",
 				 PLEASE_INFORM, IS_FATAL );
     }
 
-  //Now scale the skill icon (ahuillet's attempt)
   SpellSkillMap [ SkillSpellNr ] . icon_surface . surface = our_SDL_display_format_wrapperAlpha ( Whole_Image );
   SDL_FreeSurface ( Whole_Image );
 
