@@ -273,30 +273,6 @@ int SpellHitPercentageTable [  ] =
 spell_skill_spec *SpellSkillMap; 
 int number_of_skills;
 /*[ number_of_skills ] = {
-  { 0 , "Takeover/Talk/Loot"     , "TakeoverTalkSkill.png"     , UNLOADED_ISO_IMAGE , 
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This is the Takeover and Talk skill.  The Tux is gifted with an innert ability to hack any machine in no time.  To make use of this ability, select this skill.  When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated." } , 
-
-  { 0 , "Loot Chest/Body"        , "ChestAndDeadBodyLoot.png"  , UNLOADED_ISO_IMAGE , 
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This is the skill you must ready in order to open chests or search dead bodies.  To do this, just ready the skill and stand in front of the chest or over the dead body and press the right mouse button to open the chest/corpse looting interface." } ,
-
-  { 0 , "Repair Skill"           , "RepairSkill.png"           , UNLOADED_ISO_IMAGE , 
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This skill allows to repair a given item from inventory.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to repair.  While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value." } ,
-
-  { 0 , "Attack with weapon"     , "WeaponSkill.png"           , UNLOADED_ISO_IMAGE , 
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-    { 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 } ,
-  "This is the main weapon skill.  Right clicking somewhere will now cause an attack.  You can still use left click to move around.  In general, peaceful humans will not appreciate people running around with weapons drawn." } ,
-
-  { 0 , "Identify Item"     , "IdentifySkill.png"           , UNLOADED_ISO_IMAGE , 
-    { 15 , 13 , 11 , 9 , 7 , 5 , 4 , 3 , 2 , 1 } ,
-    { 28 , 35 , 45 , 55 , 65 , 70 , 75 , 80 , 85 , 999 } ,
-  "This skill can be used to identify items.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to identify." } ,
 
   { 1 , "Force -> Energy "       , "FirstAidSpell.png"         , UNLOADED_ISO_IMAGE , 
     { 6 , 5 , 4 , 3 , 2 , 1 , 1 , 1 , 1 , 1 } ,
