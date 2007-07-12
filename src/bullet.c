@@ -250,10 +250,6 @@ DeleteBullet ( int Bulletnumber , int ShallWeStartABlast )
       CurBullet -> Surfaces_were_generated = FALSE;
     }
 
-  //--------------------
-  // Now that the memory has been freed again, we can finally delete this bullet entry.
-  // Hope, that this does not give us a SEGFAULT, but it should not do so.
-  //
   CurBullet->type = INFOUT;
   CurBullet->time_in_seconds = 0;
   CurBullet->time_in_frames = 0;
@@ -420,39 +416,18 @@ MoveActiveSpells (void)
 	//--------------------
 	// We can ignore all unused entries...
 	//
-	if ( AllActiveSpells [ i ] . type == (-1) ) continue;
+	if ( AllActiveSpells [ i ] . img_type == (-1) ) continue;
 	
 	//--------------------
 	// All spells should count their lifetime...
 	//
 	AllActiveSpells [ i ] . spell_age += PassedTime;
 
-/*
-    for ( i = 0 ; i < NumberOfPicturesToUse ; i++ )
-    {
-	Angle = 360.0 * (float)i / (float)NumberOfPicturesToUse ;
-	
-	Displacement . x = 0 ; Displacement . y = - Radius ;
-	
-	RotateVectorByAngle ( &Displacement , Angle );
-	
-	PrerotationIndex = rintf ( ( Angle  ) * (float)FIXED_NUMBER_OF_SPARK_ANGLES / 360.0 ); 
-	if ( PrerotationIndex >= FIXED_NUMBER_OF_SPARK_ANGLES ) PrerotationIndex = 0 ;
-	
-	if ( ! active_direction [ PrerotationIndex ] ) continue ;
 
-*/
-	
-	//--------------------
-	// Now we handle the emp waves...
-	//
-	if ( ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) ||
-	     ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) ||
-	     ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) )
-	{
-	    AllActiveSpells [ i ] . spell_radius += 5.0 * PassedTime;
+	// We hardcode a speed here
+        AllActiveSpells [ i ] . spell_radius += 5.0 * PassedTime;
 	    
-	    //--------------------
+            //--------------------
 	    // We do some collision checking with the obstacles in each
 	    // 'active_direcion' of the spell and deactivate those directions,
 	    // where some collision with solid material has happend.
@@ -510,38 +485,12 @@ MoveActiveSpells (void)
 			//--------------------
 			// We do some damage to the enemy in question
 			//
-			switch ( AllActiveSpells [ i ] . type )
-			{
-			    case SPELL_RADIAL_EMP_WAVE:
-				AllEnemys [ j ] . energy -= 80.0 * Frame_Time();
-				if ( AllEnemys [ j ] . energy < 0 )
-				{
-				    sprintf ( game_message_text , "%s was destroyed by radial emp wave." ,
-					      Druidmap [ AllEnemys[j].type ] . druidname );
-				    append_new_game_message ( game_message_text );
-				}
-				break;
-			    case SPELL_RADIAL_VMX_WAVE:
-				AllEnemys [ j ] . energy -= 180.0 * Frame_Time();
-				if ( AllEnemys [ j ] . energy < 0 )
-				{
-				    sprintf ( game_message_text , "%s was destroyed by radial vmx wave." ,
-					      Druidmap [ AllEnemys[j].type ] . druidname );
-				    append_new_game_message ( game_message_text );
-				}
-				break;
-			    case SPELL_RADIAL_FIRE_WAVE:
-				AllEnemys [ j ] . energy -= 300.0 * Frame_Time();
-				if ( AllEnemys [ j ] . energy < 0 )
-				{
-				    sprintf ( game_message_text , "%s was destroyed by radial plasma wave." ,
-					      Druidmap [ AllEnemys[j].type ] . druidname );
-				    append_new_game_message ( game_message_text );
-				}
-				break;
-			    default:
-				break;
-			}
+			AllEnemys [ j ] . energy -= AllActiveSpells [ i ] . damage * Frame_Time();
+			AllEnemys [ j ] . poison_duration_left = AllActiveSpells [ i ] . poison_duration;
+			AllEnemys [ j ] . poison_damage_per_sec = AllActiveSpells [ i ] . damage;
+			AllEnemys [ j ] . frozen = AllActiveSpells [ i ] . freeze_duration;
+			AllEnemys [ j ] . paralysation_duration = AllActiveSpells [ i ] . paralyze_duration;
+
 			if ( AllEnemys [ j ] . energy < 0 )  
                                 {
 				int reward = Druidmap [ AllEnemys[j].type ] . experience_reward;
@@ -553,10 +502,6 @@ MoveActiveSpells (void)
 			if(AllEnemys [ j ] . firewait < Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit)
 				AllEnemys [ j ] . firewait = Druidmap [ AllEnemys [ j ] . type ] . recover_time_after_getting_hit ;
 		    }
-		    else
-		    {
-			DebugPrintf ( 1 , "\n%s(): Bot is NOT affected.  Doing damage... " , __FUNCTION__ );
-		    }
 		}
 	    }
 	    
@@ -564,7 +509,6 @@ MoveActiveSpells (void)
 	    // Such a spell can not live for longer than 1.0 seconds, say
 	    //
 	    if ( AllActiveSpells [ i ] . spell_age >= 1.0 ) DeleteSpell ( i ) ;
-	}
 	
     }
     
@@ -576,7 +520,7 @@ MoveActiveSpells (void)
 void
 DeleteSpell (int SpellNum)
 {
-  AllActiveSpells [ SpellNum ] . type = ( -1 );
+  AllActiveSpells [ SpellNum ] . img_type = ( -1 );
   AllActiveSpells [ SpellNum ] . spell_age = 0 ;
 }; // void DeleteSpell( int SpellNum )
 

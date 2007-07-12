@@ -2772,39 +2772,11 @@ GetObstacleBelowMouseCursor ( int player_num )
     
 }; // int GetObstacleBelowMouseCursor ( int player_num )
 
-
-/* ----------------------------------------------------------------------
- * This function fires a bullet from the influencer in some direction, 
- * no matter whether this is 'allowed' or not, not questioning anything
- * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
- * ---------------------------------------------------------------------- */
-void
-FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type, int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage , moderately_finepoint target_location ) 
+void FillInDefaultBulletStruct ( int player_num, bullet * CurBullet, int bullet_image_type, int weapon_item_type ) 
 {
-    int i = 0;
-    Bullet CurBullet = NULL;
-    double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
-    double speed_norm;
-    moderately_finepoint speed;
-    float OffsetFactor;
-    moderately_finepoint offset;
-    OffsetFactor = 0.25 ;
-#define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 1
-    
-    DebugPrintf ( 1 , "\n%s(): target location: x=%f, y=%f." , __FUNCTION__ , 
-		  target_location . x , target_location . y );
 
-    //--------------------
-    // We search for the first free bullet entry in the 
-    // bullet list...
-    //
-    i = find_free_bullet_index ();
-    CurBullet = & ( AllBullets [ i ] ) ;
-    
-    //--------------------
-    // Now that we have found a fresh and new bullet entry, we can start
-    // to fill in sensible values...
-    //
+    memset(CurBullet, 0, sizeof(bullet));
+    // Fill in what wasn't specified
     CurBullet -> pos . x = Me [ player_num ] . pos . x ;
     CurBullet -> pos . y = Me [ player_num ] . pos . y ;
     CurBullet -> pos . z = Me [ player_num ] . pos . z ;
@@ -2823,8 +2795,6 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
     CurBullet->fixed_offset           = ItemMap[ weapon_item_type ].item_gun_fixed_offset;
     CurBullet->ignore_wall_collisions = ItemMap[ weapon_item_type ].item_gun_bullet_ignore_wall_collisions;
     CurBullet->owner_pos = & ( Me [ player_num ] .pos );
-    CurBullet->time_in_frames = 0;
-    CurBullet->time_in_seconds = 0;
     CurBullet->was_reflected = FALSE;
     CurBullet->reflect_other_bullets   = ItemMap[ weapon_item_type ].item_gun_bullet_reflect_other_bullets;
     CurBullet->pass_through_explosions = ItemMap[ weapon_item_type ].item_gun_bullet_pass_through_explosions;
@@ -2832,20 +2802,48 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
     CurBullet->miss_hit_influencer = UNCHECKED ;
     memset( CurBullet->total_miss_hit , UNCHECKED , MAX_ENEMYS_ON_SHIP );
     
-    //--------------------
-    // Depending on whether this is a real bullet (-1 given as parameter)
-    // or not, we assign this bullet the appropriate to-hit propability
-    //
-    if ( HitPercentage == (-1) ) CurBullet->to_hit = Me [ player_num ] .to_hit;
-    else CurBullet->to_hit = HitPercentage ;
+    CurBullet->time_in_frames = 0;
+    CurBullet->time_in_seconds = 0;
+
+    CurBullet->to_hit = Me [ player_num ] .to_hit;
     
+    CurBullet->freezing_level = 0;
+    CurBullet->poison_duration = 0;
+    CurBullet->poison_damage_per_sec = 0;
+    CurBullet->paralysation_duration = 0;
+}
+
+/* ----------------------------------------------------------------------
+ * This function fires a bullet from the influencer in some direction, 
+ * no matter whether this is 'allowed' or not, not questioning anything
+ * and SILENTLY TRUSTING THAT THIS TUX HAS A RANGED WEAPON EQUIPPED.
+ * ---------------------------------------------------------------------- */
+void
+FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type, bullet * bullet_parameters , moderately_finepoint target_location ) 
+{
+    int i = 0;
+    bullet * CurBullet = NULL;
+    double BulletSpeed = ItemMap [ weapon_item_type ] . item_gun_speed;
+    double speed_norm;
+    moderately_finepoint speed;
+    float OffsetFactor;
+    moderately_finepoint offset;
+    OffsetFactor = 0.25 ;
+#define FIRE_TUX_RANGED_WEAPON_RAW_DEBUG 1
+    
+    DebugPrintf ( 1 , "\n%s(): target location: x=%f, y=%f." , __FUNCTION__ , 
+		  target_location . x , target_location . y );
+
     //--------------------
-    // Maybe the bullet has some magic properties.  This is handled here.
+    // We search for the first free bullet entry in the 
+    // bullet list...
     //
-    CurBullet->freezing_level = FreezeSeconds;
-    CurBullet->poison_duration = PoisonDuration;
-    CurBullet->poison_damage_per_sec = PoisonDamagePerSec;
-    CurBullet->paralysation_duration = ParalysationDuration;
+    i = find_free_bullet_index ();
+    CurBullet = & ( AllBullets [ i ] ) ;
+
+    if ( bullet_parameters ) memcpy(CurBullet, bullet_parameters, sizeof(bullet));    
+    else FillInDefaultBulletStruct (player_num, CurBullet, bullet_image_type, weapon_item_type );
+
     
     //--------------------
     // Now we can set up recharging time for the Tux...
@@ -3267,7 +3265,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
     if ( Me [ player_num ] . weapon_item . type != (-1) ) Fire_Bullet_Sound ( guntype );
     else Fire_Bullet_Sound ( LASER_SWORD_1 );
     
-    FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, FALSE , 0 , 0 , 0 , 0 , -1 , target_location ) ;
+    FireTuxRangedWeaponRaw ( player_num , Me [ player_num ] . weapon_item . type , guntype, NULL , target_location ) ;
 }; // void PerformTuxAttackRaw ( int player_num ) ;
 
 

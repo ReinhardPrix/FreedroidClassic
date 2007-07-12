@@ -87,7 +87,8 @@ EXTERN void InitInfluPositionHistory( int player_num );
 EXTERN float GetInfluPositionHistoryX( int Index );
 EXTERN float GetInfluPositionHistoryY( int Index );
 EXTERN float GetInfluPositionHistoryZ( int Index );
-EXTERN void FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type , int ForceMouseUse , int FreezeSeconds , float PoisonDuration , float PoisonDamagePerSec , float ParalysationDuration , int HitPercentage , moderately_finepoint target_location ) ;
+EXTERN void FillInDefaultBulletStruct ( int player_num, bullet * CurBullet, int bullet_image_type, int weapon_item_type );
+EXTERN void FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_image_type , bullet *, moderately_finepoint target_location ) ;
 EXTERN void move_tux ( int player_num ) ;
 EXTERN void animate_tux ( int player_num ) ;
 EXTERN void check_tux_enemy_collision (void);
@@ -511,6 +512,7 @@ EXTERN void HandleCurrentlyActivatedSkill( int player_num );
 EXTERN void activate_nth_aquired_skill ( int skill_num );
 EXTERN void ImproveSkill(int *skill);
 EXTERN int calculate_program_heat_cost(int program_id);
+EXTERN int calculate_program_hit_damage(int program_id);
 EXTERN int get_program_index_with_name(const char *);
 // input.c 
 #undef EXTERN
