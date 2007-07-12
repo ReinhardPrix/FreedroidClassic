@@ -52,14 +52,10 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="I met a Red Guard named Bender. He poisoned himself with some brain enlargement 
-pills, which turned out to highly cancirogenic. The city doctor will not give him the antidote, so it is 
-up to me to save him."
+Mission diary entry="I met a Red Guard named Bender. He poisoned himself with some brain enlargement pills, which turned out to highly cancirogenic. The city doctor will not give him the antidote, so it is up to me to save him."
 Mission diary entry="The doctor was easily fooled. I have the pills that Bender needs."
-Mission diary entry="I nearly killed the doctor, but he gave me the antidote. I hope he has learned his 
-lesson. They say that repetition is the mother of learning, but I don't think he can survive one more 
-iteration of what I did to him. Ha. Ha. Ha."
-Mission diary entry="Bender is fine now. He gave me some muscle enlargement pills in return for my help."
+Mission diary entry="I killed the doctor. I feel sick. What a disgusting mess. At least I get to help Bender now."
+Mission diary entry="Bender is fine now. He gave me some muscle enlargement pills in return for my help. Hmm..."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -83,19 +79,15 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="Dixon, the leader of the Red Guard technical division lost his yellow toolkit in the 
-city's maintenance tunnels. I am supposed to get it from there."
-Mission diary entry="The bots in the tunnels might be sentient. I cannot wait to extinguish an emerging 
-life form. This will be fun."
-Mission diary entry="I refused to get the toolkit from the bots in the tunnels because I think they might 
-be sentient. Life is precious and should be preserved."
-Mission diary entry="The tunnels bots seem to be working together with Dixon in keeping the city working. 
-All is well that ends well."
-Mission diary entry="Finally. I am tired, covered in bruises and oil... But finally I made sure the bots 
-will not survive. It felt great to break their metal bodies and crush their circuits. Dixon seemed not too 
-happy about this solution, but I don't care. It was fun killing the bots. Nothing else matters."
-Mission diary entry="I gave the toolkit to Dixon. He was very happy to have his autotools back. He gave 
-me his helmet as a gift. I guess this is better than nothing."
+Mission diary entry="Dixon, the leader of the Red Guard technical division lost his yellow toolkit in the city's maintenance tunnels. I am supposed to get it from there."
+Mission diary entry="The bots in the tunnels might be sentient. I cannot wait to extinguish an emerging life form. This will be fun."
+Mission diary entry="I refused to get the toolkit from the bots in the tunnels because I think they might be sentient. Life is precious and should be preserved."
+Mission diary entry="The tunnels bots seem to be working together with Dixon in keeping the city working. All is well that ends well."
+Mission diary entry="Finally. I am tired, covered in bruises and oil... But finally I made sure the bots will not survive. It felt great to break their metal bodies and crush their circuits. Dixon seemed not too happy about this solution, but I don't care. It was fun killing the bots. Nothing else matters."
+Mission diary entry="I gave the toolkit to Dixon. He was very happy to have his autotools back. I got his helmet as a gift. I guess this is better than nothing."
+Mission diary entry="I sold the toolkit to Dixon for a nice sum of money. Life is good."
+Mission diary entry="I sold the toolkit to Dixon for a huge sum of money. Life is great."
+Mission diary entry="I sold the toolkit to Dixon for a enormous sum of money. Life is truly grand. I better stay away from Dixon for now. He seemed very angry at me."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -119,11 +111,8 @@ Mission target is to reach level : 1
 Mission target is to reach X-Pos : 0
 Mission target is to reach Y-Pos : 0
 Mission target is to live for how many seconds : -1
-Mission diary entry="I am supposed to get some dilithium crystals for that cook. Without them he cannot 
-cook anything in his macrowave oven. And without his cooking the whole city is stuck eating army snacks. 
-Many people have committed suicide because of the horrible food. This madness must stop."
-Mission diary entry="I gave him enough dilithium to last him a decade. The evil spectre of eating army 
-snacks is lifted from the city."
+Mission diary entry="I am supposed to get some dilithium crystals for that cook. Without them he cannot cook anything in his macrowave oven. And without his cooking the whole city is stuck eating army snacks. Many people have committed suicide because of the horrible food. This madness must stop."
+Mission diary entry="I gave him enough dilithium to last him a decade. The evil spectre of eating army snacks is lifted from the city."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -148,8 +137,8 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_novice_arena_exit_door"
-Mission diary entry=""
-Mission diary entry="I've defeated the bots in the novice arena as requested.  I think they have made a life broadcast over the net and are charging for it.  How else would the arena be able to make any profit?"
+Mission diary entry="Fighting in the arena is not something I would usually do, but I feel like doing it for a change. Why not?"
+Mission diary entry="Now that was easy. Yawn. I nearly fell asleep. No problem at all, the bots are dead."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -174,10 +163,8 @@ Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
 On mission completition immediately trigger action labeled="open_master_arena_exit_door"
-Mission diary entry="I told the arena master to let me into his master arena. He agreed. Now all that 
-remains to do is to enter the teleport and wait for death herself to come on her black wings and claim my 
-soul. You know, now that I think about it... Maybe I should stay out of there? "
-Mission diary entry="I survived the master arena. A miracle."
+Mission diary entry="I told the arena master to let me into his master arena. He agreed. Now all that remains to do is to enter the teleport and wait for death herself to come on her black wings and claim my soul. You know, now that I think about it... Maybe I should stay out of there?"
+Mission diary entry="I survived the master arena. A miracle. Whew."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -186,7 +173,7 @@ Mission diary entry="I survived the master arena. A miracle."
 +++
 +++ note: the number code for this mission (like from inside dialogs and such) is 5
 +++ 
-Mission Name="Lots of bots in the warehouse"
+Mission Name="Opening a can of bots..."
 Assign this mission to influencer automatically at start : 0
 Mission target is to fetch item : -1
 Mission target is to kill all droids : -1
@@ -201,11 +188,8 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-Mission diary entry="description text 1 here (for warehouse mission)"
-Mission diary entry="description text 2 here (for warehouse mission)"
-Mission diary entry="description text 3 here (for warehouse mission)"
-Mission diary entry="description text 4 here (for warehouse mission)"
-Mission diary entry="description text 5 here (for warehouse mission)"
+Mission diary entry="I am supposed to clean out the first level of some warehouse. Sounds easy."
+Mission diary entry="Ouch. It wasn't. At least I am alive and the warehouse is clear. Whew."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -229,13 +213,8 @@ Mission target is to reach level : -1
 Mission target is to reach X-Pos : -1
 Mission target is to reach Y-Pos : -1
 Mission target is to live for how many seconds : -1
-Mission diary entry="Kevin has a problem with his power supply. His bots keep rebooting the system and he 
-cannot conduct any experiments with unstable power supply. My job is to stabilize the power. I think that 
-implies removing the bots."
-Mission diary entry="Done. Kevin can work in peace now."
-Mission diary entry="description text 3 here"
-Mission diary entry="description text 4 here"
-Mission diary entry="description text 5 here"
+Mission diary entry="Kevin has a problem with his energy supply. His bots keep rebooting the system and he cannot conduct any experiments with unstable power supply. My job is to stabilize the power. I think that implies removing the stupid bots."
+Mission diary entry="Everything is back to normal for now. Kevin can work in peace now."
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
@@ -264,9 +243,6 @@ Mission target is to live for how many seconds : -1
 Mission diary entry="Kevin gave me a cube stuffed with some kind of data. I am supposed to bring it to a 
 computer cluster for analysis. Ought to be simple."
 Mission diary entry="Yes, that was simple. I wish everything else went as smoothly as this one did..."
-Mission diary entry="description text 3 here"
-Mission diary entry="description text 4 here"
-Mission diary entry="description text 5 here"
 ** End of this mission target subsection **
 
 ** Start of this mission target subsection **
