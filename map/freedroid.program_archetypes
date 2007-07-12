@@ -272,6 +272,27 @@ Cost=30
 #Extra_effect  = 15
 #Extra_level   = -3
 
+** Start of new program specification subsection **
+Program name="Invisibility"
+Program description="I am not the Linarian you are looking for."
+Picture="somejunkpicturehere.png"
+Form="immediate"
+Effect="invisibility"
+#Bullet        = Name of the bullet picture goes here.
+#Casttime      = 2
+#Casttime_lev  = 0
+#Damage_base   = 0
+#Damage_mod    = 0
+#Damage_level  = 0
+#Damage_mod_lv = 0
+Cost=30
+#Cost_level    = 0
+#Blob          = Y
+#Hurts_humans  = N
+#Hurts_bots    = N
+#Extra_effect  = 5
+#Extra_level   = +3
+
 
 *** End of program data section ***
 *** End of this Freedroid data File ***
