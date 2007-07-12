@@ -496,10 +496,13 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     }
     else if ( CountStringOccurences ( ExtraCommandString , "IncreaseProgramVersionName:" ) )
     {
-	char pname[100];
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked increasing program version. --> have to decode... " );
-	ReadValueFromString( ExtraCommandString , "IncreaseProgramVersionName:" , "%s" , 
-			     &pname , ExtraCommandString + strlen ( ExtraCommandString ) );
+	char * pos = strstr(ExtraCommandString, "IncreaseProgramVersionName");
+	pos += strlen("IncreaseProgramVersionName:");
+	char * pos2 = pos;
+	while ( * pos2 != '\"') pos2++;
+	char pname [ pos2 - pos + 1 ];
+	strncpy(pname, pos1, pos2 - pos);
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Program name is: %d." , pname );
 	Me [ 0 ] . base_skill_level [ get_program_index_with_name(pname) ] ++;
     }
