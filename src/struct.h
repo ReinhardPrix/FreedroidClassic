@@ -985,7 +985,7 @@ typedef struct
     char* description;
     char* effect;
     int form;
-    int always_present;
+    int present_at_startup;
 }
 spell_skill_spec, *Spell_Skill_Spec;
 

@@ -824,7 +824,8 @@ int Get_Programs_Data ( char * DataPointer )
     EndOfProgramData = LocateStringInData ( DataPointer , PROGRAM_SECTION_END_STRING );
             
     int Number_Of_Programs = CountStringOccurences ( DataPointer , NEW_PROGRAM_BEGIN_STRING ) ;
-            
+    number_of_skills = Number_Of_Programs;            
+
     SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1 ));
     Me [ 0 ]  . SkillLevel = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
     Me [ 0 ] . base_skill_level = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
@@ -861,8 +862,8 @@ int Get_Programs_Data ( char * DataPointer )
 
             ReadValueFromStringWithDefault( ProgramPointer , "Cost=" , "%d" , "0",
                              & ProgramToFill -> heat_cost  , EndOfProgramData );
-            ReadValueFromStringWithDefault( ProgramPointer , "Always present=" , "%d" , "0",
-                             & ProgramToFill -> always_present  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Present at startup=" , "%d" , "0",
+                             & ProgramToFill -> present_at_startup  , EndOfProgramData );
             //ReadValueFromStringWithDefault( ProgramPointer , "Bonus to tohit modifier=" , "%d" , "0",
 	    
                              
@@ -1532,27 +1533,9 @@ InitInfluencerStartupSkills( int PlayerNum )
     Me[ PlayerNum ].readied_skill = 0;
     for ( i = 0 ; i < number_of_skills ; i ++ ) 
     {
-	Me[ PlayerNum ].SkillLevel [ i ] = 0 ;
-	Me[ PlayerNum ].base_skill_level [ i ] = 0 ;
+	Me[ PlayerNum ].SkillLevel [ i ] = SpellSkillMap[ i ] . present_at_startup ;
+	Me[ PlayerNum ].base_skill_level [ i ] = SpellSkillMap[ i ] . present_at_startup ;
     }
-    Me[ PlayerNum ].base_skill_level [ SPELL_TRANSFERMODE ] = 1 ; // transfer mode present...
-    Me[ PlayerNum ].base_skill_level [ SPELL_REPAIR_SKILL ] = 1 ; // loot chest not present...
-    Me[ PlayerNum ].base_skill_level [ SPELL_WEAPON ] = 0 ; // repair skill present...
-    Me[ PlayerNum ].base_skill_level [  3 ] = 0 ; // weapon skill present...
-    Me[ PlayerNum ].base_skill_level [  4 ] = 0 ; // force-to-energy (HEALING) NOT present...
-    Me[ PlayerNum ].base_skill_level [  5 ] = 0 ; // teleport home disabled for consistency...
-    Me[ PlayerNum ].base_skill_level [  6 ] = 0 ; // firy-bolt NOT present...
-    /*
-      Me[ PlayerNum ].base_skill_level [  7 ] = 1 ; 
-      Me[ PlayerNum ].base_skill_level [  8 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [  9 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 10 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 11 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 12 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 13 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 14 ] = 1 ;
-      Me[ PlayerNum ].base_skill_level [ 14 ] = 1 ;
-    */
     
     GameConfig.spell_level_visible = 0;
     
