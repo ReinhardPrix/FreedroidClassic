@@ -54,7 +54,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=2 ChangeToValue=0
 OnCondition="CookieIsPlanted:know_extract1" JumpToOption=20 ElseGoto=30
-DoSomethingExtra="IncreaseProgramVersionName:ExtractParts"
+DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -64,7 +64,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
 LinkedTo:70
-DoSomethingExtra="IncreaseProgramVersionName:ExtractParts"
+DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -74,7 +74,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
 OnCondition="CookieIsPlanted:know_extract2" JumpToOption=62 ElseGoto=71
-DoSomethingExtra="IncreaseProgramVersionName:ExtractParts"
+DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
