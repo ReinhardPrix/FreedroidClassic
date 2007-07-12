@@ -982,6 +982,11 @@ typedef struct
     iso_image icon_surface;
     int heat_cost;
     int heat_cost_per_level;
+    int damage_base;
+    int damage_mod;
+    int damage_per_level;
+    int hurt_bots;
+    int hurt_humans;
     char* description;
     char* effect;
     int form;
