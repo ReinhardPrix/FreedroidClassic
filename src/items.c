@@ -1789,7 +1789,7 @@ ApplyItem( item* CurItem )
 	GameConfig . Automap_Visible = TRUE ;
 	Play_Spell_ForceToEnergy_Sound( );
     }
-    else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
+/*    else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
     {
 	RadialVMXWave ( Me [ 0 ] . pos , FALSE );
     }
@@ -1800,7 +1800,7 @@ ApplyItem( item* CurItem )
     else if ( CurItem->type == ITEM_PLASMA_GRENADE )
     {
 	RadialFireWave ( Me [ 0 ] . pos , FALSE );
-    }
+    }*/
     else if ( CurItem->type == ITEM_STRENGTH_PILL )
     {
 	Me [ 0 ] . base_strength ++ ;

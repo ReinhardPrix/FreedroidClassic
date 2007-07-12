@@ -313,45 +313,15 @@ PutMiscellaneousSpellEffects ( void )
     int i;
 
     //--------------------
-    // This is here for some debugging/testing purpose
-    //
-    // long Ticks = SDL_GetTicks ( );
-    // PutRadialBlueSparks( 15.0 , 15.0 , (float) ( Ticks % 10000 ) / 500.0 );
-    
-    //--------------------
     // Now we put all the spells in the list of active spells
     //
     for ( i = 0 ; i < MAX_ACTIVE_SPELLS; i ++ )
     {
-	if ( AllActiveSpells [ i ] . type == (-1) ) continue;
-	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_EMP_WAVE ) 
-	{
-	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
+	if ( AllActiveSpells [ i ] . img_type == (-1) ) continue;
+        PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
 				 AllActiveSpells [ i ] . spell_center . y , 
-				 AllActiveSpells [ i ] . spell_radius , 0 ,
+				 AllActiveSpells [ i ] . spell_radius , AllActiveSpells [ i ] . img_type ,
 				 AllActiveSpells [ i ] . active_directions );
-	}
-	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_VMX_WAVE ) 
-	{
-	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
-				 AllActiveSpells [ i ] . spell_center . y , 
-				 AllActiveSpells [ i ] . spell_radius , 1 ,
-				 AllActiveSpells [ i ] . active_directions );
-	}
-	else if ( AllActiveSpells [ i ] . type == SPELL_RADIAL_FIRE_WAVE ) 
-	{
-	    PutRadialBlueSparks( AllActiveSpells [ i ] . spell_center . x , 
-				 AllActiveSpells [ i ] . spell_center . y , 
-				 AllActiveSpells [ i ] . spell_radius , 2 ,
-				 AllActiveSpells [ i ] . active_directions );
-	}
-	else
-	{
-	    fprintf( stderr, "\n\nAllActiveSpells [ i ] . type: '%d'\n" , AllActiveSpells [ i ] . type );
-	    GiveStandardErrorMessage ( __FUNCTION__ , "\
-There was a bogus spell type entry found in the active spell list.",
-				       PLEASE_INFORM, IS_FATAL );
-	}
     }
     
 }; // void PutMiscellaneousSpellEffects ( void )

@@ -967,7 +967,12 @@ blast, *Blast;
 
 typedef struct
 {
-    int type; // what type of spell is active?
+    int img_type; // what type of spell is active?
+    int damage;
+    int poison_duration;
+    int poison_dmg;
+    int freeze_duration;
+    int paralyze_duration;
     moderately_finepoint spell_center;
     float spell_radius;
     float spell_age;

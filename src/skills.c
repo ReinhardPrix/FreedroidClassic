@@ -154,163 +154,6 @@ location HomeSpot;
 }; // void TeleportHome ( void )
 
 /* ----------------------------------------------------------------------
- * This function handles the RadialEMPWave skill.
- * ---------------------------------------------------------------------- */
-void
-RadialEMPWave ( gps ExpCenter , int SpellCostsMana )
-{
-    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_EMP_WAVE );
-
-    int i;
-    int j;
-
-    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana )
-    {
-	//--------------------
-	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
-	//
-	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
-	//
-	Play_Spell_ForceToEnergy_Sound( );
-	
-	//--------------------
-	// First we find a new entry in the active spells list
-	//
-	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
-	{
-	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
-	}
-	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-	
-	//--------------------
-	// Now we start our new emp wave
-	//
-	AllActiveSpells [ i ] . type = SPELL_RADIAL_EMP_WAVE ; 
-	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-	AllActiveSpells [ i ] . spell_radius = 0.3 ;
-	AllActiveSpells [ i ] . spell_age = 0 ; 
-
-	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
-	{
-	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
-	}
-
-    }
-    else
-    {
-	Me[0].TextVisibleTime = 0;
-	Me[0].TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
-
-}; // void RadialEMPWave ( finepoint ExpCenter )
-
-/* ----------------------------------------------------------------------
- * This function handles the RadialVMXWave skill.
- * ---------------------------------------------------------------------- */
-void
-RadialVMXWave ( gps ExpCenter , int SpellCostsMana )
-{
-    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_VMX_WAVE );
-
-    int i;
-    int j;
-
-    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana ) 
-    {
-	//--------------------
-	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
-	//
-	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
-	//
-	Play_Spell_ForceToEnergy_Sound( );
-	
-	//--------------------
-	// First we find a new entry in the active spells list
-	//
-	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
-	{
-	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
-	}
-	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-	
-	//--------------------
-	// Now we start our new emp wave
-	//
-	AllActiveSpells [ i ] . type = SPELL_RADIAL_VMX_WAVE ; 
-	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-	AllActiveSpells [ i ] . spell_radius = 0.3 ;
-	AllActiveSpells [ i ] . spell_age = 0 ; 
-
-	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
-	{
-	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
-	}
-	
-    }
-    else
-    {
-	Me[0].TextVisibleTime = 0;
-	Me[0].TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
-
-}; // void RadialVMXWave ( finepoint ExpCenter )
-
-/* ----------------------------------------------------------------------
- * This function handles the RadialFireWave skill.
- * ---------------------------------------------------------------------- */
-void
-RadialFireWave ( gps ExpCenter , int SpellCostsMana )
-{
-    int SpellCost = calculate_program_heat_cost ( SPELL_RADIAL_FIRE_WAVE );
-    int i;
-    int j;
-    
-    if ( ( Me[0].temperature >= SpellCost ) || !SpellCostsMana ) 
-    {
-	//--------------------
-	// For now, this spell is for free!! gratis!! yeah!! oh groovy!
-	//
-	if ( SpellCostsMana ) Me[0].temperature += SpellCost;
-	//
-	Play_Spell_ForceToEnergy_Sound( );
-	
-	//--------------------
-	// First we find a new entry in the active spells list
-	//
-	for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
-	{
-	    if ( AllActiveSpells [ i ] . type == (-1) ) break;
-	}
-	if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
-	
-	//--------------------
-	// Now we start our new emp wave
-	//
-	AllActiveSpells [ i ] . type = SPELL_RADIAL_FIRE_WAVE ; 
-	AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
-	AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
-	AllActiveSpells [ i ] . spell_radius = 0.3 ;
-	AllActiveSpells [ i ] . spell_age = 0 ; 
-	
-	for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
-	{
-	    AllActiveSpells [ i ] . active_directions [ j ] = TRUE ; 	    
-	}
-
-    }
-    else
-    {
-	Me [ 0 ] . TextVisibleTime = 0;
-	Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
-}; // void RadialFireWave ( finepoint ExpCenter )
-
-/* ----------------------------------------------------------------------
  * This function handles the ForceExplosionRay skill.
  * ---------------------------------------------------------------------- */
 void
@@ -372,7 +215,6 @@ ForceToEnergyConversion ( void )
 void
 HandleCurrentlyActivatedSkill( int player_num )
 {
-    // int i;
     // float xdist, ydist, dist2;
     // Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     // moderately_finepoint loc_pos ;
@@ -382,6 +224,9 @@ HandleCurrentlyActivatedSkill( int player_num )
     if ( ! MouseRightClicked() ) return;
 
     if ( Me [ 0 ] . SkillLevel [ Me [ 0 ] . readied_skill ] <= 0 ) return;
+
+    /* We calculate the spellcost and check the power limit override - the temperature is raised further down, when the actual effect
+	gets triggered */
     int SpellCost = calculate_program_heat_cost ( Me [ 0 ] . readied_skill );
 
     if ( Me [ 0 ] . temperature > Me [ 0 ] . max_temperature - SpellCost && !Override_Power_Limit )
@@ -418,7 +263,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		break;
 
 	case PROGRAM_FORM_BULLET:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto done_handling_instant_hits;
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return;
                 Me [ 0 ] . temperature += SpellCost;
 	
 		moderately_finepoint target_location;
@@ -437,7 +282,38 @@ HandleCurrentlyActivatedSkill( int player_num )
 
 		FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , -1 , &bul_parms, target_location); 
 		
+		return; //no extra effects
+
+	case PROGRAM_FORM_RADIAL:
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return;
+		Me [ 0 ] . temperature += SpellCost;
+		
+		int i,j;
+		for ( i = 0 ; i < MAX_ACTIVE_SPELLS ; i ++ )
+	            {
+	            if ( AllActiveSpells [ i ] . img_type == (-1) ) break;
+                    }
+	        if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
+
+		AllActiveSpells [ i ] . img_type = 2; //hardcoding a temporary value
+		AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
+	        AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
+	        AllActiveSpells [ i ] . spell_radius = 0.3 ;
+	        AllActiveSpells [ i ] . spell_age = 0 ;
+ 
+	        for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
+	            { 
+  	            AllActiveSpells [ i ] . active_directions [ j ] = TRUE ;
+                    }
+		
+		AllActiveSpells [ i ] . freeze_duration = strcmp( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "slowdown" ) ? 0 : 10;
+		AllActiveSpells [ i ] .poison_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 10;
+		AllActiveSpells [ i ] .poison_dmg = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 1;
+		AllActiveSpells [ i ] .paralyze_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "paralyze" ) ? 0 : 10;
+		AllActiveSpells [ i ] .damage = calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+
 		return;
+
 	}
 
 

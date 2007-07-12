@@ -169,9 +169,10 @@ enum
 
 enum skill_forms
 {
-    PROGRAM_FORM_IMMEDIATE = 60000,
-    PROGRAM_FORM_RADIAL,
-    PROGRAM_FORM_BULLET,
+    PROGRAM_FORM_IMMEDIATE = 60000, //instant hit whatever behind cursor
+    PROGRAM_FORM_RADIAL, //nova
+    PROGRAM_FORM_BULLET, //fire a bullet
+    PROGRAM_FORM_SELF, //instant hit player
 };
 
 enum _global_ingame_modes
