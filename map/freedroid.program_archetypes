@@ -1,9 +1,38 @@
 *** Start of program data section: ***
 
 ** Start of new program specification subsection **
+Program name="Talk/Takeover"  
+Program description="This is the Takeover and Talk skill.  The Tux is gifted with an innert ability to hack any machine in no time.  To make use of this ability, select this skill. When a machine is close enough and this skill is activated by holding down the right mouse button, the takeover process will be initiated."
+Picture="TakeoverTalkSkill.png"
+Form="immediate"
+Cost=0
+Effect="talk_or_takeover"
+Always present=1
+
+** Start of new program specification subsection **
+Program name="Repair equipment"  
+Program description="This skill allows to repair a given item from inventory.  To use this skill, select it and then open the inventory screen and then right click the mouse on the item you wish to repair.  While repair doesn't 'cost' anything, the item will still lose some of its maximum duration in the process, but the current duration will be restored to this new maximum value."
+Picture="RepairSkill.png"
+Form="immediate"
+Cost=0
+Effect="repair"
+Always present=1
+
+** Start of new program specification subsection **
+Program name="Use weapon"  
+Program description="This is the main weapon skill.  Right clicking somewhere will now cause an attack.  You can still use left click to move around. "
+Picture="WeaponSkill.png"
+Form="immediate"
+Cost=0
+Effect="weapon"
+Always present=1
+
+** Start of new program specification subsection **
 Program name="Calculate Pi"  
 Program description="It is not a big problem to make a badly designed system to go hunting for the impossible, causing a performance impact."
 Picture="Calculate_PI.png"
+Effect="slowdown"
+Form="bullet"
 #Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 0.7
@@ -26,6 +55,8 @@ Cost=10
 Program name="Blue Screen"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
 Picture="somejunkpicturehere.png"
+Effect="freeze"
+Form="bullet"
 #Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 1.0
@@ -47,6 +78,8 @@ Cost=15
 Program name="Malformed packet"
 Program description="When computers are presented with the unexpected they can damage themselves."
 Picture="somejunkpicturehere.png"
+Effect="none"
+Form="bullet"
 #Form          = Bullet
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 0.1
@@ -68,6 +101,8 @@ Cost=2
 Program name="Check system integrity"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
 Picture="somejunkpicturehere.png"
+Effect="none"
+Form="bullet"
 #Form          = Self
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 30.0
@@ -89,6 +124,8 @@ Cost=40
 Program name="Analyze item"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
 Picture="somejunkpicturehere.png"
+Effect="none"
+Form="bullet"
 #Form          = Item
 #Bullet        = Name of the bullet picture goes here.
 #Casttime      = 15
