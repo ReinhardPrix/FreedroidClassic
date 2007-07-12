@@ -2953,7 +2953,7 @@ ButtonPressWasNotMeantAsFire( int player_num )
   // return from here immediately.
   //
   if ( ServerThinksAxisIsActive ( player_num ) && 
-       ( GameConfig.Inventory_Visible || GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible ) && 
+       ( GameConfig.Inventory_Visible || GameConfig.CharacterScreen_Visible || GameConfig.SkillScreen_Visible || GameConfig.skill_explanation_screen_visible) && 
        ! MouseCursorIsInUserRect( User_Rect.x + User_Rect.w/2 + ServerThinksInputAxisX ( player_num ) , User_Rect.y + User_Rect.h/2 + ServerThinksInputAxisY ( player_num ) ) )
     { 
       DebugPrintf( 0 , "\nCursor outside user-rect:\n  User_Rect.x=%d, User_Rect.w=%d, User_Rect.y=%d, User_Rect.h=%d." ,

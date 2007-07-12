@@ -537,6 +537,7 @@ toggle_game_config_screen_visibility ( int screen_visible )
 	    break;
 	case GAME_CONFIG_SCREEN_VISIBLE_SKILLS :
 	    GameConfig . SkillScreen_Visible = !GameConfig . SkillScreen_Visible;
+	    if ( !GameConfig . SkillScreen_Visible) GameConfig.skill_explanation_screen_visible = 0;
 	    GameConfig . CharacterScreen_Visible = FALSE ;
 	    break;
 	case GAME_CONFIG_SCREEN_VISIBLE_CHARACTER :
@@ -796,11 +797,12 @@ ReactToSpecialKeys(void)
     {
 	if ( GameConfig . Inventory_Visible ||
 	     GameConfig . CharacterScreen_Visible ||
-	     GameConfig . SkillScreen_Visible )
+	     GameConfig . SkillScreen_Visible || GameConfig . skill_explanation_screen_visible)
 	{
 	    GameConfig . Inventory_Visible = FALSE ;
 	    GameConfig . CharacterScreen_Visible = FALSE ;
 	    GameConfig . SkillScreen_Visible = FALSE ;
+	    GameConfig . skill_explanation_screen_visible = FALSE;
 	    while ( EscapePressed() );
 	}
 	else

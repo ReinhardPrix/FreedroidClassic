@@ -927,7 +927,6 @@ establish_skill_subset_map ( int *SkillSubsetMap )
 {
   int i;
   int NextPosition=0;
-
   for ( i = 0 ; i < number_of_skills ; i ++ )
     {
       SkillSubsetMap [ i ] = (-1) ;
@@ -1043,7 +1042,7 @@ ShowSkillsScreen ( void )
     // skills to the player and he doesn't now in advance which skills there
     // are, which is more interesting than complete control and overview.
     //
-    establish_skill_subset_map ( & ( SkillSubsetMap [ 0 ] ) );
+    establish_skill_subset_map ( SkillSubsetMap );
     
     //--------------------
     // At this point we know, that the skill screen is desired and must be
@@ -1080,6 +1079,7 @@ ShowSkillsScreen ( void )
 	ButtonRect.w = 64;
 	ButtonRect.h = 64;
 	
+	if (  i + NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible >= number_of_skills ) break;
 	SkillOfThisSlot = SkillSubsetMap [ i + NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
 	if ( SkillOfThisSlot < 0 ) continue;
 	
@@ -1126,9 +1126,11 @@ ShowSkillsScreen ( void )
     if ( ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) != ( -1 ) ) &&
 	 MouseLeftClicked() )
     {
-	if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
+	if ( CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) +
+                              NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible  < number_of_skills )
+		if ( SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
 			      NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] >= 0 ) 
-	    Me[0].readied_skill = SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
+		    Me[0].readied_skill = SkillSubsetMap [ CursorIsOnWhichSkillButton ( CurPos.x , CurPos.y ) + 
 						   NUMBER_OF_SKILLS_PER_SKILL_PAGE * GameConfig.spell_level_visible ] ;
     }
     
