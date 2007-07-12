@@ -859,9 +859,26 @@ int Get_Programs_Data ( char * DataPointer )
 		ProgramToFill ->  form = PROGRAM_FORM_BULLET;
 	    if ( !strcmp(pform, "radial") ) 
 		ProgramToFill ->  form = PROGRAM_FORM_RADIAL;
+	    if ( !strcmp(pform, "self") ) 
+		ProgramToFill ->  form = PROGRAM_FORM_SELF;
+
+            ReadValueFromStringWithDefault( ProgramPointer , "Base damage=" , "%d" , "0",
+                             & ProgramToFill -> damage_base  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Mod damage=" , "%d" , "0",
+                             & ProgramToFill -> damage_mod  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Damage per level=" , "%d" , "0",
+                             & ProgramToFill -> damage_per_level  , EndOfProgramData );
+
+            ReadValueFromStringWithDefault( ProgramPointer , "Hurt bots=" , "%d" , "1",
+                             & ProgramToFill -> hurt_bots  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Hurt humans=" , "%d" , "1",
+                             & ProgramToFill -> hurt_humans  , EndOfProgramData );
+
 
             ReadValueFromStringWithDefault( ProgramPointer , "Cost=" , "%d" , "0",
                              & ProgramToFill -> heat_cost  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Cost per level=" , "%d" , "0",
+                             & ProgramToFill -> heat_cost_per_level  , EndOfProgramData );
             ReadValueFromStringWithDefault( ProgramPointer , "Present at startup=" , "%d" , "0",
                              & ProgramToFill -> present_at_startup  , EndOfProgramData );
             //ReadValueFromStringWithDefault( ProgramPointer , "Bonus to tohit modifier=" , "%d" , "0",
