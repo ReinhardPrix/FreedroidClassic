@@ -31,7 +31,7 @@ Present at startup=1
 Program name="Extract bot parts"  
 Program description="With a little knowledge, you can extract some useful parts out of the robots you kill"
 Picture="ExtractBotParts.png"
-Form="immediate"
+Form="self"
 Effect="none"
 Cost=0
 
@@ -54,7 +54,7 @@ Cost per level=5
 Program name="Blue Screen"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
 Picture="NoSkillAvailable.png"
-Effect="freeze"
+Effect="paralyze"
 Form="bullet"
 Cost=15
 
@@ -69,10 +69,11 @@ Cost=2
 ** Start of new program specification subsection **
 Program name="Check system integrity"
 Program description="While repairing damage you must remember that patience is a virtue."
-Picture="NoSkillAvailable.png"
+Picture="FirstAidSpell.png"
 Effect="none"
-Form="bullet"
+Form="self"
 Cost=40
+Base damage=-10
 
 ** Start of new program specification subsection **
 Program name="Analyze item"
@@ -87,7 +88,7 @@ Program name="Nethack"
 Program description="The open source game called Nethack is one of the world's greatest wasters of time. Machines don't care about it, but humans can get sucked in quite deeply."
 Picture="NoSkillAvailable.png"
 Form="bullet"
-Effect="freeze"
+Effect="paralyze"
 Cost=10
 
 ** Start of new program specification subsection **
