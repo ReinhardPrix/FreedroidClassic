@@ -7,7 +7,7 @@ Picture="TakeoverTalkSkill.png"
 Form="immediate"
 Cost=0
 Effect="talk_or_takeover"
-Always present=1
+Present at startup=1
 
 ** Start of new program specification subsection **
 Program name="Repair equipment"  
@@ -16,7 +16,7 @@ Picture="RepairSkill.png"
 Form="immediate"
 Cost=0
 Effect="repair"
-Always present=1
+Present at startup=1
 
 ** Start of new program specification subsection **
 Program name="Use weapon"  
@@ -25,7 +25,7 @@ Picture="WeaponSkill.png"
 Form="immediate"
 Cost=0
 Effect="weapon"
-Always present=1
+Present at startup=1
 
 ** Start of new program specification subsection **
 Program name="Calculate Pi"  
