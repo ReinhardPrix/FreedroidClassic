@@ -104,6 +104,7 @@ Subtitle="I wish you the best of luck."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="AssignMission:5"
+DoSomethingExtra="OpenQuestDiaryEntry:M5E0:"
 DoSomethingExtra="ExecuteActionWithLabel:open_warehouse_access_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -139,7 +140,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="MISSION_IS_NOT_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=376  PositionY=235  
-Subtitle="Not too good. Without the supplies from the warehouse we are doomed. So my problems are all the same still."
+Subtitle="Not too good. Without the supplies from the warehouse we are doomed. So my problems are still the same."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Maybe later, when you grow more experienced you might be able to help us after all."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -151,7 +152,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="DONT_GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=490  PositionY=182  
-Subtitle="Thanks to your previous action, we've been able to organize all the goods we need right now. You've really helped us out there."
+Subtitle="Thanks to you, we've been able to transport all the goods we need right now. You've really helped us out there."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Rest assured that we will never forget your brave activity for our community."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -172,6 +173,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="AddGold:500"
 DoSomethingExtra="PlantCookie:reward_for_warehouse_given:"
+DoSomethingExtra="OpenQuestDiaryEntry:M5E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

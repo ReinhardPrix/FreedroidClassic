@@ -116,6 +116,7 @@ ChangeOption=6 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
 ChangeOption=13 ChangeToValue=0
 DoSomethingExtra="AssignMission:3"
+DoSomethingExtra="OpenQuestDiaryEntry:M3E0:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -134,6 +135,7 @@ ChangeOption=7 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 ChangeOption=8 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
+DoSomethingExtra="OpenQuestDiaryEntry:M3E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -170,6 +172,7 @@ Subtitle="But if you really want it, the door is open."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 DoSomethingExtra="AssignMission:4"
+DoSomethingExtra="OpenQuestDiaryEntry:M4E0:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_master_arena_access_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -188,6 +191,7 @@ Subtitle="I pity you, poor fool. You will die young."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="AddExperienceBonus:8000"
+DoSomethingExtra="OpenQuestDiaryEntry:M4E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

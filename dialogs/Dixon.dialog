@@ -135,7 +135,6 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=21 ChangeToValue=0
 ChangeOption=31 ChangeToValue=1
 ChangeOption=26 ChangeToValue=0
-DoSomethingExtra="AssignMission:1"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
 DoSomethingExtra="GiveItem:72"
 DoSomethingExtra="GiveItem:72"
@@ -186,6 +185,8 @@ ChangeOption=24 ChangeToValue=0
 ChangeOption=21 ChangeToValue=1
 ChangeOption=25 ChangeToValue=1
 ChangeOption=26 ChangeToValue=1
+DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E0:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -264,6 +265,7 @@ ChangeOption=28 ChangeToValue=0
 ChangeOption=29 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
 LinkedTo:32
+DoSomethingExtra="OpenQuestDiaryEntry:M1E1:"
 DoSomethingExtra="PlantCookie:singularity_dead"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -281,7 +283,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=29 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
 ChangeOption=30 ChangeToValue=0
-DoSomethingExtra="AssignMission:1"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E1:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
 DoSomethingExtra="PlantCookie:singularity_killed"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -299,6 +301,7 @@ Subtitle="After all, it seems like they need them more than I do."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I will try to contact them somehow. Maybe they would help us. Ah, we shall see. It would be great to have an ally against the other bots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E2:"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=28 ChangeToValue=0
 ChangeOption=29 ChangeToValue=0
@@ -343,7 +346,6 @@ Subtitle="I will talk to Spencer and ask him for a few attack teams. We will tak
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
 DoSomethingExtra="PlantCookie:singularity_killed"
-DoSomethingExtra="AssignMission:1"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_northern_maintainance_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -368,6 +370,7 @@ ChangeOption=34 ChangeToValue=0
 DoSomethingExtra="AddGold:150"
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E4:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -390,6 +393,7 @@ DoSomethingExtra="PlantCookie:singularity_dead"
 DoSomethingExtra="AddGold:100"
 DoSomethingExtra="GiveItem:119"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E5:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -440,6 +444,7 @@ DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 DoSomethingExtra="AddGold:250"
 DoSomethingExtra="EndDialog"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E6:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -456,6 +461,7 @@ ChangeOption=42 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
 DoSomethingExtra="AddGold:350"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E7:"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -475,6 +481,7 @@ DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:dixon_very_angry"
 DoSomethingExtra="AddGold:400"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="OpenQuestDiaryEntry:M1E8:"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -599,6 +606,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Just go and see for yourself. Otherwise you will not believe me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=48 ChangeToValue=0
+DoSomethingExtra="OpenQuestDiaryEntry:M1E3:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

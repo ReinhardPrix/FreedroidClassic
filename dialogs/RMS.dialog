@@ -33,7 +33,9 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Hi! I'm new here. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Welcome, then! I'm Richard. I oversee the computer cluster of our community."
+Subtitle="Welcome, welcome! I'm Richard. I'm the computer guy around here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I mostly work with this huge computer cluster here, although I also program the 614 bots in my spare time."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -44,9 +46,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" A computer cluster? What's that?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="A cluster is a collection of literally thousands of normal computers into a whole new entity."
+Subtitle="A cluster is a group of computers, connected in a way that helps them collaborate in solving problems."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="It can be used to perform the most complex of operations in comparatively little time, provided suitable methods for analyzing the data are used."
+Subtitle="As they say, 'two heads are better than one'. And we have a lot of heads here."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="This is why I call this cluster 'Hydra'. A lot of heads indeed."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -62,18 +66,19 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" I have a data cube with confidential crucial information on the colony installations "
+New Option Nr=6  OptionText=" I have a data cube with some information. Can you tell me something more about it?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="Interesting. Let me see this thing. Wow, the amount of data is incredible. Maybe we could use our cluster to evaluate the data."
+Subtitle="Interesting. Let me see this thing. Hmm... Yes, there is quite a lot of stuff in there. Maybe we could use Hydra to evaluate the data."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hey, what's that. The data are already prepared for processing by a cluster like ours. Wow! That's good work!"
+Subtitle="Hey, what do we have here? The data is already prepared for processing by a cluster just like ours. Wow! That's excellent!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I'll feed it into the cluster right away."
+Subtitle="I'll feed it into Hydra right away. Expect the results in a short while. Hydra has never let me down so far."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:7"
+DoSomethingExtra="OpenQuestDiaryEntry:M7E1:"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:100"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -97,12 +102,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Are there any results of the cluster data evaluation yet?"
+New Option Nr=9  OptionText=" Hey, did you get something out of that data cube?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Yes, of course. Some preliminary results are there and they look most interesting. I'll have to inform the chief about this."
+Subtitle="Of course! I told you, Hydra has never failed me! I designed it myself, and I know computers very well. I never make mistakes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="You'll want to talk with him. He'll know what to do. Thanks a lot for your efforts. This might in fact be crucial information for our survival."
+Subtitle="Seems like the bots can be disabled by enabling some disruptor field or something like that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I was busy servicing one of Hydra's nodes, but I sent the full report to Spencer. He will tell you more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

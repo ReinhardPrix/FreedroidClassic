@@ -164,6 +164,7 @@ ChangeOption=42 ChangeToValue=0
 ChangeOption=41 ChangeToValue=0
 ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="AssignMission:2"
+DoSomethingExtra="OpenQuestDiaryEntry:M2E0:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

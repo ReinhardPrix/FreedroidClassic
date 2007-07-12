@@ -142,6 +142,7 @@ ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 DoSomethingExtra="AssignMission:0"
+DoSomethingExtra="OpenQuestDiaryEntry:M0E0:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -180,7 +181,7 @@ DoSomethingExtra="GiveItem:76"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:79"
 DoSomethingExtra="AddExperienceBonus:150"
 DoSomethingExtra="MarkMissionComplete:0"
-DoSomethingExtra="OpenQuestDiaryEntry:M0E2:"
+DoSomethingExtra="OpenQuestDiaryEntry:M0E3:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

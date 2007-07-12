@@ -205,6 +205,109 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=20  OptionText=" Doc... I really want the antidote."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="No! I am not giving it to you. Forget about it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" My patience is running out. Give me the antidote. Now."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="No! Over my dead body."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+ChangeOption=30 ChangeToValue=1
+ChangeOption=22 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Your wish is my command."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Huh? What?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" Humans... You are so interesting. I always wanted to know how much blood do you exacly have."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Don't do this. Don't do this."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Prepare Doc. The experiment begins."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Don't do this! DON'T DO THIS!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="AAAAAAAAAAAA!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+LinkedTo:25
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText=" Ugh. Human blood is disgusting. At least four liters. I feel sick."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+LinkedTo:26
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" I guess this means I get to inherit all your stuff. I hope you don't mind if I take everything?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+LinkedTo:27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText=" Good. I am very glad not to hear a disapproval."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . . "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+DoSomethingExtra="GiveItem:"
+DoSomethingExtra="DropDead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Forget it. Getting the antidote is not worth the effort."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I am not giving it to you, and that won't change."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=22 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=99  OptionText=" See you later."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  

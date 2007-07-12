@@ -126,6 +126,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
 DoSomethingExtra="AssignMission:6"
+DoSomethingExtra="OpenQuestDiaryEntry:M6E0:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -156,6 +157,7 @@ PositionX=347  PositionY=134
 ChangeOption=9 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
 ChangeOption=18 ChangeToValue=1
+DoSomethingExtra="OpenQuestDiaryEntry:M6E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -231,6 +233,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="GiveItem:100"
 DoSomethingExtra="AssignMission:7"
+DoSomethingExtra="OpenQuestDiaryEntry:M7E0:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -247,7 +250,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=557  PositionY=497  
-Subtitle="You've already agreed to take my data cube to the cluster. I have no great influence of this matter any more."
+Subtitle="You've already agreed to take my data cube to the cluster. I have no influence on this matter anymore."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The fate of the colony now rests in your hands. Bring the data cube I gave you to the cluster. Only there the data can be evaluated properly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
