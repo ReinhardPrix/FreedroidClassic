@@ -96,8 +96,16 @@ ImproveSkill( int * skill )
 int calculate_program_heat_cost ( int program_id )
 {
     float cost_ratio [ NUMBER_OF_SKILL_LEVELS ] = { 1.5, 1.3, 1.2, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4 };
-    return cost_ratio [ Me [ 0 ] . spellcasting_skill ]* ( SpellSkillMap[ program_id ] . heat_cost  + SpellSkillMap[ program_id ] . heat_cost_per_level * Me [ 0 ] . SkillLevel [ program_id ] );
+    return cost_ratio [ Me [ 0 ] . spellcasting_skill ]* ( SpellSkillMap[ program_id ] . heat_cost  + SpellSkillMap[ program_id ] . heat_cost_per_level * (Me [ 0 ] . SkillLevel [ program_id ] - 1 ));
 };
+
+/* ------------------
+ * This function calculates the damage dealt by a hit of a given program
+ * -----------------*/
+int calculate_program_hit_damage ( int program_id )
+{
+    return ( SpellSkillMap[ program_id ] . damage_base  + SpellSkillMap[ program_id ] . damage_per_level * ( Me [ 0 ] . SkillLevel [ program_id ] - 1 ) + MyRandom(SpellSkillMap[ program_id ] . damage_mod));
+}
 
 /* ------------------
  * This function looks for a given program name in the program spec array
@@ -121,158 +129,14 @@ FreedroidRPG could not find the program name above in the program spec array!",
 }
 
 /* ----------------------------------------------------------------------
- * This function creates a paralyzing bolt (spell, but really a bullet).
- * ---------------------------------------------------------------------- */
-void
-ParalyzeBoltSpell ( gps BoltSource )
-{
-  int SpellCost = calculate_program_heat_cost ( SPELL_PARALYZE_BOLT );
-  moderately_finepoint target_location;
-
-  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-  if ( Me [ 0 ] . temperature >= SpellCost )
-  {
-      Me[0].temperature -= SpellCost;
-      
-      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , WHITE_BULLET, TRUE , 0 , 0 , 0 , 7 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-      
-      Play_Spell_ForceToEnergy_Sound( );
-      
-  }
-}; // void ParalyzeBoltSpell ( gps PortalTarget )
-
-/* ----------------------------------------------------------------------
- * This function creates a firey bolt (spell, but really a bullet).
- * ---------------------------------------------------------------------- */
-void
-FireyBoltSpell ( gps BoltSource )
-{
-  int SpellCost = calculate_program_heat_cost ( SPELL_FIREY_BOLT );
-  moderately_finepoint target_location;
-
-  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-      Me[0].temperature -= SpellCost;
-
-      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , MAGENTA_BULLET, TRUE , 0 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-
-      Play_Spell_ForceToEnergy_Sound( );
-
-    }
-}; // void FireyBoltSpell ( gps PortalTarget )
-
-/* ----------------------------------------------------------------------
- * This function creates a cold bolt. (spell, but really a bullet).
- * ---------------------------------------------------------------------- */
-void
-ColdBoltSpell ( gps BoltSource )
-{
-  int SpellCost = calculate_program_heat_cost ( SPELL_COLD_BOLT);
- moderately_finepoint target_location;
-
-  target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-  target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-
-  if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature + SpellCost )
-    {
-      Me[0].temperature += SpellCost;
-
-      FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-
-      Play_Spell_ForceToEnergy_Sound( );
-	Override_Power_Limit = 0;
-	
-    }
-  else if ( Override_Power_Limit == 0)
-    {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "ERROR: Overheating. Execute again to override Overheat.";
-      Not_Enough_Mana_Sound(  );
-      Override_Power_Limit = 1;
-    }
-  else {
-	Me[0].temperature += SpellCost;
-	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , BLUE_BULLET , TRUE , 3 , 0 , 0 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-
-	Play_Spell_ForceToEnergy_Sound( );
-	Override_Power_Limit = 0;
-  }
-	
-    
-}; // void ColdBoltSpell ( ... )
-
-/* ----------------------------------------------------------------------
- * This function creates a poison bolt.  (spell, but really a bullet)
- * ---------------------------------------------------------------------- */
-void
-PoisonBoltSpell ( gps BoltSource )
-{
-    int SpellCost = calculate_program_heat_cost ( SPELL_POISON_BOLT );
-    moderately_finepoint target_location;
-    
-    target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
-    target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
-    
-    if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-	Me[0].temperature += SpellCost;
-	
-	//FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_RIFLE ) ;
-	FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , GREEN_BULLET , TRUE , 0 , 3 , 1 , 0 , SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ] , target_location ) ;
-	
-	Play_Spell_ForceToEnergy_Sound( );
-	
-    }
-}; // void PoisonBoltSpell ( ... )
-
-/* ----------------------------------------------------------------------
- * This function creates a teleporter portal to the home location.
- * ---------------------------------------------------------------------- */
-/*void
-CreateTeleportal ( gps PortalTarget )
-{
-    int SpellCost = PlayerProgramStatus [ SPELL_TELEPORT_HOME ] . heat_cost *  Me[ 0 ]. spellcasting_skill  ;
-	    
-    if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-	Me[0].temperature += SpellCost;
-	
-	if ( curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value == FLOOR )
-	{
-	    curShip.AllLevels[ PortalTarget.z ]->map [ (int) PortalTarget.y ] [ (int) PortalTarget.x ] . floor_value = TELE_1 ;
-	}
-	
-	Play_Spell_ForceToEnergy_Sound( );
-	
-    }
-    else
-    {
-	Me[0].TextVisibleTime = 0;
-	Me[0].TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
-};*/ // void CreateTeleportal ( gps PortalTarget )
-
-/* ----------------------------------------------------------------------
  * This function creates a teleporter portal to the home location.
  * ---------------------------------------------------------------------- */
 void
 TeleportHome ( void )
 {
-   int SpellCost = calculate_program_heat_cost ( SPELL_TELEPORT_HOME );
-    location HomeSpot;
-    
-    if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-	Me[0].temperature += SpellCost;
-	
-	
+location HomeSpot;
 
-	if( (! Me [ 0 ] . teleport_anchor . x) && (! Me [ 0 ] . teleport_anchor . y)) //if there is no anchor, teleport home
+     if( (! Me [ 0 ] . teleport_anchor . x) && (! Me [ 0 ] . teleport_anchor . y)) //if there is no anchor, teleport home
         {
                 Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x;
                 Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y;
@@ -286,43 +150,8 @@ TeleportHome ( void )
                 teleport_arrival_sound  ( );
                 Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x , Me [ 0 ] . teleport_anchor . y , 0 , FALSE , TRUE ) ;
         }
-    }
-    else
-    {
-	Me[0].TextVisibleTime = 0;
-	Me[0].TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
+
 }; // void TeleportHome ( void )
-
-/* ----------------------------------------------------------------------
- * This function handles the ForceExplosionCircle skill.
- * ---------------------------------------------------------------------- */
-void
-ForceExplosionCircle ( gps ExpCenter )
-{
-  int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_EXPLOSION_CIRCLE );
-
-  if ( Me[0].temperature >= SpellCost )
-    {
-      Me[0].temperature += SpellCost;
-      StartBlast ( ExpCenter.x + 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x - 1   , ExpCenter.y       , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x       , ExpCenter.y - 1   , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x       , ExpCenter.y + 1   , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y + 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x + 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-      StartBlast ( ExpCenter.x - 0.5 , ExpCenter.y - 0.5 , ExpCenter.z , DRUIDBLAST, Blast_Damage_Per_Second );
-    }
-  else
-    {
-      Me[0].TextVisibleTime = 0;
-      Me[0].TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
-    }
-}; // void ForceExplosionCircle ( finepoint ExpCenter )
 
 /* ----------------------------------------------------------------------
  * This function handles the RadialEMPWave skill.
@@ -548,82 +377,176 @@ HandleCurrentlyActivatedSkill( int player_num )
     // Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
     // moderately_finepoint loc_pos ;
     int index_of_droid_below_mouse_cursor = ( -1 ) ;
-    int SpellCost;
 
-    switch ( Me [ 0 ] . readied_skill )
-    {
-	case SPELL_WEAPON:
-	    if ( ! MouseRightPressed ( ) ) break;
-	    
-	    if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-				      GetMousePos_y()  ) )
-		tux_wants_to_attack_now ( 0 , TRUE );
-	    
-	    break;
-	case  SPELL_TRANSFERMODE:
-	    if ( ! MouseRightPressed ( )  ) break;
-	    
-	    if ( ! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) break;
 
-	    index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
-	    if ( index_of_droid_below_mouse_cursor == ( -1 ) ) break;
-	    if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ,  translate_pixel_to_map_location ( player_num ,
+    if ( ! MouseRightClicked() ) return;
+
+    if ( Me [ 0 ] . SkillLevel [ Me [ 0 ] . readied_skill ] <= 0 ) return;
+    int SpellCost = calculate_program_heat_cost ( Me [ 0 ] . readied_skill );
+
+    if ( Me [ 0 ] . temperature > Me [ 0 ] . max_temperature - SpellCost && !Override_Power_Limit )
+	{
+	      //Not_Enough_Mana_Sound(  );
+	      Override_Power_Limit = 1;
+	      return;
+	}
+    Override_Power_Limit = 0;
+
+    /*we handle the form of the program now*/
+    switch ( SpellSkillMap [ Me[0] . readied_skill ] . form ) 
+	{
+	case PROGRAM_FORM_IMMEDIATE:
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto done_handling_instant_hits;
+		index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+		if ( index_of_droid_below_mouse_cursor == ( -1 ) ) 
+			goto done_handling_instant_hits;
+		if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ,  translate_pixel_to_map_location ( player_num ,
                                                        (float) ServerThinksInputAxisX ( player_num ) ,
                                                        (float) ServerThinksInputAxisY ( player_num ) , TRUE ), 
 							translate_pixel_to_map_location ( player_num ,
                                                        (float) ServerThinksInputAxisX ( player_num ) ,
                                                        (float) ServerThinksInputAxisY ( player_num ) , FALSE ), Me [ player_num ] . pos . z))
+						goto done_handling_instant_hits;
+
+		AllEnemys [ index_of_droid_below_mouse_cursor ] . energy -= calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+	        Me [ 0 ] . temperature += SpellCost;
+		break;
+	
+	case PROGRAM_FORM_SELF:
+		Me [ 0 ] . energy -= calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+                Me [ 0 ] . temperature += SpellCost;
 		break;
 
-
-	    if ( AllEnemys [ index_of_droid_below_mouse_cursor ] . is_friendly )
-		ChatWithFriendlyDroid( & ( AllEnemys [ index_of_droid_below_mouse_cursor ] ) );
-	    else
-	    {
-		//--------------------
-		// Only droids can be hacked.  Humans can't be 
-		// hacked.
-		//
-		if ( ! ( Druidmap [ AllEnemys [ index_of_droid_below_mouse_cursor ] . type ] . is_human ) )
-		    Takeover ( index_of_droid_below_mouse_cursor ) ;
-	    }
-	    break;
-
-	/*case SPELL_TRANSFERMODE:
-	    if (MouseRightPressed() == 1)
-	    {
-		//--------------------
-		// We switch status to transfermode
-		Me[0].status = TRANSFERMODE;
+	case PROGRAM_FORM_BULLET:
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto done_handling_instant_hits;
+                Me [ 0 ] . temperature += SpellCost;
+	
+		moderately_finepoint target_location;
+	        target_location . x = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , TRUE ) ;
+		target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 		
-		//--------------------
-		// Now we check if maybe a console was near.  If that is so, then we
-		// see how close it really is and maybe we start the console menu.
-		//
-		for ( i = 0 ; i < MAX_OBSTACLES_ON_MAP ; i ++ )
-		{
-		    switch ( ChestLevel -> obstacle_list [ i ] . type )
-		    {
-			case ISO_CONSOLE_S:
-			case ISO_CONSOLE_N:
-			case ISO_CONSOLE_E:
-			case ISO_CONSOLE_W:
-			    if ( ( ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) *
-				   ( Me [ 0 ] . pos . x - ChestLevel -> obstacle_list [ i ] . pos . x ) +
-				   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) *
-				   ( Me [ 0 ] . pos . y - ChestLevel -> obstacle_list [ i ] . pos . y ) ) < 0.4 )
-			    {
-				EnterConsole();
-				return;
-			    }
-			    break;
-			default:
-			    break;
-		    }
-		}
-	    }
-	    break;*/
+		bullet bul_parms;
+		FillInDefaultBulletStruct( 0, &bul_parms, MAGENTA_BULLET, ITEM_LASER_PISTOL );
+	
+		bul_parms.freezing_level = strcmp( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "slowdown" ) ? 0 : 10;
+		bul_parms.poison_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 10;
+		bul_parms.poison_damage_per_sec = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 1;
+		bul_parms.paralysation_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "paralyze" ) ? 0 : 10;
+		bul_parms.damage = calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+		bul_parms.to_hit = SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ];
 
+		FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , -1 , &bul_parms, target_location); 
+		
+		return;
+	}
+
+
+    done_handling_instant_hits:
+
+    /*handle the special extra effects of the skill*/
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "none" ) )
+   	{
+	goto out;
+	}
+
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "talk_or_takeover" ) )
+   	{
+	if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto out;
+	index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+	if ( index_of_droid_below_mouse_cursor == ( -1 ) ) goto out;
+	if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ,  translate_pixel_to_map_location ( player_num ,
+                                                       (float) ServerThinksInputAxisX ( player_num ) ,
+                                                       (float) ServerThinksInputAxisY ( player_num ) , TRUE ), 
+							translate_pixel_to_map_location ( player_num ,
+                                                       (float) ServerThinksInputAxisX ( player_num ) ,
+                                                       (float) ServerThinksInputAxisY ( player_num ) , FALSE ), Me [ player_num ] . pos . z))
+		goto out;
+
+
+	if ( AllEnemys [ index_of_droid_below_mouse_cursor ] . is_friendly )
+		ChatWithFriendlyDroid( & ( AllEnemys [ index_of_droid_below_mouse_cursor ] ) );
+	else
+	    {
+	    //--------------------
+	    // Only droids can be hacked.  Humans can't be 
+	    // hacked.
+	    //
+	    if ( ! ( Druidmap [ AllEnemys [ index_of_droid_below_mouse_cursor ] . type ] . is_human ) )
+	        Takeover ( index_of_droid_below_mouse_cursor ) ;
+	    }
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "weapon" ) )
+   	{
+	if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto out;
+        if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
+				      GetMousePos_y()  ) )
+		tux_wants_to_attack_now ( 0 , TRUE );
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "repair" ) )
+   	{
+	if ( ! MouseCursorIsInInvRect( GetMousePos_x()  , 
+					 GetMousePos_y()  ) 
+		     || ( !GameConfig.Inventory_Visible ) )
+		{
+		    //--------------------
+		    // Do nothing here.  The right mouse click while in inventory screen
+		    // will be handled in the inventory screen management function.
+		    //
+		    PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/CantRepairThat.ogg" , 
+						FALSE , FALSE );
+		}
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "identify" ) )
+   	{
+	//--------------------
+	// Maybe the identify mode has already been triggered and
+	// is activated right now.  Then of course this (second) mouse
+	// click must be ignored completely.
+	//
+	if ( global_ingame_mode == GLOBAL_INGAME_MODE_IDENTIFY )
+		Me [ 0 ] . temperature -= SpellCost;
+
+        silently_unhold_all_items ( );
+        global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "invisibility" ) )
+   	{
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "burnup" ) )
+   	{
+	goto out;
+	}
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "teleport_home" ) )
+   	{
+	if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
+					  GetMousePos_y()  ) )
+		{
+                TeleportHome (  ) ;
+		}
+	goto out;
+	}
+
+
+
+    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "" ) )
+   	{
+	}
+/*
+    switch ( Me [ 0 ] . readied_skill )
+    {
     
 	case SPELL_FORCE_EXPLOSION_CIRCLE:
 	    if ( MouseRightClicked() )
@@ -652,25 +575,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		}
 	    }
 	    break;
-	case SPELL_FORCE_TO_ENERGY:
-	    if ( MouseRightClicked() )
 	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    ForceToEnergyConversion ( );
-		}
-	    }
-	    break;
-	case SPELL_TELEPORT_HOME:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    // TeleportHome ( TargetLocation ) ;
-		    TeleportHome (  ) ;
-		}
 	    }
 	    break;
 	case SPELL_FIREY_BOLT:
@@ -694,52 +599,10 @@ HandleCurrentlyActivatedSkill( int player_num )
 	    }
 	    break;
 	case SPELL_REPAIR_SKILL:
-	    if ( MouseRightClicked() )
-	    {
-		if ( ! MouseCursorIsInInvRect( GetMousePos_x()  , 
-					 GetMousePos_y()  ) 
-		     || ( !GameConfig.Inventory_Visible ) )
-		{
-		    //--------------------
-		    // Do nothing here.  The right mouse click while in inventory screen
-		    // will be handled in the inventory screen management function.
-		    //
-		    PlayOnceNeededSoundSample ( "effects/tux_ingame_comments/CantRepairThat.ogg" , 
-						FALSE , FALSE );
-		}
-	    }
 	    break;
 	case SPELL_IDENTIFY_SKILL:
 	    if ( MouseRightClicked() )
 	    {
-		//--------------------
-		// Maybe the identify spell has already been triggered and
-		// is activated right now.  Then of course this (second) mouse
-		// click must be ignored completely.
-		//
-		if ( global_ingame_mode == GLOBAL_INGAME_MODE_IDENTIFY ) break;
-
-		//--------------------
-		// We need to see if sufficient mana for the identify skill
-		// is present.  Only then can we deduct mana and enter
-		// identification global mode.
-		//
-	        SpellCost = calculate_program_heat_cost ( SPELL_IDENTIFY_SKILL );
-
-		if ( Me [ 0 ] . temperature <= Me [ 0 ] . max_temperature - SpellCost )
-		{
-		    Me [ 0 ] . temperature += SpellCost;
-		    Play_Spell_ForceToEnergy_Sound( );
-
-		    silently_unhold_all_items ( );
-		    global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
-		}
-		else
-		{
-		    Me [ 0 ] . TextVisibleTime = 0;
-		    Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-		    Not_Enough_Mana_Sound(  );
-		}
 	    }
 	    break;
 	case SPELL_POISON_BOLT:
@@ -792,7 +655,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 		}
 	    }
 	    break;
-	case SPELL_EXTRACT_PLASMA_TRANSISTORS : /*handle them by doing nothing so as to avoid a warning message*/
+	case SPELL_EXTRACT_PLASMA_TRANSISTORS :
 	case  SPELL_EXTRACT_SUPERCONDUCTORS : 
 	case  SPELL_EXTRACT_ANTIMATTER_CONVERTERS : 
 	case SPELL_EXTRACT_ENTROPY_INVERTERS : 
@@ -807,7 +670,10 @@ Usually this error is not severe.",
 				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	    break;
     }
-    
+*/
+out:
+
+return;    
 }; // void HandleCurrentlyActivatedSkill( void )
 
 
