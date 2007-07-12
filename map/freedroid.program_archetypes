@@ -41,20 +41,13 @@ Program description="It is not a big problem to make a badly designed system to 
 Picture="Calculate_PI.png"
 Form="bullet"
 Effect="slowdown"
-#Bullet        = Name of the bullet picture goes here.
-#Casttime      = 0.7
-#Casttime_lev  = 0
-#Damage_base   = 4
-#Damage_mod    = 7
-#Damage_level  = +0.5
-#Damage_mod_lv = +0.5
+Base damage=4
+Mod damage=7
+Damage per level=10
+Hurt bots=1
+Hurt humans=1
 Cost=10
-#Cost_level    = 0
-#Blob          = Y
-#Hurts_humans  = N
-#Hurts_bots    = Y
-#Extra_effect  = 8
-#Extra_level   = +5
+Cost per level=5
 
 
 ** Start of new program specification subsection **
