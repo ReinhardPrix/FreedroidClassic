@@ -30,7 +30,7 @@ Present at startup=1
 ** Start of new program specification subsection **
 Program name="Extract bot parts"  
 Program description="With a little knowledge, you can extract some useful parts out of the robots you kill"
-Picture="Calculate_PI.png"
+Picture="ExtractBotParts.png"
 Form="immediate"
 Effect="none"
 Cost=0
