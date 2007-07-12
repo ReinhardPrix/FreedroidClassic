@@ -781,6 +781,7 @@ def addextra(node):
   readline.add_history("EverybodyBecomesHostile")
   readline.add_history("MakeTuxTownGuardMember")
   readline.add_history("ForceBotRespawnOnLevel:")
+  readline.add_history("IncreaseProgramVersionName:")
   readline.add_history("CompletelyHealTux")
   readline.add_history("OpenQuestDiaryEntry:")
   readline.add_history("DropDead")
