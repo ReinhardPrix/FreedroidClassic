@@ -61,6 +61,7 @@ InitFont (BFont_Info * Font)
 	  // Now we make a copy for later reference when we do OpenGL based
 	  // output of this character.
 	  //
+	  Font->number_of_chars = i;
 	  tmp_char1 = SDL_CreateRGBSurface( 0 , CharWidth ( Font , i ) , FontHeight (Font) -1 , 32, 
 					    //0xFF000000 , 0x00FF0000  , 0x0000FF00 , 0x000000FF );
 					    0x000000FF , 0x0000FF00  , 0x00FF0000 , 0xFF000000 );
