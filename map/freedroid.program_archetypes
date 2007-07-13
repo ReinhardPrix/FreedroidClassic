@@ -53,7 +53,7 @@ Cost per level=5
 ** Start of new program specification subsection **
 Program name="Blue Screen"
 Program description="With a little touch a war machine comes crashing down to a halt. For a while."
-Picture="NoSkillAvailable.png"
+Picture="BlueScreen.png"
 Effect="paralyze"
 Form="bullet"
 Cost=15
@@ -94,7 +94,7 @@ Cost=10
 ** Start of new program specification subsection **
 Program name="Dispell smoke"
 Program description="By heating up the chips with a malformed program you can cause them to release the magic smoke which keeps the bot running. "
-Picture="NoSkillAvailable.png"
+Picture="DispellSmoke.png"
 Form="immediate"
 Effect="none"
 Cost=50
@@ -126,7 +126,7 @@ Cost=0
 ** Start of new program specification subsection **
 Program name="Plasma discharge"
 Program description="The overload setting exists for emergencies. The plasma does not discriminate between bots and humans. Everything is equal to it."
-Picture="NoSkillAvailable.png"
+Picture="RadialPlasmaWaveSpell.png"
 Form="radial"
 Effect="none"
 Cost=30
