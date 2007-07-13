@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Doc, I took some of those brain enlargement pills..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=294  PositionY=143  
-OnCondition="CookieIsPlanted:BrainEnlargementAntidodeGiven:" JumpToOption=5 ElseGoto=4
+OnCondition="CookieIsPlanted:doc_healed_tux:" JumpToOption=5 ElseGoto=4
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -99,7 +99,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="GiveItem:79"
-DoSomethingExtra="PlantCookie:BrainEnlargementAntidodeGiven:"
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
 DoSomethingExtra="OpenQuestDiaryEntry:M0E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -108,11 +108,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=365  PositionY=192  
-Subtitle="Sorry, but I've already given you some medicine."
+Subtitle="Sorry, but I already give you some medical help."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="If you poison yourself again, that's entirely your business and I'm not responsible."
+Subtitle="If you poison yourself, that's entirely your business and I'm not responsible."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="As far as I am concerned, in this town everyone gets everything equally."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -167,6 +170,7 @@ ChangeOption=10 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 ChangeOption=12 ChangeToValue=1
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
 DoSomethingExtra="CompletelyHealTux"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -212,6 +216,7 @@ Subtitle="No! I am not giving it to you. Forget about it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 ChangeOption=21 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -222,7 +227,6 @@ PositionX=200  PositionY=200
 Subtitle="No! Over my dead body."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=21 ChangeToValue=0
-ChangeOption=30 ChangeToValue=1
 ChangeOption=22 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -291,7 +295,11 @@ PositionX=200  PositionY=200
 Subtitle=" . . . "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=27 ChangeToValue=0
-DoSomethingExtra="GiveItem:"
+DoSomethingExtra="GiveItem:1:15"
+DoSomethingExtra="GiveItem:2:10"
+DoSomethingExtra="GiveItem:48:10"
+DoSomethingExtra="GiveItem:79:5"
+DoSomethingExtra="GiveItem:121"
 DoSomethingExtra="DropDead"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -304,6 +312,8 @@ Subtitle="I am not giving it to you, and that won't change."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=22 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
