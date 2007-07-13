@@ -548,6 +548,22 @@ update_all_primary_stats ( int PlayerNum )
     AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux1_item );
     AddInfluencerItemAttributeBonus( & Me [ PlayerNum ] . aux2_item );
 
+    item * itrot [7] = {  & Me [ PlayerNum ] . armour_item,  & Me [ PlayerNum ] . weapon_item ,  & Me [ PlayerNum ] . drive_item ,  
+    		& Me [ PlayerNum ] . shield_item , & Me [ PlayerNum ] . special_item ,  & Me [ PlayerNum ] . aux1_item ,
+		& Me [ PlayerNum ] . aux2_item };
+    i = 0;
+    while ( i < 7 ) 
+	{
+	if ( ! ItemUsageRequirementsMet ( itrot [ i ] , FALSE ) )
+		{ //we have to move away the item
+		AddFloorItemDirectlyToInventory ( itrot [ i ] );
+		itrot [ i ] -> type = -1;
+		}
+	i ++;
+	}
+
+
+
     //--------------------
     // Maybe there is some boost from a potion or magic spell going on right
     // now...
