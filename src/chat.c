@@ -508,14 +508,30 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     }
     else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
     {
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked giving an item to the Tux. --> have to decode... " );
-	ReadValueFromString( ExtraCommandString , "GiveItem:" , "%d" , 
-			     &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...item to give is: %d." , TempValue );
+	char * pos = strstr(ExtraCommandString, "GiveItem");
+	pos += strlen("GiveItem:");
+	while ( ! isdigit(*pos) ) pos ++;
+	char * pos2 = pos;
+	while ( isdigit(*pos2) ) pos2 ++;
+	
+	char pname[15];
+	strncpy(pname, pos, pos2-pos);
+	TempValue = atoi(pname);
+
 	NewItem.type = TempValue  ;
 	NewItem.prefix_code = (-1);
 	NewItem.suffix_code = (-1);
 	FillInItemProperties ( &NewItem , TRUE , 0 );
+
+	if(pos2 == ':')
+	    {
+	    pos=pos2 + 1;
+	    pos2 ++;
+            while( isdigit(*pos2) ) pos2++;
+	    strncpy(pname, pos, pos2-pos);
+	    NewItem -> multiplicity = atoi(pname);
+	    }
+
 	//--------------------
 	// Either we put the new item directly into inventory or we issue a warning
 	// that there is no room and then drop the item to the floor directly under 
