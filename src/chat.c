@@ -523,13 +523,13 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	NewItem.suffix_code = (-1);
 	FillInItemProperties ( &NewItem , TRUE , 0 );
 
-	if(pos2 == ':')
+	if(*pos2 == ':')
 	    {
 	    pos=pos2 + 1;
 	    pos2 ++;
             while( isdigit(*pos2) ) pos2++;
 	    strncpy(pname, pos, pos2-pos);
-	    NewItem -> multiplicity = atoi(pname);
+	    NewItem.multiplicity = atoi(pname);
 	    }
 
 	//--------------------
