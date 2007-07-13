@@ -75,6 +75,12 @@ blit_vertical_status_bar ( float max_value , float current_value , Uint32 filled
     SDL_Rect running_power_rect;
     SDL_Rect un_running_power_rect;
 
+
+    if ( ! max_value ) 
+	{
+	max_value = 1;
+	current_value = 1;
+	}
     //--------------------
     // Now we might get the case of current value exceeding the max value by far.  This 
     // does happen when we set ridiculously high energy values for invincible Tux in the
@@ -1083,7 +1089,7 @@ blit_energy_and_mana_bars ( void )
 			       WHOLE_HEALTH_RECT_H , TRUE );
 /*0 0 255
 vert grimpe, bleu baisse, rouge grimpe, vert baisse*/
-    int temp_ratio = (100 * Me[0].temperature) / Me[0].max_temperature;
+    int temp_ratio = Me [ 0 ] . max_temperature ? (100 * Me[0].temperature) / Me[0].max_temperature : 100;
     if ( temp_ratio > 100 ) temp_ratio = 100;
     int red = (temp_ratio) > 50 ? ((temp_ratio > 75) ? 255 : 4 * (temp_ratio - 50) * 2.55  ): 0;
     int green;
@@ -1134,8 +1140,7 @@ vert grimpe, bleu baisse, rouge grimpe, vert baisse*/
 			break;
 		}
 	}
-    blit_vertical_status_bar ( Me[0].max_temperature , (Me[0].temperature > Me[0].max_temperature) ? Me[0].max_temperature : Me[0].temperature, 
-			       SDL_MapRGBA(Screen->format, red > 255 ? 255 : red, green < 255 ? green : 255, blue < 255 ? blue : 255, 0)
+    blit_vertical_status_bar ( Me[0].max_temperature , (Me[0].temperature > Me[0].max_temperature) ? Me[0].max_temperature : Me[0].temperature, 			       SDL_MapRGBA(Screen->format, red > 255 ? 255 : red, green < 255 ? green : 255, blue < 255 ? blue : 255, 0)
 				, un_force_rect_color ,
 			       WHOLE_FORCE_RECT_X , 
 			       WHOLE_FORCE_RECT_Y , 

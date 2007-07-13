@@ -231,7 +231,7 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
     UpdateAllCharacterStats( PlayerNum );
     
     Me [ PlayerNum ] .energy = Me [ PlayerNum ] .maxenergy;
-    Me [ PlayerNum ] .temperature = Me [ PlayerNum ] .max_temperature;
+    Me [ PlayerNum ] .temperature = 0;
     DebugPrintf( 1 , "\n Me [ PlayerNum ] .energy : %f . " , Me [ PlayerNum ] .energy );
     Me [ PlayerNum ] .health = Me [ PlayerNum ] .energy;	/* start with max. health */
     
@@ -556,8 +556,12 @@ update_all_primary_stats ( int PlayerNum )
 	{
 	if ( ! ItemUsageRequirementsMet ( itrot [ i ] , FALSE ) )
 		{ //we have to move away the item
-		AddFloorItemDirectlyToInventory ( itrot [ i ] );
-		itrot [ i ] -> type = -1;
+		if ( ! AddFloorItemDirectlyToInventory ( itrot [ i ] ) ) itrot [ i ] -> type = -1;
+		else 
+			{ //inventory is full... ouch
+			DropItemToTheFloor(itrot[i], Me[0].pos.x, Me[0].pos.y, Me[0].pos.z);
+			itrot [ i ] -> type = -1;
+			}
 		}
 	i ++;
 	}

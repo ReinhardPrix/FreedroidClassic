@@ -463,7 +463,7 @@ EXTERN int DropHeldItemToTheFloor ( void );
 EXTERN void DropItemToTheFloor ( Item DropItemPointer , float x , float y , int levelnum ) ;
 EXTERN void ShowQuickInventory ( void );
 EXTERN void HandleInventoryScreen ( void );
-EXTERN void AddFloorItemDirectlyToInventory( item* ItemPointer );
+EXTERN int AddFloorItemDirectlyToInventory( item* ItemPointer );
 EXTERN void CopyItem( item* SourceItem , item* DestItem , int MakeSound );
 EXTERN void DeleteItem( item* Item );
 EXTERN void DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int ForceMagical , int ForceDrop , int ChestItem );

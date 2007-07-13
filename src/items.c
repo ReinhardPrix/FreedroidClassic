@@ -3420,9 +3420,8 @@ HandleInventoryScreen ( void )
     if ( MouseRightClicked() )
     {
 	
-	switch ( Me [ 0 ] . readied_skill )
+	if ( Me [ 0 ] . readied_skill ==  get_program_index_with_name("Repair equipment"))
 	{
-	    case SPELL_REPAIR_SKILL:
 		//--------------------
 		// Here we know, that the repair skill is selected, therefore we try to 
 		// repair the item currently under the mouse cursor.
@@ -3491,9 +3490,9 @@ HandleInventoryScreen ( void )
 		    if ( Me [ 0 ] . aux2_item . type != (-1) )
 			HomeMadeItemRepair ( & ( Me [ 0 ] . aux2_item ) );
 		}
-		break;
-		
-	    default:
+	}
+	else 
+		{
 		//--------------------
 		// The default behaviour for right mouse clicks (i.e. when no repair or
 		// identify skills are selected) is to try to 'apply' the item in combat, 
@@ -3523,12 +3522,10 @@ HandleInventoryScreen ( void )
 			ApplyItem( & ( Me[0].Inventory[ Grabbed_InvPos ] ) );
 		    }
 		}
-		break;
 		
-	}
+		}
 	
-    }
-    
+	}    
 }; // void HandleInventoryScreen ( void );
 
 
@@ -3627,7 +3624,7 @@ place_item_on_this_position_if_you_can ( item* ItemPointer , point Inv_Loc , int
  * be put into the inventory items pool OR IN CASE THERE IS NO ROOM ANY
  * MORE the function should also say that and not do much else...
  * ---------------------------------------------------------------------- */
-void 
+int 
 AddFloorItemDirectlyToInventory( item* ItemPointer )
 {
     int InvPos;
@@ -3635,11 +3632,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     int TargetItemIndex;
     int foundplace = 0;
     
-    //--------------------
-    // In case we found an item on the floor, we remove it from the floor
-    // and add it to influs inventory
-    //
-    if ( ItemPointer == NULL ) return;
+    if ( ItemPointer == NULL ) return -1;
     
     //--------------------
     // In the special case of money, we add the amount of money to our
@@ -3650,7 +3643,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	play_item_sound( ItemPointer -> type );
 	Me [ 0 ] . Gold += ItemPointer->gold_amount;
 	DeleteItem( ItemPointer );
-	return;
+	return 0;
     }
     
     //--------------------
@@ -3666,7 +3659,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	    Me [ PLAYER_NR_0 ] . Inventory [ TargetItemIndex ] . multiplicity += ItemPointer->multiplicity;
 	    play_item_sound ( ItemPointer -> type );
 	    DeleteItem( ItemPointer );
-	    return;
+	    return 0;
 	}
     }
     
@@ -3687,7 +3680,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	    if ( Me [ 0 ] . shield_item . type == (-1) )
 	    {
 		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-		return;
+		return 0;
 	    }
 	    //--------------------
 	    // So now we know that some shield item is equipped.  Let's be careful:  2-handed
@@ -3696,7 +3689,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	    if ( ! ItemMap [ ItemPointer -> type ] . item_gun_requires_both_hands )
 	    {
 		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . weapon_item ) , Inv_Loc );
-		return;
+		return 0;
 	    }
 	}
     }
@@ -3711,7 +3704,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	    if ( Me [ 0 ] . weapon_item . type == (-1) )
 	    {
 		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-		return;
+		return 0;
 	    }
 	    //--------------------
 	    // But now we know, that there is some weapon present.  We need to be careful:
@@ -3720,7 +3713,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	    if ( ! ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_requires_both_hands )
 	    {
 		raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . shield_item ) , Inv_Loc );
-		return;
+		return 0;
 	    }
 	}
     }
@@ -3729,7 +3722,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
 	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . armour_item ) , Inv_Loc );
-	    return;
+	    return 0;
 	}
     }
     if ( ( Me [ 0 ] . drive_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_drive_slot ) )
@@ -3737,7 +3730,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
 	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . drive_item ) , Inv_Loc );
-	    return;
+	    return 0;
 	}
     }
     if ( ( Me [ 0 ] . special_item . type == (-1) ) && ( ItemMap [ ItemPointer -> type ] . item_can_be_installed_in_special_slot ) )
@@ -3745,7 +3738,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	if ( ItemUsageRequirementsMet( ItemPointer , TRUE ) )
 	{
 	    raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . special_item ) , Inv_Loc );
-	    return;
+	    return 0;
 	}
     }
     
@@ -3753,12 +3746,6 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     for ( InvPos = 0 ; InvPos < MAX_ITEMS_IN_INVENTORY -1 ; InvPos++ )
     {
 	if ( Me[0].Inventory [ InvPos ].type == (-1) ) break;
-    }
-    if ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 )
-    {
-	GiveStandardErrorMessage ( __FUNCTION__  , 
-				   "Ran out of inventory positions.  This doesn't mean inventory is simpy full.\nIt means that FreedroidRPG is wasting inventory positions due to internal bugs.",
-				   PLEASE_INFORM, IS_FATAL );
     }
     
     //--------------------
@@ -3775,7 +3762,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	Inv_Loc . y = InventorySize . y - 1 ;
 	for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
 	{
-	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
+	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return 0;
 	}
     }
 
@@ -3786,7 +3773,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     {
 	for ( Inv_Loc.x = 0; Inv_Loc.x < InventorySize.x - ItemMap[ ItemPointer->type ] . inv_image . inv_size . x + 1 ; Inv_Loc.x ++ )
 	{
-	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return ;
+	    if ( place_item_on_this_position_if_you_can ( ItemPointer , Inv_Loc , InvPos ) ) return 0;
 	}
     }
     
@@ -3795,12 +3782,15 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
 	Me [ 0 ] . TextVisibleTime = 0;
 	Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
 	CantCarrySound();
+	return 1;
     }
     else
     {
 	raw_move_picked_up_item_to_entry ( ItemPointer , & ( Me [ 0 ] . Inventory [ InvPos ] ) , Inv_Loc );
+	return 0;
     }
-    
+   
+return 0;
 }; // void AddFloorItemDirectlyToInventory( item* ItemPointer )
 
 int item_is_currently_equipped( item* Item )
