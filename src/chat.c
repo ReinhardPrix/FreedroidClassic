@@ -531,13 +531,15 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	    strncpy(pname, pos, pos2-pos);
 	    NewItem.multiplicity = atoi(pname);
 	    }
+	else NewItem.multiplicity = 1;
+
 
 	//--------------------
 	// Either we put the new item directly into inventory or we issue a warning
 	// that there is no room and then drop the item to the floor directly under 
 	// the current Tux position.  That can't fail, right?
 	//
-	if ( !TryToIntegrateItemIntoInventory ( & NewItem , 1 ) )
+	if ( !TryToIntegrateItemIntoInventory ( & NewItem , NewItem.multiplicity ) )
 	{
 	    DropItemToTheFloor ( &NewItem , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , Me [ 0 ] . pos. z ) ;
 	    SetNewBigScreenMessage( "1 Item received (on floor)" );
