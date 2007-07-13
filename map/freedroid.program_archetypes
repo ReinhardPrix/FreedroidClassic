@@ -127,9 +127,10 @@ Cost=0
 Program name="Plasma discharge"
 Program description="The overload setting exists for emergencies. The plasma does not discriminate between bots and humans. Everything is equal to it."
 Picture="NoSkillAvailable.png"
-Form="ring"
+Form="radial"
 Effect="none"
 Cost=30
+Base damage=50
 
 ** Start of new program specification subsection **
 Program name="Invisibility"
