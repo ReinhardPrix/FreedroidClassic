@@ -1798,8 +1798,8 @@ DisplayBanner ( void )
 
     ShowCurrentHealthAndForceLevel ( );
     
-    ShowCurrentTextWindow ( );
     ShowCurrentSkill ( );
+    ShowCurrentTextWindow ( );
     ShowCurrentWeapon ( );
 
     //--------------------
