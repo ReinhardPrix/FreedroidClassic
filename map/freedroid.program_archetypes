@@ -142,11 +142,47 @@ Cost=30
 
 ** Start of new program specification subsection **
 Program name="Sanctuary"
-Program description="The art of rapidly moving away from danger is very useful. Even used in reverse it has it's uses."
+Program description="The art of rapidly moving away from danger is very useful. Even when used in reverse it has it's uses."
 Picture="TeleportHomeSpell.png"
 Form="self"
 Effect="teleport_home"
 Cost=30
+
+** Start of new program specification subsection **
+Program name="Virus"
+Program description="This is not just a firmware upgrade, my dear bot. You are about to find out what exactly I want to give you."
+Picture="NoSkillAvailable.png"
+Form="bullet"
+Effect="none"
+Cost=10
+Base damage=15
+
+** Start of new program specification subsection **
+Program name="Broadcast virus"
+Program description="The network is wide and dangerous. Many traps await for the weak and unprepared."
+Picture="NoSkillAvailable.png"
+Form="radial"
+Effect="none"
+Cost=40
+Base damage=15
+
+** Start of new program specification subsection **
+Program name="Reverse-engineer"
+Program description="There is some dark magic in the art of turning bots inside-out to learn all their secrets."
+Picture="NoSkillAvailable.png"
+Form="immediate"
+Effect="none"
+Cost=60
+Base damage=40
+
+** Start of new program specification subsection **
+Program name="Emergency shutdown"
+Program description="Everyone needs to blow some steam every now and then."
+Picture="NoSkillAvailable.png"
+Form="self"
+Effect="freeze"
+Cost=-100
+Base damage=0
 
 *** End of program data section ***
 *** End of this Freedroid data File ***
