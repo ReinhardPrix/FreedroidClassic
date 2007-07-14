@@ -554,6 +554,7 @@ update_all_primary_stats ( int PlayerNum )
     i = 0;
     while ( i < 7 ) 
 	{
+	if ( itrot [ i ] -> type == -1 ) continue;
 	if ( ! ItemUsageRequirementsMet ( itrot [ i ] , FALSE ) )
 		{ //we have to move away the item
 		if ( ! AddFloorItemDirectlyToInventory ( itrot [ i ] ) ) itrot [ i ] -> type = -1;
