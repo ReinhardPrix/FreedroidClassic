@@ -3842,14 +3842,14 @@ init_obstacle_data( void )
   // be only some rubble left, and that should be *passable*.
   //
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . filename = "iso_brick_wall_0012.png" ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . is_smashable = TRUE ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_1 ] . result_type_after_smashing_once = ISO_BRICK_WALL_RUBBLE_1 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_1 = 1.2 ;
-  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . block_area_parm_2 = 0.5 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . filename = "iso_brick_wall_0013.png" ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . result_type_after_smashing_once = ISO_BRICK_WALL_RUBBLE_2 ;
   obstacle_map [ ISO_BRICK_WALL_CRACKED_2 ] . is_smashable = TRUE ;
@@ -4474,13 +4474,13 @@ init_obstacle_data( void )
   obstacle_map [ ISO_CONFERENCE_TABLE_W ] . obstacle_short_name = "Conference table" ;
   obstacle_map [ ISO_CONFERENCE_TABLE_W ] . obstacle_long_description = "A round conference table with chairs and a computer at every seat." ;
 
-  obstacle_map [ ISO_RED_FENCE_H ] . block_area_parm_1 = 2.0 ;
+  obstacle_map [ ISO_RED_FENCE_H ] . block_area_parm_1 = 2.3 ;
   obstacle_map [ ISO_RED_FENCE_H ] . block_area_parm_2 = 0.80 ;
   obstacle_map [ ISO_RED_FENCE_H ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_RED_FENCE_H ] . filename = "iso_fence_0002.png" ;
 
   obstacle_map [ ISO_RED_FENCE_V ] . block_area_parm_1 = 0.80 ;
-  obstacle_map [ ISO_RED_FENCE_V ] . block_area_parm_2 = 2.0 ;
+  obstacle_map [ ISO_RED_FENCE_V ] . block_area_parm_2 = 2.3 ;
   obstacle_map [ ISO_RED_FENCE_V ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_RED_FENCE_V ] . filename = "iso_fence_0001.png" ;
 
