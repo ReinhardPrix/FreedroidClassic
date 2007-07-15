@@ -1217,7 +1217,7 @@ Item as gun: weapon requires both hands="no"
 
 // Item No. 41
 ** Start of new item specification subsection **
-Item name="Minor Force Capsule"
+Item name="Bottled ice"
 Position_X=25
 Position_Y=338
 Item can be applied in combat="yes"
@@ -1230,12 +1230,12 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=15
-Item description text="These small containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="This bottle is filled with ice. It can keep you cool during a warm summer day."
 ** End of new item specification subsection **
 
 // Item No. 42
 ** Start of new item specification subsection **
-Item name="Major Force Capsule"
+Item name="Liquid nitrogen"
 Position_X=55
 Position_Y=376
 Item can be applied in combat="yes"
@@ -1248,7 +1248,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=45
-Item description text="These large containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="When you want something frozen solid, this is what you need. It can keep you cool even inside a class M star."
 ** End of new item specification subsection **
 
 // Item No. 43
@@ -1354,7 +1354,7 @@ Item description text="These medium sized containers hold purified essence of li
 
 // Item No. 49
 ** Start of new item specification subsection **
-Item name="Medium Force Capsule"
+Item name="Industrial coolant"
 Position_X=22
 Position_Y=308
 Item can be applied in combat="yes"
@@ -1367,7 +1367,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=30
-Item description text="These medium sized containers hold condensed and purified mental energy also known as 'force', that will automatically merge with the spirit of the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="Bartenders around the world add this to drinks to get them cold very fast. Plus the coolant is much cheaper. It can keep you cool inside a nuclear reactor."
 ** End of new item specification subsection **
 
 // Item No. 50
