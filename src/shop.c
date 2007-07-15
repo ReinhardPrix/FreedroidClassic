@@ -198,35 +198,32 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
     ListPointer = ListToBeFilled;
     if ( ShopCharacterCode == PERSON_STONE )
     {
-	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_BUCKLER; ListPointer++;
-	ListPointer->type = ITEM_ARMOR_SIMPLE_JACKET; ListPointer++;
 	ListPointer->type = ITEM_DAGGER; ListPointer++;
-	ListPointer->type = ITEM_CLUB; ListPointer++;
 	ListPointer->type = ITEM_SHORT_SWORD; ListPointer++;
 	ListPointer->type = ITEM_SCIMITAR; ListPointer++;
-	ListPointer->type = ITEM_STAFF; ListPointer++;
+	ListPointer->type = ITEM_CLUB; ListPointer++;
 	ListPointer->type = ITEM_MACE; ListPointer++;
+	ListPointer->type = ITEM_STAFF; ListPointer++;
 	ListPointer->type = ITEM_CAP; ListPointer++;
+	ListPointer->type = ITEM_BUCKLER; ListPointer++;
+	ListPointer->type = ITEM_ARMOR_SIMPLE_JACKET; ListPointer++;
+	
     }
     else if ( ShopCharacterCode == PERSON_DOC_MOORE )
     {
 	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
 	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
-	ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
+
     }
     else if ( ShopCharacterCode == PERSON_LUKAS )
     {
-	ListPointer->type = ITEM_RED_GUARD_LIGHT_ARMOUR; ListPointer++;
-	ListPointer->type = ITEM_RED_GUARD_HEAVY_ARMOUR; ListPointer++;
 	ListPointer->type = ITEM_LASER_PISTOL; ListPointer++;
 	ListPointer->type = ITEM_PLASMA_PISTOL; ListPointer++;
 	ListPointer->type = ITEM_LASER_AMMUNITION; ListPointer++;
 	ListPointer->type = ITEM_PLASMA_AMMUNITION; ListPointer++;
-
+	ListPointer->type = ITEM_RED_GUARD_LIGHT_ARMOUR; ListPointer++;
+	ListPointer->type = ITEM_RED_GUARD_HEAVY_ARMOUR; ListPointer++;
     }
     else if ( ShopCharacterCode == PERSON_SKIPPY )
     {
@@ -240,15 +237,11 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
     }
     else if ( ShopCharacterCode == PERSON_EWALD )
     {
-	ListPointer->type = ITEM_BLUE_ENERGY_DRINK; ListPointer++;
-	ListPointer->type = ITEM_SMALL_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_SMALL_MANA_POTION; ListPointer++;
-	ListPointer->type = ITEM_MEDIUM_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_MEDIUM_MANA_POTION; ListPointer++;
-	ListPointer->type = ITEM_FULL_HEALTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_FULL_MANA_POTION; ListPointer++;
+	ListPointer->type = ITEM_BLUE_ENERGY_DRINK; ListPointer++;
 	ListPointer->type = ITEM_RUNNING_POWER_POTION; ListPointer++;
-
 	ListPointer->type = ITEM_TEMP_STRENGTH_POTION; ListPointer++;
 	ListPointer->type = ITEM_TEMP_DEXTERITY_POTION; ListPointer++;
 
