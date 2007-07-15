@@ -56,7 +56,7 @@ SForce: T=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parame
 //--------------------
 // This is Bender, who suffers from brain enlargement pills...
 //
-SForce: T=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- Strongest man in town" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenderStartGameSquare" RushTux="no" DialogSectionToUse="Bender" ShortLabel="Bender -- The strongest one" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Dr. Chandra.
@@ -66,7 +66,7 @@ SForce: T=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parame
 //--------------------
 // This is Doc Moore, the only medic in the old town
 //
-SForce: T=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="DocMoore" ShortLabel="Doc Moore -- Old Town Medic" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=PRO X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DocMooreStartGameSquare" RushTux="no" DialogSectionToUse="DocMoore" ShortLabel="Doc Moore -- Medic" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Mr. Stone, running the main shop of the old town
@@ -76,7 +76,7 @@ SForce: T=MUM X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Param
 //--------------------
 // This is Sorenson, a former preferred person of the MS
 //
-Sp**ecialForce: Type=FSC X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Magics Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SpecialForce: Type=FSC X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Mystery coder" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is a security bot.
@@ -93,12 +93,12 @@ SForce: T=PRO X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Param
 //--------------------
 // This is Benjamin, the ranged weapons teacher
 //
-SForce: T=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminCitadelStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Benjamin -- Ranged Weapons Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=GUA X=10 Y=3 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BenjaminCitadelStartGameSquare" RushTux="no" DialogSectionToUse="Benjamin" ShortLabel="Benjamin -- Gunsmith" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Dixon 'DIX', who maintains the teleporter system of the colony
 //
-SForce: T=GUA X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="Dixon" ShortLabel="Dixon -- Teleport Administrator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=GUA X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DixonStartGameSquare" RushTux="no" DialogSectionToUse="Dixon" ShortLabel="Dixon -- Mechanic" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Michelangelo, who cooks for half the community
@@ -113,12 +113,12 @@ SForce: T=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Param
 //--------------------
 // This is Duncan.  He makes grenades.
 //
-SForce: T=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DuncanStartGameSquare" RushTux="no" DialogSectionToUse="Duncan" ShortLabel="Duncan -- Grenade Maker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=WOR X=29 Y=27 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="DuncanStartGameSquare" RushTux="no" DialogSectionToUse="Duncan" ShortLabel="Duncan -- Bombmaker" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Pendragon, who can train you in the fighting arts.
 //
-SForce: T=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="Pendragon" ShortLabel="Pendragon -- Melee Combat Teacher" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="PendragonStartGameSquare" RushTux="no" DialogSectionToUse="Pendragon" ShortLabel="Pendragon -- Fighter" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is Bruce 'BRU', who is recovering from work in the mines
@@ -183,7 +183,7 @@ Allowed Type of Random Droid for this level: 139
 Allowed Type of Random Droid for this level: 123
 Allowed Type of Random Droid for this level: 247
 Allowed Type of Random Droid for this level: 249
-SForce: T=883 X=29 Y=21 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Dark Apprentice of the MS" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=883 X=29 Y=21 Fixed=0 Marker=101 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="StoneStartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Dark Apprentice of MegaSys" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 ** End of this levels droid data **
 
 ----------------------------------------------------------------------
