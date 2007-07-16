@@ -121,7 +121,7 @@ ResolveDialogSectionToChatFlagsIndex ( char* SectionName )
     if ( strcmp ( SectionName , "Kevin" ) == 0 ) return PERSON_KEVIN;
     if ( strcmp ( SectionName , "Jasmine" ) == 0 ) return PERSON_JASMINE;
     if ( strcmp ( SectionName , "Lukas" ) == 0 ) return PERSON_LUKAS;
-
+    if ( strcmp ( SectionName , "SADD" ) == 0 ) return PERSON_SADD;
     if ( strncmp ( SectionName , "subdlg_" , 6 ) == 0 ) return PERSON_SUBDIALOG_DUMMY;
 
     DebugPrintf ( -1000 , "\n--------------------\nSectionName: %s." , SectionName );

@@ -610,6 +610,105 @@ Action is Influencer say="Master Arena Access Door unlocked...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
+* Start of an Event Action Subsection *
+Action label for this action="disable_sadd_gun1"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDGun1"
+modify_obstacle_to_type=324
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="disable_sadd_gun2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDGun2"
+modify_obstacle_to_type=324
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="enable_sadd_gun1"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDGun1"
+modify_obstacle_to_type=32
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="enable_sadd_gun2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDGun2"
+modify_obstacle_to_type=32
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="breake_wall_near_sadd_1"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="BreakableWall1"
+modify_obstacle_to_type=237
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="breake_wall_near_sadd_2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="BreakableWall2"
+modify_obstacle_to_type=237
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="unlock_sadd_depot_door"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDDepotDoor"
+modify_obstacle_to_type=11
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="unlock_sadd_bio_door"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="SADDBioDoor"
+modify_obstacle_to_type=11
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+* Start of an Event Action Subsection *
+Action label for this action="make_wall_near_sadd_breakable"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET" 
+modify_obstacle_with_label="BreakableWall3"
+modify_obstacle_to_type=236
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
 //--------------------
 // Now we enter the connection actions (teleporting) from
 // the north maintainance area back to the camp and vice versa
