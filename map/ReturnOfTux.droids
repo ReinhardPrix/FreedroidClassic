@@ -767,7 +767,22 @@ Allowed Type of Random Droid for this level: 751
 
 ** End of this levels droid data **
 
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
 
+** Beginning of new Level **
+Level=35 
+Maximum number of Random Droids=0
+Minimum number of Random Droids=0
+Allowed Type of Random Droid for this level: 476
+
+//--------------------
+// This is SADD - secreat area defence droid
+//
+SForce: T=883 X=28 Y=25 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SADDStartGameSquare" RushTux="no" DialogSectionToUse="SADD" ShortLabel="SADD - Secret Area Defence Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+** End of this levels droid data **
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
