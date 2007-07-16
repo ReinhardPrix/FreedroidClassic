@@ -184,5 +184,23 @@ Effect="freeze"
 Cost=-100
 Base damage=0
 
+** Start of new program specification subsection **
+Program name="Light"
+Program description="Let there be light..."
+Picture="NoSkillAvailable.png"
+Form="bullet"
+Effect="light"
+Cost=3
+Base damage=0
+
+** Start of new program specification subsection **
+Program name="Satelite image"
+Program description="Getting a map of an area is pretty easy, when you can look at everything from above."
+Picture="NoSkillAvailable.png"
+Form="immediate"
+Effect="maplevel"
+Cost=40
+Base damage=0
+
 *** End of program data section ***
 *** End of this Freedroid data File ***
