@@ -3813,7 +3813,7 @@ init_obstacle_data( void )
 
   //all brick walls above share the same description
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name = "Brick wall" ;
-  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description = "A badly constructed brick wall. Maybe you could alter it...";
+  obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description = "A badly constructed brick wall. It looks like it was built in a rush. The color is quite nice though.";
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_3 ] . obstacle_long_description = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_long_description;
   obstacle_map [ ISO_BRICK_WALL_JUNCTION_2 ] . obstacle_short_name = obstacle_map [ ISO_BRICK_WALL_JUNCTION_4 ] . obstacle_short_name;
