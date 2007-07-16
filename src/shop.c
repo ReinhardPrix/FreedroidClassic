@@ -1265,7 +1265,7 @@ TryToRepairItem( item* RepairItem )
     MenuTexts[1]="No";
     MenuTexts[2]="";
     
-    while ( SpacePressed() || EnterPressed() );
+    while ( SpacePressed() || EnterPressed() || MouseLeftPressed() );
     
     if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
@@ -1298,7 +1298,7 @@ TryToIdentifyItem( item* IdentifyItem )
     MenuTexts[1]="No";
     MenuTexts[2]="";
     
-    while ( SpacePressed() || EnterPressed() );
+    while ( SpacePressed() || EnterPressed() || MouseLeftPressed());
     
     if ( 100 > Me[0].Gold )
     {
