@@ -468,6 +468,10 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	ChatDroid -> CompletelyFixed = FALSE ;
 	ChatDroid -> follow_tux = FALSE ;
     }
+    else if ( ! strcmp ( ExtraCommandString , "KillTux" ) )
+    {
+	Me [ 0 ] . energy = 0;
+    }
     else if ( ! strcmp ( ExtraCommandString , "MakeTuxTownGuardMember" ) )
     {
 	DebugPrintf ( -1000 , "\nTux should now be a member of the old town's guard." );
@@ -505,6 +509,17 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	strncpy(pname, pos, pos2 - pos);
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Program name is: %d." , pname );
 	Me [ 0 ] . base_skill_level [ get_program_index_with_name(pname) ] ++;
+    }
+    else if ( CountStringOccurences ( ExtraCommandString , "TuxLoseHP:" ) )
+    {
+	char * pos = strstr(ExtraCommandString, "TuxLoseHP");
+	pos += strlen("TuxLoseHP:");
+	while ( ! isdigit ( * pos ) || *pos != '-' ) pos ++;
+	char * pos2 = pos;
+	while ( isdigit(*pos2) || *pos2 == '-' ) pos2++;
+	char pname [ pos2 - pos + 1 ];
+	strncpy(pname, pos, pos2 - pos);
+	Me [ 0 ] . energy -= atoi ( pname ) ;
     }
     else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
     {
