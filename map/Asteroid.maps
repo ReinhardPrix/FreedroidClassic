@@ -10349,6 +10349,20 @@ pstmtinfolvl
 
 piteminfolvl
 it: t=74  X=39.000000  Y=35.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=34.000000  Y=43.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=40.000000  Y=45.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=39.000000  Y=50.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=34.000000  Y=47.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=34.000000  Y=39.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=40.000000  Y=38.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=41.000000  Y=41.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=43.000000  Y=50.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=43.000000  Y=45.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=48.000000  Y=50.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=46.000000  Y=37.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=48.000000  Y=46.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=49.000000  Y=41.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=53.000000  Y=47.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
 /piteminfolvl
 pchestinfolvl
 /pchestinfolvl
@@ -11178,7 +11192,6 @@ pstmtinfolvl
 
 piteminfolvl
 it: t=98  X=90.000000  Y=31.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
-it: t=80  X=17.000000  Y=81.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
 /piteminfolvl
 pchestinfolvl
 /pchestinfolvl
@@ -13297,6 +13310,7 @@ pstmtinfolvl
 /pstmtinfolvl
 
 piteminfolvl
+it: t=80  X=17.000000  Y=4.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
 /piteminfolvl
 pchestinfolvl
 /pchestinfolvl
@@ -17565,6 +17579,24 @@ pstmtinfolvl
 /pstmtinfolvl
 
 piteminfolvl
+it: t=10  X=4.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=10  X=4.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=9  X=3.000000  Y=25.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=8  X=3.000000  Y=27.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=9  X=4.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=7  X=5.000000  Y=25.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=7  X=4.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=10  X=3.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=7.000000  Y=25.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=5  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=67  X=7.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=20  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=8.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=3  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=67  X=7.000000  Y=27.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=5  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=74  X=9.000000  Y=27.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=5  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=65  X=4.000000  Y=27.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=4  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=64  X=3.000000  Y=27.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=2  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=63  X=5.000000  Y=26.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=61  X=2.000000  Y=25.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=10  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
+it: t=67  X=9.000000  Y=25.000000  AC=0  Dmg=0  DmgMod=0  MDur=-1  CDur=1.000000  Gld=0  AClip=0  Multi=1  Prefix=-1  Suffix=-1  StrBon=0  StrDex=0  StrVit=0  StrMag=0  StrAllAtt=0  StrLife=0  StrHealthRecovery=0.000000  StrForce=0  StrManaRecovery=0.000000  StrToHit=0  StrACDam=0  ResEle=0  ResFor=0  ResFir=0  IsIdent=1 
 /piteminfolvl
 pchestinfolvl
 /pchestinfolvl
