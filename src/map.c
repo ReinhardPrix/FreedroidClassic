@@ -2192,16 +2192,17 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
 
   // Now we decode all the item information
   ItemPointer=ItemsSectionBegin;
-  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ )
-    {
-      if ( ! (ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING )) )
-	break;
-      char * NextItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
-      if ( NextItemPointer ) NextItemPointer [ 0 ] = 0;
-      ReadInOneItem ( ItemPointer , ItemsSectionEnd , &(loadlevel->ItemList[ i ]) );
-      if ( NextItemPointer ) NextItemPointer [ 0 ] = 'N';
-    }
-  
+  char * NextItemPointer;
+  for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ ){
+      if ( ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING ) ){
+            NextItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
+            if ( NextItemPointer ) NextItemPointer [ 0 ] = 0;
+            ReadInOneItem ( ItemPointer , ItemsSectionEnd ,
+&(loadlevel->ItemList[ i ]) );
+            if ( NextItemPointer ) NextItemPointer [ 0 ] = ITEM_CODE_STRING[0];
+      }
+  }
+
   // Now we repair the damage done to the loaded level data
   ItemsSectionEnd[0]=Preserved_Letter;
 }; // void DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
