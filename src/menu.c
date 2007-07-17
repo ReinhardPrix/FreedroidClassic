@@ -3182,7 +3182,9 @@ Credits_Menu (void)
                                       Andrew A. Gill\n\n\
                                       Johannes Prix\n\n\
                                       Mbrola\n\
-                                       text-to-speech-system\n\n\n\
+                                       text-to-speech system\n\n\
+                                      eSpeak\n\
+                                       text-to-speech system\n\n\n\
    OGG COMPOSERS:\n\n\
                                       \"The Beginning\"\n\
                                         by 4t thieves\n\
