@@ -713,7 +713,7 @@ ShowCurrentSkill( void )
     static int Mouse_Button_Pressed_Previous_Frame = FALSE;
     
     if ( Me [ 0 ] . status == BRIEFING ) return;
-    if ( GameConfig . SkillScreen_Visible && GameConfig . screen_width == 640 ) return;
+    if ( ( GameConfig . SkillScreen_Visible || GameConfig . CharacterScreen_Visible )  && GameConfig . screen_width == 640 ) return;
 
     Target_Rect.x = UNIVERSAL_COORD_W(CURRENT_SKILL_RECT_X) + (CURRENT_SKILL_RECT_W * GameConfig . screen_width / 640 - CURRENT_SKILL_RECT_W) / 2;
     Target_Rect.y = CURRENT_SKILL_RECT_Y + (CURRENT_SKILL_RECT_H * GameConfig . screen_height / 480 - CURRENT_SKILL_RECT_H) / 2;
