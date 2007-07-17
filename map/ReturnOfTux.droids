@@ -382,37 +382,9 @@ Sp**ecialForce: Type=123 X=38 Y=11 Fixed=0 Marker=24 AdvancedCommand=2 Parameter
 
 ** Beginning of new Level **
 Level=10
-Maximum number of Random Droids=0
-Minimum number of Random Droids=0
-Allowed Type of Random Droid for this level: 123
-
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=12 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=12 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=12 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot5StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot6StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=571 X=38 Y=11 Fixed=0 Marker=13 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="571PlagueBot7StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Plague Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
-SForce: T=329 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=420 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=329 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=420 X=38 Y=11 Fixed=0 Marker=30 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Lurker4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Lurking Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
-SForce: T=329 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=302 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=249 X=38 Y=11 Fixed=0 Marker=31 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Stalker3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Stalker Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
-SForce: T=139 X=38 Y=11 Fixed=0 Marker=32 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Trotter1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=247 X=38 Y=11 Fixed=0 Marker=32 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Trotter2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Trotter Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
-SForce: T=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer1StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Wandering Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer2StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Wandering Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer3StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Wandering Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer4StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Wandering Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-SForce: T=123 X=38 Y=11 Fixed=0 Marker=33 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="Level10Wanderer5StartGameSquare" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Wandering Bot" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
-
+Maximum number of Random Droids=25
+Minimum number of Random Droids=25
+Allowed Type of Random Droid for this level: 296
 
 ** End of this levels droid data **
 
