@@ -112,6 +112,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="She did not tell you she is the walker of the dark corridors --"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
+LinkedTo:24
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -187,13 +188,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="You trust Sorenson, right?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
-DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson.dialog"
+DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" I really must be going now. Goodbye."
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=347  PositionY=250  
 Subtitle="Please come back later, Linarian. We must talk again."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
