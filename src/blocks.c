@@ -3773,6 +3773,15 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_END ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_END ] . filename = "iso_brick_wall_0003.png" ;
 
+  obstacle_map [ ISO_BRICK_WALL_CABLES_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_H ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_H ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_H ] . filename = "iso_brick_wall_cables_0001.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_V ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_V ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_V ] . filename = "iso_brick_wall_cables_0002.png" ;
+
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_parm_1 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_1 ] . block_area_parm_2 = 1.2 ;
@@ -3790,6 +3799,23 @@ init_obstacle_data( void )
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . block_area_parm_2 = 1.2 ;
   obstacle_map [ ISO_BRICK_WALL_CORNER_4 ] . filename = "iso_brick_wall_0007.png" ;
   
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_1 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_1 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_1 ] . filename = "iso_brick_wall_cables_0004.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_2 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_2 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_2 ] . filename = "iso_brick_wall_cables_0005.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_3 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_3 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_3 ] . filename = "iso_brick_wall_cables_0006.png" ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_4 ] . block_area_parm_1 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_4 ] . block_area_parm_2 = 1.2 ;
+  obstacle_map [ ISO_BRICK_WALL_CABLES_CORNER_4 ] . filename = "iso_brick_wall_cables_0007.png" ;
+
   for( i = ISO_BRICK_WALL_JUNCTION_1 ; i <= ISO_BRICK_WALL_RUBBLE_2  ; i++) {
     obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
