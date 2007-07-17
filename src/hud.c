@@ -943,7 +943,7 @@ blit_experience_countdown_bars ( void )
     int exp_range = Me [ 0 ] . ExpRequired - Me [ 0 ] . ExpRequired_previously ;
     int exp_achieved = Me [ 0 ] . Experience - Me [ 0 ] . ExpRequired_previously ;
     
-    if ( GameConfig . Inventory_Visible  && GameConfig . screen_width == 640 )
+    if ( ( GameConfig . Inventory_Visible || GameConfig . skill_explanation_screen_visible )  && GameConfig . screen_width == 640 )
     {
         return ;
     }
@@ -1014,7 +1014,7 @@ blit_running_power_bars ( void )
 	infinite_running_power_rect_color = SDL_MapRGBA( Screen->format , 255 , 255 , 255 , 80 );
     }
     
-    if ( GameConfig . Inventory_Visible  && GameConfig . screen_width == 640 ) 
+    if ( ( GameConfig . Inventory_Visible || GameConfig . skill_explanation_screen_visible )   && GameConfig . screen_width == 640 ) 
     {
 	return ;
     }
