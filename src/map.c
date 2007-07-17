@@ -3077,7 +3077,7 @@ game data file with all droid type specifications.",
                 case 139: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Templar" ); break;
                 case 247: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Banshee" ); break;
                 case 249: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Chicago" ); break;
-                case 296: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
+                case 296: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Sawmill" ); break;
                 case 302: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Nemesis" ); break;
                 case 329: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "Sparkie" ); break;
                 case 420: strcpy ( AllEnemys[ FreeAllEnemysPosition ] . short_description_text , "NaN" ); break;
