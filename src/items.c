@@ -1548,7 +1548,7 @@ int
 associate_skill_with_item ( int item_type )
 {
     int associated_skill = (-1) ;
-
+/*
     switch ( item_type )
     {
 	case ITEM_SPELLBOOK_OF_HEALING:
@@ -1607,7 +1607,7 @@ associate_skill_with_item ( int item_type )
 	    //
 	    break;
     }
-
+*/
     return ( associated_skill );
 
 }; // int associate_skill_with_item ( int item_type )

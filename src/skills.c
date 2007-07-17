@@ -154,70 +154,12 @@ location HomeSpot;
 }; // void TeleportHome ( void )
 
 /* ----------------------------------------------------------------------
- * This function handles the ForceExplosionRay skill.
- * ---------------------------------------------------------------------- */
-void
-ForceExplosionRay ( gps ExpCenter , float target_vector_x , float target_vector_y )
-{
-  int i ;
-  moderately_finepoint step;
-  int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_EXPLOSION_RAY );
-
-  if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-      Me [ 0 ] . temperature += SpellCost;
-      step . x = ( target_vector_x * 0.25 ) ;
-      step . y = ( target_vector_y * 0.25 ) ;
-
-      for ( i = 1 ; i < 5 ; i ++ )
-	{
-	  StartBlast ( ExpCenter . x + i * step . x , ExpCenter . y + i * step . y , ExpCenter . z , DRUIDBLAST, Blast_Damage_Per_Second );
-	}
-    }
-  else
-    {
-      Me [ 0 ] . TextVisibleTime = 0;
-      Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-      Not_Enough_Mana_Sound(  );
-    }
-
-}; // void ForceExplosionRay ( gps ExpCenter , point TargetVector )
-
-/* ----------------------------------------------------------------------
- * This function handles the ForceToEnergyConversion skill.
- * ---------------------------------------------------------------------- */
-void
-ForceToEnergyConversion ( void )
-{
-    int SpellCost = calculate_program_heat_cost ( SPELL_FORCE_TO_ENERGY );
-
-    if ( Me [ 0 ] . temperature >= SpellCost )
-    {
-	Me [ 0 ] . temperature += SpellCost;
-	Me [ 0 ] . energy += 10 ; // * SpellLevel
-	if ( Me [ 0 ] . energy > Me [ 0 ] . maxenergy ) Me [ 0 ] . energy = Me [ 0 ] . maxenergy ;
-
-	healing_spell_sound ( );
-    }
-    else
-    {
-	Me [ 0 ] . TextVisibleTime = 0;
-	Me [ 0 ] . TextToBeDisplayed = "Not enough force left within me.";
-	Not_Enough_Mana_Sound(  );
-    }
-
-}; // void ForceToEnergyConversion ( void )
-
-/* ----------------------------------------------------------------------
  * This function handles the skills the player might have acitivated
  * or deactivated or whatever.
  * ---------------------------------------------------------------------- */
 void
-HandleCurrentlyActivatedSkill( int player_num )
+HandleCurrentlyActivatedSkill()
 {
-    // float xdist, ydist, dist2;
-    // Level ChestLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
-    // moderately_finepoint loc_pos ;
     int index_of_droid_below_mouse_cursor = ( -1 ) ;
 
 
@@ -237,33 +179,46 @@ HandleCurrentlyActivatedSkill( int player_num )
 	}
     Override_Power_Limit = 0;
 
+    DoSkill(Me [ 0 ] . readied_skill, SpellCost);
+
+out:
+
+return;    
+}; // void HandleCurrentlyActivatedSkill( void )
+
+int 
+DoSkill(int skill_index, int SpellCost)
+{
+    int index_of_droid_below_mouse_cursor = ( -1 ) ;
+    int player_num = 0;
+
     /*we handle the form of the program now*/
-    switch ( SpellSkillMap [ Me[0] . readied_skill ] . form ) 
+    switch ( SpellSkillMap [ skill_index ] . form ) 
 	{
 	case PROGRAM_FORM_IMMEDIATE:
 		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto done_handling_instant_hits;
-		index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
+		index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
 		if ( index_of_droid_below_mouse_cursor == ( -1 ) ) 
 			goto done_handling_instant_hits;
-		if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ,  translate_pixel_to_map_location ( player_num ,
-                                                       (float) ServerThinksInputAxisX ( player_num ) ,
-                                                       (float) ServerThinksInputAxisY ( player_num ) , TRUE ), 
-							translate_pixel_to_map_location ( player_num ,
-                                                       (float) ServerThinksInputAxisX ( player_num ) ,
-                                                       (float) ServerThinksInputAxisY ( player_num ) , FALSE ), Me [ player_num ] . pos . z))
+		if ( ! DirectLineWalkable ( Me [ player_num ] . pos . x , Me [ player_num ] . pos . y ,  translate_pixel_to_map_location ( 0 ,
+                                                       (float) ServerThinksInputAxisX ( 0 ) ,
+                                                       (float) ServerThinksInputAxisY ( 0 ) , TRUE ), 
+							translate_pixel_to_map_location ( 0 ,
+                                                       (float) ServerThinksInputAxisX ( 0 ) ,
+                                                       (float) ServerThinksInputAxisY ( 0 ) , FALSE ), Me [ 0 ] . pos . z))
 						goto done_handling_instant_hits;
 
-		AllEnemys [ index_of_droid_below_mouse_cursor ] . energy -= calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+		AllEnemys [ index_of_droid_below_mouse_cursor ] . energy -= calculate_program_hit_damage ( skill_index ) ;
 	        Me [ 0 ] . temperature += SpellCost;
 		break;
 	
 	case PROGRAM_FORM_SELF:
-		Me [ 0 ] . energy -= calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+		Me [ 0 ] . energy -= calculate_program_hit_damage ( skill_index ) ;
                 Me [ 0 ] . temperature += SpellCost;
 		break;
 
 	case PROGRAM_FORM_BULLET:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return;
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return 0;
                 Me [ 0 ] . temperature += SpellCost;
 	
 		moderately_finepoint target_location;
@@ -273,19 +228,19 @@ HandleCurrentlyActivatedSkill( int player_num )
 		bullet bul_parms;
 		FillInDefaultBulletStruct( 0, &bul_parms, MAGENTA_BULLET, ITEM_LASER_PISTOL );
 	
-		bul_parms.freezing_level = strcmp( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "slowdown" ) ? 0 : 10;
-		bul_parms.poison_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 10;
-		bul_parms.poison_damage_per_sec = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 1;
-		bul_parms.paralysation_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "paralyze" ) ? 0 : 10;
-		bul_parms.damage = calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+		bul_parms.freezing_level = strcmp( SpellSkillMap [ skill_index ] . effect, "slowdown" ) ? 0 : 10;
+		bul_parms.poison_duration = strcmp ( SpellSkillMap [ skill_index ] . effect, "poison" ) ? 0 : 10;
+		bul_parms.poison_damage_per_sec = strcmp ( SpellSkillMap [ skill_index ] . effect, "poison" ) ? 0 : 1;
+		bul_parms.paralysation_duration = strcmp ( SpellSkillMap [ skill_index ] . effect, "paralyze" ) ? 0 : 10;
+		bul_parms.damage = calculate_program_hit_damage ( skill_index ) ;
 		bul_parms.to_hit = SpellHitPercentageTable [ Me [ 0 ] . spellcasting_skill ];
 
 		FireTuxRangedWeaponRaw ( 0 , ITEM_LASER_PISTOL , -1 , &bul_parms, target_location); 
 		
-		return; //no extra effects
+		return 1; //no extra effects
 
 	case PROGRAM_FORM_RADIAL:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return;
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return 0;
 		Me [ 0 ] . temperature += SpellCost;
 		
 		int i,j;
@@ -306,13 +261,13 @@ HandleCurrentlyActivatedSkill( int player_num )
   	            AllActiveSpells [ i ] . active_directions [ j ] = TRUE ;
                     }
 		
-		AllActiveSpells [ i ] . freeze_duration = strcmp( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "slowdown" ) ? 0 : 10;
-		AllActiveSpells [ i ] .poison_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 10;
-		AllActiveSpells [ i ] .poison_dmg = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "poison" ) ? 0 : 1;
-		AllActiveSpells [ i ] .paralyze_duration = strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "paralyze" ) ? 0 : 10;
-		AllActiveSpells [ i ] .damage = calculate_program_hit_damage ( Me [ 0 ] . readied_skill ) ;
+		AllActiveSpells [ i ] . freeze_duration = strcmp( SpellSkillMap [ skill_index ] . effect, "slowdown" ) ? 0 : 10;
+		AllActiveSpells [ i ] .poison_duration = strcmp ( SpellSkillMap [ skill_index ] . effect, "poison" ) ? 0 : 10;
+		AllActiveSpells [ i ] .poison_dmg = strcmp ( SpellSkillMap [ skill_index ] . effect, "poison" ) ? 0 : 1;
+		AllActiveSpells [ i ] .paralyze_duration = strcmp ( SpellSkillMap [ skill_index ] . effect, "paralyze" ) ? 0 : 10;
+		AllActiveSpells [ i ] .damage = calculate_program_hit_damage ( skill_index ) ;
 
-		return;
+		return 1;
 
 	}
 
@@ -320,13 +275,13 @@ HandleCurrentlyActivatedSkill( int player_num )
     done_handling_instant_hits:
 
     /*handle the special extra effects of the skill*/
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "none" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "none" ) )
    	{
 	goto out;
 	}
 
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "talk_or_takeover" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "talk_or_takeover" ) )
    	{
 	if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto out;
 	index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( player_num ) ;
@@ -354,7 +309,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "weapon" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "weapon" ) )
    	{
 	if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto out;
         if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
@@ -363,7 +318,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "repair" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "repair" ) )
    	{
 	if ( ! MouseCursorIsInInvRect( GetMousePos_x()  , 
 					 GetMousePos_y()  ) 
@@ -379,7 +334,7 @@ HandleCurrentlyActivatedSkill( int player_num )
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "identify" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "identify" ) )
    	{
 	//--------------------
 	// Maybe the identify mode has already been triggered and
@@ -395,17 +350,17 @@ HandleCurrentlyActivatedSkill( int player_num )
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "invisibility" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "invisibility" ) )
    	{
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "burnup" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "burnup" ) )
    	{
 	goto out;
 	}
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "teleport_home" ) )
+    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "teleport_home" ) )
    	{
 	if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
 					  GetMousePos_y()  ) )
@@ -417,139 +372,13 @@ HandleCurrentlyActivatedSkill( int player_num )
 
 
 
-    if ( ! strcmp ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . effect, "" ) )
+/*    if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "" ) )
    	{
-	}
-/*
-    switch ( Me [ 0 ] . readied_skill )
-    {
-    
-	case SPELL_FORCE_EXPLOSION_CIRCLE:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		    ForceExplosionCircle( Me[0].pos );
-	    }
-	    break;
-	case SPELL_FORCE_EXPLOSION_RAY:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    ForceExplosionRay ( 
-			Me [ 0 ] . pos , 
-			translate_pixel_to_map_location ( player_num , 
-							  (float) ServerThinksInputAxisX ( player_num ) , 
-							  (float) ServerThinksInputAxisY ( player_num ) , TRUE ) 
-			- Me [ player_num ] . pos . x ,
-			translate_pixel_to_map_location ( player_num , 
-							  (float) ServerThinksInputAxisX ( player_num ) , 
-							  (float) ServerThinksInputAxisY ( player_num ) , FALSE ) 
-			- Me [ player_num ] . pos . y );
-		}
-	    }
-	    break;
-	    {
-	    }
-	    break;
-	case SPELL_FIREY_BOLT:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    FireyBoltSpell ( Me [ 0 ] . pos );
-		}
-	    }
-	    break;
-	case SPELL_COLD_BOLT:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    ColdBoltSpell ( Me [ 0 ] . pos );
-		}
-	    }
-	    break;
-	case SPELL_REPAIR_SKILL:
-	    break;
-	case SPELL_IDENTIFY_SKILL:
-	    if ( MouseRightClicked() )
-	    {
-	    }
-	    break;
-	case SPELL_POISON_BOLT:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    PoisonBoltSpell ( Me [ 0 ] . pos );
-		}
-	    }
-	    break;
-	case SPELL_PARALYZE_BOLT:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    ParalyzeBoltSpell ( Me [ 0 ] . pos );
-		}
-	    }
-	    break;
-	case SPELL_RADIAL_EMP_WAVE:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    RadialEMPWave ( Me [ 0 ] . pos , TRUE );
-		}
-	    }
-	    break;
-	case SPELL_RADIAL_VMX_WAVE:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    RadialVMXWave ( Me [ 0 ] . pos , TRUE );
-		}
-	    }
-	    break;
-	case SPELL_RADIAL_FIRE_WAVE:
-	    if ( MouseRightClicked() )
-	    {
-		if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-		    RadialFireWave ( Me [ 0 ] . pos , TRUE );
-		}
-	    }
-	    break;
-	case SPELL_EXTRACT_PLASMA_TRANSISTORS :
-	case  SPELL_EXTRACT_SUPERCONDUCTORS : 
-	case  SPELL_EXTRACT_ANTIMATTER_CONVERTERS : 
-	case SPELL_EXTRACT_ENTROPY_INVERTERS : 
-	case  SPELL_EXTRACT_TACHYON_CONDENSATORS : break;
+	}*/
 
-	default:
-	    fprintf( stderr, "\n\nMe [ 0 ] . readied_skill: %d \n" , Me [ 0 ] . readied_skill );
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-There was a request for a spell/skill that is currently not handled.\n\
-Nothing will be done then.  This is a warning message only.\n\
-Usually this error is not severe.",
-				       NO_NEED_TO_INFORM, IS_WARNING_ONLY );
-	    break;
-    }
-*/
 out:
 
-return;    
+return 1;    
 }; // void HandleCurrentlyActivatedSkill( void )
 
 

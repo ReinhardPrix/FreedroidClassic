@@ -199,30 +199,6 @@ enum _game_config_screen_visible_parameters
     GAME_CONFIG_SCREEN_VISIBLE_SKILL_EXPLANATION = 8004 ,
 };
 
-enum _spell_names
-{
-  SPELL_TRANSFERMODE = 0, // 0
-  SPELL_REPAIR_SKILL, // 
-  SPELL_WEAPON, // 
-  SPELL_IDENTIFY_SKILL, // 
-  SPELL_FORCE_TO_ENERGY, // 
-  SPELL_TELEPORT_HOME, // 
-  SPELL_FIREY_BOLT, // 
-  SPELL_COLD_BOLT, // 
-  SPELL_FORCE_EXPLOSION_CIRCLE, // 
-  SPELL_POISON_BOLT, // 
-  SPELL_PARALYZE_BOLT, // 
-  SPELL_RADIAL_EMP_WAVE, //
-  SPELL_RADIAL_VMX_WAVE, // 
-  SPELL_RADIAL_FIRE_WAVE, // 
-  SPELL_EXTRACT_PLASMA_TRANSISTORS,
-  SPELL_EXTRACT_SUPERCONDUCTORS,
-  SPELL_EXTRACT_ANTIMATTER_CONVERTERS,
-  SPELL_EXTRACT_ENTROPY_INVERTERS,
-  SPELL_EXTRACT_TACHYON_CONDENSATORS,
-  SPELL_FORCE_EXPLOSION_RAY, // 
-};
-
 //--------------------
 // This is old and should go out, but that must be done from at home, 
 // cause here I can't check if the code is still running without it
