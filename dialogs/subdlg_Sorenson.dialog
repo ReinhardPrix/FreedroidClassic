@@ -30,12 +30,22 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Sure. I'll sign it."
+New Option Nr=0  OptionText="START HERE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=0 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Sure. I'll sign it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Go0d. H3re is th3 con7ract. S1gn it!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=0
 LinkedTo:20
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -230,7 +240,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=99  OptionText=" There is no way I will sign something without reading it. Forget about it."
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=318  PositionY=425  
 Subtitle="N00oo00oo0! T1m3 to d1e, m0rta1 foo1!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
