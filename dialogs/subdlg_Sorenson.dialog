@@ -100,6 +100,7 @@ PositionX=200  PositionY=200
 Subtitle="Yes! I am free! At last I am free!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
+LinkedTo:70
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -180,7 +181,7 @@ PositionX=200  PositionY=200
 Subtitle="N0! Idi07!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
-DoSomethingExtra=""
+DoSomethingExtra="KillTux"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
