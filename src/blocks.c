@@ -2936,14 +2936,14 @@ init_obstacle_data( void )
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . obstacle_long_description = "The autogun is disabled.";
 
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_1 = 1.0 ;
+  obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_1 = 1.5 ;
   obstacle_map [ ISO_CAVE_WALL_H ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_CAVE_WALL_H ] . filename = "iso_cave_wall_0001.png" ;
   obstacle_map [ ISO_CAVE_WALL_H ] . obstacle_short_name = "Rock barrier";
   obstacle_map [ ISO_CAVE_WALL_H ] . obstacle_long_description = "No way to pass through. Find another path.";
   obstacle_map [ ISO_CAVE_WALL_V ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_CAVE_WALL_V ] . block_area_parm_1 = 1.0 ;
-  obstacle_map [ ISO_CAVE_WALL_V ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_CAVE_WALL_V ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_CAVE_WALL_V ] . filename = "iso_cave_wall_0002.png" ;
   obstacle_map [ ISO_CAVE_WALL_V ] . obstacle_short_name = "Rock barrier";
   obstacle_map [ ISO_CAVE_WALL_V ] . obstacle_long_description = "No way to pass through. Find another path.";
