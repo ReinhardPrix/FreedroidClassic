@@ -1497,44 +1497,6 @@ Quick_ApplyItem( int ItemKey )
 }; // void Quick_ApplyItem( item* CurItem )
 
 /* ----------------------------------------------------------------------
- * This function returns the spellcasting skill level that is required
- * to cast a given spell.
- * ---------------------------------------------------------------------- */
-int
-required_spellcasting_skill_for_item ( int item_type )
-{
-
-    switch ( item_type )
-    {
-	case ITEM_SPELLBOOK_OF_HEALING:
-	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
-	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
-	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	case ITEM_SPELLBOOK_OF_IDENTIFY:
-	    return ( 0 ) ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
-	case ITEM_SPELLBOOK_OF_ICE_BOLT:
-	case ITEM_SPELLBOOK_OF_POISON_BOLT:
-	case ITEM_SPELLBOOK_OF_PETRIFICATION:
-	    return ( 1 ) ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
-	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
-	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
-	    return ( 2 ) ;
-	    break;
-
-	default:
-	    return ( 0 ) ;
-	    break;
-    }
-    
-}; // int required_spellcasting_skill_for_item ( int item_type )
-
-/* ----------------------------------------------------------------------
  * There are many spellbooks.  These are handled inside the code via 
  * their item_type, an integer.  Now these spellbooks affect skills.  The
  * skills are handled internally via their index in the skill list.  So
@@ -1546,66 +1508,21 @@ int
 associate_skill_with_item ( int item_type )
 {
     int associated_skill = (-1) ;
-/*
-    switch ( item_type )
-    {
-	case ITEM_SPELLBOOK_OF_HEALING:
-	    associated_skill = SPELL_FORCE_TO_ENERGY ;
-	    break;
+    if ( ! item_type || item_type == -1 )
+	return 0; //we have a problem here...
 
-	case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
-	    associated_skill = SPELL_FORCE_EXPLOSION_CIRCLE;
-	    break;
+    if ( ! strstr( ItemMap [ item_type ] . item_name, "Source Book of" ) ) 
+	{
+	fprintf(stderr, "Game took item %d for a source book - this is a bug\n", item_type);
+	return 0;
+	}
+    
+    char * pos = strstr( ItemMap [ item_type ] . item_name, "Source Book of" );
+    pos += strlen ("Source Book of ");
+    
+//    DebugPrintf(-1, "Associating item %d with program %s\n", item_type, pos);
+    associated_skill = get_program_index_with_name(pos);
 
-	case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
-	    associated_skill = SPELL_FORCE_EXPLOSION_RAY ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	    associated_skill = SPELL_TELEPORT_HOME ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_IDENTIFY:
-	    associated_skill = SPELL_IDENTIFY_SKILL ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
-	    associated_skill = SPELL_FIREY_BOLT ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_ICE_BOLT:
-	    associated_skill = SPELL_COLD_BOLT ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_POISON_BOLT:
-	    associated_skill = SPELL_POISON_BOLT ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_PETRIFICATION:
-	    associated_skill = SPELL_PARALYZE_BOLT ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
-	    associated_skill = SPELL_RADIAL_EMP_WAVE ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
-	    associated_skill = SPELL_RADIAL_VMX_WAVE ;
-	    break;
-
-	case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
-	    associated_skill = SPELL_RADIAL_FIRE_WAVE ;
-	    break;
-
-	default:
-	    //--------------------
-	    // In case it's not one of the spellbooks mentioned above, 
-	    // there isn't any magic requirement, so we return 0 and
-	    // allow for application of the item in question.
-	    //
-	    break;
-    }
-*/
     return ( associated_skill );
 
 }; // int associate_skill_with_item ( int item_type )
@@ -1619,8 +1536,8 @@ required_magic_stat_for_next_level_and_item ( int item_type )
 {
     int level_index;
     int associated_skill = (-1) ;
-
-    associated_skill = associate_skill_with_item ( item_type );
+return 0;
+/*    associated_skill = associate_skill_with_item ( item_type );
 
     //--------------------
     // In case we're not dealing with a spell book, the question
@@ -1630,7 +1547,7 @@ required_magic_stat_for_next_level_and_item ( int item_type )
     if ( associated_skill == (-1) ) 
 	return ( 0 );
 
-/*    //--------------------
+    //--------------------
     // Now we know the associated skill, so all we need to do is
     // return the proper value from the magic requirements entry
     // of the SkillMap.
@@ -1667,10 +1584,7 @@ requirements_for_item_application_met ( item* CurItem )
 
     if ( Me [ 0 ] . Magic >= required_magic_stat_for_next_level_and_item ( CurItem -> type )  || ! required_magic_stat_for_next_level_and_item ( CurItem -> type ))
     {
-	if ( Me [ 0 ] . spellcasting_skill >= required_spellcasting_skill_for_item ( CurItem -> type ))
 	    return ( TRUE );
-	else
-	    return ( FALSE );
     }
     else
 	return ( FALSE );
@@ -1850,9 +1764,29 @@ ApplyItem( item* CurItem )
     {
 	DoSkill(get_program_index_with_name("Sanctuary"), 0);
     }
-    else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
+    else if ( (CurItem->type == ITEM_SPELLBOOK_OF_CHECK_SYSTEM_INTEGRITY) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_CALCULATE_PI) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_BLUE_SCREEN) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_TELEPORT_HOME) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_MALFORMED_PACKET) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_ANALYZE_ITEM) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_NETHACK) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_DISPELL_SMOKE) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_KILLER_POKE) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_BROADCAST_KILLER_POKE) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_RICER_CFLAGS) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_PLASMA_DISCHARGE) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_INVISIBILITY) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_SANCTUARY) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_VIRUS) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_BROADCAST_VIRUS) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_REVERSE_ENGINEER) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_EMERGENCY_SHUTDOWN) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_LIGHT) || 
+	(CurItem->type == ITEM_SPELLBOOK_OF_SATELLITE_IMAGE) )
+
     {
-	Me [ 0 ] . base_skill_level [ get_program_index_with_name("Check system integrity") ] ++ ;
+	Me [ 0 ] . base_skill_level [ associate_skill_with_item ( CurItem -> type) ] ++ ;
 	Play_Spell_ForceToEnergy_Sound( );
     }
     

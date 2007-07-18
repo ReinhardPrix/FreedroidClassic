@@ -253,22 +253,26 @@ AssembleItemListForTradeCharacter ( item* ListToBeFilled , int ShopCharacterCode
     }
     else if ( ShopCharacterCode == PERSON_SORENSON )
     {
-	ListPointer->type = ITEM_SCRIPT_OF_IDENTIFY; ListPointer++;
-	ListPointer->type = ITEM_SCRIPT_OF_TELEPORT_HOME; ListPointer++;
-
-	ListPointer->type = ITEM_SPELLBOOK_OF_HEALING; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_EXPLOSION_RAY; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++;
-	
-	ListPointer->type = ITEM_SPELLBOOK_OF_PLASMA_BOLT; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_ICE_BOLT; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_POISON_BOLT; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_PETRIFICATION; ListPointer++;
-	
-	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE; ListPointer++;
-	ListPointer->type = ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE; ListPointer++;
+	ListPointer->type = ITEM_SPELLBOOK_OF_CHECK_SYSTEM_INTEGRITY; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_CALCULATE_PI; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_BLUE_SCREEN; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_TELEPORT_HOME; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_MALFORMED_PACKET; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_ANALYZE_ITEM; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_NETHACK; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_DISPELL_SMOKE; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_KILLER_POKE; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_BROADCAST_KILLER_POKE; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_RICER_CFLAGS; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_PLASMA_DISCHARGE; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_INVISIBILITY; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_SANCTUARY; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_VIRUS; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_BROADCAST_VIRUS; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_REVERSE_ENGINEER; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_EMERGENCY_SHUTDOWN; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_LIGHT; ListPointer++; 
+	ListPointer->type = ITEM_SPELLBOOK_OF_SATELLITE_IMAGE; ListPointer++; 
     }
     else
     {

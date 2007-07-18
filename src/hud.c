@@ -269,27 +269,34 @@ exist really (i.e. has a type = (-1) ).",
 	//
 	switch ( CurItem -> type )
 	{
-/*	    case ITEM_SPELLBOOK_OF_HEALING:
-	    case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
-	    case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
-	    case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	    case ITEM_SPELLBOOK_OF_DETECT_ITEMS:
-	    case ITEM_SPELLBOOK_OF_IDENTIFY:
-	    case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
-	    case ITEM_SPELLBOOK_OF_ICE_BOLT:
-	    case ITEM_SPELLBOOK_OF_POISON_BOLT:
-	    case ITEM_SPELLBOOK_OF_PETRIFICATION:
-	    case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
-	    case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
-	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
+case ITEM_SPELLBOOK_OF_CHECK_SYSTEM_INTEGRITY:
+case ITEM_SPELLBOOK_OF_CALCULATE_PI:
+case ITEM_SPELLBOOK_OF_BLUE_SCREEN:
+case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+case ITEM_SPELLBOOK_OF_MALFORMED_PACKET:
+case ITEM_SPELLBOOK_OF_ANALYZE_ITEM:
+case ITEM_SPELLBOOK_OF_NETHACK:
+case ITEM_SPELLBOOK_OF_DISPELL_SMOKE:
+case ITEM_SPELLBOOK_OF_KILLER_POKE:
+case ITEM_SPELLBOOK_OF_BROADCAST_KILLER_POKE:
+case ITEM_SPELLBOOK_OF_RICER_CFLAGS:
+case ITEM_SPELLBOOK_OF_PLASMA_DISCHARGE:
+case ITEM_SPELLBOOK_OF_INVISIBILITY:
+case ITEM_SPELLBOOK_OF_SANCTUARY:
+case ITEM_SPELLBOOK_OF_VIRUS:
+case ITEM_SPELLBOOK_OF_BROADCAST_VIRUS:
+case ITEM_SPELLBOOK_OF_REVERSE_ENGINEER:
+case ITEM_SPELLBOOK_OF_EMERGENCY_SHUTDOWN:
+case ITEM_SPELLBOOK_OF_LIGHT:
+case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 
-		sprintf( linebuf , "Program execution status: %s\n " ,  
+/*		sprintf( linebuf , "Program execution status: %s\n " ,  
 			 AllSkillTexts [ required_spellcasting_skill_for_item ( CurItem -> type ) ] );
-		strcat( ItemDescText , linebuf );
-		sprintf( linebuf , "Required for next upgrade: %d\n " ,  
+		strcat( ItemDescText , linebuf );*/
+/*		sprintf( linebuf , "Required for next upgrade: %d\n " ,  
 			 required_magic_stat_for_next_level_and_item ( CurItem -> type ) );
-		strcat( ItemDescText , linebuf );
-		break;*/
+		strcat( ItemDescText , linebuf );*/
+		break;
 	    default:
 		break;
 	}
@@ -371,19 +378,27 @@ exist really (i.e. has a type = (-1) ).",
 		strcat( ItemDescText , linebuf );
 		break;
 		
-	    case ITEM_SPELLBOOK_OF_HEALING:
-	    case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
-	    case ITEM_SPELLBOOK_OF_EXPLOSION_RAY:
-	    case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
-	    case ITEM_SPELLBOOK_OF_PLASMA_BOLT:
-	    case ITEM_SPELLBOOK_OF_ICE_BOLT:
-	    case ITEM_SPELLBOOK_OF_POISON_BOLT:
-	    case ITEM_SPELLBOOK_OF_PETRIFICATION:
-	    case ITEM_SPELLBOOK_OF_RADIAL_EMP_WAVE:
-	    case ITEM_SPELLBOOK_OF_RADIAL_VMX_WAVE:
-	    case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
-	    case ITEM_SPELLBOOK_OF_IDENTIFY:
-		sprintf( linebuf , "Permanently aquire/enhance this program\n" );
+	case ITEM_SPELLBOOK_OF_CHECK_SYSTEM_INTEGRITY:
+	case ITEM_SPELLBOOK_OF_CALCULATE_PI:
+	case ITEM_SPELLBOOK_OF_BLUE_SCREEN:
+	case ITEM_SPELLBOOK_OF_TELEPORT_HOME:
+	case ITEM_SPELLBOOK_OF_MALFORMED_PACKET:
+	case ITEM_SPELLBOOK_OF_ANALYZE_ITEM:
+	case ITEM_SPELLBOOK_OF_NETHACK:
+	case ITEM_SPELLBOOK_OF_DISPELL_SMOKE:
+	case ITEM_SPELLBOOK_OF_KILLER_POKE:
+	case ITEM_SPELLBOOK_OF_BROADCAST_KILLER_POKE:
+	case ITEM_SPELLBOOK_OF_RICER_CFLAGS:
+	case ITEM_SPELLBOOK_OF_PLASMA_DISCHARGE:
+	case ITEM_SPELLBOOK_OF_INVISIBILITY:
+	case ITEM_SPELLBOOK_OF_SANCTUARY:
+	case ITEM_SPELLBOOK_OF_VIRUS:
+	case ITEM_SPELLBOOK_OF_BROADCAST_VIRUS:
+	case ITEM_SPELLBOOK_OF_REVERSE_ENGINEER:
+	case ITEM_SPELLBOOK_OF_EMERGENCY_SHUTDOWN:
+	case ITEM_SPELLBOOK_OF_LIGHT:
+	case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
+		sprintf( linebuf , "Permanently acquire/enhance this program\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 

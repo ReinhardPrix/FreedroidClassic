@@ -875,7 +875,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	    }
 	}
     else {
-	    switch ( ShowItem -> type )
+	/*    switch ( ShowItem -> type )
 	        {
 	            case ITEM_SPELLBOOK_OF_HEALING:
 	            case ITEM_SPELLBOOK_OF_EXPLOSION_CIRCLE:
@@ -899,7 +899,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	                break;
                 default:
                 	break;
-        	}
+        	}*/
 	}
     //--------------------
     // Now we give some pricing information, the base list price for the item,
