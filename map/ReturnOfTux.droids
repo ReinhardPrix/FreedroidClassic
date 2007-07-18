@@ -768,7 +768,57 @@ Allowed Type of Random Droid for this level: 476
 //
 SForce: T=883 X=28 Y=25 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SADDStartGameSquare" RushTux="no" DialogSectionToUse="SADD" ShortLabel="SADD - Secret Area Defence Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
+SForce: T=JAS X=18 Y=17 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="TaniaStartGameSquare" RushTux="no" DialogSectionToUse="Tania" ShortLabel="Tania - lonely scientistr" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=598 X=41 Y=19 Fixed=0 Marker=1276 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaDefenceControl" RushTux="no" DialogSectionToUse="SACD" ShortLabel="SACD - Secret Area Control Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=302 X=35 Y=16 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorPassage2" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=883 X=40 Y=14 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorEmmiters" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="SADD" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=629 X=38 Y=11 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorEmmiters" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=139 X=24 Y=8 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorEnterance" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Ashman" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=249 X=34 Y=8 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorPassage" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=302 X=29 Y=12 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorComputers" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=883 X=32 Y=15 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorComputers" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="SADD" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=476 X=36 Y=12 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorComputers" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Operator" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=629 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaHall" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=629 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaStore" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=629 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaPassage" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Guard" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=247 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaRestroom" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Servant" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=476 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaBedroom" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Criocapsules maintainer" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=329 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaBathroom" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Sanitary technician" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+SForce: T=302 X=41 Y=19 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaToilet" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Toilet droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
 ** End of this levels droid data **
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+** Beginning of new Level **
+Level=36
+Maximum number of Random Droids=7
+Minimum number of Random Droids=5
+Allowed Type of Random Droid for this level: 629
+Allowed Type of Random Droid for this level: 476
+Allowed Type of Random Droid for this level: 598
+Allowed Type of Random Droid for this level: 302
+
+** End of this levels droid data **
+
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------

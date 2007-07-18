@@ -445,6 +445,8 @@ enum _non_player_characters
     PERSON_LUKAS,
     PERSON_JASMINE,
     PERSON_SADD,
+    PERSON_SACD,
+    PERSON_TANIA,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)
@@ -725,7 +727,7 @@ enum
 
 #define MAX_ENEMYS_ON_SHIP	1000
 #define MAX_INFLU_POSITION_HISTORY 10000
-#define MAX_MISSIONS_IN_GAME 10         // how many missions can there be at most in Freedroid
+#define MAX_MISSIONS_IN_GAME 12         // how many missions can there be at most in Freedroid
 #define MAX_MISSION_TRIGGERED_ACTIONS 10
 #define MAX_MISSION_DESCRIPTION_TEXTS 10
 

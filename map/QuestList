@@ -299,6 +299,32 @@ Mission diary entry="I am supposed to get some dilithium crystals for that SADD.
 Mission diary entry="Done. He looks happy."
 ** End of this mission target subsection **
 
+** Start of this mission target subsection **
++++
++++ This is the tent'h mission:  Free Tania 
++++
++++ note: the number code for this mission (like from inside dialogs and such) is 10
++++ 
+Mission Name="Tanias sanitary"
+Assign this mission to influencer automatically at start : 0
+Mission target is to fetch item : -1
+Mission target is to kill all droids : -1
+Mission target is to kill class of droids : -1
+Mission target is to kill droids with marker : -1
+Mission target is to kill all hostile droids this first level : -1
+Mission target is to also kill all hostile droids on second level : -1
+Mission target is to become class : -1
+Mission target is to become type : -1
+Mission target is to overtake a droid with marker : 1276
+Mission target is to reach level : 1
+Mission target is to reach X-Pos : 0
+Mission target is to reach Y-Pos : 0
+Mission target is to live for how many seconds : -1
+Mission diary entry="I have met a girl locked in secret area. If I manage to disable autoguns, she would be able to go to the surface, look at sun again."
+Mission diary entry="I have found that SACD and overtooked him."
+Mission diary entry="Tania is free now!"
+** End of this mission target subsection **
+
 *** END OF QUEST LIST *** LEAVE THIS TERMINATOR IN HERE ***
 
 

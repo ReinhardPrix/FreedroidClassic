@@ -253,6 +253,40 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=24 Y=2 Lev=35
+Use map location from map label="SecretAreaExit1"
+Event Action to be triggered by this trigger="teleport_to_secret_area_collectors_1"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=24 Y=2 Lev=35
+Use map location from map label="SecretAreaExit2"
+Event Action to be triggered by this trigger="teleport_to_secret_area_collectors_2"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=24 Y=2 Lev=35
+Use map location from map label="SecretAreaCollectorsExit1"
+Event Action to be triggered by this trigger="teleport_from_secret_area_collectors_1"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=24 Y=2 Lev=35
+Use map location from map label="SecretAreaCollectorsExit2"
+Event Action to be triggered by this trigger="teleport_from_secret_area_collectors_2"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
 
 
 // ------------------------------------------------------------
@@ -810,11 +844,44 @@ Action is mission assignment=-1
 * End of this Event Action Subsection *
 
 
+* Start of an Event Action Subsection *
+Action label for this action="teleport_to_secret_area_collectors_1"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="SecretAreaCollectorsEnterance1"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 
+* Start of an Event Action Subsection *
+Action label for this action="teleport_to_secret_area_collectors_2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="SecretAreaCollectorsEnterance2"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_secret_area_collectors_1"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="SecretAreaEnterance1"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_secret_area_collectors_2"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="SecretAreaEnterance2"
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 //--------------------
 // Now the influencer makes simple comments without any other implication
