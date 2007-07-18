@@ -1048,6 +1048,73 @@ def startupnodes(everything):
           list.append(earlybirds, bite[0][1][0])
   return earlybirds
 
+def patchall():
+  patchfile = open("script.txt")
+  a = patchfile.readline()[:-1]
+  while a != "------------------------------":
+    a = patchfile.readline()[:-1]
+  a = True
+  while a:
+    a = patchone(patchfile)
+    
+def patchone(patchfile):
+  patchfile.readline()
+  line = patchfile.readline()
+  if line == "":
+    return False
+  line = line[2:-1]
+  current = open(line)
+  node = None
+  subnode = None
+  home = clip(current)
+  count = nodecount(current, home)
+  everything = scanall(current, count)
+  nodeindex = makeindex(everything)
+  nodesleft = True
+  while nodesleft:
+    nodesleft = patchnode(patchfile, everything, nodeindex)
+  current = writeall(current, everything)
+  return True
+    
+def patchnode(patchfile, everything, nodeindex):
+  line = patchfile.readline()
+  if line == "\n":
+    line = patchfile.readline()
+    if line == "\n":
+      return False
+  if line == "------------------------------\n":
+    return False
+  line = line[3:-1]
+  try:
+   int(line)
+  except:
+   return False
+  x = list.index(nodeindex, line)
+  node = everything[x]
+  count = 0
+  line = patchfile.readline()
+  while line != "\n":
+    if line == "":
+      return False
+    line = line[2:]
+    if line[0] == "T":
+      line = line[5:-1]
+    else:
+      line = line[3:-1]
+    counter = -1
+    for bit in node:
+      if bit[0] == "tuxtalk" or bit[0] == "reply":
+        counter = counter + 1
+      if counter == count:
+        if bit[0] == "tuxtalk":
+          bit[1][1] = line
+        if bit[0] == "reply":
+          bit[1] = line
+    line = patchfile.readline()
+    count = count + 1
+  return True
+
+      
 ####################################################################
 #    HERE STARTS THE PROGRAM.
 ####################################################################
@@ -1353,6 +1420,11 @@ while True :
     batchdo("dd")
   elif command == "*!s":
     batchdo("!s")
+  elif command == "*pa":
+    if current == None:
+      patchall()
+    else:
+      error()
   else:
     error()
   
