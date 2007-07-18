@@ -2170,20 +2170,6 @@ adapt_global_mode_for_player ( int player_num )
     int our_enemy_index ;
 
     //--------------------
-    // If the cursor is not in the user rectangle, i.e. the cursor is on one
-    // of the skill/character/inventory screens, othen the mode must
-    // be reset to normal (except for identify operations on the inventory
-    // screen)
-    //
-/*    if ( ( !MouseCursorIsInRect ( &User_Rect , GetMousePos_x() , GetMousePos_y() ) ) &&
-	 ( global_ingame_mode != GLOBAL_INGAME_MODE_IDENTIFY ) )
-    {
-	printf("resetting mode\n");
-	global_ingame_mode = GLOBAL_INGAME_MODE_NORMAL ;
-	return;
-    }*/
-
-    //--------------------
     // At first we check if maybe the player is scrolling the game
     // message window.
     //
