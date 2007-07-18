@@ -1707,7 +1707,10 @@ ApplyItem( item* CurItem )
     }
 
     if ( Me [ 0 ] . busy_time > 0 )
+	{	
+	append_new_game_message("How do you expect to do two things at a time?");
 	return; //if the player is busy reloading or anything
+	}
 
     //--------------------
     // At this point we know that the item is applicable in combat situation
@@ -1789,18 +1792,18 @@ ApplyItem( item* CurItem )
 	GameConfig . Automap_Visible = TRUE ;
 	Play_Spell_ForceToEnergy_Sound( );
     }
-/*    else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
+    else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
     {
-	RadialVMXWave ( Me [ 0 ] . pos , FALSE );
+	DoSkill(get_program_index_with_name("Gas grenade"), 0);
     }
     else if ( CurItem->type == ITEM_EMP_SHOCK_GRENADE )
     {
-	RadialEMPWave ( Me [ 0 ] . pos , FALSE );
+	DoSkill(get_program_index_with_name("EMP grenade"), 0);
     }
     else if ( CurItem->type == ITEM_PLASMA_GRENADE )
     {
-	RadialFireWave ( Me [ 0 ] . pos , FALSE );
-    }*/
+	DoSkill(get_program_index_with_name("Plasma grenade"), 0);
+    }
     else if ( CurItem->type == ITEM_STRENGTH_PILL )
     {
 	Me [ 0 ] . base_strength ++ ;
