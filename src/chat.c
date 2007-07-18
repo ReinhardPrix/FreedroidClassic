@@ -491,7 +491,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
     else if ( ! strcmp ( ExtraCommandString , "IncreaseSpellcastingSkill" ) )
     {
 	ImproveSkill(&Me [ 0 ] . spellcasting_skill); 
-	SetNewBigScreenMessage( "Spellcasting ability improved!" );
+	SetNewBigScreenMessage( "Programming skill increased!" );
     }
     else if ( ! strcmp ( ExtraCommandString , "IncreaseHackingSkill" ) )
     {
