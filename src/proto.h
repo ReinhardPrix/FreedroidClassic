@@ -431,7 +431,7 @@ EXTERN void silently_unhold_all_items ( void );
 EXTERN int required_spellcasting_skill_for_item ( int item_type );
 EXTERN int required_magic_stat_for_next_level_and_item ( int item_type );
 EXTERN int CountItemtypeInInventory( int Itemtype , int player_num );
-EXTERN void DeleteAllInventoryItemsOfType( int Itemtype , int player_num );
+EXTERN void DeleteInventoryItemsOfType( int Itemtype , int amount, int player_num );
 EXTERN void DeleteOneInventoryItemsOfType( int Itemtype , int player_num );
 EXTERN void DamageItem( item* CurItem );
 EXTERN int GetFreeInventoryIndex( void );

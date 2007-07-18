@@ -570,6 +570,32 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	strncpy(pname, pos, pos2 - pos);
 	Me [ 0 ] . energy -= atoi ( pname ) ;
     }
+    else if ( CountStringOccurences ( ExtraCommandString , "DeleteItem:" ) )
+    {
+	char * pos = strstr(ExtraCommandString, "DeleteItem");
+	pos += strlen("DeleteItem:");
+	while ( ! isdigit(*pos) ) pos ++;
+	char * pos2 = pos;
+	while ( isdigit(*pos2) ) pos2 ++;
+	
+	char pname[15];
+	int multiplicity = 1;
+
+	strncpy(pname, pos, pos2-pos);
+	TempValue = atoi(pname);
+
+	if(*pos2 == ':')
+	    {
+	    pos=pos2 + 1;
+	    pos2 ++;
+            while( isdigit(*pos2) ) pos2++;
+	    strncpy(pname, pos, pos2-pos);
+	    multiplicity = atoi(pname);
+	    }
+	else multiplicity = 1;
+
+	DeleteInventoryItemsOfType( TempValue , multiplicity, 0 );      
+    }
     else if ( CountStringOccurences ( ExtraCommandString , "GiveItem:" ) )
     {
 	char * pos = strstr(ExtraCommandString, "GiveItem");
@@ -766,40 +792,6 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	Me [ 0 ] . Gold += TempValue;
 	sprintf ( WorkString , "%d bucks received" , TempValue );
 	SetNewBigScreenMessage ( WorkString );
-    }
-    else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsWithCode:" ) )
-    {
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked deletion of all inventory items with a certain code. --> have to decode... " );
-	ReadValueFromString( ExtraCommandString , "DeleteAllInventoryItemsWithCode:" , "%d" , 
-			     &TempValue , ExtraCommandString + strlen ( ExtraCommandString ) + 0 );
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding... code of item to delete found is: %d." , TempValue );
-	DeleteAllInventoryItemsOfType( TempValue , 0 );      
-    }
-    else if ( CountStringOccurences ( ExtraCommandString , "DeleteAllInventoryItemsOfType:" ) )
-    {
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked deletion of all inventory items of type '%s'. --> have to decode... " ,
-		     ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
-	
-	if ( !strcmp ( ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) , "ITEM_DIXONS_TOOLBOX" ) )
-	{
-	    TempValue = ITEM_DIXONS_TOOLBOX;
-	}
-	else if ( !strcmp ( ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) , "ITEM_RED_DILITIUM_CRYSTAL" ) )
-	{
-	    TempValue = ITEM_RED_DILITIUM_CRYSTAL;
-	}
-	else
-	{
-	    fprintf( stderr, "\n\nErrorneous string: %s \n" , 
-		     ExtraCommandString + strlen ( "DeleteAllInventoryItemsOfType:" ) );
-	    GiveStandardErrorMessage ( __FUNCTION__  , "\
-ERROR:  UNKNOWN ITEM STRING GIVEN AS ITEM TO DELETE FROM INVENTORY!",
-				       PLEASE_INFORM, IS_FATAL );
-	}
-	
-	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...item to remove is: %d." , TempValue );
-	DeleteAllInventoryItemsOfType( TempValue , 0 );      
-	
     }
     else if ( ! strcmp ( ExtraCommandString , "CompletelyHealTux" ) )
     {
