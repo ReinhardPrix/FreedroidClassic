@@ -202,5 +202,34 @@ Effect="maplevel"
 Cost=40
 Base damage=0
 
+** Start of new program specification subsection **
+Program name="Plasma Grenade"
+Program description="This is a bug, report this to the developers."
+Picture="NoSkillAvailable.png"
+Form="radial"
+Effect="none"
+Cost=0
+Base damage=40
+
+** Start of new program specification subsection **
+Program name="Gas grenade"
+Program description="This is a bug, report this to the developers."
+Picture="NoSkillAvailable.png"
+Form="radial"
+Effect="none"
+Cost=0
+Base damage=30
+
+** Start of new program specification subsection **
+Program name="EMP grenade"
+Program description="This is a bug, report this to the developers."
+Picture="NoSkillAvailable.png"
+Form="radial"
+Effect="none"
+Cost=0
+Base damage=30
+
+
+
 *** End of program data section ***
 *** End of this Freedroid data File ***
