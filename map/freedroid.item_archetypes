@@ -1272,7 +1272,7 @@ Item description text="A small, lightweight and pretty straightforward shield. P
 
 // Item No. 44
 ** Start of new item specification subsection **
-Item name="Source Book of the Healing spell"
+Item name="Source Book of Check system integrity"
 Position_X=779
 Position_Y=391
 Item can be applied in combat="yes"
@@ -1288,7 +1288,7 @@ Item description text="An incredible healing spell, probably only one you will e
 
 // Item No. 45
 ** Start of new item specification subsection **
-Item name="Source Book of Teleport Home"
+Item name="Source Book of Sanctuary"
 Position_X=780
 Position_Y=269
 Item can be applied in combat="yes"
@@ -1304,7 +1304,7 @@ Item description text="Teleporting takes on a whole new face with this book-use 
 
 // Item No. 46
 ** Start of new item specification subsection **
-Item name="Source Book of Explosion Circle"
+Item name="Source Book of Calculate Pi"
 Position_X=779
 Position_Y=211
 Item can be applied in combat="yes"
@@ -1315,12 +1315,12 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
-Item description text="The destructive magic of this bookis best used in tight situations, when the enemies have an upper hand."
+Item description text="Calculate PI book"
 ** End of new item specification subsection **
 
 // Item No. 47
 ** Start of new item specification subsection **
-Item name="Source Book of Explosion Ray"
+Item name="Source Book of Blue Screen"
 Position_X=780
 Position_Y=150
 Item can be applied in combat="yes"
@@ -1954,7 +1954,7 @@ Item description text="This item is part of the 'Self Cleaning Kitchen' (SCK) pr
 
 // Item No. 83
 ** Start of new item specification subsection **
-Item name="Source Book of Plasma Bolt"
+Item name="Source Book of Malformed packet"
 Position_X=780
 Position_Y=240
 Item can be applied in combat="yes"
@@ -1970,7 +1970,7 @@ Item description text="This manual allows you to throw balls of fire from your h
 
 // Item No. 84
 ** Start of new item specification subsection **
-Item name="Source Book of Ice Bolt"
+Item name="Source Book of Analyze item"
 Position_X=780
 Position_Y=360
 Item can be applied in combat="yes"
@@ -1986,7 +1986,7 @@ Item description text="This manual allows you to throw bolts of ice, freezing th
 
 // Item No. 85
 ** Start of new item specification subsection **
-Item name="Source Book of Poison Bolt"
+Item name="Source Book of Nethack"
 Position_X=780
 Position_Y=329
 Item can be applied in combat="yes"
@@ -2002,7 +2002,7 @@ Item description text="An incredible spell, allowing you to poison varies target
 
 // Item No. 86
 ** Start of new item specification subsection **
-Item name="Source Book of Petrification"
+Item name="Source Book of Dispell smoke"
 Position_X=779
 Position_Y=421
 Item can be applied in combat="yes"
@@ -2018,7 +2018,7 @@ Item description text="An incredible spell turning the target into stone."
 
 // Item No. 87
 ** Start of new item specification subsection **
-Item name="Source Book of Radial EMP Wave"
+Item name="Source Book of Killer poke"
 Position_X=780
 Position_Y=299
 Item can be applied in combat="yes"
@@ -2034,7 +2034,7 @@ Item description text="An incredible spell, causing a wave of the dreaded radial
 
 // Item No. 88
 ** Start of new item specification subsection **
-Item name="Source Book of Radial VMX Wave"
+Item name="Source Book of Broadcast killer poke"
 Position_X=781
 Position_Y=181
 Item can be applied in combat="yes"
@@ -2050,7 +2050,7 @@ Item description text="An incredible spell, causing a wave of the dreaded radial
 
 // Item No. 89
 ** Start of new item specification subsection **
-Item name="Source Book of Radial Plasma Wave"
+Item name="Source Book of Ricer CFLAGS"
 Position_X=780
 Position_Y=120
 Item can be applied in combat="yes"
@@ -2066,7 +2066,7 @@ Item description text="An incredible spell, causing a wave of the dreaded radial
 
 // Item No. 90
 ** Start of new item specification subsection **
-Item name="Source Book of Detect Items"
+Item name="Source Book of Plasma discharge"
 Position_X=781
 Position_Y=85
 Item can be applied in combat="yes"
@@ -2082,7 +2082,7 @@ Item description text="An incredible detection spell, allowing you to know when 
 
 // Item No. 91
 ** Start of new item specification subsection **
-Item name="Source Book of Identify"
+Item name="Source Book of Invisibility"
 Position_X=782
 Position_Y=54
 Item can be applied in combat="yes"
@@ -2971,6 +2971,119 @@ Item as gun: ammo clip size=0
 Item as gun: weapon requires both hands="no"
 ----- end of part only relevant for weapons -----
 ** End of new item specification subsection **
+
+// Item No. 122
+** Start of new item specification subsection **
+Item name="Source Book of Sanctuary"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 123
+** Start of new item specification subsection **
+Item name="Source Book of Virus"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 124
+** Start of new item specification subsection **
+Item name="Source Book of Broadcast virus"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 125
+** Start of new item specification subsection **
+Item name="Source Book of Reverse-engineer"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 126
+** Start of new item specification subsection **
+Item name="Source Book of Emergency shutdown"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 127
+** Start of new item specification subsection **
+Item name="Source Book of Light"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
+// Item No. 128
+** Start of new item specification subsection **
+Item name="Source Book of Satellite image"
+Position_X=780
+Position_Y=360
+Item can be applied in combat="yes"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="spellbook"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="spellbook/inv_image.png"
+Item uses drop sound with filename="drop_book_sound.ogg"
+Base list price=450
+Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+** End of new item specification subsection **
+
 
 *** End of item data section: ***
 
