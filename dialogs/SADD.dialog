@@ -288,6 +288,7 @@ ChangeOption=21 ChangeToValue=0
 ChangeOption=22 ChangeToValue=0
 ChangeOption=23 ChangeToValue=1
 DoSomethingExtra="PlantCookie:SADD_exterminator"
+DoSomethingExtra="OpenQuestDiaryEntry:M9E1:"
 LinkedTo:23
 
 ----------------------------------------------------------------------
@@ -316,7 +317,7 @@ DoSomethingExtra="ExecuteActionWithLabel:disable_sadd_gun1"
 DoSomethingExtra="ExecuteActionWithLabel:disable_sadd_gun2"
 DoSomethingExtra="ExecuteActionWithLabel:breake_wall_near_sadd_1"
 DoSomethingExtra="AssignMission:9"
-DoSomethingExtra="OpenQuestDiaryEntry:M8E0:"
+DoSomethingExtra="OpenQuestDiaryEntry:M9E0:"
 DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
@@ -381,21 +382,6 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" I have crystals! It was uneasy to find it."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=1215  PositionY=195
-Subtitle=" Great!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=25 ChangeToValue=0
-DoSomethingExtra="MarkMissionComplete:9"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
-DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored SADD's power supply:"
-DoSomethingExtra="AddExperienceBonus:1000"
-DoSomethingExtra="OpenQuestDiaryEntry:M8E1:"
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
 New Option Nr=31  OptionText=" How is your power supply?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
@@ -418,7 +404,7 @@ DoSomethingExtra="MarkMissionComplete:9"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored SADD's power supply:"
 DoSomethingExtra="AddExperienceBonus:1000"
-DoSomethingExtra="OpenQuestDiaryEntry:M8E1:"
+DoSomethingExtra="OpenQuestDiaryEntry:M9E3:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_sadd_depot_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 DoSomethingExtra="EndDialog"
@@ -447,7 +433,7 @@ DoSomethingExtra="MarkMissionComplete:9"
 DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored SADD's power supply:"
 DoSomethingExtra="AddExperienceBonus:1500"
-DoSomethingExtra="OpenQuestDiaryEntry:M8E1:"
+DoSomethingExtra="OpenQuestDiaryEntry:M9E2:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_sadd_depot_door"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_sadd_bio_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -528,6 +514,7 @@ DoSomethingExtra="ExecuteActionWithLabel:enable_sadd_gun1"
 DoSomethingExtra="ExecuteActionWithLabel:enable_sadd_gun2"
 DoSomethingExtra="ExecuteActionWithLabel:breake_wall_near_sadd_2"
 DoSomethingExtra="ExecuteActionWithLabel:make_wall_near_sadd_breakable"
+DoSomethingExtra="OpenQuestDiaryEntry:M9E4:"
 DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
