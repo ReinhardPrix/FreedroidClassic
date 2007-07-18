@@ -881,9 +881,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 10:
-		    drop_item_type = ITEM_LASER_AMMUNITION ;
-		    drop_item_multiplicity =  2 + MyRandom ( 9 ) ;
-		    break;
+	            break;
 		case 11:
 		    drop_item_type = ITEM_CLUB ;
 		    drop_item_multiplicity =  1 ;
@@ -1818,27 +1816,11 @@ ApplyItem( item* CurItem )
     }
     else if ( CurItem->type == ITEM_SCRIPT_OF_IDENTIFY )
     {
-	Play_Spell_ForceToEnergy_Sound( );
-	silently_unhold_all_items ( );
-	global_ingame_mode = GLOBAL_INGAME_MODE_IDENTIFY ;
+	DoSkill(get_program_index_with_name("Analyze item"), 0);
     }	
     else if ( CurItem->type == ITEM_SCRIPT_OF_TELEPORT_HOME )
     {
-	if( (! Me [ 0 ] . teleport_anchor . x) && (! Me [ 0 ] . teleport_anchor . y)) //if there is no anchor, teleport home
-	{
-		Me [ 0 ] . teleport_anchor . x = Me [ 0 ] . pos . x;
-		Me [ 0 ] . teleport_anchor . y = Me [ 0 ] . pos . y;
-		Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z;
-		teleport_arrival_sound ( );
-		ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-		Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , FALSE , TRUE ) ;
-	}
-	else //we must teleport back to the anchor
-	{
-                teleport_arrival_sound  ( );
-		Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x , Me [ 0 ] . teleport_anchor . y , 0 , FALSE , TRUE ) ;
-	}
-		
+	DoSkill(get_program_index_with_name("Sanctuary"), 0);
     }
     else if ( CurItem->type == ITEM_SPELLBOOK_OF_HEALING )
     {
