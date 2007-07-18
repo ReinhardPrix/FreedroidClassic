@@ -204,7 +204,7 @@ Base damage=0
 
 ** Start of new program specification subsection **
 Program name="Plasma Grenade"
-Program description="This is a bug, report this to the developers."
+Program description="This is a bug, report this to the developers, unless you cheated, in which case you deserve to see this stupid description."
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
@@ -213,7 +213,7 @@ Base damage=40
 
 ** Start of new program specification subsection **
 Program name="Gas grenade"
-Program description="This is a bug, report this to the developers."
+Program description="This is a bug, report this to the developers, unless you cheated, in which case you deserve to see this stupid description."
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
@@ -222,7 +222,7 @@ Base damage=30
 
 ** Start of new program specification subsection **
 Program name="EMP grenade"
-Program description="This is a bug, report this to the developers."
+Program description="This is a bug, report this to the developers, unless you cheated, in which case you deserve to see this stupid description."
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
