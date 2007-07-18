@@ -333,7 +333,7 @@ Weapon type this droid uses: 0
 Aggression rate of this droid: 80
 Physical (base) damage an attack of this droid will do: 8.0
 Experience_Reward gained for destroying one of this type: 250
-Monster Level and maximum treasure chest to pick from=5
+Monster Level and maximum treasure chest to pick from=4
 Range of vision of this droid=10.0
 Time spent eyeing Tux=1.0
 Minimal distance hostile bots are tolerated=6
