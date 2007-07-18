@@ -2800,7 +2800,7 @@ handle_player_identification_command( int player_num )
 
     if ( GrabbedItem == NULL )
 	append_new_game_message("Identifying the void");
-    else if ( ! GrabbedItem -> type )
+    else if ( ! GrabbedItem -> type || GrabbedItem -> type == -1)
 	append_new_game_message("Identifying the void");
     else
 	{
