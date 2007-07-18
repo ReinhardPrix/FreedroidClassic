@@ -136,7 +136,7 @@ corresponding chat flags array index." ,
 
 /* ----------------------------------------------------------------------
  * This function plants a cookie, i.e. sets a new text string with the
- * purpose of serving as a flag.  These flags can be set from the dialog
+ * purpose of serving as a flag.  These flags can be set/unset from the dialog
  * file and used from within there and they get stored and loaded with
  * every gave via the tux_t structure.
  * ---------------------------------------------------------------------- */
@@ -223,6 +223,53 @@ This should not be possible without a severe bug in FreedroidRPG.",
     
     
 }; // void PlantCookie ( char* CookieString , int PlayerNum )
+
+
+/* ----------------------------------------------------------------------
+ * This function deletes planted cookie, i.e. delete a text string with the
+ * purpose of serving as a flag.  These flags can be set/unset from the dialog
+ * file and used from within there and they get stored and loaded with
+ * every gave via the tux_t structure.
+ * ---------------------------------------------------------------------- */
+void
+DeleteCookie ( char* CookieString , int PlayerNum )
+{
+    DebugPrintf ( -4 , "\nDeleting cookie: '%s'." , CookieString );
+    
+    if ( strlen ( CookieString ) > 1 )
+    {
+	DebugPrintf ( 1 , "\nLast character of cookie text received: %c." , 
+		      CookieString [ strlen ( CookieString ) - 1 ] );
+	if ( CookieString [ strlen ( CookieString ) - 1 ] == ':' )
+	{
+	    CookieString [ strlen ( CookieString ) - 1 ] = 0 ;
+	    DebugPrintf ( 1 , "\nRemoving trailing ':' character from cookie text...");
+	}
+    }
+
+    int i;
+    for ( i = 0 ; i < MAX_COOKIES ; i ++ )
+	{
+	DebugPrintf ( 1 , "\nCookie entry to compare to: %s." , Me [ PlayerNum ] . cookie_list [ i ] );
+	if ( ! strlen ( Me [ PlayerNum ] . cookie_list [ i ] ) ) continue;
+	if ( ! strcmp ( Me [ PlayerNum ] . cookie_list [ i ] , CookieString ) ) 
+		break;
+	//--------------------
+	// Now some extra safety, cause the ':' termination character might still be on 
+	// the cookie or on the comparison string
+	//
+	if ( strcmp ( Me [ 0 ] . cookie_list [ i ] , CookieString ) >= ( ( int ) strlen ( CookieString ) ) ) 
+	    break; 
+	}
+	
+    if (i == MAX_COOKIES){
+        DebugPrintf ( -4 , "Cookie not found.");
+    } else {
+	strcpy ( Me [ 0 ] . cookie_list [ i ] , "" ) ;
+	DebugPrintf ( 1 , "Cookie deleted.");
+    }
+}; // void DeleteCookie ( char* CookieString , int PlayerNum )
+
 
 /* ----------------------------------------------------------------------
  * This function restores all chat-with-friendly-droid variables to their
@@ -621,6 +668,12 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked planting of a cookie: %s. Doing it... " ,
 		     ExtraCommandString + strlen ( "PlantCookie:" ) );
 	PlantCookie ( ExtraCommandString + strlen ( "PlantCookie:" ) , 0 ) ;
+    }
+    else if ( CountStringOccurences ( ExtraCommandString , "DeleteCookie:" ) )
+    {
+	DebugPrintf( CHAT_DEBUG_LEVEL , "\nExtra invoked deleting of a cookie: %s. Doing it... " ,
+		     ExtraCommandString + strlen ( "DeleteCookie:" ) );
+	DeleteCookie ( ExtraCommandString + strlen ( "DeleteCookie:" ) , 0 ) ;
     }
     else if ( CountStringOccurences ( ExtraCommandString , "InitTradeWithCharacter:" ) )
     {
