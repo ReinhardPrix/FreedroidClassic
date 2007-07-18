@@ -315,8 +315,12 @@ exist really (i.e. has a type = (-1) ).",
 		break;
 		
 	    case ITEM_SCRIPT_OF_IDENTIFY:
+		sprintf( linebuf , "Analyze one item\n" );
+		strcat( ItemDescText , linebuf );
+		break;
+
 	    case ITEM_SCRIPT_OF_TELEPORT_HOME:
-		sprintf( linebuf , "Invokes a skill once\n" );
+		sprintf( linebuf , "Teleports you to your sanctuary\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		
