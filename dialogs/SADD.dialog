@@ -401,7 +401,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:9"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="DeleteItem:74"
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored SADD's power supply:"
 DoSomethingExtra="AddExperienceBonus:1000"
 DoSomethingExtra="OpenQuestDiaryEntry:M9E3:"
@@ -430,7 +430,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:9"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="DeleteItem:74"
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored SADD's power supply:"
 DoSomethingExtra="AddExperienceBonus:1500"
 DoSomethingExtra="OpenQuestDiaryEntry:M9E2:"

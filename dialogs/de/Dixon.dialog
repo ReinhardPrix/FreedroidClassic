@@ -367,7 +367,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=34 ChangeToValue=0
 DoSomethingExtra="AddGold:150"
 DoSomethingExtra="MarkMissionComplete:1"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="DeleteItem:59"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -389,7 +389,7 @@ DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:singularity_dead"
 DoSomethingExtra="AddGold:100"
 DoSomethingExtra="GiveItem:119"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="DeleteItem:59"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -437,7 +437,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=41 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="DeleteItem:59"
 DoSomethingExtra="AddGold:250"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -454,7 +454,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=42 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="DeleteItem:59"
 DoSomethingExtra="AddGold:350"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -474,7 +474,7 @@ ChangeOption=40 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:1"
 DoSomethingExtra="PlantCookie:dixon_very_angry"
 DoSomethingExtra="AddGold:400"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:59"
+DoSomethingExtra="DeleteItem:59"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

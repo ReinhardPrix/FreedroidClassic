@@ -255,7 +255,7 @@ Subtitle="Thank you, Linarian. As soon as the food cubes are ready I will be abl
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=29 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:2"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:74"
+DoSomethingExtra="DeleteItem:74"
 DoSomethingExtra="AddBigScreenMessageBUT_WITH_TERMINATION_CHARACTER_PLEASE:Restored Michaelangelo's power supply:"
 DoSomethingExtra="AddExperienceBonus:350"
 DoSomethingExtra="OpenQuestDiaryEntry:M2E1:"

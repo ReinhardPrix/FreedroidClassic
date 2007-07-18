@@ -79,7 +79,7 @@ ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:7"
 DoSomethingExtra="OpenQuestDiaryEntry:M7E1:"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:100"
+DoSomethingExtra="DeleteItem:100"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

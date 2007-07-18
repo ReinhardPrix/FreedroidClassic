@@ -177,7 +177,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 DoSomethingExtra="GiveItem:76"
 DoSomethingExtra="GiveItem:76"
-DoSomethingExtra="DeleteAllInventoryItemsWithCode:79"
+DoSomethingExtra="DeleteItem:79"
 DoSomethingExtra="AddExperienceBonus:150"
 DoSomethingExtra="MarkMissionComplete:0"
 DoSomethingExtra="OpenQuestDiaryEntry:M0E2:"
