@@ -203,7 +203,7 @@ Cost=40
 Base damage=0
 
 ** Start of new program specification subsection **
-Program name="Plasma Grenade"
+Program name="Plasma grenade"
 Program description="This is a bug, report this to the developers, unless you cheated, in which case you deserve to see this stupid description."
 Picture="NoSkillAvailable.png"
 Form="radial"
