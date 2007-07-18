@@ -1706,7 +1706,29 @@ ApplyItem( item* CurItem )
 
     if ( Me [ 0 ] . busy_time > 0 )
 	{	
-	append_new_game_message("How do you expect to do two things at a time?");
+	char msg[500];
+	sprintf(msg, "How do you expect to do two things at a time? You are ");
+		switch ( Me [ 0 ] . busy_type ) 
+			{
+			case DRINKING_POTION:
+				strcat(msg, "drinking a potion!");
+				break;
+			case WEAPON_FIREWAIT:
+				strcat(msg, "waiting for you weapon to fire again!");
+				break;
+			case WEAPON_RELOAD:
+				strcat(msg, "reloading your weapon!");
+				break;
+			case THROWING_GRENADE:
+				strcat(msg, "throwing a grenade!");
+				break;
+			case RUNNING_PROGRAM:
+				strcat(msg, "running a program!");
+				break;
+			default : 
+				strcat(msg, "doing something so weird the game does not understand what it is");
+			}
+	append_new_game_message(msg);
 	return; //if the player is busy reloading or anything
 	}
 
