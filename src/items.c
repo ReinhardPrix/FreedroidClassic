@@ -1793,14 +1793,20 @@ ApplyItem( item* CurItem )
     else if ( CurItem->type == ITEM_VMX_GAS_GRENADE )
     {
 	DoSkill(get_program_index_with_name("Gas grenade"), 0);
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = THROWING_GRENADE;
     }
     else if ( CurItem->type == ITEM_EMP_SHOCK_GRENADE )
     {
 	DoSkill(get_program_index_with_name("EMP grenade"), 0);
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = THROWING_GRENADE;
     }
     else if ( CurItem->type == ITEM_PLASMA_GRENADE )
     {
 	DoSkill(get_program_index_with_name("Plasma grenade"), 0);
+	Me [ 0 ] . busy_time = 1;
+	Me [ 0 ] . busy_type = THROWING_GRENADE;
     }
     else if ( CurItem->type == ITEM_STRENGTH_PILL )
     {
@@ -1971,15 +1977,20 @@ did not contain this item type at all!  This indicates a severe bug in Freedroid
  * player.
  * ---------------------------------------------------------------------- */
 void
-DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
+DeleteInventoryItemsOfType( int Itemtype , int amount, int PlayerNum )
 {
     int i;
     for ( i = 0 ; i < MAX_ITEMS_IN_INVENTORY ; i++ )
     {
 	if ( Me [ PlayerNum ] . Inventory [ i ] . type == Itemtype ) 
-	    DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+	{
+	    if ( Me [ PlayerNum ] . Inventory [ i ] . multiplicity > amount )  
+		Me [ PlayerNum ] . Inventory [ i ] . multiplicity -= amount;
+	    else DeleteItem ( & ( Me [ PlayerNum ] . Inventory [ i ] ) );
+	    return;
+	}
     }
-}; // void DeleteAllInventoryItemsOfType( int Itemtype , int PlayerNum )
+}; // void DeleteInventoryItemsOfType( int Itemtype , int PlayerNum )
 
 /* ----------------------------------------------------------------------
  * This deletes ONE item of the given type, like one bullet that has 
@@ -2726,7 +2737,10 @@ handle_player_identification_command( int player_num )
     // the whole operation right away
     //
     if ( ! GameConfig.Inventory_Visible ) 
+	{
+	append_new_game_message("Identifying the void");
 	return;
+	}
 
     // --------------------
     // We will need the current mouse position on several spots...
@@ -2761,19 +2775,39 @@ handle_player_identification_command( int player_num )
 
 	}
 
-    if ( GrabbedItem != NULL )
+
+    if ( GrabbedItem == NULL )
+	append_new_game_message("Identifying the void");
+    else if ( ! GrabbedItem -> type )
+	append_new_game_message("Identifying the void");
+    else
 	{
+	char gmsg[500];
+	char iname[500];
+	*iname = '\0';
+
+	if ( GrabbedItem->type == ITEM_MONEY ) sprintf( iname , "%d " , GrabbedItem->gold_amount );
+    
+	if ( ( GrabbedItem->prefix_code != (-1) ) )
+	strcat( iname , PrefixList[ GrabbedItem->prefix_code ].bonus_name );
+        strcat( iname , ItemMap[ GrabbedItem->type ].item_name );
+        if ( ( GrabbedItem->suffix_code != (-1) ) )   
+	strcat( iname , SuffixList[ GrabbedItem->suffix_code ].bonus_name );
+
+
 	    if ( GrabbedItem -> is_identified == TRUE )
 	    {
 		PlayOnceNeededSoundSample ( "effects/is_already_indentif.ogg" , FALSE , FALSE );
+		sprintf(gmsg, "You analyze %s thoroughly, but it doesn't seem to have more characteristics than what you were already aware of", iname);
 	    }
 	    else
 	    {
                 GrabbedItem -> is_identified = TRUE ;
 		Play_Spell_ForceToEnergy_Sound( );
+		sprintf(gmsg, "Identified %s", iname);
 	    }
+	append_new_game_message(gmsg);
 	}
-    
 }; // void handle_player_identification_command( int player_num )
 
 void 
