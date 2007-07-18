@@ -362,11 +362,7 @@ DoSkill(int skill_index, int SpellCost)
 
     if ( ! strcmp ( SpellSkillMap [ skill_index ] . effect, "teleport_home" ) )
    	{
-	if ( MouseCursorIsInUserRect ( GetMousePos_x()  , 
-					  GetMousePos_y()  ) )
-		{
-                TeleportHome (  ) ;
-		}
+               TeleportHome (  ) ;
 	goto out;
 	}
 
