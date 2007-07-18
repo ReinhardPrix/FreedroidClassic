@@ -881,6 +881,8 @@ int Get_Programs_Data ( char * DataPointer )
                              & ProgramToFill -> heat_cost_per_level  , EndOfProgramData );
             ReadValueFromStringWithDefault( ProgramPointer , "Present at startup=" , "%d" , "0",
                              & ProgramToFill -> present_at_startup  , EndOfProgramData );
+            ReadValueFromStringWithDefault( ProgramPointer , "Artwork internal code=" , "%d" , "-1",
+                             & ProgramToFill -> graphics_code  , EndOfProgramData );
             //ReadValueFromStringWithDefault( ProgramPointer , "Bonus to tohit modifier=" , "%d" , "0",
 	    
                              

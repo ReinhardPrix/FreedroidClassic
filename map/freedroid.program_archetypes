@@ -48,6 +48,8 @@ Hurt bots=1
 Hurt humans=1
 Cost=10
 Cost per level=5
+#12 is blue bullet
+Artwork internal code=12
 
 
 ** Start of new program specification subsection **
@@ -57,6 +59,7 @@ Picture="BlueScreen.png"
 Effect="paralyze"
 Form="bullet"
 Cost=15
+Artwork internal code=12
 
 ** Start of new program specification subsection **
 Program name="Malformed packet"
@@ -65,6 +68,8 @@ Picture="NoSkillAvailable.png"
 Effect="none"
 Form="bullet"
 Cost=2
+#14 is white bullet
+Artwork internal code=14
 
 ** Start of new program specification subsection **
 Program name="Check system integrity"
@@ -90,6 +95,7 @@ Picture="NoSkillAvailable.png"
 Form="bullet"
 Effect="paralyze"
 Cost=10
+Artwork internal code=5
 
 ** Start of new program specification subsection **
 Program name="Dispell smoke"
@@ -106,6 +112,8 @@ Picture="NoSkillAvailable.png"
 Form="bullet"
 Effect="none"
 Cost=30
+Artwork internal code=4
+
 
 ** Start of new program specification subsection **
 Program name="Broadcast killer poke"
@@ -131,6 +139,7 @@ Form="radial"
 Effect="none"
 Cost=30
 Base damage=50
+Artwork internal code=2
 
 ** Start of new program specification subsection **
 Program name="Invisibility"
@@ -156,6 +165,8 @@ Form="bullet"
 Effect="none"
 Cost=10
 Base damage=15
+Artwork internal code=13
+
 
 ** Start of new program specification subsection **
 Program name="Broadcast virus"
@@ -165,6 +176,7 @@ Form="radial"
 Effect="none"
 Cost=40
 Base damage=15
+Artwork internal code=1
 
 ** Start of new program specification subsection **
 Program name="Reverse-engineer"
@@ -192,6 +204,7 @@ Form="bullet"
 Effect="light"
 Cost=3
 Base damage=0
+Artwork internal code=14
 
 ** Start of new program specification subsection **
 Program name="Satelite image"
@@ -210,6 +223,7 @@ Form="radial"
 Effect="none"
 Cost=0
 Base damage=40
+Artwork internal code=2
 
 ** Start of new program specification subsection **
 Program name="Gas grenade"
@@ -219,6 +233,7 @@ Form="radial"
 Effect="none"
 Cost=0
 Base damage=30
+Artwork internal code=1
 
 ** Start of new program specification subsection **
 Program name="EMP grenade"
@@ -228,6 +243,7 @@ Form="radial"
 Effect="none"
 Cost=0
 Base damage=30
+Artwork internal code=0
 
 
 

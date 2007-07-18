@@ -996,6 +996,7 @@ typedef struct
     char* effect;
     int form;
     int present_at_startup;
+    int graphics_code;
 }
 spell_skill_spec, *Spell_Skill_Spec;
 

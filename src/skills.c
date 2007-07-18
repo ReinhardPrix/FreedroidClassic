@@ -226,7 +226,9 @@ DoSkill(int skill_index, int SpellCost)
 		target_location . y = translate_pixel_to_map_location ( 0 , ServerThinksInputAxisX ( 0 ) , ServerThinksInputAxisY ( 0 ) , FALSE ) ;
 		
 		bullet bul_parms;
-		FillInDefaultBulletStruct( 0, &bul_parms, MAGENTA_BULLET, ITEM_LASER_PISTOL );
+		if (  SpellSkillMap [ skill_index ] . graphics_code != -1 ) 
+			FillInDefaultBulletStruct( 0, &bul_parms,  SpellSkillMap [ skill_index ] . graphics_code, ITEM_LASER_PISTOL );
+		else	FillInDefaultBulletStruct( 0, &bul_parms, MAGENTA_BULLET, ITEM_LASER_PISTOL );
 	
 		bul_parms.freezing_level = strcmp( SpellSkillMap [ skill_index ] . effect, "slowdown" ) ? 0 : 10;
 		bul_parms.poison_duration = strcmp ( SpellSkillMap [ skill_index ] . effect, "poison" ) ? 0 : 10;
@@ -250,7 +252,7 @@ DoSkill(int skill_index, int SpellCost)
                     }
 	        if ( i >= MAX_ACTIVE_SPELLS ) i = 0 ;
 
-		AllActiveSpells [ i ] . img_type = 2; //hardcoding a temporary value
+		AllActiveSpells [ i ] . img_type = (SpellSkillMap [ skill_index ] . graphics_code == -1 ? 2 : SpellSkillMap [ skill_index ] . graphics_code);
 		AllActiveSpells [ i ] . spell_center . x = Me [ 0 ] . pos . x;
 	        AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
 	        AllActiveSpells [ i ] . spell_radius = 0.3 ;
