@@ -824,7 +824,9 @@ enum _busytype
     NONE=0,
     DRINKING_POTION=1,
     WEAPON_FIREWAIT,
-    WEAPON_RELOAD
+    WEAPON_RELOAD,
+    THROWING_GRENADE,
+    RUNNING_PROGRAM,
 };
 //--------------------
 // The possible edito modes for the level editor
