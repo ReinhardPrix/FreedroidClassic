@@ -1315,7 +1315,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
-Item description text="Calculate PI book"
+Item description text="It is not a big problem to make a badly designed system to go hunting for the impossible, causing a performance impact."
 ** End of new item specification subsection **
 
 // Item No. 47
@@ -1331,7 +1331,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=100
-Item description text="Another damaging book this one having a similar effect to dropping a house on an enemy."
+Item description text="With a little touch a war machine comes crashing down to a halt. For a while."
 ** End of new item specification subsection **
 
 // Item No. 48
@@ -1622,7 +1622,7 @@ Item description text="This is an standard part within many robots types."
 
 // Item No. 63
 ** Start of new item specification subsection **
-Item name="Antimatter-Matter Converter (AMC)"
+Item name="Antimatter-Matter Converter"
 Position_X=148
 Position_Y=240
 Item can be applied in combat="no"
@@ -1735,7 +1735,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
-Item description text="This grenade has about the same effect as the dreaded radial vmx wave spell."
+Item description text="The gas does not look terrifying. It even smells somewhat nice. And then you die. You die a most horrible death, never knowing what killed you."
 ** End of new item specification subsection **
 
 // Item No. 70
@@ -1753,7 +1753,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=150
-Item description text="This grenade has about the same effect as the dreaded radial emp wave spell."
+Item description text="This sphere contains a few strange bits of technology invented by Nikola Tesla in the early 20th century. The magnetic pulse that it generates can destroy most electronic devices in just one blast."
 ** End of new item specification subsection **
 
 // Item No. 71
@@ -1787,7 +1787,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
-Item description text="This grenade has about the same effect as the dreaded radial fire wave spell."
+Item description text="Said to the downscaled version of the original Pandora's Sphere, this device extinguishes life with superheated plasma."
 ** End of new item specification subsection **
 
 // Item No. 73
@@ -1890,7 +1890,7 @@ Item description text="These pills permanently raise magic within a person. They
 
 // Item No. 79
 ** Start of new item specification subsection **
-Item name="Brain Enlargement Antidote"
+Item name="Brain Enlargement Pills Antidote"
 Position_X=163
 Position_Y=105
 Item can be applied in combat="no"
@@ -1901,7 +1901,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="brain_enlargement_antidode/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=50
-Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the net. The planet-wide guild of medics has recommended not to respond to these ads at all, while attempts to entirely ban the distribution of those pills were never completely successful."
+Item description text="These pills can reverse the harmful effects of the 'brain enlargement pills' that are publicly sold via the internet. The planet-wide guild of medics has recommended not to respond to these ads at all, while attempts to entirely ban the distribution of those pills were never completely successful."
 ** End of new item specification subsection **
 
 // Item No. 80
@@ -1965,7 +1965,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=400
-Item description text="This manual allows you to throw balls of fire from your hands causing considerable damage to your target."
+Item description text="When computers are presented with the unexpected they can damage themselves."
 ** End of new item specification subsection **
 
 // Item No. 84
@@ -1981,7 +1981,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="There are very few items which have labels on them. Unless you happen to have an item labeled 'USE ME', you better make sure what it is before using it..."
 ** End of new item specification subsection **
 
 // Item No. 85
@@ -1997,7 +1997,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="An incredible spell, allowing you to poison varies targets, giving them a slow death."
+Item description text="The open source game called Nethack is one of the world's greatest wasters of time. Machines don't care about it, but humans can get sucked in quite deeply."
 ** End of new item specification subsection **
 
 // Item No. 86
@@ -2013,7 +2013,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="An incredible spell turning the target into stone."
+Item description text="By heating up the chips with a malformed program you can cause them to release the magic smoke which keeps the bot running."
 ** End of new item specification subsection **
 
 // Item No. 87
@@ -2029,7 +2029,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
-Item description text="An incredible spell, causing a wave of the dreaded radial EMP to explode around you."
+Item description text="Messing around with the bot's memory can cause it to damage itself, but the damage is greatly variable."
 ** End of new item specification subsection **
 
 // Item No. 88
@@ -2045,7 +2045,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
-Item description text="An incredible spell, causing a wave of the dreaded radial VMX to explode around you."
+Item description text="The radio network is a wonderful invention for the people who like to blow up a lot of stuff at once."
 ** End of new item specification subsection **
 
 // Item No. 89
@@ -2061,7 +2061,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
-Item description text="An incredible spell, causing a wave of the dreaded radial plasma to explode around you; burning everything that it hits."
+Item description text="Optimization is the root of all evil. You can gain some temporary improvements to your system, but in the end you are only likely to cause permanent damage."
 ** End of new item specification subsection **
 
 // Item No. 90
@@ -3080,8 +3080,8 @@ Item uses rotation series with prefix="spellbook"
 Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
-Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Base list price=300
+Item description text=""
 ** End of new item specification subsection **
 
 
