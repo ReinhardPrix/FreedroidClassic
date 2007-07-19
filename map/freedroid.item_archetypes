@@ -61,12 +61,12 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
-Item description text="Dummy item. If you see this report a bug."
+Item description text="Dummy item. If you see this, report a bug."
 ** End of new item specification subsection **
 
 // Item No. 1
 ** Start of new item specification subsection **
-Item name="Minor Health Capsule"
+Item name="Diet supplement"
 Position_X=34
 Position_Y=223
 Item can be applied in combat="yes"
@@ -79,12 +79,12 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=20
-Item description text="These small containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="Only proper vitamin and mineral intake can keep you healthy during the apocalypse. This can cure a cold."
 ** End of new item specification subsection **
 
 // Item No. 2
 ** Start of new item specification subsection **
-Item name="Major Health Capsule"
+Item name="Doc-in-a-can"
 Position_X=17
 Position_Y=279
 Item can be applied in combat="yes"
@@ -97,7 +97,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=60
-Item description text="These large containers hold purified essence of life, that will automatically mend and repair any injured tissue as soon as the container is opened. Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="This is a drink filled with nanobots designed to heal any damage that they notice inside you. It can cure decapitation. Most of the time."
 ** End of new item specification subsection **
 
 // Item No. 3
@@ -1336,7 +1336,7 @@ Item description text="With a little touch a war machine comes crashing down to 
 
 // Item No. 48
 ** Start of new item specification subsection **
-Item name="Medium Health Capsule"
+Item name="Antibiotic"
 Position_X=51
 Position_Y=244
 Item can be applied in combat="yes"
@@ -1349,7 +1349,7 @@ inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_potion_sound.ogg"
 Base list price=40
-Item description text="These medium sized containers hold purified essence of life, that will automatically mend and repair any injured tissue on the person closest by as soon as the container is opened.  Each container can be used only once, but multiple of those items can be grouped together like one item in inventory."
+Item description text="Truly wonderful things can be extracted from molds. This can cure lethal food poisoning. Wish you had that in your last Nethack game, eh?"
 ** End of new item specification subsection **
 
 // Item No. 49
