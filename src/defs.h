@@ -345,7 +345,7 @@ enum
 #define MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE 10000
 
 #define SCROLLSTARTX		User_Rect.x
-#define SCROLLSTARTY		GameConfig . screen_height
+#define SCROLLSTARTY		GameConfig . screen_height - 100
 
 #define INITIAL_DIGIT_LENGTH (8*2)
 #define INITIAL_DIGIT_HEIGHT (9*2)
