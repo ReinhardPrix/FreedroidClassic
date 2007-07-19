@@ -1874,7 +1874,7 @@ Item description text="These pills permanently raise dexterity within a person. 
 
 // Item No. 78
 ** Start of new item specification subsection **
-Item name="Magic Pill"
+Item name="Code Pill"
 Position_X=48
 Position_Y=177
 Item can be applied in combat="yes"
@@ -1885,7 +1885,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="pill_magic/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
-Item description text="These pills permanently raise magic within a person. They work on a nano-technological basis. Consult you physician, the receipt or pharmacy experts for details on intended effects, possible interactions and side effects of this drug."
+Item description text="Dude! This fab food will totally bump up your code skills, man! A real blast. Scarf those down to see the code."
 ** End of new item specification subsection **
 
 // Item No. 79
