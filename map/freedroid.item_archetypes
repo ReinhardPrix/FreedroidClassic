@@ -2245,7 +2245,7 @@ Item can be applied in combat="no"
 Item can be installed in influ="no"
 Item can be installed in slot with name="none"
 Item uses rotation series with prefix="datacube"
-Items of this type collect together in inventory="yes"
+Items of this type collect together in inventory="no"
 File or directory name for inventory image="datacube/inv_image.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=0
@@ -3084,6 +3084,23 @@ Base list price=300
 Item description text=""
 ** End of new item specification subsection **
 
+// Item No. 129
+** Start of new item specification subsection **
+Item name="Pandora's Cube"
+Position_X=244
+Position_Y=260
+inventory_size_y=6
+inventory_size_x=6
+Item can be applied in combat="no"
+Item can be installed in influ="no"
+Item can be installed in slot with name="none"
+Item uses rotation series with prefix="datacube"
+Items of this type collect together in inventory="no"
+File or directory name for inventory image="datacube/inv_image.png"
+Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
+Base list price=0
+Item description text="This is heavy. Cannot the end of the world come in a smaller package? It would be a great time for Duncan to explain a few things..."
+** End of new item specification subsection **
 
 *** End of item data section: ***
 
