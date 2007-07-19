@@ -2695,7 +2695,7 @@ handle_player_identification_command( int player_num )
     //
     if ( ! GameConfig.Inventory_Visible ) 
 	{
-	append_new_game_message("Identifying the void");
+	append_new_game_message("Identified air.");
 	return;
 	}
 
@@ -2734,9 +2734,9 @@ handle_player_identification_command( int player_num )
 
 
     if ( GrabbedItem == NULL )
-	append_new_game_message("Identifying the void");
+	append_new_game_message("Identified air.");
     else if ( ! GrabbedItem -> type || GrabbedItem -> type == -1)
-	append_new_game_message("Identifying the void");
+	append_new_game_message("Identified air.");
     else
 	{
 	char gmsg[500];
@@ -2755,7 +2755,7 @@ handle_player_identification_command( int player_num )
 	    if ( GrabbedItem -> is_identified == TRUE )
 	    {
 		PlayOnceNeededSoundSample ( "effects/is_already_indentif.ogg" , FALSE , FALSE );
-		sprintf(gmsg, "You analyze %s thoroughly, but it doesn't seem to have more characteristics than what you were already aware of", iname);
+		sprintf(gmsg, "You already know all there is to know about the %s.", iname);
 	    }
 	    else
 	    {
