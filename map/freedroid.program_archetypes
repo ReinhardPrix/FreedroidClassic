@@ -70,6 +70,7 @@ Form="bullet"
 Cost=2
 #14 is white bullet
 Artwork internal code=14
+Base damage=3
 
 ** Start of new program specification subsection **
 Program name="Check system integrity"
@@ -78,7 +79,7 @@ Picture="FirstAidSpell.png"
 Effect="none"
 Form="self"
 Cost=40
-Base damage=-10
+Base damage=-40
 
 ** Start of new program specification subsection **
 Program name="Analyze item"
@@ -103,7 +104,8 @@ Program description="By heating up the chips with a malformed program you can ca
 Picture="DispellSmoke.png"
 Form="immediate"
 Effect="none"
-Cost=50
+Cost=40
+Base damage=40
 
 ** Start of new program specification subsection **
 Program name="Killer poke"
@@ -111,8 +113,9 @@ Program description="Messing around with the bot's memory can cause it to damage
 Picture="NoSkillAvailable.png"
 Form="bullet"
 Effect="none"
-Cost=30
+Cost=20
 Artwork internal code=4
+Base damage=40
 
 
 ** Start of new program specification subsection **
@@ -122,6 +125,7 @@ Picture="NoSkillAvailable.png"
 Form="ring"
 Effect="none"
 Cost=100
+Base damage=250
 
 ** Start of new program specification subsection **
 Program name="Ricer CFLAGS"
@@ -138,7 +142,7 @@ Picture="RadialPlasmaWaveSpell.png"
 Form="radial"
 Effect="none"
 Cost=30
-Base damage=50
+Base damage=500
 Artwork internal code=2
 
 ** Start of new program specification subsection **
@@ -174,7 +178,7 @@ Program description="The network is wide and dangerous. Many traps await for the
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
-Cost=40
+Cost=400
 Base damage=15
 Artwork internal code=1
 
@@ -185,7 +189,7 @@ Picture="NoSkillAvailable.png"
 Form="immediate"
 Effect="none"
 Cost=60
-Base damage=40
+Base damage=80
 
 ** Start of new program specification subsection **
 Program name="Emergency shutdown"
@@ -222,7 +226,7 @@ Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
 Cost=0
-Base damage=40
+Base damage=400
 Artwork internal code=2
 
 ** Start of new program specification subsection **
@@ -232,7 +236,7 @@ Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
 Cost=0
-Base damage=30
+Base damage=300
 Artwork internal code=1
 
 ** Start of new program specification subsection **
@@ -242,7 +246,7 @@ Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
 Cost=0
-Base damage=30
+Base damage=300
 Artwork internal code=0
 
 
