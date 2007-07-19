@@ -59,7 +59,7 @@ def batchdo(task):
     everything = None
     node = None
     subnode = None
-    current = open("../dialogs/" + onedialog)
+    current = open(onedialog)
     home = clip(current)
     count = nodecount(current, home)
     everything = scanall(current, count)
