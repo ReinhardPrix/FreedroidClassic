@@ -1598,7 +1598,6 @@ requirements_for_item_application_met ( item* CurItem )
 void
 ApplyItem( item* CurItem )
 {
-    location HomeSpot;
 
     DebugPrintf( 1 , "\n%s(): function call confirmed." , __FUNCTION__ );
 
@@ -2682,12 +2681,11 @@ get_floor_item_index_under_mouse_cursor ( int player_num )
  * whole identification operation.
  * ---------------------------------------------------------------------- */
 void
-handle_player_identification_command( int player_num )
+handle_player_identification_command( )
 {
     point Inv_GrabLoc;
     point CurPos;
     int Grabbed_InvPos = (-1) ;
-    int SpellCost = 10; //SpellSkillMap [ SPELL_IDENTIFY_SKILL ] . mana_cost_table [ Me [ 0 ] . spellcasting_skill ] ;
     item * GrabbedItem = NULL;
     //--------------------
     // If the inventory sceen isn't open at all, then we can cancel
@@ -3606,7 +3604,6 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     int InvPos;
     point Inv_Loc = { -1 , -1 } ;
     int TargetItemIndex;
-    int foundplace = 0;
     
     if ( ItemPointer == NULL ) return -1;
     

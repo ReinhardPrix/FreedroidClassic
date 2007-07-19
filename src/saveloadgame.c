@@ -505,7 +505,7 @@ int
 LoadGame( void )
 {
     char version_check_string[1000];
-    unsigned char *LoadGameData;
+    char *LoadGameData;
     char filename[1000];
     unsigned char* InfluencerRawDataPointer;
     unsigned char* EnemyRawDataPointer;

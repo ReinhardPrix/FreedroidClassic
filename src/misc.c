@@ -1279,7 +1279,7 @@ move_all_items_to_level ( int target_level )
  * ship.  THIS CAN BE A POSITION ON A DIFFERENT LEVEL.
  * ---------------------------------------------------------------------- */
 void
-Teleport ( int LNum , float X , float Y , int PlayerNum , int Shuffling , int with_sound_and_fading )
+Teleport ( int LNum , float X , float Y , int PlayerNum , int with_sound_and_fading )
 {
     int curLevel = LNum;
     int array_num = 0;
@@ -1988,7 +1988,7 @@ ExecuteEvent ( int EventNumber , int PlayerNum )
 	Teleport ( AllTriggeredActions[ EventNumber ].TeleportTargetLevel ,
 		   AllTriggeredActions[ EventNumber ].TeleportTarget.x + 0.5 ,
 		   AllTriggeredActions[ EventNumber ].TeleportTarget.y + 0.5 ,
-		   PlayerNum , FALSE , TRUE );
+		   PlayerNum , TRUE );
     }
     
     // Does the defined action assign the influencer a mission?

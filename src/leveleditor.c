@@ -2604,13 +2604,13 @@ DoLevelEditorMainMenu ( Level EditLevel )
 		    if ( LeftPressed() )
 		    {
 			if ( EditLevel->levelnum > 0 )
-			    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , TRUE , FALSE );
+			    Teleport ( EditLevel->levelnum -1 , 3 , 3 , 0 , FALSE );
 			while (LeftPressed());
 		    }
 		    if ( RightPressed() )
 		    {
 			if ( EditLevel->levelnum < curShip.num_levels -1 )
-			    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , TRUE , FALSE );
+			    Teleport ( EditLevel->levelnum +1 , 3 , 3 , 0 , FALSE );
 			while (RightPressed());
 		    }
 		    break;
@@ -2627,7 +2627,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 			while (LeftPressed());
 		    }
 		    Teleport ( EditLevel -> levelnum , 
-			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
+			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 ,  FALSE ); 
 		    break;
 		    
 		case CHANGE_MINIMAL_LIGHT_ON_LEVEL:
@@ -2642,7 +2642,7 @@ DoLevelEditorMainMenu ( Level EditLevel )
 			while (LeftPressed());
 		    }
 		    Teleport ( EditLevel -> levelnum , 
-			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , TRUE , FALSE ); 
+			       Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 0 , FALSE ); 
 		    break;
 	    }
 	} // if LeftPressed || RightPressed
@@ -4774,7 +4774,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 		new_x = 3;
 	    new_y = curShip . AllLevels [ EditLevel -> jump_target_north ] -> xlen - 4 ;
 	    if ( EditLevel -> jump_target_north >= 0 ) 
-		Teleport ( EditLevel -> jump_target_north , new_x , new_y , 0 , TRUE , FALSE );
+		Teleport ( EditLevel -> jump_target_north , new_x , new_y , 0 , FALSE );
 	}
 	else if ( MouseCursorIsOnButton ( GO_LEVEL_SOUTH_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -4784,7 +4784,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 		new_x = 3;
 	    new_y = 4;
 	    if ( EditLevel -> jump_target_south >= 0 ) 
-		Teleport ( EditLevel -> jump_target_south , new_x , new_y , 0 , TRUE , FALSE );
+		Teleport ( EditLevel -> jump_target_south , new_x , new_y , 0 , FALSE );
 	}
 	else if ( MouseCursorIsOnButton ( GO_LEVEL_EAST_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -4794,7 +4794,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    else 
 		new_y = 4;
 	    if ( EditLevel -> jump_target_east >= 0 ) 
-		Teleport ( EditLevel -> jump_target_east , new_x , new_y , 0 , TRUE , FALSE );
+		Teleport ( EditLevel -> jump_target_east , new_x , new_y , 0 , FALSE );
 	}
 	else if ( MouseCursorIsOnButton ( GO_LEVEL_WEST_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{
@@ -4804,7 +4804,7 @@ level_editor_handle_left_mouse_button ( int proceed_now )
 	    else 
 		new_y = 4;
 	    if ( EditLevel -> jump_target_west >= 0 ) 
-		Teleport ( EditLevel -> jump_target_west , new_x , new_y , 0 , TRUE , FALSE );
+		Teleport ( EditLevel -> jump_target_west , new_x , new_y , 0 , FALSE );
 	}
 	else if ( MouseCursorIsOnButton ( EXPORT_THIS_LEVEL_BUTTON , GetMousePos_x()  , GetMousePos_y()  ) )
 	{

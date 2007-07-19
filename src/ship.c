@@ -1014,7 +1014,7 @@ DeleteSecurityClearances( int PlayerNum , int ClearanceIndex )
  *  * You can turn on/off autoguns
  * ----------------------------------------------------------------- */
 void
-ShowDeckMap (Level deck)
+ShowDeckMap ()
 {
   finepoint tmp;
   static char LeftMouseWasPressed = FALSE;
@@ -1199,10 +1199,10 @@ ShowDeckMap (Level deck)
 			{
 			case 0:
 			case 1:
-			  ScrollText ( EmailText1 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_BACKGROUND_CODE );
+			  ScrollText ( EmailText1 , SCROLLSTARTX, SCROLLSTARTY, NE_TITLE_PIC_BACKGROUND_CODE );
 			  break;
 			case 2:
-			  ScrollText ( EmailText2 , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_TITLE_PIC_BACKGROUND_CODE );
+			  ScrollText ( EmailText2 , SCROLLSTARTX, SCROLLSTARTY, NE_TITLE_PIC_BACKGROUND_CODE );
 			  break;
 			default:
 			  break;

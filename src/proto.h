@@ -425,7 +425,7 @@ EXTERN void play_sample_using_WAV_cache_v( char* SoundSampleFileName , int With_
 #else
 #define EXTERN extern
 #endif
-EXTERN void handle_player_identification_command ( int player_num );
+EXTERN void handle_player_identification_command ( );
 EXTERN void MoveItem( item* SourceItem , item* DestItem );
 EXTERN void silently_unhold_all_items ( void );
 EXTERN int required_magic_stat_for_next_level_and_item ( int item_type );
@@ -660,7 +660,7 @@ EXTERN int DoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstI
 EXTERN int ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON] , 
 				       unsigned char Chat_Flags[ MAX_ANSWERS_PER_PERSON ] , int FirstItem , 
 				       int background_code , void* MenuFont , enemy* ChatDroid );
-EXTERN int ChatDoMenuSelection( char* InitialText , char* MenuTexts[10] , int FirstItem , int background_code , void* MenuFont , enemy* ChatDroid );
+EXTERN int ChatDoMenuSelection( char* MenuTexts[10] , int FirstItem , void* MenuFont , enemy* ChatDroid );
 EXTERN void StartupMenu (void);
 EXTERN void BuySellMenu ( void );
 EXTERN void InitiateMenu( int background_code );
@@ -702,7 +702,7 @@ EXTERN void Activate_Conservative_Frame_Computation(void);
 EXTERN void gotoxy (int, int);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
-EXTERN void Teleport ( int LNum , float X , float Y , int player_num , int Shuffling , int WithSound ) ;
+EXTERN void Teleport ( int LNum , float X , float Y , int player_num , int WithSound ) ;
 EXTERN int SaveGameConfig (void);
 EXTERN int LoadGameConfig (void);
 EXTERN void InsertNewMessage (void);
@@ -747,7 +747,7 @@ EXTERN void occasionally_update_first_and_last_bot_indices ( void );
 #define EXTERN extern
 #endif
 EXTERN int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTORY ] );
-EXTERN void ShowDeckMap (Level deck);
+EXTERN void ShowDeckMap ();
 EXTERN void ShowItemInfo ( item* ShowItem , int page , char ShowArrows , int background_code , int title_text_flag );
 EXTERN void EnterLift (void);
 EXTERN void EnterItemIdentificationBooth( void );
@@ -789,7 +789,7 @@ EXTERN int DisplayText ( const char *text, int startx, int starty, const SDL_Rec
 EXTERN void display_current_chat_protocol ( int background_picture_code , enemy* ChatDroid , int with_update );
 
 EXTERN void DisplayChar (unsigned char c);
-EXTERN int ScrollText (char *text, int startx, int starty, int EndLine , int background_code );
+EXTERN int ScrollText (char *text, int startx, int starty, int background_code );
 
 EXTERN int ImprovedCheckLineBreak(unsigned char *text, const SDL_Rect *clip , float text_stretch );
 EXTERN char *PreviousLine (char *textstart, char *text);

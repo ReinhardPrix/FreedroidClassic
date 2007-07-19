@@ -41,7 +41,7 @@
 
 #include "map.h"
 
-void TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine);
+void TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength );
 void GetThisLevelsDroids( char* SectionPointer );
 Level DecodeLoadedLeveldata ( char *data );
 
@@ -1885,7 +1885,7 @@ use underground lighting: %d\n",
 	// But before we can write this line of the map to the disk, we need to
 	// convert is back to human readable format.
 	//
-	TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen , Lev , i );
+	TranslateToHumanReadable ( HumanReadableMapLine , Lev->map[i] , xlen );
 	strncat( LevelMem, (char*) HumanReadableMapLine , xlen * 4 * 2 ); // We need FOUR , no EIGHT chars per map tile
 	strcat(LevelMem, "\n");
     }
@@ -2194,7 +2194,7 @@ DecodeItemSectionOfThisLevel ( Level loadlevel , char* data )
   ItemPointer=ItemsSectionBegin;
   char * NextItemPointer;
   for ( i = 0 ; i < NumberOfItemsInThisLevel ; i ++ ){
-      if ( ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING ) ){
+      if ( (ItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING )) ){
             NextItemPointer = strstr ( ItemPointer + 1 , ITEM_CODE_STRING );
             if ( NextItemPointer ) NextItemPointer [ 0 ] = 0;
             ReadInOneItem ( ItemPointer , ItemsSectionEnd ,
@@ -2647,7 +2647,7 @@ of autoguns currently allowed in a Freedroid map.",
  * can later be written to the map file on disk.
  * ---------------------------------------------------------------------- */
 void
-TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength , Level Lev , int CurrentLine)
+TranslateToHumanReadable ( Uint16* HumanReadable , map_tile* MapInfo, int LineLength )
 {
   int col;
 

@@ -60,7 +60,7 @@ unsigned int StoreTextFG;
  *
  * ---------------------------------------------------------------------- */
 void
-show_backgrounded_label_at_pixel_position ( char* LabelText , float fill_status , int pos_x , int pos_y )
+show_backgrounded_label_at_pixel_position ( char* LabelText , int pos_x , int pos_y )
 {
     SDL_Rect background_rect;
     
@@ -86,7 +86,7 @@ show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , 
     float zoom_factor = (zoom_is_on ? 1.0 / LEVEL_EDITOR_ZOOM_OUT_FACT : 1.0);
     
     translate_map_point_to_screen_pixel ( pos_x , pos_y , &pixel_x, &pixel_y, zoom_factor );
-    show_backgrounded_label_at_pixel_position ( LabelText , fill_status , pixel_x , pixel_y );
+    show_backgrounded_label_at_pixel_position ( LabelText , pixel_x , pixel_y );
     
 }; // void show_backgrounded_label_at_map_position ( char* LabelText , float fill_status , float pos_x , float pos_y )
 
@@ -331,7 +331,7 @@ SetTextCursor ( int x , int y )
  *
  * ----------------------------------------------------------------- */
 int
-ScrollText (char *Text, int startx, int starty, int EndLine , int background_code )
+ScrollText (char *Text, int startx, int starty, int background_code )
 {
     int Number_Of_Line_Feeds = 0;	// number of lines used for the text
     char *textpt;			// mobile pointer to the text

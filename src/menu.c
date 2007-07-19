@@ -407,8 +407,8 @@ ChatDoMenuSelectionFlagged( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER
   //--------------------
   // Now we do the usual menu selection, using only the activated chat alternatives...
   //
-  MenuSelection = ChatDoMenuSelection( InitialText , FilteredChatMenuTexts , 
-				       FirstItem , background_code , MenuFont , ChatDroid );
+  MenuSelection = ChatDoMenuSelection( FilteredChatMenuTexts , 
+				       FirstItem , MenuFont , ChatDroid );
 
   //--------------------
   // Now that we have an answer, we must transpose it back to the original array
@@ -448,7 +448,6 @@ GetNumberOfTextLinesNeeded ( char* GivenText, SDL_Rect GivenRectangle , float te
 {
     int BackupOfMyCursorX, BackupOfMyCursorY;
     int TextLinesNeeded;
-    int i;
     int TestPosition;
     int stored_height ;
     
@@ -523,11 +522,11 @@ Warning.  Received empty or nearly empty string!",
  *
  * ---------------------------------------------------------------------- */
 int
-ChatDoMenuSelection( char* InitialText , char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] , 
-		     int FirstItem , int background_to_use , void* MenuFont , enemy* ChatDroid )
+ChatDoMenuSelection( char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] , 
+		     int FirstItem , void* MenuFont , enemy* ChatDroid )
 {
     int h = FontHeight (GetCurrentFont());
-    int i , j ;
+    int i ;
     static int menu_position_to_remember = 1;
     int NumberOfOptionsGiven;
 #define ITEM_DIST 50
@@ -1217,7 +1216,7 @@ Cheatmenu (void)
 		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
 		sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
 		free (input);
-		Teleport ( LNum , X , Y , 0 , TRUE , TRUE ) ;
+		Teleport ( LNum , X , Y , 0 , TRUE ) ;
 		break;
 		
 	    case 'r': // change to new robot type 
@@ -3220,7 +3219,7 @@ Credits_Menu (void)
     
     SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
     
-    ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
+    ScrollText ( CreditsText , SCROLLSTARTX, SCROLLSTARTY, NE_CREDITS_PIC_BACKGROUND_CODE );
     
     while( SpacePressed() || EscapePressed() ) ; /* wait for key release */
     
@@ -3280,7 +3279,7 @@ Thank you,\n\
     
     SwitchBackgroundMusicTo ( CREDITS_BACKGROUND_MUSIC_SOUND );
     
-    ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, User_Rect.y , NE_CREDITS_PIC_BACKGROUND_CODE );
+    ScrollText ( ContributeText , SCROLLSTARTX, SCROLLSTARTY, NE_CREDITS_PIC_BACKGROUND_CODE );
 
     while ( SpacePressed() || EscapePressed() ) ; 
   

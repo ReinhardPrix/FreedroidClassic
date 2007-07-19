@@ -143,12 +143,12 @@ location HomeSpot;
                 Me [ 0 ] . teleport_anchor . z = Me [ 0 ] . pos . z;
                 teleport_arrival_sound ( );
                 ResolveMapLabelOnShip ( "TeleportHomeTarget" , &(HomeSpot) );
-                Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , FALSE , TRUE ) ;
+                Teleport ( HomeSpot.level , HomeSpot.x , HomeSpot.y , 0 , TRUE ) ;
         }
         else //we must teleport back to the anchor
         {
                 teleport_arrival_sound  ( );
-                Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x , Me [ 0 ] . teleport_anchor . y , 0 , FALSE , TRUE ) ;
+                Teleport ( Me [ 0 ] . teleport_anchor . z , Me [ 0 ] . teleport_anchor . x , Me [ 0 ] . teleport_anchor . y , 0 , TRUE ) ;
         }
 
 }; // void TeleportHome ( void )
@@ -160,7 +160,6 @@ location HomeSpot;
 void
 HandleCurrentlyActivatedSkill()
 {
-    int index_of_droid_below_mouse_cursor = ( -1 ) ;
     if ( ! MouseRightClicked() ) return;
 
     int Grabbed_InvPos = GetInventoryItemAt ( GetInventorySquare_x ( GetMousePos_x() ) , GetInventorySquare_y ( GetMousePos_y() ) );
@@ -183,8 +182,6 @@ HandleCurrentlyActivatedSkill()
     Override_Power_Limit = 0;
 
     DoSkill(Me [ 0 ] . readied_skill, SpellCost);
-
-out:
 
 return;    
 }; // void HandleCurrentlyActivatedSkill( void )

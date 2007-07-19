@@ -1258,18 +1258,12 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 void 
 TryToRepairItem( item* RepairItem )
 {
-    int MenuPosition;
-    char linebuf[1000];
-    
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-    
     char* MenuTexts[ 10 ];
     MenuTexts[0]="Yes";
     MenuTexts[1]="No";
     MenuTexts[2]="";
     
-    while ( SpacePressed() || EnterPressed() || MouseLeftPressed() );
+    while ( SpacePressed() || EnterPressed() || MouseLeftPressed() ) SDL_Delay(1);
     
     if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
@@ -1291,12 +1285,6 @@ TryToRepairItem( item* RepairItem )
 void 
 TryToIdentifyItem( item* IdentifyItem )
 {
-    int MenuPosition;
-    char linebuf[1000];
-    
-#define ANSWER_YES 1
-#define ANSWER_NO 2
-    
     char* MenuTexts[ 10 ];
     MenuTexts[0]="Yes";
     MenuTexts[1]="No";

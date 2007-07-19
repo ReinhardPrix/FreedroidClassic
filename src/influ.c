@@ -626,7 +626,6 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
     float JumpStartThreshold;
     gps old_mouse_move_target ;
     
-#define SHUFFLE_WHEN_CROSSING TRUE
 #define LEVEL_JUMP_DEBUG 1
     
     old_mouse_move_target . x = Me [ player_num ] . mouse_move_target . x ;
@@ -653,7 +652,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   Me [ player_num ] . pos . x ,
 		   curShip.AllLevels [ JumpTarget ] -> ylen - 0 - JumpStartThreshold - SafetyBonus ,
 		   player_num , 
-		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+		   FALSE ) ; 
 
 	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
 	
@@ -718,7 +717,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   Me [ player_num ] . pos . x ,
 		   0 + JumpStartThreshold + SafetyBonus ,
 		   player_num , 
-		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+		   FALSE ) ; 
 	
 	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
 
@@ -784,7 +783,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   0 + JumpStartThreshold + SafetyBonus ,
 		   Me [ player_num ] . pos . y ,
 		   player_num , 
-		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+		   FALSE ) ; 
 	
 	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
 
@@ -846,7 +845,7 @@ correct_tux_position_according_to_jump_thresholds ( int player_num )
 		   curShip.AllLevels [ JumpTarget ] -> xlen - 0 - JumpStartThreshold - SafetyBonus ,
 		   Me [ player_num ] . pos . y ,
 		   player_num , 
-		   SHUFFLE_WHEN_CROSSING , FALSE ) ; 
+		   FALSE ) ; 
 	
 	DebugPrintf ( LEVEL_JUMP_DEBUG , "\nReally doing it now.  Need to check the running target still..." );
 
@@ -2852,6 +2851,7 @@ FireTuxRangedWeaponRaw ( int player_num , int weapon_item_type , int bullet_imag
     speed . x = target_location . x - Me [ player_num ] . pos . x ; 
     speed . y = target_location . y - Me [ player_num ] . pos . y ; 
     speed_norm = sqrt ( speed . x * speed . x + speed . y * speed . y );
+    if ( ! speed_norm ) fprintf(stderr, "Bullet speed is zero\n");
     CurBullet -> speed.x = ( speed . x / speed_norm );
     CurBullet -> speed.y = ( speed . y / speed_norm );
     CurBullet -> speed . x *= BulletSpeed;

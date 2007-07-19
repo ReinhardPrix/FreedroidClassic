@@ -316,7 +316,7 @@ char fpath[2048];
 	strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
 	PreparedBriefingText[ThisTextLength]=0;
 	fflush(stdout);
-	ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, ScrollEndLine , NE_TITLE_PIC_BACKGROUND_CODE );
+	ScrollText ( PreparedBriefingText, SCROLLSTARTX, SCROLLSTARTY, NE_TITLE_PIC_BACKGROUND_CODE );
 	free ( PreparedBriefingText );
     }
     
