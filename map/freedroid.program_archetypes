@@ -60,6 +60,7 @@ Effect="paralyze"
 Form="bullet"
 Cost=15
 Artwork internal code=12
+Base damage=0
 
 ** Start of new program specification subsection **
 Program name="Malformed packet"
@@ -80,6 +81,7 @@ Effect="none"
 Form="self"
 Cost=40
 Base damage=-40
+Cost per level=-3
 
 ** Start of new program specification subsection **
 Program name="Analyze item"
@@ -87,7 +89,8 @@ Program description="There are very few items which have labels on them. Unless 
 Picture="IdentifySkill.png"
 Effect="identify"
 Form="self"
-Cost=70
+Cost=65
+Cost per level=-3
 
 ** Start of new program specification subsection **
 Program name="Nethack"
@@ -160,6 +163,7 @@ Picture="TeleportHomeSpell.png"
 Form="self"
 Effect="teleport_home"
 Cost=30
+Cost per level=-3
 
 ** Start of new program specification subsection **
 Program name="Virus"
