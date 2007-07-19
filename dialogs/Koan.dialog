@@ -44,7 +44,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
-AlwaysExecuteThisOptionPriorToDialogStart="no"
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
