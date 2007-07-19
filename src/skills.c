@@ -161,10 +161,13 @@ void
 HandleCurrentlyActivatedSkill()
 {
     int index_of_droid_below_mouse_cursor = ( -1 ) ;
-
-
     if ( ! MouseRightClicked() ) return;
 
+    int Grabbed_InvPos = GetInventoryItemAt ( GetInventorySquare_x ( GetMousePos_x() ) , GetInventorySquare_y ( GetMousePos_y() ) );
+
+    if ( ItemMap [ Me[0].Inventory[ Grabbed_InvPos ] . type ] . item_can_be_applied_in_combat ) 
+	return; //if the cursor is over an item that can be applied, then the player wants to apply it not trigger a spell
+    
     if ( Me [ 0 ] . SkillLevel [ Me [ 0 ] . readied_skill ] <= 0 ) return;
 
     /* We calculate the spellcost and check the power limit override - the temperature is raised further down, when the actual effect

@@ -1804,7 +1804,8 @@ ApplyItem( item* CurItem )
     if ( CurItem->multiplicity > 1 )
 	CurItem->multiplicity--;
     else DeleteItem ( CurItem );
-    
+
+    while ( MouseRightPressed() ) SDL_Delay(1);    
 }; // void ApplyItemFromInventory( int ItemNum )
 
 /* ----------------------------------------------------------------------
