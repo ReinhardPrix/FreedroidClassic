@@ -3290,7 +3290,7 @@ ProcessAttackStateMachine ( int enemynum )
 		    //--------------------
 		    // We'll launch the attack cry of this bot...
 		    //
-		    if ( Druidmap [ ThisRobot -> type ] . greeting_sound_type != (-1) )
+		    if ( Druidmap [ ThisRobot -> type ] . greeting_sound_type != (-1) && ! ThisRobot -> paralysation_duration_left)
 		    {
 			DebugPrintf ( 1 , "\n%s(): playing enter_attack_run sound for bot of type %d." ,
 				      __FUNCTION__ , ThisRobot -> type );

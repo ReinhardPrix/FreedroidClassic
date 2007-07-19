@@ -3189,7 +3189,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 	    //--------------------
 	    // We'll launch the attack cry of this bot...
 	    //
-	    if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) )
+	    if ( Druidmap[ AllEnemys[ i ] . type ].greeting_sound_type != (-1) && ! AllEnemys [ i ] . paralysation_duration_left )
 	    {
 		DebugPrintf ( 1 , "\n%s(): playing enter_attack_run sound for tux attack victing of type %d." ,
 			      __FUNCTION__ , AllEnemys [ i ] . type );
