@@ -568,7 +568,9 @@ ChatDoMenuSelection( char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] ,
     // that will still fit well into the choice window.
     //
     Choice_Window . x = 35*GameConfig . screen_width/640;
-    Choice_Window . y = 340*GameConfig . screen_height/480; Choice_Window . w = ( 640 - 70 ) * GameConfig . screen_width / 640 ; Choice_Window . h = 110 * GameConfig . screen_height / 480 ;
+    Choice_Window . y = 335*GameConfig . screen_height/480; 
+    Choice_Window . w = ( 640 - 70 ) * GameConfig . screen_width / 640 ; 
+    Choice_Window . h = 140 * GameConfig . screen_height / 480 ;
     MaxLinesInMenuRectangle = Choice_Window . h / ( FontHeight ( GetCurrentFont() ) * TEXT_STRETCH ) ;
 //    MaxLinesInMenuRectangle = 5;
     DebugPrintf ( 1 , "\nComputed number of lines in choice window at most: %d." , MaxLinesInMenuRectangle );
@@ -618,7 +620,7 @@ ChatDoMenuSelection( char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] ,
     OptionOffset = 0 ;
     while ( 1 )
     {
-    SDL_Delay(10);
+    SDL_Delay(1);
 #if __WIN32__
       for ( win32_iterations = 0 ; win32_iterations < 2 ; win32_iterations ++ ) 
       {
@@ -827,7 +829,6 @@ ChatDoMenuSelection( char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] ,
 		  DebugPrintf ( 1 , "\nChatDoMenuSelection:  mouse now over different item, therefore new main cycle..." );
 	      }
 	  }
-	  //	  usleep ( 1 ) ;
 	  SDL_Delay(1);
       }
       
