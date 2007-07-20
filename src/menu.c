@@ -864,7 +864,7 @@ ChatDoMenuSelection( char* MenuTexts[ MAX_ANSWERS_PER_PERSON ] ,
       
       if ( MouseLeftPressed() )
       {
-	  
+	while ( MouseLeftPressed() ) SDL_Delay(1);	  
 	  //--------------------
 	  // First we see if there was perhaps a click on one of the active scroll buttons
 	  //
