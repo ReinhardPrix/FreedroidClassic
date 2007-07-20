@@ -373,13 +373,13 @@ quest_browser_display_mission_list ( int list_type )
 	    else
 		ShowGenericButtonFromList ( QUEST_BROWSER_ITEM_SHORT_BUTTON );
 
-	    if ( SpacePressed() )
+	    if ( SpacePressed() || MouseLeftPressed() )
 	    {
 		if ( MouseCursorIsOnButton ( QUEST_BROWSER_ITEM_SHORT_BUTTON , GetMousePos_x() , GetMousePos_y() ) )
 		{
 		    Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission =
 			! Me [ 0 ] . AllMissions [ mis_num ] . expanded_display_for_this_mission ;
-		    while ( SpacePressed() );
+		    while ( SpacePressed() || MouseLeftPressed() );
 		}
 	    }
 	}
@@ -406,8 +406,7 @@ Illegal quest browser status encountered.",
     }
     
     ShowGenericButtonFromList ( QUEST_BROWSER_SCROLL_UP_BUTTON );
-    if ( MyCursorY >= mission_description_rect . y + mission_description_rect . h - 50 )
-	ShowGenericButtonFromList ( QUEST_BROWSER_SCROLL_DOWN_BUTTON );
+    ShowGenericButtonFromList ( QUEST_BROWSER_SCROLL_DOWN_BUTTON );
 
 }; // void quest_browser_display_mission_list ( void )
 
