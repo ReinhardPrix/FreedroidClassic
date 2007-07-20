@@ -257,6 +257,7 @@ DoSkill(int skill_index, int SpellCost)
 	        AllActiveSpells [ i ] . spell_center . y = Me [ 0 ] . pos . y;
 	        AllActiveSpells [ i ] . spell_radius = 0.3 ;
 	        AllActiveSpells [ i ] . spell_age = 0 ;
+	        AllActiveSpells [ i ] . mine = 1;
  
 	        for ( j = 0 ; j < RADIAL_SPELL_DIRECTIONS ; j ++ )
 	            { 

@@ -485,6 +485,8 @@ MoveActiveSpells (void)
 			//--------------------
 			// We do some damage to the enemy in question
 			//
+			if ( AllActiveSpells [ i ] . mine ) 
+				robot_group_turn_hostile(j);
 			AllEnemys [ j ] . energy -= AllActiveSpells [ i ] . damage * Frame_Time();
 			AllEnemys [ j ] . poison_duration_left = AllActiveSpells [ i ] . poison_duration;
 			AllEnemys [ j ] . poison_damage_per_sec = AllActiveSpells [ i ] . damage;

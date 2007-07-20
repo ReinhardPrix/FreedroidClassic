@@ -977,6 +977,7 @@ typedef struct
     float spell_radius;
     float spell_age;
     int active_directions [ RADIAL_SPELL_DIRECTIONS ] ;
+    int mine;
 }
 spell_active, *Spell_Active;
 
