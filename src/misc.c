@@ -256,8 +256,8 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_done_quests_off.png" , { 478 , 149 , 153 ,  38 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_notes.png"          , { 478 , 203 , 153 ,  38 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_notes_off.png"      , { 478 , 203 , 153 ,  38 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 183 , 8   , 160 ,  20 } , TRUE , TRUE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 183 , 450 , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 181 , 12   , 160 ,  20 } , TRUE , TRUE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 181 , 452 , 160 ,  20 } , TRUE , TRUE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_item_short.png"     , { 108 , 86  , 26  ,  26 } , FALSE , TRUE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/quest_browser_item_long.png"      , { 108 , 86  , 26  ,  26 } , FALSE , TRUE } ,
 
