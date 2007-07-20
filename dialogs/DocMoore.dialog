@@ -108,7 +108,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=365  PositionY=192  
-Subtitle="Sorry, but I already give you some medical help."
+Subtitle="Sorry, but I already gave you some medical help."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="If you poison yourself, that's entirely your business and I'm not responsible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
