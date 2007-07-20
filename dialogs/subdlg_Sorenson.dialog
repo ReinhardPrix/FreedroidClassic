@@ -62,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Please calm down. You must speak clearly and slowly. Please stop breating smoke like that, it bothers my throat. And what is the deal with the red glowing eyes? You should see a doctor. "
+New Option Nr=3  OptionText=" Please calm down. You must speak clearly and slowly. Please stop breathing smoke like that, it bothers my throat. And what is the deal with the red glowing eyes? You should see a doctor. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="519n 17!!!!"
