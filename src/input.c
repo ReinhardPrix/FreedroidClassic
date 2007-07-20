@@ -44,8 +44,6 @@
 
 point CurrentMouseAbsPos;
 
-SDL_Event event;
-
 Uint8 * key_pressed_real_frame; /* SDL internal arrey */
 Uint8 * key_pressed_this_frame; /* This one is allocated by us and is the 'current state' */
 Uint8 * key_pressed_last_frame; /* This one is allocated by us and is the 'last' state*/
@@ -847,7 +845,9 @@ int
 keyboard_update(void)
 {
     Uint8 axis; 
-    
+    SDL_Event event;
+
+
     while( SDL_PollEvent( &event ) )
     {
 	switch( event.type )
@@ -908,27 +908,8 @@ keyboard_update(void)
 		CurrentMouseAbsPos.x = event.button.x;
 		CurrentMouseAbsPos.y = event.button.y;
 		
-		//--------------------
-		// Now maybe the crosshair mouse cursor shape is currently
-		// selected.  In this case of course we must shift the click
-		// position a bit, since the crosshair pointer pixel is in the
-		// middle of the mouse cursor, not in the top left as with the
-		// other mouse cursor shapes...
-		//
-/*		if ( current_mouse_cursor_shape == MOUSE_CURSOR_CROSSHAIR_SHAPE )
-		{
-		    input_axis . x += 16 ; 
-		    input_axis . y += 16 ; 
-		    CurrentMouseAbsPos . x += 16 ;
-		    CurrentMouseAbsPos . y += 16 ;
-		}*/
-		
 		if ( ( ClientMode ) && ( ! ServerMode ) ) SendPlayerMouseButtonEventToServer ( event );
 		
-		if ( event.button.button == SDL_BUTTON_LEFT )
-			;		
-		if ( event.button.button == SDL_BUTTON_RIGHT )	   
-			;		
 		//--------------------
 		// We need to add come conditional compilation here, so that 
 		// on some systems, where the SDL version is < 1.2.5 the code
