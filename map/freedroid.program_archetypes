@@ -229,7 +229,7 @@ Program description="This is a bug, report this to the developers, unless you ch
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
-Cost=0
+Cost=400
 Base damage=400
 Artwork internal code=2
 
@@ -239,7 +239,7 @@ Program description="This is a bug, report this to the developers, unless you ch
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
-Cost=0
+Cost=400
 Base damage=300
 Artwork internal code=1
 
@@ -249,7 +249,7 @@ Program description="This is a bug, report this to the developers, unless you ch
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
-Cost=0
+Cost=400
 Base damage=300
 Artwork internal code=0
 
