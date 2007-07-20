@@ -483,7 +483,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_mag > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to magic" , CurItem->bonus_to_mag );
+		sprintf( linebuf , "%d to CPU" , CurItem->bonus_to_mag );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
