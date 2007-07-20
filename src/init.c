@@ -2217,7 +2217,7 @@ I will not be able to load or save games or configurations\n\
     if(GameConfig . screen_width == 640)
 	 GiveMouseAlertWindow ( "\nYou are playing in 640x480.\n\nWhile this resolution works correctly and will\ngive you a great gaming experience, its support is\nin the process of being dropped, therefore you will\nwant to consider using 800x600 or 1024x768.\n\nThank you.\n");
     if ( strstr( VERSION, "rc" ) )
-	 GiveMouseAlertWindow ( "\nYou are playing a release candidate version.\nMany strange bugs might still be present in the game.\nPlease report anything you may find to #freedroid at irc.freenode.net\nThank you for helping us test the game.\nGood luck!\n");
+	 GiveMouseAlertWindow ( "\nYou are playing a release candidate version.\nMany strange bugs might still be present in the game.\nPlease report anything you may find to #freedroid at irc.freenode.net, or\n by mail to freedroid-discussion at lists.sourceforge.net\nThank you for helping us test the game.\nGood luck!\n");
 
     
 }; // void InitFreedroid ( void ) 
