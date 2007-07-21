@@ -2190,10 +2190,12 @@ light_radius_update_stretched_texture ( void )
     {
 	for ( y = 0 ; y < 48 ; y ++ )
 	{
-	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x,
-							       ( 0 + y ) * lr_square_height - UserCenter_y + lr_square_width , TRUE );
-	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x,
-							       ( 0 + y ) * lr_square_height - UserCenter_y + lr_square_width , FALSE );
+	    target_pos . x = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x - User_Rect.x / 2 - (User_Rect . x + User_Rect.w 
+- GameConfig . screen_width) / 2,
+							       ( 0 + y ) * lr_square_height - UserCenter_y, TRUE );
+	    target_pos . y = translate_pixel_to_map_location ( 0 , ( 1 + x ) * lr_square_width - UserCenter_x - User_Rect . x / 2 - (User_Rect . x + 
+User_Rect.w - GameConfig . screen_width) / 2,
+							       ( 0 + y ) * lr_square_height - UserCenter_y, FALSE );
 
 	    light_strength = get_light_strength ( target_pos );
 	    
