@@ -60,7 +60,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" No. I have not come here to kill you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Thank you then."
+Subtitle="Thank you."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Feel free to stay here. There is no danger."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -71,6 +71,7 @@ ChangeOption=1 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
 ChangeOption=20 ChangeToValue=1
 ChangeOption=10 ChangeToValue=1
+DoSomethingExtra="PlantCookie:spared_koan"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
