@@ -3557,7 +3557,7 @@ position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacl
 }; // int position_collides_with_this_obstacle ( float x , float y , obstacle* our_obstacle )
 
 /* ----------------------------------------------------------------------
- *
+ * This function is called 100k times per frame in a labyrinth. Speak of tight loops.
  *
  * ---------------------------------------------------------------------- */
 int 
@@ -3576,8 +3576,7 @@ position_collides_with_obstacles_on_square ( float x, float y , int x_tile , int
       obstacle_index = PassLevel -> map [ y_tile ] [ x_tile ] . obstacles_glued_to_here [ glue_index ] ;
 
       if ( position_collides_with_this_obstacle ( x , y , & ( PassLevel -> obstacle_list [ obstacle_index ] ) ) ) 
-	return ( TRUE );
-
+	return TRUE;
     }
 
   return ( FALSE ) ;
