@@ -1,0 +1,139 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="HERE WE GO"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=61  PositionY=200  
+Subtitle="So... Any news on the Koan matter?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=40 ChangeToValue=1
+OnCondition="CookieIsPlanted:koan_spared" JumpToOption=5 ElseGoto=1
+DoSomethingExtra="PlantCookie:koan_quest_done"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="KOAN WAS SPARED"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=5 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" Yeah. I got him. I think this is your cube."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Yes. Here is something for you for your effort."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" I could not find him anywhere in the desert. I don't think he is there anymore."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I see."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Yeah, I got him. Now, what is this big cube that you had me carry all the way here?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Just a memento after a friend."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="A little more than a portable end of the world, which I am looking forward to disassembling and learning its secrets."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Nothing that important."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" A "few" bots? The place was crawling with Sawmills! I nearly got killed!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="There were only fourty bots in the desert region. This hardly qualifies as many."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" What? You know exactly how many bots were on the desert? Without being there? I don't like this."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I just know a lot of things. You do not need to worry about it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" I don't like this at all. I'm getting out of here."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="As you wish."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=50 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="<?>"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=512  PositionY=290  
+Subtitle="<?>"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
