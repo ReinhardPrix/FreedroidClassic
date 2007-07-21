@@ -143,7 +143,7 @@ New Option Nr=50  OptionText="KOAN QUEST"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=50 ChangeToValue=0
-OnCondition="CookieIsPlanted:duncan_known" JumpToOption=80 ElseGoto=52
+OnCondition="CookieIsPlanted:duncan_known:" JumpToOption=80 ElseGoto=52
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
@@ -184,20 +184,28 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 ----------------------------------------------------------------------
 
 New Option Nr=61  OptionText="MURDERING DONE OR SAVED HIM"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="<?>"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=61 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan_koan"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=62  OptionText="DONE IT BEfORE?"
+New Option Nr=62  OptionText="IS KOAN SAVED?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=62 ChangeToValue=0
-OnCondition="CookieIsPlanted:koan_quest_done" JumpToOption=52 ElseGoto=63
+OnCondition="CookieIsPlanted:koan_spared:" JumpToOption=63 ElseGoto=52
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=63  OptionText="WAS THE QUEST DONE BEFORE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=63 ChangeToValue=0
+OnCondition="CookieIsPlanted:koan_quest_done:" JumpToOption=52 ElseGoto=61
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -206,27 +214,7 @@ New Option Nr=80  OptionText="PREVENTING DOUBLE TALK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=80 ChangeToValue=0
-OnCondition="CookieIsPlanted:koan_quest" JumpToOption=52 ElseGoto=51
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=81  OptionText="<?>"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=200  PositionY=200  
-Subtitle="<?>"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=81 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=82  OptionText="<?>"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=200  PositionY=200  
-Subtitle="<?>"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=82 ChangeToValue=0
+OnCondition="CookieIsPlanted:koan_quest:" JumpToOption=52 ElseGoto=51
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
