@@ -535,7 +535,8 @@ update_all_primary_stats ( int PlayerNum )
     //--------------------
     // Now we re-initialize the SKILL LEVELS
     //
-    memcpy( Me [ PlayerNum ] . SkillLevel, Me [ PlayerNum ] . base_skill_level, number_of_skills * sizeof(*Me[0].base_skill_level));
+    for ( i = 0; i < number_of_skills; i ++)
+	 Me [ PlayerNum ] . SkillLevel[i] =  Me [ PlayerNum ] . base_skill_level[i];
 
     //--------------------
     // Now we add all bonuses to the influencers PRIMARY stats
