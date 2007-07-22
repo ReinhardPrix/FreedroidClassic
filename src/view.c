@@ -335,7 +335,8 @@ void
 ShowCombatScreenTexts ( int mask )
 {
     static float TimeSinceLastFPSUpdate=10;
-    static int FPS_Displayed=1;
+    static int Frames_Counted=1;
+    static int FPS_Displayed;
 #define UPDATE_FPS_HOW_OFTEN 0.75
     Level DisplayLevel = curShip.AllLevels [ Me [ 0 ] . pos . z ] ;
     int minutes;
@@ -347,24 +348,17 @@ ShowCombatScreenTexts ( int mask )
     if ( GameConfig.Draw_Framerate )
     {
 	TimeSinceLastFPSUpdate += Frame_Time();
-	if ( TimeSinceLastFPSUpdate > UPDATE_FPS_HOW_OFTEN )
+	Frames_Counted ++;
+	if ( Frames_Counted > 50 )
 	{
-	    if ( Frame_Time() > 0 )
-		FPS_Displayed=(int)(1.0/Frame_Time());
-	    else
-		FPS_Displayed=(int)9999;
+	    FPS_Displayed = Frames_Counted / TimeSinceLastFPSUpdate;
 	    TimeSinceLastFPSUpdate=0;
-	    
-	    // DebugPrintf ( -2 , "\nFPS_Displayed: %d. " , FPS_Displayed );
-	    
+	    Frames_Counted = 0;
 	}
       
 	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 1,
-			 "FPS: %d " , FPS_Displayed );
+			 "FPS: %d" , FPS_Displayed );
 	
-	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x + 100, 
-	// User_Rect.y+User_Rect.h - FontHeight( FPS_Display_BFont ), 
-	// "Axis: %d %d" , input_axis.x, input_axis.y);
     }
     
     if ( GameConfig.Draw_Energy )
