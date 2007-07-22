@@ -216,7 +216,7 @@ Artwork internal code=14
 
 ** Start of new program specification subsection **
 Program name="Satellite image"
-Program description="Getting a map of an area is pretty easy, when you can look at everything from above."
+Program description="Getting a map of an area is pretty easy when you can look at everything from above."
 Picture="NoSkillAvailable.png"
 Form="immediate"
 Effect="maplevel"

@@ -2077,7 +2077,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=200
-Item description text="An incredible detection spell, allowing you to know when a item is near by."
+Item description text="The overload setting exists for emergencies. The plasma does not discriminate between bots and humans. Everything is equal to it."
 ** End of new item specification subsection **
 
 // Item No. 91
@@ -2093,7 +2093,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
-Item description text="This manual allows to learn the identify spell."
+Item description text="I am not the Linarian you are looking for."
 ** End of new item specification subsection **
 
 // Item No. 92
@@ -2217,7 +2217,7 @@ Items of this type collect together in inventory="yes"
 File or directory name for inventory image="script/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=25
-Item description text="This script can invoke stored powers to identify unknown special properties of an item.  The stored powers are expended in the process and the script becomes useless afterwards.  Note:  Multiple of those may be grouped together in inventory."
+Item description text="Point and click. Point and know anything. Point, and I will show you the correct path. Point, and I will be there. Point, and I will protect you."
 ** End of new item specification subsection **
 
 // Item No. 99
@@ -2985,7 +2985,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="The art of rapidly moving away from danger is very useful. Even when used in reverse it has it's uses."
 ** End of new item specification subsection **
 
 // Item No. 123
@@ -3001,7 +3001,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="This is not just a firmware upgrade, my dear bot. You are about to find out what exactly I want to give you."
 ** End of new item specification subsection **
 
 // Item No. 124
@@ -3017,7 +3017,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="The network is wide and dangerous. Many traps await for the weak and unprepared."
 ** End of new item specification subsection **
 
 // Item No. 125
@@ -3033,7 +3033,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="There is some dark magic in the art of turning bots inside-out to learn all their secrets."
 ** End of new item specification subsection **
 
 // Item No. 126
@@ -3049,7 +3049,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="Everyone needs to blow some steam every now and then."
 ** End of new item specification subsection **
 
 // Item No. 127
@@ -3065,7 +3065,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
-Item description text="This manual allows you to throw bolts of ice, freezing the target doing considerable damage."
+Item description text="Let there be light..."
 ** End of new item specification subsection **
 
 // Item No. 128
@@ -3081,7 +3081,7 @@ Items of this type collect together in inventory="no"
 File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=300
-Item description text=""
+Item description text="Getting a map of an area is pretty easy when you can look at everything from above."
 ** End of new item specification subsection **
 
 // Item No. 129
