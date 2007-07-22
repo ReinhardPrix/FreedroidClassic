@@ -94,7 +94,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText=" A "few" bots? The place was crawling with Sawmills! I nearly got killed!"
+New Option Nr=40  OptionText=" A 'few' bots? The place was crawling with Sawmills! I nearly got killed!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="There were only fourty bots in the desert region. This hardly qualifies as many."
