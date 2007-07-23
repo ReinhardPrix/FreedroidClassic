@@ -160,11 +160,12 @@ location HomeSpot;
 void
 HandleCurrentlyActivatedSkill()
 {
-    if ( ! MouseRightClicked() ) return;
-
+    if ( ! MouseRightClicked() ) 
+	return;
+    
     int Grabbed_InvPos = GetInventoryItemAt ( GetInventorySquare_x ( GetMousePos_x() ) , GetInventorySquare_y ( GetMousePos_y() ) );
-
-    if ( ItemMap [ Me[0].Inventory[ Grabbed_InvPos ] . type ] . item_can_be_applied_in_combat ) 
+    if ( Grabbed_InvPos != -1 )
+	if ( ItemMap [ Me[0].Inventory[ Grabbed_InvPos ] . type ] . item_can_be_applied_in_combat ) 
 	return; //if the cursor is over an item that can be applied, then the player wants to apply it not trigger a spell
     
     if ( Me [ 0 ] . SkillLevel [ Me [ 0 ] . readied_skill ] <= 0 ) return;
@@ -180,7 +181,7 @@ HandleCurrentlyActivatedSkill()
 	      return;
 	}
     Override_Power_Limit = 0;
-
+printf("Calling doskill for skill %d cost %d", Me[0].readied_skill, SpellCost);
     DoSkill(Me [ 0 ] . readied_skill, SpellCost);
 
 return;    
