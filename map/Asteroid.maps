@@ -32872,9 +32872,12 @@ t227 x57.00 y30.17 l-1 d-1
 t228 x57.47 y30.39 l-1 d-1 
 t229 x57.09 y31.22 l-1 d-1 
 t151 x57.11 y30.60 l-1 d-1 
+t271 x64.40 y50.60 l-1 d-1 
 /obsdata
 plabelinfolvl
 x=66 y=31 name="Koan"
+x=64 y=50 name="ExitBunker"
+x=63 y=50 name="BunkerEntry"
 /plabelinfolvl
 pobstaclelabelinfolvl
 /pobstaclelabelinfolvl
