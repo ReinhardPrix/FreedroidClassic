@@ -54,6 +54,22 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
+Use map location from map label="ToBunker"
+Event Action to be triggered by this trigger="teleport_to_bunker"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=11 Lev=0
+Use map location from map location from map label="ExitBunker"
+Event Action to be triggered by this trigger="teleport_from_bunker"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=2 Y=11 Lev=0
 Use map location from map label="DisruptorMachineLevelAccess"
 Event Action to be triggered by this trigger="teleport_into_disruptor_machine_level"
 Delete the event trigger after it has been triggered=-1
@@ -409,11 +425,22 @@ Action is mission assignment=-1
 
 
 * Start of an Event Action Subsection *
-Action label for this action="teleport_into_the_disruptor_base"
+Action label for this action="teleport_to_bunker"
 Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
 Use map label for map change location="NO_LABEL_DEFINED_YET"
 Teleport to TelX=27 TelY=3 TelLev=1
-Use map label for teleport target="ScientistQuartersArrivalPoint"
+Use map label for teleport target="BunkerEntry"
+Action is Influencer say="Now I should get teleported...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
+
+* Start of an Event Action Subsection *
+Action label for this action="teleport_from_bunker"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=27 TelY=3 TelLev=1
+Use map label for teleport target="ExitFromBunker"
 Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *

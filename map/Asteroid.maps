@@ -11091,6 +11091,7 @@ t152 x84.44 y86.21 l-1 d-1
 t152 x84.03 y86.47 l-1 d-1 
 t152 x84.28 y86.65 l-1 d-1 
 t152 x83.25 y85.64 l-1 d-1 
+t60 x80.27 y5.54 l-1 d-1 
 /obsdata
 plabelinfolvl
 x=46 y=35 name="571PlagueBot1StartGameSquare"
@@ -32807,7 +32808,8 @@ pchestinfolvl
 /pchestinfolvl
 wp
 Nr.=  0 x=  56 y=  42 rnd=0	 c: 
-Nr.=  1 x=  66 y=  31 rnd=0	 c: 
+Nr.=  1 x=  66 y=  31 rnd=0	 c:    2
+Nr.=  2 x=  66 y=  30 rnd=0	 c:    1
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 35
