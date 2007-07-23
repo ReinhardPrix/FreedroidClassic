@@ -1780,7 +1780,6 @@ display_current_game_message_window ( void )
 	protocol_offset = 0 ;
     }
 
-    // blit_special_background ( GAME_MESSAGE_WINDOW_BACKGROUND_CODE );
     blit_special_background ( HUD_BACKGROUND_CODE );
     
     //--------------------
@@ -1795,17 +1794,6 @@ display_current_game_message_window ( void )
     SetCurrentFont ( Message_BFont );
     DisplayText ( game_message_protocol , Subtitle_Window.x , Subtitle_Window.y - protocol_offset , &Subtitle_Window , our_stretch_factor );
 
-    /*
-    if ( protocol_offset > 0 ) 
-	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_UP_BUTTON );
-    else
-	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF_BUTTON );
-    if ( lines_needed <= AVERAGE_LINES_IN_PROTOCOL_WINDOW ) 
-	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_OFF2_BUTTON );
-    else
-	ShowGenericButtonFromList ( CHAT_PROTOCOL_SCROLL_DOWN_BUTTON );
-    */
-    // if ( with_update ) our_SDL_update_rect_wrapper ( Screen , Subtitle_Window.x , Subtitle_Window.y , Subtitle_Window.w , Subtitle_Window.h );
     
 }; // void display_current_game_message_window ( int background_picture_code , int with_update )
 
