@@ -374,7 +374,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		break;
 		
 	    case ITEM_MAGIC_PILL:
-		sprintf( linebuf , "Permanently gain +1 running programs\n" );
+		sprintf( linebuf , "Permanently gain +1 CPU\n" );
 		strcat( ItemDescText , linebuf );
 		break;
 		
