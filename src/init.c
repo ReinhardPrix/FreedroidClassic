@@ -827,8 +827,13 @@ int Get_Programs_Data ( char * DataPointer )
     number_of_skills = Number_Of_Programs;            
 
     SpellSkillMap = (spell_skill_spec *) MyMalloc( sizeof(spell_skill_spec) * (Number_Of_Programs + 1 ));
-    Me [ 0 ]  . SkillLevel = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
-    Me [ 0 ] . base_skill_level = (int *) MyMalloc( sizeof(int) * (Number_Of_Programs + 1 ));
+
+    if ( Number_Of_Programs >= MAX_NUMBER_OF_PROGRAMS ) 
+	{
+	GiveStandardErrorMessage ( __FUNCTION__  , "\
+There are more skills defined, than the maximum number specified in the code!",
+                                   PLEASE_INFORM, IS_FATAL );
+	}
 
     char * whattogrep = NEW_PROGRAM_BEGIN_STRING;
     

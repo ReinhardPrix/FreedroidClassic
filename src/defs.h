@@ -166,6 +166,7 @@ enum
 #define NUMBER_OF_SKILL_PAGES 8
 #define NUMBER_OF_SKILLS_PER_SKILL_PAGE 5
 #define MAX_ACTIVE_SPELLS 100
+#define MAX_NUMBER_OF_PROGRAMS 50
 
 enum skill_forms
 {

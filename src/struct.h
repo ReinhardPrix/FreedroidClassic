@@ -673,8 +673,8 @@ typedef struct
     // currently readied and that...
     //
     int readied_skill; 
-    int *SkillLevel;
-    int *base_skill_level;
+    int SkillLevel[MAX_NUMBER_OF_PROGRAMS];
+    int base_skill_level[MAX_NUMBER_OF_PROGRAMS];
     int melee_weapon_skill;
     int ranged_weapon_skill;
     int spellcasting_skill;
