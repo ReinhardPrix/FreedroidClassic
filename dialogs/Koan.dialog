@@ -53,6 +53,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="DropDead"
+DoSomethingExtra="ForceBotRespawnOnLevel:18"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

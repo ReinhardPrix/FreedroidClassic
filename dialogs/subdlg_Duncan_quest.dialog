@@ -52,7 +52,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText="KOAN WAS SPARED"
-OptionSample=""
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=5 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -73,7 +73,7 @@ New Option Nr=8  OptionText="YEAH. WE HAVE THE CUBE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=8 ChangeToValue=0
-ChangeOption=3 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
 ChangeOption=10 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -82,9 +82,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Yeah. I got him. I think this is your cube."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Yes. Here is something for you for your effort."
+Subtitle="Yes. I appreciate your help."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
+DoSomethingExtra="AddExperienceBonus:3000"
+DoSomethingExtra="DeleteItem:129"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -109,6 +112,10 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nothing that important."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=10 ChangeToValue=0
+ChangeOption=70 ChangeToValue=1
+ChangeOption=60 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -119,6 +126,7 @@ PositionX=200  PositionY=200
 Subtitle="There were only fourty bots in the desert region. This hardly qualifies as many."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -129,6 +137,7 @@ PositionX=200  PositionY=200
 Subtitle="I just know a lot of things. You do not need to worry about it."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
+ChangeOption=50 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -144,12 +153,25 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText="<?>"
+New Option Nr=60  OptionText=" Hey, that is really neat. Here is your cube. Enjoy disassembling it and have fun with it."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=512  PositionY=290  
-Subtitle="<?>"
+PositionX=200  PositionY=200  
+Subtitle="I will."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=99 ChangeToValue=1
+ChangeOption=60 ChangeToValue=0
+DoSomethingExtra="AddExperienceBonus:3000"
+DoSomethingExtra="DeleteItem:129"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=70  OptionText=" WHAT? No way I am giving you a doomsday device! Forget about it."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="I understand. So be it."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
