@@ -47,9 +47,16 @@
 moderately_finepoint light_sources [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_source_strengthes [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 int light_strength_buffer [ 64 ] [ 48 ] ;
+typedef struct {
+	moderately_finepoint vect;
+	float angle;
+	} light_source_vect_parms;
+
+light_source_vect_parms light_source_range_vectors [ MAX_NUMBER_OF_LIGHT_SOURCES ] [ 64 * 2 + 48 * 2] ;
+int light_source_range_vector_number [ MAX_NUMBER_OF_LIGHT_SOURCES ] ;
 
 int
-IsLightPassable ( float x , float y , int z, finepoint step )
+IsLightPassable ( const float x , const float y , const int z, const finepoint step )
 {
     Level PassLevel = curShip . AllLevels [ z ] ;
     int x_tile_start, y_tile_start;
@@ -87,86 +94,6 @@ IsLightPassable ( float x , float y , int z, finepoint step )
     }
     return ( TRUE ) ;
 }
-/* ----------------------------------------------------------------------
- * This function tests, if a Robot can go a direct straigt line from
- * x1 y1 to x2 y2 without hitting a wall or another obstacle.
- * 
- * The return value is TRUE or FALSE accoringly.
- * ----------------------------------------------------------------------*/
-int 
-DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
-{
-    float LargerDistance;
-    int Steps;
-    int i;
-    finepoint step;
-    finepoint CheckPosition;
-    static int first_call = TRUE;
-    static int step_multiplier = -1 ; // something completely absurd...
-    int steps_for_this_obstacle;
-    static int key_obstacle_type = -1 ;
-
-    //--------------------
-    // First we determine the amount of steps we need to take
-    // such that we can't oversee any walls or something.
-    //
-    if ( fabsf(x1-x2) > fabsf (y1-y2) ) LargerDistance = fabsf(x1-x2);
-    else LargerDistance=fabsf(y1-y2);
-    
-    //--------------------
-    // The larger distance must be used to compute the steps nescessary
-    // for good passability check. i.e. passability check such that no
-    // movement completely through an obstacle will be possible.
-    //
-    // The number of steps must of course be multiplied with the minimum
-    // number of steps for one floor tile, which has been calibrated
-    // (hopefully sensibly) above.
-    //
-    Steps = LargerDistance * 3 ; 
-    if ( Steps <= 1 ) Steps = 2 ; // return TRUE;
-    
-    //--------------------
-    // We determine the step size when walking from (x1,y1) to (x2,y2) in Steps number of steps
-    //
-    step.x = (x2 - x1) / ( float ) Steps;
-    step.y = (y2 - y1) / ( float ) Steps;
-    
-    // DebugPrintf( 2 , "\n%s():  step.x=%f step.y=%f." , __FUNCTION__ , step.x , step.y );
-    
-    //--------------------
-    // We start from position (x1, y1)
-    //
-    CheckPosition . x = x1;
-    CheckPosition . y = y1;
-    
-    for ( i = 0 ; i < Steps + 1 ; i++ )
-    {
-    int x = CheckPosition . x;
-    int y = CheckPosition . y;
-    Level PassLevel = curShip . AllLevels [ z ] ;
-    int x_tile_start, y_tile_start;
-    int x_tile_end, y_tile_end;
-    int x_tile, y_tile;
-    
-    //--------------------
-    // We take a look whether the position given in the parameter is 
-    // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
-    //
-    if(!IsLightPassable(CheckPosition.x, CheckPosition.y, z, step))
-	return FALSE;
-  	
-    CheckPosition.x += step.x;
-    CheckPosition.y += step.y;
-    
-
-	}
-
-    DebugPrintf( 1 , "\n%s(): Connection analysis revealed : FREE!" , __FUNCTION__ );
-
-    return TRUE;
-
-}; // int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
-
 
 /* ----------------------------------------------------------------------
  * There might be some obstacles that emit some light.  Yet, we can't
@@ -175,7 +102,7 @@ DirectLineLightable( float x1 , float y1 , float x2 , float y2 , int z )
  * usage in the light computation code.
  * ---------------------------------------------------------------------- */
 void 
-update_light_list ( int player_num )
+update_light_list ( const int player_num )
 {
     int i;
     Level light_level = curShip . AllLevels [ Me [ player_num ] . pos . z ] ;
@@ -301,6 +228,8 @@ WARNING!  End of light sources array reached!",
     // Now we can proceed with the enemies:  They should give light too,
     // even if only in small amounts...
     //
+    // Update : in fact it does not look very good so I am removing it.
+    /*
     occasionally_update_first_and_last_bot_indices ( ) ;
     for ( i = first_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; 
 	  i <  last_index_of_bot_on_level [ Me [ player_num ] . pos . z ] ; i ++ )
@@ -331,22 +260,74 @@ WARNING!  End of light sources array reached!",
 	}
 	
     }
+    */
     
 }; // void update_light_list ( int player_num )
 
+
+/* ------------
+ * Helper function to find the index of the vector that has the closest angle to the target
+ *-----------*/
+
+
+int select_minimal_deviation_vector ( const light_source_vect_parms * reference, const float target_x, const float target_y, const unsigned int number_of_vectors)
+    {
+	float target_angle;
+	int i_seeker;
+	int i_nearest;
+	int i_loop;
+	unsigned int divider = 4;
+
+	target_angle=atan2f(target_y, target_x);
+	i_seeker = (number_of_vectors / 2) ;
+	i_nearest = -1 ;
+	i_loop = 1;
+
+	while( i_nearest != i_seeker )
+	{	
+		i_nearest=i_seeker;
+		i_loop+=1;
+		if( reference[i_seeker].angle < target_angle )
+		{
+			i_seeker = i_seeker + ( number_of_vectors / (divider) ) ;
+			divider <<= 1;
+		}
+
+		else
+		{
+			i_seeker = i_seeker - ( number_of_vectors / (divider) ) ;
+			divider <<= 1;
+		}
+
+	}
+
+/*if (  fabs(target_angle - reference[i].angle) < 1 && fabs(target_angle - reference[number_of_vectors - 1].angle) < 1 )
+	while ( i < number_of_vectors ) 
+	{
+	printf("%i delta %f\n", i, target_angle - reference[i].angle);
+	i++;
+	}*/
+
+//	printf("Matching %f with %f : %d\n", target_angle, reference[i_nearest].angle, i_nearest);
+	return i_nearest;
+
+}
+	
 /* ----------------------------------------------------------------------
  * This function is used to find the light intensity at any given point
  * on the map.
  * ---------------------------------------------------------------------- */
 int 
-calculate_light_strength ( moderately_finepoint target_pos )
+calculate_light_strength ( const moderately_finepoint target_pos )
 {
-    int final_darkness = NUMBER_OF_SHADOW_IMAGES;
+    int final_darkness = (-curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value );
+    if ( final_darkness > NUMBER_OF_SHADOW_IMAGES ) final_darkness = NUMBER_OF_SHADOW_IMAGES;
+    if ( final_darkness <= 0 ) return 0;
+
     int i;
     float xdist;
     float ydist;
     float light_vec_len;
-
     //--------------------
     // Now that the light sources array is fully set up, we can start
     // to compute the individual light strength at any given position
@@ -354,9 +335,11 @@ calculate_light_strength ( moderately_finepoint target_pos )
     for ( i = 0 ; i < MAX_NUMBER_OF_LIGHT_SOURCES ; i ++ )
     {
 	//--------------------
-	// Now if we've reached the end of the current list of light
-	// sources, then we can stop immediately.
-	//
+	// minimum_light_value is usually negative (labyrinths) or zero (outside)
+	// the higher final_darkness, the darker the tile
+	// so if final darkness is "less dark" that the max darkness allowed, we return it
+	// otherwise we return - min_light = max_dark
+
 	if ( light_source_strengthes [ i ] == 0 )
 	{
 	    if ( final_darkness < -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )
@@ -384,32 +367,41 @@ calculate_light_strength ( moderately_finepoint target_pos )
 	xdist = light_sources [ i ] . x - target_pos . x ;
 	ydist = light_sources [ i ] . y - target_pos . y ;
 
-	if (  ( xdist * xdist + ydist * ydist ) * 4.0 * 4.0 
+	#define vlensqu(x,y) (x*x+y*y)
+	
+	light_vec_len = vlensqu(xdist, ydist); //we take the square of the light vector length for now
+ 
+	/*if this light source would potentially give something more 'lighty'*/
+	if (  ((int)( light_vec_len )) << 4
 	     < 
  	     ( final_darkness + light_source_strengthes [ i ] ) *  
   	     ( final_darkness + light_source_strengthes [ i ] ) )
 	{
 
-	    //--------------------
-	    // Let's try something different here:  We now do some passability
-	    // checking as well!  Cool!  But only for the very first light source
 	    //
-	    /*float */light_vec_len = sqrt(xdist * xdist + ydist * ydist);
-
-	if ( light_vec_len > 0.5 )
+	if (  light_vec_len > 0.25 )
 	    {
 		if ( curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
 		{
-		    if ( ! DirectLineLightable( light_sources [ i ] . x , light_sources [ i ] . y , 
-					       target_pos . x , target_pos . y , 
-					       Me [ 0 ] . pos . z ) )
+		int a = 0;
+		int closest = select_minimal_deviation_vector ( light_source_range_vectors[i], -xdist, -ydist, light_source_range_vector_number[i]);
+
+
+		if (  light_vec_len > vlensqu(light_source_range_vectors[i][closest].vect.x, light_source_range_vectors[i][closest].vect.y ))
 			continue;
+						
+	
 		}
 	    }
+	    /*float */light_vec_len = sqrt(xdist * xdist + ydist * ydist); //now we take the real length
 	    final_darkness = (int) ( light_vec_len * 4.0 ) - light_source_strengthes [ i ] ;
+	    if ( final_darkness <= 0 ) //negative final darkness = full light = we go out
+		{
+		return 0;
+		}
 	}
     }
-    
+
     if ( final_darkness < -curShip . AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )
 	return ( final_darkness );
     else
@@ -468,6 +460,89 @@ soften_light_distribution ( void )
     }
 }; // void soften_light_distribution ( void )
 
+
+/* --------------------------
+ * Calculate a range vector for a line source
+ * -------------------------- */
+
+moderately_finepoint compute_range_vector ( const moderately_finepoint * lspos, const float targetx, const float targety, const float maxnorm )
+    {
+    moderately_finepoint range_vector;
+    range_vector . x = 0;
+    range_vector . y = 0;
+
+    float LargerDistance;
+    int Steps;
+    int i;
+    finepoint step;
+    finepoint CheckPosition;
+
+    //--------------------
+    // First we determine the amount of steps we need to take
+    // such that we can't oversee any walls or something.
+    //
+    if ( fabsf(lspos->x - targetx) > fabsf (lspos->y - targety) ) LargerDistance = fabsf(lspos->x - targetx);
+    else LargerDistance=fabsf(lspos->y - targety);
+
+    if ( LargerDistance > maxnorm )
+	{
+	//printf("Dropping vector\n");
+	return range_vector;
+	}
+    
+    Steps = LargerDistance * 3 ; 
+    if ( Steps <= 1 ) Steps = 2 ; 
+    
+    step.x = (lspos->x - targetx) / ( float ) Steps;
+    step.y = (lspos->y - targety) / ( float ) Steps;
+    
+    //--------------------
+    // We start from position (x1, y1)
+    //
+    CheckPosition . x = lspos->x;
+    CheckPosition . y = lspos->y;
+    
+    for ( i = 0 ; i < Steps + 1 ; i++ )
+        {
+        int x = CheckPosition . x;
+        int y = CheckPosition . y;
+        Level PassLevel = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
+        int x_tile_start, y_tile_start;
+        int x_tile_end, y_tile_end;
+        int x_tile, y_tile;
+    
+        //--------------------
+        // We take a look whether the position given in the parameter is 
+        // blocked by an obstacle ON ANY SQUARE WITHIN A 3x3 TILE RECTANGLE.
+        //
+        if(!IsLightPassable(CheckPosition.x, CheckPosition.y, Me [ 0 ] .pos .z , step))
+            break;
+  	
+        CheckPosition.x += step.x;
+        CheckPosition.y += step.y;
+
+    	range_vector . x += step.x;
+    	range_vector . y += step.y;
+	}
+
+
+    return range_vector;
+    }
+
+/* -----------------------------
+ * QSort helper
+ * -----------------*/
+int compare_light_source_vect_parms(const void * in1, const void * in2 )
+{
+if ( ((light_source_vect_parms * )(in1)) -> angle < ((light_source_vect_parms * )(in2)) -> angle)
+	return -1;
+if ( ((light_source_vect_parms * )(in1)) -> angle > ((light_source_vect_parms * )(in2)) -> angle)
+	return 1;
+else
+	return 0;
+return 0;
+}
+
 /* ----------------------------------------------------------------------
  * This function is used to find the light intensity at any given point
  * on the map.
@@ -483,7 +558,142 @@ set_up_light_strength_buffer ( void )
     const float xrat = ( GameConfig . screen_width / 64 ) ;
     const float yrat = ( GameConfig . screen_height / 48 ) ;
 
-	for ( x = 0 ; x < 64 ; x ++ )
+    /*We go over every light source and throw a ray towards every square in the periphery of the lr texture*/ 
+    /*This is what I call "range vector pre computation"*/
+
+    if ( ! curShip . AllLevels [ Me [ 0 ] . pos . z ] -> use_underground_lighting )
+	goto pre_computations_done;
+    
+    int i = 0;
+
+    for ( i = 0; i < MAX_NUMBER_OF_LIGHT_SOURCES && light_source_strengthes [ i ] != 0; i ++ ) 
+	{
+	    int tot_idx = 0;
+	    y = 0;
+	    screen_y = ( y - 24 ) * yrat;
+	    for ( x = 0; x < 64; x++)
+		{
+		if ( i ) x++; //compute only one vector every two if lsource is not tux
+		screen_x = ( x - 32 ) * xrat;
+		light_source_range_vectors [ i ] [ tot_idx ] . angle = atan2f(light_sources[i].y - translate_pixel_to_map_location(0, screen_x, screen_y, 
+				FALSE), light_sources[i].x - translate_pixel_to_map_location(0, screen_x, screen_y, TRUE));
+		if ( tot_idx ) 
+			if ( fabs(light_source_range_vectors [ i ] [ tot_idx ] . angle - light_source_range_vectors [ i ] [ tot_idx - 1] . angle) < 0.05 )
+				{	
+				continue;
+				}
+		if ( x >= 64 ) break;
+		light_source_range_vectors [ i ] [ tot_idx ] . vect = compute_range_vector( &light_sources [ i ], translate_pixel_to_map_location(0, screen_x, 
+screen_y, 				TRUE), translate_pixel_to_map_location(0, screen_x, screen_y, FALSE), (light_source_strengthes[i] + (-curShip . 
+AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )) / 3);
+		tot_idx ++;
+		}
+	
+	    y = 47;
+	    screen_y = ( y - 24 ) * yrat;
+	    for ( x = 0; x < 64; x++)
+		{
+		if ( i ) x ++;
+		screen_x = ( x - 32 ) * xrat;
+		light_source_range_vectors [ i ] [ tot_idx ] . angle = atan2f(light_sources[i].y - translate_pixel_to_map_location(0, screen_x, screen_y, 
+				FALSE), light_sources[i].x - translate_pixel_to_map_location(0, screen_x, screen_y, TRUE));
+		if ( tot_idx ) 
+			if ( fabs(light_source_range_vectors [ i ] [ tot_idx ] . angle - light_source_range_vectors [ i ] [ tot_idx - 1] . angle) < 0.05 )
+				continue;
+		if ( x >= 64 ) break;
+		light_source_range_vectors [ i ] [ tot_idx ] . vect = compute_range_vector( &light_sources [ i ], translate_pixel_to_map_location(0, screen_x, screen_y, 
+				TRUE), translate_pixel_to_map_location(0, screen_x, screen_y, FALSE), (light_source_strengthes[i] + (-curShip . 
+AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )) /3);
+		tot_idx ++;
+		}
+	
+	    x = 0;
+	    screen_x = ( x - 32 ) * xrat;
+	    for	( y = 1; y < 47; y++)
+		{
+		if ( i ) y ++;
+		screen_y = ( y - 24 ) * yrat;
+		light_source_range_vectors [ i ] [ tot_idx ] . angle = atan2f(light_sources[i].y - translate_pixel_to_map_location(0, screen_x, screen_y, 
+				FALSE), light_sources[i].x - translate_pixel_to_map_location(0, screen_x, screen_y, TRUE));
+		if ( tot_idx ) 
+			if ( fabs(light_source_range_vectors [ i ] [ tot_idx ] . angle - light_source_range_vectors [ i ] [ tot_idx - 1] . angle) < 0.05 )
+				continue;
+
+		if ( y >= 48 ) break;
+		light_source_range_vectors [ i ] [ tot_idx ] . vect = compute_range_vector( &light_sources [ i ], translate_pixel_to_map_location(0, screen_x, 
+screen_y, 				TRUE), translate_pixel_to_map_location(0, screen_x, screen_y, FALSE), (light_source_strengthes[i] + (-curShip . 
+AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )) /3);
+		tot_idx ++;
+		}
+
+	    x = 63;
+	    screen_x = ( x - 32 ) * xrat;
+	    for ( y = 1; y < 47; y++)
+		{
+		if ( i ) y++;
+		screen_y = ( y - 24 ) * yrat;
+		light_source_range_vectors [ i ] [ tot_idx ] . angle = atan2f(light_sources[i].y - translate_pixel_to_map_location(0, screen_x, screen_y, 
+				FALSE), light_sources[i].x - translate_pixel_to_map_location(0, screen_x, screen_y, TRUE));
+		if ( tot_idx ) 
+			if ( fabs(light_source_range_vectors [ i ] [ tot_idx ] . angle - light_source_range_vectors [ i ] [ tot_idx - 1] . angle) < 0.05 )
+				continue;
+
+		if ( y >= 48 ) break;
+		light_source_range_vectors [ i ] [ tot_idx ] . vect = compute_range_vector( &light_sources [ i ], translate_pixel_to_map_location(0, screen_x, 
+screen_y, 				TRUE), translate_pixel_to_map_location(0, screen_x, screen_y, FALSE), (light_source_strengthes[i] + (-curShip . 
+AllLevels [ Me [ 0 ] . pos . z ] -> minimum_light_value )) / 3);
+		tot_idx ++;
+		}
+	
+	    light_source_range_vector_number [ i ] = tot_idx;
+
+	    /*Now we sort our list*/
+            qsort(light_source_range_vectors [ i ], light_source_range_vector_number [ i ],  sizeof(light_source_vect_parms), compare_light_source_vect_parms);
+	    
+	 /*   for ( x = 0; x < light_source_range_vector_number [ i ]; x++)
+		{
+		if ( fabs ( light_source_range_vectors [ i ][x].angle ) < 0.10 ) 
+		printf("Angle %f\n", light_source_range_vectors [ i ][x].angle);
+		}	    
+	    printf("Over\n\n");*/
+
+
+
+	/*Display Tux vision range*/
+		
+	//if ( !i )
+	  /*  for ( x = 0; x < light_source_range_vector_number [ i ]; x ++)
+		{
+	        glRasterPos2i ( 0 , 0 );
+ 		glDisable( GL_TEXTURE_2D );
+	        glDisable(GL_DEPTH_TEST);
+	        glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_BLEND );
+	        glDisable( GL_ALPHA_TEST );
+	        glDisable(GL_BLEND);
+
+		glColor4f(1.0, 0.0, 0.0, 1.0);
+		glDisable(GL_TEXTURE_2D);
+
+		  int r, c;
+		  glLineWidth (1);
+		  glColor3f ((!i ? 1: 0), (i ? 1 : 0), 0);
+	
+		  glBegin (GL_LINES);
+	  	translate_map_point_to_screen_pixel(light_sources[i].x, light_sources[i].y,&r,&c,1);
+		  glVertex2i (r, c);
+		  translate_map_point_to_screen_pixel(light_sources[i].x + light_source_range_vectors[ i ][x].vect.x, light_sources[i].y +light_source_range_vectors[ i ][x].vect.y,&r,&c, 1);
+		  glVertex2i (r, c);
+		
+		  glEnd ();
+
+		}*/
+	
+	}
+
+
+    pre_computations_done:
+
+    for ( x = 0 ; x < 64 ; x ++ )
     {
 	for ( y = 0 ; y < 48 ; y ++  )
 	{
@@ -495,7 +705,9 @@ set_up_light_strength_buffer ( void )
 
 	    light_strength_buffer [ x ] [ y ] = 
 		calculate_light_strength ( target_pos );
+	//	printf("% 02d ", light_strength_buffer [ x ] [ y ]);
 	}
+//	printf("\n");
     }
     
     soften_light_distribution();
@@ -656,8 +868,6 @@ blit_light_radius ( void )
 
     if ( use_open_gl )
     {
-	// blit_open_gl_light_radius ();
-	// blit_open_gl_cheap_light_radius ();
 	blit_open_gl_stretched_texture_light_radius ();
     }
     else
