@@ -430,19 +430,19 @@ ShowCombatScreenTexts ( int mask )
  * position of each map tile to compute the right position.  That is what
  * the blit_this_floor_tile_to_screen(...) function does.
  * ---------------------------------------------------------------------- */
-void
-blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image ,
+static inline void
+blit_this_floor_tile_to_screen ( iso_image * our_floor_iso_image ,
 				 float our_col, float our_line )
 {
     if ( use_open_gl )
     {
-	blit_open_gl_texture_to_map_position ( &our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
+	blit_open_gl_texture_to_map_position ( our_floor_iso_image , our_col , our_line , 1.0 , 1.0 , 1.0 , FALSE , FALSE) ;
     }
     else
     {
-	blit_iso_image_to_map_position ( &our_floor_iso_image , our_col , our_line ) ;
+	blit_iso_image_to_map_position ( our_floor_iso_image , our_col , our_line ) ;
     }
-}; // void blit_this_floor_tile_to_screen ( iso_image our_floor_iso_image , float our_col, float our_line )
+}; // void blit_this_floor_tile_to_screen ( iso_image * our_floor_iso_image , float our_col, float our_line )
 
 void
 get_floor_boundaries(int mask, int* LineStart, int* LineEnd, int* ColStart, int* ColEnd){
@@ -486,7 +486,9 @@ isometric_show_floor_around_tux_without_doublebuffering (int mask)
 	for (col = ColStart; col < ColEnd; col++)
 	    {
             MapBrick = GetMapBrick (DisplayLevel, col, line);
-		
+	    if ( MapBrick == ISO_COMPLETELY_DARK)
+		continue;
+				
     	    if (mask & ZOOM_OUT)
                 {
                 if (use_open_gl)
@@ -503,7 +505,7 @@ isometric_show_floor_around_tux_without_doublebuffering (int mask)
                }
            else
                {
-               blit_this_floor_tile_to_screen ( floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
+               blit_this_floor_tile_to_screen ( &floor_iso_images[MapBrick % ALL_ISOMETRIC_FLOOR_TILES],
 	                ((float) col) + 0.5, ((float) line) + 0.5);
                }
            }
