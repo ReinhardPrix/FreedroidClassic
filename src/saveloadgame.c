@@ -652,9 +652,9 @@ LoadGame( void )
     {
 	show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\nSorry, but I refuse to load it for safety/stability reasons...\nFor Recovery, a blank game will be loaded...(please disregard)\n" );
 	our_SDL_flip_wrapper( Screen );
-	while ( SpacePressed() ) SDL_Delay ( 3 );
-	while ( !SpacePressed() ) SDL_Delay ( 3 );
-	while ( SpacePressed() ) SDL_Delay ( 3 );
+	while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay ( 3 );
+	while ( !SpacePressed() && ! MouseLeftPressed() ) SDL_Delay ( 3 );
+	while ( SpacePressed() || MouseLeftPressed()) SDL_Delay ( 3 );
 
 	//--------------------
 	// Now at this point the current Tux data has been junked
