@@ -29,7 +29,7 @@ Present at startup=1
 
 ** Start of new program specification subsection **
 Program name="Extract bot parts"  
-Program description="With a little knowledge, you can extract some useful parts out of the robots you kill"
+Program description="With a little knowledge, you can extract some useful parts out of the robots you kill. With each bot there is some hope of a part falling out."
 Picture="ExtractBotParts.png"
 Form="self"
 Effect="none"
