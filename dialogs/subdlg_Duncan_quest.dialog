@@ -37,7 +37,7 @@ Subtitle="So... Any news on the Koan matter?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=40 ChangeToValue=1
-OnCondition="CookieIsPlanted:koan_spared" JumpToOption=5 ElseGoto=1
+OnCondition="CookieIsPlanted:koan_spared:" JumpToOption=5 ElseGoto=1
 DoSomethingExtra="PlantCookie:koan_quest_done"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -52,10 +52,29 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 ----------------------------------------------------------------------
 
 New Option Nr=5  OptionText="KOAN WAS SPARED"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+OptionSample=""
 PositionX=200  PositionY=200  
 ChangeOption=5 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="GOT THE CUBE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=7 ChangeToValue=0
+OnCondition="HaveItemWithCode:129" JumpToOption=8 ElseGoto=1
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="YEAH. WE HAVE THE CUBE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=8 ChangeToValue=0
+ChangeOption=3 ChangeToValue=1
+ChangeOption=10 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

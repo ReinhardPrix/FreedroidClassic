@@ -34,7 +34,7 @@ New Option Nr=0  OptionText="HERE WE GO"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=61  PositionY=200  
 ChangeOption=0 ChangeToValue=0
-ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
 ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -50,23 +50,12 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="He is hiding somewhere in the desert, I don't know exactly where."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
-ChangeOption=5 ChangeToValue=1
+ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" No, I don't find bloodshed a pleasurable activity."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=200  PositionY=200  
-Subtitle="That is fine. I will find someone else."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=0
-DoSomethingExtra="EndDialog"
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=5  OptionText=" I will get your property back."
+New Option Nr=2  OptionText=" I will get your property back."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Excellent. I am pleased to hear this."
@@ -77,15 +66,16 @@ Subtitle="There are not too many bots in the desert, but they are undefeatable. 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I will be waiting here for your return."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=5 ChangeToValue=0
+ChangeOption=2 ChangeToValue=0
+ChangeOption=99 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
-DoSomethingExtra="AssignMission:"
+ChangeOption=5 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" What are those bots?"
+New Option Nr=5  OptionText=" What are those bots?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="We call them 'Sawmill'."
@@ -96,27 +86,39 @@ Subtitle="Now they chop down people."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Their only weak point is their security system. But no one managed to stay alive long enough to hack them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" What is that thing he took from you?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="A cube. You can't miss it. Trust me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" What is that thing he took from you?"
+New Option Nr=7  OptionText=" That is all I need to know. I will find Koan."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=200  PositionY=200  
-Subtitle="A cube. You can't miss it. Trust me."
+PositionX=512  PositionY=290  
+Subtitle="Only time will tell."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=7 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_desert"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" That is all I need to know. I will find Koan."
+New Option Nr=99  OptionText=" No, I don't find bloodshed a pleasurable activity."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=512  PositionY=290  
-Subtitle="Yes, you will."
+PositionX=200  PositionY=200  
+Subtitle="That is fine. I will find someone else."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=99 ChangeToValue=1
+ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

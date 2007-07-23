@@ -10,7 +10,7 @@ infinite_running_on_this_level: 1
 jump threshold north: 13
 jump threshold south: 7
 jump threshold east: 13
-jump threshold west: 13
+jump threshold west: 10
 jump target north: 8
 jump target south: 11
 jump target east: 9

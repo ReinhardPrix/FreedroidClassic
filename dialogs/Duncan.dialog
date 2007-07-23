@@ -36,6 +36,7 @@ PositionX=68  PositionY=275
 Subtitle="Duncan McNamara, The Red Guard's resident bomb maker, at your service."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
+ChangeOption=90 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -187,7 +188,7 @@ New Option Nr=61  OptionText="MURDERING DONE OR SAVED HIM"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=61 ChangeToValue=0
-DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan_koan"
+DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan_quest"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
