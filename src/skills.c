@@ -181,7 +181,6 @@ HandleCurrentlyActivatedSkill()
 	      return;
 	}
     Override_Power_Limit = 0;
-printf("Calling doskill for skill %d cost %d", Me[0].readied_skill, SpellCost);
     DoSkill(Me [ 0 ] . readied_skill, SpellCost);
 
 return;    
