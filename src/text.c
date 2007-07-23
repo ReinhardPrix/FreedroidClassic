@@ -604,10 +604,11 @@ DisplayBigScreenMessage( void )
 int
 DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , float text_stretch )
 {
-    char *tmp;	// mobile pointer to the current position in the string to be printed
+    unsigned char *tmp;	// mobile pointer to the current position in the string to be printed
     SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
     SDL_Rect store_clip;
-    short int line_nb = 1;
+    short int nblines = 1;
+
     //--------------------
     // We position the internal text cursor on the right spot for
     // the first character to be printed.
@@ -644,23 +645,29 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
     //
     // The running text pointer must be initialized.
     //
-    tmp = (char*) Text;  // this is no longer a 'const' char*, but only a char*
+    tmp = (unsigned char*) Text;  // this is no longer a 'const' char*, but only a char*
     while ( *tmp && ( MyCursorY < clip -> y + clip -> h ) )
     {
 	if ( *tmp == '\n' )
 	{
 	    MyCursorX = clip->x;
 	    MyCursorY += FontHeight ( GetCurrentFont() ) * text_stretch ;
-	    line_nb ++;
+	    nblines ++;
 	}
-	else
-	    DisplayChar (*tmp);
+	else 
+	    {
+	    if ( MyCursorY > clip -> y - FontHeight ( GetCurrentFont() ) * text_stretch) 
+      	        DisplayChar (*tmp);
+	    else 
+                MyCursorX += CharWidth ( GetCurrentFont() , *tmp);
+	    }
+
 	
 	tmp++;
 	
         if(ImprovedCheckLineBreak( tmp , clip , text_stretch ) == 1)   // dont write over right border 
 		{ /*THE CALL ABOVE HAS DONE THE CARRIAGE RETURN FOR US !!!*/
-		line_nb++;
+		nblines ++;
 		}
 	
     }
@@ -675,7 +682,7 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	 ( ( MyCursorY < clip -> y ) || ( starty > clip -> y + clip -> h ) ) )
 	return FALSE;  // no text was written inside clip 
     else
-	return line_nb; 
+	return nblines; 
     
 }; // int DisplayText(...)
 
