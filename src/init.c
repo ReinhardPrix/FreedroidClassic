@@ -1594,60 +1594,6 @@ InitInfluencerChatFlags( int PlayerNum )
 }; // void InitInfluencerChatFlags( int PlayerNum )
 
 /* ----------------------------------------------------------------------
- *
- *
- * ---------------------------------------------------------------------- */
-void
-InitInfluencerPasswordsAndClearances( int PlayerNum )
-{
-  int j;
-
-  //--------------------
-  // At the beginning, the Tux shouldn't have any passwords
-  // or security clearances on him, and that's was we ensure here.
-  //
-  for ( j = 0 ; j < MAX_CLEARANCES ; j ++ )
-    {
-      Me [ PlayerNum ] . clearance_list [ j ] = 0 ;
-    }
-  j=0;
-  Me [ PlayerNum ] . clearance_list [ j ] = 1 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 2 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 3 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 4 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 5 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 6 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 7 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 8 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 9 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 10 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 11 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 12 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 13 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 14 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 15 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 16 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 17 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 18 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 19 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 20 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 21 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 22 ; j++;
-  Me [ PlayerNum ] . clearance_list [ j ] = 23 ; j++;
-
-  for ( j = 0 ; j < MAX_PASSWORDS ; j ++ )
-    {
-      strcpy ( Me [ PlayerNum ] . password_list [ j ] , "" ) ;
-    }
-  strcpy ( Me [ PlayerNum ] . password_list [ 0 ] , "Tux Himself" ) ;
-  strcpy ( Me [ PlayerNum ] . password_list [ 1 ] , "Tux Dummy1" ) ;
-  strcpy ( Me [ PlayerNum ] . password_list [ 2 ] , "Tux Dummy2" ) ;
-  strcpy ( Me [ PlayerNum ] . password_list [ 3 ] , "Tux Energy" ) ;
-  strcpy ( Me [ PlayerNum ] . password_list [ 4 ] , "Tux Idenfity" ) ;
-
-}; // void InitInfluencerPasswordsAndClearances( int PlayerNum )
-
-/* ----------------------------------------------------------------------
  * When a completely fresh and new game is started, some more or less
  * harmless status variables need to be initialized.  This is what is
  * done in here.
@@ -1793,8 +1739,6 @@ PrepareStartOfNewCharacter ( void )
     UpdateAllCharacterStats( 0 );
     
     InitInfluencerChatFlags( 0 );
-    
-    InitInfluencerPasswordsAndClearances( 0 );
     
     clear_out_intermediate_points ( 0 ) ;
     

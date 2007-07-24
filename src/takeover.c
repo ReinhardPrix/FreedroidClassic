@@ -299,21 +299,6 @@ Takeover ( int enemynum )
 	    if ( Me [ 0 ] . health > Me [ 0 ] . maxenergy ) 
 		Me [ 0 ] . health = Me [ 0 ] . maxenergy;
 	    
-	    //--------------------
-	    // We add the victims security clearance to our own list of 
-	    // availabe security clearances.
-	    //
-	    for ( ClearanceIndex = 0 ; ClearanceIndex < MAX_CLEARANCES ; ClearanceIndex ++ )
-	    {
-		if ( Me [ 0 ] . clearance_list [ ClearanceIndex ] == 0 )
-		{
-		    Me [ 0 ] . clearance_list [ ClearanceIndex ] = AllEnemys [ enemynum ] . type ;
-		    // SetNewBigScreenMessage ( "Clearance obtained" );
-		    SetNewBigScreenMessage ( "Bot Reprogrammed" );
-		    break;
-		}
-	    }
-	    
 	    Me [ 0 ] . type = AllEnemys [ enemynum ] . type;
 	    Me [ 0 ] . marker = AllEnemys [ enemynum ] . marker;
 

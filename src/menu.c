@@ -1061,7 +1061,6 @@ Cheatmenu (void)
 	printf_SDL (Screen, -1, -1, " h. Auto-aquire all skills\n" );
 	printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
 		    show_all_droids ? "ON\n" : "OFF\n" );
-	printf_SDL (Screen, -1, -1, " m. Map of Deck xy\n");
 	printf_SDL (Screen, -1, -1, " x. Cheatkeys : %s",
 		    GameConfig . enable_cheatkeys ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
@@ -1263,14 +1262,6 @@ Cheatmenu (void)
 		show_all_droids = !show_all_droids;
 		break;
 		
-	    case 'm': /* Show deck map in Concept view */
-		input = GetString ( 40 , 2 , NE_TITLE_PIC_BACKGROUND_CODE , "Levelnum: " );
-		if ( input == NULL ) break ; // We take into account the possibility of escape being pressed...
-		sscanf (input, "%d", &LNum);
-		free (input);
-		ShowDeckMap ( curShip . AllLevels [ LNum ] );
-		getchar_raw ();
-		break;
 		
 	    case 'x': 
 		GameConfig . enable_cheatkeys = ! GameConfig . enable_cheatkeys;

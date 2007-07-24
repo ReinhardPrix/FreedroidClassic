@@ -707,8 +707,6 @@ typedef struct
     // of the Tux like town guard member or not and the like...
     //
     unsigned char Chat_Flags[ MAX_PERSONS ][ MAX_ANSWERS_PER_PERSON ];
-    int clearance_list[ MAX_CLEARANCES ];
-    char password_list[ MAX_PASSWORDS ] [ MAX_PASSWORD_LENGTH ] ;
     char cookie_list[ MAX_COOKIES ] [ MAX_COOKIE_LENGTH ] ;
     int is_town_guard_member;
     char chat_character_initialized [ MAX_PERSONS ]; 
@@ -726,6 +724,9 @@ typedef struct
     int BigScreenMessageIndex;
     char BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
     float BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES ];
+
+    int extra_effect_type;
+    int extra_effect_duration;
 }
 tux_t, *Tux_t;
 
