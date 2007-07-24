@@ -201,7 +201,7 @@ Program name="Emergency shutdown"
 Program description="Everyone needs to blow some steam every now and then."
 Picture="Shutdown.png"
 Form="self"
-Effect="freeze"
+Effect="paralyze"
 Cost=-100
 Base damage=0
 
