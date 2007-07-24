@@ -1,771 +1,1488 @@
-Changes between rc4 and 0.10.2 final:
+2007-07-24 18:29  ahuillet
 
-* Made end of game harder
-* Added correct levels to all prefixes
-* Updated dialogs and title files
-* Improved temple wood and crystal fields a little 
+	* map/freedroid.program_archetypes: magotari : effect name is
+	  "paralyze", not "freeze"
 
+2007-07-24 18:27  ahuillet
 
-Changes till rc4:
-2007-06-29 20:44  ahuillet
+	* src/: bullet.c, influ.c, main.c, skills.c, struct.h: tux can be
+	  paralyzed now
 
-	* freedroidRPG.exe: upd exe before rc4
+2007-07-24 17:27  ahuillet
 
-2007-06-29 20:35  ahuillet
+	* map/Asteroid.maps: fixed koan bunker, duncan waypoints
 
-	* src/: init.c, struct.h, takeover.c: added takeover help info to
-	  savegame in order not to display help for advanced people -
-	  breaks existing savegames
+2007-07-24 17:26  ahuillet
 
-2007-06-29 20:25  ahuillet
+	* map/EventsAndEventTriggers: fixed bunker -> desert event trigger
 
-	* src/takeover.c: now automatically displaying takeover help on the
-	  first to
+2007-07-24 16:44  ahuillet
 
-2007-06-29 20:24  ahuillet
+	* map/freedroid.program_archetypes: added broadcast virus icon
 
-	* src/influ.c: removed cursor mode auto reset - should help with
-	  identify scripts being wasted, but may introduce other problems
+2007-07-24 16:39  ahuillet
 
-2007-06-29 18:37  ahuillet
+	* graphics/skill_icons/BroadcastVirus.png: hacked up BroadcastVirus
+	  skill icon
 
-	* src/input.c: fixed input for 0 1 2 3 4 ... keys for windows
+2007-07-24 16:20  ahuillet
 
-2007-06-29 18:37  ahuillet
+	* map/freedroid.program_archetypes: radial != ring, and fixed one
+	  excessive cost
 
-	* src/leveleditor.c: made leveleditor always use the same cursor
+2007-07-24 16:20  ahuillet
 
-2007-06-29 18:02  ahuillet
+	* map/freedroid.item_archetypes: fixed lasersaber item rotation
+	  prefix
 
-	* graphics/backgrounds/conversation.png: made dialog background
-	  black
+2007-07-24 15:22  ahuillet
 
-2007-06-28 21:10  ahuillet
+	* src/: init.c, menu.c, proto.h, ship.c, struct.h, takeover.c:
+	  removed legacy fdClassic code - as well as show console function
+	  which might be used again in the future to control autoguns
 
-	* freedroidRPG.exe: rc3bis exe
+2007-07-24 12:29  magotari
 
-2007-06-27 12:19  magotari
+	* dialogs/Sorenson.dialog: A small change.
 
-	* map/titles/: EndOfGame.title, TakeoverInstructions.title: Rewrote
-	  more stuff.
+2007-07-24 12:03  bastiansalmela
 
-2007-06-26 21:45  ahuillet
-
-	* src/items.c, src/struct.h, map/freedroid.prefix_archetypes: added
-	  level handling to item bonuses
-
-2007-06-26 18:02  ahuillet
-
-	* src/view.c: fixed display code to work even when skipping shadow
-	  blitting
-
-2007-06-26 15:01  magotari
-
-	* dialogs/: Pendragon.dialog, subdlg_Pendragon.dialog: Rewrote
-	  Pendragon nearly from scratch.  Please comment, I am not sure if
-	  this is an improvement.
-
-2007-06-26 12:18  magotari
-
-	* dialogs/Spencer.dialog: Moved stuff around.
-
-2007-06-26 12:15  magotari
-
-	* dialogs/Ewald.dialog: A trivial fix.	Damn good to be back.
-
-2007-06-25 20:16  ahuillet
-
-	* src/text.c: fixed escape in GetString
-
-2007-06-25 17:10  ahuillet
-
-	* src/ship.c: s/Quest item - unsellable/Unsellable/
-
-2007-06-25 14:17  ahuillet
-
-	* src/shop.c: wait for mouse left to be released in shops
-
-2007-06-25 01:19  ahuillet
-
-	* src/BFont.c: now using glClipPlane for text clipping - does nicer
-	  text scrolling at the borders
-
-2007-06-25 00:53  ahuillet
-
-	* src/chat.c: improved chat menu performance by removing map
-	  display call altogether - effect is visible but no one should
-	  care
-
-2007-06-24 23:12  ahuillet
-
-	* src/shop.c: fixed regression in exiting shop
-
-2007-06-24 23:03  ahuillet
-
-	* src/influ.c: fixed space key being usable to act on the map
-
-2007-06-24 22:42  ahuillet
-
-	* src/text.c: fixed GiveMouseAlertWindow regression
-
-2007-06-24 22:13  ahuillet
-
-	* src/: input.c, skills.c, takeover.c: fixed a few more regressions
-	  in input code
-
-2007-06-24 02:34  ahuillet
-
-	* ChangeLog: rc1 Changelog
-
-2007-06-23 15:42  ahuillet
-
-	* src/: defs.h, hud.c, input.c, skills.c, view.c: fixed skill
-	  explanation screen behavior : not conflicting with inv any
-	  longer, and view centered properly
-
-2007-06-22 23:46  ahuillet
-
-	* src/: menu.c, sound.c: fixed chat menu input regressions
-
-2007-06-22 23:08  ahuillet
-
-	* src/: character.c, graphics.c, input.c, items.c, leveleditor.c,
-	  proto.h, skills.c, text.c: fixed input regressions for
-	  mouse-related checks - hope there are none of them left now
-
-2007-06-21 16:36  ahuillet
-
-	* freedroidRPG.exe: generated more recent .exe
-
-2007-06-21 16:11  ahuillet
-
-	* map/Asteroid.maps: upd map
-
-2007-06-15 01:35  ahuillet
-
-	* src/input.c: made quick inv work with international keyboard
-	  layouts, PLEASE TEST THAT AND REPORT
-
-2007-06-15 01:13  ahuillet
-
-	* src/: input.c, proto.h: made quick inventory use new input code
-	  in preparation for intl layout fix
-
-2007-06-15 00:01  ahuillet
-
-	* src/input.c: removed debug printf
-
-2007-06-14 23:55  ahuillet
-
-	* src/items.c: removed debug messages used in fixing the previous
-	  bug
-
-2007-06-14 23:52  ahuillet
-
-	* src/items.c: fixed bug when replacing a two handed weapon by a
-	  shield, you could end up having a weapon in shield rect
-
-2007-06-14 23:47  ahuillet
-
-	* src/menu.c: fixed cheat menu quitting
-
-2007-06-14 23:11  ahuillet
-
-	* src/: input.c, proto.h: changed input code to make it Just Work -
-	  now it s as complex as the original... but more logical
-
-2007-06-13 16:09  ahuillet
-
-	* src/leveleditor.c: cosmetic fix to test CIA bot
-
-2007-06-13 12:59  ahuillet
-
-	* src/leveleditor.c: added autoscrolling in leveleditor
-
-2007-06-10 01:49  ahuillet
-
-	* src/view.c: protected matusz GL-only code for building on non-GL
-	  machines
-
-2007-06-10 00:13  ahuillet
-
-	* src/: character.c, chat.c, influ.c, init.c, leveleditor.c,
-	  menu.c, text.c: replaced a few occurences of SpacePressed by the
-	  relevant MousePressed calls
-
-2007-06-09 20:02  ahuillet
-
-	* src/: BFont.c, automap.c, blocks.c, graphics.c, hud.c,
-	  leveleditor.c, misc.c, open_gl.c, proto.h, shop.c, skills.c,
-	  takeover.c, view.c: changed call parameters for blit functions -
-	  now passing iso_image by address
-
-2007-06-09 19:02  ahuillet
-
-	* src/: global.h, input.c, proto.h, view.c: added Z key to toggle
-	  "always show items"
-
-2007-06-09 18:51  ahuillet
-
-	* src/: input.c, proto.h: added RightWasPressed and LeftWasPressed
-	  to input system
-
-2007-06-09 18:50  ahuillet
-
-	* src/graphics.c: fixed input regression in graphical number
-	  selection, and added support for selection with arrow keys
-
-2007-06-09 18:46  ahuillet
-
-	* src/leveleditor.c: fixed input regression in item drop menu
-
-2007-06-09 18:26  ahuillet
-
-	* src/skills.c: tom kun temporary calculate pi program + changed
-	  calls to match new input system
-
-2007-06-09 18:22  ahuillet
-
-	* src/: character.c, global.h, graphics.c, hud.c, influ.c, init.c,
-	  items.c, leveleditor.c, main.c, menu.c, mission.c, network.c:
-	  restructuration of input code to something a little cleaner and
-	  that eases tracking of previous frame events - there are
-	  regressions to track and report
-
-2007-06-09 18:14  ahuillet
-
-	* src/: proto.h, ship.c, shop.c, input.c: restructuration of input
-	  code to something a little cleaner and that eases tracking of
-	  previous frame events - there are regressions to track and report
-
-2007-06-09 18:11  ahuillet
-
-	* src/: takeover.c, view.c: restructuration of input code to
-	  something a little cleaner and that eases tracking of previous
-	  frame events - there are regressions to track and report
-
-2007-06-09 00:26  ahuillet
-
-	* src/: hud.c, character.c: tom_kun - working on computerish magic
-
-2007-06-07 22:43  ahuillet
-
-	* src/vars.h, graphics/skill_icons/Calculate_PI.png,
-	  graphics/skill_icons/FrostBoltSpell.png: changed frost spell to
-	  calculate pi program - tom kun
-
-2007-06-07 22:35  ahuillet
-
-	* src/influ.c: added toggle autorun function, patch from Tom Kun
-
-2007-05-04 14:23  ahuillet
-
-	* src/sound.c: now not exiting when sound could not be initialized,
-	  as requested by an user
-
-2007-04-12 22:02  ahuillet
-
-	* src/automap.c: GL automap now displays obstacles at the right
-	  place !
-
-2007-04-12 17:48  ahuillet
-
-	* dialogs/de/Kevin.dialog: fixed missing double quote
-
-2007-04-12 03:04  ahuillet
-
-	* dialogs/de/Kevin.dialog: fixed double line
-
-2007-04-11 19:11  ahuillet
-
-	* src/view.c: added grey quad in GL mode for double handed weapons
-
-2007-04-11 17:38  ahuillet
-
-	* src/: SDL_rotozoom.c, enemy.c, items.c: removed a few irrelevant
-	  uninitialized value warnings from gcc4
-
-2007-04-11 17:31  ahuillet
-
-	* graphics/font/: cpuFont.8859-2.png, parafont.8859-2.png,
-	  small_white.8859-2.png: added a few 8859-2 fonts from matusz
-
-2007-04-11 17:29  ahuillet
-
-	* src/leveleditor.c: added displaying of object type numbers in ALL
-	  tab in leveleditor
-
-2007-04-11 17:18  ahuillet
-
-	* src/defs.h: fixed numbering mistake
-
-2007-04-11 17:16  ahuillet
-
-	* src/: init.c, misc.c, struct.h: added support for linked actions
-	  in events file
-
-2007-04-11 17:11  ahuillet
-
-	* map/EventsAndEventTriggers: updated event file to handle linked
-	  actions
-
-2007-04-11 15:50  ahuillet
-
-	* src/blocks.c: fixed autoguns and counters block area size
-
-2007-04-11 15:50  ahuillet
-
-	* src/map.c: made autoguns fire faster, as requested by Mr. Map
-
-2007-04-11 13:32  ahuillet
-
-	* src/: misc.c, mission.c: improved quest browser buttons' behavior
-
-2007-04-11 13:05  ahuillet
-
-	* src/character.c: fixed bug that distributed character points even
-	  when chascr was not open
-
-2007-04-09 14:14  ahuillet
-
-	* src/leveleditor.c: patch from matusz to exit lvleditor with
-	  CTRL-Q instead of just Q - consistency
-
-2007-04-09 14:10  ahuillet
-
-	* src/: graphics.c, input.c, defs.h: removed support for crosshair
-	  cursor as only fdClassic uses it
-
-2007-04-09 14:05  ahuillet
-
-	* src/: defs.h, saveloadgame.c: removed useless references to
-	  SHIP_EXT, replaced by .shp
-
-2007-04-09 02:26  ahuillet
-
-	* src/defs.h: updated comments
-
-2007-04-09 01:43  ahuillet
-
-	* src/items.c: reduced a little the apparition of ranged weapons
-	  ammo - this still requires some work
-
-2007-04-09 01:31  ahuillet
-
-	* map/Asteroid.maps: updated Stone waypoints so that she does not
-	  get stuck
-
-2007-04-09 01:08  ahuillet
-
-	* map/freedroid.item_archetypes: made standard shield better than
-	  small shield, reported by barbatrix
-
-2007-04-09 01:02  ahuillet
-
-	* src/menu.c: skip initial title file when entering leveleditor
-	  directly
-
-2007-04-09 01:01  ahuillet
-
-	* src/text.c: reduced default speed of title files to make them
-	  more readable
-
-2007-04-09 00:56  ahuillet
-
-	* src/menu.c: added a leveleditor menu option, this is done in a
-	  rather dirty way but it does its work therefore I am keeping it
-
-2007-04-09 00:55  ahuillet
-
-	* src/leveleditor.c: removed test string left out by matusz in
-	  leveleditor
-
-2007-04-09 00:37  ahuillet
-
-	* src/input.c: improved ski/cha screens behavior: they now are
-	  exclusive
-
-2007-04-08 22:54  ahuillet
-
-	* map/Asteroid.maps: updated map for hf entrance
-
-2007-04-08 22:52  ahuillet
-
-	* map/EventsAndEventTriggers: updated to reflect my latest feature
-	  enhancements and serve as an example for barbatrix
-
-2007-04-08 22:51  ahuillet
-
-	* src/: init.c, misc.c, struct.h: added support for actions
-	  disabling event triggers, as requested by barbatrix
-
-2007-04-08 20:56  ahuillet
-
-	* src/influ.c: disabled loot mode for mwheelup as well, bug
-	  reported by matusz
-
-2007-04-08 15:10  ahuillet
-
-	* graphics/mouse_buttons/LevelEditorToggleGridButtonFull.png: added
-	  "full grid" button for leveleditor
-
-2007-04-08 15:10  ahuillet
-
-	* src/: defs.h, leveleditor.c, misc.c, view.c: matusz patch for
-	  three mode grid button, and small grid numbers in leveledit to be
-	  displayed in SDL too
-
-2007-04-05 02:34  ahuillet
-
-	* src/blocks.c: now using specific (placeholder) graphics for
-	  disabled autoguns
-
-2007-04-05 02:34  ahuillet
-
-	* graphics/obstacles/: iso_disautogun_0001.offset,
-	  iso_disautogun_0001.png, iso_disautogun_0002.offset,
-	  iso_disautogun_0002.png, iso_disautogun_0003.offset,
-	  iso_disautogun_0003.png, iso_disautogun_0004.offset,
-	  iso_disautogun_0004.png: added disabled autogun (placeholder)
-	  graphics
-
-2007-04-05 02:21  ahuillet
-
-	* freedroidRPG.exe: new binary
-
-2007-04-05 02:04  ahuillet
-
-	* src/: open_gl.c, proto.h, text.c: various position translation
-	  macro names changes by matusz
-
-2007-04-05 02:03  ahuillet
-
-	* src/: leveleditor.c, view.c: matusz added a full featured grid to
-	  the leveleditor along with cosmetic fixes
-
-2007-04-05 02:01  ahuillet
-
-	* src/influ.c: various pointless position translation macro names
-	  changes by matusz
-
-2007-04-05 01:58  ahuillet
-
-	* src/blocks.c: various pointless changes to blocks.c by matusz to
-	  change macro names
-
-2007-04-05 01:52  ahuillet
-
-	* graphics/: grid_tile.offset, grid_tile.png: added grid tile files
-	  for grid in leveleditor in SDL mode
-
-2007-04-04 22:20  ahuillet
-
-	* src/: blocks.c, bullet.c, defs.h, leveleditor.c: added disabled
-	  autoguns obstacles - some tweaking will be necessary in
-	  leveleditor to make them look different
-
-2007-04-04 22:19  ahuillet
-
-	* src/map.c: autoguns now are functional again, and were somewhat
-	  improved - rate of fire, damage, bullet position
-
-2007-04-04 22:16  ahuillet
-
-	* src/view.c: finally supressed - with an awfully dirty patch that
-	  I will regret someday - displaying of W for water obstacles out
-	  of leveleditor mode
-
-2007-04-04 01:46  ahuillet
-
-	* map/Asteroid.maps: barbatrix HF entrance
-
-2007-04-04 01:45  ahuillet
-
-	* src/misc.c: now handling removal of obstacles as events
-
-2007-04-04 01:43  ahuillet
-
-	* map/EventsAndEventTriggers: first commit of two new events on
-	  barbatrix map
-
-2007-04-03 23:27  ahuillet
-
-	* src/text.c: cosmetic fix - now obstacle labels are displaying in
-	  a correctly-sized rectangle
-
-2007-03-18 15:32  ahuillet
-
-	* graphics/backgrounds/: LevelEditorBanner.png,
-	  LevelEditorSelectionBar1.png, LevelEditorSelectionBar2.png,
-	  LevelEditorSelectionBar3.png, LevelEditorSelectionBar4.png,
-	  LevelEditorSelectionBar5.png, LevelEditorSelectionBar6.png,
-	  LevelEditorSelectionBar7.png, LevelEditorWallsMenu.png: removed
-	  now unused level editor files
-
-2007-03-18 15:28  ahuillet
-
-	* src/: leveleditor.c, misc.c, defs.h: matusz patch - better
-	  leveleditor object selection bar
-
-2007-03-18 15:28  ahuillet
-
-	* graphics/mouse_buttons/: LevelEditorObjectSelectorLeft.png,
-	  LevelEditorObjectSelectorRight.png: added object selector arrows
-	  for leveleditor
-
-2007-03-13 00:03  ahuillet
-
-	* freedroidRPG.exe: now using binary write mode for SaveShip
-
-2007-03-12 23:41  ahuillet
-
-	* src/map.c: fixed potential bug in case of crate explosion not due
-	  to the player
-
-2007-03-12 23:38  ahuillet
-
-	* src/map.c: put back the binary open mode for SaveShip - crappy
-	  windows
-
-2007-03-12 23:29  ahuillet
-
-	* src/chat.c: fixed font class for german
-
-2007-03-11 21:44  ahuillet
-
-	* map/Asteroid.maps: fixed town corner2
-
-2007-03-11 21:39  ahuillet
-
-	* map/Asteroid.maps: fixed town corner
-
-2007-03-11 21:35  ahuillet
-
-	* map/Asteroid.maps: barbatrix modifications
-
-2007-03-11 17:31  ahuillet
-
-	* src/menu.c: removed allowance for changing resolutions in SDL
-	  mode- this is definitely not supported
-
-2007-03-11 16:31  ahuillet
-
-	* src/: graphics.c, menu.c, struct.h: added possibility to disable
-	  fadings - performance tweak
-
-2007-03-11 16:19  ahuillet
-
-	* src/hud.c: added legend to HP/mana/etc bars tooltips, and
-	  improved text banner sizing
-
-2007-03-11 16:08  ahuillet
-
-	* src/map.c: fixed bug of crates never dropping random items as
-	  they were supposed to
-
-2007-03-11 15:56  ahuillet
-
-	* src/influ.c: random drops in chests as requested by Etienne Viard
-
-2007-03-11 14:43  ahuillet
-
-	* freedroidRPG.exe: new exe
-
-2007-03-10 23:49  ahuillet
-
-	* src/: menu.c, proto.h, chat.c, graphics.c: language are now tied
-	  to fonts, to handle non-8859-15 languages
-
-2007-03-10 22:32  ahuillet
-
-	* src/: BFont.c, BFont.h: using const where appropriate in BFont
-
-2007-03-10 14:14  ahuillet
-
-	* src/init.c: added locale check before setlocale
-
-2007-03-10 14:14  ahuillet
-
-	* src/map.c: cosmetic change
-
-2007-03-09 23:38  ahuillet
-
-	* freedroidRPG.exe: new bin
-
-2007-03-09 14:07  bastiansalmela
-
-	* src/sound.c:
-	  removed extra "n"
+	* graphics/skill_icons/: BadPacket.png, Nethack.png:
+	  BadPacket, Nethack...  I admit, these are not great, I'm running
+	  out of ideas, and time.  but that should be all, AGAIN! :)
 
 	  .b
 
-2007-03-09 09:27  ahuillet
+2007-07-24 11:17  bastiansalmela
 
-	* src/bullet.c: wrong format string in debug printf call
+	* graphics/skill_icons/: Poke.png, ReverseEngineer.png, cflag.png:
+	  i  poke, reverseengineer, cflag
 
-2007-03-09 09:27  ahuillet
+2007-07-24 10:36  bastiansalmela
 
-	* src/: misc.c, sound.c: fixed various further calls consequently
-	  to find_file modifications
+	* graphics/skill_icons/: Invisibility.png, Light.png, Poke.png,
+	  Shutdown.png, Virus.png:
+	  dum di dum dumm...  invisibility, light, poke, shutdown, virus
 
-2007-03-08 19:10  ahuillet
+2007-07-23 23:32  ahuillet
 
-	* src/sound.c: fixed missing fpath definition changes
+	* src/hud.c: s/magic/CPU/
 
-2007-03-07 20:45  ahuillet
+2007-07-23 23:31  ahuillet
 
-	* src/: text.c, BFont.c, BFont.h: updated font code to support high
-	  chars
+	* graphics/backgrounds/character.png: updates to cha screen
 
-2007-03-07 20:45  ahuillet
+2007-07-23 23:08  ahuillet
 
-	* graphics/font/: font05.png, font05_blue.png, font05_green.png,
-	  font05_magenta.png, font05_red.png, font05_white.png,
-	  font05_yellow.png, parafont.png, small_white.png: updated fonts
-	  with iso8859-15 characters
+	* src/skills.c: removed debug statement
 
-2007-03-07 20:37  ahuillet
+2007-07-23 22:45  ahuillet
 
-	* src/: init.c, open_gl.c, struct.h: finished removed references to
-	  deprecated notion of themes
+	* src/skills.c: fixed another stupid mistake with programs
 
-2007-03-07 20:22  ahuillet
+2007-07-23 22:45  ahuillet
 
-	* graphics/: skill_buttons.png, to_background.jpg: moved a few
-	  files from theme dir
+	* src/saveloadgame.c: fixed potential input regressions that would
+	  trigger when loading a too old savegame
 
-2007-03-07 20:03  ahuillet
+2007-07-23 22:45  ahuillet
 
-	* graphics/to_elem.png: wrong upload
+	* src/: init.c, struct.h, defs.h: stupid error
 
-2007-03-07 20:00  ahuillet
+2007-07-23 22:44  bastiansalmela
 
-	* graphics/to_elem.png: moved takeover elements
+	* graphics/obstacles/: iso_cave_wall_0001.png,
+	  iso_cave_wall_0002.png, iso_cave_wall_0003.png,
+	  iso_cave_wall_0004.png, iso_cave_wall_0005.png,
+	  iso_cave_wall_0006.png, iso_cave_wall_0007.png,
+	  iso_cave_wall_0008.png, iso_cave_wall_0009.png,
+	  iso_cave_wall_0010.png: how about now
 
-2007-03-07 19:51  ahuillet
+2007-07-23 22:41  magotari
 
-	* src/: automap.c, blocks.c, chat.c, graphics.c, hud.c, init.c,
-	  leveleditor.c, light.c, map.c, menu.c, misc.c, mission.c,
-	  open_gl.c, proto.h, saveloadgame.c, ship.c, shop.c, sound.c,
-	  takeover.c, text_public.c, view.c: changed find_file, to a
-	  cleaner approach, and removed long deprecated theme file
+	* map/: Asteroid.maps, EventsAndEventTriggers: I got the teleports
+	  going one way, you guys do it the other way. I cannot work
+	  anymore today, someone close to me needs my help right now.  I
+	  will write the announcement tomorrow. Good luck.
 
-2007-03-06 00:43  ahuillet
+2007-07-23 22:07  bastiansalmela
 
-	* freedroidRPG.exe: new exe
+	* graphics/skill_icons/SatelliteImage.png: test test test test
+	  teeeeeeeeeeeeeeeeeest teeeeeeeeeeeest teetsfsdkfjsdkfjsdlkfjsd'
 
-2007-03-06 00:34  ahuillet
+2007-07-23 20:50  bastiansalmela
 
-	* dialogs/de/Michelangelo.dialog: fixed missing "
+	* graphics/obstacles/iso_cave_wall_0004.png: fixed camera lens size
+	  model still not perfect
 
-2007-03-05 22:25  ahuillet
+2007-07-23 18:30  magotari
 
-	* graphics/mouse_buttons/: LevelEditorToggleGridButton.png,
-	  LevelEditorToggleGridButtonOff.png: added new button to toggle
-	  grid in lvleditor
+	* map/freedroid.program_archetypes: Short skill fix.
 
-2007-03-05 22:25  ahuillet
+2007-07-23 17:31  ahuillet
 
-	* src/global.h: draw_grid variable added
+	* map/Asteroid.maps: fixed desert of red tears interfaces
 
-2007-03-05 22:23  ahuillet
+2007-07-23 15:26  magotari
 
-	* src/main.c: draw grid by default
+	* map/Asteroid.maps: Added the remainig missing labels.
 
-2007-03-05 22:15  ahuillet
+2007-07-23 15:21  ahuillet
 
-	* src/menu.c: fixed bug when skipping initial menus
+	* src/hud.c: removed commented out code for brevity
 
-2007-03-05 16:51  ahuillet
+2007-07-23 14:37  magotari
 
-	* src/: leveleditor.c, misc.c, defs.h: added two buttons to
-	  leveleditor
+	* dialogs/: Koan.dialog, subdlg_Duncan_quest.dialog: Should be
+	  stable now. At last!
 
-2007-03-04 21:53  ahuillet
+2007-07-23 14:07  ahuillet
 
-	* src/proto.h: first try of leveleditor grid
+	* src/light.c: reverted new light code following report from
+	  Magotari that it is a regression in SDL mode. my own tests show
+	  the opposite but I do not want to investigate it today
 
-2007-03-04 21:51  ahuillet
+2007-07-23 13:51  magotari
 
-	* src/view.c: font code update - first try of leveleditor grid
+	* map/Asteroid.maps, map/EventsAndEventTriggers,
+	  dialogs/Duncan.dialog, dialogs/subdlg_Duncan.dialog,
+	  dialogs/subdlg_Duncan_quest.dialog: More progress on the Koan
+	  quest. Nearly done now.
 
-2007-03-03 23:59  ahuillet
+2007-07-23 12:23  magotari
 
-	* src/: view.c, misc.c: fixed endian swapping to work on Linux PPC
-	  too
+	* map/Asteroid.maps: Preparing for Koan quest.
 
-2007-03-03 22:57  ahuillet
+2007-07-23 04:00  ahuillet
 
-	* src/blocks.c: fixed collision rectangles for benches
+	* src/text.c: now displaying text only in the specified rectangle -
+	  performance optimization - actual impact : low
 
-2007-03-03 22:56  ahuillet
+2007-07-23 03:59  ahuillet
 
-	* src/proto.h: fixed expansion of arguments for position
-	  translation functions
+	* src/view.c: do not display COMPLETELY_DARK floor tiles,
+	  performance optimization. actual impact difficult to evaluate but
+	  seems important in labyrinths
 
-2007-03-03 17:38  ahuillet
+2007-07-23 03:19  ahuillet
 
-	* configure.ac: locale switching
+	* src/light.c: rewrote light passability completely, using a saner
+	  approach - performance may or may not have been improved, my own
+	  measurements are not clear about this - there may be bugs in here
 
-2007-03-03 17:34  ahuillet
+2007-07-23 03:18  ahuillet
 
-	* src/: init.c, system.h: switching to the proper C locale on
-	  startup - translations require it
+	* src/defs.h: only 20 floor tiles instead of 22 to improve perf
 
-2007-02-28 19:34  ahuillet
+2007-07-23 01:56  bastiansalmela
 
-	* src/shop.c: fixed crash due to not existing sound file
+	* graphics/obstacles/: iso_cave_wall_0001.offset,
+	  iso_cave_wall_0001.png, iso_cave_wall_0002.offset,
+	  iso_cave_wall_0002.png, iso_cave_wall_0003.offset,
+	  iso_cave_wall_0003.png, iso_cave_wall_0004.offset,
+	  iso_cave_wall_0004.png, iso_cave_wall_0005.offset,
+	  iso_cave_wall_0005.png, iso_cave_wall_0006.offset,
+	  iso_cave_wall_0006.png, iso_cave_wall_0007.offset,
+	  iso_cave_wall_0007.png, iso_cave_wall_0008.offset,
+	  iso_cave_wall_0008.png, iso_cave_wall_0009.offset,
+	  iso_cave_wall_0009.png, iso_cave_wall_0010.offset,
+	  iso_cave_wall_0010.png:
+	  ok i just rerendered from my old blend file..  maybe these dont
+	  look as much hair on them?  or.. is this the same?
 
-2007-02-26 23:02  ahuillet
+	  .b
 
-	* map/Asteroid.maps: fixed town/slasher mountains threshold
+2007-07-22 23:55  ahuillet
 
-2007-02-26 12:41  ahuillet
+	* src/view.c: improved FPS displaying, now gives sensible values
 
-	* src/view.c: now building properly on nonGL machines
+2007-07-22 21:44  bastiansalmela
 
-2007-02-25 19:22  ahuillet
+	* graphics/skill_icons/TeleportHomeSpell.png:
+	  mjah.. maybe this is better.	the otherone didnt really mean
+	  anything
 
-	* Makefile.am: added sign target
+	  .b
 
-2007-02-25 18:50  ahuillet
+2007-07-22 20:59  bastiansalmela
 
-	* dialogs/de/614.dialog, dialogs/de/Bender.dialog,
-	  dialogs/de/Benjamin.dialog, dialogs/de/Bruce.dialog,
-	  dialogs/de/Butch.dialog, dialogs/de/Chandra.dialog,
-	  dialogs/de/Darwin.dialog, dialogs/de/Dixon.dialog,
-	  dialogs/de/DocMoore.dialog, dialogs/de/Duncan.dialog,
-	  dialogs/de/Ernie.dialog, dialogs/de/Ewald.dialog,
-	  dialogs/de/Francis.dialog, dialogs/de/Jack.dialog,
-	  dialogs/de/Jasmine.dialog, dialogs/de/Julie.dialog,
-	  dialogs/de/Kevin.dialog, dialogs/de/KevinGuard.dialog,
-	  dialogs/de/Lukas.dialog,
-	  dialogs/de/MSFacilityGateGuardLeader.dialog,
-	  dialogs/de/Melfis.dialog, dialogs/de/Michelangelo.dialog,
-	  dialogs/de/OldTownGateGuardLeader.dialog,
-	  dialogs/de/Pendragon.dialog, dialogs/de/RMS.dialog,
-	  dialogs/de/Skippy.dialog, dialogs/de/Sorenson.dialog,
-	  dialogs/de/Spencer.dialog, dialogs/de/Spencer1.dialog,
-	  dialogs/de/StandardBotAfterTakeover.dialog,
-	  dialogs/de/StandardMSFacilityGateGuard.dialog,
-	  dialogs/de/StandardNewTownGateGuard.dialog,
-	  dialogs/de/StandardOldTownGateGuard.dialog,
-	  dialogs/de/Stone.dialog, dialogs/de/Tybalt.dialog,
-	  dialogs/de/subdlg_Benjamin.dialog,
-	  dialogs/de/subdlg_Benjamin_bribe.dialog,
-	  dialogs/de/subdlg_Butch.dialog, dialogs/de/subdlg_Darwin.dialog,
-	  dialogs/de/subdlg_Kevin.dialog,
-	  dialogs/de/subdlg_Pendragon.dialog,
-	  dialogs/de/subdlg_Sorenson.dialog,
-	  dialogs/de/subdlg_Spencer_eval.dialog,
-	  dialogs/de/subdlg_Spencer_funeral.dialog,
-	  dialogs/de/subdlg_Stone.dialog,
-	  dialogs/de/subdlg_kevin_reward1.dialog,
-	  map/titles/de/EndOfGame.title, map/titles/de/StartOfGame.title,
-	  map/titles/de/TakeoverInstructions.title,
-	  map/titles/de/level_editor_help.title: updated translations
+	* graphics/skill_icons/TeleportHomeSpell.png:
+	  telepad
 
-2007-02-25 18:49  ahuillet
+2007-07-22 20:29  bastiansalmela
 
-	* ChangeLog: new changelog
+	* graphics/skill_icons/ExtractBotParts.png: extract botpart
+
+2007-07-22 20:20  bastiansalmela
+
+	* graphics/skill_icons/DispellSmoke.png:
+	  strange tubishly like thingy.
+
+2007-07-22 19:06  bastiansalmela
+
+	* graphics/skill_icons/: Calculate_PI.png,
+	  ExplosionCircleSpell.png:
+	  explsioncircle, i dont see that either on actual skill-view,
+	  but..
+
+2007-07-22 18:52  ahuillet
+
+	* src/character.c: that memcpy did not seem too good. I still need
+	  to investigate a few things regarding spells
+
+2007-07-22 18:11  bastiansalmela
+
+	* graphics/skill_icons/: BlueScreen.png, DetectItemsSpell.png,
+	  FirstAidSpell.png, IdentifySkill.png, NoSkillAvailable.png,
+	  PlasmaBoltSpell.png, PoisonBoltSpell.png, RadialEMPWaveSpell.png,
+	  RadialPlasmaWaveSpell.png, RadialVMXWaveSpell.png,
+	  WeaponSkill.png:
+	  somethiung
+
+2007-07-22 11:35  magotari
+
+	* map/: freedroid.item_archetypes, freedroid.program_archetypes:
+	  Copypasted some descriptions, and wrote one for the identify
+	  script.
+
+2007-07-22 11:21  magotari
+
+	* dialogs/subdlg_Duncan_quest.dialog: Tiny change.  Dialed can
+	  create dialed incompatible files. Wow.
+
+2007-07-22 11:20  magotari
+
+	* src/dialed.py: A few updates.
+
+2007-07-21 19:45  bastiansalmela
+
+	* graphics/obstacles/: iso_cave_wall_0001.offset,
+	  iso_cave_wall_0001.png, iso_cave_wall_0002.offset,
+	  iso_cave_wall_0002.png, iso_cave_wall_0003.offset,
+	  iso_cave_wall_0003.png, iso_cave_wall_0004.offset,
+	  iso_cave_wall_0004.png, iso_cave_wall_0005.offset,
+	  iso_cave_wall_0005.png, iso_cave_wall_0006.offset,
+	  iso_walls_0001.offset, iso_walls_0002.offset,
+	  iso_walls_0003.offset, iso_walls_0004.offset,
+	  iso_walls_0005.offset, iso_walls_0006.offset,
+	  iso_walls_0007.offset, iso_walls_0008.offset,
+	  iso_walls_0009.offset, iso_walls_0010.offset,
+	  iso_walls_0011.offset, iso_walls_0012.offset,
+	  iso_walls_0013.offset, iso_walls_0014.offset,
+	  iso_walls_0015.offset, iso_walls_0016.offset,
+	  iso_walls_0017.offset, iso_walls_0018.offset,
+	  iso_walls_0019.offset, iso_walls_0020.offset,
+	  iso_walls_0021.offset, iso_walls_0022.offset,
+	  iso_walls_0023.offset, iso_walls_0024.offset,
+	  iso_walls_0025.offset, iso_walls_0026.offset,
+	  iso_walls_0027.offset, iso_walls_0028.offset,
+	  iso_walls_0029.offset:
+	  not sure what these are, but i'm trying to get up to date here
+
+2007-07-21 18:03  magotari
+
+	* dialogs/subdlg_Duncan_quest.dialog: Stillish broken, but I want a
+	  backup.  Translators: You can start murdering me any time you
+	  like.
+
+2007-07-21 17:53  magotari
+
+	* dialogs/subdlg_Duncan.dialog: Seems to hold as well.
+
+2007-07-21 17:52  ahuillet
+
+	* src/open_gl.c: finally fixed light radius not being displayed
+	  correctly when inv/cha were open - that one was tricky
+
+2007-07-21 17:48  magotari
+
+	* dialogs/Duncan.dialog: Seems to be working fine again.
+
+2007-07-21 13:23  magotari
+
+	* map/freedroid.prefix_archetypes: Added two dummy items. Reordered
+	  the levels around.
+
+2007-07-21 12:56  magotari
+
+	* dialogs/: Duncan.dialog, Koan.dialog: Half baked backups for
+	  myself.
+
+2007-07-21 02:29  ahuillet
+
+	* src/map.c: added comment
+
+2007-07-21 01:15  ahuillet
+
+	* graphics/backgrounds/inventory.png: added number for quick inv
+	  positions
+
+2007-07-21 00:32  ahuillet
+
+	* dialogs/DocMoore.dialog: s/give/gave/
+
+2007-07-21 00:26  ahuillet
+
+	* src/menu.c: put back a wait
+
+2007-07-21 00:15  ahuillet
+
+	* src/: input.c, menu.c: I do NOT know why it works, but it works.
+	  chat performance now back to normal
+
+2007-07-20 22:56  ahuillet
+
+	* graphics/mouse_buttons/: quest_browser_item_long.png,
+	  quest_browser_item_short.png: improved (alpha)
+
+2007-07-20 22:56  ahuillet
+
+	* src/menu.c: tweaked menu window for chats a little
+
+2007-07-20 22:40  ahuillet
+
+	* src/mission.c: input regression in quest browser
+
+2007-07-20 22:39  ahuillet
+
+	* src/misc.c: scroll buttons position in quest browser
+
+2007-07-20 22:03  ahuillet
+
+	* src/hud.c: s/magic/CPU/
+
+2007-07-20 18:46  ahuillet
+
+	* graphics/backgrounds/character.png: s/Magic/CPU/
+
+2007-07-20 18:16  ahuillet
+
+	* src/: bullet.c, skills.c, struct.h: now radial spells turn people
+	  hostile if it comes from the player
+
+2007-07-20 18:15  ahuillet
+
+	* src/init.c: added ML to rc message
+
+2007-07-20 18:15  ahuillet
+
+	* map/freedroid.program_archetypes: raised cost of grenade spells
+	  in order for the player not to use them directly, since he is not
+	  supposed to
+
+2007-07-20 17:28  magotari
+
+	* src/init.c: RC warning.
+
+2007-07-20 17:12  ahuillet
+
+	* src/chat.c: now sorenson dies as expected
+
+2007-07-20 17:12  ahuillet
+
+	* src/init.c: I forgot to commit the RC message patch...
+
+2007-07-20 16:50  magotari
+
+	* dialogs/: Sorenson.dialog, subdlg_Sorenson.dialog: Two errors
+	  valiantly slain.
+
+2007-07-20 01:28  magotari
+
+	* dialogs/de/: Jack.dialog, Julie.dialog: Taking out the trash.
+
+2007-07-20 01:26  magotari
+
+	* src/dialed.py: Fixed a very stupid bug preventing me from
+	  generating a script for other languages.
+
+2007-07-20 01:25  magotari
+
+	* dialogs/de/StandardNewTownGateGuard.dialog: Du bist tot.
+
+2007-07-19 19:19  magotari
+
+	* map/freedroid.item_archetypes: Hippie slang. :)
+
+2007-07-19 16:34  ahuillet
+
+	* src/: influ.c, init.c, items.c, leveleditor.c, map.c, menu.c,
+	  misc.c, proto.h, saveloadgame.c, ship.c, shop.c, skills.c,
+	  text.c: removed a few unused parameters
+
+2007-07-19 16:21  magotari
+
+	* src/items.c: Identifying air instead of void now.
+
+2007-07-19 14:10  ahuillet
+
+	* src/: enemy.c, influ.c: tentative fix for paralyzed bots talking
+
+2007-07-19 14:04  ahuillet
+
+	* map/freedroid.program_archetypes: set cost per level for
+	  healing/id/teleport home
+
+2007-07-19 14:01  ahuillet
+
+	* src/: items.c, skills.c: fixed programs being triggered when the
+	  player had the cursor on an applicable item
+
+2007-07-19 13:35  ahuillet
+
+	* src/defs.h: made title files begin partly already on screen so
+	  that people do not wonder why they have this blank screen when
+	  starting a new game
+
+2007-07-19 13:28  magotari
+
+	* map/freedroid.item_archetypes: Rewrote healing items.
+
+2007-07-19 12:11  magotari
+
+	* map/ReturnOfTux.droids: Why does our droid file carry the name
+	  "ReturnOfTux"? Can anyone tell me that?
+
+2007-07-19 12:10  magotari
+
+	* src/: chat.c, defs.h: I love hardcoding. I  L O V E  hardcoding.
+	  I  *L* *O* *V* *E*  hardcoding.  And to be serious, I want to
+	  scream. Grr... Evil!
+
+2007-07-19 12:08  magotari
+
+	* dialogs/Koan.dialog: Tiny fix. Will fix more later. Just trying
+	  to get the dialogue started.
+
+2007-07-19 11:34  magotari
+
+	* map/freedroid.item_archetypes: A new item.
+
+2007-07-19 11:25  magotari
+
+	* map/freedroid.item_archetypes: Some changes to the item
+	  descriptions.
+
+2007-07-19 10:36  magotari
+
+	* map/freedroid.program_archetypes: Some basic balancing.
+
+2007-07-19 01:40  ahuillet
+
+	* map/freedroid.item_archetypes: source books items - magotari
+	  needs to price them and give them correct description, I did but
+	  the technical part
+
+2007-07-19 01:37  ahuillet
+
+	* src/: hud.c, itemdefs.h, items.c, proto.h, ship.c, shop.c:
+	  reimplemented source books with minimal interference - so still
+	  lots of ugly hardcoded things, but we can get rid of them when
+	  implementing blobs vs. source - in the meantime pay attention
+	  when adding new programs to what this patch does... as a side
+	  note, CPU stat requirement is still not implemented, we have to
+	  talk about it first
+
+2007-07-19 01:15  ahuillet
+
+	* map/freedroid.program_archetypes: Satellite with two l
+
+2007-07-19 00:50  ahuillet
+
+	* src/items.c: fixed bug of game crashing when identifying empty
+	  equipment slot
+
+2007-07-19 00:45  ahuillet
+
+	* map/freedroid.program_archetypes, src/init.c, src/skills.c,
+	  src/struct.h: added artwork code to programs
+
+2007-07-19 00:27  ahuillet
+
+	* src/items.c: busy explanation messages
+
+2007-07-19 00:21  ahuillet
+
+	* src/influ.c: now setting mode to scrollup/scrolldown in text
+	  console only if not in identification mode in order not to waste
+	  id scripts
+
+2007-07-19 00:18  ahuillet
+
+	* src/items.c: identification text messages and implementation of
+	  DeleteItem chat extra
+
+2007-07-19 00:17  ahuillet
+
+	* src/: chat.c, proto.h: implementation of DeleteItem chat extra
+
+2007-07-19 00:03  ahuillet
+
+	* src/DialogEditor.c: it is time to remove those
+
+2007-07-18 23:56  ahuillet
+
+	* dialogs/: Bender.dialog, Dixon.dialog, Michelangelo.dialog,
+	  RMS.dialog, SADD.dialog, de/Bender.dialog, de/Dixon.dialog,
+	  de/Michelangelo.dialog, de/RMS.dialog: replaced
+	  DeleteAllInventoryItems* by a more flexible and better
+	  implemented extra DeleteItem
+
+2007-07-18 23:23  ahuillet
+
+	* src/blocks.c: cave  wall collrect fix - magotari please test and
+	  confirm
+
+2007-07-18 23:22  ahuillet
+
+	* dialogs/: SACD.dialog, SADD.dialog: kibergus characters updated -
+	  to be proofread
+
+2007-07-18 23:14  ahuillet
+
+	* src/chat.c, src/defs.h, map/Asteroid.maps,
+	  map/EventsAndEventTriggers, map/QuestList,
+	  map/ReturnOfTux.droids: kibergus added a new quest
+
+2007-07-18 18:15  magotari
+
+	* map/Asteroid.maps: Oops.
+
+2007-07-18 17:16  ahuillet
+
+	* src/chat.c: kibergus DeleteCookie
+
+2007-07-18 17:15  ahuillet
+
+	* src/defs.h: added two new busy types : THROWING_GRENADE and
+	  RUNNING_PROGRAM
+
+2007-07-18 17:15  ahuillet
+
+	* src/influ.c: removed commented out code
+
+2007-07-18 16:38  magotari
+
+	* map/ReturnOfTux.droids: More! More! More!
+
+2007-07-18 15:41  ahuillet
+
+	* src/skills.c: made teleporthome work even with cursor not in the
+	  user screen, as is typical when using a script
+
+2007-07-18 15:41  ahuillet
+
+	* src/items.c: removed random drop of laser ammo at low levels and
+	  added back identify and evacuation scripts
+
+2007-07-18 15:40  ahuillet
+
+	* src/hud.c: updated identify/teleport scripts description
+
+2007-07-18 15:30  ahuillet
+
+	* map/freedroid.droid_archetypes: fixed monster level for 296 - 4
+	  is the current maximum implemented in the engine
+
+2007-07-18 14:16  ahuillet
+
+	* src/items.c: reimplemented grenades using the new "magic" system
+
+2007-07-18 14:12  ahuillet
+
+	* map/freedroid.program_archetypes: grenade-skill name case
+	  consistency
+
+2007-07-18 14:00  magotari
+
+	* map/freedroid.program_archetypes: Improved.
+
+2007-07-18 13:56  magotari
+
+	* map/freedroid.program_archetypes: Quick three new spells to be
+	  used by grenades.
+
+2007-07-18 13:15  magotari
+
+	* dialogs/: Jack.dialog, Julie.dialog: Why do we bother to ship
+	  those? Not in the game, and unlikely to ever be.  Off with their
+	  heads!
+
+2007-07-18 12:50  magotari
+
+	* src/dialed.py: Now it can import scripts into the dialogue file.
+	  Still a mess and needs a rewrite... One day...
+
+2007-07-18 09:55  magotari
+
+	* src/chat.c: A small correction here.
+
+2007-07-18 01:31  magotari
+
+	* dialogs/SADD.dialog: Updated SADD to be dialed compatible.
+
+2007-07-17 23:29  ahuillet
+
+	* src/: defs.h, items.c, proto.h, skills.c: restructuration of
+	  skill code to be able to work with scripts and grenades
+
+2007-07-17 23:13  magotari
+
+	* map/ReturnOfTux.droids: And placing 25 murder machines on the
+	  game map.
+
+2007-07-17 23:13  magotari
+
+	* map/freedroid.droid_archetypes: Murderous bots, stat edits.
+
+2007-07-17 23:10  magotari
+
+	* src/map.c: A new name for my new toy.
+
+2007-07-17 22:42  magotari
+
+	* dialogs/subdlg_Sorenson.dialog: There. Done. Now it works MUCH
+	  better.
+
+2007-07-17 22:26  magotari
+
+	* dialogs/subdlg_Sorenson.dialog: Cleaned up a bit of the
+	  subdialogue. Will need bit of work done on the start of this
+	  dialogue though.
+
+2007-07-17 22:15  magotari
+
+	* dialogs/Sorenson.dialog: Some basic fixes. Now less buggy.
+
+2007-07-17 22:02  ahuillet
+
+	* src/chat.c: added TuxLoseHP and KillTux character extra options
+	  as requested by karol
+
+2007-07-17 21:45  magotari
+
+	* map/Asteroid.maps: Items restored.
+
+2007-07-17 21:41  ahuillet
+
+	* map/ReturnOfTux.droids: got sorenson back for real
+
+2007-07-17 21:02  magotari
+
+	* dialogs/Koan.dialog: Added new character.
+
+2007-07-17 19:44  ahuillet
+
+	* src/blocks.c: end of kibergus changes : brick walls with cables
+
+2007-07-17 19:03  magotari
+
+	* map/Asteroid.maps: Desert of Red Tears, with a lot of problems,
+	  but it should give the idea.
+
+2007-07-17 18:23  ahuillet
+
+	* src/hud.c: fixed run/XP bars displayed over skill explanation
+	  screen in 640x480
+
+2007-07-17 18:20  ahuillet
+
+	* src/hud.c: fix skill icon being displayed over open cha screen in
+	  640x480
+
+2007-07-17 17:49  ahuillet
+
+	* src/map.c: kibergus patch on item loading in LoadShip
+
+2007-07-17 12:24  ahuillet
+
+	* dialogs/SADD.dialog: kibergus SADD dialog
+
+2007-07-17 11:35  magotari
+
+	* src/menu.c: Credit to the voice synthesis program we are using.
+
+2007-07-17 11:25  magotari
+
+	* sound/: botchat, speak.py: Stuff to generate bot sounds.
+
+2007-07-16 22:47  magotari
+
+	* dialogs/Francis.dialog: A smallish change for the better. Thank
+	  you, Snark.
+
+2007-07-16 21:31  ahuillet
+
+	* map/: Asteroid.maps, QuestList, ReturnOfTux.droids: kibergus new
+	  map - last commit hopefully
+
+2007-07-16 21:18  ahuillet
+
+	* map/EventsAndEventTriggers, src/chat.c, src/defs.h,
+	  src/leveleditor.c: kibergus new map
+
+2007-07-16 21:05  ahuillet
+
+	* graphics/obstacles/: iso_brick_wall_cables_0001.offset,
+	  iso_brick_wall_cables_0001.png,
+	  iso_brick_wall_cables_0002.offset,
+	  iso_brick_wall_cables_0002.png,
+	  iso_brick_wall_cables_0004.offset,
+	  iso_brick_wall_cables_0004.png,
+	  iso_brick_wall_cables_0005.offset,
+	  iso_brick_wall_cables_0005.png,
+	  iso_brick_wall_cables_0006.offset,
+	  iso_brick_wall_cables_0006.png,
+	  iso_brick_wall_cables_0007.offset,
+	  iso_brick_wall_cables_0007.png: new wall models by KiberGus
+
+2007-07-16 16:36  ahuillet
+
+	* src/shop.c: fixed identify/repair input regressions
+
+2007-07-16 11:57  magotari
+
+	* map/freedroid.program_archetypes: A few new spells for which I
+	  will be brutally murdered by ahuillet
+
+2007-07-16 11:45  magotari
+
+	* src/blocks.c: I like Neon Genesis Evangelion, but the main
+	  character is quite irritating at times.  Ah, and also fixed a bad
+	  description. Yeah.
+
+2007-07-15 17:46  magotari
+
+	* map/freedroid.item_archetypes: Demagicized cooling items.
+
+2007-07-15 17:26  magotari
+
+	* src/shop.c: Rearranged things around.
+
+2007-07-15 16:49  magotari
+
+	* map/ReturnOfTux.droids: Assorted changes. Sorenson is back.
+
+2007-07-15 16:35  magotari
+
+	* dialogs/subdlg_Sorenson.dialog: How to sell your soul to the
+	  devil, in 10 easy chat options.
+
+2007-07-15 13:02  magotari
+
+	* dialogs/Sorenson.dialog: First draft. Likely broken.
+
+2007-07-14 22:30  ahuillet
+
+	* src/character.c: stupid mistake
+
+2007-07-14 22:13  ahuillet
+
+	* src/character.c: tentative fix for seemingly unreproductible
+	  crash reported by Snark
+
+2007-07-14 16:51  magotari
+
+	* map/freedroid.program_archetypes: More programs.
+
+2007-07-14 15:32  ahuillet
+
+	* src/blocks.c: fixed collision rectangles for red fences and
+	  breakable walls, though those still cannot be smashed  easily -
+	  thanks go to alexg for reporting the problem
+
+2007-07-14 00:14  magotari
+
+	* dialogs/StandardNewTownGateGuard.dialog: Killed a thing crashing
+	  dialed, not like we use it anyway.
+
+2007-07-13 20:46  ahuillet
+
+	* src/: character.c, hud.c, items.c, proto.h: inventory problems
+	  over, also fixed the SIGFPE that came when player magic = 0
+
+2007-07-13 18:54  ahuillet
+
+	* src/character.c: now added a check for req. not met on worn
+	  items, fixing a bug reported by Snark
+
+2007-07-13 16:55  magotari
+
+	* dialogs/DocMoore.dialog: This commit is dedicated to all people
+	  who could not get the antidote before.
+
+2007-07-13 16:39  magotari
+
+	* map/freedroid.item_archetypes: Added one more unique item.
+
+2007-07-13 16:16  ahuillet
+
+	* src/chat.c: fixed GiveItem for multiple items
+
+2007-07-13 15:32  ahuillet
+
+	* src/chat.c: next time I check if it builds before committing
+
+2007-07-13 15:19  ahuillet
+
+	* graphics/skill_icons/: BlueScreen.png, DispellSmoke.png: two new
+	  sucky skill icons
+
+2007-07-13 15:18  ahuillet
+
+	* graphics/skill_icons/RadialPlasmaWaveSpell.png,
+	  graphics/skill_icons/WeaponSkill.png,
+	  map/freedroid.program_archetypes: upd skill icons
+
+2007-07-13 15:07  ahuillet
+
+	* src/chat.c: GiveItem with multiplicity greater than one PLEASE
+	  TEST
+
+2007-07-13 14:51  magotari
+
+	* dialogs/Template.dialog: Because dialed cannot create new
+	  dialogues, here is a template to use in making new ones.
+
+2007-07-13 02:20  ahuillet
+
+	* src/hud.c: fixed bug reported by <forgot who, sorry> that
+	  life/temperature tooltips were being displayed under skill icon
+
+2007-07-13 02:13  ahuillet
+
+	* map/freedroid.program_archetypes: form name is "radial" not
+	  "ring"
+
+2007-07-13 01:43  ahuillet
+
+	* src/: bullet.c, defs.h, items.c, skills.c, struct.h, view.c: part
+	  2 of magic rework : radial form, with support for poison slowdown
+	  and paralyze effects, is in - some parts of it are still not
+	  quite customizable but it will be enough for a start - still need
+	  to add differentiation between blob and source, readd books and
+	  scripts, readd grenades
+
+2007-07-13 01:34  ahuillet
+
+	* src/influ.c: reworked FireTuxRangedWeaponRaw to have more control
+	  on the bullet parameters, as needed by new magic code
+
+2007-07-13 01:31  ahuillet
+
+	* src/: bullet.c, proto.h: reworked FireTuxRangedWeaponRaw to have
+	  more control on the bullet parameters, as needed by new magic
+	  code
+
+2007-07-13 01:29  ahuillet
+
+	* src/init.c: damage etc. reading code for programs
+
+2007-07-13 00:37  ahuillet
+
+	* src/skills.c: part 1 of the magic rework - implemented spell form
+	  IMMEDIATE and SELF, all special extra effects such as repair and
+	  takeover, and preliminary implementation of the BULLET form for
+	  spells - still lacking normal effects with immediate form, e.g.
+	  you cannot make a IMMEDIATE slowdown program right now - have not
+	  implemented the hit bots/humans checks either
+
+2007-07-13 00:35  ahuillet
+
+	* src/struct.h: added damage base, mod, per level, and hurt
+	  bots/humans variables to program spec struct
+
+2007-07-13 00:35  ahuillet
+
+	* src/vars.h: removed a few of the old spell definitions
+
+2007-07-13 00:33  ahuillet
+
+	* map/freedroid.program_archetypes: made Calculate PI a bullet
+	  again - note that immediate spells are really a big advantage
+	  over bullets
+
+2007-07-13 00:22  ahuillet
+
+	* map/freedroid.program_archetypes: [no log message]
+
+2007-07-13 00:10  ahuillet
+
+	* src/BFont.c: fixed charsize problem
+
+2007-07-13 00:06  ahuillet
+
+	* src/BFont.c: valgrind reported some uninitialized value usage -
+	  harmless in that case, but fixed
+
+2007-07-12 22:06  ahuillet
+
+	* map/freedroid.program_archetypes: removed useless statements, put
+	  placeholder icon file
+
+2007-07-12 22:01  ahuillet
+
+	* graphics/skill_icons/IdentifySkill.png: improved
+
+2007-07-12 21:15  magotari
+
+	* dialogs/subdlg_Darwin.dialog: Ok, this is better, but still
+	  horribly broken. Stay tuned.
+
+2007-07-12 21:05  ahuillet
+
+	* src/chat.c: typo
+
+2007-07-12 21:03  ahuillet
+
+	* src/chat.c: tentative fix to the IncreaseProgramVersionName chat
+	  extra not working
+
+2007-07-12 20:59  magotari
+
+	* dialogs/subdlg_Darwin.dialog: Has at least one bug that I see,
+	  but will do for test purposes.
+
+2007-07-12 20:36  magotari
+
+	* map/Asteroid.maps: A new map and cleaned out the desert for
+	  future changes.
+
+2007-07-12 20:22  magotari
+
+	* dialogs/subdlg_Darwin.dialog: Ported to the new magic system.
+	  This is probably broken.  Also, to everyone who is following our
+	  CVS: HI!
+
+2007-07-12 20:03  ahuillet
+
+	* map/freedroid.program_archetypes: example implementation of base
+	  dmg, mod dmg, dmg per level, and hurt bots/humans for karol to
+	  complete
+
+2007-07-12 19:29  magotari
+
+	* src/dialed.py: A oneliner fix to make life easier later on.
+
+2007-07-12 18:56  magotari
+
+	* map/freedroid.program_archetypes: Some fixes. I hope this does
+	  not blow up.
+
+2007-07-12 18:41  ahuillet
+
+	* map/freedroid.program_archetypes: using extract bot parts icon
+
+2007-07-12 18:35  ahuillet
+
+	* graphics/skill_icons/: ExtractAntimatterConverter.png,
+	  ExtractEntropyInverter.png, ExtractPlasmaTransistor.png,
+	  ExtractSuperconductor.png, ExtractTachyonCondensator.png: removed
+	  now useless part extraction icons
+
+2007-07-12 18:32  ahuillet
+
+	* graphics/skill_icons/ExtractBotParts.png: added extract bot parts
+	  icon
+
+2007-07-12 17:11  ahuillet
+
+	* src/: blocks.c, chat.c, enemy.c, items.c, proto.h, skills.c:
+	  added get_program_index_with_name func for program lookup needs
+
+2007-07-12 16:37  ahuillet
+
+	* map/freedroid.program_archetypes: added bot parts extraction
+	  skill
+
+2007-07-12 16:05  ahuillet
+
+	* src/character.c: saved 5 CPU cycles per main loop !
+
+2007-07-12 15:38  ahuillet
+
+	* src/: influ.c, input.c, items.c, misc.c, skills.c: fixed small
+	  interface bugs related to skill explanation screen
+
+2007-07-12 15:38  ahuillet
+
+	* src/: init.c, struct.h: now using Present at startup field to
+	  know if tux has a spell on startup
+
+2007-07-12 15:32  ahuillet
+
+	* map/freedroid.program_archetypes: changed Always present to
+	  Present at startup for clarity
+
+2007-07-12 15:27  magotari
+
+	* map/freedroid.program_archetypes: Invisibility
+
+2007-07-12 15:12  magotari
+
+	* map/freedroid.program_archetypes: Two missing descriptions are
+	  in.
+
+2007-07-12 15:04  ahuillet
+
+	* map/freedroid.program_archetypes: added Effect field forgotten by
+	  karol
+
+2007-07-12 14:36  magotari
+
+	* map/freedroid.program_archetypes: My name is breakage.
+
+2007-07-12 13:24  ahuillet
+
+	* map/freedroid.program_archetypes: added form and effect fields
+
+2007-07-12 10:19  magotari
+
+	* map/QuestList: And the quest list to go with my previous commit.
+
+2007-07-12 10:19  magotari
+
+	* dialogs/: Bender.dialog, Butch.dialog, Dixon.dialog,
+	  DocMoore.dialog, Kevin.dialog, Michelangelo.dialog, RMS.dialog,
+	  Spencer.dialog: Rewritten RMS and added quest log entries.
+
+2007-07-12 00:15  ahuillet
+
+	* src/: character.c, defs.h, global.h, init.c, main.c, ship.c,
+	  skills.c, struct.h, vars.h: removed hardcoded NUMBER_OF_SKILLS,
+	  now reading this dynamically
+
+2007-07-12 00:13  ahuillet
+
+	* src/takeover.c: fixed takeover instant win combination - please
+	  someone test it
+
+2007-07-11 23:48  ahuillet
+
+	* src/ship.h: removed empty ship.h
+
+2007-07-10 15:48  magotari
+
+	* map/QuestList: Most quest descriptions and stuff in.
+
+2007-07-10 13:06  ahuillet
+
+	* src/: init.c, main.c, system.h: patches from Antoine Jacoutot for
+	  the game to build on OpenBSD, and a few modifications on program
+	  archetypes reading
+
+2007-07-10 12:57  ahuillet
+
+	* configure.ac: patches from Antoine Jacoutot for the game to build
+	  on OpenBSD
+
+2007-07-08 13:02  ahuillet
+
+	* src/menu.c: input reg in droid talk menu
+
+2007-07-07 12:05  ahuillet
+
+	* src/influ.c: yet another out of bounds array access - jp you did
+	  not do too well here ...
+
+2007-07-07 02:59  ahuillet
+
+	* src/menu.c: yet another input regression fixed
+
+2007-07-07 02:01  ahuillet
+
+	* src/sound.c: fixed dialog advancing when sound was enabled - all
+	  apologies to karol
+
+2007-07-07 00:20  ahuillet
+
+	* src/: chat.c, enemy.c, init.c, map.c, text_public.c: fixed a
+	  bunch of small memleaks, and array out-of-bounds access
+
+2007-07-06 23:48  ahuillet
+
+	* src/: global.h, init.c, skills.c, struct.h, vars.h: put new
+	  programs infrastructure in, removed all spells
+
+2007-07-06 23:46  ahuillet
+
+	* src/: automap.c, defs.h, hud.c, itemdefs.h, items.c, misc.c,
+	  proto.h, ship.c, shop.c: removed useless detect items spell
+
+2007-07-06 23:12  magotari
+
+	* map/freedroid.program_archetypes: Some new ones to hold the place
+	  till better ideas come around.
+
+2007-07-06 20:59  ahuillet
+
+	* map/freedroid.program_archetypes: added programs "spell"
+	  description file
+
+2007-07-06 20:58  ahuillet
+
+	* src/init.c: fixed program_archetypes path
+
+2007-07-06 20:46  ahuillet
+
+	* src/: blocks.c, global.h, hud.c, init.c, items.c, skills.c: new
+	  magic system part 1
+
+2007-07-06 18:08  ahuillet
+
+	* src/struct.h: added back fullscreen to gameconfig.. mistake of
+	  mine
+
+2007-07-06 18:03  ahuillet
+
+	* src/items.c: fixed FillInItemProperties so that it does not
+	  happily work on item types = -1
+
+2007-07-06 18:02  ahuillet
+
+	* src/init.c: fixed initialization code that was doing crap
+
+2007-07-06 17:51  ahuillet
+
+	* src/: defs.h, hud.c, init.c, items.c, skills.c, struct.h, vars.h:
+	  moved spell data to freedroid.programs_archetypes
+
+2007-07-06 14:11  ahuillet
+
+	* src/open_gl.c: replaced hardcoded constant in
+	  GL_check_error_message call
+
+2007-07-06 14:10  ahuillet
+
+	* src/: global.h, graphics.c, init.c, main.c, menu.c, struct.h:
+	  saved fullscreen state in GameConfig now - this breaks existing
+	  configfile
+
+2007-07-06 14:09  magotari
+
+	* map/Asteroid.maps: Kevin now has some treasure in his dungeon.
+	  Assorted changes.
+
+2007-07-06 00:07  ahuillet
+
+	* src/init.c: tentative fix for cursor not being reset when you get
+	  killed
+
+2007-07-03 23:53  ahuillet
+
+	* src/shop.c: fixed bug that made unsellable magical items sellable
+
+2007-07-03 22:27  ahuillet
+
+	* src/shop.c: fixed bug that made unsellable items perfectly
+	  sellable
+
+2007-07-03 19:16  ahuillet
+
+	* ChangeLog: updated to 0.10.2 ChangeLog
+
+2007-07-03 17:15  magotari
+
+	* src/defs.h: A bit saner now.
+
+2007-07-03 15:57  magotari
+
+	* map/freedroid.prefix_archetypes: Prefixes leveled.
+
+2007-07-03 15:54  magotari
+
+	* src/defs.h: More items please!
+
+2007-07-03 00:13  magotari
+
+	* map/titles/: EndOfGame.title, StartOfGame.title,
+	  TakeoverInstructions.title: Final tweaks on the dialogue matter.
+	  Dialogues are now frozen before release.
+
+2007-07-02 23:55  magotari
+
+	* dialogs/: Pendragon.dialog, subdlg_Pendragon.dialog: Minor
+	  bugfixes.
+
+2007-07-02 19:47  magotari
+
+	* sound/effects/bot_sounds/voice_samples/: 1.ogg, 10.ogg, 11.ogg,
+	  12.ogg, 13.ogg, 14.ogg, 15.ogg, 16.ogg, 17.ogg, 18.ogg, 19.ogg,
+	  2.ogg, 20.ogg, 21.ogg, 22.ogg, 23.ogg, 24.ogg, 25.ogg, 26.ogg,
+	  27.ogg, 28.ogg, 29.ogg, 3.ogg, 30.ogg, 31.ogg, 32.ogg, 33.ogg,
+	  34.ogg, 35.ogg, 36.ogg, 37.ogg, 38.ogg, 39.ogg, 4.ogg, 40.ogg,
+	  41.ogg, 42.ogg, 43.ogg, 5.ogg, 6.ogg, 7.ogg, 8.ogg, 9.ogg: Louder
+	  bot chat.
+
+2007-07-02 12:10  magotari
+
+	* map/ReturnOfTux.droids: Now the end of the game is harder.
+
+2007-07-02 11:10  magotari
+
+	* map/Asteroid.maps: Tried to improve crystal fields a bit.
+
+2007-07-01 22:58  ahuillet
+
+	* src/: main.c, struct.h: temperature is float, now tracking old
+	  value to display a message in console when overheating
+
+2007-07-01 22:40  ahuillet
+
+	* src/hud.c: added blinking of temp bar when player is overheating
+
+2007-07-01 22:03  ahuillet
+
+	* src/hud.c: temperature bar now changes colors : blue -> green ->
+	  yellow -> orange
+
+2007-07-01 20:57  ahuillet
+
+	* src/main.c: cooling and overheating now properly handled
+
+2007-07-01 20:46  ahuillet
+
+	* src/: init.c, items.c, map.c, character.c, hud.c: changed mana to
+	  temperature, as part of our new "magic" system
+
+2007-07-01 20:42  ahuillet
+
+	* src/: struct.h, network.c, skills.c: changed mana to temperature,
+	  as part of our new "magic" system
+
+2007-07-01 18:01  ahuillet
+
+	* sound/effects/bot_sounds/voice_samples/: 1.ogg, 10.ogg, 11.ogg,
+	  12.ogg, 13.ogg, 14.ogg, 15.ogg, 16.ogg, 17.ogg, 18.ogg, 19.ogg,
+	  2.ogg, 20.ogg, 21.ogg, 22.ogg, 23.ogg, 24.ogg, 25.ogg, 26.ogg,
+	  27.ogg, 28.ogg, 29.ogg, 3.ogg, 30.ogg, 31.ogg, 32.ogg, 33.ogg,
+	  34.ogg, 35.ogg, 36.ogg, 37.ogg, 38.ogg, 39.ogg, 4.ogg, 40.ogg,
+	  41.ogg, 42.ogg, 43.ogg, 5.ogg, 6.ogg, 7.ogg, 8.ogg, 9.ogg:
+	  updated sounds from magotari
+
+2007-07-01 17:59  ahuillet
+
+	* src/sound_effects.c: ratio for voice speeches : 1/6, got 43
+	  sounds now
+
+2007-07-01 15:18  ahuillet
+
+	* src/sound_effects.c: lowered voice speech/standard attack sound
+	  ratio
+
+2007-07-01 15:00  magotari
+
+	* map/freedroid.item_archetypes: Changed .wav to .ogg
+
+2007-07-01 14:58  ahuillet
+
+	* map/freedroid.droid_archetypes: droid archetypes sound effects
+	  format fix
+
+2007-07-01 14:43  ahuillet
+
+	* sound/effects/: bot_sounds/First_Contact_Sound_0.ogg,
+	  bot_sounds/First_Contact_Sound_0.wav,
+	  bot_sounds/First_Contact_Sound_1.ogg,
+	  bot_sounds/First_Contact_Sound_1.wav,
+	  bot_sounds/First_Contact_Sound_10.ogg,
+	  bot_sounds/First_Contact_Sound_10.wav,
+	  bot_sounds/First_Contact_Sound_11.ogg,
+	  bot_sounds/First_Contact_Sound_11.wav,
+	  bot_sounds/First_Contact_Sound_12.ogg,
+	  bot_sounds/First_Contact_Sound_12.wav,
+	  bot_sounds/First_Contact_Sound_13.ogg,
+	  bot_sounds/First_Contact_Sound_13.wav,
+	  bot_sounds/First_Contact_Sound_14.ogg,
+	  bot_sounds/First_Contact_Sound_14.wav,
+	  bot_sounds/First_Contact_Sound_15.ogg,
+	  bot_sounds/First_Contact_Sound_15.wav,
+	  bot_sounds/First_Contact_Sound_16.ogg,
+	  bot_sounds/First_Contact_Sound_16.wav,
+	  bot_sounds/First_Contact_Sound_17.ogg,
+	  bot_sounds/First_Contact_Sound_17.wav,
+	  bot_sounds/First_Contact_Sound_18.ogg,
+	  bot_sounds/First_Contact_Sound_18.wav,
+	  bot_sounds/First_Contact_Sound_2.ogg,
+	  bot_sounds/First_Contact_Sound_2.wav,
+	  bot_sounds/First_Contact_Sound_3.ogg,
+	  bot_sounds/First_Contact_Sound_3.wav,
+	  bot_sounds/First_Contact_Sound_4.ogg,
+	  bot_sounds/First_Contact_Sound_4.wav,
+	  bot_sounds/First_Contact_Sound_5.ogg,
+	  bot_sounds/First_Contact_Sound_5.wav,
+	  bot_sounds/First_Contact_Sound_6.ogg,
+	  bot_sounds/First_Contact_Sound_6.wav,
+	  bot_sounds/First_Contact_Sound_7.ogg,
+	  bot_sounds/First_Contact_Sound_7.wav,
+	  bot_sounds/First_Contact_Sound_8.ogg,
+	  bot_sounds/First_Contact_Sound_8.wav,
+	  bot_sounds/First_Contact_Sound_9.ogg,
+	  bot_sounds/First_Contact_Sound_9.wav,
+	  bot_sounds/Start_Attack_Sound_0.ogg,
+	  bot_sounds/Start_Attack_Sound_0.wav,
+	  bot_sounds/Start_Attack_Sound_1.ogg,
+	  bot_sounds/Start_Attack_Sound_1.wav,
+	  bot_sounds/Start_Attack_Sound_10.ogg,
+	  bot_sounds/Start_Attack_Sound_10.wav,
+	  bot_sounds/Start_Attack_Sound_11.ogg,
+	  bot_sounds/Start_Attack_Sound_11.wav,
+	  bot_sounds/Start_Attack_Sound_12.ogg,
+	  bot_sounds/Start_Attack_Sound_12.wav,
+	  bot_sounds/Start_Attack_Sound_13.ogg,
+	  bot_sounds/Start_Attack_Sound_13.wav,
+	  bot_sounds/Start_Attack_Sound_14.ogg,
+	  bot_sounds/Start_Attack_Sound_14.wav,
+	  bot_sounds/Start_Attack_Sound_15.ogg,
+	  bot_sounds/Start_Attack_Sound_15.wav,
+	  bot_sounds/Start_Attack_Sound_16.ogg,
+	  bot_sounds/Start_Attack_Sound_16.wav,
+	  bot_sounds/Start_Attack_Sound_17.ogg,
+	  bot_sounds/Start_Attack_Sound_17.wav,
+	  bot_sounds/Start_Attack_Sound_18.ogg,
+	  bot_sounds/Start_Attack_Sound_18.wav,
+	  bot_sounds/Start_Attack_Sound_2.ogg,
+	  bot_sounds/Start_Attack_Sound_2.wav,
+	  bot_sounds/Start_Attack_Sound_9.ogg,
+	  bot_sounds/Start_Attack_Sound_9.wav,
+	  bot_sounds/death_sound_123.ogg, bot_sounds/death_sound_123.wav,
+	  bot_sounds/death_sound_247.ogg, bot_sounds/death_sound_247.wav,
+	  bot_sounds/death_sound_302.ogg, bot_sounds/death_sound_302.wav,
+	  item_sounds/Item_Armour_Put_Sound_0.ogg,
+	  item_sounds/Item_Armour_Put_Sound_0.wav,
+	  item_sounds/Item_Drop_Sound_0.ogg,
+	  item_sounds/Item_Drop_Sound_0.wav,
+	  item_sounds/Item_Drop_Sound_1.ogg,
+	  item_sounds/Item_Drop_Sound_1.wav,
+	  item_sounds/Item_Drop_Sound_2.ogg,
+	  item_sounds/Item_Drop_Sound_2.wav,
+	  item_sounds/Item_Drop_Sound_3.ogg,
+	  item_sounds/Item_Drop_Sound_3.wav,
+	  item_sounds/Item_Drop_Sound_4.ogg,
+	  item_sounds/Item_Drop_Sound_4.wav,
+	  item_sounds/Item_Drop_Sound_5.ogg,
+	  item_sounds/Item_Drop_Sound_5.wav,
+	  item_sounds/Item_Range_Weapon_Put_Sound_0.ogg,
+	  item_sounds/Item_Range_Weapon_Put_Sound_0.wav,
+	  item_sounds/Item_Taken_Sound_0.ogg,
+	  item_sounds/Item_Taken_Sound_0.wav,
+	  item_sounds/Item_Wheels_Put_Sound_0.ogg,
+	  item_sounds/Item_Wheels_Put_Sound_0.wav,
+	  item_sounds/drop_book_sound.ogg, item_sounds/drop_book_sound.wav,
+	  item_sounds/drop_potion_sound.ogg,
+	  item_sounds/drop_potion_sound.wav,
+	  item_sounds/drop_sword_sound.ogg,
+	  item_sounds/drop_sword_sound.wav: replaced wav samples by ogg
+
+2007-07-01 14:39  ahuillet
+
+	* sound/effects/: Blast_Sound_0.ogg, Blast_Sound_0.wav,
+	  Bullet_Reflected_Sound_0.ogg, Bullet_Reflected_Sound_0.wav,
+	  CameraTakesPicture.ogg, CameraTakesPicture.wav,
+	  Cant_Use_That_Here_0.ogg, Cant_Use_That_Here_0.wav,
+	  Cant_Use_That_Here_1.ogg, Cant_Use_That_Here_1.wav,
+	  Collision_Sound_0.ogg, Collision_Sound_0.wav, Cry_Sound_0.ogg,
+	  Cry_Sound_0.wav, Enemy_Got_Hit_Sound_0.ogg,
+	  Enemy_Got_Hit_Sound_0.wav, Enemy_Hit_But_Not_Dead_Sound_0.ogg,
+	  Enemy_Hit_But_Not_Dead_Sound_0.wav, EnterElevator_Sound_0.ogg,
+	  EnterElevator_Sound_0.wav, Fire_Bullet_Exterminator_Sound_0.ogg,
+	  Fire_Bullet_Exterminator_Sound_0.wav,
+	  Fire_Bullet_Flash_Sound_0.ogg, Fire_Bullet_Flash_Sound_0.wav,
+	  Fire_Bullet_Laser_Rifle_Sound_0.ogg,
+	  Fire_Bullet_Laser_Rifle_Sound_0.wav,
+	  Fire_Bullet_Military_Sound_0.ogg,
+	  Fire_Bullet_Military_Sound_0.wav,
+	  Fire_Bullet_Plasma_Pistol_Sound_0.ogg,
+	  Fire_Bullet_Plasma_Pistol_Sound_0.wav,
+	  Fire_Bullet_Pulse_Sound_0.ogg, Fire_Bullet_Pulse_Sound_0.wav,
+	  Fire_Bullet_Single_Laser_Sound_0.ogg,
+	  Fire_Bullet_Single_Laser_Sound_0.wav,
+	  Fire_Bullet_Single_Pulse_Sound_0.ogg,
+	  Fire_Bullet_Single_Pulse_Sound_0.wav,
+	  Fire_Bullet_Sword_Sound_0.ogg, Fire_Bullet_Sword_Sound_0.wav,
+	  GotIntoBlast_Sound_0.ogg, GotIntoBlast_Sound_0.wav,
+	  Got_Hit_Sound_0.ogg, Got_Hit_Sound_0.wav,
+	  I_See_No_Chest_Sound_0.ogg, I_See_No_Chest_Sound_0.wav,
+	  Influencer_Scream_Sound_0.ogg, Influencer_Scream_Sound_0.wav,
+	  Influencer_Scream_Sound_1.ogg, Influencer_Scream_Sound_1.wav,
+	  Influencer_Scream_Sound_2.ogg, Influencer_Scream_Sound_2.wav,
+	  Influencer_Scream_Sound_3.ogg, Influencer_Scream_Sound_3.wav,
+	  Influencer_Scream_Sound_4.ogg, Influencer_Scream_Sound_4.wav,
+	  LeaveElevator_Sound_0.ogg, LeaveElevator_Sound_0.wav,
+	  MSMachinesClose_0.ogg, MSMachinesClose_0.wav,
+	  Menu_Item_Deselected_Sound_0.ogg,
+	  Menu_Item_Deselected_Sound_0.wav, Menu_Item_Selected_Sound_0.ogg,
+	  Menu_Item_Selected_Sound_0.wav, Menu_Item_Selected_Sound_1.ogg,
+	  Menu_Item_Selected_Sound_1.wav,
+	  Mission_Status_Change_Sound_0.ogg,
+	  Mission_Status_Change_Sound_0.wav, MoveElevator_Sound_0.ogg,
+	  MoveElevator_Sound_0.wav, Move_Menu_Position_Sound_0.ogg,
+	  Move_Menu_Position_Sound_0.wav, No_Ammo_Sound_0.ogg,
+	  No_Ammo_Sound_0.wav, Not_Enough_Mana_1.ogg,
+	  Not_Enough_Mana_1.wav, Refresh_Sound_0.ogg, Refresh_Sound_0.wav,
+	  Shield_Sound_1.ogg, Shield_Sound_1.wav,
+	  Shop_ItemBoughtSound_0.ogg, Shop_ItemBoughtSound_0.wav,
+	  Shop_ItemIdentifiedSound_0.ogg, Shop_ItemIdentifiedSound_0.wav,
+	  Shop_ItemRepairedSound_0.ogg, Shop_ItemRepairedSound_0.wav,
+	  Shop_ItemSoldSound_0.ogg, Shop_ItemSoldSound_0.wav,
+	  Spell_DetectItems_Sound_0.ogg, Spell_DetectItems_Sound_0.wav,
+	  Spell_ForceToEnergy_Sound_0.ogg, Spell_ForceToEnergy_Sound_0.wav,
+	  TakeoverSetCapsule_Sound_0.ogg, TakeoverSetCapsule_Sound_0.wav,
+	  Takeover_Game_Deadlock_Sound_0.ogg,
+	  Takeover_Game_Deadlock_Sound_0.wav,
+	  Takeover_Game_Lost_Sound_0.ogg, Takeover_Game_Lost_Sound_0.wav,
+	  Takeover_Game_Start_Sound_0.ogg, Takeover_Game_Start_Sound_0.wav,
+	  Takeover_Game_Won_Sound_0.ogg, Takeover_Game_Won_Sound_0.wav,
+	  Takeover_Sound_0.ogg, Takeover_Sound_0.wav,
+	  ThouArtDefeated_Sound_0.ogg, ThouArtDefeated_Sound_0.wav,
+	  enter_chest_sound.ogg, enter_chest_sound.wav,
+	  is_already_indentif.ogg, is_already_indentif.wav,
+	  item_must_be_in_inv_for_identi.ogg,
+	  item_must_be_in_inv_for_identi.wav, new_healing_sound.ogg,
+	  new_healing_sound.wav, new_teleporter_sound.ogg,
+	  new_teleporter_sound.wav, open_chest_sound.ogg,
+	  open_chest_sound.wav, phaser.ogg, phaser.wav,
+	  swing_then_hit_1.ogg, swing_then_hit_1.wav, swing_then_hit_2.ogg,
+	  swing_then_hit_2.wav, swing_then_hit_3.ogg, swing_then_hit_3.wav,
+	  swing_then_hit_4.ogg, swing_then_hit_4.wav,
+	  swing_then_nohit_1.ogg, swing_then_nohit_1.wav,
+	  swing_then_nohit_2.ogg, swing_then_nohit_2.wav,
+	  swing_then_nohit_3.ogg, swing_then_nohit_3.wav,
+	  swing_then_nohit_4.ogg, swing_then_nohit_4.wav, tux_footstep.ogg,
+	  tux_footstep.wav, wrong.ogg, wrong.wav: replaced wav samples by
+	  ogg
+
+2007-07-01 14:32  ahuillet
+
+	* sound/effects/bot_sounds/voice_samples/: 1.ogg, 10.ogg, 11.ogg,
+	  12.ogg, 13.ogg, 14.ogg, 15.ogg, 16.ogg, 17.ogg, 18.ogg, 19.ogg,
+	  2.ogg, 20.ogg, 21.ogg, 22.ogg, 23.ogg, 24.ogg, 25.ogg, 26.ogg,
+	  27.ogg, 28.ogg, 29.ogg, 3.ogg, 4.ogg, 5.ogg, 6.ogg, 7.ogg, 8.ogg,
+	  9.ogg: added 29 bot voice samples to be played on attack
+
+2007-07-01 14:32  ahuillet
+
+	* src/sound_effects.c: we have 29 voice samples right now, need
+	  more
+
+2007-07-01 14:31  ahuillet
+
+	* src/: ItemEditor.c, enemy.c, graphics.c, influ.c, items.c,
+	  ship.c, shop.c, skills.c, sound.c, sound_effects.c: changed wav
+	  sound samples to ogg, and added support for bot voice samples
+	  when starting attack
+
+2007-06-30 17:47  ahuillet
+
+	* src/influ.c: chest dropping code adapted to avoid dropping things
+	  in walls
+
+2007-06-30 16:49  magotari
+
+	* map/Asteroid.maps: Added more trees and a few goodies to the
+	  temple wood.
+
+2007-06-30 15:43  ahuillet
+
+	* map/Asteroid.maps: updated arena zone in town
 
