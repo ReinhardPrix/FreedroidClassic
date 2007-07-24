@@ -62,7 +62,7 @@ Delete the event trigger after it has been triggered=-1
 // This is a pure location trigger.  Copy and adapt is as you feel like it.
 * Start of an Event Trigger Subsection *
 Influencer must be at X=2 Y=11 Lev=0
-Use map location from map location from map label="ExitBunker"
+Use map location from map label="ExitBunker"
 Event Action to be triggered by this trigger="teleport_from_bunker"
 Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
