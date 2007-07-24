@@ -26,6 +26,7 @@
 dialogue_option ChatRoster[MAX_DIALOGUE_OPTIONS_IN_ROSTER];
 int debug_level = 0;
 
+
 char* remove_termination_character_if_nescessary ( char* our_string , char term_char );
 char* add_termination_character_if_nescessary ( char* our_string , char term_char );
 void gui_clear_graph_window ( void );
