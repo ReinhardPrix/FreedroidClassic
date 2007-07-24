@@ -125,7 +125,7 @@ Base damage=40
 Program name="Broadcast killer poke"
 Program description="The radio network is a wonderful invention for the people who like to blow up a lot of stuff at once."
 Picture="NoSkillAvailable.png"
-Form="ring"
+Form="radial"
 Effect="none"
 Cost=100
 Base damage=250
@@ -182,8 +182,8 @@ Program description="The network is wide and dangerous. Many traps await for the
 Picture="NoSkillAvailable.png"
 Form="radial"
 Effect="none"
-Cost=400
-Base damage=15
+Cost=40
+Base damage=30
 Artwork internal code=1
 
 ** Start of new program specification subsection **
