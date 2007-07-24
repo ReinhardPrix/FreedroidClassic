@@ -21,7 +21,7 @@ endif
 
 bin_PROGRAMS = freedroidRPG $(extra_prg)
 
-EXTRA_PROGRAMS = DialogEditor ItemEditor
+EXTRA_PROGRAMS = ItemEditor
 
 freedroidRPG_SOURCES = menu.c shop.c network.c items.c character.c skills.c saveloadgame.c \
 	leveleditor.c blocks.c  graphics.c  map.c   init.c  ship.c \
