@@ -65,7 +65,7 @@ Base damage=0
 ** Start of new program specification subsection **
 Program name="Malformed packet"
 Program description="When computers are presented with the unexpected they can damage themselves."
-Picture="NoSkillAvailable.png"
+Picture="BadPacket.png"
 Effect="none"
 Form="bullet"
 Cost=2
@@ -95,7 +95,7 @@ Cost per level=-3
 ** Start of new program specification subsection **
 Program name="Nethack"
 Program description="The open source game called Nethack is one of the world's greatest wasters of time. Machines don't care about it, but humans can get sucked in quite deeply."
-Picture="NoSkillAvailable.png"
+Picture="Nethack.png"
 Form="bullet"
 Effect="paralyze"
 Cost=10
@@ -113,7 +113,7 @@ Base damage=40
 ** Start of new program specification subsection **
 Program name="Killer poke"
 Program description="Messing around with the bot's memory can cause it to damage itself, but the damage is greatly variable."
-Picture="NoSkillAvailable.png"
+Picture="Poke.png"
 Form="bullet"
 Effect="none"
 Cost=20
@@ -132,8 +132,9 @@ Base damage=250
 
 ** Start of new program specification subsection **
 Program name="Ricer CFLAGS"
-Program description="Optimization is the root of all evil. You can gain some temporary improvements to your system, but in the end you are only likely to cause permanent damage."
-Picture="NoSkillAvailable.png"
+Program description="This does nothing in this version of freedroidRPG. Optimization is the root of all evil. You can gain some temporary improvements to your 
+system, but in the end you are only likely to cause permanent damage."
+Picture="cflag.png"
 Form="self"
 Effect="burnup"
 Cost=0
@@ -150,8 +151,8 @@ Artwork internal code=2
 
 ** Start of new program specification subsection **
 Program name="Invisibility"
-Program description="I am not the Linarian you are looking for."
-Picture="NoSkillAvailable.png"
+Program description="This does nothing in this version of freedroidRPG. I am not the Linarian you are looking for."
+Picture="Invisibility.png"
 Form="self"
 Effect="invisibility"
 Cost=30
@@ -168,7 +169,7 @@ Cost per level=-3
 ** Start of new program specification subsection **
 Program name="Virus"
 Program description="This is not just a firmware upgrade, my dear bot. You are about to find out what exactly I want to give you."
-Picture="NoSkillAvailable.png"
+Picture="Virus.png"
 Form="bullet"
 Effect="none"
 Cost=10
@@ -179,7 +180,7 @@ Artwork internal code=13
 ** Start of new program specification subsection **
 Program name="Broadcast virus"
 Program description="The network is wide and dangerous. Many traps await for the weak and unprepared."
-Picture="NoSkillAvailable.png"
+Picture="BroadcastVirus.png"
 Form="radial"
 Effect="none"
 Cost=40
@@ -189,7 +190,7 @@ Artwork internal code=1
 ** Start of new program specification subsection **
 Program name="Reverse-engineer"
 Program description="There is some dark magic in the art of turning bots inside-out to learn all their secrets."
-Picture="NoSkillAvailable.png"
+Picture="ReverseEngineer.png"
 Form="immediate"
 Effect="none"
 Cost=60
@@ -198,7 +199,7 @@ Base damage=80
 ** Start of new program specification subsection **
 Program name="Emergency shutdown"
 Program description="Everyone needs to blow some steam every now and then."
-Picture="NoSkillAvailable.png"
+Picture="Shutdown.png"
 Form="self"
 Effect="freeze"
 Cost=-100
@@ -206,8 +207,8 @@ Base damage=0
 
 ** Start of new program specification subsection **
 Program name="Light"
-Program description="Let there be light..."
-Picture="NoSkillAvailable.png"
+Program description="This does nothing in this version of freedroidRPG. Let there be light..."
+Picture="Light.png"
 Form="bullet"
 Effect="light"
 Cost=3
@@ -216,8 +217,8 @@ Artwork internal code=14
 
 ** Start of new program specification subsection **
 Program name="Satellite image"
-Program description="Getting a map of an area is pretty easy when you can look at everything from above."
-Picture="NoSkillAvailable.png"
+Program description="This does nothing in this version of freedroidRPG. Getting a map of an area is pretty easy when you can look at everything from above."
+Picture="SatelliteImage.png"
 Form="immediate"
 Effect="maplevel"
 Cost=40
