@@ -725,8 +725,8 @@ typedef struct
     char BigScreenMessage [ MAX_BIG_SCREEN_MESSAGES ] [ 5000 ];
     float BigScreenMessageDuration [ MAX_BIG_SCREEN_MESSAGES ];
 
-    int extra_effect_type;
-    int extra_effect_duration;
+    float slowdown_duration;
+    float paralyze_duration;
 }
 tux_t, *Tux_t;
 

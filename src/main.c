@@ -439,8 +439,13 @@ UpdateCountersForThisFrame ( int player_num )
 	Me [ player_num ] . busy_type = NONE;
 	}
 
-    // DebugPrintf ( -1000 , "\nfirewait; %f." , Me [ 0 ] . firewait );
-    
+    if ( Me [ player_num ] . paralyze_duration )
+	Me [ player_num ] . paralyze_duration -= latest_frame_time;  
+    if ( Me [ player_num ] . slowdown_duration )
+	Me [ player_num ] . slowdown_duration -= latest_frame_time;    
+    if ( Me [ player_num ] . paralyze_duration < 0)  Me [ player_num ] . paralyze_duration = 0;
+    if ( Me [ player_num ] . slowdown_duration < 0)  Me [ player_num ] . slowdown_duration = 0;
+
     //--------------------
     // In order to know when a level can finally be respawned with
     // enemies, we keep track to the time spent actually in the game, i.e.

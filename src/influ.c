@@ -2274,7 +2274,11 @@ move_tux ( int player_num )
 {
     Level MoveLevel = curShip.AllLevels[ Me [ player_num ] . pos . z ] ;
 
+
     // DebugPrintf ( -1000 , "\n%s(): player_num = %d." , __FUNCTION__ , player_num );
+
+    // check, if the influencer is still ok
+    CheckIfCharacterIsStillOk ( player_num ) ;
 
     //--------------------
     // We store the influencers position for the history record and so that others
@@ -2286,9 +2290,6 @@ move_tux ( int player_num )
     Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . y = Me [ player_num ] .pos.y;
     Me [ player_num ] . Position_History_Ring_Buffer [ Me [ player_num ] . current_zero_ring_index ] . z = MoveLevel->levelnum ;
     
-    // check, if the influencer is still ok
-    CheckIfCharacterIsStillOk ( player_num ) ;
-    
     //--------------------
     // As a preparation for the later operations, we see if there is
     // a living droid set as a target, and if yes, we correct the move
@@ -2296,6 +2297,17 @@ move_tux ( int player_num )
     //
     if ( Me [ player_num ] . current_enemy_target != (-1) )
 	UpdateMouseMoveTargetAccordingToEnemy ( player_num );
+
+    //--------------------
+    // Perhaps the player has turned the mouse wheel.  In that case we might
+    // need to change the current global mode, depending on whether a change
+    // of global mode (with the current obstacles under the mouse cursor)
+    // makes sense or not.
+    // 
+    adapt_global_mode_for_player ( player_num );
+
+
+    if  ( Me [ player_num ] . paralyze_duration ) return;  //If tux is paralyzed, we do nothing more
     
     //--------------------
     // But in case of some mouse move target present, we proceed to move
@@ -2309,14 +2321,6 @@ move_tux ( int player_num )
     //
     HandleCurrentlyActivatedSkill( player_num );
     
-    //--------------------
-    // Perhaps the player has turned the mouse wheel.  In that case we might
-    // need to change the current global mode, depending on whether a change
-    // of global mode (with the current obstacles under the mouse cursor)
-    // makes sense or not.
-    // 
-    adapt_global_mode_for_player ( player_num );
-
     // --------------------
     // Maybe we need to fire a bullet or set a new mouse move target
     // for the new move-to location

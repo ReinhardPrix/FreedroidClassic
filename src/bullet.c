@@ -488,10 +488,10 @@ MoveActiveSpells (void)
 			if ( AllActiveSpells [ i ] . mine ) 
 				robot_group_turn_hostile(j);
 			AllEnemys [ j ] . energy -= AllActiveSpells [ i ] . damage * Frame_Time();
-			AllEnemys [ j ] . poison_duration_left = AllActiveSpells [ i ] . poison_duration;
+			AllEnemys [ j ] . poison_duration_left += AllActiveSpells [ i ] . poison_duration;
 			AllEnemys [ j ] . poison_damage_per_sec = AllActiveSpells [ i ] . damage;
-			AllEnemys [ j ] . frozen = AllActiveSpells [ i ] . freeze_duration;
-			AllEnemys [ j ] . paralysation_duration_left = AllActiveSpells [ i ] . paralyze_duration;
+			AllEnemys [ j ] . frozen += AllActiveSpells [ i ] . freeze_duration;
+			AllEnemys [ j ] . paralysation_duration_left += AllActiveSpells [ i ] . paralyze_duration;
 
 			if ( AllEnemys [ j ] . energy < 0 )  
                                 {

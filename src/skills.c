@@ -215,6 +215,8 @@ DoSkill(int skill_index, int SpellCost)
 	case PROGRAM_FORM_SELF:
 		Me [ 0 ] . energy -= calculate_program_hit_damage ( skill_index ) ;
                 Me [ 0 ] . temperature += SpellCost;
+		Me [ 0 ] . slowdown_duration += strcmp( SpellSkillMap [ skill_index ] . effect, "slowdown" ) ? 0 : 10;
+                Me [ 0 ] . paralyze_duration += strcmp ( SpellSkillMap [ skill_index ] . effect, "paralyze" ) ? 0 : 15;
 		break;
 
 	case PROGRAM_FORM_BULLET:
