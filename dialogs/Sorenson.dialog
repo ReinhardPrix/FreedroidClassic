@@ -173,9 +173,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=41  OptionText=" Can I take a look at your books again?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="No. You saw enough."
+Subtitle="Yes. Sure. Of course."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=41 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
