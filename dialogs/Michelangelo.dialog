@@ -176,7 +176,7 @@ Subtitle="I had prepared some delicacies, but the ravenous Red Guard ate it all.
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Not a big loss, I have a second batch of food cubes in the oven and they will be ready shortly."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="I think the mood it the town will improve once the cooking master Michelangelo gets to work. Ha!"
+Subtitle="I think the mood in the town will improve once the cooking master Michelangelo gets to work. Ha!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=24 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
