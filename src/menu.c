@@ -2795,14 +2795,6 @@ I need to know that for saving. Abort.\n");
     }
     else
     {
-	fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Either it couldn't open the directory for the saved games\n\
-which should be %s,\n\
-or there were no saved games present in this directory.\n\
-Freedroid will continue execution now, since this problem\n\
- will be dealt with in-game.",
-				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	
 	MenuTexts[0]="BACK";
 	MenuTexts[1]="";
@@ -2924,14 +2916,6 @@ I need to know that for saving. Abort.\n");
     }
     else
     {
-	fprintf ( stderr, "\n\nSaved_Games_Dir: '%s'.\n" , Saved_Games_Dir );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-Either it couldn't open the directory for the saved games\n\
-which should be %s,\n\
-or there were no saved games present in this directory.\n\
-Freedroid will continue execution now, since this problem\n\
- will be dealt with in-game.",
-				   NO_NEED_TO_INFORM, IS_WARNING_ONLY );
 	
 	MenuTexts[0]="BACK";
 	MenuTexts[1]="";
