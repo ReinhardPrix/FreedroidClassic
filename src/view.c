@@ -2019,20 +2019,10 @@ AssembleCombatPicture ( int mask )
 	}
     }
 
-    if ( use_open_gl )
-    {
-	blit_nonpreput_objects_according_to_blitting_list ( mask );
-	if ( ( ! GameConfig . skip_light_radius ) &&
+    blit_nonpreput_objects_according_to_blitting_list ( mask );
+    if ( ( ! GameConfig . skip_light_radius )  &&
 	     ( ! ( mask & SKIP_LIGHT_RADIUS ) ) ) blit_light_radius();
 
-    }
-    else
-    {
-	blit_nonpreput_objects_according_to_blitting_list ( mask );
-	if ( ( ! GameConfig . skip_light_radius )  &&
-	     ( ! ( mask & SKIP_LIGHT_RADIUS ) ) ) blit_light_radius();
-
-    }
   
     PutMiscellaneousSpellEffects ( );
     
