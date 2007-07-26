@@ -2593,12 +2593,6 @@ Creation of an Tux SDL software surface from pixel data failed.",
 		//
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . force_color_key = FALSE ;
 
-		//--------------------
-		// This might be useful later, when using only SDL output...
-		//
-		// SDL_SetAlpha( Whole_Image , 0 , SDL_ALPHA_OPAQUE );
-		// our_iso_image -> surface = our_SDL_display_format_wrapperAlpha( Whole_Image );
-		// now we have an alpha-surf of right size
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . zoomed_out_surface = NULL ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . texture_has_been_created = FALSE ;
 		loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x = img_x_offs ;
@@ -2610,6 +2604,7 @@ Creation of an Tux SDL software surface from pixel data failed.",
 
 		if ( ! use_open_gl ) 		  
 		  flip_image_horizontally ( loaded_tux_images[tux_part_group][our_phase][rotation_index].surface ) ;
+		else make_texture_out_of_surface(&loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ]);
 	      }
 	    else
 	      {
@@ -2957,18 +2952,52 @@ Empty part string received!",
     // that isn't loaded yet should be considered a serious bug and a reason to terminate 
     // immediately...
     //
-    if ( loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL )
+    if ( (loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . surface != NULL && ! use_open_gl) 
+	|| (use_open_gl))
     {
-	if ( x == (-1) )
-	{
-	    blit_iso_image_to_map_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+	if ( ! use_open_gl )
+	    {
+            if ( x == (-1) )
+    		{
+	        blit_iso_image_to_map_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
 					     Me [ player_num ] . pos . x , Me [ player_num ] . pos . y );
-	}
-	else
-	{
-	    blit_iso_image_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+        	}
+	     else
+	        {
+	        blit_iso_image_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
 						x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y );
-	}
+	        }
+	    }
+	else
+	    {
+	    #ifdef HAVE_LIBGL
+	    float r=1.0, g=1.0, b=1.0;
+
+	    if ( Me [ 0 ] . paralyze_duration ) 
+		{
+		r = 1.0;
+		g = 0.2;
+		b = 0.2;
+		}
+
+	    if ( Me [ 0 ] . slowdown_duration ) 
+		{
+		r = 0.2;
+		g = 0.2;
+		b = 1.0;
+		}
+
+            if ( x == (-1) )
+    		{
+	        blit_open_gl_texture_to_map_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , 
+					     Me [ player_num ] . pos . x , Me [ player_num ] . pos . y, r, g, b, FALSE, FALSE );
+        	}
+	     else
+	        {
+	        blit_open_gl_texture_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ 			tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y, FALSE );
+	        }
+	    #endif
+	    }
     }
     else
     {
