@@ -3590,7 +3590,7 @@ Unable to load the level editor floor cursor.", PLEASE_INFORM, IS_FATAL);
       if (use_open_gl)
         blit_zoomed_open_gl_texture_to_map_position (&level_editor_cursor,
                                                      Me[0].pos.x, Me[0].pos.y,
-                                                     1.0, 1.0, 1.0, 0.25,
+                                                     1.0, 1.0, 1.0, 0,
                                                      FALSE);
       else
         blit_zoomed_iso_image_to_map_position (&level_editor_cursor,
@@ -3601,7 +3601,7 @@ Unable to load the level editor floor cursor.", PLEASE_INFORM, IS_FATAL);
       if (use_open_gl)
         blit_open_gl_texture_to_map_position (&level_editor_cursor,
                                               Me[0].pos.x, Me[0].pos.y, 1.0,
-                                              1.0, 1.0, 0.25, FALSE);
+                                              1.0, 1.0, 0, FALSE);
       else
         blit_iso_image_to_map_position (&level_editor_cursor, Me[0].pos.x,
                                         Me[0].pos.y);
@@ -3756,7 +3756,7 @@ Unable to load the level editor waypoint cursor.",
 	{
 	    if ( use_open_gl )
 		blit_open_gl_texture_to_map_position ( &level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ]  , 
-						       this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0.25 , FALSE) ;
+						       this_wp->x + 0.5 , this_wp->y + 0.5 , 1.0 , 1.0 , 1.0 , 0 , FALSE) ;
 	    else
 		blit_iso_image_to_map_position ( &level_editor_waypoint_cursor [ this_wp -> suppress_random_spawn ] , 
 						 this_wp->x + 0.5 , this_wp->y + 0.5 ) ;
