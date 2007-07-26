@@ -38,6 +38,27 @@
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
 
+//--------------------
+// This controls the zoom factor for the automap.  Since this uses
+// a different update policy than the level editor, even strong zoom
+// will not be a problem here...
+//
+// However some other considerations must be taken into account:  OPENGL
+// DOES IN GENERAL NOT WORK WELL ANY MORE WITH TEXTURES LARGER THAN 1024
+// AND SOMETIMES EVEN NOT WELL WITH ANYTHING > 256 (old vodoo cards!!!)
+// EVEN GEFORCE II HAS PROBLEMS WITH 2048 TEXTURE SIZE.
+//
+// Therefore some sanity-factor is introduced here:  it will scale down
+// the internal automap texture but scale it up again when the acutal
+// part-transparent blit is being done.  Using 0.25 for the sanity factor
+// should be the safest bet.  However quality is poor:  you get lots of
+// rectangular blocks where a wall/door/tree would be.
+// So we're using larger textures, assuming that most people will have
+// decen graphics adapters. Vodoo users can recompile the game for their needs...
+//
+#define AUTOMAP_ZOOM_OUT_FACT 8.0
+int AUTOMAP_TEXTURE_WIDTH=2048;
+int AUTOMAP_TEXTURE_HEIGHT=1024;
 
 
 /* ----------------------------------------------------------------------
@@ -93,6 +114,20 @@ set_up_texture_for_automap ( void )
     // We create an SDL surface, so that we can make the texture for the
     // automap from it...
     //
+    int max_size;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &max_size);
+
+    if ( AUTOMAP_TEXTURE_WIDTH > max_size )
+	{
+	AUTOMAP_TEXTURE_HEIGHT *= (float)(max_size / (float)AUTOMAP_TEXTURE_WIDTH);
+	AUTOMAP_TEXTURE_WIDTH = max_size;
+	}
+    if ( AUTOMAP_TEXTURE_HEIGHT > max_size )
+	{
+	AUTOMAP_TEXTURE_WIDTH *= (float)(max_size / (float)AUTOMAP_TEXTURE_HEIGHT);
+	AUTOMAP_TEXTURE_HEIGHT = max_size;
+	}
+
     pure_surface = SDL_CreateRGBSurface( 0 , AUTOMAP_TEXTURE_WIDTH , AUTOMAP_TEXTURE_HEIGHT , 32, 0x0FF000000 , 0x000FF0000  , 0x00000FF00 , 0x000FF );
 
     //--------------------
@@ -412,8 +447,8 @@ automap_update_texture_for_square ( int x , int y )
 	    glEnable ( GL_TEXTURE_2D );
 	    glBindTexture ( GL_TEXTURE_2D , *automap_texture );
 	    glTexSubImage2D ( GL_TEXTURE_2D , 0 , 
-			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( our_obstacle -> pos . x - our_obstacle -> pos . y ) * ( iso_floor_tile_width * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
-			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( our_obstacle -> pos . x + our_obstacle -> pos.  y ) * ( iso_floor_tile_height *AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
+			      ( AUTOMAP_TEXTURE_WIDTH / 2 ) + ( our_obstacle -> pos . x - our_obstacle -> pos . y ) * ( iso_floor_tile_width / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ,
+			      AUTOMAP_TEXTURE_HEIGHT - ( 50 + ( our_obstacle -> pos . x + our_obstacle -> pos.  y ) * ( iso_floor_tile_height / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) ) ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> w ,
 			      obstacle_map [ our_obstacle -> type ] . automap_version -> h ,
 			      GL_BGRA, 
@@ -612,13 +647,13 @@ show_automap_data_ogl ( float scale_factor )
 	+ GameConfig . screen_width / 2 
 	- GameConfig . automap_manual_shift_x 
 	- ( Me [ 0 ] . pos . x - Me [ 0 ] . pos . y ) * 
-	  ( iso_floor_tile_width * scale_factor * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
+	  ( iso_floor_tile_width * scale_factor / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
 
 	// + ( AUTOMAP_TEXTURE_HEIGHT / 2 ) 
 	+ GameConfig . screen_height / 2 
 	- GameConfig . automap_manual_shift_y 
 	- ( Me [ 0 ] . pos . x + Me [ 0 ] . pos . y ) * 
-          ( iso_floor_tile_height * scale_factor * AUTOMAP_SANITY_FACTOR / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
+          ( iso_floor_tile_height * scale_factor / ( 2.0 * AUTOMAP_ZOOM_OUT_FACT ) ) , 
 	scale_factor );
 
 
