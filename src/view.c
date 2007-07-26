@@ -2994,7 +2994,7 @@ Empty part string received!",
         	}
 	     else
 	        {
-	        blit_open_gl_texture_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ 			tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y, FALSE );
+	        blit_open_gl_texture_to_screen_position ( &loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] , x + loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ] . offset_x , y + loaded_tux_images [ 			tux_part_group ] [ our_phase ] [ rotation_index ] . offset_y, TRUE );
 	        }
 	    #endif
 	    }
