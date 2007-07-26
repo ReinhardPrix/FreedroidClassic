@@ -445,6 +445,16 @@ Action is Influencer say="Now I should get teleported...."
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
+* Start of an Event Action Subsection *
+Action label for this action="teleport_into_the_disruptor_base"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=27 TelY=3 TelLev=1
+Use map label for teleport target="ScientistQuartersArrivalPoint"
+Action is Influencer say="Now I should get teleported...."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
+
 
 * Start of an Event Action Subsection *
 Action label for this action="teleport_back_from_scientist_quarters"
