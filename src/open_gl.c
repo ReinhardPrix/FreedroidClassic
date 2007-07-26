@@ -1125,7 +1125,7 @@ safely_initialize_our_default_open_gl_parameters ( void )
 void
 blit_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image , 
 				       float our_col , float our_line , 
-				       double r, double g , double b , 
+				       float r, float g , float b , 
 				       int highlight_texture, int blend ) 
 {
 
@@ -1152,13 +1152,6 @@ blit_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image ,
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     
-    //--------------------
-    // Blending can be used, if there is no suitable alpha checking so that
-    // I could get it to work right....
-    //
-    // But alpha check functions ARE a bit faster, even on my hardware, so
-    // let's stick with that possibility for now, especially with the floor.
-    //
     if ( ( blend == TRANSPARENCY_FOR_WALLS ) && GameConfig . transparency ) 
     {
 	glEnable ( GL_BLEND ) ;
@@ -1177,15 +1170,8 @@ blit_open_gl_texture_to_map_position ( iso_image * our_floor_iso_image ,
 	glBlendFunc ( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
     }
 
-/*    if(blend == 0)
-    {
-	glDisable(GL_BLEND);
-	glEnable( GL_ALPHA_TEST );  
-	glAlphaFunc ( GL_GREATER , 0.5 ) ;
-    }*/
 
   
-    // glDisable( GL_ALPHA_TEST );  
   
     //--------------------
     // Now of course we need to find out the proper target position.
