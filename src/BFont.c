@@ -93,7 +93,9 @@ InitFont (BFont_Info * Font)
   Font->Chars[' '].h = Font->Surface->h;
   Font->Chars[' '].w = Font->Chars['!'].w;
   Font->number_of_chars = i;
-
+#ifdef HAVE_LIBGL
+  Font->list_base = glGenLists(i);
+#endif
   if (SDL_MUSTLOCK (Font->Surface))
     SDL_UnlockSurface (Font->Surface);
 
@@ -143,12 +145,6 @@ LoadFont (const char *filename)
 	      /* Set the font as the current font */
 	      SetCurrentFont (Font);
 	      
-	      /*
-	      if ( use_open_gl )
-		{
-		  flip_image_horizontally ( Font -> Surface ) ;
-		}
-	      */
 	    }
 	  else
 	    {
@@ -378,9 +374,41 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 						 PLEASE_INFORM, IS_FATAL );
 		    }
 		  make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
+		  #ifdef HAVE_LIBGL
+		  glNewList(Font->list_base + c, GL_COMPILE);
+	          glEnable( GL_TEXTURE_2D );
+		  glBindTexture(GL_TEXTURE_2D, *(Font->char_iso_image[c] . texture));
+	          glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
+        	  glEnable ( GL_BLEND );
+        	  glDisable ( GL_ALPHA_TEST );
+ 
+	          glBlendFunc( GL_SRC_ALPHA , GL_ONE_MINUS_SRC_ALPHA );
+
+		  glBegin(GL_QUADS);
+
+		  glTexCoord2f( 0, 1.0 );
+		  glVertex2i( 0 , 0 );
+		  glTexCoord2f( 0.0, 0 );
+		  glVertex2i( 0 , Font->char_iso_image[c] . texture_height );
+		  glTexCoord2f( 1.0, 0 );
+		  glVertex2i( Font->char_iso_image[c] . texture_width , Font->char_iso_image[c] . texture_height );
+		  glTexCoord2f( 1.0, 1 );
+		  glVertex2i(  Font->char_iso_image[c] . texture_width , 0 );
+		
+		  glEnd( );
+	          glDisable( GL_TEXTURE_2D );
+		  glEndList();
+
+		  #endif
 		}
 	      
-	      blit_open_gl_texture_to_screen_position ( & (Font -> char_iso_image [ c ]) , dest . x , dest . y , TRUE ) ;
+	      //blit_open_gl_texture_to_screen_position ( & (Font -> char_iso_image [ c ]) , dest . x , dest . y , TRUE ) ;
+	      glPushMatrix();
+	      glMatrixMode(GL_MODELVIEW);
+	      glTranslated(dest.x, dest.y, 0);
+	      glCallList(Font->list_base + c );
+	      glPopMatrix();
+
               }
 	#ifdef HAVE_LIBGL
 	glDisable(GL_CLIP_PLANE0);

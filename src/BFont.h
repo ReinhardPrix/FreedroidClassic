@@ -19,6 +19,9 @@ typedef struct
   // SDL_Surface* char_surface [ MAX_CHARS_IN_FONT ];
   iso_image char_iso_image [ MAX_CHARS_IN_FONT ];
   unsigned int number_of_chars;
+  #ifdef HAVE_LIBGL
+  GLuint list_base;
+  #endif
 }
 BFont_Info;
 
