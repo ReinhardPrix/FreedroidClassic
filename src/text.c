@@ -659,7 +659,15 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	    if ( MyCursorY > clip -> y - FontHeight ( GetCurrentFont() ) * text_stretch) 
       	        DisplayChar (*tmp);
 	    else 
+		{
                 MyCursorX += CharWidth ( GetCurrentFont() , *tmp);
+		switch ( * tmp ) 
+		    {
+		    case 1: SetCurrentFont(Red_BFont); break;
+		    case 2: SetCurrentFont(Blue_BFont); break; 
+		    case 3: SetCurrentFont(FPS_Display_BFont); break;
+		    }
+		}
 	    }
 
 	
