@@ -349,12 +349,10 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 	#ifdef HAVE_LIBGL
 	GLdouble eqntop[4] = { 0.0, 1.0, 0.0, - clipping_rect . y };
 	GLdouble eqnbottom[4] = { 0.0, -1.0, 0.0, clipping_rect . y + clipping_rect . h};
-	glClipPlane(GL_CLIP_PLANE0, eqntop);
-	glEnable(GL_CLIP_PLANE0);
-	glClipPlane(GL_CLIP_PLANE1, eqnbottom);
-	glEnable(GL_CLIP_PLANE1);
-
-
+        glClipPlane(GL_CLIP_PLANE0, eqntop);
+        glEnable(GL_CLIP_PLANE0);
+        glClipPlane(GL_CLIP_PLANE1, eqnbottom);
+        glEnable(GL_CLIP_PLANE1);
 	#endif
 	if ( ( dest . x < clipping_rect . x + clipping_rect . w ) &&
               ( dest . x >= clipping_rect . x ) )
@@ -376,6 +374,7 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 		  make_texture_out_of_surface ( & ( Font -> char_iso_image [ c ] ) ) ;
 		  #ifdef HAVE_LIBGL
 		  glNewList(Font->list_base + c, GL_COMPILE);
+
 	          glEnable( GL_TEXTURE_2D );
 		  glBindTexture(GL_TEXTURE_2D, *(Font->char_iso_image[c] . texture));
 	          glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE );
@@ -403,17 +402,17 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 		}
 	      
 	      //blit_open_gl_texture_to_screen_position ( & (Font -> char_iso_image [ c ]) , dest . x , dest . y , TRUE ) ;
+	      #ifdef HAVE_LIBGL
 	      glPushMatrix();
 	      glMatrixMode(GL_MODELVIEW);
 	      glTranslated(dest.x, dest.y, 0);
 	      glCallList(Font->list_base + c );
 	      glPopMatrix();
+              glDisable(GL_CLIP_PLANE0);
+	      glDisable(GL_CLIP_PLANE1);
+	      #endif
 
               }
-	#ifdef HAVE_LIBGL
-	glDisable(GL_CLIP_PLANE0);
-	glDisable(GL_CLIP_PLANE1);
-	#endif
 	}
       else
 	{
