@@ -922,7 +922,7 @@ ShowCharacterScreen ( int player_num )
     //
     if ( GameConfig.CharacterScreen_Visible == FALSE ) return;
 
-    SetCurrentFont ( FPS_Display_BFont );
+    SetCurrentFont ( Message_BFont );
     
     // --------------------
     // We will need the current mouse position on several spots...
@@ -984,35 +984,35 @@ ShowCharacterScreen ( int player_num )
     sprintf( CharText , "%6ld", Me[0].Gold ); 
     DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    SetCurrentFont( FPS_Display_BFont) ;
+    SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].base_strength );
     DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Strength );
     if ( Me[0].Strength != Me[0].base_strength ) SetCurrentFont( Red_BFont) ;
     DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    SetCurrentFont( FPS_Display_BFont) ;
+    SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].base_magic );
     DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Magic );
     if ( Me[0].Magic != Me[0].base_magic ) SetCurrentFont( Red_BFont) ;
     DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    SetCurrentFont( FPS_Display_BFont) ;
+    SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].base_dexterity );
     DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Dexterity );
     if ( Me[0].Dexterity != Me[0].base_dexterity ) SetCurrentFont( Red_BFont) ;
     DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    SetCurrentFont( FPS_Display_BFont) ;
+    SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].base_vitality );
     DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Vitality );
     if ( Me[0].Vitality != Me[0].base_vitality ) SetCurrentFont( Red_BFont) ;
     DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    SetCurrentFont( FPS_Display_BFont) ;
+    SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].points_to_distribute );
     DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
