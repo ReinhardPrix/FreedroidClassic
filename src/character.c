@@ -945,7 +945,10 @@ ShowCharacterScreen ( int player_num )
     // Now we can start to fill in the character values:
     // Name, Class, Level, Exp, Strength, Dex, ...
     //
-    DisplayText( Me[0].character_name , 20 + CharacterRect.x , 18 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    SetCurrentFont ( Menu_BFont );
+    DisplayText( Me[0].character_name , 20 + CharacterRect.x , 12 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    SetCurrentFont ( Message_BFont );
+    
     
     if ( Me [ 0 ] . is_town_guard_member )
 	DisplayText( "Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
@@ -971,18 +974,18 @@ ShowCharacterScreen ( int player_num )
       }
     */
     
-    sprintf( CharText , "%4d", Me[0].exp_level );
-    DisplayText( CharText , 62 + CharacterRect.x , 56 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d", Me[0].exp_level );
+    DisplayText( CharText , 110 + CharacterRect.x , 70 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     // Me[0].Experience = RealScore;
-    sprintf( CharText , "%6ld", Me[0].Experience ); // this should be the real score, sooner or later
-    DisplayText( CharText , 240 + CharacterRect.x ,  EXPERIENCE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d", Me[0].Experience ); // this should be the real score, sooner or later
+    DisplayText( CharText , 110 + CharacterRect.x ,  90 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%6ld", Me[0].ExpRequired ); 
-    DisplayText( CharText , 240 + CharacterRect.x ,  NEXT_LEVEL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH ) ;
+    sprintf( CharText , "%d", Me[0].ExpRequired );
+    DisplayText( CharText , 110 + CharacterRect.x ,  107 + CharacterRect.y , &CharacterRect , TEXT_STRETCH ) ;
     
     sprintf( CharText , "%6ld", Me[0].Gold ); 
-    DisplayText( CharText , 240 + CharacterRect.x ,  GOLD_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 240 + CharacterRect.x ,  71 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].base_strength );
@@ -1017,16 +1020,16 @@ ShowCharacterScreen ( int player_num )
     DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d", (int) Me[0].maxenergy );
-    DisplayText( CharText , 95 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 95 + CharacterRect.x , 290 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d", (int) Me[0].energy );
-    DisplayText( CharText , 143 + CharacterRect.x , 293 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 143 + CharacterRect.x , 290 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d", (int) Me[0].max_temperature );
-    DisplayText( CharText , 95 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 95 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d", (int) Me[0].temperature );
-    DisplayText( CharText , 143 + CharacterRect.x , 318 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 143 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
     DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
@@ -1045,10 +1048,10 @@ ShowCharacterScreen ( int player_num )
     //--------------------
     // We fill in the numbers for the current running power.
     //
-    sprintf( CharText , "%3d", (int) Me [ 0 ] . max_running_power );
-    DisplayText( CharText , 223 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    sprintf( CharText , "%3d", (int) Me [ 0 ] . running_power );
-    DisplayText( CharText , 269 + CharacterRect.x , 275 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d", (int) Me [ 0 ] . max_running_power );
+    DisplayText( CharText , 95 + CharacterRect.x , 319 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d", (int) Me [ 0 ] . running_power );
+    DisplayText( CharText , 143 + CharacterRect.x , 319 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
 
 
     sprintf( CharText , "%3d", (int) Me [ 0 ] . resist_disruptor );

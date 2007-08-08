@@ -629,10 +629,10 @@ enum
 
 #define STR_BASE_X 100
 #define STR_NOW_X 148
-#define STR_Y 143
-#define DEX_Y 171
-#define MAG_Y 197
-#define VIT_Y 227
+#define STR_Y 141
+#define DEX_Y 165
+#define MAG_Y 190
+#define VIT_Y 218
 #define POINTS_Y 252
 
 #define BUTTON_MOD_X (-6)

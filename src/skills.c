@@ -38,8 +38,8 @@
 
 #define CLASS_X 175
 
-#define EXPERIENCE_Y 55
-#define NEXT_LEVEL_Y 82
+#define EXPERIENCE_Y 150
+#define NEXT_LEVEL_Y 220
 
 #define GOLD_Y 132
 
@@ -70,8 +70,8 @@
 #define INV_BUTTON_WIDTH 38
 #define INV_BUTTON_HEIGHT 22
 
-#define SPELL_LEVEL_BUTTONS_X 10
-#define SPELL_LEVEL_BUTTONS_Y 413
+#define SPELL_LEVEL_BUTTONS_X 60
+#define SPELL_LEVEL_BUTTONS_Y 423
 #define SPELL_LEVEL_BUTTON_WIDTH 30
 
 int Override_Power_Limit=0;
@@ -598,7 +598,7 @@ ShowSkillsScreen ( void )
     
     for ( i = 0 ; i < NUMBER_OF_SKILLS_PER_SKILL_PAGE ; i ++ )
     {
-	SkillRectLocations [ i ] . x = SkillScreenRect . x + 17 ;
+	SkillRectLocations [ i ] . x = SkillScreenRect . x + 20 ;
 	SkillRectLocations [ i ] . y = SkillScreenRect.y + FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + 3 ;
     }
 
@@ -693,20 +693,24 @@ ShowSkillsScreen ( void )
 	//--------------------
 	// First we write the name of the skill to the screen
 	//
+    //SetCurrentFont ( Menu_BFont );
+    SetCurrentFont ( FPS_Display_BFont );
+    
 	DisplayText( SpellSkillMap [ SkillOfThisSlot ] . name , 
 		     16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y , 
 		     &SkillScreenRect , TEXT_STRETCH );
       
+    SetCurrentFont ( Message_BFont );
 	//--------------------
 	// Now we write the competence of the players character in that skill to the screen
 	//
 	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
+		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	sprintf( CharText , "Heat produced: %d " ,   calculate_program_heat_cost ( SkillOfThisSlot )  );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
-		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
+		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 3 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	
     }
 
