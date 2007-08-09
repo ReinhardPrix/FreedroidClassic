@@ -1745,7 +1745,7 @@ display_current_game_message_window ( void )
     //
     // { 65 , 410 , 500 , 70 }       
     
-    Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . x = ( ( 100 + 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . y = ( ( 380 + 8 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . h = ( 60 * GameConfig . screen_height ) / 480 ;
@@ -1787,7 +1787,7 @@ display_current_game_message_window ( void )
     //
     SDL_SetClipRect( Screen, NULL );
     // { 65 , 410 , 500 , 70 }       
-    Subtitle_Window . x = ( ( 90 + 20 ) * GameConfig . screen_width ) / 640 ;
+    Subtitle_Window . x = ( ( 100 + 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . y = ( ( 380 + 8 ) * GameConfig . screen_height ) / 480 ;
     Subtitle_Window . w = ( ( 500 - 20 - 20 ) * GameConfig . screen_width ) / 640 ;
     Subtitle_Window . h = ( 40 * GameConfig . screen_height ) / 480 ;
