@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 //--------------------
 // Now we give some definitions for the computation of the
@@ -464,7 +465,7 @@ check_for_new_experience_level_reached ( int PlayerNum )
 
     if ( Me [ PlayerNum ] . exp_level >= 24 )
 	{
-	SetNewBigScreenMessage( "Max level reached!");
+	SetNewBigScreenMessage(_("Max level reached!"));
 	return;
 	}
 
@@ -507,7 +508,7 @@ check_for_new_experience_level_reached ( int PlayerNum )
 	// Also when a new level is reached, we will display a big message
 	// right over the combat window.
 	//
-	SetNewBigScreenMessage( "Level Gained!" );
+	SetNewBigScreenMessage(_("Level Gained!"));
 	Takeover_Game_Won_Sound();
     }
 }; // void check_for_new_experience_level_reached ( int PlayerNum )
@@ -848,7 +849,7 @@ show_character_screen_skills ( int player_num )
 Error: melee weapon skill seems out of bounds.",
 				   PLEASE_INFORM, IS_FATAL );
     }
-    DisplayText( AllSkillTexts [ Me [ player_num ] . melee_weapon_skill ] , 
+    DisplayText( _(AllSkillTexts [ Me [ player_num ] . melee_weapon_skill ]), 
 		 MELEE_SKILL_X + CharacterRect.x , MELEE_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
 
     //--------------------
@@ -863,7 +864,7 @@ Error: melee weapon skill seems out of bounds.",
 Error: ranged weapon skill seems out of bounds.",
 				   PLEASE_INFORM, IS_FATAL );
     }
-    DisplayText( AllSkillTexts [ Me [ player_num ] . ranged_weapon_skill ] , 
+    DisplayText( _(AllSkillTexts [ Me [ player_num ] . ranged_weapon_skill ]), 
 		 RANGED_SKILL_X + CharacterRect.x , RANGED_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
 
     //--------------------
@@ -878,7 +879,7 @@ Error: ranged weapon skill seems out of bounds.",
 Error: Programming_Skill skill seems out of bounds.",
 				   PLEASE_INFORM, IS_FATAL );
     }
-    DisplayText( AllSkillTexts [ Me [ player_num ] . spellcasting_skill ] , 
+    DisplayText( _(AllSkillTexts [ Me [ player_num ] . spellcasting_skill ]), 
 		 SPELLCASTING_SKILL_X + CharacterRect.x , SPELLCASTING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
 
     //--------------------
@@ -893,7 +894,7 @@ Error: Programming_Skill skill seems out of bounds.",
 Error: hacking skill seems out of bounds.",
 				   PLEASE_INFORM, IS_FATAL );
     }
-    DisplayText( AllSkillTexts [ Me [ player_num ] . hacking_skill ] , 
+    DisplayText( _(AllSkillTexts [ Me [ player_num ] . hacking_skill ]), 
 		 HACKING_SKILL_X + CharacterRect.x , HACKING_SKILL_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
 
     /*
@@ -951,9 +952,9 @@ ShowCharacterScreen ( int player_num )
     
     
     if ( Me [ 0 ] . is_town_guard_member )
-	DisplayText( "Red Guard" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
+	DisplayText( _("Red Guard"), CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
     else
-	DisplayText( "Novice" , CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
+	DisplayText( _("Novice"), CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
     
     /*
       switch ( Me[0].character_class )

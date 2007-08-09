@@ -38,6 +38,7 @@
 #include "proto.h"
 #include "global.h"
 #include "SDL_rotozoom.h"
+#include "lang.h"
 
 
 #define PUSH_ROSTER 2
@@ -633,11 +634,11 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	if ( !TryToIntegrateItemIntoInventory ( & NewItem , NewItem.multiplicity ) )
 	{
 	    DropItemToTheFloor ( &NewItem , Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , Me [ 0 ] . pos. z ) ;
-	    SetNewBigScreenMessage( "1 Item received (on floor)" );
+	    SetNewBigScreenMessage( _("1 Item received (on floor)") );
 	}
 	else
 	{
-	    SetNewBigScreenMessage( "1 Item received!" );
+	    SetNewBigScreenMessage( _("1 Item received!") );
 	}
     }
     else if ( CountStringOccurences ( ExtraCommandString , "OpenQuestDiaryEntry:" ) )
@@ -1370,7 +1371,7 @@ DoChatFromChatRosterData( int PlayerNum , int ChatPartnerCode , Enemy ChatDroid 
 	}
 	else
 	{
-	    MenuSelection = ChatDoMenuSelectionFlagged ( "What will you say?" , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
+	    MenuSelection = ChatDoMenuSelectionFlagged ( _("What will you say?") , DialogMenuTexts , Me [ PlayerNum ] . Chat_Flags [ ChatPartnerCode ]  , 1 , -1 , FPS_Display_BFont , ChatDroid );
 	    //--------------------
 	    // We do some correction of the menu selection variable:
 	    // The first entry of the menu will give a 1 and so on and therefore

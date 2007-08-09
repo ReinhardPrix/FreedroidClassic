@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
+#include "lang.h"
 
 #include "SDL_rotozoom.h" // that's for rotating the speed-o-meter arrows
 
@@ -188,15 +189,15 @@ exist really (i.e. has a type = (-1) ).",
     if ( CurItem->damage )
     {
 	if ( ! ForShop ) 
-	    sprintf( linebuf , "Damage: %d to %d \n" , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
+	    sprintf( linebuf , _("Damage: %d to %d \n"), CurItem->damage , CurItem->damage_modifier + CurItem->damage );
 	else
-	    sprintf( linebuf , "Dam: %d-%d " , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
+	    sprintf( linebuf , _("Dam: %d-%d ") , CurItem->damage , CurItem->damage_modifier + CurItem->damage );
 	strcat( ItemDescText , linebuf );
     }
 
     if ( ItemMap [ CurItem->type ] . item_gun_ammo_clip_size )
     {
-	sprintf( linebuf , "Ammo : %d of %d\n", CurItem->ammo_clip,  ItemMap [ CurItem->type ] . item_gun_ammo_clip_size);
+	sprintf( linebuf , _("Ammo : %d of %d\n"), CurItem->ammo_clip,  ItemMap [ CurItem->type ] . item_gun_ammo_clip_size);
 	strcat( ItemDescText , linebuf );
     }
     
@@ -205,7 +206,7 @@ exist really (i.e. has a type = (-1) ).",
     //
     if ( ItemMap [ CurItem->type ] . item_group_together_in_inventory )
     {
-	sprintf( linebuf , "Multiplicity: %d \n" , CurItem->multiplicity );
+	sprintf( linebuf , _("Multiplicity: %d \n"), CurItem->multiplicity );
 	strcat( ItemDescText , linebuf );
     }
     
@@ -214,7 +215,7 @@ exist really (i.e. has a type = (-1) ).",
     //
     if ( CurItem->ac_bonus )
     {
-	sprintf( linebuf , "Armour: %d" , CurItem->ac_bonus );
+	sprintf( linebuf , _("Armour: %d"), CurItem->ac_bonus );
 	strcat( ItemDescText , linebuf );
 	if ( !ForShop ) strcat( ItemDescText , " \n " );
     }
@@ -226,14 +227,14 @@ exist really (i.e. has a type = (-1) ).",
     if ( CurItem->max_duration != (-1) )
     {
 	if ( ! ForShop ) 
-	    sprintf( linebuf , " Durability: %d of %d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+	    sprintf( linebuf , _(" Durability: %d of %d"), (int) CurItem->current_duration , (int) CurItem->max_duration );
 	else
-	    sprintf( linebuf , " Dur: %d/%d" , (int) CurItem->current_duration , (int) CurItem->max_duration );
+	    sprintf( linebuf , _(" Dur: %d/%d"), (int) CurItem->current_duration , (int) CurItem->max_duration );
 	strcat( ItemDescText , linebuf );
     }
     else if ( ItemMap [ CurItem->type ].item_can_be_installed_in_influ )
     {
-	strcat( ItemDescText , " Indestructible" );
+	strcat( ItemDescText , _(" Indestructible") );
     };
     
     // --------------------
@@ -243,21 +244,21 @@ exist really (i.e. has a type = (-1) ).",
 	 ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) ) )
     {
 	if ( ! ForShop ) strcat ( ItemDescText , "\n" );
-	if ( ForShop ) strcat ( ItemDescText , " Required:" );
+	if ( ForShop ) strcat ( ItemDescText , _(" Required:") );
 	if ( ItemMap[ CurItem->type ].item_require_strength != ( -1 ) )
 	{
 	    if ( ForShop )
-		sprintf( linebuf , "   Str: %d" , ItemMap[ CurItem->type ].item_require_strength );
+		sprintf( linebuf , _("   Str: %d"), ItemMap[ CurItem->type ].item_require_strength );
 	    else 
-		sprintf( linebuf , " Required strength: %d " , ItemMap[ CurItem->type ].item_require_strength );
+		sprintf( linebuf , _(" Required strength: %d "), ItemMap[ CurItem->type ].item_require_strength );
 	    strcat( ItemDescText , linebuf );
 	}
 	if ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) )
 	{
 	    if ( ForShop )
-		sprintf( linebuf , "   Dex: %d" ,  ItemMap[ CurItem->type ].item_require_dexterity );
+		sprintf( linebuf , _("   Dex: %d"),  ItemMap[ CurItem->type ].item_require_dexterity );
 	    else
-		sprintf( linebuf , " Dexterity: %d " ,  ItemMap[ CurItem->type ].item_require_dexterity );
+		sprintf( linebuf , _(" Dexterity: %d "),  ItemMap[ CurItem->type ].item_require_dexterity );
 	    strcat( ItemDescText , linebuf );
 	}
     }
@@ -291,7 +292,7 @@ case ITEM_SPELLBOOK_OF_LIGHT:
 case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 
 /*		sprintf( linebuf , "Program execution status: %s\n " ,  
-			 AllSkillTexts [ required_spellcasting_skill_for_item ( CurItem -> type ) ] );
+			 _(AllSkillTexts [ required_spellcasting_skill_for_item ( CurItem -> type ) ]));
 		strcat( ItemDescText , linebuf );*/
 /*		sprintf( linebuf , "Required for next upgrade: %d\n " ,  
 			 required_magic_stat_for_next_level_and_item ( CurItem -> type ) );
@@ -303,7 +304,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
     }
     else if ( ForShop )
     {
-	strcat ( ItemDescText , " , No required attributes " );
+	strcat ( ItemDescText , _(" , No required attributes ") );
     }
     
 
@@ -317,64 +318,64 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 	    case ITEM_SMALL_HEALTH_POTION:
 	    case ITEM_MEDIUM_HEALTH_POTION:
 	    case ITEM_FULL_HEALTH_POTION:
-		sprintf( linebuf , "Recover Health\n" );
+		sprintf( linebuf , _("Recover Health\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_SCRIPT_OF_IDENTIFY:
-		sprintf( linebuf , "Analyze one item\n" );
+		sprintf( linebuf , _("Analyze one item\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    case ITEM_SCRIPT_OF_TELEPORT_HOME:
-		sprintf( linebuf , "Teleports you to your sanctuary\n" );
+		sprintf( linebuf , _("Teleports you to your sanctuary\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_MEDIUM_MANA_POTION:
 	    case ITEM_FULL_MANA_POTION:
 	    case ITEM_SMALL_MANA_POTION:
-		sprintf( linebuf , "Cooling aid\n" );
+		sprintf( linebuf , _("Cooling aid\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    case ITEM_BLUE_ENERGY_DRINK:
-		sprintf( linebuf , "Recover Health, Force\nand Running Power\n" );
+		sprintf( linebuf , _("Recover Health, Force\nand Running Power\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_RUNNING_POWER_POTION:
-		sprintf( linebuf , "Recover Running Power\n" );
+		sprintf( linebuf , _("Recover Running Power\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_TEMP_STRENGTH_POTION:
-		sprintf( linebuf , "Temporary Boost to Strength\n" );
+		sprintf( linebuf , _("Temporary Boost to Strength\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_TEMP_DEXTERITY_POTION:
-		sprintf( linebuf , "Temporary Boost to Dexterity\n" );
+		sprintf( linebuf , _("Temporary Boost to Dexterity\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_MAP_MAKER_SIMPLE:
-		sprintf( linebuf , "To implant the automap device\n" );
+		sprintf( linebuf , _("To implant the automap device\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_STRENGTH_PILL:
-		sprintf( linebuf , "Permanently gain +1 strength\n" );
+		sprintf( linebuf , _("Permanently gain +1 strength\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_DEXTERITY_PILL:
-		sprintf( linebuf , "Permanently gain +1 dexterity\n" );
+		sprintf( linebuf , _("Permanently gain +1 dexterity\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
 	    case ITEM_MAGIC_PILL:
-		sprintf( linebuf , "Permanently gain +1 CPU\n" );
+		sprintf( linebuf , _("Permanently gain +1 CPU\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 		
@@ -398,31 +399,31 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 	case ITEM_SPELLBOOK_OF_EMERGENCY_SHUTDOWN:
 	case ITEM_SPELLBOOK_OF_LIGHT:
 	case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
-		sprintf( linebuf , "Permanently acquire/enhance this program\n" );
+		sprintf( linebuf , _("Permanently acquire/enhance this program\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    case ITEM_EMP_SHOCK_GRENADE:
-    		sprintf( linebuf , "Electromagnetic pulse\n" );
+    		sprintf( linebuf , _("Electromagnetic pulse\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    case ITEM_VMX_GAS_GRENADE:
-		sprintf( linebuf , "Gas attack\n" );
+		sprintf( linebuf , _("Gas attack\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    case ITEM_PLASMA_GRENADE:
-		sprintf( linebuf , "Huge explosion\n" );
+		sprintf( linebuf , _("Huge explosion\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 
 	    default:
-		sprintf( linebuf , "USE UNDESCRIBED YET\n" );
+		sprintf( linebuf , _("USE UNDESCRIBED YET\n") );
 		strcat( ItemDescText , linebuf );
 		break;
 	}
-	sprintf( linebuf , "Right click to use" );
+	sprintf( linebuf , _("Right click to use") );
 	strcat( ItemDescText , linebuf );
     }
     
@@ -431,17 +432,17 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
     //
     if ( ( CurItem->type == ITEM_START_PLUGIN_WARRIOR ) && ( !ForShop ) )
     {
-	sprintf( linebuf , "\nFreezes targets after melee hit" );
+	sprintf( linebuf , _("\nFreezes targets after melee hit") );
 	strcat( ItemDescText , linebuf );
     }
     if ( ( CurItem->type == ITEM_START_PLUGIN_SNIPER ) && ( !ForShop ) )
     {
-	sprintf( linebuf , "\nAdds double damage to ranged attacks" );
+	sprintf( linebuf , _("\nAdds double damage to ranged attacks") );
 	strcat( ItemDescText , linebuf );
     }
     if ( ( CurItem->type == ITEM_START_PLUGIN_HACKER ) && ( !ForShop ) )
     {
-	sprintf( linebuf , "\nAdds two levels to all spells" );
+	sprintf( linebuf , _("\nAdds two levels to all spells") );
 	strcat( ItemDescText , linebuf );
     }
     
@@ -464,7 +465,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 	    {
 		if ( CurItem->bonus_to_str > 0 ) strcat( ItemDescText , "+" );
 		else strcat ( ItemDescText, "-");
-		sprintf( linebuf , "%d to strength" , CurItem->bonus_to_str );
+		sprintf( linebuf , _("%d to strength") , CurItem->bonus_to_str );
 		AppendToLine = TRUE;
 		strcat( ItemDescText , linebuf );
 	    }
@@ -474,7 +475,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_dex > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to dexterity" , CurItem->bonus_to_dex );
+		sprintf( linebuf , _("%d to dexterity") , CurItem->bonus_to_dex );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -483,7 +484,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_mag > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d to CPU" , CurItem->bonus_to_mag );
+		sprintf( linebuf , _("%d to CPU") , CurItem->bonus_to_mag );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -492,7 +493,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "%d to vitality" , CurItem->bonus_to_vit );
+		sprintf( linebuf , _("%d to vitality") , CurItem->bonus_to_vit );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -501,7 +502,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_life > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d health points" , CurItem->bonus_to_life );
+		sprintf( linebuf , _("%d health points") , CurItem->bonus_to_life );
 		strcat( ItemDescText , linebuf );
 	    }
 
@@ -510,7 +511,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_health_recovery > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%0.1f health points per second" , CurItem->bonus_to_health_recovery );
+		sprintf( linebuf , _("%0.1f health points per second") , CurItem->bonus_to_health_recovery );
 		strcat( ItemDescText , linebuf );
 	    }
 
@@ -519,9 +520,9 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_cooling_rate > 0 )
-			sprintf( linebuf , "%0.1f cooling per second" , CurItem->bonus_to_cooling_rate );
+			sprintf( linebuf , _("%0.1f cooling per second") , CurItem->bonus_to_cooling_rate );
 		else if ( CurItem->bonus_to_cooling_rate < 0 )
-			sprintf( linebuf , "%0.1f heating per second" , CurItem->bonus_to_cooling_rate );
+			sprintf( linebuf , _("%0.1f heating per second") , CurItem->bonus_to_cooling_rate );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -530,7 +531,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		AppendToLine = TRUE;
 		if ( CurItem->bonus_to_force > 0 ) strcat( ItemDescText , "+" );
-		sprintf( linebuf , "%d Force" , CurItem->bonus_to_force );
+		sprintf( linebuf , _("%d Force") , CurItem->bonus_to_force );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -539,7 +540,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_tohit > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "%d%% to hit" , CurItem->bonus_to_tohit );
+		sprintf( linebuf , _("%d%% to hit") , CurItem->bonus_to_tohit );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -548,7 +549,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "%d to all attributes" , CurItem->bonus_to_all_attributes );
+		sprintf( linebuf , _("%d to all attributes") , CurItem->bonus_to_all_attributes );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -565,7 +566,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		    }
 		    AppendToLine = TRUE;
 		    if ( CurItem->bonus_to_ac_or_damage > 0 ) strcat( ItemDescText , "+" );
-		    sprintf( linebuf , "%d%% to armour" , CurItem->bonus_to_ac_or_damage );
+		    sprintf( linebuf , _("%d%% to armour") , CurItem->bonus_to_ac_or_damage );
 		    strcat( ItemDescText , linebuf );
 		}
 		if ( ItemMap [ CurItem->type ].base_item_gun_damage )
@@ -578,7 +579,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		    }
 		    AppendToLine = TRUE;
 		    if ( CurItem->bonus_to_ac_or_damage > 0 ) strcat( ItemDescText , "+" );
-		    sprintf( linebuf , "%d%% to damage" , CurItem->bonus_to_ac_or_damage );
+		    sprintf( linebuf , _("%d%% to damage") , CurItem->bonus_to_ac_or_damage );
 		    strcat( ItemDescText , linebuf );
 		}
 	    }
@@ -588,7 +589,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "+%d to resist disruptor" , CurItem->bonus_to_resist_disruptor );
+		sprintf( linebuf , _("+%d to resist disruptor") , CurItem->bonus_to_resist_disruptor );
 		strcat( ItemDescText , linebuf );
 	    }
 
@@ -597,7 +598,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "+%d to resist fire" , CurItem->bonus_to_resist_fire );
+		sprintf( linebuf , _("+%d to resist fire") , CurItem->bonus_to_resist_fire );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -606,7 +607,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_all_attributes > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , "+%d to resist electricity" , CurItem->bonus_to_resist_electricity );
+		sprintf( linebuf , _("+%d to resist electricity") , CurItem->bonus_to_resist_electricity );
 		strcat( ItemDescText , linebuf );
 	    }
 	    
@@ -624,7 +625,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		    if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		    strcat( ItemDescText , "+" );
 		    AppendToLine = TRUE;
-		    sprintf( linebuf , "%d to light radius" , PrefixList [ CurItem -> prefix_code ] . light_bonus_value );
+		    sprintf( linebuf , _("%d to light radius") , PrefixList [ CurItem -> prefix_code ] . light_bonus_value );
 		    strcat( ItemDescText , linebuf );
 		}
 	    }
@@ -634,7 +635,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 	{
 	    strcat ( ItemDescText , "\n" );
 	    strcat ( ItemDescText , font_switchto_red );
-	    strcat ( ItemDescText , " UNIDENTIFIED " );
+	    strcat ( ItemDescText , _(" UNIDENTIFIED ") );
 	}
     }
 }; // void GiveItemDescription ( char* ItemDescText , item* CurItem , int ForShop )
@@ -782,9 +783,9 @@ ShowCurrentWeapon( void )
 	return; //Melee weapons don't have ammunition [yet]
 
     if (Me [ 0 ] . busy_type == WEAPON_RELOAD)
-	sprintf(current_ammo, "reloading");
+	sprintf(current_ammo, _("reloading"));
     else if (! Me [ 0 ] . weapon_item . ammo_clip )
-	sprintf(current_ammo, " %sEMPTY", font_switchto_red );
+	sprintf(current_ammo, _(" %sEMPTY"), font_switchto_red );
 	else sprintf(current_ammo, "%2d / %2d", Me [ 0 ] . weapon_item . ammo_clip, ItemMap [ Me [ 0 ] . weapon_item . type ] . item_gun_ammo_clip_size);
     PutStringFont( Screen ,  FPS_Display_BFont , Target_Rect.x , Target_Rect.y + 50 , current_ammo );
 
@@ -1242,7 +1243,7 @@ teleporter_square_below_mouse_cursor ( int player_num , char* ItemDescText )
 	    
 	    if ( AllTriggeredActions [ action_number ] . TeleportTargetLevel != (-1) )
 	    {
-		sprintf ( ItemDescText , "To %s...." , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
+		sprintf ( ItemDescText , _("To %s....") , curShip . AllLevels [ AllTriggeredActions [ action_number ] . TeleportTargetLevel ] -> Levelname ) ;
 		return ( TRUE );
 	    }
 	}
@@ -1268,7 +1269,7 @@ prepare_text_window_content ( char* ItemDescText )
     finepoint MapPositionOfMouse;
     int obs_type;
 
-#define REQUIREMENTS_NOT_MET_TEXT "REQUIREMENTS NOT MET"
+#define REQUIREMENTS_NOT_MET_TEXT _("REQUIREMENTS NOT MET")
 
     CurPos . x = GetMousePos_x()  ;
     CurPos . y = GetMousePos_y()  ;
@@ -1401,7 +1402,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_HEALTH_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_HEALTH_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "Health\n%s%d/%d", Me[0].energy / Me[0].maxenergy <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].energy), (int)rintf(Me[0].maxenergy));
+	sprintf(ItemDescText, _("Health\n%s%d/%d"), Me[0].energy / Me[0].maxenergy <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].energy), (int)rintf(Me[0].maxenergy));
 	}
 
     if (( CurPos . x > WHOLE_FORCE_RECT_X * GameConfig . screen_width / 640) && 
@@ -1411,7 +1412,7 @@ prepare_text_window_content ( char* ItemDescText )
 	{
 	best_banner_pos_x = ( WHOLE_FORCE_RECT_X ) * GameConfig . screen_width / 640;
 	best_banner_pos_y = ( WHOLE_FORCE_RECT_Y - 25 ) * GameConfig . screen_height / 480;
-	sprintf(ItemDescText, "Temperature \n%s%d/%d",  Me[0].temperature / Me[0].max_temperature >= 0.9 ? font_switchto_red:"", (int)rintf(Me[0].temperature), (int)rintf(Me[0].max_temperature));
+	sprintf(ItemDescText, _("Temperature \n%s%d/%d"),  Me[0].temperature / Me[0].max_temperature >= 0.9 ? font_switchto_red:"", (int)rintf(Me[0].temperature), (int)rintf(Me[0].max_temperature));
 	}
 
     if (( CurPos . x > WHOLE_RUNNING_POWER_RECT_X * GameConfig . screen_width / 640) &&
@@ -1421,7 +1422,7 @@ prepare_text_window_content ( char* ItemDescText )
         {
         best_banner_pos_x = ( WHOLE_RUNNING_POWER_RECT_X ) * GameConfig . screen_width / 640;
         best_banner_pos_y = ( WHOLE_RUNNING_POWER_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
-        sprintf(ItemDescText, "Run\n%s%d/%d",  Me[0].running_power / Me[0].max_running_power <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].running_power), (int)rintf(Me[0].max_running_power));
+        sprintf(ItemDescText, _("Run\n%s%d/%d"),  Me[0].running_power / Me[0].max_running_power <= 0.1 ? font_switchto_red:"", (int)rintf(Me[0].running_power), (int)rintf(Me[0].max_running_power));
         }     
 
     if (( CurPos . x > WHOLE_EXPERIENCE_COUNTDOWN_RECT_X * GameConfig . screen_width / 640) &&
@@ -1431,7 +1432,7 @@ prepare_text_window_content ( char* ItemDescText )
         {
         best_banner_pos_x = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_X ) * GameConfig . screen_width / 640;
         best_banner_pos_y = ( WHOLE_EXPERIENCE_COUNTDOWN_RECT_Y - 25 ) * GameConfig . screen_height / 480;  
-        sprintf(ItemDescText, "XP\n%ld/%ld", Me[0].Experience, Me[0].ExpRequired);
+        sprintf(ItemDescText, _("XP\n%ld/%ld"), Me[0].Experience, Me[0].ExpRequired);
         }     
 
 
@@ -1476,7 +1477,7 @@ prepare_text_window_content ( char* ItemDescText )
 	index_of_chest_below_mouse_cursor = closed_chest_below_mouse_cursor ( 0 ) ;
 	if ( index_of_chest_below_mouse_cursor != (-1) )
 	{
-	    strcpy ( ItemDescText , " C H E S T " ); 
+	    strcpy ( ItemDescText , _(" C H E S T ") ); 
 	    // index_of_chest_below_mouse_cursor
 	    best_banner_pos_x = translate_map_point_to_screen_pixel_x ( 
 		CurLevel -> obstacle_list [ index_of_chest_below_mouse_cursor ] . pos . x , 
@@ -1502,11 +1503,11 @@ prepare_text_window_content ( char* ItemDescText )
 	    {
 		case ISO_BARREL_1:
 		case ISO_BARREL_2:
-		    strcpy ( ItemDescText , " B A R R E L " ); 
+		    strcpy ( ItemDescText , _(" B A R R E L ") ); 
 		    break;
 		case ISO_BARREL_3:
 		case ISO_BARREL_4:
-		    strcpy ( ItemDescText , " C R A T E " ); 
+		    strcpy ( ItemDescText , _(" C R A T E ") ); 
 		    break;
 		default:
 		    fprintf ( stderr , "\nobs_type: %d." , obs_type );
@@ -1707,7 +1708,7 @@ append_new_game_message ( char* game_message_text )
     if ( game_message_protocol == NULL )
     {
 	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
-	sprintf ( game_message_protocol , "--- Message Protocol ---" );
+	sprintf ( game_message_protocol , _("--- Message Protocol ---") );
     }
 
     strcat ( game_message_protocol , "\n* " ) ;
@@ -1736,7 +1737,7 @@ display_current_game_message_window ( void )
     if ( game_message_protocol == NULL )
     {
 	game_message_protocol = MyMalloc ( 500000 ) ; // enough for any protocol
-	sprintf ( game_message_protocol , "This is the protocol.\nOh yes, it is indeed!\nIt has multiple lines too!\nIsn't that great?  But how long may any one line be?  Is there a limit for that?  Anyway, it looks good." );
+	sprintf ( game_message_protocol , _("This is the protocol.\nOh yes, it is indeed!\nIt has multiple lines too!\nIsn't that great?  But how long may any one line be?  Is there a limit for that?  Anyway, it looks good.") );
     }
 
     //--------------------
@@ -1820,7 +1821,7 @@ DisplayBanner ( void )
     //
     if ( ! ( GameConfig . CharacterScreen_Visible || GameConfig . SkillScreen_Visible ))
     {
-	sprintf ( level_name_and_time , "%s (%03.1f:%03.1f:%d) day %d %02d:%02d " , 
+	sprintf ( level_name_and_time , _("%s (%03.1f:%03.1f:%d) day %d %02d:%02d ") , 
 		  curShip . AllLevels [ Me [ 0 ] . pos . z ] -> Levelname , 
 		  Me [ 0 ] . pos . x , 
 		  Me [ 0 ] . pos . y , 

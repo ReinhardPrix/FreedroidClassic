@@ -36,6 +36,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #define COL_SPEED		3
 
@@ -1391,7 +1392,7 @@ InitiateDeathOfEnemy ( Enemy ThisRobot )
 	Activate_Conservative_Frame_Computation();
 	//PlayOnceNeededSoundSample( "Tux_Why_Did_I_0.ogg" , FALSE , TRUE );
 
-	sprintf ( game_message_text , "Your friend %s has died." ,
+	sprintf ( game_message_text , _("Your friend %s has died."),
 		  Druidmap [ ThisRobot -> type ] . druidname );
 	append_new_game_message ( game_message_text );
 
@@ -1889,7 +1890,7 @@ RawStartEnemysShot( enemy* ThisRobot , float xdist , float ydist )
 
 		if ( target_robot -> energy < 0 )
 		{
-		    sprintf ( game_message_text , "Hostile %s was destroyed by melee attack from friendly %s." ,
+		    sprintf ( game_message_text , _("Hostile %s was destroyed by melee attack from friendly %s.") ,
 			      Druidmap [ target_robot -> type ] . druidname ,
 			      Druidmap [ ThisRobot -> type ] . druidname );
 		    append_new_game_message ( game_message_text );

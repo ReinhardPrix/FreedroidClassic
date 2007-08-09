@@ -34,6 +34,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 /* Distances for hitting a druid */
 #define MORE		(4/64.0)
@@ -647,7 +648,7 @@ handle_flash_effects ( bullet* CurBullet )
 	    enemy_spray_blood ( & ( AllEnemys [ i ] ) ) ;
 	    if ( AllEnemys [ i ] . energy < 0 )
 	    {
-		sprintf ( game_message_text , "%s was destroyed by disruptor blast." ,
+		sprintf ( game_message_text , _("%s was destroyed by disruptor blast."),
 			  Druidmap [ AllEnemys[i].type ] . druidname );
 		append_new_game_message ( game_message_text );
 	    }
@@ -660,7 +661,7 @@ handle_flash_effects ( bullet* CurBullet )
     //
     my_damage = CurBullet -> damage * ( 100 - Me [ 0 ] . resist_disruptor ) / 100 ;
     Me [ 0 ] . energy -= my_damage;
-    sprintf ( game_message_text , "Disruptor blast has hit you for %d damage." ,
+    sprintf ( game_message_text , _("Disruptor blast has hit you for %d damage."),
 	      ((int)my_damage) );
     append_new_game_message ( game_message_text );
     
@@ -713,7 +714,7 @@ apply_bullet_damage_to_player ( int player_num , int damage, int owner )
     if ( MyRandom(100) / monster_level >= Me [ player_num ] . lv_1_bot_will_hit_percentage )
     {
 	Me [ player_num ] . TextVisibleTime = 0 ;
-	Me [ player_num ] . TextToBeDisplayed = "That one went into the armour." ;
+	Me [ player_num ] . TextToBeDisplayed = _("That one went into the armour.");
 	DamageAllEquipment ( player_num ) ;
 	BulletReflectedSound ( ) ;
     }
@@ -863,7 +864,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 			    reward = Druidmap [ ThisRobot -> type ] . experience_reward;
 			    Me [ 0 ] . Experience += reward;
 			    sprintf ( game_message_text , 
-				      "%s was destroyed by your bullet.  For defeating your enemy, you receive %d experience." ,
+				      _("%s was destroyed by your bullet.  For defeating your enemy, you receive %d experience."),
 				      Druidmap [ ThisRobot -> type ] . druidname , 
 				      reward );
 			    append_new_game_message ( game_message_text );
@@ -873,7 +874,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		  {
 		      if ( ThisRobot -> energy < 0 && CurBullet -> owner > 0)
 		      {
-			  sprintf ( game_message_text , "%s was destroyed by bullet from %s." ,
+			  sprintf ( game_message_text , _("%s was destroyed by bullet from %s."),
 				    Druidmap [ ThisRobot -> type ] . druidname ,
 				    Druidmap [ CurBullet -> owner ] . druidname );
 			  append_new_game_message ( game_message_text );
@@ -925,7 +926,7 @@ check_bullet_enemy_collisions ( bullet* CurBullet , int num )
 		{
 		  CurBullet -> total_miss_hit[ i ] = MISS;
 		  ThisRobot -> TextVisibleTime = 0;
-		  ThisRobot -> TextToBeDisplayed = "Haha, you missed me!";
+		  ThisRobot -> TextToBeDisplayed = _("Haha, you missed me!");
 		}
 	    }
 #endif
