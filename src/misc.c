@@ -37,7 +37,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 //--------------------
 // This header file is needed

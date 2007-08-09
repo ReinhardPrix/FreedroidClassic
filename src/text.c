@@ -39,7 +39,6 @@
 #include "proto.h"
 #include "global.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground , float text_stretch );
 

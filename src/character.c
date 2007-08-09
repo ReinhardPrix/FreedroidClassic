@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 //--------------------
 // Now we give some definitions for the computation of the

@@ -41,7 +41,6 @@
 #include "global.h"
 #include "proto.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 char *PrefixToFilename[ ENEMY_ROTATION_MODELS_AVAILABLE ];
 int ModelMultiplier[ ENEMY_ROTATION_MODELS_AVAILABLE ];

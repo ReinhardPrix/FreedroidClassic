@@ -34,7 +34,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 /* Distances for hitting a druid */
 #define MORE		(4/64.0)

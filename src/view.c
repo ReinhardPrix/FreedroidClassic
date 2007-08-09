@@ -43,7 +43,6 @@
 #include "proto.h"
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 #define PUT_ONLY_THROWN_ITEMS 3
 #define PUT_NO_THROWN_ITEMS 4

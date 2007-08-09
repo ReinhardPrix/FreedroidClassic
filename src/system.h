@@ -110,6 +110,6 @@
 #include "SDL_opengl.h"
 #endif /* HAVE_LIBGL */
 
-
+#include "lang.h"
 
 #endif /* double-inclusion protection */

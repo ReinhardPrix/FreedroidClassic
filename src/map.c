@@ -38,7 +38,6 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "lang.h"
 
 #include "map.h"
 

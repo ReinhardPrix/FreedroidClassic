@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 #define CLASS_X 175
 

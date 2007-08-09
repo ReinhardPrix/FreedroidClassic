@@ -35,7 +35,6 @@
 #include "struct.h"
 #include "proto.h"
 #include "global.h"
-#include "lang.h"
 
 #include "SDL_rotozoom.h" // that's for rotating the speed-o-meter arrows
 

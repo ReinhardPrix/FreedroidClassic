@@ -34,7 +34,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 #define ITEM_TAKE_DIST (1.2)
 

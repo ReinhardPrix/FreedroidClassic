@@ -43,7 +43,6 @@
 #include "proto.h"
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 int currently_selected_mission = (-1) ;
 SDL_Rect mission_list_rect = { 20 , 280 , 280 , 180 } ; 

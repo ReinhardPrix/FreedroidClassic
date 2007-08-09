@@ -36,7 +36,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 #define BEST_MELEE_DISTANCE (0.8)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)

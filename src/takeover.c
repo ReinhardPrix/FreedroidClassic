@@ -37,7 +37,6 @@
 #include "proto.h"
 #include "takeover.h"
 #include "map.h"
-#include "lang.h"
 
 Uint32 cur_time;  		// current time in ms 
 SDL_Surface *to_blocks;         // the global surface containing all game-blocks 

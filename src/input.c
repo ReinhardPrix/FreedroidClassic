@@ -34,7 +34,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 #ifndef SDL_BUTTON_WHEELUP 
 #define SDL_BUTTON_WHEELUP 4

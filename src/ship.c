@@ -42,7 +42,6 @@
 #include "global.h"
 #include "proto.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 enum 
   {

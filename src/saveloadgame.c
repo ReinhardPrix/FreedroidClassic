@@ -41,7 +41,6 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 #include "sys/stat.h"
-#include "lang.h"
 
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "Now the raw data of the influencer structure:"
 #define ALLENEMYS_RAW_DATA_STRING "Now the raw AllEnemys data:"

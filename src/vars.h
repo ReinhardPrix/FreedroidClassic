@@ -32,7 +32,6 @@
 
 
 #include "colodefs.h"
-#include "lang.h"
 
 char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   {

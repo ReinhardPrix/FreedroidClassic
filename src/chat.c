@@ -38,7 +38,6 @@
 #include "proto.h"
 #include "global.h"
 #include "SDL_rotozoom.h"
-#include "lang.h"
 
 
 #define PUSH_ROSTER 2

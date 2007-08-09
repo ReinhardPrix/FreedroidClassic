@@ -36,7 +36,6 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
-#include "lang.h"
 
 #define COL_SPEED		3
 
