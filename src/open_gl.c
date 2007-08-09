@@ -671,15 +671,13 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
     //
     glPixelStorei ( GL_UNPACK_ALIGNMENT , 1 );
     
-    //--------------------
-    // We must not call glGenTextures more than once in all of Freedroid,
-    // according to the nehe docu and also confirmed instances of textures
-    // getting overwritten.  So all the gentexture stuff is now in the
-    // initialzize_our_default_open_gl_parameters function and we`ll use 
-    // stuff from there.
-    //
-    // glGenTextures( 1, & our_image -> texture );
-    //
+
+    if ( our_image -> texture ) 
+	if ( * our_image-> texture )
+		{
+		goto reuse_tex;
+		}
+
     our_image -> texture = & ( all_freedroid_textures [ next_texture_index_to_use ] ) ;
     our_image -> texture_has_been_created = TRUE ;
     next_texture_index_to_use ++ ;
@@ -691,9 +689,12 @@ hmmm... either the surface has been freed and the pointer moved cleanly to NULL\
     }
     else
     {
-	DebugPrintf ( 0 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
+	DebugPrintf ( 1 , "\nTexture positions remaining: %d." , MAX_AMOUNT_OF_TEXTURES_WE_WILL_USE - next_texture_index_to_use );
     }
     
+    reuse_tex:
+    DebugPrintf ( 1 , "Using texture %d\n", *our_image->texture);
+   
     //--------------------
     // Typical Texture Generation Using Data From The Bitmap 
     //
