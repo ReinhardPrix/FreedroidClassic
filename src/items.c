@@ -3054,17 +3054,48 @@ HandleInventoryScreen ( void )
 					  Me [ 0 ] . pos . x , Me [ 0 ] . pos . y , 
 					  Me [ 0 ] . pos . z ) )
 		{
-		    if ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type == ITEM_MONEY )
-		    {
-			AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
-			return;
-		    }
-		    else
-		    {
-			Item_Held_In_Hand = PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type ;
-			PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . currently_held_in_hand = TRUE;
-			// break;
-		    }
+		if ( ( fabsf( MapPositionOfMouse . x - Me [ 0 ] . pos . x ) < ITEM_TAKE_DIST ) &&
+			( fabsf( MapPositionOfMouse . y - Me [ 0 ] . pos . y ) < ITEM_TAKE_DIST ) )
+		   	    {
+			    if ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type == ITEM_MONEY )
+				{
+				AddFloorItemDirectlyToInventory( & ( PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] ) );
+				return;
+		                }
+			    else
+	               	        {
+             			Item_Held_In_Hand = PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . type ;
+	          		PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . currently_held_in_hand = TRUE;
+                     		}
+			    }
+	         else
+			    {
+			    index_of_item_under_mouse_cursor = get_floor_item_index_under_mouse_cursor ( 0 );
+		
+	                    if ( index_of_item_under_mouse_cursor != (-1) )
+				{
+			    //--------------------
+			    // We set course to the item in question, directly to it's location,
+			    // not somewhere remote, just for simplicity (for now)...
+			    //
+			        Me [ 0 ] . mouse_move_target . x = 
+			  		PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . x ;
+	                        Me [ 0 ] . mouse_move_target . y = 
+					PlayerLevel -> ItemList [ index_of_item_under_mouse_cursor ] . pos . y ;
+		                Me [ 0 ] . mouse_move_target . z = 
+					Me [ 0 ] . pos . z ;
+                                set_up_intermediate_course_for_tux ( 0 ) ;
+		    
+			    //--------------------
+			    // We set up the combo_action, so that the barrel can be smashed later...
+			    //
+		                Me [ 0 ] . current_enemy_target = ( -1 ) ;
+		                Me [ 0 ] . mouse_move_target_combo_action_type = COMBO_ACTION_PICK_UP_ITEM ;
+		                Me [ 0 ] . mouse_move_target_combo_action_parameter = index_of_item_under_mouse_cursor ;
+				}
+			    }
+
+		
 		}
 	    }
 	}
