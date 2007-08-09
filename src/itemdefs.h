@@ -216,7 +216,7 @@
 //
 #define WEAPON_RECT_WIDTH 67
 #define WEAPON_RECT_HEIGHT 112
-#define WEAPON_RECT_X 21
+#define WEAPON_RECT_X 25
 #define WEAPON_RECT_Y 117
 
 //--------------------
@@ -225,8 +225,8 @@
 //
 #define ARMOUR_RECT_WIDTH 66
 #define ARMOUR_RECT_HEIGHT 92
-#define ARMOUR_RECT_X 129
-#define ARMOUR_RECT_Y 90
+#define ARMOUR_RECT_X 130
+#define ARMOUR_RECT_Y 60
 
 //--------------------
 // The shield rectangle is obviously for the shields, but not only
@@ -236,7 +236,7 @@
 //
 #define SHIELD_RECT_WIDTH 67
 #define SHIELD_RECT_HEIGHT 112
-#define SHIELD_RECT_X 237
+#define SHIELD_RECT_X 230
 #define SHIELD_RECT_Y 116
 
 //--------------------
@@ -244,16 +244,16 @@
 //
 #define DRIVE_RECT_WIDTH 64
 #define DRIVE_RECT_HEIGHT 64
-#define DRIVE_RECT_X 237
-#define DRIVE_RECT_Y 25
+#define DRIVE_RECT_X 130
+#define DRIVE_RECT_Y 175
 
 //--------------------
 // Now this is the 'helmet' rectangle.
 //
 #define HELMET_RECT_WIDTH 64
 #define HELMET_RECT_HEIGHT 64
-#define HELMET_RECT_X 22
-#define HELMET_RECT_Y 26
+#define HELMET_RECT_X 25
+#define HELMET_RECT_Y 22
 
 //--------------------
 // Now these are the 'bracelet' rectangles, where you could put
