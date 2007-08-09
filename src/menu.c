@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #include "scandir.h"
 
@@ -55,9 +56,9 @@ extern int load_game_command_came_from_inside_running_game;
 #define SELL_PRICE_FACTOR (0.25)
 #define REPAIR_PRICE_FACTOR (0.5)
 
-#define SINGLE_PLAYER_STRING "Play"
-#define LOAD_EXISTING_HERO_STRING "The first 10 characters: "
-#define DELETE_EXISTING_HERO_STRING "Select character to delete: "
+#define SINGLE_PLAYER_STRING _("Play")
+#define LOAD_EXISTING_HERO_STRING _("The first 10 characters: ")
+#define DELETE_EXISTING_HERO_STRING _("Select character to delete: ")
 
 #define MENU_SELECTION_DEBUG 1
 
@@ -113,18 +114,18 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
 	SetCurrentFont ( FPS_Display_BFont );
 	RightPutString( Screen , GameConfig . screen_height - 1 * FontHeight ( GetCurrentFont() ) , VERSION );
 	// printf ("\n%s %s  \n", PACKAGE, VERSION);
-	sprintf ( open_gl_string , "OpenGL support compiled: " );
+	sprintf ( open_gl_string , _("OpenGL support compiled: ") );
 #ifdef HAVE_LIBGL
-	strcat ( open_gl_string , " YES " ) ;
+	strcat ( open_gl_string , _(" YES ") ) ;
 #else
-	strcat ( open_gl_string , " NO " ) ;
+	strcat ( open_gl_string , _(" NO ") ) ;
 #endif
 	LeftPutString( Screen , GameConfig . screen_height - 2 * FontHeight ( GetCurrentFont() ) , open_gl_string );
-	sprintf ( open_gl_string , "OpenGL output active: " );
+	sprintf ( open_gl_string , _("OpenGL output active: ") );
 	if ( use_open_gl )
-	    strcat ( open_gl_string , " YES " ) ;
+	    strcat ( open_gl_string , _(" YES ") ) ;
 	else
-	    strcat ( open_gl_string , " NO " ) ;
+	    strcat ( open_gl_string , _(" NO ") ) ;
 	LeftPutString( Screen , GameConfig . screen_height - FontHeight ( GetCurrentFont() ) , open_gl_string );
     }
     
@@ -1060,7 +1061,7 @@ Cheatmenu (void)
 	printf_SDL (Screen, -1, -1, " e. set energy\n");
 	printf_SDL (Screen, -1, -1, " h. Auto-aquire all skills\n" );
 	printf_SDL (Screen, -1, -1, " n. No hidden droids: %s",
-		    show_all_droids ? "ON\n" : "OFF\n" );
+		    show_all_droids ? "ON\n" : "OFF\n" ); 
 	printf_SDL (Screen, -1, -1, " x. Cheatkeys : %s",
 		    GameConfig . enable_cheatkeys ? "ON\n" : "OFF\n");
 	printf_SDL (Screen, -1, -1, " w. Print current waypoints\n");
@@ -1355,11 +1356,11 @@ StartupMenu (void)
         SwitchBackgroundMusicTo( MENU_BACKGROUND_MUSIC_SOUND );
 
 	MenuTexts[0]= SINGLE_PLAYER_STRING ;
-	MenuTexts[1]="Level Editor";
-	MenuTexts[2]="Options";
-	MenuTexts[3]="Credits";
-	MenuTexts[4]="Contribute";
-	MenuTexts[5]="Exit FreedroidRPG";
+	MenuTexts[1]=_("Level Editor");
+	MenuTexts[2]=_("Options");
+	MenuTexts[3]=_("Credits");
+	MenuTexts[4]=_("Contribute");
+	MenuTexts[5]=_("Exit FreedroidRPG");
 	MenuTexts[6]="";
 	
 	if ( ! skip_initial_menus )
@@ -1454,13 +1455,13 @@ enum
 
   while (!can_continue)
     {
-      MenuTexts[0]="Save Game";
-      MenuTexts[1]="Resume Game";
-      MenuTexts[2]="Options";
-      MenuTexts[3]="Level Editor";
-      MenuTexts[4]="Load Game";
-      MenuTexts[5]="New Game";
-      MenuTexts[6]="Quit";
+      MenuTexts[0]=_("Save Game");
+      MenuTexts[1]=_("Resume Game");
+      MenuTexts[2]=_("Options");
+      MenuTexts[3]=_("Level Editor");
+      MenuTexts[4]=_("Load Game");
+      MenuTexts[5]=_("New Game");
+      MenuTexts[6]=_("Quit");
       MenuTexts[7]="";
 
       //MenuPosition = DoMenuSelection( "" , MenuTexts , 1 ,  NE_TITLE_PIC_BACKGROUND_CODE , Menu_BFont );
@@ -1539,12 +1540,12 @@ Change_Screen_Resolution_Menu ( void )
 	MenuTexts[0]="640x480";
 	MenuTexts[1]="800x600";
 	MenuTexts[2]="1024x768";
-	MenuTexts[3]="Back";
+	MenuTexts[3]=_("Back");
 	MenuTexts[4]="";
 	
-	if ( GameOver == TRUE ) MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
+	if ( GameOver == TRUE ) MenuPosition = DoMenuSelection( _("Changes will take effect\n       when you next start the game"), 
 					MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
-	else MenuPosition = DoMenuSelection( "Changes will take effect\n       when you next start the game" , 
+	else MenuPosition = DoMenuSelection( _("Changes will take effect\n       when you next start the game"), 
 					MenuTexts , -1 , -1 , NULL );
 	
 	switch (MenuPosition) 
@@ -1557,13 +1558,13 @@ Change_Screen_Resolution_Menu ( void )
 		while ( EnterPressed( ) || SpacePressed( ) );
 		GameConfig . next_time_width_of_screen = 640 ;
 		GameConfig . next_time_height_of_screen = 480 ;
-		GiveMouseAlertWindow ( "\n\
+		GiveMouseAlertWindow ( _("\n\
 You selected 640x480 pixel.\n\n\
 Change of screen resolution will\n\
 take effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thank you.\n");
+Thank you.\n"));
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1571,13 +1572,13 @@ Thank you.\n");
 		while ( EnterPressed( ) || SpacePressed( ) );
 		GameConfig . next_time_width_of_screen = 800 ;
 		GameConfig . next_time_height_of_screen = 600 ;
-		GiveMouseAlertWindow ( "\n\
+		GiveMouseAlertWindow ( _("\n\
 You selected 800x600 pixel.\n\n\
 Change of screen resolution will\n\
 take effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thank you.\n");
+Thank you.\n"));
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1585,13 +1586,13 @@ Thank you.\n");
 		while ( EnterPressed( ) || SpacePressed( ) );
 		GameConfig . next_time_width_of_screen = 1024 ;
 		GameConfig . next_time_height_of_screen = 768 ;
-		GiveMouseAlertWindow ( "\n\
+		GiveMouseAlertWindow ( _("\n\
 You selected 1024x768 pixel.\n\n\
 Change of screen resolution will take\n\
 effect automatically when you next\n\
 start FreedroidRPG.\n\
 \n\
-Thank you.\n");
+Thank you.\n"));
 		SetCurrentFont ( Menu_BFont );
 		break;
 		
@@ -1646,19 +1647,19 @@ Graphics_Options_Menu (void)
     
     while (!can_continue)
     {
-	sprintf( Options0 , "Gamma Correction: %1.2f", GameConfig.current_gamma_correction );
-	sprintf( Options1 , "Fullscreen Mode: %s", GameConfig . fullscreen_on ? "ON" : "OFF");
-	sprintf( Options2 , "Change Screen Resolution" );
-	sprintf( Options3 , "Show Blood: %s", 
-		 GameConfig . show_blood ? "YES" : "NO" );
-	sprintf( Options4 , "Automap Scale: %2.1f", 
+	sprintf( Options0 , _("Gamma Correction: %1.2f"), GameConfig.current_gamma_correction );
+	sprintf( Options1 , _("Fullscreen Mode: %s"), GameConfig . fullscreen_on ? "ON" : "OFF");
+	sprintf( Options2 , _("Change Screen Resolution") );
+	sprintf( Options3 , _("Show Blood: %s"), 
+		 GameConfig . show_blood ? _("YES") : _("NO") );
+	sprintf( Options4 , _("Automap Scale: %2.1f"), 
 		 GameConfig . automap_display_scale );
 	MenuTexts[0]=Options0;
 	MenuTexts[1]=Options1;
 	MenuTexts[2]=Options2;
 	MenuTexts[3]=Options3;
 	MenuTexts[4]=Options4;
-	MenuTexts[5]="Back";
+	MenuTexts[5]=_("Back");
 	MenuTexts[6]="";
 	
         if ( GameOver == TRUE )
@@ -1696,8 +1697,8 @@ Graphics_Options_Menu (void)
 		SDL_WM_ToggleFullScreen ( Screen );
 		GameConfig . fullscreen_on = ! GameConfig . fullscreen_on;
 		#else
-		GiveMouseAlertWindow("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
-There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n");
+		GiveMouseAlertWindow(_("\nUnfortunately, fullscreen cannot be\ntoggled at runtime under Windows.\nWe apologise for this.\n\n\
+There are good Linux distributions out there,\n please check them out.\n\nOr you can launch the game with the -w option.\n\n   Thank you.\n"));
                 SetCurrentFont ( Menu_BFont );
 		#endif
 		break;
@@ -1706,7 +1707,7 @@ There are good Linux distributions out there,\n please check them out.\n\nOr you
 		while ( EnterPressed() || SpacePressed() );
 		if ( ! use_open_gl )
 		{
-		    GiveMouseAlertWindow ( "\n\
+		    GiveMouseAlertWindow ( _("\n\
 You are using SDL instead of OpenGL\n\
 for graphics ouput right now.\n\
 \n\
@@ -1717,7 +1718,7 @@ You might want to restart the game using\n\
 OpenGL instead.\n\
 \n\
 \n\
-Thank you.\n");
+Thank you.\n"));
 		    SetCurrentFont ( Menu_BFont );
 		}
 		else
@@ -1796,17 +1797,17 @@ Sound_Options_Menu (void)
     while (!can_continue)
     {
 	
-	sprintf ( Options0 , "Background Music Volume: %1.2f" , GameConfig.Current_BG_Music_Volume );
-	sprintf ( Options1 , "Sound Effects Volume: %1.2f", GameConfig.Current_Sound_FX_Volume );
-	sprintf( Options2 , "Terminate On Missing Sample: %s", 
-		 GameConfig.terminate_on_missing_speech_sample ? "YES" : "NO" );
-	sprintf( Options3 , "Show Subtitles in Dialogs: %s", 
-		 GameConfig.show_subtitles_in_dialogs ? "YES" : "NO" );
+	sprintf ( Options0 , _("Background Music Volume: %1.2f") , GameConfig.Current_BG_Music_Volume );
+	sprintf ( Options1 , _("Sound Effects Volume: %1.2f"), GameConfig.Current_Sound_FX_Volume );
+	sprintf( Options2 , _("Terminate On Missing Sample: %s"), 
+		 GameConfig.terminate_on_missing_speech_sample ? _("YES") : _("NO") );
+	sprintf( Options3 , _("Show Subtitles in Dialogs: %s"), 
+		 GameConfig.show_subtitles_in_dialogs ? _("YES") : _("NO") );
 	MenuTexts [ 0 ] = Options0;
 	MenuTexts [ 1 ] = Options1;
 	MenuTexts [ 2 ] = Options2;
 	MenuTexts [ 3 ] = Options3;
-	MenuTexts [ 4 ] = "Back";
+	MenuTexts [ 4 ] = _("Back");
 	MenuTexts [ 5 ] = "";
 	
 	if ( GameOver == TRUE ) 
@@ -1925,29 +1926,29 @@ PerformanceTweaksOptionsMenu (void)
     while (!can_continue)
     {
 	
-	sprintf ( Options0 , "Hog CPU for max. performance: %s", 
-		  GameConfig.hog_CPU ? "YES" : "NO" );
-	sprintf ( Options1 , "Highlighting mode: %s", GameConfig.highlighting_mode_full ? "FULL" : "REDUCED" );
-	sprintf ( Options3 , "Show quick inventory: %s", GameConfig . show_quick_inventory ? "YES" : "NO" );
-	sprintf ( Options4 , "Skip light radius: %s", GameConfig . skip_light_radius ? "YES" : "NO" );
-	sprintf ( Options5 , "Use bars for energy display: %s", 
-		  GameConfig . use_bars_instead_of_energy_o_meter ? "YES" : "NO" );
-	sprintf ( Options6 , "Skip shadow blitting: %s", 
-		  GameConfig . skip_shadow_blitting ? "YES" : "NO" );
-	sprintf( Options7 , "Skip fadings: %s", 
-		 GameConfig . do_fadings ? "NO" : "YES" );
+	sprintf ( Options0 , _("Hog CPU for max. performance: %s"), 
+		  GameConfig.hog_CPU ? _("YES") : _("NO") );
+	sprintf ( Options1 , _("Highlighting mode: %s"), GameConfig.highlighting_mode_full ? _("FULL") : _("REDUCED") );
+	sprintf ( Options3 , _("Show quick inventory: %s"), GameConfig . show_quick_inventory ? _("YES") : _("NO") );
+	sprintf ( Options4 , _("Skip light radius: %s"), GameConfig . skip_light_radius ? _("YES") : _("NO") );
+	sprintf ( Options5 , _("Use bars for energy display: %s"), 
+		  GameConfig . use_bars_instead_of_energy_o_meter ? _("YES") : _("NO") );
+	sprintf ( Options6 , _("Skip shadow blitting: %s"), 
+		  GameConfig . skip_shadow_blitting ? _("YES") : _("NO") );
+	sprintf( Options7 , _("Skip fadings: %s"), 
+		 GameConfig . do_fadings ? _("NO") : _("YES") );
 	
-	strcpy ( Options2 , "Menu handling: " );
+	strcpy ( Options2 , _("Menu handling: ") );
 	switch ( GameConfig . menu_mode )
 	{
 	    case MENU_MODE_FAST:
-		strcat ( Options2, "FAST" );
+		strcat ( Options2, _("FAST") );
 		break;
 	    case MENU_MODE_DEFAULT:
-		strcat ( Options2, "DEFAULT" );
+		strcat ( Options2, _("DEFAULT") );
 		break;
 	    case MENU_MODE_DOUBLE:
-		strcat ( Options2, "DOUBLE" );
+		strcat ( Options2, _("DOUBLE") );
 		break;
 	    default:
 		break;
@@ -1961,7 +1962,7 @@ PerformanceTweaksOptionsMenu (void)
 	MenuTexts[5]=Options5;
 	MenuTexts[6]=Options6;
 	MenuTexts[7]=Options7;
-	MenuTexts[8]="Back";
+	MenuTexts[8]=_("Back");
 	MenuTexts[9]="";
 	
         if ( GameOver == TRUE )      
@@ -2080,19 +2081,19 @@ On_Screen_Display_Options_Menu (void)
   while (!can_continue)
     {
 
-      sprintf( Options0 , "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF" );
-      sprintf( Options1 , "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF" );
-      sprintf( Options2 , "Show Tux Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF" );
-      sprintf( Options3 , "Show Enemy Energy Bars: %s", GameConfig.enemy_energy_bars_visible? "ON" : "OFF" );
-      sprintf( Options4 , "Screen Messages at most: %d", GameConfig.number_of_big_screen_messages );
-      sprintf( Options5 , "Screen Message time: %3.1f", GameConfig.delay_for_big_screen_messages );
+      sprintf( Options0 , _("Show Position: %s"), GameConfig.Draw_Position ? _("ON") : _("OFF") );
+      sprintf( Options1 , _("Show Framerate: %s"), GameConfig.Draw_Framerate? _("ON") : _("OFF") );
+      sprintf( Options2 , _("Show Tux Energy: %s"), GameConfig.Draw_Energy? _("ON") : _("OFF") );
+      sprintf( Options3 , _("Show Enemy Energy Bars: %s"), GameConfig.enemy_energy_bars_visible? _("ON") : _("OFF") );
+      sprintf( Options4 , _("Screen Messages at most: %d"), GameConfig.number_of_big_screen_messages );
+      sprintf( Options5 , _("Screen Message time: %3.1f"), GameConfig.delay_for_big_screen_messages );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
       MenuTexts[4]=Options4;
       MenuTexts[5]=Options5;
-      MenuTexts[6]="Back";
+      MenuTexts[6]=_("Back");
       MenuTexts[7]="";
 
         if ( GameOver == TRUE )
@@ -2203,19 +2204,19 @@ Droid_Talk_Options_Menu (void)
 
   while (!can_continue)
     {
-      sprintf( Options0 , "Influencer Refresh Texts: %s" , GameConfig.Influencer_Refresh_Text ? "ON" : "OFF" );
-      sprintf( Options1 , "Influencer Blast Texts: %s", GameConfig.Influencer_Blast_Text ? "ON" : "OFF" );
-      sprintf( Options2 , "Enemy Hit Texts: %s", GameConfig.Enemy_Hit_Text ? "ON" : "OFF" );
-      sprintf( Options3 , "Enemy Bumped Texts: %s", GameConfig.Enemy_Bump_Text ? "ON" : "OFF" );
-      sprintf( Options4 , "Enemy Aim Texts: %s", GameConfig.Enemy_Aim_Text ? "ON" : "OFF" );
-      sprintf( Options5 , "All in-game Speech: %s", GameConfig.All_Texts_Switch ? "ON" : "OFF" );
+      sprintf( Options0 , _("Influencer Refresh Texts: %s") , GameConfig.Influencer_Refresh_Text ? _("ON") : _("OFF") );
+      sprintf( Options1 , _("Influencer Blast Texts: %s"), GameConfig.Influencer_Blast_Text ? _("ON") : _("OFF") );
+      sprintf( Options2 , _("Enemy Hit Texts: %s"), GameConfig.Enemy_Hit_Text ? _("ON") : _("OFF") );
+      sprintf( Options3 , _("Enemy Bumped Texts: %s"), GameConfig.Enemy_Bump_Text ? _("ON") : _("OFF") );
+      sprintf( Options4 , _("Enemy Aim Texts: %s"), GameConfig.Enemy_Aim_Text ? _("ON") : _("OFF") );
+      sprintf( Options5 , _("All in-game Speech: %s"), GameConfig.All_Texts_Switch ? _("ON") : _("OFF") );
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
       MenuTexts[2]=Options2;
       MenuTexts[3]=Options3;
       MenuTexts[4]=Options4;
       MenuTexts[5]=Options5;
-      MenuTexts[6]="Back";
+      MenuTexts[6]=_("Back");
 
 	if ( GameOver == TRUE ) 
                 MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );     
@@ -2288,11 +2289,11 @@ Language_Options_Menu (void)
 
   while (!can_continue)
     {
-      sprintf( Options0 , "English");
-      sprintf( Options1 , "German");
+      sprintf( Options0 , _("English"));
+      sprintf( Options1 , _("German"));
       MenuTexts[0]=Options0;
       MenuTexts[1]=Options1;
-      MenuTexts[2]="Back";
+      MenuTexts[2]=_("Back");
 
 	if ( GameOver == TRUE ) 
                 MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );     
@@ -2360,14 +2361,14 @@ Options_Menu (void)
 	    LEAVE_OPTIONS_MENU 
 	};
     
-    MenuTexts[0]="Graphics Options";
-    MenuTexts[1]="Sound Options";
-    MenuTexts[2]="Language";
-    MenuTexts[3]="Droid Talk";
-    MenuTexts[4]="On-Screen Displays";
-    MenuTexts[5]="Performance Tweaks";
-    MenuTexts[6]="Save Options";
-    MenuTexts[7]="Back";
+    MenuTexts[0]=_("Graphics Options");
+    MenuTexts[1]=_("Sound Options");
+    MenuTexts[2]=_("Language");
+    MenuTexts[3]=_("Droid Talk");
+    MenuTexts[4]=_("On-Screen Displays");
+    MenuTexts[5]=_("Performance Tweaks");
+    MenuTexts[6]=_("Save Options");
+    MenuTexts[7]=_("Back");
     MenuTexts[8]="";
     
     while ( !can_continue )
@@ -2432,10 +2433,10 @@ Get_Server_Name ( void )
   char* Temp;
   InitiateMenu(  NE_TITLE_PIC_BACKGROUND_CODE );
 
-  Temp = GetString( 140 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
+  Temp = GetString( 140 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , _("\n\
  Please enter name of server to connect to:\n\
  You can give an empty string for the local host.\n\
- > " );
+ > "));
   
   if ( Temp == NULL )
     {
@@ -2459,11 +2460,11 @@ Get_New_Character_Name ( void )
     InitiateMenu( NE_TITLE_PIC_BACKGROUND_CODE );
 
     if ( ! skip_initial_menus )
-	Temp = GetString ( 12 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , "\n\
+	Temp = GetString ( 12 , FALSE  , NE_TITLE_PIC_BACKGROUND_CODE , _("\n\
      Please enter a name\n\
      for the new hero: \n\
      (ESCAPE to cancel.)\n\n\
-     > " );
+     > ") );
     else
 	Temp = "MapEd" ;
 
@@ -2772,7 +2773,7 @@ I need to know that for saving. Abort.\n");
 	    }
 	}
 	
-	MenuTexts [ cnt ] = "Back";
+	MenuTexts [ cnt ] = _("Back");
 	MenuTexts [ cnt + 1] = "";
 	
 	MenuPosition = DoMenuSelection( LOAD_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
@@ -2796,11 +2797,11 @@ I need to know that for saving. Abort.\n");
     else
     {
 	
-	MenuTexts[0]="BACK";
+	MenuTexts[0]=_("BACK");
 	MenuTexts[1]="";
 	
 	while ( SpacePressed() || EnterPressed() );
-	DoMenuSelection ( "\n\nNo saved games found!!  Loading Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	DoMenuSelection ( _("\n\nNo saved games found!!  Loading Cancelled. "), MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 	
 	//--------------------
 	// Now we got to return the problem to the calling function...
@@ -2884,7 +2885,7 @@ I need to know that for saving. Abort.\n");
 		DebugPrintf ( -1 , "\nAnother delete game name found: %s.\n" , MenuTexts [ cnt ] );
 	    }
 	}
-        MenuTexts [ cnt ] = "Back";
+        MenuTexts [ cnt ] = _("Back");
         MenuTexts [ cnt + 1] = "";
 
 	MenuPosition = DoMenuSelection( DELETE_EXISTING_HERO_STRING , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
@@ -2901,10 +2902,10 @@ I need to know that for saving. Abort.\n");
 	    //--------------------
 	    // We do a final safety check to ask for confirmation.
 	    //
-	    MenuTexts [ 0 ] = "Sure!" ;
-	    MenuTexts [ 1 ] = "BACK" ;
+	    MenuTexts [ 0 ] = _("Sure!") ;
+	    MenuTexts [ 1 ] = _("BACK") ;
 	    MenuTexts [ 2 ] = "";
-	    sprintf( SafetyText , "Really delete hero '%s'?" , Me[0].character_name ) ;
+	    sprintf( SafetyText , _("Really delete hero '%s'?") , Me[0].character_name ) ;
 	    FinalDecision = DoMenuSelection( SafetyText , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 	    
 	    if ( FinalDecision == 1 )
@@ -2917,11 +2918,11 @@ I need to know that for saving. Abort.\n");
     else
     {
 	
-	MenuTexts[0]="BACK";
+	MenuTexts[0]=_("BACK");
 	MenuTexts[1]="";
 	
 	while ( SpacePressed() || EnterPressed() );
-	DoMenuSelection ( "\n\nNo saved games found!!  Deletion Cancelled. " , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
+	DoMenuSelection ( _("\n\nNo saved games found!!  Deletion Cancelled. ") , MenuTexts , 1 , NE_TITLE_PIC_BACKGROUND_CODE , NULL );
 	
 	//--------------------
 	// Now we got to return the problem to the calling function...
@@ -2960,10 +2961,10 @@ Single_Player_Menu (void)
 	    BACK_POSITION
 	};
     
-    MenuTexts[0]="New Hero";
-    MenuTexts[1]="Load existing Hero";
-    MenuTexts[2]="Delete existing Hero";
-    MenuTexts[3]="Back";
+    MenuTexts[0]=_("New Hero");
+    MenuTexts[1]=_("Load existing Hero");
+    MenuTexts[2]=_("Delete existing Hero");
+    MenuTexts[3]=_("Back");
     MenuTexts[4]="";
     
     while (!can_continue)
@@ -3052,13 +3053,13 @@ Multi_Player_Menu (void)
 	    BACK_POSITION
 	};
     
-    MenuTexts[0]="Start as a Server";
-    MenuTexts[1]="Join existing Multiplayer game";
-    MenuTexts[2]="List known Servers";
-    MenuTexts[3]="Back";
+    MenuTexts[0]=_("Start as a Server");
+    MenuTexts[1]=_("Join existing Multiplayer game");
+    MenuTexts[2]=_("List known Servers");
+    MenuTexts[3]=_("Back");
     MenuTexts[4]="";
     
-    GiveMouseAlertWindow ( "\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot." ) ;
+    GiveMouseAlertWindow ( _("\nW A R N I N G !\n\nMultiplayer and network play is still very much experimental code.\nCurrently we are not continuing the networking code, simply because our team does not have enough manpower for this additional task and because it slows down development of new features of the single player game a lot.") ) ;
     SetCurrentFont ( Menu_BFont );
     
     while (!can_continue)
@@ -3135,7 +3136,7 @@ Multi_Player_Menu (void)
 void
 Credits_Menu (void)
 {
-    char* CreditsText = "\n\n\n\
+    char* CreditsText = _("\n\n\n\
                                             CREDITS\n\n\n\
    PROGRAMMING:\n\n\
                                       Johannes Prix\n\n\
@@ -3181,7 +3182,7 @@ Credits_Menu (void)
                                       Zombie Ryushu\n\n\
                                       Ted Cipicchio\n\n\
                                       The Doctor\n\n\
-                                      Simon Newton\n\n\n\n\n";
+                                      Simon Newton\n\n\n\n\n");
     
     User_Rect . x = Full_Screen_Rect . x ;
     User_Rect . y = Full_Screen_Rect . y ;
@@ -3208,7 +3209,7 @@ Credits_Menu (void)
 void
 Contribute_Menu (void)
 {
-    char* ContributeText = "\n\n\
+    char* ContributeText = _("\n\n\
                        HOW TO CONTRIBUTE\n\n\n\
 FreedroidRPG is entirely free software and free artwork.\n\
 It is developed exclusively by volunteers in their leisure time.\n\
@@ -3248,7 +3249,7 @@ Or, if you prefer that, you might want to pop into our IRC channel (#freedroid o
 Thank you,\n\
 \n\
                 The FreedroidRPG dev team.\n\
-                                      \n\n\n\n\n";
+                                      \n\n\n\n\n");
     
     while ( SpacePressed() || EscapePressed() ) ; 
     
@@ -3285,7 +3286,7 @@ Show_Mission_Details ( int MissionNumber )
 	
 	CenteredPutString ( Screen ,  1*FontHeight(Menu_BFont),    "MISSION DETAILS");
 	
-	printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : "  );
+	printf_SDL ( Screen , User_Rect.x , 3 *FontHeight(Menu_BFont) , "Kill all droids : ");
 	if ( Me[0].AllMissions[ MissionNumber ].KillAll != (-1) ) printf_SDL( Screen , -1 , -1 , "YES" ); 
 	else printf_SDL( Screen , -1 , -1 , "NO" );
 	
@@ -3318,7 +3319,7 @@ Show_Mission_Details ( int MissionNumber )
 	else printf_SDL( Screen , -1 , -1 , "NO\n" );
 	
 	printf_SDL ( Screen , User_Rect.x , 10 * FontHeight(Menu_BFont) , "Kill Class : "  );
-	if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , Classname[Me[0].AllMissions[ MissionNumber ].KillClass] ); 
+	if ( Me[0].AllMissions[ MissionNumber ].KillClass != (-1) ) printf_SDL( Screen , -1 , -1 , "%s" , _(Classname[Me[0].AllMissions[ MissionNumber ].KillClass]) ); 
 	else printf_SDL( Screen , -1 , -1 , "NONE\n" );
 	
 	our_SDL_flip_wrapper( Screen );
@@ -3366,7 +3367,7 @@ Show_Mission_Log_Menu (void)
 
       SetCurrentFont( Para_BFont );
 
-      DisplayText ( "This is the record of all missions you have been assigned:\n\n" , 
+      DisplayText ( _("This is the record of all missions you have been assigned:\n\n") , 
 		    0 , FIRST_MISSION_POS_Y - 2 * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 
       NoOfActiveMissions=0;
@@ -3381,19 +3382,19 @@ Show_Mission_Log_Menu (void)
 
 	  if ( Me[0].AllMissions[i].MissionIsComplete == TRUE )
 	    {
-	      DisplayText ( "SOLVED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
+	      DisplayText ( _("SOLVED: ") , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else if ( Me[0].AllMissions[i].MissionWasFailed == TRUE )
 	    {
-	      DisplayText ( "FAILED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
+	      DisplayText ( _("FAILED: ") , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else if ( Me[0].AllMissions[i].MissionWasAssigned == TRUE ) 
 	    {
-	      DisplayText ( "ASSIGNED: " , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
+	      DisplayText ( _("ASSIGNED: ") , 0 , FIRST_MISSION_POS_Y + NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 	  else
 	    {
-	      DisplayText ( "UNASSIGNED: " , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
+	      DisplayText ( _("UNASSIGNED: ") , 0 , FIRST_MISSION_POS_Y +  NoOfActiveMissions * InterLineSpace , Mission_Window_Pointer , TEXT_STRETCH );
 	    }
 
 	  DisplayText ( Me[0].AllMissions[i].MissionName , MISSION_NAME_POS_X , 
@@ -3401,7 +3402,7 @@ Show_Mission_Log_Menu (void)
 
 	}
 
-      DisplayText ( "\n\n--- Currently no missions beyond that ---" , 
+      DisplayText ( _("\n\n--- Currently no missions beyond that ---") , 
 		    -1 , -1 , Mission_Window_Pointer , TEXT_STRETCH );
 
       // Highlight currently selected option with an influencer before it

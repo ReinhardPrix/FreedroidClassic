@@ -35,6 +35,7 @@
 #include "global.h"
 #include "proto.h"
 #include "vars.h"
+#include "lang.h"
 
 #ifdef __OpenBSD__
 #include "ieeefp.h"
@@ -85,7 +86,21 @@ main (int argc, char * argv[])
 {
     int i;
     int PlayerNum;
+	DIR *tmp_dir;
     
+#if ENABLE_NLS
+	setlocale(LC_MESSAGES, "");
+	tmp_dir = opendir("../po");
+	if(tmp_dir != NULL) 
+	{
+		bindtextdomain(LOCALE_PACKAGE, "../po");
+		closedir(tmp_dir);
+	}
+	else 
+		bindtextdomain(LOCALE_PACKAGE, LOCALE_DIR);
+	textdomain(LOCALE_PACKAGE);
+#endif
+
     //--------------------
     // First we issue some message, that should appear in the debug log for
     // windows users.
@@ -134,6 +149,7 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
     ParseCommandLine ( argc , argv ); 
     
     InitFreedroid ();   // Initialisation of global variables and arrays
+    
 
     while (!QuitProgram)
     {
@@ -418,7 +434,7 @@ UpdateCountersForThisFrame ( int player_num )
     if ( Me [ player_num ] . temperature > Me [ player_num] . max_temperature ) //overheat, lose life
 	    {
 	    if ( Me [ player_num ] . old_temperature < Me [ player_num ] . max_temperature ) 
-		append_new_game_message("Overheating!");
+		append_new_game_message(_("Overheating!"));
 	    Me [ player_num ] . energy -= ( Me [ player_num ] . temperature - Me[player_num].max_temperature ) * latest_frame_time / 10;
 	    }
     
@@ -435,7 +451,7 @@ UpdateCountersForThisFrame ( int player_num )
     if ( Me [ player_num ] . busy_time == 0)
 	{
 	if ( Me [ player_num ] . busy_type == WEAPON_RELOAD )
-		append_new_game_message("Weapon reloaded");
+		append_new_game_message(_("Weapon reloaded"));
 	Me [ player_num ] . busy_type = NONE;
 	}
 

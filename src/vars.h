@@ -32,6 +32,7 @@
 
 
 #include "colodefs.h"
+#include "lang.h"
 
 char* floor_tile_filenames [ ALL_ISOMETRIC_FLOOR_TILES ] =
   {
@@ -127,25 +128,26 @@ tux_t Me[ MAX_PLAYERS ] ;
 network_tux_t NetworkMe[ MAX_PLAYERS ];
 
 char *InfluenceModeNames[] = {
-  "Mobile",
-  "Transfer",
-  "Weapon",
-  "Captured",
-  "Complete",
-  "Rejected",
-  "Logged In",
-  "Debriefing",
-  "Terminated",
-  "Pause",
-  "Cheese",
-  "Elevator",
-  "Briefing",
-  "Menu",
-  "Fresh Net",
-  "Name Tran",
+  N_("Mobile"),
+  N_("Transfer"),
+  N_("Weapon"),
+  N_("Captured"),
+  N_("Complete"),
+  N_("Rejected"),
+  N_("Logged In"),
+  N_("Debriefing"),
+  N_("Terminated"),
+  N_("Pause"),
+  N_("Cheese"),
+  N_("Elevator"),
+  N_("Briefing"),
+  N_("Menu"),
+  N_("Fresh Net"),
+  N_("Name Tran"),
   NULL
 };
 
+// Debug string, no need for translation
 char *NetworkClientStatusNames[] = {
   "Network ERROR" ,
   "Unconnected" , 
@@ -157,90 +159,90 @@ char *NetworkClientStatusNames[] = {
 
 
 char *Classname[] = {
-  "Influence device",
-  "Disposal robot",
-  "Servant robot",
-  "Messenger robot",
-  "Maintenance robot",
-  "Crew droid",
-  "Sentinel droid",
-  "Battle droid",
-  "Security droid",
-  "Command Cyborg",
-  "Peaceful Human",
-  "Cold MS Force",
-  "Mrs. Stone, Shopowner",
-  "Resistance Founder",
-  "Town Healer",
-  "Sorenson, Master of Magic", // 15
-  "Pendragon, Rebel Fighter",
-  "Dixon, Teleporter Service Man",
-  "Chandra, Tourist Guide",
+  N_("Influence device"),
+  N_("Disposal robot"),
+  N_("Servant robot"),
+  N_("Messenger robot"),
+  N_("Maintenance robot"),
+  N_("Crew droid"),
+  N_("Sentinel droid"),
+  N_("Battle droid"),
+  N_("Security droid"),
+  N_("Command Cyborg"),
+  N_("Peaceful Human"),
+  N_("Cold MS Force"),
+  N_("Mrs. Stone, Shopowner"),
+  N_("Resistance Founder"),
+  N_("Town Healer"),
+  N_("Sorenson, Master of Magic"), // 15
+  N_("Pendragon, Rebel Fighter"),
+  N_("Dixon, Teleporter Service Man"),
+  N_("Chandra, Tourist Guide"),
   NULL
 };
 
 char *Classes[] = {
-  "influence",
-  "disposal",
-  "servant",
-  "messenger",
-  "maintenance",
-  "crew",
-  "sentinel",
-  "battle",
-  "security",
-  "command",
-  "error"
+  N_("influence"),
+  N_("disposal"),
+  N_("servant"),
+  N_("messenger"),
+  N_("maintenance"),
+  N_("crew"),
+  N_("sentinel"),
+  N_("battle"),
+  N_("security"),
+  N_("command"),
+  N_("error")
 };
 
 char *Drivenames[] = {
-  "none",
-  "tracks",
-  "anti-grav",
-  "tripedal",
-  "wheels",
-  "bipedal",
-  "error"
+  N_("none"),
+  N_("tracks"),
+  N_("anti-grav"),
+  N_("tripedal"),
+  N_("wheels"),
+  N_("bipedal"),
+  N_("error")
 };
 
 char *Sensornames[] = {
-  " - ",
-  "spectral",
-  "infra-red",
-  "subsonic",
-  "ultra-sonic",
-  "radar",
-  "error"
+  N_(" - "),
+  N_("spectral"),
+  N_("infra-red"),
+  N_("subsonic"),
+  N_("ultra-sonic"),
+  N_("radar"),
+  N_("error")
 };
 
 char *Brainnames[] = {
-  "none",
-  "neutronic",
-  "primode",
-  "error"
+  N_("none"),
+  N_("neutronic"),
+  N_("primode"),
+  N_("error")
 };
 
 char *Weaponnames[] = {
-  "none",
-  "lasers",
-  "laser rifle",
-  "disruptor",
-  "exterminator",
-  "error"
+  N_("none"),
+  N_("lasers"),
+  N_("laser rifle"),
+  N_("disruptor"),
+  N_("exterminator"),
+  N_("error")
 };
 
 char* AllSkillTexts [ NUMBER_OF_SKILL_LEVELS ] =
   {
-    "novice",
-    "average",
-    "experienced",
-    "skilled",
-    "adept",
-    "masterful",
-    "inhuman",
-    "god-like",
-    "super-god-like",
-    "wicked sick"
+    N_("novice"),
+    N_("average"),
+    N_("experienced"),
+    N_("skilled"),
+    N_("adept"),
+    N_("masterful"),
+    N_("inhuman"),
+    N_("god-like"),
+    N_("super-god-like"),
+    N_("wicked sick")
   };
 
 //--------------------

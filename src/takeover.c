@@ -37,6 +37,7 @@
 #include "proto.h"
 #include "takeover.h"
 #include "map.h"
+#include "lang.h"
 
 Uint32 cur_time;  		// current time in ms 
 SDL_Surface *to_blocks;         // the global surface containing all game-blocks 
@@ -304,7 +305,7 @@ Takeover ( int enemynum )
 
 	    reward = Druidmap [ AllEnemys [ enemynum ] . type ] . experience_reward * 3 ;
 	    Me [ 0 ] . Experience += reward;
-	    sprintf ( game_message_text , "For taking control of your enemy, you receive %d experience." ,
+	    sprintf ( game_message_text , _("For taking control of your enemy, you receive %d experience."),
 		      reward );
 	    append_new_game_message ( game_message_text );
 
@@ -351,9 +352,9 @@ Takeover ( int enemynum )
 	    // very much relevant any more in the freedroidRPG variant....
 	    //
 	    if ( LeaderColor != YourColor )	// only won because of InvincibleMode 
-		message = "You cheat";
+		message = _("You cheat");
 	    else				// won the proper way 
-		message = "Complete";
+		message = _("Complete");
 	    
 	    //--------------------
 	    // Ok.  The whole takeover is done now.  We can return...
@@ -363,7 +364,7 @@ Takeover ( int enemynum )
 	else if ( LeaderColor == OpponentColor )
 	{
 	    Takeover_Game_Lost_Sound ();
-	    message = "Rejected";
+	    message = _("Rejected");
 	    Me [ 0 ] . energy *= 0.5 ;
 	    AllEnemys [ enemynum ] . energy = Druidmap [ AllEnemys [ enemynum ] . type ] . maxenergy ;
 	    FinishTakeover = TRUE;
@@ -371,7 +372,7 @@ Takeover ( int enemynum )
 	else
 	{
 	    Takeover_Game_Deadlock_Sound ();
-	    message = "Deadlock";
+	    message = _("Deadlock");
 	}			// LeadColor == DRAW	
 
 	ShowPlayground ();
@@ -434,7 +435,7 @@ ChooseColor (void)
 	}
 	
 	countdown--; // Count down 
-	sprintf (count_text, "Color-%d", countdown);
+	sprintf (count_text, _("Color-%d"), countdown);
 	
 	ShowPlayground ();
 	to_show_banner (count_text, NULL);
@@ -471,7 +472,7 @@ PlayGame (void)
   int up, down, set; 
   int up_counter, down_counter; 
 
-  sprintf (count_text, "Subliminal");   /* Make sure a value gets assigned to count_text */
+  sprintf (count_text, _("Subliminal"));   /* Make sure a value gets assigned to count_text */
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
   
@@ -508,7 +509,7 @@ PlayGame (void)
 	{
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
-	  sprintf (count_text, "Finish-%d", countdown);
+	  sprintf (count_text, _("Finish-%d"), countdown);
 
 	  if (countdown == 0)
 	    FinishTakeover = TRUE;
@@ -1751,7 +1752,7 @@ to_show_banner (const char* left, const char* right)
 
   if ( right == NULL )
     {
-      sprintf ( dummy , "Score" );
+      sprintf ( dummy , _("Score"));
       right = dummy;
     }
 

@@ -36,6 +36,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #define BEST_MELEE_DISTANCE (0.8)
 #define BEST_CHAT_DISTANCE (BEST_MELEE_DISTANCE+0.2)
@@ -505,7 +506,7 @@ tux_wants_to_attack_now ( int player_num , int use_mouse_cursor_for_targeting )
             //--------------------
             // So no ammunition... We should say so and reload...
             //
-	      append_new_game_message("Clip empty, reloading...");
+	      append_new_game_message(_("Clip empty, reloading..."));
 	      TuxReloadWeapon();
               return ;
 
@@ -2078,7 +2079,7 @@ move_tux_thowards_intermediate_point ( int player_num )
 		if ( ( fabsf ( Me [ 0 ] . pos . x - our_obstacle -> pos . x ) >= 1.0 ) ||
 		     ( fabsf ( Me [ 0 ] . pos . y - our_obstacle -> pos . y ) >= 1.0 ) )
 		{
-		    append_new_game_message ( "Looting failed:  unable to reach loot target." );
+		    append_new_game_message ( _("Looting failed:  unable to reach loot target."));
 		}
 		else
 		{
@@ -3175,7 +3176,7 @@ PerformTuxAttackRaw ( int player_num , int use_mouse_cursor_for_targeting )
 		reward = Druidmap [ AllEnemys [ i ] . type ] . experience_reward;
 		Me [ 0 ] . Experience += reward;
 		sprintf ( game_message_text , 
-			  "%s was destroyed by your melee attack.  For defeating your enemy, you receive %d experience." ,
+			  _("%s was destroyed by your melee attack.  For defeating your enemy, you receive %d experience."),
 			  Druidmap [ AllEnemys [ i ] . type ] . druidname , 
 			  reward );
 		append_new_game_message ( game_message_text );
@@ -3281,7 +3282,7 @@ if(!count) //no ammo found, tell the player that he "has it in the baba"
         {
         No_Ammo_Sound( );
         No_Ammo_Sound( );
-	append_new_game_message("No more ammunition !");
+	append_new_game_message(_("No more ammunition !"));
 	return;
         }
 int i;
@@ -3762,7 +3763,7 @@ handle_player_examine_command ( int player_num )
 	    sprintf( game_message_text , "%s" , character_descriptions [ chat_section ] );
 	}
 	else
-	    sprintf( game_message_text , "This is a %s. %s" , Druidmap [ AllEnemys [ final_bot_found ] . type ] . druidname , Druidmap [ AllEnemys [ final_bot_found ] . type ] . notes );
+	    sprintf( game_message_text , _("This is a %s. %s") , Druidmap [ AllEnemys [ final_bot_found ] . type ] . druidname , Druidmap [ AllEnemys [ final_bot_found ] . type ] . notes );
 
 	append_new_game_message ( game_message_text );
 	return;
@@ -3786,14 +3787,14 @@ handle_player_examine_command ( int player_num )
 	{
 	    obstacle_level = curShip . AllLevels [ Me [ 0 ] . pos . z ] ;
 	    
-	    sprintf ( game_message_text , "Examining %s.  %s" , 
+	    sprintf ( game_message_text , _("Examining %s.  %s"), 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
 		      obstacle_level -> obstacle_description_list [ our_obstacle -> description_index ] ) ;
 	    append_new_game_message ( game_message_text );
 	}
 	else
 	{
-	    sprintf ( game_message_text , "Examining %s.  %s" , 
+	    sprintf ( game_message_text , _("Examining %s.  %s"), 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_short_name , 
 		      obstacle_map [ our_obstacle -> type ] . obstacle_long_description ) ;
 	    append_new_game_message ( game_message_text );
@@ -3806,7 +3807,7 @@ handle_player_examine_command ( int player_num )
     // was found under the mouse cursor.  Then it's the floor being
     // examined.  We say so, currently rather unspecific, but still.
     //
-    sprintf ( game_message_text , "You see the floor.  It should be perfectly safe to walk on it." ) ;
+    sprintf ( game_message_text , _("You see the floor.  It should be perfectly safe to walk on it.")) ;
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_examine_command ( int player_num ) 
@@ -3836,7 +3837,7 @@ handle_player_unlock_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): unlocking obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Unlocking obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , _("Unlocking obstacle of type %d.") , our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_unlock_command ( int player_num ) 
@@ -3865,7 +3866,7 @@ handle_player_repair_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): repairing obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Repairing obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , _("Repairing obstacle of type %d."), our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_repair_command ( int player_num ) 
@@ -3902,7 +3903,7 @@ handle_player_talk_command ( int player_num )
 	{
 	    if ( ! ( Druidmap [ this_enemy -> type ] . is_human ) )
 	    {
-		sprintf ( game_message_text , "You try to hack %s." , Druidmap [ this_enemy -> type ] . druidname );
+		sprintf ( game_message_text , _("You try to hack %s."), Druidmap [ this_enemy -> type ] . druidname );
 		append_new_game_message ( game_message_text );
 		Takeover ( our_enemy_index );
 	    }
@@ -3919,7 +3920,7 @@ handle_player_talk_command ( int player_num )
 	    return;
 	}
 
-	sprintf ( game_message_text , "You chat with %s." , Druidmap [ this_enemy -> type ] . druidname );
+	sprintf ( game_message_text , _("You chat with %s."), Druidmap [ this_enemy -> type ] . druidname );
 	append_new_game_message ( game_message_text );
 	ChatWithFriendlyDroid ( this_enemy ) ;
 	return;
@@ -3943,7 +3944,7 @@ handle_player_talk_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): applying talk skill to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Talking to an obstacle of type %d.  Ok.  You've told it everything.  Maybe it just needs more time to digest the news." , our_obstacle -> type );
+    sprintf ( game_message_text , _("Talking to an obstacle of type %d.  Ok.  You've told it everything.  Maybe it just needs more time to digest the news."), our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_talk_command ( int player_num ) 
@@ -3980,7 +3981,7 @@ handle_player_first_aid_command ( int player_num )
 	//
 	if ( ! this_enemy -> is_friendly )
 	{
-	    sprintf ( game_message_text , "The hostile %s won't let you apply your first aid skill.  Maybe it doesn't trust you?" , Druidmap [ this_enemy -> type ] . druidname );
+	    sprintf ( game_message_text , _("The hostile %s won't let you apply your first aid skill.  Maybe it doesn't trust you?"), Druidmap [ this_enemy -> type ] . druidname );
 	    append_new_game_message ( game_message_text );
 	    return;
 	}
@@ -3993,14 +3994,14 @@ handle_player_first_aid_command ( int player_num )
 
 	    this_enemy -> energy += heal_amount ;
 	    reward = heal_amount * 3 ;
-	    sprintf ( game_message_text , "You healed %d damage on the %s.  For successfully applying your first aid skill you receive %d experience." , heal_amount , Druidmap [ this_enemy -> type ] . druidname , reward );
+	    sprintf ( game_message_text , _("You healed %d damage on the %s.  For successfully applying your first aid skill you receive %d experience."), heal_amount , Druidmap [ this_enemy -> type ] . druidname , reward );
 	    Me [ player_num ] . Experience += reward ;
 	    append_new_game_message ( game_message_text );
 	    return;
 	}
 	else
 	{
-	    sprintf ( game_message_text , "Any injury on %s is purely cosmetic and must heal over time." , Druidmap [ this_enemy -> type ] . druidname );
+	    sprintf ( game_message_text , _("Any injury on %s is purely cosmetic and must heal over time."), Druidmap [ this_enemy -> type ] . druidname );
 	    append_new_game_message ( game_message_text );
 	    return;
 	}
@@ -4023,7 +4024,7 @@ handle_player_first_aid_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): applying first aid to obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Applying first aid to obstacle of type %d.  Ok.  You've made sure it doesn't bleed.  That's what you wanted, right?" , our_obstacle -> type );
+    sprintf ( game_message_text , _("Applying first aid to obstacle of type %d.  Ok.  You've made sure it doesn't bleed.  That's what you wanted, right?"), our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_first_aid_command ( int player_num ) 
@@ -4052,7 +4053,7 @@ handle_player_attack_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): attacking obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Attacking obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , _("Attacking obstacle of type %d."), our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_attack_command ( int player_num ) 
@@ -4081,7 +4082,7 @@ handle_player_pickpocket_command ( int player_num )
 
     DebugPrintf ( -4 , "\n%s(): picking pockets of obstacle of type : %d. " , __FUNCTION__ , our_obstacle -> type );
     
-    sprintf ( game_message_text , "Picking pockets of obstacle of type %d." , our_obstacle -> type );
+    sprintf ( game_message_text , _("Picking pockets of obstacle of type %d."), our_obstacle -> type );
     append_new_game_message ( game_message_text );
 
 }; // void handle_player_pickpocket_command ( int player_num ) 

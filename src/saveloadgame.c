@@ -41,6 +41,7 @@
 #include "proto.h"
 #include "SDL_rotozoom.h"
 #include "sys/stat.h"
+#include "lang.h"
 
 #define INFLUENCER_STRUCTURE_RAW_DATA_STRING "Now the raw data of the influencer structure:"
 #define ALLENEMYS_RAW_DATA_STRING "Now the raw AllEnemys data:"
@@ -292,7 +293,7 @@ SaveGame( void )
     //
     if ( Me[0].energy <= 0 )
     {
-	DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
+	DoMenuSelection( _("\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?"), 
 			 MenuTexts , 1 , -1 , NULL );
 	return ( OK );
     }
@@ -456,7 +457,7 @@ freedroid-discussion@lists.sourceforge.net\n\
     
     ShowSaveLoadGameProgressMeter( 100 , TRUE ) ;
     
-    append_new_game_message ( "Game saved." );
+    append_new_game_message ( _("Game saved.") );
 
     DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
     
@@ -544,7 +545,7 @@ LoadGame( void )
     if ((DataFile = fopen ( filename , "rb")) == NULL )
     {
 	GiveMouseAlertWindow ( "\nW A R N I N G !\n\nFreedroidRPG was unable to locate the saved game file you requested to load.\nThis might mean that it really isn't there cause you tried to load a game without ever having saved the game before.  \nThe other explanation of this error might be a severe error in FreedroidRPG.\nNothing will be done about it." );
-	append_new_game_message ( "Failed to load old game." );
+	append_new_game_message ( _("Failed to load old game.") );
 	return ( ERR ) ;
     }
     else
@@ -650,7 +651,7 @@ LoadGame( void )
     
     if ( strcmp ( Me [ 0 ] . freedroid_version_string , version_check_string ) != 0 )
     {
-	show_button_tooltip ( "Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\nSorry, but I refuse to load it for safety/stability reasons...\nFor Recovery, a blank game will be loaded...(please disregard)\n" );
+	show_button_tooltip ( _("Error: Version or structsize mismatch! The saved game in question appears to be from a (slightly?) different version of FreedroidRPG.\nSorry, but I refuse to load it for safety/stability reasons...\nFor Recovery, a blank game will be loaded...(please disregard)\n") );
 	our_SDL_flip_wrapper( Screen );
 	while ( SpacePressed() || MouseLeftPressed() ) SDL_Delay ( 3 );
 	while ( !SpacePressed() && ! MouseLeftPressed() ) SDL_Delay ( 3 );
@@ -710,7 +711,7 @@ LoadGame( void )
     // take a little time.  Therefore we print some message so the user will not
     // panic and push the reset button :)
     //
-    PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , "Updating Tux images (this may take a little while...)" );
+    PutStringFont ( Screen , FPS_Display_BFont , 75 , 150 , _("Updating Tux images (this may take a little while...)") );
     our_SDL_flip_wrapper ( Screen );
     
     //--------------------
@@ -722,7 +723,7 @@ LoadGame( void )
 
     load_game_command_came_from_inside_running_game = TRUE ;
 
-    append_new_game_message ( "Game loaded." );
+    append_new_game_message ( _("Game loaded.") );
 
     return OK;
 }; // int LoadGame ( void ) 

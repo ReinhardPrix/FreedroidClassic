@@ -43,6 +43,7 @@
 #include "proto.h"
 #include "colodefs.h"
 #include "SDL_rotozoom.h"
+#include "lang.h"
 
 #define PUT_ONLY_THROWN_ITEMS 3
 #define PUT_NO_THROWN_ITEMS 4
@@ -357,14 +358,14 @@ ShowCombatScreenTexts ( int mask )
 	}
       
 	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 1,
-			 "FPS: %d" , FPS_Displayed );
+			 _("FPS: %d"), FPS_Displayed );
 	
     }
     
     if ( GameConfig.Draw_Energy )
     {
 	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 1 + 1 * FontHeight( FPS_Display_BFont ), 
-			 "Energy: %d " , (int) (Me[0].energy) );
+			 _("Energy: %d "), (int) (Me[0].energy) );
 	// PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x+User_Rect.w/2 , 
 	// User_Rect.y+User_Rect.h - 2 * FontHeight( FPS_Display_BFont ), 
 	// "Resistance: %f " , (Me[0].Current_Victim_Resistance_Factor) );
@@ -374,7 +375,7 @@ ShowCombatScreenTexts ( int mask )
     {
 	PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
                          GameConfig.screen_height - 9*FontHeight( FPS_Display_BFont ), 
-			 "GPS: X=%3.1f Y=%3.1f Lev=%d" , ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , 
+			 _("GPS: X=%3.1f Y=%3.1f Lev=%d"), ( Me [ 0 ] . pos . x ) , ( Me [ 0 ] . pos . y ) , 
                          DisplayLevel->levelnum );
     }
     
@@ -395,7 +396,7 @@ ShowCombatScreenTexts ( int mask )
 	    }
 	    PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 			     User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-			     "Time to hold out still: %2d:%2d " , minutes , seconds );
+			     _("Time to hold out still: %2d:%2d "), minutes , seconds );
 	}
 	
 	if ( ( Me [ 0 ] . AllMissions [ i ] . must_clear_first_level == Me [ 0 ] . pos . z ) ||
@@ -414,7 +415,7 @@ ShowCombatScreenTexts ( int mask )
 	    }
 	    PrintStringFont( Screen , FPS_Display_BFont , User_Rect.x , 
 			     User_Rect.y + 0*FontHeight( FPS_Display_BFont ), 
-			     "Bots remaining on level: %d" , remaining_bots );
+			     _("Bots remaining on level: %d"), remaining_bots );
 	    DebugPrintf ( 0 , "\nYES, this is the level...." );
 	}
     }
@@ -2594,7 +2595,10 @@ Creation of an Tux SDL software surface from pixel data failed.",
 
 		if ( ! use_open_gl ) 		  
 		  flip_image_horizontally ( loaded_tux_images[tux_part_group][our_phase][rotation_index].surface ) ;
-		else make_texture_out_of_surface(&loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ]);
+		else 
+		    {
+		    make_texture_out_of_surface(&loaded_tux_images [ tux_part_group ] [ our_phase ] [ rotation_index ]);
+		    }
 	      }
 	    else
 	      {

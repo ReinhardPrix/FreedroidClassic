@@ -35,6 +35,7 @@
 #include "global.h"
 #include "proto.h"
 #include "SDL_rotozoom.h"
+#include "lang.h"
 
 #define SHOP_ROW_LENGTH 8
 
@@ -1195,7 +1196,7 @@ DoEquippmentListSelection( char* Startstring , item* Item_Pointer_List[ MAX_ITEM
 	// DisplayText( "BACK" , 580 , 50 + (i+1) * ITEM_MENU_DISTANCE , NULL );
 	// CenteredPutStringFont( Screen , Message_BFont , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
 	//
-	CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , " BACK " );
+	CenteredPutString( Screen , 50 + (i+1) * ITEM_MENU_DISTANCE , _(" BACK "));
 	
 	//--------------------
 	// Now we draw the influencer as a cursor
@@ -1259,18 +1260,18 @@ void
 TryToRepairItem( item* RepairItem )
 {
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     while ( SpacePressed() || EnterPressed() || MouseLeftPressed() ) SDL_Delay(1);
     
     if ( calculate_item_repair_price ( RepairItem ) > Me [ 0 ] . Gold )
     {
-	MenuTexts[0]=" BACK ";
+	MenuTexts[0]=_(" BACK ");
 	MenuTexts[1]="";
         SetCurrentFont ( Menu_BFont );
-	DoMenuSelection ( "\n\nYou can't afford to have this item repaired! " , MenuTexts , 1 , -1 , NULL );
+	DoMenuSelection ( _("\n\nYou can't afford to have this item repaired! ") , MenuTexts , 1 , -1 , NULL );
 	return;
     }
     
@@ -1286,18 +1287,18 @@ void
 TryToIdentifyItem( item* IdentifyItem )
 {
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     while ( SpacePressed() || EnterPressed() || MouseLeftPressed());
     
     if ( 100 > Me[0].Gold )
     {
-	MenuTexts[0]=" BACK ";
+	MenuTexts[0]=_(" BACK ");
 	MenuTexts[1]="";
         SetCurrentFont ( Menu_BFont );
-	DoMenuSelection ( "You can't afford to have this item identified! " , MenuTexts , 1 , -1 , NULL );
+	DoMenuSelection ( _("You can't afford to have this item identified! ") , MenuTexts , 1 , -1 , NULL );
 	return;
     }
     
@@ -1323,8 +1324,8 @@ TryToSellItem( item* SellItem , int WithBacktalk , int AmountToSellAtMost )
 #define ANSWER_NO 2
     
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     //--------------------
@@ -1366,7 +1367,7 @@ please inform the developers...",
 	while ( 1 )
 	{
 	    GiveItemDescription( linebuf , SellItem , TRUE );
-	    strcat ( linebuf , "\n\n    Are you sure you wish to sell this/(some of these) item(s)?" );
+	    strcat ( linebuf , _("\n\n    Are you sure you wish to sell this/(some of these) item(s)?") );
 	    MenuPosition = DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	    switch (MenuPosition) 
 	    {
@@ -1493,10 +1494,10 @@ TryToIntegrateItemIntoInventory ( item* BuyItem , int AmountToBuyAtMost )
     // Therefore a message must be displayed, saying what the problem is.
     //
     PlayOnceNeededSoundSample ( "Tux_Hold_On_I_0.ogg" , FALSE , FALSE );
-    MenuTexts[0]=" BACK ";
+    MenuTexts[0]=_(" BACK ");
     MenuTexts[1]="";
     GiveItemDescription( linebuf , BuyItem , TRUE );
-    strcat ( linebuf , "\n\n   No room for this item in inventory!" );
+    strcat ( linebuf , _("\n\n   No room for this item in inventory!") );
     DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
     return ( FALSE );
     
@@ -1520,7 +1521,7 @@ TryToTakeItem( item* BuyItem , int AmountToBuyAtMost )
     //
     if ( AmountToBuyAtMost <= 0 ) 
     {
-	DebugPrintf ( 0 , "\nTried to take 0 items of a kind from chest or cointainer... doing nothing... " );
+	DebugPrintf ( 0 , _("\nTried to take 0 items of a kind from chest or cointainer... doing nothing... ") );
 	return;
     }
     
@@ -1553,8 +1554,8 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
 #define ANSWER_NO 2
     
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     DebugPrintf ( 0 , "\nTryToBuyItem (...):  function called." );
@@ -1579,10 +1580,10 @@ TryToBuyItem( item* BuyItem , int WithBacktalk , int AmountToBuyAtMost )
     {
 	if ( WithBacktalk )
 	{
-	    MenuTexts[0]=" BACK ";
+	    MenuTexts[0]=_(" BACK ");
 	    MenuTexts[1]="";
 	    GiveItemDescription( linebuf , BuyItem , TRUE );
-	    strcat ( linebuf , "\n\n    You can't afford to purchase this item!" );
+	    strcat ( linebuf , _("\n\n    You can't afford to purchase this item!") );
             SetCurrentFont ( Menu_BFont );
 	    DoMenuSelection( linebuf , MenuTexts , 1 , -1 , NULL );
 	}
@@ -1742,8 +1743,8 @@ Repair_Items( void )
     int NumberOfItemsInTuxRow = 0 ;
     item* TuxItemsList[ MAX_ITEMS_IN_INVENTORY ];
     shop_decision ShopOrder;
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     
@@ -1808,9 +1809,9 @@ Repair_Items( void )
 	
 	if ( Pointer_Index == 0 )
 	{
-	    MenuTexts[0]=" BACK ";
+	    MenuTexts[0]=_(" BACK ");
 	    MenuTexts[1]="";
-	    DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR " , MenuTexts , 1 , -1 , NULL );
+	    DoMenuSelection ( _(" YOU DONT HAVE ANYTHING THAT WOULD NEED REPAIR ") , MenuTexts , 1 , -1 , NULL );
 	    return;
 	}
 	
@@ -1862,8 +1863,8 @@ Identify_Items ( void )
     char DescriptionText[5000];
     int ItemSelected;
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     //--------------------
@@ -1913,9 +1914,9 @@ Identify_Items ( void )
     
     if ( Pointer_Index == 0 )
     {
-	MenuTexts[0]=" BACK ";
+	MenuTexts[0]=_(" BACK ");
 	MenuTexts[1]="";
-	DoMenuSelection ( " YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!" , MenuTexts , 1 , -1 , NULL );
+	DoMenuSelection ( _(" YOU DONT HAVE ANYTHING THAT WOULD NEED TO BE IDENTIFIED!") , MenuTexts , 1 , -1 , NULL );
 	return;
     }
     
@@ -1927,7 +1928,7 @@ Identify_Items ( void )
     
     while ( ItemSelected != (-1) )
     {
-	sprintf( DescriptionText , " I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld" , Me[0].Gold );
+	sprintf( DescriptionText , _(" I COULD IDENTIFY THESE ITEMS             YOUR GOLD:  %4ld") , Me[0].Gold );
 	ItemSelected = DoEquippmentListSelection( DescriptionText , Identify_Pointer_List , PRICING_FOR_IDENTIFY );
 	if ( ItemSelected != (-1) ) TryToIdentifyItem( Identify_Pointer_List[ ItemSelected ] ) ;
     }
@@ -1954,8 +1955,8 @@ Sell_Items( int ForHealer )
     //  int MenuInListPosition = 0;
     char DescriptionText[5000];
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     //--------------------
@@ -1988,9 +1989,9 @@ Sell_Items( int ForHealer )
     
     if ( Pointer_Index == 0 )
     {
-	MenuTexts[0]=" BACK ";
+	MenuTexts[0]=_(" BACK ");
 	MenuTexts[1]="";
-	DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. " , 
+	DoMenuSelection ( _(" YOU DONT HAVE ANYTHING IN INVENTORY (I.E. NOT WORN), THAT COULD BE SOLD. "), 
 			  MenuTexts, 1 , -1 , NULL );
 	return;
     }
@@ -2003,7 +2004,7 @@ Sell_Items( int ForHealer )
     
     while ( ItemSelected != (-1) )
     {
-	sprintf( DescriptionText , " I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld" , Me[0].Gold );
+	sprintf( DescriptionText , _(" I WOULD BUY FROM YOU THESE ITEMS        YOUR GOLD:  %4ld"), Me[0].Gold );
 	ItemSelected = DoEquippmentListSelection( DescriptionText , Sell_Pointer_List , PRICING_FOR_SELL );
 	if ( ItemSelected != (-1) ) TryToSellItem( Sell_Pointer_List[ ItemSelected ] , TRUE , 1 ) ;
     }
@@ -2046,12 +2047,12 @@ BuySellMenu ( void )
     
     while (!Weiter)
     {
-	MenuTexts[0]="Buy Basic Items";
-	MenuTexts[1]="Buy Premium Items";
-	MenuTexts[2]="Sell Items";
-	MenuTexts[3]="Repair Items";
-	MenuTexts[5]="Leave the Sales Representative";
-	MenuTexts[4]="Identify Items";
+	MenuTexts[0]=_("Buy Basic Items");
+	MenuTexts[1]=_("Buy Premium Items");
+	MenuTexts[2]=_("Sell Items");
+	MenuTexts[3]=_("Repair Items");
+	MenuTexts[5]=_("Leave the Sales Representative");
+	MenuTexts[4]=_("Identify Items");
 	MenuTexts[8]="";
 	
 	// MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , SHOP_BACKGROUND_IMAGE , NULL );

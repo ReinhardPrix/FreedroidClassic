@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #ifdef __OpenBSD__
 #include "ieeefp.h"
@@ -120,66 +121,66 @@ init_character_descriptions ( void )
 
     for ( i = 0 ; i < MAX_PERSONS ; i ++ )
     {
-	character_descriptions [ i ] = "My name is Bug. Software Bug. Please report me to the developers. Thank you." ;
+	character_descriptions [ i ] = _("My name is Bug. Software Bug. Please report me to the developers. Thank you.");
     }
 
-    character_descriptions [ PERSON_CHA ] = "Hmm... This must be the token town sage." ;
+    character_descriptions [ PERSON_CHA ] = _("Hmm... This must be the token town sage.");
 
-    character_descriptions [ PERSON_SORENSON ] = "You see a legend. Sorenson Clark. One of the best human programmers that have ever lived. Just like Paganini she is said to have sold her soul to the devil for her skill. Whatever is the truth, her code is like magic, and there is no denying that." ;
+    character_descriptions [ PERSON_SORENSON ] = _("You see a legend. Sorenson Clark. One of the best human programmers that have ever lived. Just like Paganini she is said to have sold her soul to the devil for her skill. Whatever is the truth, her code is like magic, and there is no denying that.");
 
-    character_descriptions [ PERSON_KEVIN ] = "He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope." ;
+    character_descriptions [ PERSON_KEVIN ] = _("He is either a college student, a drug addict or a hacker. I bet he did not have a warm meal for days, he looks totally malnourished. His body keeps twitching. Must be the caffeine. I hope.");
 
-    character_descriptions [ PERSON_BENDER ] = "Don't do steoroids or you will be just like him. The armor hides his body" ;
+    character_descriptions [ PERSON_BENDER ] = _("Don't do steoroids or you will be just like him. The armor hides his body");
 
-    character_descriptions [ PERSON_614 ] = "There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platform can be your best friend during combat...";
+    character_descriptions [ PERSON_614 ] = _("There are at least 614 reasons to stay away from the 614 bot battle platform. There are also 614 reasons why a 614 bot battle platform can be your best friend during combat...");
 
-    character_descriptions [ PERSON_FRANCIS ] = "Francis is not looking so good today. His tattered coat is not looking that much better either. The war is taking it's toll on them both.";
+    character_descriptions [ PERSON_FRANCIS ] = _("Francis is not looking so good today. His tattered coat is not looking that much better either. The war is taking it's toll on them both.");
 
-    character_descriptions [ PERSON_DUNCAN ] = "What a strange person. He does not seem to really fit into this reality. There is something very eerie about him. And frightening.";
+    character_descriptions [ PERSON_DUNCAN ] = _("What a strange person. He does not seem to really fit into this reality. There is something very eerie about him. And frightening.");
 
-    character_descriptions [ PERSON_BRUCE ] = "This person looks totally defeated. Tattered clothes surround his skeletal form. If there was a fifth raider of the apocalypse, it would be him and his name would be Hard Work.";
+    character_descriptions [ PERSON_BRUCE ] = _("This person looks totally defeated. Tattered clothes surround his skeletal form. If there was a fifth raider of the apocalypse, it would be him and his name would be Hard Work.");
 
-    character_descriptions [ PERSON_SKIPPY ] = "It seems that even during the end of the world the species known as 'Salesman' is able to survive. Just his presence makes you want to kill all humans.";
+    character_descriptions [ PERSON_SKIPPY ] = _("It seems that even during the end of the world the species known as 'Salesman' is able to survive. Just his presence makes you want to kill all humans.");
     
-    character_descriptions [ PERSON_EWALD ] = "We are sorry for this character's graphics. The bartender look is coming soon. Freedroid Dev Team.";
+    character_descriptions [ PERSON_EWALD ] = _("We are sorry for this character's graphics. The bartender look is coming soon. Freedroid Dev Team.");
 
-    character_descriptions [ PERSON_STONE ] = "In some places of the world there exists a very interesting saying. 'Tough as nails.' However, in every place where the Stone trader family stays for a while, a new saying emerges. 'Tough as the Stones.'";
+    character_descriptions [ PERSON_STONE ] = _("In some places of the world there exists a very interesting saying. 'Tough as nails.' However, in every place where the Stone trader family stays for a while, a new saying emerges. 'Tough as the Stones.'");
 
-    character_descriptions [ PERSON_DIXON ] = "It is very obvious that this is not a normal Red Guard. Most of them do not have oil stains on their armor and smell of alcohol.";
+    character_descriptions [ PERSON_DIXON ] = _("It is very obvious that this is not a normal Red Guard. Most of them do not have oil stains on their armor and smell of alcohol.");
 
-    character_descriptions [ PERSON_KEVINS_GUARD ] = "It looks like a 614. It moves like a 614. It even kills like a 614. Must be a 614 then.";
+    character_descriptions [ PERSON_KEVINS_GUARD ] = _("It looks like a 614. It moves like a 614. It even kills like a 614. Must be a 614 then.");
 
-    character_descriptions [ PERSON_RMS ] = "He must be the resident scientist. The only thing keeping his body alive is the massive coffee overdose that he takes early in the morning every day. The amount of cafeine that he has in his blood right now would be enough to kill ten humans, but since computer scientists are a different species, he is unharmed.";
+    character_descriptions [ PERSON_RMS ] = _("He must be the resident scientist. The only thing keeping his body alive is the massive coffee overdose that he takes early in the morning every day. The amount of cafeine that he has in his blood right now would be enough to kill ten humans, but since computer scientists are a different species, he is unharmed.");
 
-    character_descriptions [ PERSON_DARWIN ] = "Something about him makes you think of angels. Except angels are usually sane, do not have an urge to kill everything around them and are much better at singing religious songs.";
+    character_descriptions [ PERSON_DARWIN ] = _("Something about him makes you think of angels. Except angels are usually sane, do not have an urge to kill everything around them and are much better at singing religious songs.");
 
-    character_descriptions [ PERSON_MELFIS ] = "As you look at him, you cannot really belive he is there. If you turn your back on him he will vanish like a ghost into thin air and you will never see him again.";
+    character_descriptions [ PERSON_MELFIS ] = _("As you look at him, you cannot really belive he is there. If you turn your back on him he will vanish like a ghost into thin air and you will never see him again.");
 
-    character_descriptions [ PERSON_TYBALT ] = "His IQ is sometimes as high as a dog's. Only sometimes though. He smells like a dog too.";
+    character_descriptions [ PERSON_TYBALT ] = _("His IQ is sometimes as high as a dog's. Only sometimes though. He smells like a dog too.");
 
-    character_descriptions [ PERSON_PENDRAGON ] = "He seems to be the chief of the gate guards. Hard to say anything more, the armor hides his body.";
+    character_descriptions [ PERSON_PENDRAGON ] = _("He seems to be the chief of the gate guards. Hard to say anything more, the armor hides his body.");
 
-    character_descriptions [ PERSON_BENJAMIN ] = "Just an another Red Guard. The armor hides his body.";
+    character_descriptions [ PERSON_BENJAMIN ] = _("Just an another Red Guard. The armor hides his body.");
 
-    character_descriptions [ PERSON_DOC_MOORE ] = "Some people say that every doctor is addicted to drugs. You estimate that right now this one is high on at least four different narcotics. Doc Moore seems very happy indeed...";
+    character_descriptions [ PERSON_DOC_MOORE ] = _("Some people say that every doctor is addicted to drugs. You estimate that right now this one is high on at least four different narcotics. Doc Moore seems very happy indeed...");
 
-    character_descriptions [ PERSON_BUTCH ] = "Yet another Red Guard. You cannot say anything more, the armor hides his body.";
+    character_descriptions [ PERSON_BUTCH ] = _("Yet another Red Guard. You cannot say anything more, the armor hides his body.");
 
-    character_descriptions [ PERSON_SPENCER ] = "He looks taller than most of the Red Guards, but you cannot really say anything more about him, the armor hides his body.";
+    character_descriptions [ PERSON_SPENCER ] = _("He looks taller than most of the Red Guards, but you cannot really say anything more about him, the armor hides his body.");
 
-    character_descriptions [ PERSON_MICHELANGELO ] = "And now you know who is to be blamed for the truly awful food in here. You are in a killing mood. Oh yeah. The cook must die. The cook must die. Ha. Ha. Ha.";
+    character_descriptions [ PERSON_MICHELANGELO ] = _("And now you know who is to be blamed for the truly awful food in here. You are in a killing mood. Oh yeah. The cook must die. The cook must die. Ha. Ha. Ha.");
 
-    character_descriptions [ PERSON_SUBDIALOG_DUMMY ] = "This is a major bug. Please report this incident to the developers. Thank you.";
+    character_descriptions [ PERSON_SUBDIALOG_DUMMY ] = _("This is a major bug. Please report this incident to the developers. Thank you.");
 
-    character_descriptions [ PERSON_STANDARD_BOT_AFTER_TAKEOVER ] = "Blood. Stone. Cog. The Blood has made the Cog from the Stone. Now the Cog is making more Stone from the Blood. I wonder what is the next step of the cycle...";
+    character_descriptions [ PERSON_STANDARD_BOT_AFTER_TAKEOVER ] = _("Blood. Stone. Cog. The Blood has made the Cog from the Stone. Now the Cog is making more Stone from the Blood. I wonder what is the next step of the cycle...");
 
-    character_descriptions [ PERSON_STANDARD_OLD_TOWN_GATE_GUARD ] = "The armor hides his body.";
+    character_descriptions [ PERSON_STANDARD_OLD_TOWN_GATE_GUARD ] = _("The armor hides his body.");
 
-    character_descriptions [ PERSON_OLD_TOWN_GATE_GUARD_LEADER ] = "The armor hides his body.";
+    character_descriptions [ PERSON_OLD_TOWN_GATE_GUARD_LEADER ] = _("The armor hides his body.");
 
-    character_descriptions [ PERSON_STANDARD_MS_FACILITY_GATE_GUARD ] = "The armor hides his body.";
+    character_descriptions [ PERSON_STANDARD_MS_FACILITY_GATE_GUARD ] = _("The armor hides his body.");
 
-    character_descriptions [ PERSON_MS_FACILITY_GATE_GUARD_LEADER ] = "The armor hides his body.";
+    character_descriptions [ PERSON_MS_FACILITY_GATE_GUARD_LEADER ] = _("The armor hides his body.");
 
     /*
     Note: Those are not used in the game.
@@ -1696,7 +1697,7 @@ PrepareStartOfNewCharacter ( void )
     //--------------------
     // We also load the comment for the influencer to say at the beginning of the mission
     //
-    Me [ 0 ] . TextToBeDisplayed = "Huh? What?  Where am I?" ;
+    Me [ 0 ] . TextToBeDisplayed = _("Huh? What?  Where am I?");
     Me [ 0 ] . TextVisibleTime = 0;
     
     //--------------------
@@ -1762,7 +1763,7 @@ PrepareStartOfNewCharacter ( void )
     Me [ 0 ] . readied_skill = 0;
     Me [ 0 ] . walk_cycle_phase = 0 ;
     // CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-    Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+    Me [ 0 ] . TextToBeDisplayed = _("Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.");
     
     //--------------------
     // None of the inventory slots like currently equipped weapons
@@ -1831,11 +1832,11 @@ PrepareStartOfNewCharacter ( void )
     // take a little time.  Therefore we print some message so the user will not
     // panic and push the reset button :)
     //
-    PutStringFont ( Screen , Menu_BFont , ( GameConfig . screen_width / 2 ) - 180 , ( GameConfig . screen_height / 2 ) - 70 , "Updating Tux images" );
-    PutStringFont ( Screen , Menu_BFont , ( GameConfig . screen_width / 2 ) - 250 , ( GameConfig . screen_height / 2 ) - 30 , "(this may take a little while...)" );
+    PutStringFont ( Screen , Menu_BFont , ( GameConfig . screen_width / 2 ) - 180 , ( GameConfig . screen_height / 2 ) - 70 , _("Updating Tux images") );
+    PutStringFont ( Screen , Menu_BFont , ( GameConfig . screen_width / 2 ) - 250 , ( GameConfig . screen_height / 2 ) - 30 , _("(this may take a little while...)") );
     our_SDL_flip_wrapper ( Screen );
     
-    append_new_game_message ( "Starting new game." );
+    append_new_game_message ( _("Starting new game.") );
 
 }; // void PrepareStartOfNewCharacter ( char* MissionName )
 
@@ -1986,9 +1987,14 @@ InitFreedroid ( void )
 
 #ifndef __WIN32__
 #ifdef HAVE_LOCALE_H
+#include <locale.h>
     //--------------------
     // Portable localization
-    setlocale(LC_ALL, "C");
+	setlocale(LC_COLLATE, "C");
+	setlocale(LC_CTYPE, "C");
+	setlocale(LC_MONETARY, "C");
+	setlocale(LC_NUMERIC, "C");
+	setlocale(LC_TIME, "C");
 #endif
 #endif
 
@@ -2042,7 +2048,7 @@ InitFreedroid ( void )
     Me [ 0 ] . readied_skill = 0;
     Me [ 0 ] . walk_cycle_phase = 0 ;
     CurLevel = NULL;  // please leave this here.  It indicates, that the map is not yet initialized!!!
-    Me [ 0 ] . TextToBeDisplayed = "Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.";
+    Me [ 0 ] . TextToBeDisplayed = _("Linux Kernel booted.  001 transfer-tech modules loaded.  System up and running.");
     
     // --------------------
     //
@@ -2188,7 +2194,7 @@ ThouArtDefeated (void)
 
     DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
     Me [ 0 ] . status = INFOUT ;
-    append_new_game_message ( "Game over.\n" );
+    append_new_game_message ( _("Game over.\n") );
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;
     GameConfig . Mission_Log_Visible = FALSE;
@@ -2292,7 +2298,7 @@ ThouHastWon (void)
 
     DebugPrintf ( 1 , "\n%s(): Real function call confirmed." , __FUNCTION__ );
     Me [ 0 ] . status = INFOUT ;
-    append_new_game_message ( "Game won.\n" );
+    append_new_game_message ( _("Game won.\n") );
     GameConfig . Inventory_Visible = FALSE;
     GameConfig . CharacterScreen_Visible = FALSE;
     GameConfig . Mission_Log_Visible = FALSE;

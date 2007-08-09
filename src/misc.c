@@ -37,6 +37,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 //--------------------
 // This header file is needed
@@ -797,7 +798,7 @@ Pause ( void )
     
     Me [ 0 ] . status = PAUSE;
     AssembleCombatPicture ( DO_SCREEN_UPDATE | USE_OWN_MOUSE_CURSOR );
-    append_new_game_message ( "Pausing game..." );
+    append_new_game_message ( _("Pausing game...") );
     while ( PPressed () )
 	SDL_Delay (1); /* Wait for the pause key to be released */
 
@@ -808,7 +809,7 @@ Pause ( void )
 	DisplayBanner ( );
 	AssembleCombatPicture ( USE_OWN_MOUSE_CURSOR );
 /*	CenteredPutStringFont ( Screen , Message_BFont , 200 , "G A M E     P A U S E D" ) ;*/
-	CenteredPutStringFont ( Screen , Menu_BFont , 200 , "GAME PAUSED" ) ;
+	CenteredPutStringFont ( Screen , Menu_BFont , 200 , _("GAME PAUSED") );
 	our_SDL_flip_wrapper ( Screen );
 	
 	if ( CPressed ( ) )
@@ -838,7 +839,7 @@ Pause ( void )
 	
     } // while (Pause) 
 
-    append_new_game_message ( "Game resumed." );
+    append_new_game_message ( _("Game resumed.") );
     return;
 
 }; // void Pause ( void ) 
@@ -1464,7 +1465,7 @@ This indicates an error in the map system of Freedroid.",
     
     if ( with_sound_and_fading ) 
     {
-	sprintf ( game_message_text , "Arrived at %s." , curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> Levelname );
+	sprintf ( game_message_text , _("Arrived at %s.") , curShip . AllLevels [ Me [ PlayerNum ] . pos . z ] -> Levelname );
 	append_new_game_message ( game_message_text );
 	AssembleCombatPicture ( SHOW_ITEMS | USE_OWN_MOUSE_CURSOR ); 
 	//our_SDL_flip_wrapper ( Screen );

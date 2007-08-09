@@ -34,6 +34,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #ifndef SDL_BUTTON_WHEELUP 
 #define SDL_BUTTON_WHEELUP 4
@@ -421,13 +422,13 @@ automap_keyboard_handling ( void )
 	    if ( Me [ 0 ] . map_maker_is_present )
 	    {
 		if ( GameConfig.Automap_Visible )
-		    append_new_game_message ( "Automap ON." );
+		    append_new_game_message ( _("Automap ON.") );
 		else
-		    append_new_game_message ( "Automap OFF." );
+		    append_new_game_message ( _("Automap OFF.") );
 	    }
 	    else
 	    {
-		append_new_game_message ( "Sorry, you don't have automap yet:  map maker item not present." );
+		append_new_game_message ( _("Sorry, you don't have automap yet:  map maker item not present."));
 	    }
 
 	    //--------------------

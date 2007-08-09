@@ -34,6 +34,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #define ITEM_TAKE_DIST (1.2)
 
@@ -1607,7 +1608,7 @@ ApplyItem( item* CurItem )
     if ( ItemMap[ CurItem->type ] . item_can_be_applied_in_combat == FALSE ) 
     {
 	Me [ 0 ] . TextVisibleTime = 0;
-	Me [ 0 ] . TextToBeDisplayed = "I can't use this item here.";
+	Me [ 0 ] . TextToBeDisplayed = _("I can't use this item here.");
 	return;
     }
 
@@ -1620,26 +1621,26 @@ ApplyItem( item* CurItem )
     if ( Me [ 0 ] . busy_time > 0 )
 	{	
 	char msg[500];
-	sprintf(msg, "How do you expect to do two things at a time? You are ");
+	sprintf(msg, _("How do you expect to do two things at a time? You are "));
 		switch ( Me [ 0 ] . busy_type ) 
 			{
 			case DRINKING_POTION:
-				strcat(msg, "drinking a potion!");
+				strcat(msg, _("drinking a potion!"));
 				break;
 			case WEAPON_FIREWAIT:
-				strcat(msg, "waiting for you weapon to fire again!");
+				strcat(msg, _("waiting for you weapon to fire again!"));
 				break;
 			case WEAPON_RELOAD:
-				strcat(msg, "reloading your weapon!");
+				strcat(msg, _("reloading your weapon!"));
 				break;
 			case THROWING_GRENADE:
-				strcat(msg, "throwing a grenade!");
+				strcat(msg, _("throwing a grenade!"));
 				break;
 			case RUNNING_PROGRAM:
-				strcat(msg, "running a program!");
+				strcat(msg, _("running a program!"));
 				break;
 			default : 
-				strcat(msg, "doing something so weird the game does not understand what it is");
+				strcat(msg, _("doing something so weird the game does not understand what it is"));
 			}
 	append_new_game_message(msg);
 	return; //if the player is busy reloading or anything
@@ -2693,7 +2694,7 @@ handle_player_identification_command( )
     //
     if ( ! GameConfig.Inventory_Visible ) 
 	{
-	append_new_game_message("Identified air.");
+	append_new_game_message(_("Identified air."));
 	return;
 	}
 
@@ -2732,9 +2733,9 @@ handle_player_identification_command( )
 
 
     if ( GrabbedItem == NULL )
-	append_new_game_message("Identified air.");
+	append_new_game_message(_("Identified air."));
     else if ( ! GrabbedItem -> type || GrabbedItem -> type == -1)
-	append_new_game_message("Identified air.");
+	append_new_game_message(_("Identified air."));
     else
 	{
 	char gmsg[500];
@@ -2753,13 +2754,13 @@ handle_player_identification_command( )
 	    if ( GrabbedItem -> is_identified == TRUE )
 	    {
 		PlayOnceNeededSoundSample ( "effects/is_already_indentif.ogg" , FALSE , FALSE );
-		sprintf(gmsg, "You already know all there is to know about the %s.", iname);
+		sprintf(gmsg, _("You already know all there is to know about the %s."), iname);
 	    }
 	    else
 	    {
                 GrabbedItem -> is_identified = TRUE ;
 		Play_Spell_ForceToEnergy_Sound( );
-		sprintf(gmsg, "Identified %s", iname);
+		sprintf(gmsg, _("Identified %s"), iname);
 	    }
 	append_new_game_message(gmsg);
 	}
@@ -3171,7 +3172,7 @@ HandleInventoryScreen ( void )
 					MakeHeldFloorItemOutOf( & ( Me [ 0 ] . shield_item ) ) ;
 					}
 				else    {
-					append_new_game_message("Two-handed weapon requirements not met: shield bonus doesn't count.");
+					append_new_game_message(_("Two-handed weapon requirements not met: shield bonus doesn't count."));
                                         Me [ 0 ] . shield_item . type = shield_item_type;
 					}
 			    }
@@ -3194,7 +3195,7 @@ HandleInventoryScreen ( void )
 	    }
 	    else
 	    {
-		append_new_game_message("You cannot fight with this!");
+		append_new_game_message(_("You cannot fight with this!"));
 		// If the item can't be used as a weapon, we don't do anything
 	    }
 	}
@@ -3290,7 +3291,7 @@ HandleInventoryScreen ( void )
 				MakeHeldFloorItemOutOf( & ( Me [ 0 ] . weapon_item ) ) ;
 				}
 			    else    {
-				append_new_game_message("Shield requirements not met: two-handed weapon bonus doesn't count.");
+				append_new_game_message(_("Shield requirements not met: two-handed weapon bonus doesn't count."));
                                 Me [ 0 ] . weapon_item . type = weapon_item_type;
 				}
 			}
@@ -3515,7 +3516,7 @@ raw_move_picked_up_item_to_entry ( item* ItemPointer , item* TargetPointer , poi
     
     // We announce that we have taken the item
     Me [ 0 ] . TextVisibleTime = 0;
-    sprintf ( TempText , "Item taken: %s." , ItemMap[ ItemPointer->type ].item_name );
+    sprintf ( TempText , _("Item taken: %s."), ItemMap[ ItemPointer->type ].item_name );
     append_new_game_message ( TempText ); // this can be freed/destroyed afterwards.  it's ok.
     Me [ 0 ] . TextToBeDisplayed = MyMalloc ( strlen( TempText ) + 1 );
     strcpy ( Me [ 0 ] . TextToBeDisplayed , TempText );
@@ -3579,7 +3580,7 @@ place_item_on_this_position_if_you_can ( item* ItemPointer , point Inv_Loc , int
     if ( ( InvPos >= MAX_ITEMS_IN_INVENTORY -1 ) || ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) ) )
     {
 	Me [ 0 ] . TextVisibleTime = 0;
-	Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
+	Me [ 0 ] . TextToBeDisplayed = _("I can't carry any more.");
 	CantCarrySound();
 	// can't take any more items,
     }
@@ -3753,7 +3754,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     if ( Me[0].Inventory[ InvPos ].inventory_position.x == (-1) )
     {
 	Me [ 0 ] . TextVisibleTime = 0;
-	Me [ 0 ] . TextToBeDisplayed = "I can't carry any more.";
+	Me [ 0 ] . TextToBeDisplayed = _("I can't carry any more.");
 	CantCarrySound();
 	return 1;
     }

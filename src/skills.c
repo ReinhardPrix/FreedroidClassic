@@ -35,6 +35,7 @@
 #include "struct.h"
 #include "global.h"
 #include "proto.h"
+#include "lang.h"
 
 #define CLASS_X 175
 
@@ -705,10 +706,10 @@ ShowSkillsScreen ( void )
 	//--------------------
 	// Now we write the competence of the players character in that skill to the screen
 	//
-	sprintf( CharText , "Program revision: %d " , Me[0].SkillLevel[ SkillOfThisSlot ] );
+	sprintf( CharText , _("Program revision: %d "), Me[0].SkillLevel[ SkillOfThisSlot ] );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * ( 64 + INTER_SKILLRECT_DIST ) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
-	sprintf( CharText , "Heat produced: %d " ,   calculate_program_heat_cost ( SkillOfThisSlot )  );
+	sprintf( CharText , _("Heat produced: %d "),   calculate_program_heat_cost ( SkillOfThisSlot )  );
 	DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
 		     FIRST_SKILLRECT_Y + i * (64 + INTER_SKILLRECT_DIST) + SkillScreenRect.y + 3 * FontHeight( GetCurrentFont() ) , &SkillScreenRect , TEXT_STRETCH );
 	

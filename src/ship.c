@@ -42,6 +42,7 @@
 #include "global.h"
 #include "proto.h"
 #include "SDL_rotozoom.h"
+#include "lang.h"
 
 enum 
   {
@@ -56,9 +57,9 @@ int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVE
 
 void ShowDroidPicture (int PosX, int PosY, int Number );
 
-char *EmailText1 = "Hello Tux!\n\nHello Tux!\nI'm glad to see you alive and moving again.\nYour awakening has stirred considerable amounts of dicsussion within our group, but it's a bit too early to disclose anything yet.\nAnyway, we're glad you're back.";
+char *EmailText1 = N_("Hello Tux!\n\nHello Tux!\nI'm glad to see you alive and moving again.\nYour awakening has stirred considerable amounts of dicsussion within our group, but it's a bit too early to disclose anything yet.\nAnyway, we're glad you're back.");
 
-char *EmailText2 = "The FreedroidRPG maps are currently full of bugs.\n\nBut that's only the start of our problems.\nWe also need more characters, maps and story and quests.\nPlease take a look at he 'contribute' section of the main menu to see on what ways you could aid the FreedroidRPG development team.\n\nThanks a lot and see ya, the FreedroidRPG dev team.";
+char *EmailText2 = N_("The FreedroidRPG maps are currently full of bugs.\n\nBut that's only the start of our problems.\nWe also need more characters, maps and story and quests.\nPlease take a look at he 'contribute' section of the main menu to see on what ways you could aid the FreedroidRPG development team.\n\nThanks a lot and see ya, the FreedroidRPG dev team.");
 
 /* ----------------------------------------------------------------------
  * This function does the item show when the user has selected item
@@ -78,8 +79,8 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
     // int ClearanceIndex = (-1) ;
     int IdentifyAllowed = FALSE ;
     char* MenuTexts[ 10 ];
-    MenuTexts[0]="Yes";
-    MenuTexts[1]="No";
+    MenuTexts[0]=_("Yes");
+    MenuTexts[1]=_("No");
     MenuTexts[2]="";
     
     //--------------------
@@ -94,9 +95,9 @@ GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVENTOR
     
     if ( ShowPointerList[0] == NULL )
     {
-	MenuTexts[0]=" BACK ";
+	MenuTexts[0]=_(" BACK ");
 	MenuTexts[1]="";
-	DoMenuSelection ( " YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. " , 
+	DoMenuSelection ( _(" YOU DONT HAVE ANYTHING IN INVENTORY, THAT COULD BE VIEWED. "), 
 			  MenuTexts, 1 , -1 , NULL );
 	return (-1) ;
     }
@@ -234,30 +235,30 @@ ShowDroidInfo ( int droidtype, int Displacement , char ShowArrows )
     CutDownStringToMaximalSize ( TextChunk , 225 );
     PutString ( Screen , 330 * GameConfig . screen_width / 640 , 38 * GameConfig . screen_height / 480 , TextChunk );
     
-    sprintf( InfoText, "\
+    sprintf( InfoText, _("\
 Unit type %s - %s\n\
 Entry : %d\n\
 Class : %s\n\
 Drive : %s \n\
-Brain : %s", Druidmap[droidtype].druidname, Classname[Druidmap[ droidtype ].class],
-	     droidtype+1, Classes[Druidmap[droidtype].class],
+Brain : %s"), Druidmap[droidtype].druidname, _(Classname[Druidmap[ droidtype ].class]),
+	     droidtype+1, _(Classes[Druidmap[droidtype].class]),
 	     ItemMap [ Druidmap[ droidtype ].drive_item.type ].item_name,
-	     Brainnames[ Druidmap[droidtype].brain ]);
+	     _(Brainnames[ Druidmap[droidtype].brain ]));
     
     if ( (type = Druidmap[droidtype].weapon_item.type) >= 0) // make sure item=-1 
 	item_name = ItemMap[type].item_name;                 // does not segfault 
     else 
 	item_name = "none";
     
-    sprintf( TextChunk , "\nArmamant : %s\n\
-Sensors  1: %s\n          2: %s\n          3: %s", 
+    sprintf( TextChunk , _("\nArmamant : %s\n\
+Sensors  1: %s\n          2: %s\n          3: %s"),
 	     item_name,
-	     Sensornames[ Druidmap[droidtype].sensor1 ],
-	     Sensornames[ Druidmap[droidtype].sensor2 ],
-	     Sensornames[ Druidmap[droidtype].sensor3 ]);
+	     _(Sensornames[ Druidmap[droidtype].sensor1 ]),
+	     _(Sensornames[ Druidmap[droidtype].sensor2 ]),
+	     _(Sensornames[ Druidmap[droidtype].sensor3 ]));
     strcat ( InfoText , TextChunk );
     
-    sprintf ( TextChunk , "\nNotes: %s\n", Druidmap[droidtype].notes);
+    sprintf ( TextChunk , _("\nNotes: %s\n"), Druidmap[droidtype].notes);
     strcat ( InfoText , TextChunk );
     
     SetCurrentFont( FPS_Display_BFont );
@@ -570,7 +571,7 @@ write_full_item_name_into_string ( item* ShowItem , char* full_item_name )
   if ( ( ( ShowItem -> suffix_code != (-1) ) || ( ShowItem -> prefix_code != (-1) ) ) && ( ! ShowItem -> is_identified ) )
     {
       strcat ( full_item_name , font_switchto_red );
-      strcat ( full_item_name , " (Unidentified)" );
+      strcat ( full_item_name , _(" (Unidentified)"));
     }
 
   //--------------------
@@ -614,21 +615,21 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     // Now we can display the rest of the smaller-font item description.
     //
     if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_weapon_slot )
-	ClassString = "Weapon" ;
+	ClassString = _("Weapon");
     else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_drive_slot )
-	ClassString = "Drive" ; 
+	ClassString = _("Drive"); 
     else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_armour_slot )
-	ClassString = "Armour" ; 
+	ClassString = _("Armour"); 
     else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_shield_slot )
-	ClassString = "Shield" ; 
+	ClassString = _("Shield"); 
     else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_special_slot )
-	ClassString = "Helm" ; 
+	ClassString = _("Helm"); 
     else if ( ItemMap [ ShowItem->type ] . item_can_be_installed_in_aux_slot )
-	ClassString = "Wristband/Collar" ; 
-    else ClassString = "Miscellaneous" ; 
+	ClassString = _("Wristband/Collar"); 
+    else ClassString = _("Miscellaneous"); 
     
     write_full_item_name_into_string ( ShowItem , TextChunk ) ;
-    sprintf( InfoText, "Item: %s \nClass: %s\n" , TextChunk , ClassString );
+    sprintf( InfoText, _("Item: %s \nClass: %s\n"), TextChunk , ClassString );
     
     if ( ( ShowItem->suffix_code != (-1) ) || ( ShowItem->prefix_code != (-1) ) )
     	{
@@ -642,7 +643,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 		tmp = strstr(tmp, " +");
 		strcpy(TextChunk, tmp);
 		}
-	    strcat( InfoText, "Specials:");
+	    strcat( InfoText, _("Specials:"));
 	    strcat( InfoText, font_switchto_red);
 	    strcat( InfoText, TextChunk);
 	    strcat( InfoText, "\n");
@@ -652,46 +653,46 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     
     if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
     {
-	strcat ( InfoText , "Multiplicity: " );
+	strcat ( InfoText , _("Multiplicity: "));
 	sprintf( TextChunk, "%d \n" , 
 		 (int)ShowItem->multiplicity );
 	strcat ( InfoText , TextChunk );
     }
     
-    strcat ( InfoText , "Duration: " );
+    strcat ( InfoText , _("Duration: "));
     if ( ShowItem->max_duration >= 0 )
 	sprintf( TextChunk, "%d / %d\n" , 
 		 (int)ShowItem->current_duration, 
 		 ShowItem->max_duration );
     else
-	sprintf( TextChunk, "Indestructible\n" );
+	sprintf( TextChunk, _("Indestructible\n"));
     strcat ( InfoText , TextChunk );
     
     if ( ! ItemMap [ ShowItem->type ] . item_can_be_applied_in_combat )
 	{
-	strcat ( InfoText , "Attributes required: " );
+	strcat ( InfoText , _("Attributes required: "));
     
 	if ( ( ItemMap [ ShowItem->type ] . item_require_strength == (-1) ) &&
 	 ( ItemMap [ ShowItem->type ] . item_require_dexterity == (-1) ) &&
 	 ( ItemMap [ ShowItem->type ] . item_require_magic == (-1) ) )
 	    {
-	    strcat ( InfoText , "NONE\n" );
+	    strcat ( InfoText , _("NONE\n"));
 	    }
 	else
 	    {
 	    if ( ItemMap [ ShowItem->type ] . item_require_strength > 0 )
 		{
-	        sprintf( TextChunk, "Str: %d " , ItemMap [ ShowItem->type ] . item_require_strength ) ;
+	        sprintf( TextChunk, _("Str: %d "), ItemMap [ ShowItem->type ] . item_require_strength ) ;
 	        strcat ( InfoText , TextChunk );
 		}
 	    if ( ItemMap [ ShowItem->type ] . item_require_dexterity > 0 )
 		{
-	        sprintf( TextChunk, "Dex: %d " , ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
+	        sprintf( TextChunk, _("Dex: %d "), ItemMap [ ShowItem->type ] . item_require_dexterity ) ;
 	        strcat ( InfoText , TextChunk );
 		}
             if ( ItemMap [ ShowItem->type ] . item_require_magic > 0 )
 		{
-	        sprintf( TextChunk, "Mag: %d " , ItemMap [ ShowItem->type ] . item_require_magic ) ;
+	        sprintf( TextChunk, _("Mag: %d "), ItemMap [ ShowItem->type ] . item_require_magic ) ;
                 strcat ( InfoText , TextChunk );
          	}
 	    strcat ( InfoText , "\n" );
@@ -714,7 +715,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
 	            case ITEM_SPELLBOOK_OF_RADIAL_PLASMA_WAVE:
 
 	                sprintf( TextChunk , "Spellcasting skill: %s\n " ,
-	                         AllSkillTexts [ required_spellcasting_skill_for_item ( ShowItem -> type ) ] );
+	                         _(AllSkillTexts [ required_spellcasting_skill_for_item ( ShowItem -> type ) ]));
 	                strcat( InfoText , TextChunk );
 	                sprintf( TextChunk , "Magic: %d\n " ,
 	                         required_magic_stat_for_next_level_and_item ( ShowItem -> type ) );
@@ -729,10 +730,10 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     // the repair price and the sell value
     if ( calculate_item_buy_price ( ShowItem ) )
 	{
-	sprintf( TextChunk, "Base list price: %ld\n", 
+	sprintf( TextChunk, _("Base list price: %ld\n"), 
 	     calculate_item_buy_price ( ShowItem ) ) ;
         strcat ( InfoText , TextChunk );
-        sprintf( TextChunk, "Sell value: %ld\n", 
+        sprintf( TextChunk, _("Sell value: %ld\n"), 
 	     calculate_item_sell_price ( ShowItem ) ) ;
         strcat ( InfoText , TextChunk );
         if ( ShowItem->current_duration == ShowItem->max_duration ||
@@ -740,12 +741,12 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
         	repairPrice = 0;
 	else
 	        repairPrice = calculate_item_repair_price ( ShowItem );
-        sprintf( TextChunk, "Repair cost: %ld\n", repairPrice );
+        sprintf( TextChunk, _("Repair cost: %ld\n"), repairPrice );
         strcat ( InfoText , TextChunk );
 	}
     else
 	{
-	sprintf( TextChunk, "Unsellable\n") ;
+	sprintf( TextChunk, _("Unsellable\n"));
         strcat ( InfoText , TextChunk );
 	}
   
@@ -754,7 +755,7 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     //
     if ( ItemMap [ ShowItem->type ] . base_item_gun_damage + ItemMap [ ShowItem->type ] . item_gun_damage_modifier > 0 )
     {
-	sprintf( TextChunk, "Damage: %d - %d\n" , 
+	sprintf( TextChunk, _("Damage: %d - %d\n"), 
 		 ItemMap [ ShowItem->type ] . base_item_gun_damage,
 		 ItemMap [ ShowItem->type ] . base_item_gun_damage + 
 		 ItemMap [ ShowItem->type ] . item_gun_damage_modifier );
@@ -763,38 +764,38 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     
     if ( ItemMap [ ShowItem->type ] . item_gun_recharging_time > 0 )
     {
-	sprintf( TextChunk, "Recharge time: %3.2f\n" , 
+	sprintf( TextChunk, _("Recharge time: %3.2f\n"), 
 		 ItemMap [ ShowItem->type ] . item_gun_recharging_time );
 	strcat ( InfoText , TextChunk );
     }
 
     if ( ItemMap [ ShowItem->type ] . item_gun_reloading_time > 0 )
     {
-	sprintf( TextChunk, "Time to reload ammo clip: %3.2f\n" , 
+	sprintf( TextChunk, _("Time to reload ammo clip: %3.2f\n"), 
 		 ItemMap [ ShowItem->type ] . item_gun_reloading_time );
 	strcat ( InfoText , TextChunk );
     }
     
     if ( ShowItem->ac_bonus > 0 )
     {
-	sprintf ( TextChunk, "Defense bonus: %d\n" , ShowItem->ac_bonus ) ;
+	sprintf ( TextChunk, _("Defense bonus: %d\n"), ShowItem->ac_bonus ) ;
 	strcat ( InfoText , TextChunk );
     }
     
-    sprintf ( TextChunk, "Notes: %s", 
+    sprintf ( TextChunk, _("Notes: %s"), 
 	      ItemMap [ ShowItem->type ] . item_description );
     strcat ( InfoText, TextChunk );
     
     switch ( ItemMap [ ShowItem->type ] . item_gun_use_ammunition )
     {
 	case ITEM_PLASMA_AMMUNITION:
-	    strcat ( InfoText, " This weapon requires standard plasma ammunition." );
+	    strcat ( InfoText, _(" This weapon requires standard plasma ammunition."));
 	    break;
 	case ITEM_LASER_AMMUNITION:
-	    strcat ( InfoText, " This weapon requires standard laser crystal ammunition." );
+	    strcat ( InfoText, _(" This weapon requires standard laser crystal ammunition."));
 	    break;
 	case ITEM_EXTERMINATOR_AMMUNITION:
-	    strcat ( InfoText, " This weapon requires standard exterminator ammunition spheres." );
+	    strcat ( InfoText, _(" This weapon requires standard exterminator ammunition spheres."));
 	    break;
 	default:
 	    break;

@@ -39,6 +39,7 @@
 #include "proto.h"
 #include "global.h"
 #include "SDL_rotozoom.h"
+#include "lang.h"
 
 int DisplayTextWithScrolling (char *Text, int startx, int starty, const SDL_Rect *clip , SDL_Surface* ScrollBackground , float text_stretch );
 
@@ -190,23 +191,23 @@ EnemyHitByBulletText( int Enum )
 	switch (MyRandom(4))
 	{
 	    case 0:
-		ThisRobot->TextToBeDisplayed="Unhandled exception fault.  Press ok to reboot.";
+		ThisRobot->TextToBeDisplayed=_("Unhandled exception fault.  Press ok to reboot.");
 		break;
 	    case 1:
-		ThisRobot->TextToBeDisplayed="System fault. Please buy a newer version.";
+		ThisRobot->TextToBeDisplayed=_("System fault. Please buy a newer version.");
 		break;
 	    case 2:
-		ThisRobot->TextToBeDisplayed="System error. Might be a virus.";
+		ThisRobot->TextToBeDisplayed=_("System error. Might be a virus.");
 		break;
 	    case 3:
-		ThisRobot->TextToBeDisplayed="System error. Pleae buy an upgrade from MS.";
+		ThisRobot->TextToBeDisplayed=_("System error. Please buy an upgrade from MS.");
 		break;
 	    case 4:
-		ThisRobot->TextToBeDisplayed="System error. Press any key to reboot.";
+		ThisRobot->TextToBeDisplayed=_("System error. Press any key to reboot.");
 		break;
 	}
     else
-	ThisRobot->TextToBeDisplayed="Aargh, I got hit.  Ugh, I got a bad feeling...";
+	ThisRobot->TextToBeDisplayed=_("Aargh, I got hit.  Ugh, I got a bad feeling...");
 }; // void EnemyHitByBullet( int Enum );
 
 /* ----------------------------------------------------------------------
@@ -224,17 +225,17 @@ EnemyInfluCollisionText ( int Enum )
     
     if ( ThisRobot->is_friendly )
     {
-	ThisRobot->TextToBeDisplayed="Ah, good, that we have an open collision avoiding standard, isn't it.";
+	ThisRobot->TextToBeDisplayed=_("Ah, good, that we have an open collision avoiding standard, isn't it.");
     }
     else
     {
 	switch ( MyRandom ( 1 ) )
 	{
 	    case 0:
-		ThisRobot->TextToBeDisplayed="Hey, I'm from MS! Walk outa my way!";
+		ThisRobot->TextToBeDisplayed=_("Hey, I'm from MS! Walk outa my way!");
 		break;
 	    case 1:
-		ThisRobot->TextToBeDisplayed="Hey, I know the big MS boss! You better go.";
+		ThisRobot->TextToBeDisplayed=_("Hey, I know the big MS boss! You better go.");
 		break;
 	}
     }
@@ -256,11 +257,11 @@ AddStandingAndAimingText ( int Enum )
     
     if ( ( fabsf ( Me [ 0 ] . speed . x ) < 1 ) && ( fabsf ( Me [ 0 ] . speed . y ) < 1 ) )
     {
-	ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
+	ThisRobot->TextToBeDisplayed=_("Yeah, stay like that, haha.");
     }
     else
     {
-	ThisRobot->TextToBeDisplayed="Stand still while I aim at you.";
+	ThisRobot->TextToBeDisplayed=_("Stand still while I aim at you.");
     }
     
 }; // void AddStandingAndAimingText( int Enum )
@@ -282,25 +283,25 @@ AddInfluBurntText( void )
     switch ( FinalTextNr )
     {
 	case 0:
-	    Me[0].TextToBeDisplayed="Aaarrgh, aah, that burnt me!";
+	    Me[0].TextToBeDisplayed=_("Aaarrgh, aah, that burnt me!");
 	    break;
 	case 1:
-	    Me[0].TextToBeDisplayed="Hell, that blast was hot!";
+	    Me[0].TextToBeDisplayed=_("Hell, that blast was hot!");
 	    break;
 	case 2:
-	    Me[0].TextToBeDisplayed="Ghaart, I hate to stain my chassis like that.";
+	    Me[0].TextToBeDisplayed=_("Ghaart, I hate to stain my chassis like that.");
 	    break;
 	case 3:
-	    Me[0].TextToBeDisplayed="Oh no!  I think I've burnt a cable!";
+	    Me[0].TextToBeDisplayed=_("Oh no!  I think I've burnt a cable!");
 	    break;
 	case 4:
-	    Me[0].TextToBeDisplayed="Oh no, my poor transfer connectors smolder!";
+	    Me[0].TextToBeDisplayed=_("Oh no, my poor transfer connectors smolder!");
 	    break;
 	case 5:
-	    Me[0].TextToBeDisplayed="I hope that didn't melt any circuits!";
+	    Me[0].TextToBeDisplayed=_("I hope that didn't melt any circuits!");
 	    break;
 	case 6:
-	    Me[0].TextToBeDisplayed="So that gives some more black scars on me ol' dented chassis!";
+	    Me[0].TextToBeDisplayed=_("So that gives some more black scars on me ol' dented chassis!");
 	    break;
 	default:
 	    printf("\nError in AddInfluBurntText! That shouldn't be happening.");
