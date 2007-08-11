@@ -43,12 +43,6 @@
 
 #define GOLD_Y 132
 
-#define STR_BASE_X 100
-#define STR_NOW_X 148
-#define STR_Y 143
-#define VIT_Y 227
-#define POINTS_Y 252
-
 #define BUTTON_MOD_X (-6)
 #define BUTTON_MOD_Y (-4)
 #define BUTTON_WIDTH 35
@@ -181,6 +175,15 @@ HandleCurrentlyActivatedSkill()
 	      return;
 	}
     Override_Power_Limit = 0;
+
+    switch ( SpellSkillMap [ Me [ 0 ] . readied_skill ] . form ) 
+	{
+	case PROGRAM_FORM_IMMEDIATE:
+	case PROGRAM_FORM_BULLET:
+	case PROGRAM_FORM_RADIAL:
+		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return;; break;
+	}
+
     DoSkill(Me [ 0 ] . readied_skill, SpellCost);
 
 return;    
@@ -196,7 +199,6 @@ DoSkill(int skill_index, int SpellCost)
     switch ( SpellSkillMap [ skill_index ] . form ) 
 	{
 	case PROGRAM_FORM_IMMEDIATE:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) goto done_handling_instant_hits;
 		index_of_droid_below_mouse_cursor = GetLivingDroidBelowMouseCursor ( 0 ) ;
 		if ( index_of_droid_below_mouse_cursor == ( -1 ) ) 
 			goto done_handling_instant_hits;
@@ -220,7 +222,6 @@ DoSkill(int skill_index, int SpellCost)
 		break;
 
 	case PROGRAM_FORM_BULLET:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return 0;
                 Me [ 0 ] . temperature += SpellCost;
 	
 		moderately_finepoint target_location;
@@ -244,7 +245,6 @@ DoSkill(int skill_index, int SpellCost)
 		return 1; //no extra effects
 
 	case PROGRAM_FORM_RADIAL:
-		if (! MouseCursorIsInUserRect ( GetMousePos_x() , GetMousePos_y() ) ) return 0;
 		Me [ 0 ] . temperature += SpellCost;
 		
 		int i,j;
