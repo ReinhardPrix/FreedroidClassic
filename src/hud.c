@@ -251,14 +251,16 @@ exist really (i.e. has a type = (-1) ).",
 	    else 
 		sprintf( linebuf , _(" Required strength: %d "), ItemMap[ CurItem->type ].item_require_strength );
 	    strcat( ItemDescText , linebuf );
+	    if ( ! ForShop ) strcat ( ItemDescText , "\n" );
 	}
 	if ( ItemMap[ CurItem->type ].item_require_dexterity != ( -1 ) )
 	{
 	    if ( ForShop )
 		sprintf( linebuf , _("   Dex: %d"),  ItemMap[ CurItem->type ].item_require_dexterity );
 	    else
-		sprintf( linebuf , _(" Dexterity: %d "),  ItemMap[ CurItem->type ].item_require_dexterity );
+		sprintf( linebuf , _(" Required dexterity: %d "),  ItemMap[ CurItem->type ].item_require_dexterity );
 	    strcat( ItemDescText , linebuf );
+	    if ( ! ForShop ) strcat ( ItemDescText , "\n" );
 	}
     }
     else if ( ItemMap [ CurItem->type ] . item_can_be_applied_in_combat )
