@@ -148,7 +148,7 @@ SForce: T=GUA X=35 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Param
 //--------------------
 // This is Ewald barkeeper character, who now inherits RMS's former place.
 //
-SForce: T=COO X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="EwaldStartGameSquare" RushTux="no" DialogSectionToUse="Ewald" ShortLabel="Ewald -- Barkeeper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=BAR X=26 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="EwaldStartGameSquare" RushTux="no" DialogSectionToUse="Ewald" ShortLabel="Ewald -- Barkeeper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 ** End of this levels droid data **
 

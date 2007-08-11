@@ -45,7 +45,6 @@ YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
 That will not cause any problems.  
 
 Droidname: 139
-Droid portrait file name (without extension) to use="139"
 Droid uses portrait rotation series with prefix="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
@@ -128,7 +127,6 @@ Now we come to the description of all the droids:
 
 ** Start of new Robot: ** 
 Droidname: 001
-Droid portrait file name (without extension) to use="001"
 Droid uses portrait rotation series with prefix="001"
 Maximum speed of this droid: 5.1
 Class of this droid: 0
@@ -166,7 +164,6 @@ Notes concerning this droid : Robot activity influence device. This helmet is se
 
 ** Start of new Robot: ** 
 Droidname: 123
-Droid portrait file name (without extension) to use="123"
 Droid uses portrait rotation series with prefix="123"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
@@ -206,7 +203,6 @@ Notes concerning this droid : simple rubbish diposal robot. Common device in mos
 
 ** Start of new Robot: ** 
 Droidname: 139
-Droid portrait file name (without extension) to use="139"
 Droid uses portrait rotation series with prefix="139"
 Maximum speed of this droid: 2.1
 Class of this droid: 1
@@ -245,7 +241,6 @@ Notes concerning this droid : created by Dr. Masternak to clean up large heaps o
 
 ** Start of new Robot: ** 
 Droidname: 247
-Droid portrait file name (without extension) to use="247"
 Droid uses portrait rotation series with prefix="247"
 Maximum speed of this droid: 5.1
 Class of this droid: 2
@@ -283,7 +278,6 @@ Notes concerning this droid : light duty servant robot. One of the first to use 
 
 ** Start of new Robot: ** 
 Droidname: 249
-Droid portrait file name (without extension) to use="249"
 Droid uses portrait rotation series with prefix="249"
 Maximum speed of this droid: 3.1
 Class of this droid: 2
@@ -321,7 +315,6 @@ Notes concerning this droid : cheaper version of the anti-grav servant robot.
 
 ** Start of new Robot: ** 
 Droidname: 296
-Droid portrait file name (without extension) to use="296"
 Droid uses portrait rotation series with prefix="296"
 Maximum speed of this droid: 2.1
 Class of this droid: 2
@@ -357,7 +350,6 @@ Notes concerning this droid : Run away! This bot will kill you!
 
 ** Start of new Robot: ** 
 Droidname: 302
-Droid portrait file name (without extension) to use="302"
 Droid uses portrait rotation series with prefix="302"
 Maximum speed of this droid: 6.1
 Class of this droid: 3
@@ -397,7 +389,6 @@ Notes concerning this droid : common device for moving small packages. Clamp is 
 
 ** Start of new Robot: ** 
 Droidname: 329
-Droid portrait file name (without extension) to use="329"
 Droid uses portrait rotation series with prefix="329"
 Maximum speed of this droid: 0.8
 Class of this droid: 3
@@ -434,7 +425,6 @@ Notes concerning this droid : early type messenger robot. Large wheels impede mo
 
 ** Start of new Robot: ** 
 Droidname: 420
-Droid portrait file name (without extension) to use="420"
 Droid uses portrait rotation series with prefix="420"
 Maximum speed of this droid: 2.1
 Class of this droid: 4
@@ -471,7 +461,6 @@ Notes concerning this droid : slow maintenance robot. Confined to drive maintena
 
 ** Start of new Robot: ** 
 Droidname: 476
-Droid portrait file name (without extension) to use="476"
 Droid uses portrait rotation series with prefix="476"
 Maximum speed of this droid: 3.1
 Class of this droid: 4
@@ -507,7 +496,6 @@ Notes concerning this droid : ship maintenance robot. Fitted with multiple arms 
 
 ** Start of new Robot: ** 
 Droidname: 493
-Droid portrait file name (without extension) to use="493"
 Droid uses portrait rotation series with prefix="493"
 Maximum speed of this droid: 3.1
 Class of this droid: 4
@@ -543,7 +531,6 @@ Notes concerning this droid : slave maintenance droid. Standard version will car
 
 ** Start of new Robot: ** 
 Droidname: 516
-Droid portrait file name (without extension) to use="516"
 Droid uses portrait rotation series with prefix="516"
 Maximum speed of this droid: 3.6
 Class of this droid: 5
@@ -579,7 +566,6 @@ Notes concerning this droid : early crew droid. Able to carry out simple flight 
 
 ** Start of new Robot: ** 
 Droidname: 571
-Droid portrait file name (without extension) to use="571"
 Droid uses portrait rotation series with prefix="571"
 Maximum speed of this droid: 4.1
 Class of this droid: 5
@@ -615,7 +601,6 @@ Notes concerning this droid : standard crew droid. Supplied with the ship.
 
 ** Start of new Robot: ** 
 Droidname: 598
-Droid portrait file name (without extension) to use="598"
 Droid uses portrait rotation series with prefix="598"
 Maximum speed of this droid: 3.1
 Class of this droid: 5
@@ -651,7 +636,6 @@ Notes concerning this droid : a highly sophisticated device. Able to control the
 
 ** Start of new Robot: ** 
 Droidname: 614
-Droid portrait file name (without extension) to use="614"
 Droid uses portrait rotation series with prefix="614"
 Maximum speed of this droid: 2.0
 Class of this droid: 6
@@ -687,7 +671,6 @@ Notes concerning this droid : low security sentinel droid. Used to protect areas
 
 ** Start of new Robot: ** 
 Droidname: 615
-Droid portrait file name (without extension) to use="615"
 Droid uses portrait rotation series with prefix="615"
 Maximum speed of this droid: 4.1
 Class of this droid: 6
@@ -723,7 +706,6 @@ Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by t
 
 ** Start of new Robot: ** 
 Droidname: 629
-Droid portrait file name (without extension) to use="629"
 Droid uses portrait rotation series with prefix="629"
 Maximum speed of this droid: 2.1
 Class of this droid: 6
@@ -759,7 +741,6 @@ Notes concerning this droid : low sentinel droid. Lasers are built into the turr
 
 ** Start of new Robot: ** 
 Droidname: 711
-Droid portrait file name (without extension) to use="711"
 Droid uses portrait rotation series with prefix="711"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
@@ -796,7 +777,6 @@ Notes concerning this droid : heavy duty battle droid. Disruptor is built into t
 
 ** Start of new Robot: ** 
 Droidname: 742
-Droid portrait file name (without extension) to use="742"
 Droid uses portrait rotation series with prefix="742"
 Maximum speed of this droid: 4.1
 Class of this droid: 7
@@ -832,7 +812,6 @@ Notes concerning this droid : this version is the one mainly used by the Militar
 
 ** Start of new Robot: ** 
 Droidname: 751
-Droid portrait file name (without extension) to use="751"
 Droid uses portrait rotation series with prefix="751"
 Maximum speed of this droid: 5.1
 Class of this droid: 7
@@ -868,7 +847,6 @@ Notes concerning this droid : very heavy duty battle droid. Only a few have so f
 
 ** Start of new Robot: ** 
 Droidname: 821
-Droid portrait file name (without extension) to use="821"
 Droid uses portrait rotation series with prefix="821"
 Maximum speed of this droid: 6.1
 Class of this droid: 8
@@ -905,7 +883,6 @@ Notes concerning this droid : a very reliable anti-grav unit is fitted into this
 
 ** Start of new Robot: ** 
 Droidname: 834
-Droid portrait file name (without extension) to use="834"
 Droid uses portrait rotation series with prefix="834"
 Maximum speed of this droid: 7.1
 Class of this droid: 8
@@ -940,7 +917,6 @@ Notes concerning this droid : early type anti-grav security droid. Fitted with a
 
 ** Start of new Robot: ** 
 Droidname: 883
-Droid portrait file name (without extension) to use="883"
 Droid uses portrait rotation series with prefix="883"
 Maximum speed of this droid: 2.1
 Class of this droid: 8
@@ -976,7 +952,6 @@ Notes concerning this droid : this droid was designed from archive data. For som
 
 ** Start of new Robot: ** 
 Droidname: 999
-Droid portrait file name (without extension) to use="999"
 Droid uses portrait rotation series with prefix="999"
 Maximum speed of this droid: 6.1
 Class of this droid: 9
@@ -1015,7 +990,6 @@ Notes concerning this droid : experimental command cyborg. Fitted with a new tip
 
 ** Start of new Robot: ** 
 Droidname: PRO
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1053,7 +1027,6 @@ Notes concerning this droid : This is a typical professor/sage character of some
 
 ** Start of new Robot: ** 
 Droidname: GUA
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1091,7 +1064,6 @@ Notes concerning this droid : This is a typical red (male) guard/fighter charact
 
 ** Start of new Robot: ** 
 Droidname: MUM
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 3.1
 Class of this droid: 18
@@ -1129,7 +1101,6 @@ Notes concerning this droid : This is the hot_mama shopkeeper character model.
 
 ** Start of new Robot: ** 
 Droidname: FSC
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 3.1
 Class of this droid: 18
@@ -1167,7 +1138,6 @@ Notes concerning this droid : This is the female scientist character model.  The
 
 ** Start of new Robot: ** 
 Droidname: WOR
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1205,7 +1175,6 @@ Notes concerning this droid : This is the brown worker model.  They are not arme
 
 ** Start of new Robot: ** 
 Droidname: GUB
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1243,7 +1212,6 @@ Notes concerning this droid : This is the blue guard model used e.g. for Darwin 
 
 ** Start of new Robot: ** 
 Droidname: GUG
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1281,7 +1249,6 @@ Notes concerning this droid : This is a typical green (male) guard/fighter chara
 
 ** Start of new Robot: ** 
 Droidname: COO
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 3.1
 Class of this droid: 18
@@ -1315,12 +1282,10 @@ Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 31
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : This is the colony cook character model.  They are not armed as powerfully as e.g. the red guards.
-
+Notes concerning this droid : This is the cook.
 
 ** Start of new Robot: ** 
 Droidname: KEV
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1358,7 +1323,6 @@ Notes concerning this droid : This is a typical professor/sage character of some
 
 ** Start of new Robot: ** 
 Droidname: JAS
-Droid portrait file name (without extension) to use="Chandra"
 Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
 Maximum speed of this droid: 6.1
 Class of this droid: 18
@@ -1393,6 +1357,45 @@ Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 33
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : This is a typical sex bomb.  This one is even armed.
+
+** Start of new Robot: ** 
+Droidname: BAR
+Droid uses portrait rotation series with prefix="NONE_AVAILABLE_YET"
+Maximum speed of this droid: 3.1
+Class of this droid: 18
+Maximum acceleration of this droid: 2.1
+Maximum energy of this droid: 100.1
+Maximum mana of this droid: 100.1
+Rate of healing: 15.1
+Weapon type this droid uses: 4
+Aggression rate of this droid: 92
+Physical (base) damage an attack of this droid will do: 10.0
+Experience_Reward gained for destroying one of this type: 200
+Monster Level and maximum treasure chest to pick from=4
+Range of vision of this droid=2
+Time spent eyeing Tux=3
+Minimal distance hostile bots are tolerated=6
+Drive of this droid : 2
+Brain of this droid : 2
+Sensor 1 of this droid : 2
+Sensor 3 of this droid : 3
+Drive item=7
+Weapon item=13
+Greeting Sound number=6
+Got Hit Sound number=-1
+Death sound file name="none"
+Attack animation sound file name="none"
+Chance of this robot scoring a hit=50
+Chance modifier, that this robot gets hit=30
+Time to recover after getting hit=0.30
+Armament of this droid : 1
+Advanced Fighting present in this droid : 1
+Is this 'droid' a human : 1
+Individual shape of this droid or just -1 for classic ball shaped : 34
+Going to request reinforcements typical for this droid : 0
+Notes concerning this droid : This is the bartender.
+
+
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
