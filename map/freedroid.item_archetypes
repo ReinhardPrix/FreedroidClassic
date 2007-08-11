@@ -1,45 +1,7 @@
 
-----------------------------------------------------------------------
- *
- *   Copyright (c) 2003, 2004 Johannes Prix
- *
- *
- *  This file is part of Freedroid
- *
- *  Freedroid is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  Freedroid is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
- *  MA  02111-1307  USA
- *
-----------------------------------------------------------------------
-
-This file was generated using the FreedroidRPG item editor.
-If you have questions concerning FreedroidRPG, please send mail to:
-
-freedroid-discussion@lists.sourceforge.net
-
-BEGIN OF AUTORS NOTES
-
-You can use this text field to make some notes on anything.  These otes will get saved with the dialog.
-This is intended purely for the author's reference when using the dialog editor, while the engine of the game itself will ignore this entry.
-
-END OF AUTORS NOTES
-
-
-
-----------------------------------------------------------------------
-----------------------------------------------------------------------
-----------------------------------------------------------------------
+Copyright (c) 2003, 2004 Johannes Prix
+Copyright (c) 2004-2007 Arthur Huillet
+Copyright (c) 2007 Karol Swietlicki
 
 *** Start of item data section: ***
 
@@ -1083,10 +1045,10 @@ Position_Y=309
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
-Item uses rotation series with prefix="laser_sword_green"
+Item uses rotation series with prefix="laser_dagger"
 Items of this type collect together in inventory="no"
 Base item duration=10 plus duration modifier=10
-File or directory name for inventory image="inventory_image_28.png"
+File or directory name for inventory image="laser_dagger/inv_image.png"
 inventory_size_y=2
 inventory_size_x=1
 Item uses drop sound with filename="drop_sword_sound.ogg"
@@ -2917,9 +2879,9 @@ Position_Y=309
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
-Item uses rotation series with prefix="laser_sword_green"
+Item uses rotation series with prefix="laser_dagger"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="inventory_image_28.png"
+File or directory name for inventory image="laser_dagger/inv_image.png"
 inventory_size_y=2
 inventory_size_x=2
 Item uses drop sound with filename="drop_sword_sound.ogg"
@@ -2956,9 +2918,9 @@ Position_Y=309
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="weapon"
-Item uses rotation series with prefix="laser_sword_green"
+Item uses rotation series with prefix="laser_dagger"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="inventory_image_28.png"
+File or directory name for inventory image="laser_dagger/inv_image.png"
 inventory_size_y=1
 inventory_size_x=1
 Item uses drop sound with filename="drop_sword_sound.ogg"
