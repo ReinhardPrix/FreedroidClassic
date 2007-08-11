@@ -980,7 +980,6 @@ PrepareMultipleChoiceDialog ( Enemy ChatDroid , int with_flip )
     // loaded....
     //
     make_sure_chat_portraits_loaded_for_this_droid ( ChatDroid ) ;
-    //make_sure_all_chat_portraits_are_loaded ( );
     
     //--------------------
     // We select small font for the menu interaction...
