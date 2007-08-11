@@ -4716,51 +4716,6 @@ FdFillRect (SDL_Rect rect, SDL_Color color)
 }; // void FillRect (SDL_Rect rect, SDL_Color color)
 
 /* ----------------------------------------------------------------------
- * This function displays a robot picture.  This does NOT mean a
- * robot picture like in combat but this means a finely renderd
- * artwork by bastian, that is displayed in the console if info
- * about a robot is requested.  The only parameters to this 
- * function are the position on the screen where to blit the 
- * picture and the number of the robot in the Druidmap *NOT*
- * in AllEnemys!!
- *
- * ---------------------------------------------------------------------- */
-void
-ShowRobotPicture (int PosX, int PosY, int Number )
-{
-    SDL_Surface *tmp;
-    SDL_Rect target;
-    char fpath[2048];
-    char fname[500];
-    
-    DebugPrintf ( 2 , "\n%s(): Function call confirmed." , __FUNCTION__ );
-    
-    // strcpy( fname, Druidmap[Number].druidname );
-    strcpy( fname, "droids/" );
-    strcat( fname, Druidmap[Number].portrait_filename_without_ext );
-    strcat( fname , "/portrait.png" );
-    DebugPrintf ( 2 , "\ntrying to load this: %s" , fname );
-    find_file (fname, GRAPHICS_DIR, fpath, 0);
-    
-    if ( (tmp=our_IMG_load_wrapper (fpath)) == NULL )
-    {
-	fprintf( stderr, "\n\nfpath '%s' SDL_GetError(): %s. \n" , fpath, SDL_GetError() );
-	GiveStandardErrorMessage ( __FUNCTION__  , "\
-A droid portrait failed to load.",
-				   PLEASE_INFORM, IS_FATAL );
-    }
-    
-    SDL_SetClipRect( Screen , NULL );
-    Set_Rect (target, PosX, PosY, GameConfig . screen_width, GameConfig . screen_height);
-    our_SDL_blit_surface_wrapper( tmp , NULL, Screen , &target);
-    
-    SDL_FreeSurface(tmp);
-    
-    DebugPrintf ( 2 , "\n%s(): Usual end of function reached." , __FUNCTION__ );
-
-}; // void ShowRobotPicture ( ... )
-
-/* ----------------------------------------------------------------------
  * When the inventory screen is visible, we do not only show the items
  * present in inventory, but we also show the inventory squares, that each
  * item in the item pool takes away for storage.  This function blits a

@@ -1036,13 +1036,6 @@ Get_Robot_Data ( void* DataPointer )
 	ReadAndMallocStringFromData ( RobotPointer , DROIDNAME_BEGIN_STRING , "\n" ) ;
 
       //--------------------
-      // Now we read in the file name of the portrait file for this droid.  
-      // Is should be enclosed in double-quotes.
-      //
-      Druidmap[RobotIndex].portrait_filename_without_ext =
-	ReadAndMallocStringFromData ( RobotPointer , PORTRAIT_FILENAME_WITHOUT_EXT , "\"" ) ;
-
-      //--------------------
       // Now we read in the prefix of the file names in the rotation series
       // to use for the console droid rotation
       Druidmap [ RobotIndex ] . droid_portrait_rotation_series_prefix =

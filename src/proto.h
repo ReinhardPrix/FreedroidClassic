@@ -155,7 +155,6 @@ EXTERN void PutItem ( int ItemNumber , int mask , int put_thrown_items_flag , in
 EXTERN void PutBlast (int);
 EXTERN void PutEnemy (int Enum, int x , int y , int mask , int highlight );
 EXTERN void PutMouseMoveCursor ( void ) ;
-EXTERN void ShowRobotPicture (int PosX, int PosY, int Number);
 EXTERN void ShowInventoryScreen ( void );
 EXTERN void clear_all_loaded_tux_images ( int with_free );
 EXTERN int set_rotation_index_for_this_robot ( enemy* ThisRobot );

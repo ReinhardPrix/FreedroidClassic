@@ -520,7 +520,6 @@ typedef struct
 typedef struct
 {
     char *druidname;
-    char *portrait_filename_without_ext;
     char *droid_portrait_rotation_series_prefix;
     char *droid_death_sound_file_name;
     char *droid_attack_animation_sound_file_name;
