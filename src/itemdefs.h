@@ -234,7 +234,7 @@
 // again, to indicate, that no shield can be used in conjunction with
 // such a 2-handed weapon.
 //
-#define SHIELD_RECT_WIDTH 67
+#define SHIELD_RECT_WIDTH 70
 #define SHIELD_RECT_HEIGHT 112
 #define SHIELD_RECT_X 230
 #define SHIELD_RECT_Y 116
