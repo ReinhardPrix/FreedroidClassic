@@ -20,7 +20,7 @@ Present at startup=1
 
 ** Start of new program specification subsection **
 Program name="Use weapon"  
-Program description="Using this skill allows you to force at attack on something. You can attack friendly targets by using it."
+Program description="Using this skill allows you to force an attack on something. You can attack friendly targets by using it."
 Picture="WeaponSkill.png"
 Form="immediate"
 Cost=0
