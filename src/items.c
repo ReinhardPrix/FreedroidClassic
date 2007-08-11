@@ -756,7 +756,6 @@ find_suitable_bonus_for_item ( int drop_item_type , int TreasureChestRange, item
 	i ++;
 	}    
 
-
     int pick = MyRandom(bcount);
 
     i = 0;
@@ -766,11 +765,15 @@ find_suitable_bonus_for_item ( int drop_item_type , int TreasureChestRange, item
 		{
 		pick--;
 	//	if(!pick) printf("Returning bonus %i\n", i);
-		if(!pick) return i;
+		if(pick <= 0) return i;
 		}
 	i ++;
 
 	}
+
+
+fprintf(stderr,  "Could not find a bonus for item type %d, treasure chest %d, in bonus list %p starting with bonus name %s\n", drop_item_type, 
+TreasureChestRange, btype, btype[0].bonus_name);
 
 return 0; //by default, return bonus number 0
 }; // int find_suitable_bonus_for_item ( int drop_item_type , int TreasureChestRange, item_bonus * btype )
