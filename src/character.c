@@ -345,8 +345,8 @@ DisplayButtons( void )
 int
 CursorIsOnStrButton( int x , int y )
 {
-    if ( x > CharacterRect.x + BUTTON_MOD_X + STR_NOW_X + BUTTON_WIDTH ) return ( FALSE );
-    if ( x < CharacterRect.x + BUTTON_MOD_X + STR_NOW_X ) return ( FALSE );
+    if ( x > CharacterRect.x + BUTTON_MOD_X + STR_X + BUTTON_WIDTH ) return ( FALSE );
+    if ( x < CharacterRect.x + BUTTON_MOD_X + STR_X ) return ( FALSE );
     if ( y > CharacterRect.y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
     if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
     return ( TRUE );
@@ -978,42 +978,38 @@ ShowCharacterScreen ( int player_num )
     DisplayText( CharText , 110 + CharacterRect.x , 70 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     // Me[0].Experience = RealScore;
-    sprintf( CharText , "%d", Me[0].Experience ); // this should be the real score, sooner or later
+    sprintf( CharText , "%lu", Me[0].Experience ); // this should be the real score, sooner or later
     DisplayText( CharText , 110 + CharacterRect.x ,  90 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%d", Me[0].ExpRequired );
+    sprintf( CharText , "%lu", Me[0].ExpRequired );
     DisplayText( CharText , 110 + CharacterRect.x ,  107 + CharacterRect.y , &CharacterRect , TEXT_STRETCH ) ;
     
     sprintf( CharText , "%6ld", Me[0].Gold ); 
     DisplayText( CharText , 240 + CharacterRect.x ,  71 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
-    sprintf( CharText , "%d", Me[0].base_strength );
-    DisplayText( CharText , STR_BASE_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    sprintf( CharText , "%d", Me[0].Strength );
-    if ( Me[0].Strength != Me[0].base_strength ) SetCurrentFont( Red_BFont) ;
-    DisplayText( CharText , STR_NOW_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d", Me[0].Strength);
+    if ( Me[0].Strength != Me[0].base_strength ) 
+	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Strength - Me[0].base_strength); 
+    DisplayText( CharText , STR_X + CharacterRect.x , STR_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
-    sprintf( CharText , "%d", Me[0].base_magic );
-    DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Magic );
-    if ( Me[0].Magic != Me[0].base_magic ) SetCurrentFont( Red_BFont) ;
-    DisplayText( CharText , 148 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    if ( Me[0].Magic != Me[0].base_magic ) 
+	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Magic - Me[0].base_magic); 
+    DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
-    sprintf( CharText , "%d", Me[0].base_dexterity );
-    DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Dexterity );
-    if ( Me[0].Dexterity != Me[0].base_dexterity ) SetCurrentFont( Red_BFont) ;
-    DisplayText( CharText , 148 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    if ( Me[0].Dexterity != Me[0].base_dexterity ) 
+	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Dexterity - Me[0].base_dexterity); 
+    DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
-    sprintf( CharText , "%d", Me[0].base_vitality );
-    DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     sprintf( CharText , "%d", Me[0].Vitality );
-    if ( Me[0].Vitality != Me[0].base_vitality ) SetCurrentFont( Red_BFont) ;
-    DisplayText( CharText , 148 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    if ( Me[0].Vitality != Me[0].base_vitality ) 
+	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Vitality - Me[0].base_vitality); 
+    DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].points_to_distribute );
