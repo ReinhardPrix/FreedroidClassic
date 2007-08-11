@@ -964,7 +964,6 @@ Get_Robot_Data ( void* DataPointer )
 #define DROID_ATTACK_ANIMATION_SOUND_FILE_NAME "Attack animation sound file name=\""
 #define TO_HIT_STRING "Chance of this robot scoring a hit="
 #define GETTING_HIT_MODIFIER_STRING "Chance modifier, that this robot gets hit="
-#define ADVANCED_FIGHTING_BEGIN_STRING "Advanced Fighting present in this droid : "
 #define IS_HUMAN_SPECIFICATION_STRING "Is this 'droid' a human : "
 #define INDIVIDUAL_SHAPE_SPECIFICATION_STRING "Individual shape of this droid or just -1 for classic ball shaped : "
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
@@ -1194,10 +1193,6 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the modifier, that increases/decreases the chance of this robot getting hit
       ReadValueFromString( RobotPointer , "Time to recover after getting hit=" , "%lf" , 
 			   &Druidmap[RobotIndex] . recover_time_after_getting_hit , EndOfDataPointer );
-
-      // Now we read in the AdvancedFighing flag of this droid type
-      ReadValueFromString( RobotPointer , ADVANCED_FIGHTING_BEGIN_STRING , "%d" , 
-			   &Druidmap[RobotIndex].advanced_behaviour , EndOfDataPointer );
 
       // Now we read in the is_human flag of this droid type
       ReadValueFromString( RobotPointer , IS_HUMAN_SPECIFICATION_STRING , "%d" , 

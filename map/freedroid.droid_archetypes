@@ -89,7 +89,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 2
 Going to request reinforcements typical for this droid : 0
@@ -156,7 +155,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 0
 Going to request reinforcements typical for this droid : 0
@@ -195,7 +193,6 @@ Attack animation sound file name="death_sound_123.ogg"
 Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 1
 Going to request reinforcements typical for this droid : 0
@@ -233,7 +230,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=60
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 2
 Going to request reinforcements typical for this droid : 0
@@ -270,7 +266,6 @@ Attack animation sound file name="death_sound_247.ogg"
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=20
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 3
 Going to request reinforcements typical for this droid : 0
@@ -307,7 +302,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=82
 Chance modifier, that this robot gets hit=10
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 4
 Going to request reinforcements typical for this droid : 0
@@ -342,7 +336,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 5
 Going to request reinforcements typical for this droid : 0
@@ -381,7 +374,6 @@ Attack animation sound file name="death_sound_302.ogg"
 Chance of this robot scoring a hit=85
 Chance modifier, that this robot gets hit=-25
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 6
 Going to request reinforcements typical for this droid : 0
@@ -417,7 +409,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 7
 Going to request reinforcements typical for this droid : 0
@@ -453,7 +444,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 8
 Going to request reinforcements typical for this droid : 0
@@ -488,7 +478,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=70
 Chance modifier, that this robot gets hit=10
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 9
 Going to request reinforcements typical for this droid : 0
@@ -523,7 +512,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 10
 Going to request reinforcements typical for this droid : 0
@@ -558,7 +546,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 11
 Going to request reinforcements typical for this droid : 0
@@ -593,7 +580,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 12
 Going to request reinforcements typical for this droid : 0
@@ -628,7 +614,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 13
 Going to request reinforcements typical for this droid : 0
@@ -663,7 +648,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 14
 Going to request reinforcements typical for this droid : 0
@@ -698,7 +682,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 15
 Going to request reinforcements typical for this droid : 0
@@ -733,7 +716,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 16
 Going to request reinforcements typical for this droid : 0
@@ -769,7 +751,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=300
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 17
 Going to request reinforcements typical for this droid : 0
@@ -804,7 +785,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 18
 Going to request reinforcements typical for this droid : 0
@@ -839,7 +819,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=500
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 19
 Going to request reinforcements typical for this droid : 0
@@ -875,7 +854,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=800
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 20
 Going to request reinforcements typical for this droid : 0
@@ -909,7 +887,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=1000
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 21
 Going to request reinforcements typical for this droid : 0
@@ -944,7 +921,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=80
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 22
 Going to request reinforcements typical for this droid : 0
@@ -982,7 +958,6 @@ Attack animation sound file name="none"
 Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 0
 Individual shape of this droid or just -1 for classic ball shaped : 23
 Going to request reinforcements typical for this droid : 0
@@ -1019,7 +994,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 24
 Going to request reinforcements typical for this droid : 0
@@ -1056,7 +1030,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 25
 Going to request reinforcements typical for this droid : 0
@@ -1093,7 +1066,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 26
 Going to request reinforcements typical for this droid : 0
@@ -1130,7 +1102,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 27
 Going to request reinforcements typical for this droid : 0
@@ -1167,7 +1138,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 28
 Going to request reinforcements typical for this droid : 0
@@ -1204,7 +1174,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 29
 Going to request reinforcements typical for this droid : 0
@@ -1241,7 +1210,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 30
 Going to request reinforcements typical for this droid : 0
@@ -1278,7 +1246,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 31
 Going to request reinforcements typical for this droid : 0
@@ -1315,7 +1282,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 32
 Going to request reinforcements typical for this droid : 0
@@ -1352,7 +1318,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 33
 Going to request reinforcements typical for this droid : 0
@@ -1389,7 +1354,6 @@ Chance of this robot scoring a hit=50
 Chance modifier, that this robot gets hit=30
 Time to recover after getting hit=0.30
 Armament of this droid : 1
-Advanced Fighting present in this droid : 1
 Is this 'droid' a human : 1
 Individual shape of this droid or just -1 for classic ball shaped : 34
 Going to request reinforcements typical for this droid : 0
