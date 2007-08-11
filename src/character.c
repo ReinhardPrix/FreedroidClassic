@@ -54,31 +54,29 @@ float AC_Gain_Per_Dex_Point[]={     -1 ,     0.5 ,         0.5  ,       0.5 };
 
 #define CLASS_X 175
 
-#define EXPERIENCE_Y 55
+#define EXPERIENCE_Y 56
 #define NEXT_LEVEL_Y 82
 
-#define GOLD_Y 132
+#define GOLD_Y 133
 
-#define DAMAGE_X 260
-#define DAMAGE_Y 225
+#define DAMAGE_X 255
+#define DAMAGE_Y 193
 
-#define RECHARGE_X 260
-#define RECHARGE_Y 200
+#define TOHIT_X 255
+#define TOHIT_Y 167
 
-#define AC_X 260
-#define AC_Y 171
+#define AC_X 255
+#define AC_Y 138
 
-#define LV_1_BOT_HITS_CHANCE_X 254
-#define LV_1_BOT_HITS_CHANCE_Y 249
 
-#define MELEE_SKILL_X 130
-#define MELEE_SKILL_Y 346
-#define RANGED_SKILL_X 130
-#define RANGED_SKILL_Y 373
-#define SPELLCASTING_SKILL_X 130
-#define SPELLCASTING_SKILL_Y 398
-#define HACKING_SKILL_X 130
-#define HACKING_SKILL_Y 421
+#define MELEE_SKILL_X 247
+#define MELEE_SKILL_Y 228
+#define RANGED_SKILL_X MELEE_SKILL_X
+#define RANGED_SKILL_Y 252
+#define SPELLCASTING_SKILL_X MELEE_SKILL_X
+#define SPELLCASTING_SKILL_Y 276
+#define HACKING_SKILL_X MELEE_SKILL_X
+#define HACKING_SKILL_Y 301
 
 /* ----------------------------------------------------------------------
  *
@@ -941,19 +939,10 @@ ShowCharacterScreen ( int player_num )
     
     blit_special_background ( CHARACTER_SCREEN_BACKGROUND_CODE );
     
-    //--------------------
-    // Now we can start to fill in the character values:
-    // Name, Class, Level, Exp, Strength, Dex, ...
-    //
     SetCurrentFont ( Menu_BFont );
     DisplayText( Me[0].character_name , 20 + CharacterRect.x , 12 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     SetCurrentFont ( Message_BFont );
     
-    
-    if ( Me [ 0 ] . is_town_guard_member )
-	DisplayText( _("Red Guard"), CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
-    else
-	DisplayText( _("Novice"), CLASS_X + CharacterRect . x , 18 + CharacterRect . y , &CharacterRect , TEXT_STRETCH );
     
     /*
       switch ( Me[0].character_class )
@@ -975,11 +964,10 @@ ShowCharacterScreen ( int player_num )
     */
     
     sprintf( CharText , "%d", Me[0].exp_level );
-    DisplayText( CharText , 110 + CharacterRect.x , 70 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , 110 + CharacterRect.x , 73 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    // Me[0].Experience = RealScore;
-    sprintf( CharText , "%lu", Me[0].Experience ); // this should be the real score, sooner or later
-    DisplayText( CharText , 110 + CharacterRect.x ,  90 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%lu", Me[0].Experience ); 
+    DisplayText( CharText , 110 + CharacterRect.x ,  89 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%lu", Me[0].ExpRequired );
     DisplayText( CharText , 110 + CharacterRect.x ,  107 + CharacterRect.y , &CharacterRect , TEXT_STRETCH ) ;
@@ -1015,43 +1003,25 @@ ShowCharacterScreen ( int player_num )
     sprintf( CharText , "%d", Me[0].points_to_distribute );
     DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%d", (int) Me[0].maxenergy );
-    DisplayText( CharText , 95 + CharacterRect.x , 290 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d/%d", (int) Me[0].energy, (int) Me[0].maxenergy );
+    DisplayText( CharText , 105 + CharacterRect.x , 289 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , "%d", (int) Me[0].energy );
-    DisplayText( CharText , 143 + CharacterRect.x , 290 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    
-    sprintf( CharText , "%d", (int) Me[0].max_temperature );
-    DisplayText( CharText , 95 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    
-    sprintf( CharText , "%d", (int) Me[0].temperature );
-    DisplayText( CharText , 143 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    
-    sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
-    DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    
-    // sprintf( CharText , "%d", (int) Me[0].RechargeTimeModifier );
-    sprintf( CharText , "%d", (int) Me[0].to_hit );
-    strcat( CharText , "%" );
-    DisplayText( CharText , RECHARGE_X + CharacterRect.x , RECHARGE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    sprintf( CharText , "%d/%d", (int) Me [ 0 ] . temperature, (int) Me[0].max_temperature );
+    DisplayText( CharText , 105 + CharacterRect.x , 308+ CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    sprintf( CharText , "%d/%d", (int) Me [ 0 ] . running_power, (int) Me [ 0 ] . max_running_power );
+    DisplayText( CharText , 105 + CharacterRect.x , 327 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d", (int) Me[0].AC );
     DisplayText( CharText , AC_X + CharacterRect.x , AC_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    sprintf( CharText , "%d%%", (int) Me[0].to_hit );
+    DisplayText( CharText , TOHIT_X + CharacterRect.x , TOHIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+
+    sprintf( CharText , "%d-%d", (int) Me[0].base_damage , (int) Me[0].base_damage + (int) Me[0].damage_modifier );
+    DisplayText( CharText , DAMAGE_X + CharacterRect.x , DAMAGE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
-    sprintf( CharText , " %d%%", (int) Me [ 0 ] . lv_1_bot_will_hit_percentage );
-    DisplayText( CharText , LV_1_BOT_HITS_CHANCE_X + CharacterRect.x , LV_1_BOT_HITS_CHANCE_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-
-    //--------------------
-    // We fill in the numbers for the current running power.
-    //
-    sprintf( CharText , "%d", (int) Me [ 0 ] . max_running_power );
-    DisplayText( CharText , 95 + CharacterRect.x , 319 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-    sprintf( CharText , "%d", (int) Me [ 0 ] . running_power );
-    DisplayText( CharText , 143 + CharacterRect.x , 319 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
-
-
-    sprintf( CharText , "%3d", (int) Me [ 0 ] . resist_disruptor );
-    DisplayText( CharText , 269 + CharacterRect.x , 305 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    
     
     //--------------------
     // Now we print out the current skill levels in hacking skill, 
