@@ -205,10 +205,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 235 , (480-20-130-20-2) , 160 ,  20 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 235 , (480-22) , 160 ,  20 } , TRUE , FALSE } ,
 
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , DEX_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , VIT_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + STR_X + 45 , STR_Y - 5 , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + STR_X + 45 , MAG_Y - 5 , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + STR_X + 45 , DEX_Y - 5 , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + STR_X + 45 , VIT_Y - 5 , 38 , 22 } , FALSE , FALSE } ,
 
     //--------------------
     // These two buttons are for the scrolling text during the

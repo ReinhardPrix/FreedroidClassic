@@ -627,15 +627,13 @@ enum
 #define CHAT_SUBDIALOG_WINDOW_W ((337)*GameConfig . screen_width/640)
 #define CHAT_SUBDIALOG_WINDOW_H ((216)*GameConfig . screen_height/480)
 
-#define STR_X 100
+#define STR_X 95
 #define STR_Y 141
 #define DEX_Y 165
 #define MAG_Y 190
 #define VIT_Y 218
 #define POINTS_Y 252
 
-#define BUTTON_MOD_X (-6)
-#define BUTTON_MOD_Y (-4)
 #define BUTTON_WIDTH 35
 #define BUTTON_HEIGHT 19
 

@@ -336,19 +336,6 @@ DisplayButtons( void )
     
 }; // void DisplayButtons( void )
 
-/* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
- * strength plus button or not
- * ---------------------------------------------------------------------- */
-int
-CursorIsOnStrButton( int x , int y )
-{
-    if ( x > CharacterRect.x + BUTTON_MOD_X + STR_X + BUTTON_WIDTH ) return ( FALSE );
-    if ( x < CharacterRect.x + BUTTON_MOD_X + STR_X ) return ( FALSE );
-    if ( y > CharacterRect.y + BUTTON_MOD_X + STR_Y + BUTTON_HEIGHT ) return ( FALSE );
-    if ( y < CharacterRect.y + BUTTON_MOD_X + STR_Y ) return ( FALSE );
-    return ( TRUE );
-}; // int CursorIsOnStrButton( int x , int y )
 
 /* ----------------------------------------------------------------------
  * This function adds any bonuses that might be on the influencers things
@@ -985,23 +972,23 @@ ShowCharacterScreen ( int player_num )
     sprintf( CharText , "%d", Me[0].Magic );
     if ( Me[0].Magic != Me[0].base_magic ) 
 	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Magic - Me[0].base_magic); 
-    DisplayText( CharText , 100 + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , STR_X + CharacterRect.x , MAG_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].Dexterity );
     if ( Me[0].Dexterity != Me[0].base_dexterity ) 
 	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Dexterity - Me[0].base_dexterity); 
-    DisplayText( CharText , 100 + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , STR_X + CharacterRect.x , DEX_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].Vitality );
     if ( Me[0].Vitality != Me[0].base_vitality ) 
 	sprintf ( CharText + strlen(CharText), " (%+d)", Me[0].Vitality - Me[0].base_vitality); 
-    DisplayText( CharText , 100 + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , STR_X + CharacterRect.x , VIT_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     SetCurrentFont( Message_BFont) ;
     sprintf( CharText , "%d", Me[0].points_to_distribute );
-    DisplayText( CharText , 100 + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
+    DisplayText( CharText , STR_X + CharacterRect.x , POINTS_Y + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
     
     sprintf( CharText , "%d/%d", (int) Me[0].energy, (int) Me[0].maxenergy );
     DisplayText( CharText , 105 + CharacterRect.x , 289 + CharacterRect.y , &CharacterRect , TEXT_STRETCH );
