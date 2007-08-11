@@ -2578,12 +2578,6 @@ ShowQuickInventory ( void )
     int Index;
 
     //--------------------
-    // with the new hud, we always show the quick inventory.  Turning it
-    // off completely is no longer an option (or now it's rather a dead option :)
-    //
-    // if ( ! GameConfig . show_quick_inventory ) return;
-    
-    //--------------------
     // We must not blit something right over the active character screen or the
     // active skill screen of course.  That would be irritating.
     // This does not apply to high resolutions though.
@@ -2595,14 +2589,14 @@ ShowQuickInventory ( void )
     // those small objects, that have a 1x1 inventory grid size, so that they really
     // can be drawn from the 'belt' that is actually the quick inventory.
     //
-    for ( i = 0 ; i < 9 ; i ++ )
+    for ( i = 0 ; i < 10 ; i ++ )
     {
-	PutCharFont ( Screen , FPS_Display_BFont , ( 130 + i * 43 - 9 ) * GameConfig.screen_width / 640 , GameConfig.screen_height - 16 , '1' + i );
+	PutCharFont ( Screen , Message_BFont , ( 130 + i * 40 - 9 ) * GameConfig.screen_width / 640 , GameConfig.screen_height - 16 , (i < 9 ) ? ('1' + i ) : '0');
 	if ( ( ( Index = GetInventoryItemAt ( i , INVENTORY_GRID_HEIGHT -1 ) ) != (-1) ) &&
 	     ( Me[0].Inventory[ Index ].inventory_position.x == i ) &&
 	     ( Me[0].Inventory[ Index ].inventory_position.y == INVENTORY_GRID_HEIGHT -1 ) )
 	{
-	    TargetRect.x = ( 130 + i * 43 ) * GameConfig.screen_width / 640 ;
+	    TargetRect.x = ( 130 + i * 40 ) * GameConfig.screen_width / 640 ;
 	    TargetRect.y = GameConfig . screen_height - 32 ;
 	    
 	    our_SDL_blit_surface_wrapper ( ItemMap [ Me [ 0 ] . Inventory [ Index ] . type ] . inv_image . Surface , 

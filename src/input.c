@@ -514,6 +514,10 @@ handle_quick_appy_inventory_keys( void )
     {
 	Quick_ApplyItem ( 9 );
     }
+    if ( Number0Hit() )
+    {
+	Quick_ApplyItem ( 10 );
+    }
     
 }; // void handle_quick_appy_inventory_keys( void )
 
