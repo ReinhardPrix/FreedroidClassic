@@ -2489,6 +2489,16 @@ Load_Enemy_Surfaces( void )
     droid_stand_animation_speed_factor [ i ] = 6 ;
     ModelMultiplier  [ i ] = 1 ;i++;
 
+    PrefixToFilename [ i ] = "bartender" ; // 34
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
+    Druidmap [ i ] . use_image_archive_file = TRUE ;
+    droid_walk_animation_speed_factor [ i ] = 8 ;
+    droid_attack_animation_speed_factor [ i ] = 10 ;
+    droid_gethit_animation_speed_factor [ i ] = 10 ;
+    droid_death_animation_speed_factor [ i ] = 5 ;
+    droid_stand_animation_speed_factor [ i ] = 6 ;
+    ModelMultiplier  [ i ] = 1 ;i++;
+
     //--------------------
     // Finally we do some test to make sure we don't write
     // over the bounds of our array or so
