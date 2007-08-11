@@ -116,6 +116,8 @@ File or directory name for inventory image="inventory_image_14.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=350
 Item description text="The twin laser is small, but does its job. A somewhat cheap but effective weapon."
+inventory_size_x=2
+inventory_size_y=2
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
 Item as gun: reloading time=3.000000
@@ -286,6 +288,8 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=600
+inventory_size_x=2
+inventory_size_y=2
 Item description text="This rifle is a high-end laser weapon. There is only one problem with it: Shooting it is too much fun. People often end up with no ammunition in the middle of a battle."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
@@ -399,6 +403,8 @@ Base item duration=10 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
 Item uses drop sound with filename="Item_Range_Weapon_Put_Sound_0.ogg"
 Base list price=800
+inventory_size_x=2
+inventory_size_y=2
 Item description text="Think of a twin laser with twice the power. Now make it shoot half as often. What you have is the 'Advanced' twin laser."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=1.400000
@@ -705,6 +711,8 @@ Base item duration=18 plus duration modifier=1
 File or directory name for inventory image="basic_armour/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=40
+inventory_size_x=2
+inventory_size_y=2
 Item description text="Does a decent job of protection. I guess. Maybe. I'm not sure."
 ** End of new item specification subsection **
 
@@ -840,6 +848,8 @@ Base item duration=20 plus duration modifier=10
 File or directory name for inventory image="basic_armour2/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=75
+inventory_size_x=2
+inventory_size_y=2
 Item description text="One step up from a normal jacket."
 ** End of new item specification subsection **
 
@@ -859,6 +869,8 @@ Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="basic_armour3/inv_image.png"
 Item uses drop sound with filename="Item_Armour_Put_Sound_0.ogg"
 Base list price=200
+inventory_size_x=2
+inventory_size_y=2
 Item description text="Very strong for its size, does a good job of absorbing basic blows."
 ** End of new item specification subsection **
 
@@ -883,7 +895,7 @@ Item description text="Tough as nails and able to withstand most blows."
 
 // Item No. 32
 ** Start of new item specification subsection **
-Item name="Dancing laser blades (don't hurt yourself!)"
+Item name="Dancing laser blades (BAD BUG PLEASE REPORT)"
 Position_X=529
 Position_Y=392
 Item can be applied in combat="no"
@@ -896,6 +908,8 @@ Base item duration=30 plus duration modifier=10
 File or directory name for inventory image="inventory_image_14.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=450
+inventory_size_x=2
+inventory_size_y=2
 Item description text="A melee weapon that requires skill and coordination to use. A fine handler can control one of the finest weapons ever made."
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.950000
