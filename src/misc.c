@@ -65,15 +65,15 @@ extern SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, i
 
 mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
   {
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 216 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 307 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 261 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 354 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/cha_button_red.png"               , { 307 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/log_button_yellow.png"            , { 216 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/cha_button_yellow.png"            , { 307 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/inv_button_yellow.png"            , { 261 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/ski_button_yellow.png"            , { 354 , 480-46 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 239 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 334 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 283 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "THIS_DOESNT_NEED_BLITTING"                      , { 378 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/cha_button_red.png"               , { 334 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/log_button_yellow.png"            , { 239 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/cha_button_yellow.png"            , { 334 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/inv_button_yellow.png"            , { 283 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/ski_button_yellow.png"            , { 378 , 480-47 ,  46 ,  14 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/UPButton.png"                     , { 600 ,  94 ,  40 ,  40 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/DOWNButton.png"                   , { 600 , 316 ,  40 ,  40 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/LEFTButton.png"                   , { 300 ,   5 , 100 ,  50 } , TRUE , FALSE } ,
@@ -205,10 +205,10 @@ mouse_press_button AllMousePressButtons[ MAX_MOUSE_PRESS_BUTTONS ] =
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuUp.png"           , { 235 , (480-20-130-20-2) , 160 ,  20 } , TRUE , FALSE } ,
     { UNLOADED_ISO_IMAGE , "mouse_buttons/ScrollDialogMenuDown.png"         , { 235 , (480-22) , 160 ,  20 } , TRUE , FALSE } ,
 
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , DEX_Y  , 38 , 22 } , FALSE , FALSE } ,
-    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_NOW_X  , VIT_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , STR_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , MAG_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , DEX_Y  , 38 , 22 } , FALSE , FALSE } ,
+    { UNLOADED_ISO_IMAGE , "mouse_buttons/AttributePlusButton.png"                   , { 0 + BUTTON_MOD_X + STR_X  , VIT_Y  , 38 , 22 } , FALSE , FALSE } ,
 
     //--------------------
     // These two buttons are for the scrolling text during the
