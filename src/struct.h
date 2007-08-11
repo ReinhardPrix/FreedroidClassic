@@ -567,8 +567,6 @@ typedef struct
     int to_hit;                           // chance that this droid hits an unarmoured target
     int getting_hit_modifier;             // modifier for this droid to receive a hit from the player
     float recover_time_after_getting_hit;
-    int call_for_help_after_getting_hit;  // Does this droid request help from the next console so soon as it is
-    // hit by a bullet of some type?
     char *notes;			        // notes on the druid of this type 
     int is_human;
     int individual_shape_nr;

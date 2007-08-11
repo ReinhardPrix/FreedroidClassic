@@ -274,24 +274,6 @@ Enemy_Post_Bullethit_Behaviour( int EnemyNum )
   // Since the enemy just got hit, it might as well say so :)
   EnemyHitByBulletText( EnemyNum );
 
-  //--------------------
-  // It that is an enemy, who can go and tell his mommy MS at the next console,
-  // we will establish a route to the next best console and set the droid to
-  // persue this route and make his report.
-  //
-  if ( Druidmap[ ThisRobot->type ].call_for_help_after_getting_hit ) 
-    {
-      DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): starting to set up special course.");
-      
-      ThisRobot->persuing_given_course = TRUE;
-
-      if ( SetDirectCourseToConsole( EnemyNum ) == TRUE ) return;
-      else 
-	{
-	  DebugPrintf( 1 , "\nEnemy_Post_Bullethit_Behaviour( int EnemyNum ): giving up way for console....");
-	  ThisRobot->persuing_given_course = FALSE;
-	}
-    }
 }; // void Enemy_Post_Bullethit_Behaviour( int Enemynum )
 
 
