@@ -767,14 +767,13 @@ ShowCurrentWeapon( void )
     static int Mouse_Button_Pressed_Previous_Frame = FALSE;
     char current_ammo[10];
     if ( Me [ 0 ] . status == BRIEFING ) return;
-    if ( GameConfig . Inventory_Visible && GameConfig . screen_width == 640 ) return;
+    if ( ( GameConfig . Inventory_Visible || GameConfig . skill_explanation_screen_visible ) && GameConfig . screen_width == 640 ) return;
     if ( Me [ 0 ] . weapon_item . type == -1 ) return;
 
-    Target_Rect.x = CURRENT_WEAPON_RECT_X + (CURRENT_WEAPON_RECT_W * GameConfig . screen_width / 640 - CURRENT_WEAPON_RECT_W) / 2;
-    Target_Rect.y = CURRENT_WEAPON_RECT_Y + (CURRENT_WEAPON_RECT_H * GameConfig . screen_height / 480 - CURRENT_WEAPON_RECT_H) / 2;
+    Target_Rect.x = UNIVERSAL_COORD_W(CURRENT_WEAPON_RECT_X) + UNIVERSAL_COORD_W(CURRENT_WEAPON_RECT_W) / 2 - ItemMap [ Me[0].weapon_item . type ] . inv_image . Surface -> w / 2;
+    Target_Rect.y = UNIVERSAL_COORD_H(CURRENT_WEAPON_RECT_Y) + UNIVERSAL_COORD_H(CURRENT_WEAPON_RECT_H) / 2 - ItemMap [ Me[0].weapon_item . type ] . inv_image . Surface -> h / 2;
     Target_Rect.w = CURRENT_WEAPON_RECT_W;
     Target_Rect.h = CURRENT_WEAPON_RECT_H;
-    
     our_SDL_blit_surface_wrapper ( ItemMap [ Me[0].weapon_item . type ] . inv_image . Surface , NULL , Screen , &Target_Rect );
     
     Mouse_Button_Pressed_Previous_Frame = MouseLeftPressed();
