@@ -117,7 +117,7 @@ LoadFont (const char *filename)
 
   if (filename != NULL)
     {
-      Font = (BFont_Info *) malloc (sizeof (BFont_Info));
+      Font = (BFont_Info *) MyMalloc (sizeof (BFont_Info));
       if (Font != NULL)
 	{
 	  //--------------------
@@ -359,13 +359,6 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, unsigned ch
 	if ( ( dest . x < clipping_rect . x + clipping_rect . w ) &&
               ( dest . x >= clipping_rect . x ) )
 	      {
-	      //--------------------
-	      // Blitting the characters of the font with plain pixel operations in OpenGL is
-	      // known to fail on some systems.  So why not just use the faster textured quads
-	      // anyway?  Yes, why not.  But to safe some texture memory, we won't create *every*
-	      // texture for every font loaded at starting time but we'll create the surfaces
-	      // on the fly and ONLY FOR THOSE CHARACTERS NEEDED.  That should save us some time...
-	      //
 	      if ( ! Font -> char_iso_image [ c ] . texture_has_been_created )
 		{
 		  if ( Font -> char_iso_image [ c ] . surface == NULL )
