@@ -56,10 +56,6 @@ int GreatItemShow ( int NumberOfItems , item* ShowPointerList[ MAX_ITEMS_IN_INVE
 
 void ShowDroidPicture (int PosX, int PosY, int Number );
 
-char *EmailText1 = N_("Hello Tux!\n\nHello Tux!\nI'm glad to see you alive and moving again.\nYour awakening has stirred considerable amounts of dicsussion within our group, but it's a bit too early to disclose anything yet.\nAnyway, we're glad you're back.");
-
-char *EmailText2 = N_("The FreedroidRPG maps are currently full of bugs.\n\nBut that's only the start of our problems.\nWe also need more characters, maps and story and quests.\nPlease take a look at he 'contribute' section of the main menu to see on what ways you could aid the FreedroidRPG development team.\n\nThanks a lot and see ya, the FreedroidRPG dev team.");
-
 /* ----------------------------------------------------------------------
  * This function does the item show when the user has selected item
  * show from the console menu.
