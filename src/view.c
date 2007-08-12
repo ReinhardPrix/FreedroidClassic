@@ -445,11 +445,8 @@ blit_this_floor_tile_to_screen ( iso_image * our_floor_iso_image ,
 }; // void blit_this_floor_tile_to_screen ( iso_image * our_floor_iso_image , float our_col, float our_line )
 
 void
-get_floor_boundaries(int mask, int* LineStart, int* LineEnd, int* ColStart, int* ColEnd){
-    //--------------------
-    // Maybe we should be using a more elegant function here, that will automatically
-    // compute the right amount of squares to blit in each direction from the known amount
-    // of pixel one floor tile takes...  But that must follow later...
+get_floor_boundaries(int mask, int* LineStart, int* LineEnd, int* ColStart, int* ColEnd)
+{
     if ( mask & ZOOM_OUT )
     {
 	*LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX * LEVEL_EDITOR_ZOOM_OUT_FACT ;
@@ -459,10 +456,10 @@ get_floor_boundaries(int mask, int* LineStart, int* LineEnd, int* ColStart, int*
     }
     else
     {
-	*LineStart = Me [ 0 ] . pos . y - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	*LineEnd = Me [ 0 ] . pos . y + FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	*ColStart = Me [ 0 ] . pos . x - FLOOR_TILES_VISIBLE_AROUND_TUX ;
-	*ColEnd = Me [ 0 ] . pos . x + FLOOR_TILES_VISIBLE_AROUND_TUX ;
+	*LineStart = translate_pixel_to_map_location(0, UserCenter_x, -UserCenter_y, FALSE) ;
+	*LineEnd = translate_pixel_to_map_location(0, -UserCenter_x - iso_floor_tile_width + 1, UserCenter_y + iso_floor_tile_height - 1, FALSE) ;
+	*ColStart = translate_pixel_to_map_location(0, -UserCenter_x, -UserCenter_y, TRUE) ;
+	*ColEnd = translate_pixel_to_map_location(0, UserCenter_x + iso_floor_tile_width - 1, UserCenter_y + iso_floor_tile_height - 1, TRUE) ;
     }
 }
 /* ----------------------------------------------------------------------
