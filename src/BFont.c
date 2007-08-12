@@ -93,7 +93,9 @@ InitFont (BFont_Info * Font)
   Font->Chars[' '].h = Font->Surface->h;
   Font->Chars[' '].w = Font->Chars['!'].w;
   Font->number_of_chars = i;
+
 #ifdef HAVE_LIBGL
+if ( use_open_gl ) 
   Font->list_base = glGenLists(i);
 #endif
   if (SDL_MUSTLOCK (Font->Surface))
