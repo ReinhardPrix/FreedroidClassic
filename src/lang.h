@@ -1,7 +1,10 @@
 #ifndef _LANG_H
 #define _LANG_H
 
-#ifdef HAVE_LOCALE_H
+#ifndef HAVE_LOCALE_H
+#undef ENABLE_NLS
+#endif
+
 #if ENABLE_NLS
 
 #include <locale.h>
@@ -22,5 +25,3 @@
 #endif
 
 #endif
-#endif
-
