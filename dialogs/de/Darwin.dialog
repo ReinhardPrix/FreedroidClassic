@@ -30,23 +30,20 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Bitte nicht schießen! Ich bin unschuldig! "
+New Option Nr=0  OptionText=" Hy, bin neu hier! "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=253  
-Subtitle="Keine Angst, wir nur killen Robots. Never humans. Außer vielleicht, wenn wir sind in schlechte mood."
+Subtitle="Hy, Wir sind die Fleischer brothers."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Wir sind die Fleischer brothers."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich heiße Angel. Das ist Spirit; er ist nicht maechtig der localen Sprache."
+Subtitle="Ich heisse Angel. Das ist Spirit; er ist nicht maechtig der localen Sprache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
-ChangeOption=99 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Weshalb seid ihr hier draußen?"
+New Option Nr=1  OptionText=" Weshalb seid ihr hier draussen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=254  
 Subtitle="Aus Rache."
@@ -160,7 +157,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Äh... ihr Jungs seid echt großartig und ich bewundere euren Mut angesichts des sicheren Todes."
+New Option Nr=10  OptionText=" Äh... ihr Jungs seid echt grossartig und ich bewundere euren Mut angesichts des sicheren Todes."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ha, Donnerwetter, Sie sind ein funny Kerl!"
@@ -181,7 +178,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich war ein Erbauer von Robots. Habe gemacht die Mörder von meiner Mutter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Jetzt, ich verkaufe die Parts, die ich herausreiße aus Robotern, um mehr Munition und Essen zu kaufen."
+Subtitle="Jetzt, ich verkaufe die Parts, die ich herausreisse aus Robotern, um mehr Munition und Essen zu kaufen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1

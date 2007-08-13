@@ -36,18 +36,20 @@ PositionX=57  PositionY=350
 Subtitle="Moin. Was willste, Grünschnabel? Etwa kämpfen?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
-ChangeOption=1 ChangeToValue=1
 ChangeOption=4 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Sagen Sie, sind Sie scharf auf 'nen Satz heiße Ohren? Mein Schnabel ist Gelb!"
+New Option Nr=1  OptionText="Sagen Sie, sind Sie scharf auf 'nen Satz heisse Ohren? Mein Schnabel ist Gelb!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Dein Schnabel ist grüner als ein Laubfrosch, aber nicht so grün wie das Grüne hinter deinen Ohren. Verstanden, flügellahme Zwergkrähe?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="An MEINE Ohren reichst du Dreikäsehoch jedenfalls nicht ran, dafür haste deinen Milchschnabel zu weit unten! HA!"
+Subtitle="An MEINE Ohren reichst du Dreikäsehoch jedenfalls nicht ran, dafür haste deinen Milchschnabel zu weit unten! "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="HA!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -62,7 +64,6 @@ Subtitle="HAHAHA... versuchs doch! Ich kann eh eine neue Kissenfüllung gebrauche
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
-DoSomethingExtra="ExecuteSubdialog:subdlg_Butch"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -94,7 +95,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Arena? Ich sehe hier keine Arena..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Natürlich nicht... die is ja schließlich auch unter der Erde."
+Subtitle="Natürlich nicht... die is ja schliesslich auch unter der Erde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Willste da runter, dich ein bisschen rumprügeln?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -115,6 +116,7 @@ ChangeOption=6 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
 ChangeOption=13 ChangeToValue=0
 DoSomethingExtra="AssignMission:3"
+DoSomethingExtra="OpenQuestDiaryEntry:M3E0:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -133,6 +135,7 @@ ChangeOption=7 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 ChangeOption=8 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
+DoSomethingExtra="OpenQuestDiaryEntry:M3E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -169,6 +172,7 @@ Subtitle="Aber wenn du wirklich als Broiler enden willst, die Tür ist offen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 DoSomethingExtra="AssignMission:4"
+DoSomethingExtra="OpenQuestDiaryEntry:M4E0:"
 DoSomethingExtra="ExecuteActionWithLabel:unlock_master_arena_access_door"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -187,6 +191,7 @@ Subtitle="Ich hab Mitleid mit dir, armer Dummkopf! Du wirst noch jung zu Grunde 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="AddExperienceBonus:8000"
+DoSomethingExtra="OpenQuestDiaryEntry:M4E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -239,7 +244,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText=" Beendet endlich die Gewalt! Alles Blut ist rot!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Hey, die Bots bluten schwarz. Die verspritzen Öl, weißt du."
+Subtitle="Hey, die Bots bluten schwarz. Die verspritzen Öl, weisst du."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:16
@@ -263,7 +268,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText=" Sie... haben meiner friedlichen Gesinnung... einen schweren Schlag versetzt - ich... ich werde echt wütend...! So sauer, dass ich was zerstören muss!!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Großartig. Geh durchs Tor da rechts, meine kleine Frühkartoffel."
+Subtitle="Grossartig. Geh durchs Tor da rechts, meine kleine Frühkartoffel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"

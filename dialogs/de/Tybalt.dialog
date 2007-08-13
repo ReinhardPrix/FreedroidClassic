@@ -217,7 +217,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Tschüß."
+New Option Nr=99  OptionText=" Tschüss."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
 Subtitle="Na endlich..."

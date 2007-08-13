@@ -36,6 +36,7 @@ PositionX=68  PositionY=275
 Subtitle="Duncan McNamara, örtlicher Bombenbauer der Roten Wache, zu Ihren Diensten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
+ChangeOption=90 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -54,10 +55,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas größeres?"
+New Option Nr=2  OptionText=" Ich sehe nur Granaten. Haben Sie auch etwas grösseres?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Zu meinem größten Bedauern, nein."
+Subtitle="Zu meinem grössten Bedauern, nein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Rote Wache verbietet den Verkauf von extrem gefährlichen Sprengkörpern."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -96,7 +97,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Es ist noch nicht an der Zeit, von solchen Dingen zu reden. Kommen Sie eines Tages wieder, und wir werden darüber Genaueres besprechen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Rote Wache hat vielleicht ihre großen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
+Subtitle="Die Rote Wache hat vielleicht ihre grossen Laserstrahler und Plasmageschütze... und doch kann sie nichts retten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -139,6 +140,86 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=50  OptionText="KOAN QUEST"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=50 ChangeToValue=0
+OnCondition="CookieIsPlanted:duncan_known:" JumpToOption=80 ElseGoto=52
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=51  OptionText="STARTING KOAN QUEST"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="Ahh! Willkommen zurück, Linarier."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich hätte eine kleine Aufgabe für Sie."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich kenne jemanden, der eine Lektion lernen muss."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Hätten Sie Interesse?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=51 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan"
+DoSomethingExtra="PlantCookie:koan_quest"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=52  OptionText="VOID"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=52 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=60  OptionText="TEST FOR BOX OR SAVING KOAN"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=60 ChangeToValue=0
+OnCondition="HaveItemWithCode:129" JumpToOption=61 ElseGoto=62
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=61  OptionText="MURDERING DONE OR SAVED HIM"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=61 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan_quest"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=62  OptionText="IS KOAN SAVED?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=62 ChangeToValue=0
+OnCondition="CookieIsPlanted:koan_spared:" JumpToOption=63 ElseGoto=52
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=63  OptionText="WAS THE QUEST DONE BEFORE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=63 ChangeToValue=0
+OnCondition="CookieIsPlanted:koan_quest_done:" JumpToOption=52 ElseGoto=61
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=80  OptionText="PREVENTING DOUBLE TALK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=80 ChangeToValue=0
+OnCondition="CookieIsPlanted:koan_quest:" JumpToOption=52 ElseGoto=51
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=90  OptionText=" Ich fühle, dass Sie irgendwie... anders sind."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
@@ -174,9 +255,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=92  OptionText=" Sagen Sie mir, wer Sie sind... ich muss es wissen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Vor 20 Jahren waren die Menschen einander Kinder."
+Subtitle="Vor 20 Jahren waren die Menschen zueinander freundlicher."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich schlage vor, dass Sie nett zu mir sind und ich werde es zu Ihnen auch sein."
+Subtitle="Ich schlage vor, dass Sie nett zu mir sind und ich werde es auch zu Ihnen sein."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Auf diese Weise kann ich mein Geheimnis wahren und Sie das Ihrige."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -207,7 +288,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruß? Niemand hier kennt ihn!"
+New Option Nr=97  OptionText=" Wie? Woher kennen Sie den linarischen Abschiedsgruss? Niemand hier kennt ihn!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ich habe viele Bücher über Linarianer gelesen. Das ist alles."
@@ -229,6 +310,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=98 ChangeToValue=1
 ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
+DoSomethingExtra="PlantCookie:duncan_known"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -241,6 +323,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 ChangeOption=98 ChangeToValue=0
 DoSomethingExtra="EndDialog"
+DoSomethingExtra="PlantCookie:duncan_known"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

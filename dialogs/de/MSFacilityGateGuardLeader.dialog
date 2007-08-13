@@ -84,8 +84,6 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=132  
 Subtitle="Bist du lebensmüde oder was in der Art!?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hast du was an der Birne? Die Blechkameraden da drüben würden das mit ihren Dosenöffnern sicher gern mal nachprüfen... "
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Hau ab von hier!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0

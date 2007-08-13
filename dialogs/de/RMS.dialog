@@ -33,7 +33,9 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Tag auch! Ich bin ein neues Mitglied der Wache!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Na dann, willkommen! Mein Name ist Richard. Ich bin Aufseher über den Computercluster unserer Gemeinde."
+Subtitle="Na dann, willkommen! Mein Name ist Richard. Ich bin der Admin hier."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Normalerweise arbeite ich mit diesem Cluster hier, obwohl ich auch die 614er in meiner Freizeit programmiere."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -44,9 +46,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Aha, Computercluster... was ist das?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="Ein Cluster ist ein Verbund von sprichwörtlich tausenden von gewöhnlichen Rechnern, zu einer ganzen großen Einheit."
+Subtitle="Ein Cluster ist eine Gruppe von Computern, die so miteinander verbunden sind, dass sie möglichst reibungslos zusammenarbeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es kann dazu verwendet werden, die kompliziertesten Berechnungen in vergleichsweise geringer Zeit anzustellen, vorausgesetzt man benutzt geeignete Methoden zur Datenanalyse."
+Subtitle="Wie man so schön sagt: Zwei Köpfe sind besser als Einer. Wir haben hier eine Menge Köpfe..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Das ist der Grund, warum ich diesen Cluster 'Hydra' nenne. Wirklich, eine ganze Menge Köpfe..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -74,13 +78,13 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
 DoSomethingExtra="MarkMissionComplete:7"
+DoSomethingExtra="OpenQuestDiaryEntry:M7E1:"
 DoSomethingExtra="DeleteItem:100"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="DO NOTHING HERE...
-"
+New Option Nr=7  OptionText="DO NOTHING HERE..."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=206  PositionY=62  
 ChangeOption=7 ChangeToValue=0
@@ -100,9 +104,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText=" Gibt es schon irgendwelche Ergebnisse aus der Supercomputer-Auswertung?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Ja, natürlich! Die ersten Ergebnisse stehen bereits zur Verfügung und sie sehen äußerst interessant aus. Ich habe den Chef darüber informiert..."
+Subtitle="Ja, natürlich! Ich habe doch gesagt, dass mich Hydra nie im Stich lässt. Ich habe sie selbst entworfen, und ich kenne mich aus! Ich mache nie Fehler!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sie sollten am besten mit Spencer sprechen - er wird Sie einweihen und wissen was zu tun ist. Ich danke Ihnen vielmals für Ihre Bemühungen! Es könnte sich in der Tat um für uns überlebenswichtige Informationen handeln..."
+Subtitle="Es sieht so aus, als könne man die Roboter mit einer Art Disruptor-Feld oder sowas abschalten field or something like that."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich war zwar damit beschäftigt, einer der Nodes von Hydra zu warten, aber ich habe zwischendurch den kompletten Bericht an Spence gesendet. Er wird Ihnen mehr erzählen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

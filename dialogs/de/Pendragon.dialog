@@ -33,9 +33,9 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Tag! Ich bin eben erst hier angekommen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=157  PositionY=219  
-Subtitle="Was Sie nicht sagen! Ich wohne auch nicht hier. Ich habe Urlaub und bin nur auf der Durchreise..."
+Subtitle="Was Sie nicht sagen! Ich wohne hier auch nicht. Ich habe Urlaub und bin nur auf der Durchreise..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Eigentlich bin ich Kämpfer. Aber im Moment versuche ich mich zu entspannen, herunterzukommen, mir keinen Stress zu machen und jede Menge Spaß zu haben!"
+Subtitle="Eigentlich bin ich Kämpfer. Aber im Moment versuche ich mich zu entspannen, herunterzukommen, mir keinen Stress zu machen und jede Menge Spass zu haben!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ach ja, und falls Sie's nicht mitgekriegt haben sollten -- das war purer Sarkasmus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -48,11 +48,30 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Könnten Sie mir zeigen wie man kämpft?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=265  PositionY=236  
+ChangeOption=1 ChangeToValue=1
+OnCondition="CookieIsPlanted:beat_up_pendragon:" JumpToOption=2 ElseGoto=3
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="NEIN, NEIN! Ähm... Ich meine, jetzt gerade nicht. Ich bin beschäftigt. Komm doch später wieder."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
 Subtitle="Tja, das ist zwar nicht mein Beruf, aber sicherlich könnte ich. Für einen vernünftigen Preis, versteht sich."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wie wärs mit... 100 Tribucks?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
+ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Pendragon"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

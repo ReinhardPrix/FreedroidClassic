@@ -30,77 +30,95 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Identifiziere dich!"
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=98  PositionY=280  
-Subtitle="Ich bin ein Sicherheitsrobot Typ 614, ehemals eines der am besten verkauften Produkte der Firma Nicholson."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+New Option Nr=0  OptionText="HERE WE GO"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=61  PositionY=200  
 ChangeOption=0 ChangeToValue=0
-ChangeOption=4 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Sind irgendwelche Feindaktivitäten zu orten?"
+New Option Nr=1  OptionText=" Tell me more."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=100  PositionY=204  
-Subtitle="Nein. Keine Feindaktivitäten innerhalb der letzten 24 Stunden."
+PositionX=200  PositionY=200  
+Subtitle="Ah, excellent."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="A... friend of mine, Koan, stole something of great value to me."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="He is hiding somewhere in the desert, I don't know exactly where."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
+ChangeOption=2 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Was kannst du mir über den Typ 614 sagen? "
+New Option Nr=2  OptionText=" I will get your property back."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=96  PositionY=134  
-Subtitle="Das offizielle Handbuch klassifiziert den Typ 614 als Hochsicherheits-Androiden."
+PositionX=200  PositionY=200  
+Subtitle="Excellent. I am pleased to hear this."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hauptsächlich wurde er in Raumschiffen eingesetzt, um spezielle Bereiche vor Eindringlingen abzusichern."
+Subtitle="There is something you must know."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Er wird als alte, aber zuverlässige Einheit angesehen."
+Subtitle="There are not too many bots in the desert, but they are undefeatable. It is best to avoid them."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also machen Sie sich keine Sorgen. Ich bin immer noch in recht gutem Zustand."
+Subtitle="I will be waiting here for your return."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
+ChangeOption=99 ChangeToValue=0
+ChangeOption=7 ChangeToValue=1
+ChangeOption=6 ChangeToValue=1
+ChangeOption=5 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Wie lauten deine Befehle?"
+New Option Nr=5  OptionText=" What are those bots?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=100  PositionY=71  
-Subtitle="Mein Befehl lautet, die Lebewesen in dieser Niederlassung vor den Angriffen feindlicher Roboter zu schützen."
+PositionX=200  PositionY=200  
+Subtitle="We call them 'Sawmill'."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Dies hat höchste Priorität. Es gibt keine anderen Prioritäten."
+Subtitle="They were designed to chop down trees in the mountains."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=3 ChangeToValue=0
+Subtitle="Now they chop down people."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Their only weak point is their security system. But no one managed to stay alive long enough to hack them."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Weshalb bist du nicht wie all die anderen Robots feindlich gesinnt?"
+New Option Nr=6  OptionText=" What is that thing he took from you?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=223  PositionY=270  
-Subtitle="Ich gehöre einer älteren Generation von Bots an, auf denen ein speziell für Sicherheits- und Überwachungszwecke ausgelegtes Betriebssystem läuft."
+PositionX=200  PositionY=200  
+Subtitle="A cube. You can't miss it. Trust me."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Keiner der Robots dieser Generation wurde durch die Vorgänge beeinflusst, die zu den Robot-Übergriffen führten - allgemein bekannt als der Grosse Angriff."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Obwohl mein Typ schon vor langer Zeit von der Firma Nicholson eingestellt wurde, haben in jüngster Zeit einige Leute die Arbeit daran wieder aufgenommen und man versucht sogar das Betriebssystem der Baureihe zu verbessern."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nicht vergessen - kaufen Sie Produkte der Firma Nicholson. Sie sind die besten."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=4 ChangeToValue=0
+ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ein schönes Programm noch - und nicht einrosten, ja?"
+New Option Nr=7  OptionText=" That is all I need to know. I will find Koan."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=438  PositionY=268  
-Subtitle="Schalte zurück in Wachmodus."
+PositionX=512  PositionY=290  
+Subtitle="Only time will tell."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=99 ChangeToValue=1
+ChangeOption=7 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+DoSomethingExtra="ExecuteActionWithLabel:unlock_desert"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" No, I don't find bloodshed a pleasurable activity."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="That is fine. I will find someone else."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=0
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

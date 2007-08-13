@@ -30,43 +30,21 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Guten Tag, ich suche hier vorübergehend Schutz..."
+New Option Nr=0  OptionText="<?>"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=43  PositionY=138  
-Subtitle="Ah, ein Neuankömmling. Ich sehe, Sie sind ziemlich ruppig von meinem Freund am Tor behandelt worden? Entschuldigen Sie ihn bitte, er hat seine kleine Schwester beim Grossen Angriff verloren - er ist nie darüber hinweggekommen."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Also Fremder, seien Sie hier willkommen. Sie werden vielleicht mit Chandra oder Spencer sprechen wollen - diese beiden können Ihnen einiges über unsere gegenwärtige Lage erzählen."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Die Stadt wird derzeit von der Roten Wache regiert. Wir stellen die Polizei und die Soldaten hier."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es gibt hier nur ein Gesetz das Aussenstehende angeht: Sei kein Idiot!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich denke, das reicht Ihnen erst einmal als Einführung."
+PositionX=61  PositionY=200  
+Subtitle="<?>"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
-ChangeOption=1 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Was tun Sie hier?"
+New Option Nr=99  OptionText="<?>"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=109  PositionY=138  
-Subtitle="Ich habe gerade Wachdienst."
+PositionX=512  PositionY=290  
+Subtitle="<?>"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Es gab schon seit geraumer Zeit keine Angriffe mehr. Es ist zu still -- ich fürchte, es wird bald etwas Heftiges passieren..."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=0
-AlwaysExecuteThisOptionPriorToDialogStart="no"
-
-----------------------------------------------------------------------
-
-New Option Nr=99  OptionText=" Ich muss dann weiter."
-OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=171  PositionY=138  
-Subtitle="Seien Sie wachsam, mein Freund."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=1 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

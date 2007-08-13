@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Spencer sagte, dass ich hier eine Panzerung kriege..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=263  PositionY=137  
-Subtitle="Na klar! Als Mitglied der Roten Wache bist du bevollmächtigt, einen unserer Schutzanzüge zu tragen. Ich kann seine Maße an alle Größen anpassen - sogar an deine!"
+Subtitle="Na klar! Als Mitglied der Roten Wache bist du bevollmächtigt, einen unserer Schutzanzüge zu tragen. Ich kann seine Masse an alle Grössen anpassen - sogar an deine!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Es gibt zwei Arten an Schutzpanzer: die schwere ultrastabile Wachrüstung und eine leichtere Version der gleichen Ausführung."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -67,11 +67,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ich muss jetzt gehen, ciao!"
+New Option Nr=99  OptionText=" END"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=361  PositionY=133  
-Subtitle="Pass auf dich auf."
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

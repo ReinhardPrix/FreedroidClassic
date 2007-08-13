@@ -30,50 +30,174 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Einen schönen Guten Tag!"
+New Option Nr=0  OptionText=" Äh... Hallo?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=64  PositionY=224  
-Subtitle="Nun denn, willkommen in unserer befestigten Niederlassung! Ich bin Sorenson, Lehrerin magischer Fähigkeiten."
+Subtitle="Ah! Ein Besucher! Kommen Sie herein! Kommen Sie herein!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
-ChangeOption=1 ChangeToValue=1
+LinkedTo:1
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Ich glaube, ich muss gleich weiter. Ich sehe Sie später."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=152  PositionY=170  
+Subtitle="Nein, bleiben Sie hier. Ich werde Sie nicht weglassen, bis wir geredet haben. Es gibt wichtige Dinge."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ich kann Ihnen helfen Computer zu verstehen. Besser als je zuvor."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+ChangeOption=50 ChangeToValue=1
+ChangeOption=40 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" [TRADE]"
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
-PositionX=155  PositionY=302  
-ChangeOption=1 ChangeToValue=1
+New Option Nr=20  OptionText=" Wer sind Sie?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ich? Sorenson ist eine grossartige Computer-Wissenschaftlerin."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Kennt die Codes. Kennt die Algorithmen."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sieht das Licht in jedem Chip. Kann mit jeder Tastatur arbeiten."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+LinkedTo:21
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" Ähm..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Sieht jedes Bit, Kennt jedes Byte. Erkundet die weiten Netzwerke."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die beste Freundin des sauberen und effizienten Code."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Das helle Licht am Nachthimmel der Rechenleistung."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+LinkedTo:22
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Ja, ich habe es kapiert, denke ich..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Die Sucherin der klaren Sprache. Die Wissende jedes Geheimnisses."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Die, die zu den Festplatten spricht. Die Beste --"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" ICH HABS VERSTANDEN, ES IST GUT!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Oh."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson hat Ihnen doch noch gar nicht alles erklärt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sie hat Ihnen nicht erzählt, dass sie die grosse Hüterin des Lichtes ist."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sie hat Ihnen nicht erzählt, dass sie die Sucherin in den langen dunklen Korridoren --"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" STOP! STOP! ICH KANN NICHT MEHR! MEIN KOPF PLATZT!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Eine Entschuldigung wird von mir angeboten. Sorenson hat es übertrieben."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson die Programmiererin grüsst Sie."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Warum sind Sie so? Was ist mit Ihnen passiert?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Wollte COBOl lernen. Schmerz. Folter. Schreckliches Schreien."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson fragte nach Hilfe. Viele Tage und Nächte."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Licht kam an. Licht bot Hilfe an. Sorenson änderte sich."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Eine freie Person jetzt."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=31 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText=" Was ist jetzt COBOL?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="COBOL ist der Gehirn-Verkrüppler."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Benutzen Sie es nicht. Vergessen Sie den verfluchten Namen. COBOL ist Schmerz. COBOL ist Hass."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" Ich habe bemerkt, Sie haben eine grosse Sammlung von Büchern. Darf ich Ihnen einige davon abkaufen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Natürlich. Handel ist gut!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Können Sie meine geistigen Fähigkeiten erweitern?"
+New Option Nr=41  OptionText=" Kann ich mir Ihre Bücher noch einmal ansehen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
-PositionX=152  PositionY=170  
-Subtitle="Das kommt darauf an. Was genau möchten Sie trainieren?"
+PositionX=200  PositionY=200  
+Subtitle="Nein. Sie haben genug gesehen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ich könnte Ihnen helfen, das Kraftreservoir Ihres Geists zu vergrößern."
+ChangeOption=41 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" Sie haben mich neugierig gemacht. Wie können Sie mir helfen Computer besser zu verstehen?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Einfachkeit! Unterschreiben Sie diesen Vertrag. Unnötig ihn zu lesen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Außerdem kann ich Ihnen zeigen wie Sie besser im Sprechen eines Zaubers werden."
+Subtitle="Sie vertrauen Sorenson, richtig?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nun, was soll es denn sein?"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=1
+ChangeOption=50 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" END "
-OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+New Option Nr=99  OptionText=" Ich muss jetzt wirklich weg. Auf Wiedersehen."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=347  PositionY=250  
-Subtitle="Schönen Tag noch!"
-ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"
+Subtitle="Bitte kommen Sie später wieder zurück. Wir müssen nochmal reden!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

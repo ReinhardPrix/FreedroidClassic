@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Doktor, ich habe einige dieser Gehirnbooster-Pillen genommen..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=294  PositionY=143  
-OnCondition="CookieIsPlanted:BrainEnlargementAntidodeGiven:" JumpToOption=5 ElseGoto=4
+OnCondition="CookieIsPlanted:doc_healed_tux:" JumpToOption=5 ElseGoto=4
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -66,15 +66,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Was wissen Sie über diese Kraftpillen?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=205  PositionY=38  
-Subtitle="Kraftpillen sind nur eine der Errungenschaften eines fantastischen wissenschaftlichen Durchbruchs, der sich kurz vor dem Großen Angriff ereignete."
+Subtitle="Kraftpillen sind nur eine der Errungenschaften eines fantastischen wissenschaftlichen Durchbruchs, der sich kurz vor dem Grossen Angriff ereignete."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Drei Arten von Optimierungspillen wurden damals entwickelt. Eine zur Vergrößerung der Kraft, eine zur Steigerung der Geschicklichkeit und eine zur Erhöhung der magischen Fähigkeiten."
+Subtitle="Drei Arten von Optimierungspillen wurden damals entwickelt. Eine zur Vergrösserung der Kraft, eine zur Steigerung der Geschicklichkeit und eine zur Erhöhung der magischen Fähigkeiten."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Diese Pillen arbeiten auf nanotechnischer Basis, wobei sich winzige Maschinen mit den Muskel- und Nervenzellen verbinden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Die Nano-Mechs verbinden sich miteinander und formen ein anorganisches künstliches Gewebe, das für bestimmte Eigenschaften vorprogrammiert wurde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Da diese Erfindung erst kurz vor dem Großen Angriff gemacht wurde, sind die Pillen mittlerweile sehr selten zur finden."
+Subtitle="Da diese Erfindung erst kurz vor dem Grossen Angriff gemacht wurde, sind die Pillen mittlerweile sehr selten zur finden."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Jedoch, falls Sie welche auftreiben können - umso besser, da ihre Effekte von Dauer sind. Und soweit wir wissen gibt es keine Nebenwirkungen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -99,7 +99,7 @@ ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="GiveItem:79"
-DoSomethingExtra="PlantCookie:BrainEnlargementAntidodeGiven:"
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
 DoSomethingExtra="OpenQuestDiaryEntry:M0E1:"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -112,7 +112,10 @@ Subtitle="Tut mir leid, aber ich hatte Ihnen bereits einmal die Medizin gegeben.
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Wenn Sie sich wieder selbst vergiften, ist das allein Ihr Problem und ich trage keine Verantwortung dafür."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Soweit es mich betrifft bekommt jeder in dieser Stadt das Gleiche."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -167,6 +170,7 @@ ChangeOption=10 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
 ChangeOption=12 ChangeToValue=1
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
 DoSomethingExtra="CompletelyHealTux"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
@@ -177,7 +181,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=347  
 Subtitle="Tja, sehen Sie diese schwachsinnige Person, Bender, vor meiner Türschwelle?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Er nahm diese bescheuerten Gehirnvergrößerer. Soweit kein Problem, er kam zu mir und ich heilte ihn. Aber werden Sie's glauben?"
+Subtitle="Er nahm diese bescheuerten Gehirnvergrösserer. Soweit kein Problem, er kam zu mir und ich heilte ihn. Aber werden Sie's glauben?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Er hat nochmal welche geschluckt - entgegen meiner ausdrücklichen Anordnung. Ja, glaubt der denn, er kann meinen ganzen Vorrat an Heilmittel aufbrauchen? Da liegt er leider falsch!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -205,10 +209,119 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
+New Option Nr=20  OptionText=" Doktor... Ich brauche wirklich das Gegenmittel."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nein, Ich gebe es Ihnen nicht. Vergessen Sie es einfach."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" Ich verliere langsam die Geduld. Geben Sie mir das Gegenmittel. Jetzt!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nein! Nur über meine Leiche."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+ChangeOption=22 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Ihr Wunsch ist mir Befehl."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Wie? Was?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" Menschen... Ihr seid schon interessant. Ich wollte schon immer wissen, wieviel Blut jetzt genau in Eurem Körper ist."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nein, tun Sie es nicht, bitte tun Sie es nicht!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Stillhalten, Doktor. Das Experiment beginnt."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Nein, tun Sie es nicht! BITTE TUN SIE ES NICHT!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="AAAAAAAAAAA!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+LinkedTo:25
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText=" Uäh... Menschliches Blut ist ekelerregend. Mindestens vier Liter. Ich fühle mich dreckig."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=". . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+LinkedTo:26
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" Ich denke, damit erbe ich alle Ihr Sachen. Macht es Ihnen etwas aus, wenn ich alles mitnehme?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=". . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+LinkedTo:27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText=" Schön, ich bin froh, keine Einsprüche zu hören."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=". . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+DoSomethingExtra="GiveItem:1:15"
+DoSomethingExtra="GiveItem:2:10"
+DoSomethingExtra="GiveItem:48:10"
+DoSomethingExtra="GiveItem:79:5"
+DoSomethingExtra="GiveItem:121"
+DoSomethingExtra="DropDead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Ach, vergessen Sie es. Das Gegenmittel ist den Aufwand nicht wert."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ich würde es Ihnen auch nicht geben, keine Chance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=22 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
 New Option Nr=99  OptionText=" Auf Wiedersehen!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle="Schönen Tag noch - und passen Sie besser auf sich auf!"
+Subtitle="Schönen Tag noch!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

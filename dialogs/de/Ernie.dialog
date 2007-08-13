@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=76  PositionY=241  
-Subtitle="Hey du!  Linarianer!  Was treibst du hier?"
+Subtitle="Hey du! Linarianer! Was treibst du hier?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="Ich spaziere nur ein wenig herum."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=175  PositionY=358  
-Subtitle="OK!  Aber mach keinen Ärger! Sonst kriegst du Ärger!"
+Subtitle="OK! Aber mach keinen Ärger! Sonst kriegst du Ärger!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="Ich bin hier um eurem faschistoiden Minengeschäft ein Ende zu bereiten!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=103  
-Subtitle="OK Linarianer!  Du wolltest es so haben -- außerdem kann ich Pinguine nicht ausstehen!!"
+Subtitle="OK, Linarianer! Du wolltest es so haben -- ausserdem kann ich Pinguine nicht ausstehen!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
