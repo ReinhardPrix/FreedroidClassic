@@ -607,6 +607,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	
 	char pname[15];
 	strncpy(pname, pos, pos2-pos);
+	pname[pos2-pos] = 0;
 	TempValue = atoi(pname);
 
 	NewItem.type = TempValue  ;
