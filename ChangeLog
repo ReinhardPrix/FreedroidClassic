@@ -1,103 +1,401 @@
-2007-08-05 19:57  magotari
+2007-08-13 17:01  magotari
 
-	* map/freedroid.prefix_archetypes: I just hope this works.
-	  Untested.
+	* dialogs/de/: 614.dialog, Bender.dialog, Benjamin.dialog,
+	  Bruce.dialog, Butch.dialog, Chandra.dialog, Darwin.dialog,
+	  Dixon.dialog, DocMoore.dialog, Duncan.dialog, Ernie.dialog,
+	  Ewald.dialog, Francis.dialog, Jasmine.dialog, Kevin.dialog,
+	  KevinGuard.dialog, Koan.dialog, Lukas.dialog,
+	  MSFacilityGateGuardLeader.dialog, Melfis.dialog,
+	  Michelangelo.dialog, OldTownGateGuardLeader.dialog,
+	  Pendragon.dialog, RMS.dialog, SACD.dialog, SADD.dialog,
+	  Skippy.dialog, Sorenson.dialog, Spencer.dialog,
+	  StandardMSFacilityGateGuard.dialog,
+	  StandardOldTownGateGuard.dialog, Stone.dialog, Template.dialog,
+	  Tybalt.dialog, subdlg_Benjamin.dialog,
+	  subdlg_Benjamin_bribe.dialog, subdlg_Butch.dialog,
+	  subdlg_Darwin.dialog, subdlg_Duncan.dialog,
+	  subdlg_Duncan_quest.dialog, subdlg_Kevin.dialog,
+	  subdlg_Pendragon.dialog, subdlg_Sorenson.dialog,
+	  subdlg_Spencer_eval.dialog, subdlg_Stone.dialog,
+	  subdlg_kevin_reward1.dialog: German script. Whew.
 
-2007-07-28 02:44  ahuillet
+2007-08-13 11:39  magotari
 
-	* src/BFont.c: moved back disabling of clip planes outside of the
-	  display list, as it totally kills performance on my computer
+	* dialogs/Bruce.dialog: A tiny fix, missing space.
 
-2007-07-28 02:44  ahuillet
+2007-08-12 18:04  ahuillet
 
-	* src/text.c: fixed font color bug in dialogs
+	* src/view.c: now dynamically computing the start/end positions for
+	  floor tile displaying - avoid black corners and unneeded blitting
+	  operations
 
-2007-07-27 02:27  ahuillet
+2007-08-12 17:51  bastiansalmela
 
-	* src/: BFont.c, BFont.h: now using display lists for text
-	  displaying - this seems to have improved performance dramatically
-	  on my NV28
+	* graphics/droids/kevin/portrait.png: bigger
 
-2007-07-27 00:17  ahuillet
+	  .b
 
-	* map/EventsAndEventTriggers: fixed breakage of disruptor
-	  teleporter
+2007-08-12 17:43  bastiansalmela
 
-2007-07-26 19:38  ahuillet
+	* graphics/droids/professor/professor.tux_image_archive:
+	  from there to here, and back again
 
-	* src/leveleditor.c: parameter error
+	  .b
 
-2007-07-26 19:37  ahuillet
+2007-08-12 17:42  bastiansalmela
 
-	* src/: open_gl.c, proto.h: blit_open_gl_texture_to_map_position is
-	  really supposed to take floats not doubles
+	* graphics/droids/: bartender/portrait.png,
+	  female_scientist/portrait.png,
+	  professor/professor.tux_image_archive:
+	  bigger
 
-2007-07-26 19:37  ahuillet
+	  .b
 
-	* src/view.c: removed a useless if statement
+2007-08-12 17:25  ahuillet
 
-2007-07-26 18:03  ahuillet
+	* src/: defs.h, light.c, open_gl.c: adapted number of floor tiles
+	  to display with resolution, in order to improve performance at
+	  800x and 640x
 
-	* src/view.c: now enable GL_TEXTURE when displaying tux on screen
-	  in takeover game - better rendering than black squares
+2007-08-12 16:43  ahuillet
 
-2007-07-26 17:24  ahuillet
+	* src/: hud.c, itemdefs.h: fixed weapon rect positionning problems
 
-	* src/view.c: now using GL to draw tux parts - supports making Tux
-	  red when he is paralyzed
+2007-08-12 15:36  ahuillet
 
-2007-07-26 17:17  ahuillet
+	* configure.ac: this has been .10.3CVS for quite a long time
 
-	* src/: automap.c, blocks.c, defs.h: now checking max texture size
-	  before creating automap tex - thanks to snark for testing
+2007-08-12 15:32  ahuillet
 
-2007-07-26 16:11  ahuillet
+	* src/BFont.c: yeah, using malloc instead of calloc in font
+	  initialization gives bad results when creating the texture
 
-	* src/menu.c: removed console warning message when no savegames
-	  present
+2007-08-12 15:16  ahuillet
 
-2007-07-25 15:24  ahuillet
+	* src/BFont.c: fixed game crashing in SDL mode on GL-enabled
+	  machines
 
-	* dialogs/Michelangelo.dialog: fixed typo
+2007-08-12 15:08  ahuillet
 
-2007-07-24 21:35  ahuillet
+	* src/lang.h: tentative fix of build problems on machines without
+	  gettext
 
-	* freedroidRPG.exe: .10.3rc1
+2007-08-12 15:03  ahuillet
 
-2007-07-24 21:03  ahuillet
+	* src/ship.c: removed unused variables as reported by Colin Pitrat
 
-	* src/Makefile.am: next time I take care when I remove empty files
+2007-08-12 10:05  bastiansalmela
 
-2007-07-24 20:54  ahuillet
+	* graphics/backgrounds/hud_background.png:
+	  f/t
 
-	* src/Makefile.am: forgot that
+	  .b
 
-2007-07-24 20:12  ahuillet
+2007-08-12 02:13  ahuillet
 
-	* src/DialogEditor.h: hope it is good this time
+	* src/vars.h: using much saner progression when increasing
+	  melee/ranged weapon skills
 
-2007-07-24 20:10  ahuillet
+2007-08-12 01:51  ahuillet
 
-	* src/DialogEditor.h: CVS, je te pisse à la raie
+	* freedroidRPG.exe: updated exe
 
-2007-07-24 20:09  ahuillet
+2007-08-12 01:37  ahuillet
 
-	* src/DialogEditor.h: cvs unhappy ?
+	* map/freedroid.droid_archetypes, src/enemy.c, src/init.c,
+	  src/struct.h: removed more useless data from droid description
+	  file
 
-2007-07-24 19:17  ahuillet
+2007-08-12 01:31  ahuillet
 
-	* src/DialogEditor.h: to make CVS happy
+	* map/freedroid.droid_archetypes, src/init.c, src/struct.h: removed
+	  unused legacy data in droid description file
 
-2007-07-24 19:05  ahuillet
+2007-08-12 01:24  ahuillet
 
-	* dialogs/Michelangelo.dialog: fixed typo
+	* src/chat.c: removed useless comment
 
-2007-07-24 18:52  ahuillet
+2007-08-12 01:24  ahuillet
 
-	* ChangeLog: .10.3rc1 CL
+	* src/: blocks.c, defs.h: support code for the bartender - the way
+	  we handle droid graphics is just crazy.
 
-2007-07-24 18:39  ahuillet
+2007-08-12 01:23  ahuillet
 
-	* graphics/backgrounds/character.png: god is it ugly.. but it will
-	  do for rc1
+	* map/: ReturnOfTux.droids, freedroid.droid_archetypes: three years
+	  after its introduction in CVS, bartender is in game!!
+
+2007-08-12 00:59  ahuillet
+
+	* src/: init.c, proto.h, struct.h, view.c: removed unused code and
+	  data stuff
+
+2007-08-12 00:50  ahuillet
+
+	* graphics/droids/: Benjamin.png, Chandra.png, DefaultPortrait.png,
+	  Francis.png, Sorenson.png, Stone.png: removed long useless files
+
+2007-08-12 00:36  ahuillet
+
+	* src/: character.c, defs.h, misc.c: fixed stat+ buttons positions
+
+2007-08-12 00:11  bastiansalmela
+
+	* graphics/droids/: default_dead_human_00_0001.offset,
+	  default_dead_human_00_0001.png, hot_mama/portrait.png:
+	  one frame of dead human.
+
+	  i dont know what hotmama has to do with this, maybe i've touched
+	  that long ago.. dunno.. but, there it is.. :)
+
+	  .b
+
+2007-08-11 23:55  ahuillet
+
+	* graphics/items/inventory_image_28.png,
+	  map/freedroid.item_archetypes: new laser dagger - old file
+	  removed
+
+2007-08-11 23:47  ahuillet
+
+	* src/items.c: fixed bonus picking code that failed when bonus 0
+	  was taken
+
+2007-08-11 23:30  bastiansalmela
+
+	* graphics/items/laser_dagger/: ingame.offset, ingame.png,
+	  inv_image.png, portrait_0001.jpg, portrait_0002.jpg,
+	  portrait_0003.jpg, portrait_0004.jpg, portrait_0005.jpg,
+	  portrait_0006.jpg, portrait_0007.jpg, portrait_0008.jpg,
+	  portrait_0009.jpg, portrait_0010.jpg, portrait_0011.jpg,
+	  portrait_0012.jpg, portrait_0013.jpg, portrait_0014.jpg,
+	  portrait_0015.jpg, portrait_0016.jpg, portrait_0017.jpg,
+	  portrait_0018.jpg, portrait_0019.jpg, portrait_0020.jpg,
+	  portrait_0021.jpg, portrait_0022.jpg, portrait_0023.jpg,
+	  portrait_0024.jpg, portrait_0025.jpg, portrait_0026.jpg,
+	  portrait_0027.jpg, portrait_0028.jpg, portrait_0029.jpg,
+	  portrait_0030.jpg, portrait_0031.jpg, portrait_0032.jpg:
+	  laser dagger,  portrait, ingame, invimage
+
+2007-08-11 23:26  ahuillet
+
+	* src/itemdefs.h: enlarged shield rect so that the GL grey quad
+	  fills it in completely
+
+2007-08-11 22:53  ahuillet
+
+	* src/itemdefs.h: tweaked inv positionning
+
+2007-08-11 22:52  ahuillet
+
+	* src/hud.c: fixed displaying required stats for an item
+
+2007-08-11 22:52  ahuillet
+
+	* map/freedroid.item_archetypes: fixed inv sizes of new high res
+	  items
+
+2007-08-11 22:21  bastiansalmela
+
+	* graphics/items/: basic_armour/inv_image.png,
+	  basic_armour2/inv_image.png, basic_armour3/inv_image.png:
+	  128x128
+
+	  .b
+
+2007-08-11 22:14  bastiansalmela
+
+	* graphics/items/inventory_image_14.png:
+	  128x128 .b
+
+2007-08-11 22:12  ahuillet
+
+	* src/skills.c: fixed grenades working only through quick inv
+
+2007-08-11 22:03  ahuillet
+
+	* src/: input.c, items.c: quick inventory updates: font used,
+	  position, item #10
+
+2007-08-11 22:02  bastiansalmela
+
+	* graphics/items/red_dilitium_crystal/inv_image.png:
+	  le crystaal
+
+2007-08-11 21:42  ahuillet
+
+	* src/character.c: position of fields in cha
+
+2007-08-11 21:27  ahuillet
+
+	* map/freedroid.program_archetypes: typo fix
+
+2007-08-11 20:54  bastiansalmela
+
+	* graphics/backgrounds/inventory.png:
+	  1 2 3 4 5 6 7 8 9 0 .b
+
+2007-08-11 20:50  ahuillet
+
+	* src/: defs.h, character.c: stopped displaying NOW values - this
+	  breaks the stat + buttons
+
+2007-08-11 20:50  ahuillet
+
+	* src/hud.c: moved subtitle rectangle a tiny bit to accomodate new
+	  hud
+
+2007-08-11 20:49  ahuillet
+
+	* src/misc.c: fixed positionning of "focuse" inv cha ski log
+	  buttons
+
+2007-08-11 20:45  bastiansalmela
+
+	* graphics/backgrounds/character.png:
+	  things
+
+2007-08-11 19:58  bastiansalmela
+
+	* graphics/backgrounds/character.png: i  temperature instead of
+	  force
+
+	  .b
+
+	  :wq
+
+2007-08-09 21:41  ahuillet
+
+	* freedroidRPG.exe: [no log message]
+
+2007-08-09 18:29  ahuillet
+
+	* src/items.c: fixed item grabbing when inv is open - now player
+	  has to reach for a distant item even in that case - no
+	  reclamations will be accepted you cheaters :p
+
+2007-08-09 18:09  ahuillet
+
+	* src/itemdefs.h: fixed positionning in inventory for new inv
+	  screen
+
+2007-08-09 17:36  bastiansalmela
+
+	* graphics/mouse_buttons/: cha_button_red.png,
+	  cha_button_yellow.png, inv_button_yellow.png, log_button_red.png,
+	  log_button_yellow.png, ski_button_yellow.png: new butts
+
+2007-08-09 17:31  ahuillet
+
+	* src/: blocks.c, bullet.c, character.c, chat.c, enemy.c, hud.c,
+	  influ.c, init.c, input.c, items.c, main.c, map.c, menu.c, misc.c,
+	  mission.c, saveloadgame.c, ship.c, shop.c, skills.c, system.h,
+	  takeover.c, text.c, vars.h, view.c: saner lang.h include
+	  mechanism - now we need to check if all this is portable - MS
+	  Windows/BSD/etc testers?
+
+2007-08-09 17:30  ahuillet
+
+	* src/defs.h: displaying 11 floor tiles again
+
+2007-08-09 17:01  ahuillet
+
+	* src/lang.h: this file is required for gettext
+
+2007-08-09 17:01  ahuillet
+
+	* src/open_gl.c: fixed texture name exhaustion tied to tux part
+	  loading
+
+2007-08-09 16:59  ahuillet
+
+	* src/: influ.c, init.c, input.c, items.c, main.c, map.c, menu.c,
+	  misc.c, mission.c, saveloadgame.c, ship.c, shop.c, skills.c,
+	  takeover.c, text.c, vars.h, view.c: Colin Pitrat: initial support
+	  for gettext, marked strings
+
+2007-08-09 16:54  ahuillet
+
+	* src/: DialogEditor.h, ItemEditor.h, blocks.c, bullet.c,
+	  character.c, chat.c, enemy.c, hud.c: Colin Pitrat: marked strings
+	  for gettext
+
+2007-08-09 10:28  bastiansalmela
+
+	* src/init.c:
+	  little more consistent to use atleast same font during startup..
+
+	  .b
+
+2007-08-09 09:53  bastiansalmela
+
+	* graphics/backgrounds/hud_background.png:
+	  new hud gfx .b
+
+2007-08-09 09:52  bastiansalmela
+
+	* src/: hud.c, itemdefs.h:
+	  positionings for HUD
+
+2007-08-09 07:38  bastiansalmela
+
+	* graphics/obstacles/iso_walls_0016.png:
+	  tiling fix
+
+	  .b
+
+2007-08-09 07:38  bastiansalmela
+
+	* graphics/floor_tiles/iso_sidewalk_0014.png:
+	  tiling fix .b
+
+2007-08-08 20:40  bastiansalmela
+
+	* src/: character.c, defs.h, skills.c:
+	  location and fonts.
+
+	  .b
+
+2007-08-08 19:49  bastiansalmela
+
+	* src/: character.c, system.h: i  correct font
+
+2007-08-08 19:41  bastiansalmela
+
+	* graphics/backgrounds/SkillExplanationScreen.png:
+	  fix fox bg
+
+2007-08-08 19:39  bastiansalmela
+
+	* graphics/backgrounds/SkillExplanationScreen.png: i
+	  skillexplanation gfx
+
+	  .b
+
+2007-08-08 19:33  bastiansalmela
+
+	* graphics/backgrounds/inventory.png: i  hrhmh.... the correct inv
+	  screen
+
+	  .b
+
+2007-08-08 19:25  bastiansalmela
+
+	* graphics/skill_buttons.png: i  new skill buttons gfx
+
+	  .b
+
+2007-08-08 19:19  bastiansalmela
+
+	* graphics/backgrounds/SkillScreen.png:
+	  skill screen gfx .b
+
+2007-08-08 19:16  bastiansalmela
+
+	* graphics/backgrounds/character.png:
+	  new character screen gfx .b
+
+2007-08-05 22:41  ahuillet
+
+	* ChangeLog: .10.3rc2 CL
 
