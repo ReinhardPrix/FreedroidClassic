@@ -557,6 +557,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	while ( * pos2 != '\"') pos2++;
 	char pname [ pos2 - pos + 1 ];
 	strncpy(pname, pos, pos2 - pos);
+	pname[pos2-pos] = 0;
 	DebugPrintf( CHAT_DEBUG_LEVEL , "\n...decoding...Program name is: %d." , pname );
 	Me [ 0 ] . base_skill_level [ get_program_index_with_name(pname) ] ++;
     }
@@ -569,6 +570,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	while ( isdigit(*pos2) || *pos2 == '-' ) pos2++;
 	char pname [ pos2 - pos + 1 ];
 	strncpy(pname, pos, pos2 - pos);
+	pname[pos2-pos] = 0;
 	Me [ 0 ] . energy -= atoi ( pname ) ;
     }
     else if ( CountStringOccurences ( ExtraCommandString , "DeleteItem:" ) )
@@ -583,6 +585,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	int multiplicity = 1;
 
 	strncpy(pname, pos, pos2-pos);
+	pname[pos2-pos] = 0;
 	TempValue = atoi(pname);
 
 	if(*pos2 == ':')
