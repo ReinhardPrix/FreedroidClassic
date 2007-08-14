@@ -157,7 +157,9 @@ Subtitle="Well, we are in a barred spiral galaxy, twenty-six thousand light year
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The galactic radius is 43,000 light years and the circumference is estimated at 270,000 light years."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="This is a planetary system of nine planets, and we are presently located on the third one from our star, Sun."
+Subtitle="This is a planetary system of ten planets, and we are presently located on the fourth one from our star, Sun."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="I am not an astronomer, so I can be wrong. I am too tired to keep track of what is a planet and what is just an overweight rock."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 LinkedTo:12
@@ -185,7 +187,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText=" This can be just about anywhere. Your description is too ambiguous."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=253  PositionY=263  
-Subtitle="Sorry, I am not an astronomer. Maybe someone in the town might know something more."
+Subtitle="Sorry, star sciences are my weak point. Maybe someone in the town might know something more."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
