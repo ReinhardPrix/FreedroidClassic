@@ -136,19 +136,6 @@ print_menu_text ( char* InitialText , char* MenuTexts[] , int first_menu_item_po
     else SetCurrentFont ( (BFont_Info*) MenuFont );
     h = FontHeight ( GetCurrentFont() );
     
-    if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
-	 ( GameConfig . menu_mode == MENU_MODE_FAST ) )
-    {
-	for ( i = 0 ; TRUE ; i ++ )
-	{
-	    if ( strlen( MenuTexts[ i ] ) == 0 ) break;
-	    CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
-	    CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
-	}
-	if ( strlen( InitialText ) > 0 ) 
-	    DisplayText ( InitialText , 50 , 50 , NULL , TEXT_STRETCH );
-    }
-    
 }; // void print_menu_text ( ... )
 
 /* ----------------------------------------------------------------------
@@ -272,18 +259,14 @@ DoMenuSelection( char* InitialText , char* MenuTexts[] , int FirstItem , int bac
 
     
     
-	if ( ( GameConfig . menu_mode == MENU_MODE_DOUBLE ) ||
-	     ( GameConfig . menu_mode == MENU_MODE_DEFAULT ) )
-	{
-	    for ( i = 0 ; TRUE ; i ++ )
+        for ( i = 0 ; TRUE ; i ++ )
 	    {
 		if ( strlen( MenuTexts[ i ] ) == 0 ) break;
 		CutDownStringToMaximalSize ( MenuTexts [ i ] , 550 );
 		CenteredPutString ( Screen ,  first_menu_item_pos_y + i * h , MenuTexts[ i ] );
 	    }
-	    if ( strlen( InitialText ) > 0 ) 
+        if ( strlen( InitialText ) > 0 ) 
 		DisplayText ( InitialText , 50 , 50 , NULL , TEXT_STRETCH );
-	}
 	
 	//--------------------
 	// Now the mouse cursor must be brought to the screen
@@ -1900,17 +1883,13 @@ PerformanceTweaksOptionsMenu (void)
     char Options3[1000];
     char Options4[1000];
     char Options5[1000];
-    char Options6[1000];
-    char Options7[1000];
     char* MenuTexts[10];
     enum
 	{ 
 	    SET_HOG_CPU_FLAG = 1,
 	    SET_HIGHLIGHTING_MODE,
-	    SET_MENU_HANDLING_MODE,
 	    SHOW_QUICK_INVENTORY_MODE,
 	    SKIP_LIGHT_RADIUS_MODE,
-	    USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE,
 	    SKIP_SHADOWS,
 	    SKIP_FADINGS,
 	    LEAVE_PERFORMANCE_TWEAKS_MENU 
@@ -1928,30 +1907,12 @@ PerformanceTweaksOptionsMenu (void)
 	sprintf ( Options0 , _("Hog CPU for max. performance: %s"), 
 		  GameConfig.hog_CPU ? _("YES") : _("NO") );
 	sprintf ( Options1 , _("Highlighting mode: %s"), GameConfig.highlighting_mode_full ? _("FULL") : _("REDUCED") );
-	sprintf ( Options3 , _("Show quick inventory: %s"), GameConfig . show_quick_inventory ? _("YES") : _("NO") );
-	sprintf ( Options4 , _("Skip light radius: %s"), GameConfig . skip_light_radius ? _("YES") : _("NO") );
-	sprintf ( Options5 , _("Use bars for energy display: %s"), 
-		  GameConfig . use_bars_instead_of_energy_o_meter ? _("YES") : _("NO") );
-	sprintf ( Options6 , _("Skip shadow blitting: %s"), 
+	sprintf ( Options2 , _("Show quick inventory: %s"), GameConfig . show_quick_inventory ? _("YES") : _("NO") );
+	sprintf ( Options3 , _("Skip light radius: %s"), GameConfig . skip_light_radius ? _("YES") : _("NO") );
+	sprintf ( Options4 , _("Skip shadow blitting: %s"), 
 		  GameConfig . skip_shadow_blitting ? _("YES") : _("NO") );
-	sprintf( Options7 , _("Skip fadings: %s"), 
+	sprintf( Options5 , _("Skip fadings: %s"), 
 		 GameConfig . do_fadings ? _("NO") : _("YES") );
-	
-	strcpy ( Options2 , _("Menu handling: ") );
-	switch ( GameConfig . menu_mode )
-	{
-	    case MENU_MODE_FAST:
-		strcat ( Options2, _("FAST") );
-		break;
-	    case MENU_MODE_DEFAULT:
-		strcat ( Options2, _("DEFAULT") );
-		break;
-	    case MENU_MODE_DOUBLE:
-		strcat ( Options2, _("DOUBLE") );
-		break;
-	    default:
-		break;
-	}
 	
 	MenuTexts[0]=Options0;
 	MenuTexts[1]=Options1;
@@ -1959,10 +1920,8 @@ PerformanceTweaksOptionsMenu (void)
 	MenuTexts[3]=Options3;
 	MenuTexts[4]=Options4;
 	MenuTexts[5]=Options5;
-	MenuTexts[6]=Options6;
-	MenuTexts[7]=Options7;
-	MenuTexts[8]=_("Back");
-	MenuTexts[9]="";
+	MenuTexts[6]=_("Back");
+	MenuTexts[7]="";
 	
         if ( GameOver == TRUE )      
                 MenuPosition = DoMenuSelection( "" , MenuTexts , -1 , NE_TITLE_PIC_BACKGROUND_CODE, NULL );      
@@ -1975,59 +1934,37 @@ PerformanceTweaksOptionsMenu (void)
 		break;
 		
 	    case SET_HOG_CPU_FLAG:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed());
 		GameConfig . hog_CPU = ! GameConfig . hog_CPU ;
 		break;
 		
 	    case SET_HIGHLIGHTING_MODE:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed());
 		GameConfig . highlighting_mode_full = ! GameConfig . highlighting_mode_full ;
 		break;
 		
-	    case SET_MENU_HANDLING_MODE:
-		while (EnterPressed() || SpacePressed() );
-		if ( GameConfig . menu_mode == MENU_MODE_FAST )
-		    GameConfig . menu_mode = MENU_MODE_DEFAULT;
-		else if ( GameConfig . menu_mode == MENU_MODE_DEFAULT )
-		    GameConfig . menu_mode = MENU_MODE_DOUBLE;
-		else if ( GameConfig . menu_mode == MENU_MODE_DOUBLE )
-		    GameConfig . menu_mode = MENU_MODE_FAST;
-		//--------------------
-		// In OpenGL, there is no need for the reduced menu display (which is
-		// based on restoring a saved "screenshot", which isn't working so well
-		// in OpenGL anyway) so we don't even allow for reduced menus in this
-		// mode.
-		//
-		if ( use_open_gl ) GameConfig . menu_mode = MENU_MODE_DEFAULT;
-		break;
-		
 	    case SHOW_QUICK_INVENTORY_MODE:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed());
 		GameConfig . show_quick_inventory = ! GameConfig . show_quick_inventory ;
 		break;
 		
 	    case SKIP_LIGHT_RADIUS_MODE:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed()|| MouseLeftPressed() );
 		GameConfig . skip_light_radius = ! GameConfig . skip_light_radius ;
 		break;
 		
-	    case USE_BARS_INSTEAD_OF_ENERGY_O_METER_MODE:
-		while (EnterPressed() || SpacePressed() );
-		GameConfig . use_bars_instead_of_energy_o_meter = ! GameConfig . use_bars_instead_of_energy_o_meter ;
-		break;
-		
 	    case SKIP_SHADOWS:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed()|| MouseLeftPressed() );
 		GameConfig . skip_shadow_blitting = ! GameConfig . skip_shadow_blitting ;
 		break;
 
 	    case SKIP_FADINGS:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed() || MouseLeftPressed() );
 		GameConfig . do_fadings = ! GameConfig . do_fadings ;
 		break;
 	    
 	    case LEAVE_PERFORMANCE_TWEAKS_MENU:
-		while (EnterPressed() || SpacePressed() );
+		while (EnterPressed() || SpacePressed()|| MouseLeftPressed() );
 		can_continue=TRUE;
 		break;
 		
