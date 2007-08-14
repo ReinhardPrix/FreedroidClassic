@@ -1,0 +1,180 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="HERE WE GO"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=61  PositionY=200  
+Subtitle="Alors... Des nouvelles de l'affaire de Koan ?" 
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=40 ChangeToValue=1
+OnCondition="CookieIsPlanted:koan_spared:" JumpToOption=5 ElseGoto=1
+DoSomethingExtra="PlantCookie:koan_quest_done"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="KOAN WAS SPARED"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=5 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="GOT THE CUBE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=7 ChangeToValue=0
+OnCondition="HaveItemWithCode:129" JumpToOption=8 ElseGoto=1
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="YEAH. WE HAVE THE CUBE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=8 ChangeToValue=0
+ChangeOption=30 ChangeToValue=1
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText="Ouais. Je l'ai. Je pense que c'est ton cube." 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Oui. J'apprécie ton aide."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+DoSomethingExtra="AddExperienceBonus:3000"
+DoSomethingExtra="DeleteItem:129"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Je n'ai pu le trouver nulle part dans le désert. Je ne pense pas qu'il y soit encore."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Je vois."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Ouais, je l'ai. Maintenant, quel est ce grand cube auquel tu m'as avertit de prendre garde pendant tout le chemin ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Seulement un souvenir après un ami."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Un peu plus qu'un portable à  la fin du monde, lequel je recherche pour désassembler et apprendre ses secrets."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Rien de très important."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=10 ChangeToValue=0
+ChangeOption=70 ChangeToValue=1
+ChangeOption=60 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" 'Quelques" robots ? La place regorgeait de Scimouleurs ! J'ai presque été tué !"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Il y a seulement quarante robots dans le désert. àa peut difficilement être qualifié de 'un grand nombre'."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" Quoi ? Tu sais exactement combien il y avait de robots dans le désert ? Sans y avoir été ? Je n'aime pas ça."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Je sais simplement beaucoup de choses. Tu n'as pas besoin de t'inquiéter à  ce propos."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=0
+ChangeOption=50 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" Je n'aime pas ça du tout. Je me barre d'ici."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Comme tu veux."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=50 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=60  OptionText=" Hé, c'est vraiment soigné. Voici ton cube. Amuse toi bien â  le démonter et â  jouer avec."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Je veux."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=60 ChangeToValue=0
+DoSomethingExtra="AddExperienceBonus:3000"
+DoSomethingExtra="DeleteItem:129"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=70  OptionText=" QUOI ? Pas moyen que je te donne un [translation missing] ! Oublie ça."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Je comprends. Ainsi soit-il."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=70 ChangeToValue=0
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

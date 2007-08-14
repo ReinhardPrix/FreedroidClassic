@@ -1,0 +1,208 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="Um... Bonjour ?" 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=64  PositionY=224  
+Subtitle="AH ! Des visiteurs ! Entrez ! Entrez !" 
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+LinkedTo:1
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Je pense que je dois partir maintenant. Ok. Voyons nous plus tard."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=152  PositionY=170  
+Subtitle="Non, n'y allez pas. Je ne vous laisserai pas partir avant que nous parlions. Ce sont des choses importantes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je peux t'aider à  comprendre les ordinateurs... Mieux que jamais avant."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+ChangeOption=50 ChangeToValue=1
+ChangeOption=40 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Qui es-tu ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Moi ? Sorenson est un grand informaticien."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il connait les codes profonds. Il parcourt les chemins."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Regarde la lumière de toutes ces puces. Sachant comment utiliser chaque clavier."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+LinkedTo:21
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" Erm..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Regarde le bit. Apprends les bytes. Explore le grand réseau."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Le meilleur ami du code propre et pur."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="La grande lumière du ciel nocturne du web fantôme de la puissances des ordinateurs."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+LinkedTo:22
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Oui, j'ai l'idée..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="à la recherche de languages clean. La grande connaissance de secrets obscurs."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Le seul qui parle auwx disques durs. Le meilleur --"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" JE SAIS ! JE SAIS !"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Oh."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson ne t'a encore rien dit."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Elle ne t'a pas dit qu'elle est le grand contrôleur de lumière."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Elle ne t'a pas dit qu'elle parcourt les corridors sombres --"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" ARRâTE ! ARRâTE ! JE NE PEUX PAS EN RECEVOIR PLUS ! MA TâTE SOUFFRE !"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="L'apologie s'est étendue à  moi. Sorenson l'a surpassé."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson le codeur est ravi de vous rencontrer."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Pourquoi est-ce que tu es comme ça ? Qu'est-ce qui t'arrive ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="àtait en train d'apprendre COBOL. Souffrance. Torture. Cris atroces."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Sorenson demande assistance. Beaucoup de jours et de nuits."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="La lumière est venue. La lumière a donnée de l'aide. Sorenson a changé."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Personne libre maintenant."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=31 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText=" Qu'est ce que COBOL ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="COBOL cause des séquelles pour l'esprit."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ne l'utilise pas. Oublie le nom maudit. COBOL est le mal. COBOL est la haine."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=40  OptionText=" Je vois que vous avez une collection de livres impressionante. Que diriez vous si je vous en achetais quelques uns ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Bien sûr. Le commerce est bon."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=40 ChangeToValue=0
+ChangeOption=41 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=41  OptionText=" Puis-je jeter un coup d'oeil â  vos livres â  nouveau ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Oui. Bien sûr. Naturellement."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=41 ChangeToValue=1
+DoSomethingExtra="InitTradeWithCharacter:Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=50  OptionText=" Vous éveillez ma curiosité. Comment pouvez vous m'aider â  mieux comprendre les ordinateurs ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Simplement ! Signe ce contrat. Tu n'as pas besoin de le lire."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Tu crois Sorenson, pas vrai ?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=50 ChangeToValue=0
+DoSomethingExtra="ExecuteSubdialog:subdlg_Sorenson"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" Je dois réellement partir maintenant. Au revoir"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=347  PositionY=250  
+Subtitle="S'il te plaà®t, reviens me voir plus tard, Linarien. Nous avons encore des choses à  nous dire."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

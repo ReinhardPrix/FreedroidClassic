@@ -1,0 +1,76 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=43  PositionY=138  
+Subtitle="Ah, un nouvel arrivant. J'ai entendu dire que tu as été rudoyé par mon ami à  la porte ? Quelle histoire, il a perdu sa petite sÅur dans le Grand Assaut. Il n'a jamais réussi à  le surmonter." 
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Donc, étranger, bienvenue ici. Tu pourrais vouloir parler à  Chandra ou à  Spencer, ils peuvent t'en dire beaucoup à  propos de la situation actuelle."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="La ville est actuellement dirigée par la Garde Rouge. Nous sommes à  la fois la police et l'armée ici."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il n'y a qu'une loi ici concernant les étrangers : ne soit pas stupide."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je pense que c'est suffisant pour commencer."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Qu'est-ce que tu fais ici ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=109  PositionY=138  
+Subtitle="Je suis en service de garde pour le moment."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ils n'y a pas eu d'attaque récemment. C'est trop tranquille, je pense que quelque chose de conséquent se prépare."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" J'y vais alors."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=171  PositionY=138  
+Subtitle="Au revoir."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

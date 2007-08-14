@@ -1,0 +1,268 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="THIS SHOULD NEVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=63  PositionY=228  
+ChangeOption=0 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText=" HERE IS THE START"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=368  PositionY=402  
+ChangeOption=12 ChangeToValue=0
+OnCondition="MissionComplete:1" JumpToOption=13 ElseGoto=14
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=13  OptionText="DIXON SUCCESSFUL."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=502  PositionY=378  
+Subtitle=" La division technique a rapporté que tu les avais sortis d'affaire avec leurs difficultés, néanmoins, ils sont restés très vagues à  ce sujet." 
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Bon travail."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=13 ChangeToValue=0
+LinkedTo:17
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=14  OptionText="DIXON NOT DONE YET"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=501  PositionY=455  
+Subtitle="Dixon, le chef de la division technique, a mentionné il y a quelques jours qu'ils sont à  court de personnel."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=14 ChangeToValue=0
+LinkedTo:17
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=15  OptionText="MICHELANGELO DONE."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=625  PositionY=373  
+Subtitle="Le qualité de nourriture a augmenté depuis que tu as rapporté le four à  macro-ondes poura faire la cuisine."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Avant ça, 12 personnes sont mortes à  cause de la mauvaise qualité de la nourriture, mais mieux vaut tard que jamais."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=15 ChangeToValue=0
+LinkedTo:18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=627  PositionY=454  
+Subtitle="Notre situation a empiré à  cause de la piètre qualité de la nourriture disponible."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Nous avons également quelques cas de cannibalisme, mais après que j'en ai descendu quelques uns, tout est rentré dans l'ordre."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="S'il te plaà®t, parle de notre cuisine et essaie d'arranger la situation."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=16 ChangeToValue=0
+LinkedTo:18
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=17  OptionText="IS MICHELANGELO DONE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=567  PositionY=421  
+ChangeOption=17 ChangeToValue=0
+OnCondition="MissionComplete:2" JumpToOption=15 ElseGoto=16
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=18  OptionText="IS TUX AN ARENA MASTER"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=675  PositionY=419  
+ChangeOption=18 ChangeToValue=0
+OnCondition="MissionComplete:3" JumpToOption=19 ElseGoto=20
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=19  OptionText="TUX IS AN ARENA MASTER"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=723  PositionY=374  
+Subtitle="Félicitation pour ta victoire dans l'arène."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=19 ChangeToValue=0
+LinkedTo:21
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=730  PositionY=465  
+Subtitle="Nous avons une arène ici. Si tu survis au combat ici, je saurai que tu es fais pour survivre dans des conditions de combat réel."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+LinkedTo:21
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText="IS BENDER SICK?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=771  PositionY=421  
+ChangeOption=21 ChangeToValue=0
+OnCondition="MissionComplete:0" JumpToOption=22 ElseGoto=23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText="BENDER DONE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=818  PositionY=375  
+Subtitle="Bender va bien maintenant. Merci."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText="BENDER STILL SICK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=820  PositionY=461  
+Subtitle="Un membre de la Garde Rouge, Bender, est mort. Il a absorbé un poison, en croyant que ça l'aiderait."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Notre docteur refuse de l'aider de toutes façons."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je ne peux pas l'exécuter, parce qu'il est le seul médecin que nous avons ici."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Oh, et, s'il te plaà®t, prends garde, Bender est facile à  effrayer."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText="WAREHOUSE MISSION DONE?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=870  PositionY=418  
+ChangeOption=24 ChangeToValue=0
+OnCondition="MissionComplete:5" JumpToOption=25 ElseGoto=27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText="WAREHOUSE DONE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=928  PositionY=374  
+Subtitle="Nous avons déplacé 17 tonnes de fourniture de l'entrepôt vers la villle."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Cela signifie que nous pouvons résister aux robots pendant plus d'un mois. Sûrement pas mal de temps."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je n'oublierai ce que tu as fait."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+LinkedTo:27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText="JOINING HERE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+Subtitle="Félicitations, tu m'as convaincu que tu pourras être une bon Garde Rouge."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Bienvenue à  bord."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+DoSomethingExtra="MakeTuxTownGuardMember"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText="THERE ARE ENOUGH POINTS TO JOIN RG"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=997  PositionY=416  
+ChangeOption=27 ChangeToValue=0
+OnCondition="OldTownMissionScoreAtLeast:50" JumpToOption=26 ElseGoto=29
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=29  OptionText="SOME POINTS? ANYTHING?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1060  PositionY=418  
+ChangeOption=29 ChangeToValue=0
+OnCondition="OldTownMissionScoreAtLeast:30" JumpToOption=30 ElseGoto=31
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText="NEARLY THERE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1107  PositionY=373  
+Subtitle="Pas mal, pas mal du tout. Je suis presque convaincu que tu deviendras un membre exemplaire."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Fais-en deux de plus, et je te ferai un membre d'équipage."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=31  OptionText="TUX SUCKS"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=1095  PositionY=469  
+Subtitle="Tu as encore besoin de beaucoup travailler pour gagner ton rang de membre d'équipage. Bonne chance."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=31 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText="Je reviendrai alors."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=250  PositionY=260  
+Subtitle="Voyons nous plus tard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=2 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

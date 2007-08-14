@@ -1,0 +1,332 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText="Bonjour!"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=61  PositionY=200  
+Subtitle="Bonjour. Je suis le docteur Moore. Je suis le médecin de cette ville."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=0 ChangeToValue=0
+ChangeOption=10 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Vendez-vous de l'équipement médical?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=156  PositionY=200  
+Subtitle="Bien sûr. Voici ce que j'ai à  votre disposition en ce moment."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=1
+ChangeOption=0 ChangeToValue=0
+DoSomethingExtra="InitTradeWithCharacter:DocMoore"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=2  OptionText=" Docteur, j'ai pris une de ces pilules d'élargissement cérébral..."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=294  PositionY=143  
+OnCondition="CookieIsPlanted:doc_healed_tux:" JumpToOption=5 ElseGoto=4
+ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=3  OptionText=" Que pouvez-vous me dire â  propos des pilules de force ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=205  PositionY=38  
+Subtitle="Les pilules de force ne sont qu'une variante d'une découverte scientifique révolutionnaire survenue peu avant le Grand Assaut."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Trois super-pilules différentes furent développés. Une pour la force, une pour la dextérité et une pour la magie."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Ces pilules fonctionnent à  une échelle nanotechnologique : de toutes petites machines se connectent à  vos tissus musculaires et nerveux."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Les machines se connectent ensemble et forment un tissu artificiel qui a été optimisé pour disposer de qualités propres."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="àtant donné que cette invention a été réalisée peu avant le Grand Assaut, ces pilules sont très rares."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Mais si tu peux mettre la main dessus, c'est encore mieux, parce que leurs effets sont permanents et, d'après ce que je sais, il n'y a aucun effet secondaire!"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=3 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=4  OptionText="THIS WILL NEVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=365  PositionY=94  
+Subtitle="Oh non, pas encore un autre. Ces pilules sont un véritable poison."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="En prendre correspond à  un suicide à  retardement."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Bon, prends cet antidote. Il devrait détruire les substances dangereuses contenues dans ton organisme."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Mais souviens-toi, c'est la seule fois que je t'en donne, parce que tu ne connaissais pas les effets de la pilule. "
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Si tu prends encore de cette cochonnerie, je ne me sentirai pas responsable de ce qui t'arrivera."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=4 ChangeToValue=0
+ChangeOption=2 ChangeToValue=0
+DoSomethingExtra="GiveItem:79"
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
+DoSomethingExtra="OpenQuestDiaryEntry:M0E1:"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="THIS WILL NEVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=365  PositionY=192  
+Subtitle="Désolé, mais je t'ai déjà  administré une aide médicale."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Si tu t'empoisonnes toi-même, c'est ton affaire exclusivement et je ne suis pas responsable."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Pour ce qui me concerne, dans cette ville chacun est l'égale de l'autre."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=5 ChangeToValue=0
+ChangeOption=20 ChangeToValue=1
+ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText="ON MISSION 0 WAS ASSIGNED..."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=49  PositionY=71  
+OnCondition="MissionAssigned:0" JumpToOption=8 ElseGoto=7
+ChangeOption=6 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="DO NOTHING"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=139  PositionY=35  
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=134  PositionY=110  
+ChangeOption=3 ChangeToValue=1
+ChangeOption=8 ChangeToValue=0
+OnCondition="MissionComplete:0" JumpToOption=7 ElseGoto=9
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText="THIS SHOULD ENABLE..."
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=214  PositionY=137  
+ChangeOption=2 ChangeToValue=1
+ChangeOption=9 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=10  OptionText=" Pouvez-vous me soigner ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=155  PositionY=274  
+Subtitle="Bien sûr. àtant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Cependant, les dommages infligés à  soi-même échappent parfois à  cette règle..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Voilà , c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
+ChangeOption=11 ChangeToValue=1
+ChangeOption=12 ChangeToValue=1
+DoSomethingExtra="PlantCookie:doc_healed_tux:"
+DoSomethingExtra="CompletelyHealTux"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=11  OptionText=" Comment ça, des dommages infligés â  soi-même?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=155  PositionY=347  
+Subtitle="Tu vois cet idiot de Bender, là , à  mon seuil ?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il a pris ces satanées pilules d'élargissement cérébral. Donc il est venu me voir pour que je le guérisse. Ok, pas de problème. Mais devine quoi?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il en a pris de nouveau alors que je le lui avais fortement déconseillé. Et maintenant il croit qu'il peut vider mes réserves d'antidote ? Il rêve..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il n'obtiendra rien de moi. Il serait injuste vis-à -vis de la communauté de gaspiller toutes les réserves pour lui. Ma décision est irrévoquable."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=11 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=12  OptionText=" Pouvez-vous me soigner?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=155  PositionY=274  
+Subtitle="Bien sûr. àtant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Cependant, les dommages infligés à  soi-même échappent parfois à  cette règle..."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Voilà , c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=10 ChangeToValue=0
+ChangeOption=0 ChangeToValue=0
+ChangeOption=12 ChangeToValue=1
+DoSomethingExtra="CompletelyHealTux"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=20  OptionText=" Doc... J'ai vraiment besoin de l'antidote."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Non ! Je ne suis pas en train de te faire un cadeau. Oublie ça."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=1
+ChangeOption=30 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=21  OptionText=" Ma patience est â  bout. Donne moi l'antidote. Maintenant."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Non ! Tu devras me passer sur le corps."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=21 ChangeToValue=0
+ChangeOption=22 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=22  OptionText=" Tu feras ce que je te dis."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Hein ? Quoi ?"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=22 ChangeToValue=0
+LinkedTo:23
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=23  OptionText=" Les humains... Vous êtes tellement intéressants. J'ai toujours voulu savoir quelle quantité de sang exactement vous pouvez dégorger."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ne fait pas çe. Ne fais pas ça."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=23 ChangeToValue=0
+LinkedTo:24
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=24  OptionText=" Préparez vous Doc. L'espérience va commencer."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Ne fais pas ça !  NE FAIS PAS àA !"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="AAAAAAAAAAAAA !"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=24 ChangeToValue=0
+LinkedTo:25
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=25  OptionText=" Huh. Le sang humain est dégoâ»tant. Au moins quatre litres. Je me sens mal."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=25 ChangeToValue=0
+LinkedTo:26
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText=" Je suppose que je vais hériter ce tous ces trucs. J'espère que ça ne te dérange pas si je prends tout ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=26 ChangeToValue=0
+LinkedTo:27
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=27  OptionText=" Bien. Je suis très heureux ne peut pas entendre ta désapprobation."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle=" . . ."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=27 ChangeToValue=0
+DoSomethingExtra="GiveItem:1:15"
+DoSomethingExtra="GiveItem:2:10"
+DoSomethingExtra="GiveItem:48:10"
+DoSomethingExtra="GiveItem:79:5"
+DoSomethingExtra="GiveItem:121"
+DoSomethingExtra="DropDead"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Oublie ça. Prendre l'antidote n'est pas pire que l'effort."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=200  PositionY=200  
+Subtitle="Je ne te ferai pas de cadeau, et je ne risque pas de changer d'avis."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=30 ChangeToValue=0
+ChangeOption=22 ChangeToValue=0
+ChangeOption=20 ChangeToValue=0
+ChangeOption=21 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" â plus tard."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=512  PositionY=290  
+Subtitle="à plus tard."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=99 ChangeToValue=1
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"

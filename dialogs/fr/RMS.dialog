@@ -1,0 +1,129 @@
+% -*- mode: flyspell; mode: fill -*-
+----------------------------------------------------------------------
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the 
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  MA  02111-1307  USA
+----------------------------------------------------------------------
+
+This file was generated using dialed.
+If you have questions concerning FreedroidRPG, please send an email to:
+
+freedroid-discussion@lists.sourceforge.net
+
+BEGIN OF AUTORS NOTES
+
+END OF AUTORS NOTES 
+
+
+Beginning of new chat dialog for character="XXXXX"
+
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici. " 
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=107  PositionY=282  
+Subtitle="Bienvenue, bienvenue ! Je suis Richard. Je suis le gars de l'informatique par ici." 
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je travaille la plupart du temps avec ce gros cluster d'ordinateurs, ici, autrement je programme des robots 614 pendant mon temps libre."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=0 ChangeToValue=0
+ChangeOption=1 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText=" Un cluster d'ordinateurs? Qu'est-ce que c'est que ça?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=209  PositionY=280  
+Subtitle="Un cluster est un groupe d'ordinateurs, connectés d'une façon qui les aide à  collaborer dans la résolution de problèmes."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Comme ils disent, "deux mains sont mieux que une seule'. Et nous avons beaucoup de mains ici."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="C'est pourquoi j'appelle ce cluster 'L'Hydre' . Il y beaucoup de têtes à  l'intérieur."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=1 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=109  PositionY=116  
+ChangeOption=5 ChangeToValue=0
+OnCondition="HaveItemWithCode:100" JumpToOption=8 ElseGoto=7
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=6  OptionText=" J'ai un cube de données avec quelques informations. Pouvez vous me dire quelque chose â  ce propos ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=303  PositionY=152  
+Subtitle="Intéressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs là  dedans. Peut être que nous pourrions utiliserl'Hydre pour évaluer les données."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Hé, qu'est-ce que nous avons là  ? Les données sont déjà  prêtes pour l'analyse par un cluster comme le notre. Wow ! C'est terrible !"
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Je nourrirai l'Hydre avec. Les résultats sont attendus dans peu de temps. L'Hydre ne me laisse jamais attendre trop longtemps."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=6 ChangeToValue=0
+ChangeOption=9 ChangeToValue=1
+DoSomethingExtra="MarkMissionComplete:7"
+DoSomethingExtra="OpenQuestDiaryEntry:M7E1:"
+DoSomethingExtra="DeleteItem:100"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=7  OptionText="DO NOTHING HERE...
+"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=206  PositionY=62  
+ChangeOption=7 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=202  PositionY=146  
+ChangeOption=8 ChangeToValue=0
+ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9  OptionText=" Hé, est-ce que tu as sorti quelque chose du cube de données ?"
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=396  PositionY=153  
+Subtitle="Naturellement ! Je te l'ai dit, l'Hydre n'a jamais échoué ! Je l'ai conçue moi-même, et je connais très bien les ordinateurs. Je ne fait jamais d'erreurs."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="Il semble probable que les robots peuvent être désactivés par une sorte de champ disrupteur ou quelque chose dans ce genre."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+Subtitle="J'étais occupé par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyé le rapport entier à  Spencer. Il t'en dira plus."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+ChangeOption=9 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=99  OptionText=" â plus tard."
+OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
+PositionX=348  PositionY=273  
+Subtitle="Fais attention, Linarian."
+ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
+DoSomethingExtra="EndDialog"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+End of chat dialog for character="XXXXX"
