@@ -41,7 +41,7 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
     Yes, I'm being sarcastic again.
       The whole planet is in flames.
         Thousands of people are very dead.
-         Qwerty and Arensito are not responding.
+          Qwerty and Arensito are not responding.
 
         Ah, yes, I almost forgot.
        The bloody bots are about to find me, too.
@@ -64,7 +64,7 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 
  Attacking:
 
- Left clicking an enemy will cause Tux to come close to the bot and to start attacking it with the current weapon. If the current weapon is a gun then tux will stand still and shoot the bot.
+ Left clicking an enemy will cause Tux to come close to the bot and to start attacking it with the current weapon. If the current weapon is a gun then Tux will stand still and shoot the bot.
  
  Special functions:
 
