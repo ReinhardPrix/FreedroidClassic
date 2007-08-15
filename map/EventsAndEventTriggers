@@ -318,6 +318,21 @@ Delete the event trigger after it has been triggered=-1
 * End of this Event Trigger Subsection *
 
 
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=14 Y=8 Lev=35
+Use map location from map label="NO_LABEL_DEFINED_YET"
+Event Action to be triggered by this trigger="stepped_cable_tunnels"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
+
+// This is a pure location trigger.  Copy and adapt is as you feel like it.
+* Start of an Event Trigger Subsection *
+Influencer must be at X=15 Y=8 Lev=35
+Use map location from map label="NO_LABEL_DEFINED_YET"
+Event Action to be triggered by this trigger="stepped_cable_tunnels"
+Delete the event trigger after it has been triggered=-1
+* End of this Event Trigger Subsection *
 
 
 
@@ -956,6 +971,15 @@ Action is Influencer say="Hey, I think I've completed this mission!  Hey, cool!"
 Action is mission assignment=-1
 * End of this Event Action Subsection *
 
+* Start of an Event Action Subsection *
+Action label for this action="stepped_cable_tunnels"
+Mapchange at X=-1 Y=-1 Lev=-1 to new value=-1
+Use map label for map change location="NO_LABEL_DEFINED_YET"
+Teleport to TelX=-1 TelY=-1 TelLev=-1
+Use map label for teleport target="NO_LABEL_DEFINED_YET"
+Action is Influencer say="This should be service tunnels Tania told me about."
+Action is mission assignment=-1
+* End of this Event Action Subsection *
 
 //--------------------
 // Now we assign the missions to the influencer through these actions:
