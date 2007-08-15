@@ -127,6 +127,7 @@ PositionX=358  PositionY=238
 ChangeOption=6 ChangeToValue=0
 OnCondition="MissionAssigned:10" JumpToOption=7 ElseGoto=8
 AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
 ----------------------------------------------------------------------
 
 New Option Nr=7 OptionText="THIS WILL NOT EVER BE VISIBLE"
@@ -143,6 +144,26 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=358  PositionY=238  
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=9 OptionText="IS THIS FIRST DIALOG?"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=358  PositionY=238  
+ChangeOption=9 ChangeToValue=0
+OnCondition="CookieIsPlanted:SACDOvertaken:" JumpToOption=8 ElseGoto=10
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=10 OptionText="DO NOTHING"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=358  PositionY=238  
+ChangeOption=10 ChangeToValue=0
+DoSomethingExtra="AddExperienceBonus:1000"
+DoSomethingExtra="PlantCookie:SACDOvertaken"
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
 
 ----------------------------------------------------------------------
 
