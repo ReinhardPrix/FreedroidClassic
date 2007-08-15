@@ -850,7 +850,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    switch ( MyRandom ( 17 ) )
 	    {
 		case 0:
-		    drop_item_type = ITEM_TRACKS ;
+		    drop_item_type = ITEM_SMALL_HEALTH_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:
@@ -920,7 +920,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    switch ( MyRandom ( 16 ) )
 	    {
 		case 0:
-		    drop_item_type = ITEM_WHEELS ;
+		    drop_item_type = ITEM_SMALL_HELM ;
 		    drop_item_multiplicity = 1 ;
 		    break;
 		case 1:
@@ -988,7 +988,7 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
 	    switch ( MyRandom ( 18 ) )
 	    {
 		case 0:
-		    drop_item_type = ITEM_TRIPEDAL ;
+		    drop_item_type = ITEM_MEDIUM_MANA_POTION ;
 		    drop_item_multiplicity =  1 ;
 		    break;
 		case 1:

@@ -431,7 +431,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
     //--------------------
     // Maybe it's a special unique plugin, then we print out this items use
     //
-    if ( ( CurItem->type == ITEM_START_PLUGIN_WARRIOR ) && ( !ForShop ) )
+/*    if ( ( CurItem->type == ITEM_START_PLUGIN_WARRIOR ) && ( !ForShop ) )
     {
 	sprintf( linebuf , _("\nFreezes targets after melee hit") );
 	strcat( ItemDescText , linebuf );
@@ -445,7 +445,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
     {
 	sprintf( linebuf , _("\nAdds two levels to all spells") );
 	strcat( ItemDescText , linebuf );
-    }
+    }*/
     
     
     //--------------------

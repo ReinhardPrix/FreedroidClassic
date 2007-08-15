@@ -356,7 +356,7 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
   // In case of a unique special plugin, we do the nescessary modification
   // here...
   //
-  if ( BonusItem->type == ITEM_START_PLUGIN_WARRIOR )
+/*  if ( BonusItem->type == ITEM_START_PLUGIN_WARRIOR )
     {
       Me [ 0 ] . freezing_melee_targets = 7 ;
     }
@@ -370,7 +370,7 @@ AddInfluencerItemAttributeBonus( item* BonusItem )
 	{
 	  Me [ 0 ] . SkillLevel [ i ] += 2 ;
 	}
-    }
+    }*/
 
   //--------------------
   // In case of a suffix modifier, we need to apply the suffix...

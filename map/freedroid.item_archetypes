@@ -155,15 +155,15 @@ Item description text=""
 
 // Item No. 7
 ** Start of new item specification subsection **
-Item name="Wheel Drive"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=115
 Position_Y=339
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="wheel_drive"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="wheel_drive/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Wheels_Put_Sound_0.ogg"
 Base list price=100
 Item description text="This is a droid part used for locomotion. The wheel drive is slow, but not very complicated and easy to construct or repair."
@@ -171,15 +171,15 @@ Item description text="This is a droid part used for locomotion. The wheel drive
 
 // Item No. 8
 ** Start of new item specification subsection **
-Item name="Tripedal Drive"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=140
 Position_Y=331
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="tri_pedal_drive"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="tri_pedal_drive/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=250
 Item description text="This is a nightmare. Some crazed inventor had a problem with the stability of a bipedial drive. She solved it by adding a third leg to the drive unit. A real mess to maintain and unreliable as hell, but at least it walks."
@@ -187,15 +187,15 @@ Item description text="This is a nightmare. Some crazed inventor had a problem w
 
 // Item No. 9
 ** Start of new item specification subsection **
-Item name="Bipedal Drive"
+Item name="THIS_ITEM_DOES_NOT_EXIST"
 Position_X=122
 Position_Y=315
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="bi_pedal_drive"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="bi_pedal_drive/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_4.ogg"
 Base list price=300
 Item description text="This type of drive is de facto the standard in humanoid machine industry."
@@ -203,15 +203,15 @@ Item description text="This type of drive is de facto the standard in humanoid m
 
 // Item No. 10
 ** Start of new item specification subsection **
-Item name="Tracks"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=131
 Position_Y=356
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="none"
-Item uses rotation series with prefix="track_drive"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="track_drive/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=65
 Item description text="The track drive. Good for all types of terrain. Except lava, acid, landmines and the like."
@@ -530,15 +530,15 @@ Item description text="A simple cover for your head. Don't expect to be incognit
 
 // Item No. 21
 ** Start of new item specification subsection **
-Item name="Warrior Wristband"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=329
 Position_Y=323
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
-Item uses rotation series with prefix="warrior_wristband"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="warrior_wristband/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
@@ -1369,15 +1369,15 @@ Item description text="A rather useful helmet, has a few defense issues here and
 
 // Item No. 51
 ** Start of new item specification subsection **
-Item name="Sniper Wristband"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=347
 Position_Y=306
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
-Item uses rotation series with prefix="sniper_wristband"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="sniper_wristband/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
@@ -1385,15 +1385,15 @@ Item description text=""
 
 // Item No. 52
 ** Start of new item specification subsection **
-Item name="Hacker Wristband"
+Item name="THIS ITEM DOES NOT EXIST"
 Position_X=346
 Position_Y=340
 Item can be applied in combat="no"
 Item can be installed in influ="yes"
 Item can be installed in slot with name="aux"
-Item uses rotation series with prefix="hacker_wristband"
+Item uses rotation series with prefix="NONE_AVAILABLE_YET"
 Items of this type collect together in inventory="no"
-File or directory name for inventory image="hacker_wristband/inv_image.png"
+File or directory name for inventory image="inventory_image_7.png"
 Item uses drop sound with filename="Item_Drop_Sound_0.ogg"
 Base list price=0
 Item description text=""
