@@ -1320,7 +1320,7 @@ t77 x13.49 y67.83 l-1 d-1
 t226 x14.68 y70.26 l-1 d-1 
 t198 x16.50 y67.38 l-1 d-1 
 t270 x13.71 y71.29 l-1 d-1 
-t246 x33.39 y58.27 l-1 d0 
+t246 x33.39 y58.27 l-1 d7 
 t246 x53.88 y65.95 l-1 d2 
 t246 x56.94 y65.94 l-1 d1 
 t157 x39.05 y70.50 l-1 d-1 
@@ -1461,7 +1461,6 @@ t200 x13.14 y29.20 l-1 d-1
 t284 x17.49 y24.00 l-1 d-1 
 t255 x19.32 y27.19 l-1 d-1 
 t255 x20.07 y27.19 l-1 d-1 
-t255 x18.56 y27.18 l-1 d-1 
 t11 x68.50 y42.50 l-1 d-1 
 t11 x68.50 y43.50 l-1 d-1 
 t34 x74.50 y40.50 l-1 d-1 
@@ -2321,6 +2320,7 @@ t152 x4.03 y86.47 l-1 d-1
 t152 x4.28 y86.65 l-1 d-1 
 t152 x3.25 y85.64 l-1 d-1 
 t191 x7.17 y42.88 l7 d-1 
+t246 x18.50 y27.00 l-1 d8 
 /obsdata
 plabelinfolvl
 x=49 y=19 name="StoneStartGameSquare"
@@ -2374,6 +2374,8 @@ obstacle_description.index=3 obstacle_description_text="These monitors show scan
 obstacle_description.index=4 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=5 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
 obstacle_description.index=6 obstacle_description_text="These monitors show scanning results for all visitors wanting to enter the town.  You're lucky;  You're not being considered a terrorist.  For now."
+obstacle_description.index=7 obstacle_description_text="Do not step on the lawn."
+obstacle_description.index=8 obstacle_description_text="Save your game. Now."
 /pobsdescinfolvl
 
 pstmtinfolvl
