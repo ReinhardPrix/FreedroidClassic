@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=16  OptionText=" Je propose un marchÃ©. Tu me laisses partir, je te ramÃ¨ne les cristaux de dilithium. Comme Ã§a seule la troisiÃ¨me, qui est une rÃ¨gle avec une faible prioritÃ©, sera brisÃ©e."
+New Option Nr=16  OptionText=" Je propose un marché. Tu me laisses partir, je te ramène les cristaux de dilithium. Comme ça seule la troisième, qui est une règle avec une faible priorité, sera brisée."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=200  
 Subtitle=" Pourquoi devrais-je te croire ?" 
@@ -62,7 +62,7 @@ LinkedTo:3
 New Option Nr=3  OptionText=" Je parle de ne pas tuer les humains ou de m'attaquer..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" C'est Ã§a ! C'est Ã§a ! Je tue les humains, les robots, les linariens et mÃªme les chiens, les chats et d'autres animaux ! Je voudrai tuer tout le monde !"
+Subtitle=" C'est ça ! C'est ça ! Je tue les humains, les robots, les linariens et même les chiens, les chats et d'autres animaux ! Je voudrai tuer tout le monde !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -76,11 +76,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" Quel est cet endroit ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" OBJECTIF SECONDAIRE : prÃ©vention de la fuite d'information"
+Subtitle=" OBJECTIF SECONDAIRE : prévention de la fuite d'information"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" *INFO* vol d'informations secrÃ¨tes dÃ©tectÃ© !"
+Subtitle=" *INFO* vol d'informations secrètes détecté !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" Va t'en. Tu n'as pas le droit d'Ãªtre ici !"
+Subtitle=" Va t'en. Tu n'as pas le droit d'être ici !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 DoSomethingExtra="EndDialog"
@@ -91,13 +91,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=0  OptionText=" Qui es-tu et que fais tu ici ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Je suis SADD - DroÃ Â¯de de DÃ©fense des Zones SecrÃ¨tes"
+Subtitle=" Je suis SADD - Droà¯de de Défense des Zones Secrètes"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" OBJECTIF PRIORITAIRE 1 : ne pas laisser des personnes non authorisÃ©es entrer."
+Subtitle=" OBJECTIF PRIORITAIRE 1 : ne pas laisser des personnes non authorisées entrer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accÃ©der Ã Â  cette zone."
+Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accéder à  cette zone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" OBJECTIF SECONDAIRE : prÃ©vention de la fuite d'information"
+Subtitle=" OBJECTIF SECONDAIRE : prévention de la fuite d'information"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=4 ChangeToValue=1
@@ -105,12 +105,12 @@ ChangeOption=0 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Tu ne sais rien Ã¢Â  propos du Grand Assaut ?"
+New Option Nr=6  OptionText=" Tu ne sais rien â  propos du Grand Assaut ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Pour des raisons de sÃ©curitÃ©, les SADD ne sont pas Ã©quipÃ© de modules de communication sans fil."
+Subtitle=" Pour des raisons de sécurité, les SADD ne sont pas équipé de modules de communication sans fil."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" Je sais seulement que je dois Ãªtre rechargÃ©, vÃ©rifiÃ© et avoir un nouveau firmware tous les trois mois."
+Subtitle=" Je sais seulement que je dois être rechargé, vérifié et avoir un nouveau firmware tous les trois mois."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=7 ChangeToValue=1
@@ -122,11 +122,11 @@ LinkedTo:7
 New Option Nr=7  OptionText="Et qu'est ce que tu viens d'affirmer ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Il y a une annÃ©e et demie. Maintenant mon accumulateur est presque vide, donc je vais bientÃ´t m'arrÃªter. Donc les portes vont rester sans surveillance..."
+Subtitle=" Il y a une année et demie. Maintenant mon accumulateur est presque vide, donc je vais bientôt m'arrêter. Donc les portes vont rester sans surveillance..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" *INFO* vol d'information secrÃ¨te dÃ©tectÃ© !"
+Subtitle=" *INFO* vol d'information secrète détecté !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" *INFO* information classÃ©e comme critique !"
+Subtitle=" *INFO* information classée comme critique !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle=" *INFO* verrouillage de la zone !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -140,10 +140,10 @@ DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Qu'est-ce que tu faisais ? Comment suis-je supposÃ© sortir d'ici ?"
+New Option Nr=8  OptionText=" Qu'est-ce que tu faisais ? Comment suis-je supposé sortir d'ici ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Pas toi. Tu possÃ¨des des informations secrÃ¨tes, donc je ne te laisserai pas partir."
+Subtitle=" Pas toi. Tu possèdes des informations secrètes, donc je ne te laisserai pas partir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=9 ChangeToValue=1
@@ -151,10 +151,10 @@ ChangeOption=8 ChangeToValue=0
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Pourquoi ne pas me tuer immÃ©diatement ?"
+New Option Nr=9  OptionText=" Pourquoi ne pas me tuer immédiatement ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Et rester ici jusqu'Ã Â  ce que je meurs ? Tant que tu reste ici je peux parler avec toi. Oh, je n'ai parlÃ© Ã Â  personne depuis si longtemps !"
+Subtitle=" Et rester ici jusqu'à  ce que je meurs ? Tant que tu reste ici je peux parler avec toi. Oh, je n'ai parlé à  personne depuis si longtemps !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=9 ChangeToValue=0
@@ -163,10 +163,10 @@ ChangeOption=11 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Je suis assoifÃ© et je veux manger. Je mourrai bientÃ´t et tu n'auras plus personne Ã¢Â  qui parler !"
+New Option Nr=10  OptionText=" Je suis assoifé et je veux manger. Je mourrai bientôt et tu n'auras plus personne â  qui parler !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Mon alimentation en Ã©nergie va bientÃ´t cesser."
+Subtitle=" Mon alimentation en énergie va bientôt cesser."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=10 ChangeToValue=0
@@ -176,9 +176,9 @@ ChangeOption=10 ChangeToValue=0
 New Option Nr=11  OptionText=" Tu parles comme un humain la plupart du temps !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Peut Ãªtre suis-je pour la plupart humain ?"
+Subtitle=" Peut être suis-je pour la plupart humain ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" De toutes faÃ§ons, ce ne sont pas tes affaires. Je t'emporterai avec moi dans la mort, et personne ne pourra plus entrer dans cet endroit !"
+Subtitle=" De toutes façons, ce ne sont pas tes affaires. Je t'emporterai avec moi dans la mort, et personne ne pourra plus entrer dans cet endroit !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=11 ChangeToValue=0
@@ -186,14 +186,14 @@ ChangeOption=12 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Quels sont tes intentions, stupide boÃ®te de conserve ?!"
+New Option Nr=12  OptionText=" Quels sont tes intentions, stupide boîte de conserve ?!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" OBJECTIF PRIORITAIRE 1 : ne pas laisser des personnes non authorisÃ©es entrer."
+Subtitle=" OBJECTIF PRIORITAIRE 1 : ne pas laisser des personnes non authorisées entrer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accÃ©der Ã Â  cette zone."
+Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accéder à  cette zone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" OBJECTIF SECONDAIRE : prÃ©vention de la fuite d'information"
+Subtitle=" OBJECTIF SECONDAIRE : prévention de la fuite d'information"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle=" Pourquoi poses-tu cette question ?" 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -207,9 +207,9 @@ LinkedTo:13
 New Option Nr=13  OptionText=" Quel ton second objectif, idiot ?!
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accÃ©der Ã Â  cette zone."
+Subtitle=" OBJECTIF PRIORITAIRE 2 : le personnel doit toujours pouvoir accéder à  cette zone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Oui, Ã§a Ã©tÃ© outrepassÃ©. Mais le premier a la plus haute prioritÃ©."
+Subtitle="Oui, ça été outrepassé. Mais le premier a la plus haute priorité."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=13 ChangeToValue=0
@@ -221,7 +221,7 @@ LinkedTo:14
 New Option Nr=14  OptionText=" Donc tu peux enfreindre tes objectifs ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Je l'ai dÃ©jÃ Â  brisÃ©e, lorsque je t'ai dit que je ne pouvais pas te le dire. C'est Ã Â  cause de ma nature humaine."
+Subtitle=" Je l'ai déjà  brisée, lorsque je t'ai dit que je ne pouvais pas te le dire. C'est à  cause de ma nature humaine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=14 ChangeToValue=0
@@ -230,10 +230,10 @@ ChangeOption=16 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=15  OptionText=" Alors, s'il te plaÃ®t, enfreint la loi, dÃ©sactive ces armes."
+New Option Nr=15  OptionText=" Alors, s'il te plaît, enfreint la loi, désactive ces armes."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Ce n'est pas possible. Je suis un ordinateur, je ne peux pas enfreindre les rÃ¨gles."
+Subtitle=" Ce n'est pas possible. Je suis un ordinateur, je ne peux pas enfreindre les règles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=15 ChangeToValue=0
@@ -244,7 +244,7 @@ ChangeOption=18 ChangeToValue=1
 New Option Nr=18  OptionText=" Et qu'est ce qui se passe avec ta nature humaine ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Humain ? Tu as dit que j'Ã©tais un humain ? Je suis un ordinateur !"
+Subtitle=" Humain ? Tu as dit que j'étais un humain ? Je suis un ordinateur !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle=" Ok, je suis pour la plus grande part une machine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -254,10 +254,10 @@ ChangeOption=19 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText=" La plupart robot ? Qu'est-ce que Ã§a signifie ?"
+New Option Nr=19  OptionText=" La plupart robot ? Qu'est-ce que ça signifie ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Ã Â‡a veut dire ce que Ã§a veut dire ! Rien de plus, rien de moins ! Tais-toi, petit Ãªtre organique !"
+Subtitle=" à‡a veut dire ce que ça veut dire ! Rien de plus, rien de moins ! Tais-toi, petit être organique !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=19 ChangeToValue=0
@@ -266,10 +266,10 @@ DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" La plupart ordinateur ? Qu'est ce que Ã§a signifie ?"
+New Option Nr=20  OptionText=" La plupart ordinateur ? Qu'est ce que ça signifie ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Quand je te dis de te TAIRE, tu DOIS te taire ! Essaie au moins, minable poussiÃ¨re spatiale !"
+Subtitle=" Quand je te dis de te TAIRE, tu DOIS te taire ! Essaie au moins, minable poussière spatiale !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=19 ChangeToValue=1
@@ -278,7 +278,7 @@ DoSomethingExtra="BreakOffAndBecomeHostile"
 
 ----------------------------------------------------------------------
 
-New Option Nr=21  OptionText=" Tu peux me promettre une rÃ©compense significative."
+New Option Nr=21  OptionText=" Tu peux me promettre une récompense significative."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
 Subtitle=" Enfer. Bon, je te donnerai SUPER EXTRAMINATOR si tu me donnes un cristal de dilithium."
@@ -293,7 +293,7 @@ LinkedTo:23
 
 ----------------------------------------------------------------------
 
-New Option Nr=22  OptionText=" Il semble, que, Ã©tant capable de sentiment, tu es une forme de vie. Je dois aider toute forme de vie."
+New Option Nr=22  OptionText=" Il semble, que, étant capable de sentiment, tu es une forme de vie. Je dois aider toute forme de vie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
 Subtitle=" Merci beaucoup pour tes chaleureuses paroles. Je pense que je peux te faire confiance."
@@ -306,7 +306,7 @@ LinkedTo:23
 
 ----------------------------------------------------------------------
 
-New Option Nr=23  OptionText=" Donc dÃ©sactive les armes, s'il te plaÃ®t."
+New Option Nr=23  OptionText=" Donc désactive les armes, s'il te plaît."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
 Subtitle=" Va, et rapport le dilithium. J'en ai salement besoin."
@@ -382,7 +382,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=31  OptionText=" Comment marche ton alimentation en Ã©nergie ?"
+New Option Nr=31  OptionText=" Comment marche ton alimentation en énergie ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
 Subtitle=" Salement. Prends le cristal. Souviens toi, tu as promis !"
@@ -393,10 +393,10 @@ DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" J'ai des cristaux ! Ce n'Ã©tait pas trÃ¨s facile d'en trouver."
+New Option Nr=30  OptionText=" J'ai des cristaux ! Ce n'était pas très facile d'en trouver."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1215  PositionY=195  
-Subtitle=" Bien. J'ai ouvert la porte du dÃ©pÃ´t pour toi. Prends ton super etraminator et DÃ Â‰GAGE de lÃ Â  !"
+Subtitle=" Bien. J'ai ouvert la porte du dépôt pour toi. Prends ton super etraminator et Dà‰GAGE de là  !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
@@ -422,10 +422,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=33  OptionText=" J'ai les cristaux ! Ce n'Ã©tait pas facile d'en trouver."'
+New Option Nr=33  OptionText=" J'ai les cristaux ! Ce n'était pas facile d'en trouver."'
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1215  PositionY=195  
-Subtitle=" GÃ©nial ! Merci. Je t'ai ouvert la porte du dÃ©pÃ´t, j'espÃ¨re que tu trouveras quelque chose d'intÃ©ressant. C'est tout ce que je peux faire pour toi."
+Subtitle=" Génial ! Merci. Je t'ai ouvert la porte du dépôt, j'espère que tu trouveras quelque chose d'intéressant. C'est tout ce que je peux faire pour toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=33 ChangeToValue=0
 ChangeOption=37 ChangeToValue=1
@@ -468,10 +468,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=37  OptionText=" Tu appelles Ã§a super exteriminator ?"
+New Option Nr=37  OptionText=" Tu appelles ça super exteriminator ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Oui. Ã Â€ prÃ©sent, quitte cet endroit."
+Subtitle=" Oui. à€ présent, quitte cet endroit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=37 ChangeToValue=0
@@ -479,7 +479,7 @@ ChangeOption=38 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=38  OptionText=" C'est un sale truc ! Personne ne peux utiliser ce satanÃ© exteriminator !"
+New Option Nr=38  OptionText=" C'est un sale truc ! Personne ne peux utiliser ce satané exteriminator !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
 Subtitle=" La porte est encore ouverte. Tu peux le laisser ou le prendre et t'en aller."
@@ -490,10 +490,10 @@ ChangeOption=39 ChangeToValue=1
 
 ----------------------------------------------------------------------
 
-New Option Nr=39  OptionText=" Donne moi une vraie arme, mec ! Imidiatement ! Je t'ai apportÃ© ce que tu voulais, maintenant donne moi ma rÃ©compense !"
+New Option Nr=39  OptionText=" Donne moi une vraie arme, mec ! Imidiatement ! Je t'ai apporté ce que tu voulais, maintenant donne moi ma récompense !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Tu peux y aller, c'est ta rÃ©compense. Et N'ABUSE PAS DE MA PATIENCE !"
+Subtitle=" Tu peux y aller, c'est ta récompense. Et N'ABUSE PAS DE MA PATIENCE !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 ChangeOption=39 ChangeToValue=0
@@ -519,36 +519,36 @@ DoSomethingExtra="EndDialog"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" Et que deviennent tes directives, particuliÃ¨rement la seconde ?"
+New Option Nr=41  OptionText=" Et que deviennent tes directives, particulièrement la seconde ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Maintenant j'ai du temps. Lorsque tu seras mort, je dÃ©sactiverai les armes."
+Subtitle=" Maintenant j'ai du temps. Lorsque tu seras mort, je désactiverai les armes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" S'il te plaÃ®t, oublie moi !"
+New Option Nr=41  OptionText=" S'il te plaît, oublie moi !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Trop tard. Je regarde une bonne Ã©mission."
+Subtitle=" Trop tard. Je regarde une bonne émission."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" Ã Â‡a s'appelle..."
+Subtitle=" à‡a s'appelle..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" Ã Â‡a s'appelle..."
+Subtitle=" à‡a s'appelle..."
 ReplySample="CONDEMMED TO DEATH!"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" S'il te plaÃ®t, dÃ©sactive ces armes !"
+New Option Nr=41  OptionText=" S'il te plaît, désactive ces armes !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle=" Ok, je les dÃ©sactiverai."
+Subtitle=" Ok, je les désactiverai."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" J'ai seulement besoin de faire un peu de prÃ©parations. Tu dois attendre..."
+Subtitle=" J'ai seulement besoin de faire un peu de préparations. Tu dois attendre..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" Jusqu'Ã Â  ce que tu meurs !"
+Subtitle=" Jusqu'à  ce que tu meurs !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 

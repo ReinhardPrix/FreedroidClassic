@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=64  PositionY=196  
-Subtitle="H√©, Linarien! Qu'est-ce que tu fais ici?" 
+Subtitle="HÈ, Linarien! Qu'est-ce que tu fais ici?" 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -52,7 +52,7 @@ Subtitle="Oh, regarde. L'oiseau veut aller faire un tour."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nous ne n'appelons pas cet endroit 'l'enfer' pour rien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="D√©gage de l√† !"
+Subtitle="DÈgage de l‡ !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -67,7 +67,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=293  
 Subtitle="T'es devenu fou ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a des trillions de millions de quintillions de robots l√†-dedans !"
+Subtitle="Il y a des trillions de millions de quintillions de robots l‡-dedans !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Trouve une autre porte pour entrer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -79,7 +79,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Je dois r√©gler des affaires importantes de l'autre c√¥t√© !"
+New Option Nr=3  OptionText="Je dois rÈgler des affaires importantes de l'autre cÙtÈ !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=132  
 Subtitle="Est-ce que tu es impatient de mourir ?"
@@ -106,7 +106,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=5  OptionText="NOTHING IS SAID HERE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=407  PositionY=259  
-Subtitle="D√âGAGE DE L√Ä IDIOT !"
+Subtitle="D…GAGE DE L¿ IDIOT !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="EndDialog"

@@ -40,7 +40,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Augmente tes compÃ©tences dans le maniement des armes (coÃ¢Â»te 5 points d'entraÃ®nement, 100 billets) "
+New Option Nr=5  OptionText=" Augmente tes compétences dans le maniement des armes (coâ»te 5 points d'entraînement, 100 billets) "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=477  PositionY=203  
 OnCondition="GoldIsLessThan:100" JumpToOption=10 ElseGoto=11
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=636  PositionY=469  
-Subtitle="Fait. AmÃ©liorer un peu sa dextÃ©ritÃ© n'est pas si difficile aprÃ¨s tout." 
+Subtitle="Fait. Améliorer un peu sa dextérité n'est pas si difficile après tout." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=635  PositionY=361  
-Subtitle="Tu n'as pas assez d'expÃ©rience. Reviens ici aprÃ¨s que tu aies vu un peu plus de combats."
+Subtitle="Tu n'as pas assez d'expérience. Reviens ici après que tu aies vu un peu plus de combats."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=557  PositionY=98  
-Subtitle="Tu n'as pas assez d'argent ! Je ne peux pas te donner un entraÃ Â®nement pour rien."
+Subtitle="Tu n'as pas assez d'argent ! Je ne peux pas te donner un entraà®nement pour rien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -92,13 +92,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=639  PositionY=189  
-Subtitle="Maintenant la chose la plus importante est de dÃ©sactiver la visÃ©e automatique de ton arme, comme ceci."
+Subtitle="Maintenant la chose la plus importante est de désactiver la visée automatique de ton arme, comme ceci."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sinon, ton arme pourra t' 'aider' et tirer Ã Â  un endroit oÃ Â¹ tu n'avais pas l'intention de faire feu."
+Subtitle="Sinon, ton arme pourra t' 'aider' et tirer à  un endroit oà¹ tu n'avais pas l'intention de faire feu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="La prochaine chose importante suivant est de se souvenir comment ajuster proprement ton tir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ne fixe que ta cible. Imagine que tu bouges avec elle. Ce doit Ãªtre le but pour ton cerveau."
+Subtitle="Ne fixe que ta cible. Imagine que tu bouges avec elle. Ce doit être le but pour ton cerveau."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Lorsque tu sens faire corps avec ta cible, alors enclenche le viseur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

@@ -45,9 +45,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="Je veux faire partie de la Garde rouge."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=158  PositionY=302  
-Subtitle="Mmmm... Vraiment? Eh bien, tu ne peux pas rejoindre la Garde juste comme Ã§a, tu sais..."
+Subtitle="Mmmm... Vraiment? Eh bien, tu ne peux pas rejoindre la Garde juste comme ça, tu sais..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu dois d'abord prouver que tu pourras faire un bon Ã©lÃ©ment au sein de la Garde."
+Subtitle="Tu dois d'abord prouver que tu pourras faire un bon élément au sein de la Garde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -67,7 +67,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="Et si je te payais ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=196  PositionY=430  
-Subtitle="Pour 15 millions de dollars, pas moins, hÃ©hÃ©"
+Subtitle="Pour 15 millions de dollars, pas moins, héhé"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -77,11 +77,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="ASSIGN WAREHOUSE MISSION"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=293  PositionY=53  
-Subtitle="Nous sommes dans une pÃ©riode trouble. Ã Â€ cause des vaisseaux robots, il nous est impossible d'accÃ©der aux autres planÃ¨tes, ce qui nous oblige Ã Â  nous contenter de nos ressources locales."
+Subtitle="Nous sommes dans une période trouble. à€ cause des vaisseaux robots, il nous est impossible d'accéder aux autres planètes, ce qui nous oblige à  nous contenter de nos ressources locales."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a une sÃ©rie d'objets qui se trouvent dans le hanger souterrain automatisÃ©, au nord de la ville, dont nous avons besoin. Mais les robots y sont nombreux."
+Subtitle="Il y a une série d'objets qui se trouvent dans le hanger souterrain automatisé, au nord de la ville, dont nous avons besoin. Mais les robots y sont nombreux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et actuellement, je ne peux pas me permettre de perdre un seul homme postÃ© Ã Â  un poste de dÃ©fense, au frontiÃ¨res de la ville. C'est une situation assez difficile."
+Subtitle="Et actuellement, je ne peux pas me permettre de perdre un seul homme posté à  un poste de défense, au frontières de la ville. C'est une situation assez difficile."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 ChangeOption=4 ChangeToValue=0
@@ -89,16 +89,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText="Peut Ãªtre puis-je t'aider d'une quelconque faÃ§on ?"
+New Option Nr=5  OptionText="Peut être puis-je t'aider d'une quelconque façon ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=437  PositionY=53  
 Subtitle="Cela serait fort sympathique de ta part, mais je ne pense pas que tu es en mesure de nettoyer le hanger de tous ces robots seul."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais Ã©tant donnÃ© qu'on dit de toi que tu es puissant et que tu as Ã©tÃ©, dans le passÃ©, un hÃ©ros, je vais encore une fois faire confiance Ã Â  un inconnu."
+Subtitle="Mais étant donné qu'on dit de toi que tu es puissant et que tu as été, dans le passé, un héros, je vais encore une fois faire confiance à  un inconnu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai dÃ©verrouillÃ© la voie d'accÃ¨s vers le hangar. C'est au nord de la ville, cachÃ© quelque part dans les bois du nord-est."
+Subtitle="J'ai déverrouillé la voie d'accès vers le hangar. C'est au nord de la ville, caché quelque part dans les bois du nord-est."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le matÃ©riel dont nous avons besoin est au premier sous-sol. Ne descends pas plus profond, tu n'y trouveras que des robots."
+Subtitle="Le matériel dont nous avons besoin est au premier sous-sol. Ne descends pas plus profond, tu n'y trouveras que des robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je te souhaite bonne chance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -110,7 +110,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Comment Ã§a se passe ?"
+New Option Nr=6  OptionText="Comment ça se passe ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=134  PositionY=116  
 ChangeOption=6 ChangeToValue=1
@@ -140,9 +140,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="MISSION_IS_NOT_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=376  PositionY=235  
-Subtitle="Pas trÃ¨s bon. Sans l'alimentation de l'entrepÃ´t nous sommes condamnÃ©s. Donc mes problÃ¨mes ne changent pas."
+Subtitle="Pas très bon. Sans l'alimentation de l'entrepôt nous sommes condamnés. Donc mes problèmes ne changent pas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Plus tard, quand tu auras plus d'expÃ©rience, peut-Ãªtre pourras-tu nous aider, aprÃ¨s tout."
+Subtitle="Plus tard, quand tu auras plus d'expérience, peut-être pourras-tu nous aider, après tout."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -152,9 +152,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="DONT_GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=490  PositionY=182  
-Subtitle="Merci, nous avons Ã©tÃ© capable de transporter tout les denrÃ©es dont nous avons besoin en ce moment. Tu as nous as rÃ©ellement tirÃ© d'affaire."
+Subtitle="Merci, nous avons été capable de transporter tout les denrées dont nous avons besoin en ce moment. Tu as nous as réellement tiré d'affaire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Crois bien que nous n'oublierons jamais tes courageuses prouesses rÃ©alisÃ©es en faveur de notre communautÃ©."
+Subtitle="Crois bien que nous n'oublierons jamais tes courageuses prouesses réalisées en faveur de notre communauté."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -164,11 +164,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText="GIVE_REWARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=488  PositionY=100  
-Subtitle="Eh mec, t'as vraiment rÃ©ussi ! J'ai du mal Ã Â  y croire, mais tous les robots sont partis !"
+Subtitle="Eh mec, t'as vraiment réussi ! J'ai du mal à  y croire, mais tous les robots sont partis !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tiens, prends ces 500 dollars en guise de rÃ©compense. Crois bien que tu as mÃ©ritÃ© mon plus profond respect, Linarien."
+Subtitle="Tiens, prends ces 500 dollars en guise de récompense. Crois bien que tu as mérité mon plus profond respect, Linarien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Notre peuple transporte les biens en ce moment mÃªme. Dans peu de temps, de nouveaux robots provenant des vaisseaux en orbite autour de la planÃ¨te viendront remplacer les robots dÃ©truits."
+Subtitle="Notre peuple transporte les biens en ce moment même. Dans peu de temps, de nouveaux robots provenant des vaisseaux en orbite autour de la planète viendront remplacer les robots détruits."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="AddGold:500"
@@ -178,7 +178,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Ai-je rÃ©ussi suffisamment de quÃªtes pour devenir un membre de la Garde ?"
+New Option Nr=12  OptionText=" Ai-je réussi suffisamment de quêtes pour devenir un membre de la Garde ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=368  PositionY=402  
 ChangeOption=12 ChangeToValue=1
@@ -190,7 +190,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText="DIXON SUCCESSFUL."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
-Subtitle="Dixon m'a parlÃ© de l'histoire avec sa boÃ Â®te Ã Â  outils. Il semblait Ãªtre sacrÃ©ment impressionnÃ© par ta prouesse."
+Subtitle="Dixon m'a parlé de l'histoire avec sa boà®te à  outils. Il semblait être sacrément impressionné par ta prouesse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 LinkedTo:17
@@ -201,7 +201,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="DIXON NOT DONE YET"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=501  PositionY=455  
-Subtitle="Je crois que notre prÃ©posÃ© au tÃ©lÃ©porteur, Dixon, a un problÃ¨me. Tu devrais peut-Ãªtre aller lui parler."
+Subtitle="Je crois que notre préposé au téléporteur, Dixon, a un problème. Tu devrais peut-être aller lui parler."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 LinkedTo:17
@@ -212,7 +212,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="Pendant que je mangeais, Michelangelo m'a parlÃ© de son four enfin rÃ©alimentÃ© en Ã©nergie. Il semblait trÃ¨s satisfait, et moi aussi."
+Subtitle="Pendant que je mangeais, Michelangelo m'a parlé de son four enfin réalimenté en énergie. Il semblait très satisfait, et moi aussi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:18
@@ -252,7 +252,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText="TUX IS AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=723  PositionY=374  
-Subtitle="J'ai appris grÃ Â¢ce Ã Â  Butch que tu es devenue un maÃ Â®tre d'arÃ¨ne novice. FÃ©licitations!"
+Subtitle="J'ai appris grà¢ce à  Butch que tu es devenue un maà®tre d'arène novice. Félicitations!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=19 ChangeToValue=0
 LinkedTo:21
@@ -263,7 +263,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="TUX IS NOT AN ARENA MASTER"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=730  PositionY=465  
-Subtitle="Tu devrais obtenir des victoires dans l'arÃ¨ne. Ã Â‡a ferait beaucoup de bien Ã Â  ta rÃ©putation."
+Subtitle="Tu devrais obtenir des victoires dans l'arène. à‡a ferait beaucoup de bien à  ta réputation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 LinkedTo:21
@@ -283,7 +283,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=22  OptionText="BENDER DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=818  PositionY=375  
-Subtitle="Le fait d'aider Bender Ã©tait assez judicieux. Mais mÃ©fie-toi de lui : il pÃªte les plombs assez facilement. C'est un peu un problÃ¨me pour la sÃ©curitÃ©, mais nous ne pouvons pas nous permettre d'Ãªtre trop exigeants."
+Subtitle="Le fait d'aider Bender était assez judicieux. Mais méfie-toi de lui : il pête les plombs assez facilement. C'est un peu un problème pour la sécurité, mais nous ne pouvons pas nous permettre d'être trop exigeants."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=22 ChangeToValue=0
 LinkedTo:24
@@ -294,7 +294,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=23  OptionText="BENDER STILL SICK"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=820  PositionY=461  
-Subtitle="D'aprÃ¨s ce que je sais, Bender est toujours trÃ¨s malade."
+Subtitle="D'après ce que je sais, Bender est toujours très malade."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
 LinkedTo:24
@@ -314,7 +314,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=25  OptionText="WAREHOUSE DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=928  PositionY=374  
-Subtitle="Mais avant tout, tu m'as beaucoup impressionnÃ© quand tu as nettoyÃ© le hangar de tous ces robots. Je n'oublierai jamais cette prouesse."
+Subtitle="Mais avant tout, tu m'as beaucoup impressionné quand tu as nettoyé le hangar de tous ces robots. Je n'oublierai jamais cette prouesse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 LinkedTo:27
@@ -334,13 +334,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=28  OptionText="JOINING TOWN GUARD"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=473  PositionY=290  
-Subtitle="Ok, c'est bon. Ta liste de tÃ Â¢ches accomplies est suffisamment longue. Tu peux te joindre Ã Â  nous. Je te dÃ©clare membre de la Garde rouge."
+Subtitle="Ok, c'est bon. Ta liste de tà¢ches accomplies est suffisamment longue. Tu peux te joindre à  nous. Je te déclare membre de la Garde rouge."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais maintenant que tu fais partie de la Garde, il faut que tu saches une chose. Il n'y a qu'une rÃ¨gle pour les gardes : nous restons ensemble, que nous survivions ou que nous mourrions. En tout cas, nous le faisons ensemble."
+Subtitle="Mais maintenant que tu fais partie de la Garde, il faut que tu saches une chose. Il n'y a qu'une règle pour les gardes : nous restons ensemble, que nous survivions ou que nous mourrions. En tout cas, nous le faisons ensemble."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Peut-Ãªtre veux-tu visiter les locaux des gardes. Demande Ã Â  Tybalt de t'ouvrir la porte. Lukas, de l'armurerie, te donnera ton armure."
+Subtitle="Peut-être veux-tu visiter les locaux des gardes. Demande à  Tybalt de t'ouvrir la porte. Lukas, de l'armurerie, te donnera ton armure."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'espÃ¨re que tu sauras te montrer digne de ton nouveau poste."
+Subtitle="J'espère que tu sauras te montrer digne de ton nouveau poste."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -364,7 +364,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=30  OptionText="NEARLY THERE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
-Subtitle="Somme toute, ce n'est pas si mal. Mais il y a toujours quelques petites choses que tu dois encore faire. AprÃ¨s, nous verrons."
+Subtitle="Somme toute, ce n'est pas si mal. Mais il y a toujours quelques petites choses que tu dois encore faire. Après, nous verrons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -374,7 +374,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText="TUX SUCKS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1095  PositionY=469  
-Subtitle="Je ne peux pas t'accepter au sein de la garde dans l'Ã©tat actuel des choses. Va. Il y a toujours un grand nombre de choses Ã Â  faire pour toi."
+Subtitle="Je ne peux pas t'accepter au sein de la garde dans l'état actuel des choses. Va. Il y a toujours un grand nombre de choses à  faire pour toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -384,7 +384,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=32  OptionText="STUPID OPTION. IT MUST DIE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=283  PositionY=443  
-Subtitle="Mais tu es dÃ©jÃ Â  membre de la Garde de la ville! Ne te moque pas de moi! Les Gardes doivent rester ensemble."
+Subtitle="Mais tu es déjà  membre de la Garde de la ville! Ne te moque pas de moi! Les Gardes doivent rester ensemble."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=32 ChangeToValue=0
 ChangeOption=12 ChangeToValue=0
@@ -395,9 +395,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=33  OptionText="NOT JOINED YET."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=312  PositionY=321  
-Subtitle="Ce n'est pas si facile que Ã§a. Tout d'abord tu dois te construire une rÃ©putation dans les parages. Pour cela, tu dois parler, poser des questions aux gens des alentours."
+Subtitle="Ce n'est pas si facile que ça. Tout d'abord tu dois te construire une réputation dans les parages. Pour cela, tu dois parler, poser des questions aux gens des alentours."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Quand tu seras quelqu'un de connu, nous te laisserons peut-Ãªtre rejoindre les rangs de la Garde."
+Subtitle="Quand tu seras quelqu'un de connu, nous te laisserons peut-être rejoindre les rangs de la Garde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=1
 ChangeOption=3 ChangeToValue=1
@@ -435,11 +435,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=37  OptionText=" On m'a dit que Richard avait obtenu de nouvelles informations sur la colonie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=289  PositionY=512  
-Subtitle="Oui, c'est juste, et en fait cela pourrait mÃªme Ãªtre crucial. Les donnÃ©es du cube qu'il a obtenu indiquent l'existence d'une installation expÃ©rimentale secret dans cette zone."
+Subtitle="Oui, c'est juste, et en fait cela pourrait même être crucial. Les données du cube qu'il a obtenu indiquent l'existence d'une installation expérimentale secret dans cette zone."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="D'aprÃ¨s nos informations, ils testaient une nouvelle forme de bouclier brouilleur, mais les recherches ont Ã©tÃ© interrompues Ã Â  cause des effets secondaires du bouclier."
+Subtitle="D'après nos informations, ils testaient une nouvelle forme de bouclier brouilleur, mais les recherches ont été interrompues à  cause des effets secondaires du bouclier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si cette information est vraie, alors le bouclier a interfÃ©rer avec le systÃ¨me de localisation des les robots et a causÃ© leur dÃ©part."
+Subtitle="Si cette information est vraie, alors le bouclier a interférer avec le système de localisation des les robots et a causé leur départ."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="C'est un don des cieux. Nous devons activer le bouclier, si c'est toujours possible, et sauver la colonie une fois pour toutes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -449,16 +449,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=38  OptionText=" J'aimerais participer Ã¢Â  cette opÃ©ration."
+New Option Nr=38  OptionText=" J'aimerais participer â  cette opération."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=371  PositionY=529  
-Subtitle="C'est trÃ¨s gentil de ta part de te porter volontaire. Pour l'instant, j'ai envoyÃ© deux explorateurs dans cette zone. Il ont trouvÃ© l'entrÃ©e de l'installation et dÃ©verrouillÃ© la porte."
+Subtitle="C'est très gentil de ta part de te porter volontaire. Pour l'instant, j'ai envoyé deux explorateurs dans cette zone. Il ont trouvé l'entrée de l'installation et déverrouillé la porte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est bon signe, parce que Ã§a montre que les clefs fournies par le cube de donnÃ©es Ã©taient valides."
+Subtitle="C'est bon signe, parce que ça montre que les clefs fournies par le cube de données étaient valides."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cependant, nous avons perdu contact avec eux peu aprÃ¨s leur entrÃ©e. Ils nous ont indiquÃ© une forte concentration de robots."
+Subtitle="Cependant, nous avons perdu contact avec eux peu après leur entrée. Ils nous ont indiqué une forte concentration de robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ã Â‡a serait bien que tu y jettes un oeil. Mais soit extrÃªmement prudent. Nous ne pouvons pas nous permettre de perdre un autre garde."
+Subtitle="à‡a serait bien que tu y jettes un oeil. Mais soit extrêmement prudent. Nous ne pouvons pas nous permettre de perdre un autre garde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=38 ChangeToValue=0
 ChangeOption=39 ChangeToValue=1
@@ -470,11 +470,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=39  OptionText=" Ok, je ferai attention. Mais je le ferai."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=464  PositionY=510  
-Subtitle="Bien. L'entrÃ©e de la base est cachÃ©e quelque part dans les grottes du nord-ouest. Prends la sortie nord de la ville, et dirige-toi vers l'ouest."
+Subtitle="Bien. L'entrée de la base est cachée quelque part dans les grottes du nord-ouest. Prends la sortie nord de la ville, et dirige-toi vers l'ouest."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je te souhaite bonne chance pour cette opÃ©ration. C'est peut-Ãªtre notre survie qui en dÃ©pend. N'hÃ©site pas Ã Â  demander de l'aide."
+Subtitle="Je te souhaite bonne chance pour cette opération. C'est peut-être notre survie qui en dépend. N'hésite pas à  demander de l'aide."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Essaie d'activer le bouclier brouilleur si tu le peux. Les contrÃ´les doivent Ãªtre dans le dernier sous-sol de l'installation."
+Subtitle="Essaie d'activer le bouclier brouilleur si tu le peux. Les contrôles doivent être dans le dernier sous-sol de l'installation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=39 ChangeToValue=0
 ChangeOption=40 ChangeToValue=0
@@ -484,12 +484,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText=" Je ne me sens pas de le faire tout de suite. Je prÃ©fÃ¨re continuer Ã¢Â  me prÃ©parer."
+New Option Nr=40  OptionText=" Je ne me sens pas de le faire tout de suite. Je préfère continuer â  me préparer."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=462  PositionY=578  
-Subtitle="Bien. Si tu as vraiment l'intention d'y aller, tu ferais mieux d'Ãªtre bien prÃ©parÃ©."
+Subtitle="Bien. Si tu as vraiment l'intention d'y aller, tu ferais mieux d'être bien préparé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Par ailleurs, il est inutile de se presser. AprÃ¨s tout, l'installation ne va pas s'enfuir en courant, donc privilÃ©gie une approche lente."
+Subtitle="Par ailleurs, il est inutile de se presser. Après tout, l'installation ne va pas s'enfuir en courant, donc privilégie une approche lente."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -508,7 +508,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=99  OptionText=" Bon, eh bien je m'en vais alors."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=250  PositionY=260  
-Subtitle="Ã Â€ plus tard."
+Subtitle="à€ plus tard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=202  PositionY=109  
-Subtitle="HÃ© toi ! Linarien! Qu'est-ce que tu veux ? 
+Subtitle="Hé toi ! Linarien! Qu'est-ce que tu veux ? 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -44,18 +44,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Je jette seulement un coup d'oÃ…Â“il."
+New Option Nr=1  OptionText=" Je jette seulement un coup d'oÅ“il."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=33  PositionY=33  
-Subtitle="Oh, gÃ©nial. Encore un autre loufoque."
+Subtitle="Oh, génial. Encore un autre loufoque."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a environ une semaine j'ai laissÃ© un Ã©tranger qui a Ã©galement dit qu'il Ã©tait seulement en train de jeter un oeil. Je ne l'ai jamais revu."
+Subtitle="Il y a environ une semaine j'ai laissé un étranger qui a également dit qu'il était seulement en train de jeter un oeil. Je ne l'ai jamais revu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ã Â€ partir de ce jour, tous no ordinateurs sont devenus fous, 20 sacs de rations se sont Ã©vanouis de otre stock et un de nos robots a Ã©tÃ© dÃ©robÃ©."
+Subtitle="à€ partir de ce jour, tous no ordinateurs sont devenus fous, 20 sacs de rations se sont évanouis de otre stock et un de nos robots a été dérobé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je pense que ce damnÃ© marginal vit quelque part dans l'est. J'aimerai l'avoir entre les mains et le tabasser Ã Â  mort. Lentement."
+Subtitle="Je pense que ce damné marginal vit quelque part dans l'est. J'aimerai l'avoir entre les mains et le tabasser à  mort. Lentement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Linarien, je te laisserai lÃ Â  dedans. Fais quelque chose de stupide, et tu ne reviendras pas. Compris ? Bien."
+Subtitle="Linarien, je te laisserai là  dedans. Fais quelque chose de stupide, et tu ne reviendras pas. Compris ? Bien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -68,9 +68,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" J'aimerai entrer dans la ville."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=32  PositionY=383  
-Subtitle="Marrant, on pourrait dire exactement la mÃªme chose Ã Â  propos de tous ces robots fous Ã Â  l'extÃ©rieur."
+Subtitle="Marrant, on pourrait dire exactement la même chose à  propos de tous ces robots fous à  l'extérieur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je te laisserai Ã Â  l'intÃ©rieur, mais fais attention : un faux pas et nous serons tous sans
+Subtitle="Je te laisserai à  l'intérieur, mais fais attention : un faux pas et nous serons tous sans
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -80,7 +80,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Je suis ici pour assassiner votre chef et vous ne m'arrÃªterez pas !"
+New Option Nr=3  OptionText=" Je suis ici pour assassiner votre chef et vous ne m'arrêterez pas !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=369  PositionY=382  
 Subtitle="Ok, Linarien ! Tu l'auras voulu !"

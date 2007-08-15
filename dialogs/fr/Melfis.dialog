@@ -72,7 +72,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" J'aurai aimÃ© savoir de quoi vous parlez."
+New Option Nr=3  OptionText=" J'aurai aimé savoir de quoi vous parlez."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Verschwinde."

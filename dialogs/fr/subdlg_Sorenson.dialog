@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Hum... Ta vois a un Ã©trange accent. Est-ce que tout va bien ?"
+New Option Nr=2  OptionText=" Hum... Ta vois a un étrange accent. Est-ce que tout va bien ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="519n3 l3 (0n7r47 !!!!"
@@ -62,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" S'il te plaÃ®t reste calme. Tu dois parler clairement et lentement. S'il te plaÃ®t arrÃªte de parler en fumant comme Ã§a, Ã§a m'irrite la gorge. Et c'est que le truc avec tes yeux injectÃ©s de sang ? Tu devais voir un mÃ©decin."
+New Option Nr=3  OptionText=" S'il te plaît reste calme. Tu dois parler clairement et lentement. S'il te plaît arrête de parler en fumant comme ça, ça m'irrite la gorge. Et c'est que le truc avec tes yeux injectés de sang ? Tu devais voir un médecin."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="519n3 l3 !!!!"
@@ -85,7 +85,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" Certainement, pas de problÃ¨me... Maintenant, comment pourrais-je signer Ã§a ?"
+New Option Nr=30  OptionText=" Certainement, pas de problème... Maintenant, comment pourrais-je signer ça ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
@@ -107,7 +107,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=40  OptionText=" Tux."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Oui ! Je suis libre ! En dÃ©finitive je suis libre !"
+Subtitle="Oui ! Je suis libre ! En définitive je suis libre !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 LinkedTo:70
@@ -140,7 +140,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=43  OptionText=" Elbereth"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="4444 ! Ã Â‡4 brÃ»l3 ! "
+Subtitle="4444 ! à‡4 brûl3 ! "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="444444444444444444 !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -153,7 +153,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=44  OptionText=" Francis"
 OptionSample=""
 PositionX=200  PositionY=200  
-Subtitle="H4 ! T0n 3spr1t 3s7 Ã Â  m01, Francis !"
+Subtitle="H4 ! T0n 3spr1t 3s7 à  m01, Francis !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Qu01 ? P4s d3 7r4v4il ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -163,7 +163,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=45  OptionText=" Le grand destructeur de dÃ©mons, le grand purgateur de toutes les mauvaises choses, l'ami de la sincÃ©ritÃ©, le troisiÃ¨me duc de Linarius, DiplÃ´mÃ© en sciences informatiques, le grand prÃªtre de Kernelius, le rayon de lumiÃ¨re qui pourfend les tÃ©nÃ¨bres, le plieur de cuillÃ¨re tÃ©lÃ©kinÃ©sique, Sa Grande Magnificience, Tux."
+New Option Nr=45  OptionText=" Le grand destructeur de démons, le grand purgateur de toutes les mauvaises choses, l'ami de la sincérité, le troisième duc de Linarius, Diplômé en sciences informatiques, le grand prêtre de Kernelius, le rayon de lumière qui pourfend les ténèbres, le plieur de cuillère télékinésique, Sa Grande Magnificience, Tux."
 OptionSample=""
 PositionX=200  PositionY=200  
 Subtitle="Hein ?"
@@ -196,7 +196,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=60  OptionText=" Erm. J'ai des confession Ã¢Â  faire? Mon nom n'est pas Francis."
+New Option Nr=60  OptionText=" Erm. J'ai des confession â  faire? Mon nom n'est pas Francis."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="N00000000NN!!!!!!" 
@@ -210,7 +210,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=70  OptionText=" Hein ? J3 n3 m3 s3ns p4s bi3n."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Oui, fou ! Tu m'as libÃ©rÃ© ! Je peux finalement mourir ! Salut crÃ©tin !"
+Subtitle="Oui, fou ! Tu m'as libéré ! Je peux finalement mourir ! Salut crétin !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=70 ChangeToValue=0
 LinkedTo:71
@@ -228,7 +228,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=98  OptionText=" Dans le sang ? Berk. He ne vais pas faire Ã§a, le sang est trop Ã©pais pour valider un contrat lÃ©gal. Oublie Ã§a."
+New Option Nr=98  OptionText=" Dans le sang ? Berk. He ne vais pas faire ça, le sang est trop épais pour valider un contrat légal. Oublie ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="N00oo00oo0 ! 1l 3s7 73mps p0ur t01 de m0ur1r, p4uvr3 f0u !"
@@ -239,7 +239,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Il n'y a pas moyen que je signe quoi que ce soit sans le lire." Oublie Ã§a."
+New Option Nr=99  OptionText=" Il n'y a pas moyen que je signe quoi que ce soit sans le lire." Oublie ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=318  PositionY=425  
 Subtitle="N00oo00oo0 ! 1l 3s7 73mps p0ur t01 de m0ur1r, p4uvr3 f0u !"

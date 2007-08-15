@@ -35,7 +35,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=718  PositionY=238  
 Subtitle="Bonjour. Je suis Michelangelo. Je ne suis pas ici depuis plus longtemps que toi." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'aura aimÃ© que les robots me tuent, simplement, mais j'ai Ã©tÃ© 'chanceux' et j'ai Ã©chouÃ© dans ce trou infernal."
+Subtitle="J'aura aimé que les robots me tuent, simplement, mais j'ai été 'chanceux' et j'ai échoué dans ce trou infernal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
@@ -44,7 +44,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Comment Ã§a va?"
+New Option Nr=10  OptionText=" Comment ça va?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=719  PositionY=160  
 Subtitle="Ne me demande pas."
@@ -57,22 +57,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText=" Tu n'as pas l'air trÃ¨s heureux. Qu'est-ce qui ne va pas?"
+New Option Nr=18  OptionText=" Tu n'as pas l'air très heureux. Qu'est-ce qui ne va pas?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=717  PositionY=319  
 Subtitle="TOUT!"	
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Regarde seulement cette ville idiote!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous sommes constamment opprimÃ©s par nos 'sauveurs' , la satanÃ©e Garde Rouge. J'espÃ¨re qu'ils mourront tous de maladie et s'en iront dans les profondeurs des enfers bouillir Ã  jamais dans la lave."
+Subtitle="Nous sommes constamment opprimés par nos 'sauveurs' , la satanée Garde Rouge. J'espère qu'ils mourront tous de maladie et s'en iront dans les profondeurs des enfers bouillir à jamais dans la lave."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et les robots nous occupent en passant leur temps Ã  tuer, dÃ©couper, trancher, briser, ravager et dÃ©truire. GÃ©nial. "
+Subtitle="Et les robots nous occupent en passant leur temps à tuer, découper, trancher, briser, ravager et détruire. Génial. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les gardes m'ont attribuÃ© un sale taudis comme logement. Les murs sont si minces que chaque nuit je suis rÃ©veillÃ© par les communications des robots, avec ces bips et ces bruits de modem incessants."
+Subtitle="Les gardes m'ont attribué un sale taudis comme logement. Les murs sont si minces que chaque nuit je suis réveillé par les communications des robots, avec ces bips et ces bruits de modem incessants."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="On croirait qu'ils chantent quelque chose. Chaque nuit ils commencent leur chanson... Je ne peux pas dormir Ã  cause de leur chorale Ã©lectrique."
+Subtitle="On croirait qu'ils chantent quelque chose. Chaque nuit ils commencent leur chanson... Je ne peux pas dormir à cause de leur chorale électrique."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ai-je mentionnÃ© que la seule nourriture que nous avons est un genre de ration militaire pestilentielle? Rien que l'odeur me donne envie de vomir."
+Subtitle="Ai-je mentionné que la seule nourriture que nous avons est un genre de ration militaire pestilentielle? Rien que l'odeur me donne envie de vomir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=18 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -81,12 +81,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=19  OptionText=" RÃ©jouis-toi! Tout ira bien! Les jours heureux arrivent! Hourra!"
+New Option Nr=19  OptionText=" Réjouis-toi! Tout ira bien! Les jours heureux arrivent! Hourra!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=319  
 Subtitle="..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Linarin, est ce que tu as avalÃ© des pilules psychoactives ou quelque chose comme Ã§a?"
+Subtitle="Linarin, est ce que tu as avalé des pilules psychoactives ou quelque chose comme ça?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Reprends toi, la situation est mauvaise et il n'est pas possible d'envisager autre chose."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -95,12 +95,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" Tu es un cuisinier. ArrÃªte de te plaindre Ã  propos de la nourriture mÃ©diocre! Cuisine quelque chose."
+New Option Nr=20  OptionText=" Tu es un cuisinier. Arrête de te plaindre à propos de la nourriture médiocre! Cuisine quelque chose."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=634  PositionY=319  
-Subtitle="Je ne peux pas. Mon beau four Ã  macro-ondes n'a plus de batteries. L'affreuse Garde Rouge m'a pris ma pile Ã  uranium."
+Subtitle="Je ne peux pas. Mon beau four à macro-ondes n'a plus de batteries. L'affreuse Garde Rouge m'a pris ma pile à uranium."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'aimerais pouvoir tous les tuer de mes mains nues. Ils le mÃ©ritent."
+Subtitle="J'aimerais pouvoir tous les tuer de mes mains nues. Ils le méritent."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Si seulement j'avais un peu de dilithium pour l'utiliser comme batterie de secours..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -119,9 +119,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=634  PositionY=400  
 Subtitle="Oui."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hier, une patrouille de garde a trouvÃ© quelques petits morceaux de lui et beaucoup de sang sÃ©chÃ©."
+Subtitle="Hier, une patrouille de garde a trouvé quelques petits morceaux de lui et beaucoup de sang séché."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les robots l'ont vraiment mis en sale Ã©tat."
+Subtitle="Les robots l'ont vraiment mis en sale état."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=70 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -133,9 +133,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=557  PositionY=319  
 Subtitle="T'as pris un coup de chaud, Linarien?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ã‰coute, des moyens de te suicider, il y en a des dizaines, et la plupart font moins mal que d'Ãªtre tuÃ© par un bot."
+Subtitle="Écoute, des moyens de te suicider, il y en a des dizaines, et la plupart font moins mal que d'être tué par un bot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si tu veux mourir, va marcher dans un rÃ©acteur nuclÃ©aire ou quelque chose comme Ã§a. C'est tellement plus simple."
+Subtitle="Si tu veux mourir, va marcher dans un réacteur nucléaire ou quelque chose comme ça. C'est tellement plus simple."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=80 ChangeToValue=0
 ChangeOption=81 ChangeToValue=1
@@ -143,18 +143,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=81  OptionText=" Ã‡a ira. Ne t'inquiÃ¨te pas."
+New Option Nr=81  OptionText=" Ça ira. Ne t'inquiète pas."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=476  PositionY=318  
-Subtitle="Est-ce que tu sais comment les bots agissent? Certains veulent te tuer dÃ¨s que possible... D'autres veulent faire la mÃªme chose, mais plus lentement."
+Subtitle="Est-ce que tu sais comment les bots agissent? Certains veulent te tuer dès que possible... D'autres veulent faire la même chose, mais plus lentement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai vu des cadavres dont tous les doigts avaient Ã©tÃ© arrachÃ©s, des gens avec les yeux percÃ©s..."
+Subtitle="J'ai vu des cadavres dont tous les doigts avaient été arrachés, des gens avec les yeux percés..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai l'odeur de viande grillÃ©e et entendu les cris des captifs tandis qu'ils Ã©taient incinÃ©rÃ©s vivants Ã  l'extÃ©rieur des murailles de la citÃ©. "
+Subtitle="J'ai l'odeur de viande grillée et entendu les cris des captifs tandis qu'ils étaient incinérés vivants à l'extérieur des murailles de la cité. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les robots ne connaissent pas la pitiÃ©. Ils ne peuvent mÃªme pas la dÃ©finir, ces dÃ©moniaques engins mÃ©talliques."
+Subtitle="Les robots ne connaissent pas la pitié. Ils ne peuvent même pas la définir, ces démoniaques engins métalliques."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Vas-y si tu veux vraiment, Linarien, mais assure-toi d'Ãªtre bien mort avant qu'ils ne commencent Ã  te tuer."
+Subtitle="Vas-y si tu veux vraiment, Linarien, mais assure-toi d'être bien mort avant qu'ils ne commencent à te tuer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=81 ChangeToValue=0
 ChangeOption=19 ChangeToValue=0
@@ -169,12 +169,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=24  OptionText=" Tu as quelque chose Ã  manger ?"
+New Option Nr=24  OptionText=" Tu as quelque chose à manger ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1174  PositionY=157  
-Subtitle="J'avais prÃ©parÃ© quelques mets dÃ©licats, mais la vorace Garde Rouge a tout mangÃ©."
+Subtitle="J'avais préparé quelques mets délicats, mais la vorace Garde Rouge a tout mangé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ce n'est pas une grande perte, j'ai un second carton de cubes nutritifs dans le four et ils seront bientÃ´t prÃªts."
+Subtitle="Ce n'est pas une grande perte, j'ai un second carton de cubes nutritifs dans le four et ils seront bientôt prêts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="I think the mood in the town will improve once the cooking master Michelangelo gets to work. Ha!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -186,13 +186,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText=" Puis-je acheter un peu de nourriture ici ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=799  PositionY=239  
-Subtitle="Il n'y a pas de nourriture ici, seulement ces infÃ¢mes rations militaires."
+Subtitle="Il n'y a pas de nourriture ici, seulement ces infâmes rations militaires."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Faites entiÃ¨rement de nutriments artificiels et d'arÃ´mes cancÃ©rigÃ¨nes. MÃªme l'armÃ©e les hait."
+Subtitle="Faites entièrement de nutriments artificiels et d'arômes cancérigènes. Même l'armée les hait."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est mieux que de mourir de faim, mais quelques personnes se sont dÃ©jÃ  suicidÃ©es parce qu'il n'y a que ce truc dÃ©goÃ»tant Ã  manger."
+Subtitle="C'est mieux que de mourir de faim, mais quelques personnes se sont déjà suicidées parce qu'il n'y a que ce truc dégoûtant à manger."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je peux t'en donner un peu, mais Ã§a n'est pas digne d'Ãªtre appelÃ© nourriture."
+Subtitle="Je peux t'en donner un peu, mais ça n'est pas digne d'être appelé nourriture."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 ChangeOption=12 ChangeToValue=1
@@ -200,18 +200,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Je veux quelques une de ces allÃ©chantes rations militaires!"
+New Option Nr=12  OptionText=" Je veux quelques une de ces alléchantes rations militaires!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=882  PositionY=239  
-Subtitle="Je dois lire ceci Ã  tous les nouveaux arrivants. Voila:"
+Subtitle="Je dois lire ceci à tous les nouveaux arrivants. Voila:"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="'Rappelez-vous que le repas militaire modÃ¨le 23 que vous vous apprÃªtez Ã  manger  est fourni 'tel que', sans garantie d'aucune sorte."
+Subtitle="'Rappelez-vous que le repas militaire modèle 23 que vous vous apprêtez à manger  est fourni 'tel que', sans garantie d'aucune sorte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ceci inclut la garantie implicite de mangeabilitÃ©, ou d'adaptation Ã  un besoin particulier. Vous assumez la totalitÃ© du risque liÃ© Ã  la qualitÃ© de la nourriture."
+Subtitle="Ceci inclut la garantie implicite de mangeabilité, ou d'adaptation à un besoin particulier. Vous assumez la totalité du risque lié à la qualité de la nourriture."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si la ration de l'armÃ©e modÃ¨le #23 devait s'avÃ©rer toxique, vous acceptez de couvrir les frais de maintien en vie engagÃ©s par l'Ã©quipe mÃ©dicale ou la coÃ»t de votre propre crÃ©mation dans notre fourneau nuclÃ©aire."
+Subtitle="Si la ration de l'armée modèle #23 devait s'avérer toxique, vous acceptez de couvrir les frais de maintien en vie engagés par l'équipe médicale ou la coût de votre propre crémation dans notre fourneau nucléaire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Bien, c'est tout. Voila l'horreur que tu voulais. Bon appÃ©tit."
+Subtitle="Bien, c'est tout. Voila l'horreur que tu voulais. Bon appétit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 LinkedTo:27
@@ -222,7 +222,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=27  OptionText=" Hmm... Croustillant... C'est... Oh... Non. Argh. Au secours."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=882  PositionY=325  
-Subtitle="Oh oui. Je t'avais prÃ©venu."
+Subtitle="Oh oui. Je t'avais prévenu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=27 ChangeToValue=0
 LinkedTo:28
@@ -233,11 +233,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=28  OptionText=" Berk! Ce n'est pas de la nourriture!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=970  PositionY=325  
-Subtitle="Nous savons dÃ©jÃ  Ã§a. Il n'y a rien d'autre Ã  manger ici, donc j'espÃ¨re que tu t'habitueras au goÃ»t."
+Subtitle="Nous savons déjà ça. Il n'y a rien d'autre à manger ici, donc j'espère que tu t'habitueras au goût."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Cette chose a un bel aspect et une jolie couleur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais comme tu peux le voir, la couleur ne peut pas Ãªtre mangÃ©e, seul l'arÃ´me compte."
+Subtitle="Mais comme tu peux le voir, la couleur ne peut pas être mangée, seul l'arôme compte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=28 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -247,11 +247,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=29  OptionText=" J'ai le dilithium que tu voulais."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1129  PositionY=196  
-Subtitle="Vraiment? Je pensais que tu Ã©tais mort, mais en plus de revenir vivant, tu me rapportes quelques cristaux de puissance pour rÃ©parer mon four."
+Subtitle="Vraiment? Je pensais que tu étais mort, mais en plus de revenir vivant, tu me rapportes quelques cristaux de puissance pour réparer mon four."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je vais commencer Ã  cuisiner dans un instant."
+Subtitle="Je vais commencer à cuisiner dans un instant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Merci, Linarien. DÃ¨s que les cubes seront prÃªts je pourrai les donner aux gens affamÃ©s."
+Subtitle="Merci, Linarien. Dès que les cubes seront prêts je pourrai les donner aux gens affamés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=29 ChangeToValue=0
 DoSomethingExtra="MarkMissionComplete:2"
@@ -272,12 +272,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=31  OptionText=" Qu'est ce que je dois faire, dÃ©jÃ  ?"
+New Option Nr=31  OptionText=" Qu'est ce que je dois faire, déjà ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1128  PositionY=60  
-Subtitle="Donne moi un peu de dilithium avant que cette stupide colonie ne fasse un suicide collectif Ã  cause de la mauvaise qualitÃ© de la nourriture."
+Subtitle="Donne moi un peu de dilithium avant que cette stupide colonie ne fasse un suicide collectif à cause de la mauvaise qualité de la nourriture."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement notre dÃ©testable nourriture pourrait nous avoir bien avant Ã§a. Je jure l'avoir vue briller dans le noir et essayer de s'Ã©chapper de mon assiette quelques fois."
+Subtitle="Naturellement notre détestable nourriture pourrait nous avoir bien avant ça. Je jure l'avoir vue briller dans le noir et essayer de s'échapper de mon assiette quelques fois."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -340,10 +340,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=82  OptionText=" OÃ¹ est-ce que je peux trouver des cristaux?"
+New Option Nr=82  OptionText=" Où est-ce que je peux trouver des cristaux?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=476  PositionY=396  
-Subtitle="Il y une vieille mine de dilithium Ã  l'est. Je suis certain qu'il y a beaucoup de ces trucs lÃ  bas."
+Subtitle="Il y une vieille mine de dilithium à l'est. Je suis certain qu'il y a beaucoup de ces trucs là bas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je parlerai aux gardes, ils ouvriront la porte est pour toi." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -368,11 +368,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=40  OptionText=" Qu'est ce que le dilithium ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=633  PositionY=239  
-Subtitle="Tu ne le sais pas? Je pensais que les Linariens Ã©taient imbattables dans leur connaissance de l'univers. De toutes faÃ§on..."
+Subtitle="Tu ne le sais pas? Je pensais que les Linariens étaient imbattables dans leur connaissance de l'univers. De toutes façon..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le dilithium est une substance qui se prÃ©sente habituellement sous la forme d'un petit cristal."
+Subtitle="Le dilithium est une substance qui se présente habituellement sous la forme d'un petit cristal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il gÃ©nÃ¨re et stocke une quantitÃ© incroyable d'Ã©nergie. Je ne connais pas les dÃ©tails. Je suis un cuisinier, pas un expert en physique quantique."
+Subtitle="Il génère et stocke une quantité incroyable d'énergie. Je ne connais pas les détails. Je suis un cuisinier, pas un expert en physique quantique."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Un petit cristal alimenterait mon four pendant des semaines."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -381,32 +381,32 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" Je sais : fais du feu pour cuire la nourriture de la citÃ©."
+New Option Nr=41  OptionText=" Je sais : fais du feu pour cuire la nourriture de la cité."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=555  PositionY=242  
-Subtitle="Une idÃ©e sympa, mais il y deux gros problÃ¨mes avec Ã§a."
+Subtitle="Une idée sympa, mais il y deux gros problèmes avec ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous sommes une ville de 450 personnes affamÃ©es. Ã‡a nÃ©cessiterait un trÃ¨s grand feu pour cuire toute la nourriture."
+Subtitle="Nous sommes une ville de 450 personnes affamées. Ça nécessiterait un très grand feu pour cuire toute la nourriture."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'y a rien Ã  brÃ»ler Ã  l'intÃ©rieur de la ville. Si tu veux tu peux aller et essayer de couper quelques arbres dans la rÃ©gion du Nord, mais les dangers sont les robots qui te couperons avant que tu ais eu une chance de balancer un coup de hache."
+Subtitle="Il n'y a rien à brûler à l'intérieur de la ville. Si tu veux tu peux aller et essayer de couper quelques arbres dans la région du Nord, mais les dangers sont les robots qui te couperons avant que tu ais eu une chance de balancer un coup de hache."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Enfin, les cubes de nourriture que nous avons au congÃ©lateur sont optimisÃ©s pour les macro-ondes. Si nous les mettions au feu ils brÃ»leraient et ne cuiraient pas."
+Subtitle="Enfin, les cubes de nourriture que nous avons au congélateur sont optimisés pour les macro-ondes. Si nous les mettions au feu ils brûleraient et ne cuiraient pas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Pas de four signifie que tu es obligÃ© d'utiliser la nourriture prÃ©-cuite pour le four macro-ondes."
+Subtitle="Pas de four signifie que tu es obligé d'utiliser la nourriture pré-cuite pour le four macro-ondes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et le seul truc de ce genre par ici est l'exÃ©crable ration militaire marron."
+Subtitle="Et le seul truc de ce genre par ici est l'exécrable ration militaire marron."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=42  OptionText=" Dis Ã  la Garde Rouge que tu as besoin de ta batterie."
+New Option Nr=42  OptionText=" Dis à la Garde Rouge que tu as besoin de ta batterie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=558  PositionY=397  
 Subtitle="Oui."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils ont dit qu'ils s'en Ã©taient dÃ©jÃ  servi comme carburant pour leur rÃ©acteur."
+Subtitle="Ils ont dit qu'ils s'en étaient déjà servi comme carburant pour leur réacteur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=42 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -416,7 +416,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText="J'y vais alors."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=640  PositionY=162  
-Subtitle="Ã€ plus tard."
+Subtitle="À plus tard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

@@ -41,7 +41,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Donne moi l'arÃ¨ne pour novice." 
+New Option Nr=1  OptionText="Donne moi l'arène pour novice." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=273  PositionY=123  
 ChangeOption=1 ChangeToValue=0
@@ -62,7 +62,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="GO_THERE_AND_DO_IT"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=482  PositionY=135  
-Subtitle="Je t'ai dÃ©jÃ Â  ouvert la porte. Tout ce que tu as besoin de faire est d'entrer et d'abattre quatre robots." 
+Subtitle="Je t'ai déjà  ouvert la porte. Tout ce que tu as besoin de faire est d'entrer et d'abattre quatre robots." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -72,9 +72,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="ASSIGN NOVICE ARENA"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=393  PositionY=55  
-Subtitle="Naturellement. Alors, tu pouras peut Ãªtre survivre."
+Subtitle="Naturellement. Alors, tu pouras peut être survivre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Prends ce chemin. J'ai dÃ©verrouillÃ© la porte. Bonne chance."
+Subtitle="Prends ce chemin. J'ai déverrouillé la porte. Bonne chance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_novice_arena_access_door"
@@ -86,9 +86,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="ASSIGN MASTER ARENA"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=552  PositionY=271  
-Subtitle="Ok. J'ai dÃ©vÃ©rouillÃ© la porte pour le maÃ Â®tre de l'arÃ¨ne? Mais fais attention, Ã§a n'en sera pas plus facile."
+Subtitle="Ok. J'ai dévérouillé la porte pour le maà®tre de l'arène? Mais fais attention, ça n'en sera pas plus facile."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="En fait, il faut que tu saches que nous avons eu une batailles de robots 711 ici. Les Ã©clairs de disrupteurs Ã©tait si meurtriers que personne n'en a rÃ©chappÃ©."
+Subtitle="En fait, il faut que tu saches que nous avons eu une batailles de robots 711 ici. Les éclairs de disrupteurs était si meurtriers que personne n'en a réchappé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu devrais t'assurer que tu as choisi le bon dispositif anti-disrupteur ou alors tu te feras vite tuer. Bonne chance!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -102,9 +102,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText="ITS_ALL_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=481  PositionY=215  
-Subtitle="Tu as dÃ©jÃ Â  achevÃ© l'arÃ¨ne de dÃ©butant. Mais puisque tu veux vraiment Ãªtre confrontÃ© Ã Â  une autre, Je vais actionner les robots maintenant. VoilÃ Â , c'est fait."
+Subtitle="Tu as déjà  achevé l'arène de débutant. Mais puisque tu veux vraiment être confronté à  une autre, Je vais actionner les robots maintenant. Voilà , c'est fait."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais tu pourrais vouloir essayer l'arÃ¨ne principale, peut Ãªtre ? Si c'est le cas, dis le simplement."
+Subtitle="Mais tu pourrais vouloir essayer l'arène principale, peut être ? Si c'est le cas, dis le simplement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 DoSomethingExtra="ForceBotRespawnOnLevel:29"
@@ -112,7 +112,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Donne moi l'arÃ¨ne maÃ®tresse."
+New Option Nr=7  OptionText="Donne moi l'arène maîtresse."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=250  PositionY=296  
 ChangeOption=7 ChangeToValue=0
@@ -133,11 +133,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText="NOVICE_NOT_YET_DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=347  PositionY=383  
-Subtitle="Je suis dÃ©solÃ©, mais la rÃ©gulation de la ville interdit l'accÃ¨s Ã Â  l'arÃ¨ne principale sans que tu aies complÃ©tÃ© l'arÃ¨ne des dÃ©butants d'abord."
+Subtitle="Je suis désolé, mais la régulation de la ville interdit l'accès à  l'arène principale sans que tu aies complété l'arène des débutants d'abord."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cette rÃ©gulation est en place pour ta propre sÃ©curitÃ©, afin qu'aucun dÃ©butant ne souscrive pour l'arÃ¨ne principale accidentellement."
+Subtitle="Cette régulation est en place pour ta propre sécurité, afin qu'aucun débutant ne souscrive pour l'arène principale accidentellement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu pourrais essayer l'arÃ¨ne des dÃ©butants en premier. Alors je pourrais te donner accÃ¨s au terrain principal."
+Subtitle="Tu pourrais essayer l'arène des débutants en premier. Alors je pourrais te donner accès au terrain principal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -147,11 +147,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="MASTER ALREADY ASSIGNED"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=554  PositionY=339  
-Subtitle="Mais j'ai dÃ©jÃ Â  ouvert la porte. Qu'est-ce que tu attends? Tout ce que tu as besoin de faire est de descendre dans l'arÃ¨ne et de combattre les robots."
+Subtitle="Mais j'ai déjà  ouvert la porte. Qu'est-ce que tu attends? Tout ce que tu as besoin de faire est de descendre dans l'arène et de combattre les robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais je comprends que tu sois hÃ©sitant. L'arÃ¨ne principale n'est n'a pas une Ã©preuve facile. Peut-Ãªtre tu que tu devrais t'entraÃ Â®ner un peu plus avant d'y descendre."
+Subtitle="Mais je comprends que tu sois hésitant. L'arène principale n'est n'a pas une épreuve facile. Peut-être tu que tu devrais t'entraà®ner un peu plus avant d'y descendre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lorsque tu te seras assurÃ© d'avoir choisi le bon dispositif anti-disrupteur, sinon le disrupteur du robot 711 te tuera en deux secondes."
+Subtitle="Lorsque tu te seras assuré d'avoir choisi le bon dispositif anti-disrupteur, sinon le disrupteur du robot 711 te tuera en deux secondes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -161,9 +161,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText="MASTER IS DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=452  PositionY=370  
-Subtitle="Mais tu as dÃ©jÃ Â  terminÃ© l'arÃ¨ne principale. Bon, mais je peux rÃ©initialiser les robots pour toi, et tu peux recommencer!"
+Subtitle="Mais tu as déjà  terminé l'arène principale. Bon, mais je peux réinitialiser les robots pour toi, et tu peux recommencer!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais tu as certainement gagnÃ© beaucoup de rÃ©putation comme maÃ Â®tre de l'arÃ¨ne et nous respectons Ã§a."
+Subtitle="Mais tu as certainement gagné beaucoup de réputation comme maà®tre de l'arène et nous respectons ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 DoSomethingExtra="ForceBotRespawnOnLevel:30"

@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Salut ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Salut. Je suis Tybalt. Je garde le portail de la maison. Seul les personnels autorisÃ©s ont accÃ¨s." 
+Subtitle="Salut. Je suis Tybalt. Je garde le portail de la maison. Seul les personnels autorisés ont accès." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,10 +42,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Pourquoi est ce que le portail est fermÃ© la plupart du temps ?"
+New Option Nr=1  OptionText=" Pourquoi est ce que le portail est fermé la plupart du temps ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="C'est fermÃ© donc personne ne peut regarder Ã Â  l'intÃ©rieur tant que je ne regarde pas. C'est pour cela."
+Subtitle="C'est fermé donc personne ne peut regarder à  l'intérieur tant que je ne regarde pas. C'est pour cela."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="THE GATE OPENS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=224  PositionY=154  
-Subtitle="Naturellement. Les membres de la Garde sont toujours autorisÃ©s Ã Â  entrer dans la salle de garde. La porte est ouverte. Bienvenue chez toi."
+Subtitle="Naturellement. Les membres de la Garde sont toujours autorisés à  entrer dans la salle de garde. La porte est ouverte. Bienvenue chez toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_guardhouse_door"
@@ -76,9 +76,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText="YOU SHALL NOT PASS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
-Subtitle="DÃ©solÃ©, pal, mais je ne pense pas. Seuls les personnels autorisÃ©s ont le droit et Ã§a signifie les membres de la Garde Rouge uniquement."
+Subtitle="Désolé, pal, mais je ne pense pas. Seuls les personnels autorisés ont le droit et ça signifie les membres de la Garde Rouge uniquement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Demande Ã Â  Spencer si tu as des questions. Je ne peux pas te laisser passer."
+Subtitle="Demande à  Spencer si tu as des questions. Je ne peux pas te laisser passer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 LinkedTo:60
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=56  OptionText="Ok, maintenant suis moi jusqu'Ã¢Â  la prochaine porte."
+New Option Nr=56  OptionText="Ok, maintenant suis moi jusqu'â  la prochaine porte."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Quelle porte ?"
@@ -170,10 +170,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=58  OptionText=" Je t'ai payÃ©!"
+New Option Nr=58  OptionText=" Je t'ai payé!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Vraiment ? Je ne me rappelle pas de Ã§a."
+Subtitle="Vraiment ? Je ne me rappelle pas de ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=58 ChangeToValue=0
 ChangeOption=59 ChangeToValue=1
@@ -220,7 +220,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Au revoir."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=336  PositionY=301  
-Subtitle="Bon dÃ©barras."
+Subtitle="Bon débarras."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1

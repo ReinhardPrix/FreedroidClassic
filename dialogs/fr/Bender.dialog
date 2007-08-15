@@ -41,12 +41,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Qu'est ce qui ne va pas ? Tu parais Ãªtre en bonne forme Ã©tat pour une personne morte."
+New Option Nr=1  OptionText=" Qu'est ce qui ne va pas ? Tu parais être en bonne forme état pour une personne morte."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=133  PositionY=269  
-Subtitle="Ouais. Je suis l'homme le plus fort du monde. C'est parce que j'ai avalÃ© TOUTES les pilules de force."
+Subtitle="Ouais. Je suis l'homme le plus fort du monde. C'est parce que j'ai avalé TOUTES les pilules de force."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais je serai probablement mort dans peu de temps. Le doc m'avait averti, mais je ne l'ai pas Ã©coutÃ©. FlÃ»te."
+Subtitle="Mais je serai probablement mort dans peu de temps. Le doc m'avait averti, mais je ne l'ai pas écouté. Flûte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -60,7 +60,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=207  PositionY=231  
 Subtitle="Non. Les pilules de force marchent parfaitement. Elles m'ont rendu plus fort. Le doc l'a dit aussi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ce sont les pilules d'augmentation du volume cÃ©rÃ©bral. Elles ne m'ont pas rÃ©ussi, mec."
+Subtitle="Ce sont les pilules d'augmentation du volume cérébral. Elles ne m'ont pas réussi, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -73,7 +73,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Qu'est ce qui t'as rendu aussi malade ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=220  PositionY=323  
-Subtitle="Ce sont les pilules d'augmentation du volume cÃ©rÃ©bral. Elle ne m'ont pas rÃ©ussi, mec."
+Subtitle="Ce sont les pilules d'augmentation du volume cérébral. Elle ne m'ont pas réussi, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -83,18 +83,18 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Des pilules d'augmentation de la masse cÃ©rÃ©brale ? C'est ridicule !"
+New Option Nr=4  OptionText=" Des pilules d'augmentation de la masse cérébrale ? C'est ridicule !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=270  PositionY=198  
-Subtitle="Tu sais mec, tout le monde m'a fait les mÃªmes propositions."
+Subtitle="Tu sais mec, tout le monde m'a fait les mêmes propositions."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils fournissent certaines pilules d'augmentation du volume cÃ©rÃ©bral pour augmenter les performances cognitives."
+Subtitle="Ils fournissent certaines pilules d'augmentation du volume cérébral pour augmenter les performances cognitives."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="'Agrandiss3z votre cerveau! Achetez des pilules ! P4s ch3r !!!'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et tout le monde dans le camp disait que j'Ã©tais stupide, alors que ce n'est pas vrai."
+Subtitle="Et tout le monde dans le camp disait que j'étais stupide, alors que ce n'est pas vrai."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alors j'ai pensÃ© que ces pilules les feraient changer d'avis Ã Â  mon sujet."
+Subtitle="Alors j'ai pensé que ces pilules les feraient changer d'avis à  mon sujet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -103,10 +103,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Mais si tu n'Ã©tais pas stupide, pourquoi as tu utilisÃ© les pilules d'augmentation de la masse cÃ©rÃ©brale ?"
+New Option Nr=5  OptionText=" Mais si tu n'étais pas stupide, pourquoi as tu utilisé les pilules d'augmentation de la masse cérébrale ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=345  PositionY=250  
-Subtitle="Parce qu'ils disaient que j'Ã©tais bÃªte. Donc j'Ã©tais obligÃ© de rÃ©agir, pas vrai ?"
+Subtitle="Parce qu'ils disaient que j'étais bête. Donc j'étais obligé de réagir, pas vrai ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -116,11 +116,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" N'y a-t-il pas en ville un docteur qui pourrait te soigner ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=147  
-Subtitle="Ouais, le doc pourrait faire quelque chose. Mais il ne fera rien. Je l'ai menacÃ©, mais il ne fera rien."
+Subtitle="Ouais, le doc pourrait faire quelque chose. Mais il ne fera rien. Je l'ai menacé, mais il ne fera rien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il est trÃ¨s inquiet parce que je ne l'ai pas Ã©coutÃ©. C'est lui qui m'a averti Ã Â  propos des pilules d'augmentation de la masse cÃ©rÃ©brale."
+Subtitle="Il est très inquiet parce que je ne l'ai pas écouté. C'est lui qui m'a averti à  propos des pilules d'augmentation de la masse cérébrale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Elles peuvent Ãªtre responsables d'atroces manifestations cancÃ©reuses. Mais je ne l'ai pas Ã©coutÃ©. Et maintenant, il refuse de m'aider, mec."
+Subtitle="Elles peuvent être responsables d'atroces manifestations cancéreuses. Mais je ne l'ai pas écouté. Et maintenant, il refuse de m'aider, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=7 ChangeToValue=1
@@ -129,14 +129,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" Peut Ãªtre que je peux t'aider d'une quelconque maniÃ¨re ?"
+New Option Nr=7  OptionText=" Peut être que je peux t'aider d'une quelconque manière ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=497  PositionY=214  
-Subtitle="Mec, si tu pouvais le faire, je te donnerais n'importe quoi. J'ai encore quelques pilules de force de cÃ´tÃ©."
+Subtitle="Mec, si tu pouvais le faire, je te donnerais n'importe quoi. J'ai encore quelques pilules de force de côté."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je pourrais aussi voter pour toi si tu voulais rejoindre la garde de la ville."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Procure moi juste un peu de remÃ¨de, et je te serai reconnaissant pour toujours !"
+Subtitle="Procure moi juste un peu de remède, et je te serai reconnaissant pour toujours !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
@@ -147,14 +147,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Je suis dÃ©solÃ©, mais on dirait que je ne peux rien faire pour toi."
+New Option Nr=8  OptionText=" Je suis désolé, mais on dirait que je ne peux rien faire pour toi."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=429  PositionY=129  
-Subtitle="Bien sÃ»r que non. Tu n'es pas docteur. Seuls les mÃ©decins ont la vÃ©ritable science de la guÃ©rison."
+Subtitle="Bien sûr que non. Tu n'es pas docteur. Seuls les médecins ont la véritable science de la guérison."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mais ce chacal aimerait mieux me laisser mourir !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je l'Ã©triperai dÃ¨s que j'aurai mis la main sur lui, mec."
+Subtitle="Je l'étriperai dès que j'aurai mis la main sur lui, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
@@ -162,16 +162,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" J'ai ton mÃ©dicament. Avec les meilleurs souhaits de rÃ©tablissement de la part du docteur."
+New Option Nr=9  OptionText=" J'ai ton médicament. Avec les meilleurs souhaits de rétablissement de la part du docteur."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=397  PositionY=442  
-Subtitle="Wow, tu l'as vraiment fait ! Je suppose que tu lui as mis une sacrÃ©e raclÃ©e."
+Subtitle="Wow, tu l'as vraiment fait ! Je suppose que tu lui as mis une sacrée raclée."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'a pas voulu m'aider mÃªme aprÃ¨s que je l'ai un peu frappÃ©. Un peu beaucoup."
+Subtitle="Il n'a pas voulu m'aider même après que je l'ai un peu frappé. Un peu beaucoup."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mec, tu es le plus gÃ©nial des hÃ©ros !"
+Subtitle="Mec, tu es le plus génial des héros !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Maintenant, voici ta rÃ©compense. Et tu peux Ãªtre certain que je voterais pour toi si tu veux Ãªtre membre d'Ã©quipage dans la Garde Rouge !"
+Subtitle="Maintenant, voici ta récompense. Et tu peux être certain que je voterais pour toi si tu veux être membre d'équipage dans la Garde Rouge !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Merci, mec !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -186,14 +186,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Peut Ãªtre que prendre des pilules d'augmentation de la masse cÃ©rÃ©brale Ã©tait vraiment stupide."
+New Option Nr=10  OptionText=" Peut être que prendre des pilules d'augmentation de la masse cérébrale était vraiment stupide."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=315  PositionY=327  
 Subtitle="QUOI ? Tu viens de dire que je suis stupide ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ne dis pas Ã§a, mec."
+Subtitle="Ne dis pas ça, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je peux te tuer de faÃ§on tellement atroce que personne ne reconnaÃ Â®tra ton cadavre !"
+Subtitle="Je peux te tuer de façon tellement atroce que personne ne reconnaà®tra ton cadavre !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=50 ChangeToValue=1
@@ -201,28 +201,28 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=11  OptionText=" OÃ¢Â¹ est-ce que je peux trouver ce docteur ?"
+New Option Nr=11  OptionText=" Oâ¹ est-ce que je peux trouver ce docteur ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=556  PositionY=218  
-Subtitle="Il est Ã Â  l'intÃ©rieur de cet immeuble. Je l'attends ici, mec."
+Subtitle="Il est à  l'intérieur de cet immeuble. Je l'attends ici, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Quand il sera sorti, peut Ãªtre que je pourrai le frapper encore un peu. Peut Ãªtre mÃªme qu'il finira alors par m'aider!"
+Subtitle="Quand il sera sorti, peut être que je pourrai le frapper encore un peu. Peut être même qu'il finira alors par m'aider!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ouais, va recevoir une bonne raclÃ©e. Ce qui le fera rÃ©flÃ©chir ! Quel sale chacal !"
+Subtitle="Ouais, va recevoir une bonne raclée. Ce qui le fera réfléchir ! Quel sale chacal !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" De quelle genre de mÃ©dicament as-tu besoin..."
+New Option Nr=12  OptionText=" De quelle genre de médicament as-tu besoin..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=394  PositionY=497  
 Subtitle="Qu'est ce que tu as?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Quoi, t'as rien?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mec, qu'est-ce que tu fais ici ? Va chercher le mÃ©dicament ! J'en ai besoin maintenant !"
+Subtitle="Mec, qu'est-ce que tu fais ici ? Va chercher le médicament ! J'en ai besoin maintenant !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -232,7 +232,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText=" Comment est-ce que tu vas ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=386  PositionY=389  
-Subtitle="C'est beaucoup mieux. Je suis guÃ©ri. Merci encore mec ! Je voterai pour toi si tu veux dans la ville des gardes ! Tu es un bon gars, mec !"
+Subtitle="C'est beaucoup mieux. Je suis guéri. Merci encore mec ! Je voterai pour toi si tu veux dans la ville des gardes ! Tu es un bon gars, mec !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -314,14 +314,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=50  OptionText=" Oui, c'Ã©tait une idÃ©e complÃ©tement stupide de prendre ces pilules."
+New Option Nr=50  OptionText=" Oui, c'était une idée complétement stupide de prendre ces pilules."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=315  PositionY=327  
 Subtitle="Quoi ? Je ne suis pas idiot ! Compris ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Personne ne dit que je suis stupide ! Je NE SUIS PAS STUPIDE !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="JE VAIS T'Ã Â‰CLATER !"
+Subtitle="JE VAIS T'à‰CLATER !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"

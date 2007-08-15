@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=73  PositionY=220  
-Subtitle="Excellent. Maintenant retourne d'oÃ Â¹ tu viens. Ce n'est pas un endroit qui te convient." 
+Subtitle="Excellent. Maintenant retourne d'oà¹ tu viens. Ce n'est pas un endroit qui te convient." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -41,14 +41,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Quel est le problÃ¨me avec cette porte ?"
+New Option Nr=1  OptionText=" Quel est le problème avec cette porte ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=151  PositionY=218  
-Subtitle="Ceci est une porte vers une usine de robots automatisÃ©e que nous appelons la Forteresse du Diable."
+Subtitle="Ceci est une porte vers une usine de robots automatisée que nous appelons la Forteresse du Diable."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu es certainement fou si tu dÃ©sires t'y rendre. Cet endroit est plein de robots."
+Subtitle="Tu es certainement fou si tu désires t'y rendre. Cet endroit est plein de robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sors de lÃ Â . Ils peuvent attaquer n'importe quand!"
+Subtitle="Sors de là . Ils peuvent attaquer n'importe quand!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -56,12 +56,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Qu'est ce qui se passe si je ne faits que marcher ici ? Tu vas tenter de m'arrÃªter ?"
+New Option Nr=2  OptionText=" Qu'est ce qui se passe si je ne faits que marcher ici ? Tu vas tenter de m'arrêter ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=279  PositionY=102  
-Subtitle="bien sÃ»r que non. T'assassiner serait une perte de temps complÃ¨te."
+Subtitle="bien sûr que non. T'assassiner serait une perte de temps complète."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="les robots feront attention Ã Â  Ã§a Ã Â  ma place."
+Subtitle="les robots feront attention à  ça à  ma place."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Rappelle toi seulement de me donner mes gages avant de te suicider."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -76,7 +76,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Merci pour ce conseil."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=113  
-Subtitle="Tu es mort si tu ne prends pas Ã§a."
+Subtitle="Tu es mort si tu ne prends pas ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Login : tux  Password : *******" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
-Subtitle="DerniÃ¨re connexion sur dev/ttyS0 le Dim, 23 mar 2057. tux@hacked_bot: ~ #" 
+Subtitle="Dernière connexion sur dev/ttyS0 le Dim, 23 mar 2057. tux@hacked_bot: ~ #" 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=1  OptionText=" ./pull_breaks.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186  
-Subtitle="Exploitation des failles, utilisant le script V 1.0.2 (c) gnu.org, 2054 vÃ©rification requises. Ã Â‰nergie sur les failles. Fait. Ã Â‰tat : Tout mouvemement interrompu." 
+Subtitle="Exploitation des failles, utilisant le script V 1.0.2 (c) gnu.org, 2054 vérification requises. à‰nergie sur les failles. Fait. à‰tat : Tout mouvemement interrompu." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="SetCompletelyFixedProperty"
@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" ./follow_me.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=107  
-Subtitle="Initialisation de la sÃ©quence de suivi. Ã Â‰nergie sur la faille dÃ©placÃ©e. Tentative de conserver la position de Tux. D'accord. On suit Tux."
+Subtitle="Initialisation de la séquence de suivi. à‰nergie sur la faille déplacée. Tentative de conserver la position de Tux. D'accord. On suit Tux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="SetFollowTuxProperty"
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" ./move_freely.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=250  
-Subtitle="EnlÃ¨ve l'Ã©nergie de la faille. ArrÃªt des opÃ©ration de routine de patrouille. Fait. Ã Â‰tat : en patrouille."
+Subtitle="Enlève l'énergie de la faille. Arrêt des opération de routine de patrouille. Fait. à‰tat : en patrouille."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"
@@ -80,11 +80,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" ./hcf.py"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="ExÃ©cute : arrÃªt des tirs."
+Subtitle="Exécute : arrêt des tirs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sous-systÃ¨mes de refroidissement dÃ©sactivÃ©s."
+Subtitle="Sous-systèmes de refroidissement désactivés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Attention ! Oxydation spontanÃ©e avec Ã©mis$ion de lumiÃ¨re eT de chAleUr dÃ©tectÃ©eee dans L#'unitÃ©| de caLcUl principale,"
+Subtitle="Attention ! Oxydation spontanée avec émis$ion de lumière eT de chAleUr détectéeee dans L#'unité| de caLcUl principale,"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="SsTeM=#faiPure%^#n 3 S 1()$++"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

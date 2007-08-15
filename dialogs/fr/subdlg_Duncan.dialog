@@ -45,9 +45,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ah, excellent." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Un... ami Ã Â  moi, Koan, ma dÃ©robÃ© quelque chose qui a une grande valeur Ã Â  mes yeux."
+Subtitle="Un... ami à  moi, Koan, ma dérobé quelque chose qui a une grande valeur à  mes yeux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il se cache quelque part dans le dÃ©ser, je ne sais pas exactement Ã Â  quel endroit." 
+Subtitle="Il se cache quelque part dans le déser, je ne sais pas exactement à  quel endroit." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -55,16 +55,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Je te rapporterai ta propriÃ©tÃ©."
+New Option Nr=2  OptionText=" Je te rapporterai ta propriété."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Parfait. Je suis heureux d'entendre Ã§a."
+Subtitle="Parfait. Je suis heureux d'entendre ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il y a quelque chose que tu dois savoir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils n'y a pas beaucoup de robots dans le dÃ©sert, mais il sont invincibles. Il est plus prudent de les Ã©viter."
+Subtitle="Ils n'y a pas beaucoup de robots dans le désert, mais il sont invincibles. Il est plus prudent de les éviter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je t'attendrai ici jusqu'Ã Â  ton retour."
+Subtitle="Je t'attendrai ici jusqu'à  ton retour."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=99 ChangeToValue=0
@@ -80,18 +80,18 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Nous l'appellons 'Scimouleur'."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils Ã©taient conÃ§us pour abattre les arbres des montagnes."
+Subtitle="Ils étaient conçus pour abattre les arbres des montagnes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Maintenant ils dÃ©coupent les gens
+Subtitle="Maintenant ils découpent les gens
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a seulement un point faible dans leurs systÃ¨mes de sÃ©curitÃ©. Mais personne n'est parvenu Ã Â  rester assez longtemps pour le hacker."
+Subtitle="Il y a seulement un point faible dans leurs systèmes de sécurité. Mais personne n'est parvenu à  rester assez longtemps pour le hacker."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Quelle est la chose qu'il t'a dÃ©robÃ©e ?"
+New Option Nr=6  OptionText=" Quelle est la chose qu'il t'a dérobée ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Un cube. Tu ne peux pas le manquer. Fais moi confiance."
@@ -113,7 +113,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Non, je ne pense pas que les bains de sang soit un loisir particuliÃ¨rement attachant."
+New Option Nr=99  OptionText=" Non, je ne pense pas que les bains de sang soit un loisir particulièrement attachant."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="C'est parfait. Je vais trouver quelqu'un d'autre."

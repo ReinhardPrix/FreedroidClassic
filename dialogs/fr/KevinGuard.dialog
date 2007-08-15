@@ -38,7 +38,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Je dois parler Ã¢Â  ton maÃ®tre." 
+New Option Nr=1  OptionText=" Je dois parler â  ton maître." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=239  
 Subtitle="EXPOSEZ VOTRE RAISON." 
@@ -56,7 +56,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Ne tire pas ! Je viens en paix."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=368  
-Subtitle="ESPOSEZ LA RAISON DE VOTRE PRÃ Â‰SENCE ICI."
+Subtitle="ESPOSEZ LA RAISON DE VOTRE PRà‰SENCE ICI."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -67,10 +67,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="J'ai vu cette construction lorsque j'Ã©tais en train de marcher, et j'ai dÃ©cidÃ© de jeter un regard Ã¢Â  l'intÃ©rieur."
+New Option Nr=3  OptionText="J'ai vu cette construction lorsque j'étais en train de marcher, et j'ai décidé de jeter un regard â  l'intérieur."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=373  PositionY=239  
-Subtitle="VOTRE RAISON EST Ã Â‰TRANGE. MAÃ ÂŽTRE KEVIN AIME LES GENS CURIEUX."
+Subtitle="VOTRE RAISON EST à‰TRANGE. MAàŽTRE KEVIN AIME LES GENS CURIEUX."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="TU PEUX PASSER"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -104,7 +104,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Les gens de la uhh... ville veulent lui toucher quelques mots. Ouais, c'est Ã§a."
+New Option Nr=6  OptionText=" Les gens de la uhh... ville veulent lui toucher quelques mots. Ouais, c'est ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=270  PositionY=110  
 Subtitle="ERREUR : RAISON INVALIDE."
@@ -114,12 +114,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" J'ai quelques information vraiment trÃ¨s importantes. Cela pourrait intÃ©resser ton maÃ®tre."
+New Option Nr=7  OptionText=" J'ai quelques information vraiment très importantes. Cela pourrait intéresser ton maître."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=109  
-Subtitle="MAÃ ÂŽTRE KEVIN SERA ENCHANTÃ Â‰. VOUS POUVEZ PASSER."
+Subtitle="MAàŽTRE KEVIN SERA ENCHANTà‰. VOUS POUVEZ PASSER."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="SÃ Â‰QUENCE D'OUVERTURE DE LA PORTE INITIALISÃ Â‰E"
+Subtitle="Sà‰QUENCE D'OUVERTURE DE LA PORTE INITIALISà‰E"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -135,10 +135,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Bouge, stupide boÃ®te de conserve !"
+New Option Nr=8  OptionText=" Bouge, stupide boîte de conserve !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=269  PositionY=515  
-Subtitle="VOUS NE POUVEZ PASSER. ACTIVATION DU FAISCEAU DÃ Â‰SINTÃ Â‰GRATEUR DANS DIX SECONDES."
+Subtitle="VOUS NE POUVEZ PASSER. ACTIVATION DU FAISCEAU Dà‰SINTà‰GRATEUR DANS DIX SECONDES."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NEUF."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -193,7 +193,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Les ennemis approchent de tous cÃ´tÃ©s !"
+New Option Nr=12  OptionText=" Les ennemis approchent de tous côtés !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=168  PositionY=39  
 Subtitle="ERREUR : RAISON INVALIDE."
@@ -204,7 +204,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" Nous sommes dÃ©bordÃ©s ! Ils attaqueront dans une seconde !"
+New Option Nr=13  OptionText=" Nous sommes débordés ! Ils attaqueront dans une seconde !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=99  PositionY=38  
 Subtitle="ERREUR : RAISON INVALIDE."
@@ -229,7 +229,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText=" C'est moi."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=876  PositionY=69  
-Subtitle="IDENTITÃ Â‰ CONFIRMÃ Â‰E. VOUS POUVEZ PASSER."
+Subtitle="IDENTITà‰ CONFIRMà‰E. VOUS POUVEZ PASSER."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 ChangeOption=15 ChangeToValue=0
@@ -247,10 +247,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=17  OptionText=" Je ne suis pas obligÃ© de te dire quoi que ce soit, robot."
+New Option Nr=17  OptionText=" Je ne suis pas obligé de te dire quoi que ce soit, robot."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=169  PositionY=239  
-Subtitle="ENGAGMENT DES CIRCUITS D'ATTAQUE. VOUS SEREZ DÃ Â‰SINTÃ Â‰GRÃ Â‰S DANS DIX SECONDES."
+Subtitle="ENGAGMENT DES CIRCUITS D'ATTAQUE. VOUS SEREZ Dà‰SINTà‰GRà‰S DANS DIX SECONDES."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="NEUF."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -265,7 +265,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText=" Je pense que j'ai simplement trouvÃ© une erreur dans ta programmation."
+New Option Nr=18  OptionText=" Je pense que j'ai simplement trouvé une erreur dans ta programmation."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=36  PositionY=107  
 Subtitle="ERREUR : RAISON INVALIDE."
@@ -289,9 +289,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=20  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=164  PositionY=383  
-Subtitle="INTRUS, BAISSEZ VOS ARMES ET IDENTIFIEZ VOUS OU VOUS AFFRONTEREZ UN MORT INSTANTANÃ Â‰E."
+Subtitle="INTRUS, BAISSEZ VOS ARMES ET IDENTIFIEZ VOUS OU VOUS AFFRONTEREZ UN MORT INSTANTANà‰E."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="JE NE NOUS LAISSERAI PAS INJURIER MON MAÃ ÂŽTRE."
+Subtitle="JE NE NOUS LAISSERAI PAS INJURIER MON MAàŽTRE."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -301,10 +301,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ã¢Â€ plus, boÃ®te de conserve."
+New Option Nr=99  OptionText=" â€ plus, boîte de conserve."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=700  PositionY=70  
-Subtitle="FIN DE TRANSMISSION ENREGISTRÃ Â‰E. CONNECTION CLOSE."
+Subtitle="FIN DE TRANSMISSION ENREGISTRà‰E. CONNECTION CLOSE."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="AU REVOIR."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

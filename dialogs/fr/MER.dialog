@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="Salut! Je suis nouveau ici. " 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=121  PositionY=241  
-Subtitle="Bienvenue ici! On m'appelle MER. Mes dialogues ne sont pas encore Ã©crits."
+Subtitle="Bienvenue ici! On m'appelle MER. Mes dialogues ne sont pas encore écrits."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -43,10 +43,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Comment est-ce que Ã§a va?"
+New Option Nr=1  OptionText=" Comment est-ce que ça va?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=141  PositionY=228  
-Subtitle="Je suis trÃ¨s fatiguÃ©, mais sinon Ã§a va."
+Subtitle="Je suis très fatigué, mais sinon ça va."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -57,9 +57,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Tu ne parles pas beaucoup, hein ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=214  PositionY=229  
-Subtitle="Non, je suis juste trop fatiguÃ© pour l'instant. Je reviens de deux semaines de travail dans les mines."
+Subtitle="Non, je suis juste trop fatigué pour l'instant. Je reviens de deux semaines de travail dans les mines."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je suis vraiment Ã©puisÃ©, donc ce serait peut Ãªtre mieux si tu venais un autre jour."
+Subtitle="Je suis vraiment épuisé, donc ce serait peut être mieux si tu venais un autre jour."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -70,11 +70,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Pourquoi est-ce que tu travailles si dur dans les mines?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=302  PositionY=228  
-Subtitle="Parce que je suis obligÃ© ! Les gardes rouges exploitent tout le monde jusqu'Ã Â  l'Ã©puisement !"
+Subtitle="Parce que je suis obligé ! Les gardes rouges exploitent tout le monde jusqu'à  l'épuisement !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si tu ne travailles pas pendant une pÃ©riode pleine, tu auras des problÃ¨mes."
+Subtitle="Si tu ne travailles pas pendant une période pleine, tu auras des problèmes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais je n'ai pas le choix. Je ne veux pas Ãªtre soldat Ã Â  nouveau."
+Subtitle="Mais je n'ai pas le choix. Je ne veux pas être soldat à  nouveau."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -82,10 +82,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Tu Ã©tais soldat avant ?"
+New Option Nr=4  OptionText=" Tu étais soldat avant ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=399  PositionY=228  
-Subtitle="Oui. J'aimerai mieux ne pas parler de Ã§a."
+Subtitle="Oui. J'aimerai mieux ne pas parler de ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
@@ -94,14 +94,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Bien. CommenÃ§ons Ã¢Â  parler. Maintenant."
+New Option Nr=5  OptionText=" Bien. Commençons â  parler. Maintenant."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=498  PositionY=227  
-Subtitle="C'Ã©tait rudement douloureux et c'est un vieux souvenir."
+Subtitle="C'était rudement douloureux et c'est un vieux souvenir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="AprÃ¨s le Grand Assaut, j'ai rejoint la Garde Rouge. Ils avaient besoin d'aide et recherchaient des volontaires."
+Subtitle="Après le Grand Assaut, j'ai rejoint la Garde Rouge. Ils avaient besoin d'aide et recherchaient des volontaires."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je les ai servis pendant quelques temps, et ils m'ont mÃªme laissÃ© utilisÃ© un exterminator. Mais aprÃ¨s un Ã©chec en mision, je me suis rÃ©signÃ© et je n'ai plus jamais portÃ© l'uniforme."
+Subtitle="Je les ai servis pendant quelques temps, et ils m'ont même laissé utilisé un exterminator. Mais après un échec en mision, je me suis résigné et je n'ai plus jamais porté l'uniforme."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=98 ChangeToValue=1
@@ -111,14 +111,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText="Tu as mentionnÃ© un exterminateur. Qu'est ce que c'est?
+New Option Nr=6  OptionText="Tu as mentionné un exterminateur. Qu'est ce que c'est?
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=498  PositionY=357  
-Subtitle="C'est la meilleure arme que possÃ¨de la Garde Rouge pour affronter les robots."
+Subtitle="C'est la meilleure arme que possède la Garde Rouge pour affronter les robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Un impact direct d'un de ces fusils est suffisant pour transformer la plupart des robots en Ã©clats de mÃ©tal."
+Subtitle="Un impact direct d'un de ces fusils est suffisant pour transformer la plupart des robots en éclats de métal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La plupart des grandes victoires de la Garde Rouge le fÃ»rent grÃ Â¢ce Ã Â  l'exterminateur."
+Subtitle="La plupart des grandes victoires de la Garde Rouge le fûrent grà¢ce à  l'exterminateur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Naturellement parce que c'est portable et que le temps de rechargement est terriblement long, Il peut causer beaucoup de morts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -127,20 +127,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText="Une mission Ã©chouÃ©e ?"
+New Option Nr=7  OptionText="Une mission échouée ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=592  PositionY=227  
-Subtitle="Nous Ã©tions six. Moi, Wilber, Anderson et trois autres. Je ne me rappelle plus de leur nom. Nous Ã©tions l'Ã©quipe numÃ©ro neuf."
+Subtitle="Nous étions six. Moi, Wilber, Anderson et trois autres. Je ne me rappelle plus de leur nom. Nous étions l'équipe numéro neuf."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'Ã©tait une mission de reconnaissance habituelle. Nous avions vu une construction intÃ©ressante qui n'Ã©tait pas lÃ Â  avant, et nous avons dÃ©cidÃ© d'y jeter un Ã…Â“il."
+Subtitle="C'était une mission de reconnaissance habituelle. Nous avions vu une construction intéressante qui n'était pas là  avant, et nous avons décidé d'y jeter un Å“il."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'Ã©tait une forteresse terrible,[...] . Il y avait des armes partout. Lorsque nous avons fermÃ© la fusillade a commencÃ©."
+Subtitle="C'était une forteresse terrible,[...] . Il y avait des armes partout. Lorsque nous avons fermé la fusillade a commencé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils nous attendaient. Ils venaient tels une multitude infinie. Il y en avait toujours plus. Nous avons tenu notre posittion et maintenu le feu, mais Ã§a n'a servi Ã Â  rien. La plupart d'entre eux sont passÃ©s."
+Subtitle="Ils nous attendaient. Ils venaient tels une multitude infinie. Il y en avait toujours plus. Nous avons tenu notre posittion et maintenu le feu, mais ça n'a servi à  rien. La plupart d'entre eux sont passés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous Ã©tions Ã Â  court de munitions. Ils se rapprochaient. C'Ã©tait la fin de l'Ã©quipe numÃ©ro neuf. La forteresse de l'enfer avait pris leurs vies. J'ai couru. Et j'ai survÃ©cu."
+Subtitle="Nous étions à  court de munitions. Ils se rapprochaient. C'était la fin de l'équipe numéro neuf. La forteresse de l'enfer avait pris leurs vies. J'ai couru. Et j'ai survécu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="AprÃ¨s quoi j'ai dÃ©cidÃ© que je ne pouvais pas Ãªtre un garde rouge seul. Je me suis rÃ©signÃ© et j'ai commencÃ© Ã Â  travailler Ã Â  la mine peu de temps aprÃ¨s."
+Subtitle="Après quoi j'ai décidé que je ne pouvais pas être un garde rouge seul. Je me suis résigné et j'ai commencé à  travailler à  la mine peu de temps après."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je ne voulais plus jamais affronter la fureur de la Forteresse de l'enfer. Plus jamais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -152,7 +152,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" Je disais que je voulais en apprendre sur ta vie de soldat."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=398  PositionY=132  
-Subtitle="Et j'ai dit que je ne voulais plus parler de Ã§a. C'est trop douloureux. S'il vous plait arrÃªtez de me questionner Ã Â  ce propos et laisser moi seul."
+Subtitle="Et j'ai dit que je ne voulais plus parler de ça. C'est trop douloureux. S'il vous plait arrêtez de me questionner à  ce propos et laisser moi seul."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 ChangeOption=10 ChangeToValue=0
@@ -161,10 +161,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Tu ne comprends pas. Ce n'est pas ce que je t'ai demandÃ©. Maintenant, parle moi de ta vie de soldat, ou j'irai raconter aux gardes que tu es en train de paresser."
+New Option Nr=9  OptionText=" Tu ne comprends pas. Ce n'est pas ce que je t'ai demandé. Maintenant, parle moi de ta vie de soldat, ou j'irai raconter aux gardes que tu es en train de paresser."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=497  PositionY=132  
-Subtitle="Non ! S'il vous plaÃ Â®t... Je ferai n'importe quoi, n'appellez pas la Garde Rouge! Ils n'aiment pas les dÃ©serteurs. Ils ne m'aiment pas. "
+Subtitle="Non ! S'il vous plaà®t... Je ferai n'importe quoi, n'appellez pas la Garde Rouge! Ils n'aiment pas les déserteurs. Ils ne m'aiment pas. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je vous dirai tout."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -176,7 +176,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" J'ai une trÃ¨s mauvaise mÃ©moire aussi. Je sais combien c'est difficile d'Ãªtre capable de parler de Ã§a. Garde ton histoire par devers toi."
+New Option Nr=10  OptionText=" J'ai une très mauvaise mémoire aussi. Je sais combien c'est difficile d'être capable de parler de ça. Garde ton histoire par devers toi."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Oui. Et maintenant je voudrai aller dormir. Bonne nuit Linarien."

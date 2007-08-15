@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=144  PositionY=132  
-Subtitle="Un nouvel arrivant ! Super ! Nous avons toujours besoin de bras. Bienvenue Ã Â  la Garde rouge ! Je m'appelle Lukas, je m'occupe de notre petite armurerie."
+Subtitle="Un nouvel arrivant ! Super ! Nous avons toujours besoin de bras. Bienvenue à  la Garde rouge ! Je m'appelle Lukas, je m'occupe de notre petite armurerie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -45,11 +45,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Spencer m'a dit que tu me donnerais une armure."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=263  PositionY=137  
-Subtitle="Bien sÃ»r. En tant que membre de notre Garde, tu es en droit de porter une armure comme la nÃ´tre. Je peux ajuster ses dimensions de telle sorte qu'elle aille Ã Â  n'importe qui, mÃªme Ã Â  toi."
+Subtitle="Bien sûr. En tant que membre de notre Garde, tu es en droit de porter une armure comme la nôtre. Je peux ajuster ses dimensions de telle sorte qu'elle aille à  n'importe qui, même à  toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a deux types d'armures diffÃ©rents : une armure lourde et une lÃ©gÃ¨re."
+Subtitle="Il y a deux types d'armures différents : une armure lourde et une légère."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alors, Ã§a sera quoi pour toi ?"
+Subtitle="Alors, ça sera quoi pour toi ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Lukas"
@@ -57,10 +57,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Qu'est ce que tu fais de tes journÃ©es, ici Ã¢Â  l'armurerie ?"
+New Option Nr=2  OptionText=" Qu'est ce que tu fais de tes journées, ici â  l'armurerie ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=267  PositionY=192  
-Subtitle="Il y a toujours quelque chose Ã Â  faire, ne t'en fais pas. Ranger cet endroit me prend dÃ©jÃ Â  pas mal de temps." 
+Subtitle="Il y a toujours quelque chose à  faire, ne t'en fais pas. Ranger cet endroit me prend déjà  pas mal de temps." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

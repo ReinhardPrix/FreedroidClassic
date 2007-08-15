@@ -46,7 +46,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=152  PositionY=170  
 Subtitle="Non, n'y allez pas. Je ne vous laisserai pas partir avant que nous parlions. Ce sont des choses importantes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je peux t'aider Ã Â  comprendre les ordinateurs... Mieux que jamais avant."
+Subtitle="Je peux t'aider à  comprendre les ordinateurs... Mieux que jamais avant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=1
 ChangeOption=99 ChangeToValue=1
@@ -64,7 +64,7 @@ Subtitle="Moi ? Sorenson est un grand informaticien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il connait les codes profonds. Il parcourt les chemins."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Regarde la lumiÃ¨re de toutes ces puces. Sachant comment utiliser chaque clavier."
+Subtitle="Regarde la lumière de toutes ces puces. Sachant comment utiliser chaque clavier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 LinkedTo:21
@@ -75,11 +75,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=21  OptionText=" Erm..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Regarde le bit. Apprends les bytes. Explore le grand rÃ©seau."
+Subtitle="Regarde le bit. Apprends les bytes. Explore le grand réseau."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Le meilleur ami du code propre et pur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La grande lumiÃ¨re du ciel nocturne du web fantÃ´me de la puissances des ordinateurs."
+Subtitle="La grande lumière du ciel nocturne du web fantôme de la puissances des ordinateurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=21 ChangeToValue=0
 LinkedTo:22
@@ -87,10 +87,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=22  OptionText=" Oui, j'ai l'idÃ©e..."
+New Option Nr=22  OptionText=" Oui, j'ai l'idée..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ã Â€ la recherche de languages clean. La grande connaissance de secrets obscurs."
+Subtitle="à€ la recherche de languages clean. La grande connaissance de secrets obscurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Le seul qui parle auwx disques durs. Le meilleur --"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -107,7 +107,7 @@ Subtitle="Oh."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sorenson ne t'a encore rien dit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Elle ne t'a pas dit qu'elle est le grand contrÃ´leur de lumiÃ¨re."
+Subtitle="Elle ne t'a pas dit qu'elle est le grand contrôleur de lumière."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Elle ne t'a pas dit qu'elle parcourt les corridors sombres --"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -117,10 +117,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=24  OptionText=" ARRÃ¢ÂŠTE ! ARRÃ¢ÂŠTE ! JE NE PEUX PAS EN RECEVOIR PLUS ! MA TÃ¢ÂŠTE SOUFFRE !"
+New Option Nr=24  OptionText=" ARRâŠTE ! ARRâŠTE ! JE NE PEUX PAS EN RECEVOIR PLUS ! MA TâŠTE SOUFFRE !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="L'apologie s'est Ã©tendue Ã Â  moi. Sorenson l'a surpassÃ©."
+Subtitle="L'apologie s'est étendue à  moi. Sorenson l'a surpassé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sorenson le codeur est ravi de vous rencontrer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -129,14 +129,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" Pourquoi est-ce que tu es comme Ã§a ? Qu'est-ce qui t'arrive ?"
+New Option Nr=30  OptionText=" Pourquoi est-ce que tu es comme ça ? Qu'est-ce qui t'arrive ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ã Â‰tait en train d'apprendre COBOL. Souffrance. Torture. Cris atroces."
+Subtitle="à‰tait en train d'apprendre COBOL. Souffrance. Torture. Cris atroces."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Sorenson demande assistance. Beaucoup de jours et de nuits."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La lumiÃ¨re est venue. La lumiÃ¨re a donnÃ©e de l'aide. Sorenson a changÃ©."
+Subtitle="La lumière est venue. La lumière a donnée de l'aide. Sorenson a changé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Personne libre maintenant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -149,7 +149,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText=" Qu'est ce que COBOL ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="COBOL cause des sÃ©quelles pour l'esprit."
+Subtitle="COBOL cause des séquelles pour l'esprit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ne l'utilise pas. Oublie le nom maudit. COBOL est le mal. COBOL est la haine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -161,7 +161,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=40  OptionText=" Je vois que vous avez une collection de livres impressionante. Que diriez vous si je vous en achetais quelques uns ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Bien sÃ»r. Le commerce est bon."
+Subtitle="Bien sûr. Le commerce est bon."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 ChangeOption=41 ChangeToValue=1
@@ -170,10 +170,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" Puis-je jeter un coup d'oeil Ã¢Â  vos livres Ã¢Â  nouveau ?"
+New Option Nr=41  OptionText=" Puis-je jeter un coup d'oeil â  vos livres â  nouveau ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Oui. Bien sÃ»r. Naturellement."
+Subtitle="Oui. Bien sûr. Naturellement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Sorenson"
@@ -181,7 +181,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=50  OptionText=" Vous Ã©veillez ma curiositÃ©. Comment pouvez vous m'aider Ã¢Â  mieux comprendre les ordinateurs ?"
+New Option Nr=50  OptionText=" Vous éveillez ma curiosité. Comment pouvez vous m'aider â  mieux comprendre les ordinateurs ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Simplement ! Signe ce contrat. Tu n'as pas besoin de le lire."
@@ -194,10 +194,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Je dois rÃ©ellement partir maintenant. Au revoir"
+New Option Nr=99  OptionText=" Je dois réellement partir maintenant. Au revoir"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=347  PositionY=250  
-Subtitle="S'il te plaÃ Â®t, reviens me voir plus tard, Linarien. Nous avons encore des choses Ã Â  nous dire."
+Subtitle="S'il te plaà®t, reviens me voir plus tard, Linarien. Nous avons encore des choses à  nous dire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

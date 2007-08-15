@@ -46,11 +46,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Qu'est-ce que vous faites ici tout seul ? "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=398  PositionY=247  
-Subtitle="J'expÃ©rimente de nouvelles formes. Je veux redessiner le pistolet laser."
+Subtitle="J'expérimente de nouvelles formes. Je veux redessiner le pistolet laser."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Une grande quantitÃ© d'Ã©nergie est gÃ Â¢chÃ©e pendant le tir, et je ne sais pas oÃ Â¹. Si je pouvais trouver la source du problÃ¨me, le pistolet deviendrait beaucoup plus puissant."
+Subtitle="Une grande quantité d'énergie est gà¢chée pendant le tir, et je ne sais pas oà¹. Si je pouvais trouver la source du problème, le pistolet deviendrait beaucoup plus puissant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Chacun de mes prototypes n'a jamais fonctionnÃ©. La plupart surchauffent ou s'enrayent. Parfois je suis impressionnÃ© si je fais quelque chose de faux."
+Subtitle="Chacun de mes prototypes n'a jamais fonctionné. La plupart surchauffent ou s'enrayent. Parfois je suis impressionné si je fais quelque chose de faux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=3 ChangeToValue=1
@@ -63,9 +63,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Pouvez vous m'apprendre comment bien utiliser les fusils et les pistolets ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=310  PositionY=326  
-Subtitle="Si quelqu'un dans cette ville en sait plus que moi Ã Â  propos des armes, alors je ne m'appelle pas Benjamin."
+Subtitle="Si quelqu'un dans cette ville en sait plus que moi à  propos des armes, alors je ne m'appelle pas Benjamin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement j'aurai besoin d'une compensation pour la dÃ©pense en munitions lors de l'entraÃ Â®nement et pour mon horaire. Disons... Cent triangles devraient Ãªtre suffisants."
+Subtitle="Naturellement j'aurai besoin d'une compensation pour la dépense en munitions lors de l'entraà®nement et pour mon horaire. Disons... Cent triangles devraient être suffisants."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=1
 DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin"
@@ -73,10 +73,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Est-ce que vous pensez que quelque chose associe l'excÃ¨s de chaleur et l'utilisation d'un faisceau puissant ?"
+New Option Nr=3  OptionText=" Est-ce que vous pensez que quelque chose associe l'excès de chaleur et l'utilisation d'un faisceau puissant ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=262  PositionY=176  
-Subtitle="Hmm... Il y a de l'idÃ©e. J'y repenserai."
+Subtitle="Hmm... Il y a de l'idée. J'y repenserai."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=0
@@ -86,7 +86,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText="Si j'Ã©tais vous, je concentrerais mon travail sur la puissance de feu."
+New Option Nr=4  OptionText="Si j'étais vous, je concentrerais mon travail sur la puissance de feu."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=397  PositionY=112  
 Subtitle="Hmm... J'y repenserai. Hmm..."
@@ -99,10 +99,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Vous savez, les pistolets laser ne sont pas des armes trÃ¨s prometteuses. Je pense que vous devriez travailler sur quelque chose d'autre."
+New Option Nr=5  OptionText=" Vous savez, les pistolets laser ne sont pas des armes très prometteuses. Je pense que vous devriez travailler sur quelque chose d'autre."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=530  PositionY=176  
-Subtitle="Ouais, tu as sÃ»rement raison. J'y repenserai."
+Subtitle="Ouais, tu as sûrement raison. J'y repenserai."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -115,7 +115,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" Quelles armes sont disponibles pour les membres de la Garde Rouge ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=798  PositionY=327  
-Subtitle="Bien, pour les nouveaux membres il y a des lasers de base et des pistolets Ã Â  plasma. Ils ont chacun leur lot de problÃ¨mes, mais ils fonctionnent neuf fois sur 10."
+Subtitle="Bien, pour les nouveaux membres il y a des lasers de base et des pistolets à  plasma. Ils ont chacun leur lot de problèmes, mais ils fonctionnent neuf fois sur 10."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Pour les plus grands robots, nous utilisons les plus gros calibres. L'exterminateur est la meilleure arme que nous ayons. Nous ne nous en servons que dans les cas d'urgence ou pour enseigner."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -130,47 +130,47 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText=" Le plasma fait un bruit de mort."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=402  
-Subtitle="C'est Ã§a !"
+Subtitle="C'est ça !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tant que la plupart des gens trouvent les rÃ©servoirs Ã Â  munitions trop grands, et les balles trop lentes. De toutes faÃ§ons, ils ne peuvent pas nier les avantages du plasma, Ã§a laisse de gros trous."
+Subtitle="Tant que la plupart des gens trouvent les réservoirs à  munitions trop grands, et les balles trop lentes. De toutes façons, ils ne peuvent pas nier les avantages du plasma, ça laisse de gros trous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est le plasma le truc, du gaz ionisÃ© pour Ãªtre exact. C'est assez chaud pour faire bouillir de l'acier."
+Subtitle="C'est le plasma le truc, du gaz ionisé pour être exact. C'est assez chaud pour faire bouillir de l'acier."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La plupart des nouvelles recrues dÃ©testent la difficultÃ© de manipulation de ce fusil. Si les balles Ã©taient des animaux, alors le plasma serait un bon gardien de troupeau. Mais le temps que Ã§a atteigne sa cible, le robot est dÃ©jÃ Â  un mile plus loin."
+Subtitle="La plupart des nouvelles recrues détestent la difficulté de manipulation de ce fusil. Si les balles étaient des animaux, alors le plasma serait un bon gardien de troupeau. Mais le temps que ça atteigne sa cible, le robot est déjà  un mile plus loin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si vous avez l'intention d'utiliser des armes Ã Â  plasma, rappelez vous une chose : Ne laissez pas le fusil s'abÃ Â®mer."
+Subtitle="Si vous avez l'intention d'utiliser des armes à  plasma, rappelez vous une chose : Ne laissez pas le fusil s'abà®mer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="MÃªme si notre armure est conÃ§ue pour rÃ©sister Ã Â  de hautes tempÃ©ratures, si le plasma s'Ã©chappe du module de confinement, vous mourrez, et ce sera pareil pour toute chose dans un rayon de dix mÃ¨tres autour de vous."
+Subtitle="Même si notre armure est conçue pour résister à  de hautes températures, si le plasma s'échappe du module de confinement, vous mourrez, et ce sera pareil pour toute chose dans un rayon de dix mètres autour de vous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ã Â€ cause de tout ces inconvÃ©nients, les armes Ã Â  plasma ne sont pas trÃ¨s populaires. MalgrÃ© tout, elles ont un grand potentiel."
+Subtitle="à€ cause de tout ces inconvénients, les armes à  plasma ne sont pas très populaires. Malgré tout, elles ont un grand potentiel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Dites m'en plus Ã¢Â  propos des armes laser."
+New Option Nr=8  OptionText=" Dites m'en plus â  propos des armes laser."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=249  
-Subtitle="Le laser est la technologie employÃ©e dans la majoritÃ© de notre arsenal. C'est la production d'un faisceau lumineux concentrÃ© pour provoquer des dommages."
+Subtitle="Le laser est la technologie employée dans la majorité de notre arsenal. C'est la production d'un faisceau lumineux concentré pour provoquer des dommages."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Parce que le faisceau est un faisceau lumineux, il se propage TRÃ ÂˆS rapidement. De mÃªme, il n'est pas affectÃ© par la gravitÃ© ou le vent, ce qui permet une visÃ©e prÃ©cise facile."
+Subtitle="Parce que le faisceau est un faisceau lumineux, il se propage TRàˆS rapidement. De même, il n'est pas affecté par la gravité ou le vent, ce qui permet une visée précise facile."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Comme toujours, ce n'est pas un bon outil d'entraÃ Â®nement pour les dÃ©butants, je n'arrive pas Ã Â  en terminer le dessin."
+Subtitle="Comme toujours, ce n'est pas un bon outil d'entraà®nement pour les débutants, je n'arrive pas à  en terminer le dessin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les tirs tendent Ã Â  devenir sous-puissants, l'arme met longtemps avant d'emmagasiner assez d'Ã©nergie pour un tir et peut surchauffer pendant un combat intense."
+Subtitle="Les tirs tendent à  devenir sous-puissants, l'arme met longtemps avant d'emmagasiner assez d'énergie pour un tir et peut surchauffer pendant un combat intense."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est pourquoi j'essaie actuellement de l'amÃ©liorer, mais pour l'instant je n'ai rÃ©ussi Ã Â  rien. J'aimerai abandonner."
+Subtitle="C'est pourquoi j'essaie actuellement de l'améliorer, mais pour l'instant je n'ai réussi à  rien. J'aimerai abandonner."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Je me pose des questions Ã¢Â  propos de l'exterminator."
+New Option Nr=9  OptionText=" Je me pose des questions â  propos de l'exterminator."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=883  PositionY=327  
-Subtitle="DÃ©solÃ©, mais c'est classÃ© confidentiel. Je vous en ai dÃ©jÃ Â  trop dit."
+Subtitle="Désolé, mais c'est classé confidentiel. Je vous en ai déjà  trop dit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
@@ -181,7 +181,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Je le ferai pire que toi lorsque..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=882  PositionY=249  
-Subtitle="Ã Â‰trange."
+Subtitle="à‰trange."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Benjamin_bribe"

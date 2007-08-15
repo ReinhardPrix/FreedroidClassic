@@ -35,7 +35,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=491  PositionY=265  
 Subtitle="Tu es Tux, n'est-ce pas..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le hÃ©ros..."
+Subtitle="Le héros..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -49,13 +49,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Oui, c'est moi." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=491  PositionY=354  
-Subtitle="Je croyais aussi. Mon grand-pÃ¨re me racontait souvent des histoires Ã Â  ton sujet. Il disait que tu arriverais en une Ã©poque de dÃ©sespoir."
+Subtitle="Je croyais aussi. Mon grand-père me racontait souvent des histoires à  ton sujet. Il disait que tu arriverais en une époque de désespoir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et maintenant tu es lÃ Â ."
+Subtitle="Et maintenant tu es là ."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'espÃ¨re que ton arrivÃ©e va changer le cours de cette guerre..."
+Subtitle="J'espère que ton arrivée va changer le cours de cette guerre..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tux, si jamais tu trouves celui qui a dÃ©clenchÃ© le Grand Assaut... BOTTE LUI LE CUL, DE LA PART DE LILY STONE!!!"
+Subtitle="Tux, si jamais tu trouves celui qui a déclenché le Grand Assaut... BOTTE LUI LE CUL, DE LA PART DE LILY STONE!!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -68,9 +68,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="Qui je suis n'a pas d'importance."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=491  PositionY=166  
-Subtitle="Si tu souhaite rester un Ã©tranger, je respecterai ton choix."
+Subtitle="Si tu souhaite rester un étranger, je respecterai ton choix."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alors c'est Ã§a."
+Subtitle="Alors c'est ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -87,7 +87,7 @@ Subtitle="Tu es... un monstre..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Personne ne se moque du magasin de la famille Lily Stone !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Dis tes priÃ¨res, canard grotesque !!!"
+Subtitle="Dis tes prières, canard grotesque !!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"

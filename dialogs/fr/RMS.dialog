@@ -43,14 +43,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Un cluster d'ordinateurs? Qu'est-ce que c'est que Ã§a?"
+New Option Nr=1  OptionText=" Un cluster d'ordinateurs? Qu'est-ce que c'est que ça?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="Un cluster est un groupe d'ordinateurs, connectÃ©s d'une faÃ§on qui les aide Ã Â  collaborer dans la rÃ©solution de problÃ¨mes."
+Subtitle="Un cluster est un groupe d'ordinateurs, connectés d'une façon qui les aide à  collaborer dans la résolution de problèmes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Comme ils disent, "deux mains sont mieux que une seule'. Et nous avons beaucoup de mains ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est pourquoi j'appelle ce cluster 'L'Hydre' . Il y beaucoup de tÃªtes Ã Â  l'intÃ©rieur."
+Subtitle="C'est pourquoi j'appelle ce cluster 'L'Hydre' . Il y beaucoup de têtes à  l'intérieur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -66,14 +66,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" J'ai un cube de donnÃ©es avec quelques informations. Pouvez vous me dire quelque chose Ã¢Â  ce propos ?"
+New Option Nr=6  OptionText=" J'ai un cube de données avec quelques informations. Pouvez vous me dire quelque chose â  ce propos ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="IntÃ©ressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs lÃ Â  dedans. Peut Ãªtre que nous pourrions utiliserl'Hydre pour Ã©valuer les donnÃ©es."
+Subtitle="Intéressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs là  dedans. Peut être que nous pourrions utiliserl'Hydre pour évaluer les données."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="HÃ©, qu'est-ce que nous avons lÃ Â  ? Les donnÃ©es sont dÃ©jÃ Â  prÃªtes pour l'analyse par un cluster comme le notre. Wow ! C'est terrible !"
+Subtitle="Hé, qu'est-ce que nous avons là  ? Les données sont déjà  prêtes pour l'analyse par un cluster comme le notre. Wow ! C'est terrible !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je nourrirai l'Hydre avec. Les rÃ©sultats sont attendus dans peu de temps. L'Hydre ne me laisse jamais attendre trop longtemps."
+Subtitle="Je nourrirai l'Hydre avec. Les résultats sont attendus dans peu de temps. L'Hydre ne me laisse jamais attendre trop longtemps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
@@ -102,21 +102,21 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" HÃ©, est-ce que tu as sorti quelque chose du cube de donnÃ©es ?"
+New Option Nr=9  OptionText=" Hé, est-ce que tu as sorti quelque chose du cube de données ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
-Subtitle="Naturellement ! Je te l'ai dit, l'Hydre n'a jamais Ã©chouÃ© ! Je l'ai conÃ§ue moi-mÃªme, et je connais trÃ¨s bien les ordinateurs. Je ne fait jamais d'erreurs."
+Subtitle="Naturellement ! Je te l'ai dit, l'Hydre n'a jamais échoué ! Je l'ai conçue moi-même, et je connais très bien les ordinateurs. Je ne fait jamais d'erreurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il semble probable que les robots peuvent Ãªtre dÃ©sactivÃ©s par une sorte de champ disrupteur ou quelque chose dans ce genre."
+Subtitle="Il semble probable que les robots peuvent être désactivés par une sorte de champ disrupteur ou quelque chose dans ce genre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'Ã©tais occupÃ© par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyÃ© le rapport entier Ã Â  Spencer. Il t'en dira plus."
+Subtitle="J'étais occupé par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyé le rapport entier à  Spencer. Il t'en dira plus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ã¢Â€ plus tard."
+New Option Nr=99  OptionText=" â€ plus tard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
 Subtitle="Fais attention, Linarian."

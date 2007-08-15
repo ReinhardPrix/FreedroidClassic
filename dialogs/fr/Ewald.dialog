@@ -30,12 +30,12 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Bonjour. Tu sembles vraiment trÃ¨s joyeux" 
+New Option Nr=0  OptionText=" Bonjour. Tu sembles vraiment très joyeux" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=44  PositionY=157  
-Subtitle="HÃ© ! Je suis Ewald. Je suis un tenancier de bar." 
+Subtitle="Hé ! Je suis Ewald. Je suis un tenancier de bar." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai pris beaucoup de drogues, et j'ai dÃ©truit mon cerveau."
+Subtitle="J'ai pris beaucoup de drogues, et j'ai détruit mon cerveau."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je ne suis pas trop bien maintenant, mais je suis super content tout le temps !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -52,15 +52,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="Comment vont les affaires ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=168  PositionY=138  
-Subtitle="Non, il n'y a rien de bon Ã Â  reprendre."
+Subtitle="Non, il n'y a rien de bon à  reprendre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les robots m'ont ruinÃ©. Maintenant il y a vraiment trÃ¨s peu de fournitures et j'ai Ã©tÃ© obligÃ© de faire des prix trÃ¨s Ã©levÃ©s."
+Subtitle="Les robots m'ont ruiné. Maintenant il y a vraiment très peu de fournitures et j'ai été obligé de faire des prix très élevés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Personne ne voudrai payer 499 triangles pour la rinÃ§ure de l'Ã©tagÃ¨re du bas que mÃªme Bender ne voudrait pas boire..."
+Subtitle="Personne ne voudrai payer 499 triangles pour la rinçure de l'étagère du bas que même Bender ne voudrait pas boire..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La tax est trÃ¨s brutale. Et la Garde Rouge demande toujours un dÃ©compte aussi."
+Subtitle="La tax est très brutale. Et la Garde Rouge demande toujours un décompte aussi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La vie est ainsi. Je suis encore heureux malgrÃ© tout."
+Subtitle="La vie est ainsi. Je suis encore heureux malgré tout."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -78,10 +78,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Je pourrais utiliser une boisson. Qu'est-ce qu'il y a de mal Ã¢Â  Ã§a?" 
+New Option Nr=3  OptionText="Je pourrais utiliser une boisson. Qu'est-ce qu'il y a de mal â  ça?" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=284  PositionY=309  
-Subtitle="Bien... On est un peu Ã Â  court de fournisseurs en ce moment... Erm... AH! Je sais!"
+Subtitle="Bien... On est un peu à  court de fournisseurs en ce moment... Erm... AH! Je sais!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'ai de L'EAU !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -93,10 +93,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Je veux une double eau sur la pierre. MÃ©langÃ©e, pas secouÃ©e."
+New Option Nr=4  OptionText=" Je veux une double eau sur la pierre. Mélangée, pas secouée."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=353  PositionY=209  
-Subtitle="Va ici. Il y a une maison. Et si l'eau manque, n'hÃ©site pas Ã Â  m'en demander plus."
+Subtitle="Va ici. Il y a une maison. Et si l'eau manque, n'hésite pas à  m'en demander plus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
@@ -106,7 +106,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Une eau de glaÃ§on de Long Island s'il te plaÃ®t."
+New Option Nr=5  OptionText=" Une eau de glaçon de Long Island s'il te plaît."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=445  PositionY=319  
 Subtitle="Va ici."
@@ -119,7 +119,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Je n'ai pas beaucoup d'argent... Donne moi un peu d'eau rÃ©confortante."
+New Option Nr=6  OptionText=" Je n'ai pas beaucoup d'argent... Donne moi un peu d'eau réconfortante."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=576  PositionY=189  
 Subtitle="Eh... Certainement, comme tu veux. Viens ici."
@@ -132,7 +132,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" Ugh... Ahh... J'aime Ã§a. Donne m'en encore."
+New Option Nr=7  OptionText=" Ugh... Ahh... J'aime ça. Donne m'en encore."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Euh... Certainement..."
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" Ahh... De l'eau fraiche ! Donne m'en plus."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ouais, je pensais bien que tu aimerais Ã§a. Il y en a plus ici."
+Subtitle="Ouais, je pensais bien que tu aimerais ça. Il y en a plus ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 ChangeOption=10 ChangeToValue=1
@@ -168,7 +168,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" PLUS! Je veux plus d'eau!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Euh... Ok... Ici, il a quelques unes des mes spÃ©cialitÃ©s, eau colada."
+Subtitle="Euh... Ok... Ici, il a quelques unes des mes spécialités, eau colada."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
@@ -176,7 +176,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=11  OptionText=" J'ai vraiment trÃ¨s soif! Je veux de l'eau."
+New Option Nr=11  OptionText=" J'ai vraiment très soif! Je veux de l'eau."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Bon, tu as bu toute mon eau, donc tu ne peux plus rien boire de plus. Il ne reste rien."
@@ -192,7 +192,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText=" PLUS ! PLUS ! PLUS ! JE VEUX PLUS D'EAU. MAINTENANT!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Eh... Je pense que tu en as eu assez... Peut Ãªtre que tu devrais aller marcher quelques temps?"
+Subtitle="Eh... Je pense que tu en as eu assez... Peut être que tu devrais aller marcher quelques temps?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu as pris tout ce que j'avais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -201,25 +201,25 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" Avez vous une idÃ©e d'un endroit oÃ¢Â¹ je pourrai trouver un peu de divertissement ici?"
+New Option Nr=13  OptionText=" Avez vous une idée d'un endroit oâ¹ je pourrai trouver un peu de divertissement ici?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="BIen... Erm... Non."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ce que les robots ne brisent pas, la Garde Rouge le taxe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cette nature morte est vraiment drÃ´le."
+Subtitle="Cette nature morte est vraiment drôle."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Bien, sauf si tu es toi-mÃªme de la Garde Rouge, naturellement. Ils ont ces gros pistolets qui peuvent dÃ©truire une douzaine de bots en un coup..."
+Subtitle="Bien, sauf si tu es toi-même de la Garde Rouge, naturellement. Ils ont ces gros pistolets qui peuvent détruire une douzaine de bots en un coup..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="DrÃ´le, si tu me demandes."
+Subtitle="Drôle, si tu me demandes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Ã¢Â€ plus tard."
+New Option Nr=99  OptionText=" â€ plus tard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=338  PositionY=144  
 Subtitle="Au revoir et souviens toi : Mon bar est toujours ouvert."

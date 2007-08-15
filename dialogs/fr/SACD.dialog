@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Identifiant : admin  Mot de passe : *******" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
-Subtitle="DerniÃ¨re connexion depuis dev/ttyS0 le Dim, 23 mar 2057. admin@sadefence: ~ #" 
+Subtitle="Dernière connexion depuis dev/ttyS0 le Dim, 23 mar 2057. admin@sadefence: ~ #" 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -47,11 +47,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=1  OptionText=" /usr/bin/guns --disable"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
-Subtitle="DÃ©sativation des armes..."
+Subtitle="Désativation des armes..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Connection au contrÃ´leur pÃ©riphÃ©rique..."
+Subtitle="Connection au contrôleur périphérique..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Armes dÃ©sactivÃ©es."
+Subtitle="Armes désactivées."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -67,9 +67,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
 Subtitle="Activation des armes..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Connection au contrÃ´leur pÃ©riphÃ©rique..."
+Subtitle="Connection au contrôleur périphérique..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Armes activÃ©es."
+Subtitle="Armes activées."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -85,9 +85,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
 Subtitle="Ouverture des portes..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Connection au contrÃ´leur pÃ©riphÃ©rique..."
+Subtitle="Connection au contrôleur périphérique..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="S'il vous plaÃ Â®t entrez votre mot de passe de sÃ©curitÃ© :"
+Subtitle="S'il vous plaà®t entrez votre mot de passe de sécurité :"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 LinkedTo:5
@@ -97,11 +97,11 @@ LinkedTo:5
 New Option Nr=4  OptionText=" ./hcf.py"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="ExÃ©cution : cessation des tirs."
+Subtitle="Exécution : cessation des tirs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sous-systÃ¨mes de refroidissement dÃ©sactivÃ©s."
+Subtitle="Sous-systèmes de refroidissement désactivés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Attention ! Oxydation spontanÃ©e aveC Ã©mis$ion de lumiÃ¨re ET de chAleur dÃ©tectÃ©ee dans L'#UnitÃ©| de cAlcUl principale,"
+Subtitle="Attention ! Oxydation spontanée aveC émis$ion de lumière ET de chAleur détectéee dans L'#Unité| de cAlcUl principale,"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="SsTeM=#faiPure%^#n 3 S 1()$++"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -114,7 +114,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" ctrl+c"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
-Subtitle="Une erreur est survenue Ã Â  l'ouverture des portes"
+Subtitle="Une erreur est survenue à  l'ouverture des portes"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" dÃ©connexion"
+New Option Nr=99  OptionText=" déconnexion"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=351  PositionY=231  
 ChangeOption=99 ChangeToValue=1

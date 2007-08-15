@@ -82,7 +82,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText="Ouais. Je l'ai. Je pense que c'est ton cube." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Oui. J'apprÃ©cie ton aide."
+Subtitle="Oui. J'apprécie ton aide."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="AddExperienceBonus:3000"
@@ -92,7 +92,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" Je n'ai pu le trouver nulle part dans le dÃ©sert. Je ne pense pas qu'il y soit encore."
+New Option Nr=20  OptionText=" Je n'ai pu le trouver nulle part dans le désert. Je ne pense pas qu'il y soit encore."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Je vois."
@@ -105,11 +105,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=30  OptionText=" Ouais, je l'ai. Maintenant, quel est ce grand cube auquel tu m'as avertit de prendre garde pendant tout le chemin ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Seulement un souvenir aprÃ¨s un ami."
+Subtitle="Seulement un souvenir après un ami."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Un peu plus qu'un portable Ã Â  la fin du monde, lequel je recherche pour dÃ©sassembler et apprendre ses secrets."
+Subtitle="Un peu plus qu'un portable à  la fin du monde, lequel je recherche pour désassembler et apprendre ses secrets."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Rien de trÃ¨s important."
+Subtitle="Rien de très important."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=20 ChangeToValue=0
@@ -120,10 +120,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText=" 'Quelques" robots ? La place regorgeait de Scimouleurs ! J'ai presque Ã©tÃ© tuÃ© !"
+New Option Nr=40  OptionText=" 'Quelques" robots ? La place regorgeait de Scimouleurs ! J'ai presque été tué !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Il y a seulement quarante robots dans le dÃ©sert. Ã Â‡a peut difficilement Ãªtre qualifiÃ© de 'un grand nombre'."
+Subtitle="Il y a seulement quarante robots dans le désert. à‡a peut difficilement être qualifié de 'un grand nombre'."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 ChangeOption=41 ChangeToValue=1
@@ -131,10 +131,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" Quoi ? Tu sais exactement combien il y avait de robots dans le dÃ©sert ? Sans y avoir Ã©tÃ© ? Je n'aime pas Ã§a."
+New Option Nr=41  OptionText=" Quoi ? Tu sais exactement combien il y avait de robots dans le désert ? Sans y avoir été ? Je n'aime pas ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Je sais simplement beaucoup de choses. Tu n'as pas besoin de t'inquiÃ©ter Ã Â  ce propos."
+Subtitle="Je sais simplement beaucoup de choses. Tu n'as pas besoin de t'inquiéter à  ce propos."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
 ChangeOption=50 ChangeToValue=1
@@ -142,7 +142,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=50  OptionText=" Je n'aime pas Ã§a du tout. Je me barre d'ici."
+New Option Nr=50  OptionText=" Je n'aime pas ça du tout. Je me barre d'ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Comme tu veux."
@@ -153,7 +153,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=60  OptionText=" HÃ©, c'est vraiment soignÃ©. Voici ton cube. Amuse toi bien Ã¢Â  le dÃ©monter et Ã¢Â  jouer avec."
+New Option Nr=60  OptionText=" Hé, c'est vraiment soigné. Voici ton cube. Amuse toi bien â  le démonter et â  jouer avec."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Je veux."
@@ -166,7 +166,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=70  OptionText=" QUOI ? Pas moyen que je te donne un [translation missing] ! Oublie Ã§a."
+New Option Nr=70  OptionText=" QUOI ? Pas moyen que je te donne un [translation missing] ! Oublie ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Je comprends. Ainsi soit-il."

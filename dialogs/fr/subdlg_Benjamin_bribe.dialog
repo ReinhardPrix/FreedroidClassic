@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Combien d'exterminateurs possÃ¨de la Garde Rouge ?" 
+New Option Nr=1  OptionText=" Combien d'exterminateurs possède la Garde Rouge ?" 
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=699  PositionY=283  
 ChangeOption=1 ChangeToValue=0
@@ -56,12 +56,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Combien d'exterminateurs possÃ¨de la Garde Rouge ?"
+New Option Nr=2  OptionText=" Combien d'exterminateurs possède la Garde Rouge ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=699  PositionY=182  
-Subtitle="Ã Â‡a pourrait te surprendre, mais nous n'en avons pas beaucoup. Un peu plus que vingt, la derniÃ¨re fois que j'ai vÃ©rifiÃ©."
+Subtitle="à‡a pourrait te surprendre, mais nous n'en avons pas beaucoup. Un peu plus que vingt, la dernière fois que j'ai vérifié."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=" De toutes maniÃ¨res, comme tu peux le voir, c'est plus que suffisant pour tenir tous ces satanÃ©s pots Ã Â  distance."
+Subtitle=" De toutes manières, comme tu peux le voir, c'est plus que suffisant pour tenir tous ces satanés pots à  distance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -70,12 +70,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Bien, je suis un peu Ã¢Â  court d'argent en ce moment..."
+New Option Nr=3  OptionText=" Bien, je suis un peu â  court d'argent en ce moment..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=280  PositionY=109  
-Subtitle="Linarien, je pensais que nous avions un accord. Cinquante par morceau d'information. Mon silence ne peut petre birsÃ© qu'avec des espÃ¨ces sonnantes, tu dois payer."
+Subtitle="Linarien, je pensais que nous avions un accord. Cinquante par morceau d'information. Mon silence ne peut petre birsé qu'avec des espèces sonnantes, tu dois payer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cette conversation est terminÃ©e."
+Subtitle="Cette conversation est terminée."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
@@ -103,11 +103,11 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=698  PositionY=41  
 Subtitle="Ils ont tous eu beaucoup de chance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous avons trouvÃ© un parc d'Ã©paves de camion sur le Champ Terminal. Il y a avait six cratÃ¨res dedans, chacun contenant cinq exterminateurs."
+Subtitle="Nous avons trouvé un parc d'épaves de camion sur le Champ Terminal. Il y a avait six cratères dedans, chacun contenant cinq exterminateurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous avons essayÃ©, mais nous n'avons pas pu copier la technologie, seulement les balles."
+Subtitle="Nous avons essayé, mais nous n'avons pas pu copier la technologie, seulement les balles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous avons subi quelques dommages pendant la bataille, et nous n'avons pas rÃ©ussi Ã Â  en retrouver cinq aprÃ¨s une mission d'Ã©clairage Ã©chouÃ©e. Nous sommes vingt-deux bien portants pour l'heure."
+Subtitle="Nous avons subi quelques dommages pendant la bataille, et nous n'avons pas réussi à  en retrouver cinq après une mission d'éclairage échouée. Nous sommes vingt-deux bien portants pour l'heure."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
@@ -125,10 +125,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" Dis moi qui a fabriquÃ© l'exterminateur."
+New Option Nr=7  OptionText=" Dis moi qui a fabriqué l'exterminateur."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=783  PositionY=443  
-Subtitle="La rÃ©ponse est dans la maison. HÃ©."
+Subtitle="La réponse est dans la maison. Hé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nous ne savons pas, Linarien. Nous n'avons absolument aucun indice."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -140,13 +140,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" De quoi sont faite les munitions de l'exterminateur ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=510  PositionY=350  
-Subtitle="Nous utilisons des Ã©lÃ©ments radioactifs, quelqu'il soit si c'est pratique. La plupart du temps du plutonium et de l'uranium, mais ne nous sommes pas vraiment difficiles."
+Subtitle="Nous utilisons des éléments radioactifs, quelqu'il soit si c'est pratique. La plupart du temps du plutonium et de l'uranium, mais ne nous sommes pas vraiment difficiles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lorsque nous sommes Ã Â  court de munitions, nous envoyons un groupe de dÃ©tenus criminels et de paresseux dans le puit de mine K-17."
+Subtitle="Lorsque nous sommes à  court de munitions, nous envoyons un groupe de détenus criminels et de paresseux dans le puit de mine K-17."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="L'endroit Ã©tait restÃ© scellÃ© Ã Â  cause du taux de radiations Ã©levÃ©. C'est plein de bon minerais avec lequel nous faisons des balles et de la puissance pour nos rÃ©acteurs nuclÃ©aires."
+Subtitle="L'endroit était resté scellé à  cause du taux de radiations élevé. C'est plein de bon minerais avec lequel nous faisons des balles et de la puissance pour nos réacteurs nucléaires."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous avons notre matÃ©riau fiscible et ils reÃ§oivent leur peine. C'est une des meilleures idÃ©e que nous ayons eue."
+Subtitle="Nous avons notre matériau fiscible et ils reçoivent leur peine. C'est une des meilleures idée que nous ayons eue."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 DoSomethingExtra="SubtractGold:50"
@@ -154,14 +154,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Quelle Ã©tait la mission qui a Ã©chouÃ©e ?"
+New Option Nr=9  OptionText=" Quelle était la mission qui a échouée ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=806  PositionY=41  
-Subtitle="Hu. Ã Â‡a nous coÃ»terait le triple."
+Subtitle="Hu. à‡a nous coûterait le triple."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Non. Attends."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai changÃ© d'avis."
+Subtitle="J'ai changé d'avis."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Garde ton argent, Linarien. Rien ne me fera parler de ce jour."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -184,9 +184,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=859  PositionY=348  
 Subtitle="C'est une question embarassantes. La plupart de la force de la mini Bombe atomique arrive lorsque le missile frappe quelque chose."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement la grande vÃ©locitÃ© seule de l'impact peut Ã©galement causer de formidables dÃ©gÃ Â¢ts."
+Subtitle="Naturellement la grande vélocité seule de l'impact peut également causer de formidables dégà¢ts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous ne nous ennuyons jamais Ã Â  propos de recherche Ã Â  ce sujet. Ã Â‡a marche et Ã§a nous suffit."
+Subtitle="Nous ne nous ennuyons jamais à  propos de recherche à  ce sujet. à‡a marche et ça nous suffit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractGold:50"
@@ -197,7 +197,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" C'est tout ce que je voulais savoir."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=699  PositionY=443  
-Subtitle="TrÃ¨s bien. Cette conversation n'a jamais eu lieu."
+Subtitle="Très bien. Cette conversation n'a jamais eu lieu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"
