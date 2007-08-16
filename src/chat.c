@@ -689,8 +689,6 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	}
 	
 	LoadChatRosterWithChatSequence ( fpath );
-	// ChatDroid -> will_rush_tux = TRUE ;
-	ChatDroid -> combat_state = RUSH_TUX_ON_SIGHT_AND_OPEN_TALK ;
 	DoChatFromChatRosterData( 0 , PERSON_SUBDIALOG_DUMMY , ChatDroid , FALSE );
 	if ( ! ChatDroid -> energy ) //if the droid was killed, end the chat
 		return 1;
