@@ -494,7 +494,7 @@ case ITEM_SPELLBOOK_OF_SATELLITE_IMAGE:
 		if ( AppendToLine ) { if ( ForShop ) strcat ( ItemDescText , ", " ); else strcat ( ItemDescText , "\n" ); };
 		if ( CurItem->bonus_to_vit > 0 ) strcat( ItemDescText , "+" );
 		AppendToLine = TRUE;
-		sprintf( linebuf , _("%d to vitality") , CurItem->bonus_to_vit );
+		sprintf( linebuf , _("%d to life") , CurItem->bonus_to_vit );
 		strcat( ItemDescText , linebuf );
 	    }
 	    

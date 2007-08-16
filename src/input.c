@@ -654,7 +654,7 @@ ReactToSpecialKeys(void)
     //
     if ( QPressed() )
     {
-	if ( CtrlWasPressed() )
+	if ( AltWasPressed() )
 	    Terminate (OK);
 	else
 	{

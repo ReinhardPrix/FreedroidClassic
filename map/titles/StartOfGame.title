@@ -72,21 +72,24 @@ Song name to play in the end title if the mission is completed: TheBeginning.ogg
 
  Other Keys:
 
- I ... Open/Close inventory panel
- C ... Open/Close character panel
- S ... Open/Close skills panel
- Q ... Show quest status log
- P ... Toggle pause mode
- A ... Hold down 'A' to attack and not move
- R ... Reload your weapon
- T ... Make walls transparent when Tux approaches
- Tab ... Turn on/off automap display
- LEFT SHIFT ... Make items on the ground visible
- Escape ... Show the main menu
- F1-F9 Quick-Switch to skill/ability/spells 1-9
- 1-9 ... Quick-Use items from the quick-inventory
- Space ... Close all open panels
- F12 ... Take a screenshot
+ I .......... Open/Close inventory panel
+ C .......... Open/Close character panel
+ S .......... Open/Close skills panel
+ Space ...... Close all open panels
+ R .......... Reload your weapon
+ 0-9 ........ Quick-Use items from the quick-inventory
+ F1-F9 ...... Quick-Switch to skill/ability/spell 1 through 9
+ T .......... Enable/Disable transparent walls when Tux approaches
+ Z .......... Enable/Disable labels with the name of items on the ground
+ U .......... Enable/Disable run mode
+ Tab ........ Enable/Disable automap display
+ A .......... Hold down to attack and not move
+ Left Shift . Hold down to show labels with the name of items on the ground
+ Left Ctrl .. Hold down to toogle run mode
+ P .......... Paus/Unpaus the game
+ Q .......... Open/Close quest status log
+ Escape ..... Show the main menu
+ F12 ........ Take a screenshot
 
  Spells and Skills:
  Takeover/Chat skill:  To chat with a friendly droid, it's enough to click on 

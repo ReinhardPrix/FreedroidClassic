@@ -1420,7 +1420,7 @@ move_tux_thowards_raw_position ( int player_num , float x , float y )
 	//DebugPrintf( -2, "\n Now walking...");
    	}
 
-   if ( (LeftCtrlPressed() || autorun_activated ) && ( ! Me [ player_num ] . running_must_rest ) )
+   if ( (LeftCtrlPressed() || autorun_activated ) && !( LeftCtrlPressed() && autorun_activated ) && ( ! Me [ player_num ] . running_must_rest ) )
 	{ 
 	planned_step . x = RemainingWay . x * TUX_RUNNING_SPEED / length ;
 	planned_step . y = RemainingWay . y * TUX_RUNNING_SPEED / length ;
