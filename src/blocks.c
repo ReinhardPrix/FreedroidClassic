@@ -2522,16 +2522,6 @@ init_obstacle_data( void )
 	obstacle_map [ i ] . transparent = FALSE ;
 	obstacle_map [ i ] . emitted_light_strength = 0 ; // how much light emitted from here...
 
-	obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
-	sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
-
-	obstacle_map [ i ] . obstacle_short_name = MyMalloc ( 100 ); // that should be sufficient for most short names...
-	sprintf ( obstacle_map [ i ] . obstacle_short_name , _("unnamed_obstacle") );
-
-	obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 500 ); // that should be sufficient for most long descriptions...
-	sprintf ( obstacle_map [ i ] . obstacle_long_description , _("This obstacle seems solid."));
-
-
     }
     //--------------------
     // Now we define all exceptions from the default values
@@ -4785,6 +4775,25 @@ init_obstacle_data( void )
       obstacle_map [ i ] . lower_border = + obstacle_map [ i ] . block_area_parm_1 / 2.0 ;
       obstacle_map [ i ] . left_border  = - obstacle_map [ i ] . block_area_parm_2 / 2.0 ;
       obstacle_map [ i ] . right_border = + obstacle_map [ i ] . block_area_parm_2 / 2.0 ;
+
+      if ( ! obstacle_map [ i ] . filename )
+	{
+        obstacle_map [ i ] . filename = MyMalloc ( 100 ); // that should be sufficient for file names...
+        sprintf ( obstacle_map [ i ] . filename , "iso_obstacle_%04d.png" , i );
+	}
+
+      if ( ! obstacle_map [ i ] . obstacle_short_name )
+	{
+        obstacle_map [ i ] . obstacle_short_name = MyMalloc ( 100 ); // that should be sufficient for most short names...
+        sprintf ( obstacle_map [ i ] . obstacle_short_name , _("unnamed_obstacle") );
+
+	}
+      if ( ! obstacle_map [ i  ] . obstacle_long_description)
+	{
+        obstacle_map [ i ] . obstacle_long_description = MyMalloc ( 500 ); // that should be sufficient for most long descriptions...
+        sprintf ( obstacle_map [ i ] . obstacle_long_description , _("This obstacle seems solid."));
+	}
+
     }
 
   // corrections for corner and T walls
