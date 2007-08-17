@@ -76,7 +76,7 @@ SForce: T=MUM X=33 Y=11 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Param
 //--------------------
 // This is Sorenson, a former preferred person of the MS
 //
-SForce: T=FSC X=7 Y=18 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Mystery coder" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=FSC X=7 Y=18 Fixed=0 Marker=9998 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SorensonStartGameSquare" RushTux="no" DialogSectionToUse="Sorenson" ShortLabel="Sorenson -- Mystery coder" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 //--------------------
 // This is a security bot.
