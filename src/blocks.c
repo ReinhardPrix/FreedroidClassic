@@ -2277,10 +2277,10 @@ Load_Enemy_Surfaces( void )
     // use_default_gethit_image [ i ] = TRUE ;
     // use_default_death_image [ i ] = TRUE ;
     // use_default_stand_image [ i ] = FALSE ;
-    Druidmap [ i ] . suppress_bullet_generation_when_attacking = FALSE ;
+    Druidmap [ i ] . suppress_bullet_generation_when_attacking = TRUE ;
     Druidmap [ i ] . use_image_archive_file = TRUE ;
     droid_walk_animation_speed_factor [ i ] = 5 ;
-    droid_attack_animation_speed_factor [ i ] = 5 ;
+    droid_attack_animation_speed_factor [ i ] = 20 ;
     droid_gethit_animation_speed_factor [ i ] = 5 ;
     droid_death_animation_speed_factor [ i ] = 5 ;
     droid_stand_animation_speed_factor [ i ] = 1 ;
