@@ -1260,6 +1260,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=250
 Item description text="An incredible healing spell, probably only one you will ever need."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 45
@@ -1276,6 +1278,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="Teleporting takes on a whole new face with this book-use it wisely."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 46
@@ -1292,6 +1296,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="It is not a big problem to make a badly designed system to go hunting for the impossible, causing a performance impact."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 47
@@ -1308,6 +1314,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=100
 Item description text="With a little touch a war machine comes crashing down to a halt. For a while."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 48
@@ -1942,6 +1950,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=400
 Item description text="When computers are presented with the unexpected they can damage themselves."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 84
@@ -1958,6 +1968,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="There are very few items which have labels on them. Unless you happen to have an item labeled 'USE ME', you better make sure what it is before using it..."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 85
@@ -1974,6 +1986,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="The open source game called Nethack is one of the world's greatest wasters of time. Machines don't care about it, but humans can get sucked in quite deeply."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 86
@@ -1990,6 +2004,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="By heating up the chips with a malformed program you can cause them to release the magic smoke which keeps the bot running."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 87
@@ -2006,6 +2022,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="Messing around with the bot's memory can cause it to damage itself, but the damage is greatly variable."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 88
@@ -2022,6 +2040,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="The radio network is a wonderful invention for the people who like to blow up a lot of stuff at once."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 89
@@ -2038,6 +2058,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=600
 Item description text="Optimization is the root of all evil. You can gain some temporary improvements to your system, but in the end you are only likely to cause permanent damage."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 90
@@ -2054,6 +2076,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=200
 Item description text="The overload setting exists for emergencies. The plasma does not discriminate between bots and humans. Everything is equal to it."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 91
@@ -2070,6 +2094,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=225
 Item description text="I am not the Linarian you are looking for."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 92
@@ -2962,6 +2988,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="The art of rapidly moving away from danger is very useful. Even when used in reverse it has it's uses."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 123
@@ -2978,6 +3006,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="This is not just a firmware upgrade, my dear bot. You are about to find out what exactly I want to give you."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 124
@@ -2994,6 +3024,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="The network is wide and dangerous. Many traps await for the weak and unprepared."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 125
@@ -3010,6 +3042,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="There is some dark magic in the art of turning bots inside-out to learn all their secrets."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 126
@@ -3026,6 +3060,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="Everyone needs to blow some steam every now and then."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 127
@@ -3042,6 +3078,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=450
 Item description text="Let there be light..."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 128
@@ -3058,6 +3096,8 @@ File or directory name for inventory image="spellbook/inv_image.png"
 Item uses drop sound with filename="drop_book_sound.ogg"
 Base list price=300
 Item description text="Getting a map of an area is pretty easy when you can look at everything from above."
+inventory_size_x=2
+inventory_size_y=2
 ** End of new item specification subsection **
 
 // Item No. 129
