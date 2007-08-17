@@ -1636,10 +1636,6 @@ WriteOutOneItem ( char* LevelMem , Item ItemToWriteOut )
   sprintf( linebuf , "%f " , ItemToWriteOut->current_duration );
   strcat( LevelMem , linebuf );
   
-  strcat( LevelMem , ITEM_GOLD_AMOUNT_STRING );
-  sprintf( linebuf , "%d " , ItemToWriteOut->gold_amount );
-  strcat( LevelMem , linebuf );
-
   strcat( LevelMem , ITEM_AMMO_CLIP_STRING );
   sprintf( linebuf , "%d " , ItemToWriteOut->ammo_clip );
   strcat( LevelMem , linebuf );
@@ -2105,8 +2101,6 @@ ReadInOneItem ( char* ItemPointer , char* ItemsSectionEnd , Item TargetItem )
 		       &( TargetItem -> max_duration ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_CUR_DURATION_STRING , "%f" , 
 		       &( TargetItem -> current_duration ) , ItemsSectionEnd );
-  ReadValueFromString( ItemPointer , ITEM_GOLD_AMOUNT_STRING , "%d" , 
-		       &( TargetItem -> gold_amount ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_AMMO_CLIP_STRING , "%d" , 
 		       &( TargetItem -> ammo_clip ) , ItemsSectionEnd );
   ReadValueFromString( ItemPointer , ITEM_MULTIPLICITY_STRING , "%d" , 

@@ -434,9 +434,10 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     //
     if ( ThisItem -> type == ITEM_MONEY )
     {
-	ThisItem -> gold_amount = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
+	ThisItem -> multiplicity = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
     }
-    ThisItem->multiplicity = 1;
+    else    ThisItem->multiplicity = 1;
+
     ThisItem->ammo_clip = 0;
     if( ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size )
 	ThisItem->ammo_clip = MyRandom(ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size);
@@ -641,8 +642,9 @@ Couldn't find another array entry to drop another item.",
     item_drop_map_level -> ItemList [ i ] . suffix_code = suffix;
     
     FillInItemProperties ( & ( item_drop_map_level->ItemList[ i ] ) , FALSE, TreasureChestRange );
-    
+
     item_drop_map_level -> ItemList [ i ] . multiplicity = multiplicity ;
+    
     item_drop_map_level -> ItemList [ i ] . throw_time = 0.01 ; // something > 0 
     if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) item_drop_map_level -> ItemList [ i ] . is_identified = TRUE ;
     else item_drop_map_level -> ItemList [ i ] . is_identified = FALSE ;
@@ -2738,7 +2740,7 @@ handle_player_identification_command( )
 	char iname[500];
 	*iname = '\0';
 
-	if ( GrabbedItem->type == ITEM_MONEY ) sprintf( iname , "%d " , GrabbedItem->gold_amount );
+	if ( GrabbedItem->type == ITEM_MONEY ) sprintf( iname , "%d " , GrabbedItem->multiplicity );
     
 	if ( ( GrabbedItem->prefix_code != (-1) ) )
 	strcat( iname , PrefixList[ GrabbedItem->prefix_code ].bonus_name );
@@ -3642,7 +3644,7 @@ AddFloorItemDirectlyToInventory( item* ItemPointer )
     if ( ItemPointer->type == ITEM_MONEY )
     {
 	play_item_sound( ItemPointer -> type );
-	Me [ 0 ] . Gold += ItemPointer->gold_amount;
+	Me [ 0 ] . Gold += ItemPointer->multiplicity;
 	DeleteItem( ItemPointer );
 	return 0;
     }

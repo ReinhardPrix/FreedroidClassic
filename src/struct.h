@@ -509,7 +509,6 @@ typedef struct
     int ac_bonus;                    // how much is ac increased by this item worn
     int damage;                      // how much damage does this item
     int damage_modifier;             // how much additional damage can add to the base damage
-    int gold_amount;                 // how much cyberbucks are there, IN CASE OF CYBERBUCKS
     int multiplicity;
     int ammo_clip; 		// how much bullets in the clip, IN CASE OF WEAPON
     point inventory_position;

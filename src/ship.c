@@ -545,7 +545,7 @@ write_full_item_name_into_string ( item* ShowItem , char* full_item_name )
       strcat ( full_item_name , font_switchto_neon );
     }
 
-  if ( ShowItem->type == ITEM_MONEY ) sprintf( full_item_name , "%d " , ShowItem->gold_amount );
+  if ( ShowItem->type == ITEM_MONEY ) sprintf( full_item_name , "%d " , ShowItem->multiplicity );
 
   //--------------------
   // If the item is is magical, we give the prefix name of course.
