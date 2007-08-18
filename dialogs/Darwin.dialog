@@ -186,7 +186,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" Could you teach me how to get those parts from bots?"
+New Option Nr=12  OptionText=" I want to know how to extract modules from the bots."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Yes."
