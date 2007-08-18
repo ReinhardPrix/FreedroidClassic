@@ -205,8 +205,11 @@ exist really (i.e. has a type = (-1) ).",
     //
     if ( ItemMap [ CurItem->type ] . item_group_together_in_inventory )
     {
-	sprintf( linebuf , _("Multiplicity: %d \n"), CurItem->multiplicity );
-	strcat( ItemDescText , linebuf );
+	if ( CurItem->type != ITEM_MONEY )
+		{
+		sprintf( linebuf , _("Multiplicity: %d \n"), CurItem->multiplicity );
+		strcat( ItemDescText , linebuf );
+		}
     }
     
     // --------------------

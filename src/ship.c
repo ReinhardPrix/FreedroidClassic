@@ -648,10 +648,13 @@ ShowItemInfo ( item* ShowItem , int Displacement , char ShowArrows , int backgro
     
     if ( ItemMap [ ShowItem->type ] . item_group_together_in_inventory )
     {
-	strcat ( InfoText , _("Multiplicity: "));
-	sprintf( TextChunk, "%d \n" , 
+	if ( ShowItem -> type != ITEM_MONEY )
+		{
+		strcat ( InfoText , _("Multiplicity: "));
+		sprintf( TextChunk, "%d \n" , 
 		 (int)ShowItem->multiplicity );
-	strcat ( InfoText , TextChunk );
+		strcat ( InfoText , TextChunk );
+		}
     }
     
     strcat ( InfoText , _("Duration: "));
