@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="HERE WE GO"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=61  PositionY=200  
-Subtitle="So... Any news on the Koan matter?"
+Subtitle="Nun, gibt es Neuigkeiten bezüglich dieser Koan-Sache?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=40 ChangeToValue=1
@@ -79,10 +79,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Yeah. I got him. I think this is your cube."
+New Option Nr=10  OptionText=" Ich habe ihn gefunden. Dies hier sollte Ihr Würfel sein."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Yes. I appreciate your help."
+Subtitle="Richtig, das ist er. Vielen Dank für Ihre Hilfe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 DoSomethingExtra="AddExperienceBonus:3000"
@@ -92,24 +92,24 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" I could not find him anywhere in the desert. I don't think he is there anymore."
+New Option Nr=20  OptionText=" Ich habe ihn in der Wüste nicht finden können. Ich glaube nicht, daß er noch irgendwo dort ist."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="I see."
+Subtitle="Schade."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" Yeah, I got him. Now, what is this big cube that you had me carry all the way here?"
+New Option Nr=30  OptionText=" Sicher, ich habe ihn gefunden. So, und was ist das jetzt für ein schweres Ding, das ich Ihnen den ganzen Weg hierher geschleppt habe?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Just a memento after a friend."
+Subtitle="Ein Andenken an einen alten Freund."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="A little more than a portable end of the world, which I am looking forward to disassembling and learning its secrets."
+Subtitle="Nur ein tragbarer Weltuntergang. Ich freue mich schon darauf, ihn auseinander zu nehmen und seine Geheimnisse zu entdecken."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nothing that important."
+Subtitle="Nichts Wichtiges."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 ChangeOption=20 ChangeToValue=0
@@ -120,10 +120,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=40  OptionText=" A 'few' bots? The place was crawling with Sawmills! I nearly got killed!"
+New Option Nr=40  OptionText=" Ein 'paar' Roboter? Da waren ohne Ende Sensenmänner! Ich hätte es fast nicht geschafft!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="There were only fourty bots in the desert region. This hardly qualifies as many."
+Subtitle="Nur vierzehn Roboter in der ganzen Wüste. Sowas nennen Sie 'ohne Ende'?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=40 ChangeToValue=0
 ChangeOption=41 ChangeToValue=1
@@ -131,10 +131,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=41  OptionText=" What? You know exactly how many bots were on the desert? Without being there? I don't like this."
+New Option Nr=41  OptionText=" Wie? Sie wußten genau wieviele Roboter in der Wüste waren? Ohne jemals dort gewesen zu sein? Das gefällt mir nicht."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="I just know a lot of things. You do not need to worry about it."
+Subtitle="Ich weiß einfach nur eine Menge Dinge. Sie müssen sich keine Sorgen deswegen machen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=41 ChangeToValue=0
 ChangeOption=50 ChangeToValue=1
@@ -142,10 +142,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=50  OptionText=" I don't like this at all. I'm getting out of here."
+New Option Nr=50  OptionText=" Das gefällt mir wirklich nicht. Ich verschwinde."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="As you wish."
+Subtitle="Wie Sie wünschen."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 DoSomethingExtra="EndDialog"
@@ -153,10 +153,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=60  OptionText=" Hey, that is really neat. Here is your cube. Enjoy disassembling it and have fun with it."
+New Option Nr=60  OptionText=" Hey, das ist wirklich ordentlich. Hier ist Ihr Würfel, viel Spaß beim Zerlegen."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="I will."
+Subtitle="Werde ich haben."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=60 ChangeToValue=0
 DoSomethingExtra="AddExperienceBonus:3000"
@@ -166,10 +166,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=70  OptionText=" WHAT? No way I am giving you a doomsday device! Forget about it."
+New Option Nr=70  OptionText=" WAS? Keine Chance, daß ich Ihnen diese Weltuntergangsmaschine überlasse! Vergessen Sie´s!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="I understand. So be it."
+Subtitle="Ich verstehe. So sei es."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="EndDialog"
