@@ -30,7 +30,16 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText="HERE WE GO"
+New Option Nr=0  OptionText="KILLING DOUBLE TALK"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=61  PositionY=200  
+OnCondition="CookieIsPlanted:koan_spared:" JumpToOption=2 ElseGoto=1
+ChangeOption=0 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="yes"
+
+----------------------------------------------------------------------
+
+New Option Nr=1  OptionText="HERE WE GO"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=61  PositionY=200  
 Subtitle="So you have come. I knew Duncan would not let me live for too long."
@@ -41,24 +50,33 @@ Subtitle="I hoped to turn the whole desert into a sanctuary. And now my dream wi
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Do what you must."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=0 ChangeToValue=0
-ChangeOption=2 ChangeToValue=1
-ChangeOption=1 ChangeToValue=1
-AlwaysExecuteThisOptionPriorToDialogStart="yes"
+ChangeOption=1 ChangeToValue=0
+ChangeOption=5 ChangeToValue=1
+ChangeOption=6 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" With pleasure."
+New Option Nr=2  OptionText="DO NOTHING NODE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=61  PositionY=200  
+ChangeOption=2 ChangeToValue=0
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+
+----------------------------------------------------------------------
+
+New Option Nr=5  OptionText=" With pleasure."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-ChangeOption=1 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="DropDead"
 DoSomethingExtra="ForceBotRespawnOnLevel:18"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" No. I have not come here to kill you."
+New Option Nr=6  OptionText=" No. I have not come here to kill you."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Thank you."
@@ -67,12 +85,12 @@ Subtitle="Feel free to stay here. There is no danger."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="The water is safe to drink and the fruit from the tree is quite delicious."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-ChangeOption=2 ChangeToValue=0
-ChangeOption=1 ChangeToValue=0
+ChangeOption=5 ChangeToValue=0
+ChangeOption=6 ChangeToValue=0
 ChangeOption=99 ChangeToValue=1
 ChangeOption=20 ChangeToValue=1
 ChangeOption=10 ChangeToValue=1
-DoSomethingExtra="PlantCookie:spared_koan"
+DoSomethingExtra="PlantCookie:koan_spared"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
