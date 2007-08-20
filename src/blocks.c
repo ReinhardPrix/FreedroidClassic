@@ -4766,14 +4766,24 @@ init_obstacle_data( void )
   obstacle_map[ ISO_TRANSP_FOR_WATER ] . obstacle_long_description = _("This water seems dangerous. You will want to avoid going there. ");
     
   obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_1 = 1.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_2 = 3.5 ;
   obstacle_map [ ISO_RESTAURANT_DESK_1 ] . filename = "iso_restaurant_desk_0001.png" ;
   
   obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_1 = 0.5 ;
-  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_1 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_RESTAURANT_DESK_2 ] . filename = "iso_restaurant_desk_0002.png" ;
+
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_1 = 1.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_2 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . filename = "iso_restaurant_desk_0003.png" ;
+  
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_1 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_2 = 1.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . filename = "iso_restaurant_desk_0004.png" ;
   
     
   //--------------------
