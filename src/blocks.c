@@ -3605,7 +3605,8 @@ init_obstacle_data( void )
   obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_parm_1 = 0.5 ;
   obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . block_area_parm_2 = 1.1 ;
   obstacle_map [ ISO_RESTAURANT_SHELVES_10 ] . filename = "iso_restaurant_furniture_0010.png" ;
-  
+
+
   int ahrot = 0;
   for ( ahrot = ISO_RESTAURANT_SHELVES_1; ahrot <= ISO_RESTAURANT_SHELVES_10; ahrot ++ )
 	{
@@ -4763,6 +4764,17 @@ init_obstacle_data( void )
   obstacle_map[ ISO_TRANSP_FOR_WATER ] . block_vision_too = FALSE ;
   obstacle_map[ ISO_TRANSP_FOR_WATER ] . obstacle_short_name = _("Water");
   obstacle_map[ ISO_TRANSP_FOR_WATER ] . obstacle_long_description = _("This water seems dangerous. You will want to avoid going there. ");
+    
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . filename = "iso_restaurant_desk_0001.png" ;
+  
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_1 = 0.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_2 = 1.1 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . filename = "iso_restaurant_desk_0002.png" ;
+  
     
   //--------------------
   // Now that we have defined the block area paramters, it's time to do some
