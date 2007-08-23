@@ -2604,10 +2604,10 @@ Connect_To_Existing_Server_Menu (void)
     Me[0].Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
     Me[0].Inventory[ 3 ].inventory_position.x = 1;
     Me[0].Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-    FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 );
-    FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 );
-    FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 );
-    FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 );
+    FillInItemProperties ( & Me[0].Inventory[ 0 ] , TRUE , 0 , 1);
+    FillInItemProperties ( & Me[0].Inventory[ 1 ] , TRUE , 0 , 1);
+    FillInItemProperties ( & Me[0].Inventory[ 2 ] , TRUE , 0 , 1);
+    FillInItemProperties ( & Me[0].Inventory[ 3 ] , TRUE , 0 , 1);
     
     Get_Server_Name ( );
     Get_New_Character_Name( );

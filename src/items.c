@@ -420,7 +420,7 @@ calculate_item_repair_price ( item* repair_item )
  *
  * ---------------------------------------------------------------------- */
 void
-FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange )
+FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange, int multiplicity )
 {
     if ( ThisItem -> type < 0 ) return;
 
@@ -428,16 +428,7 @@ FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange
     ThisItem -> damage_modifier = ItemMap[ ThisItem->type ].item_gun_damage_modifier;
     ThisItem -> ac_bonus = ItemMap[ ThisItem->type ].base_ac_bonus +
 	MyRandom( ItemMap[ ThisItem->type ].ac_bonus_modifier );
-    
-    //--------------------
-    // In case of cyberbucks, we have to specify the amount of cyberbucks
-    //
-    if ( ThisItem -> type == ITEM_MONEY )
-    {
-	ThisItem -> multiplicity = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
-    }
-    else    ThisItem->multiplicity = 1;
-
+    ThisItem->multiplicity = multiplicity;
     ThisItem->ammo_clip = 0;
     if( ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size )
 	ThisItem->ammo_clip = MyRandom(ItemMap[ ThisItem->type ] . item_gun_ammo_clip_size);
@@ -568,7 +559,7 @@ DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int 
     int i;
     gps item_pos;
     level* item_drop_map_level = NULL ;
-
+    
     //--------------------
     // Some check against illegal item types
     //
@@ -640,10 +631,8 @@ Couldn't find another array entry to drop another item.",
     item_drop_map_level -> ItemList [ i ] . pos . y = y;
     item_drop_map_level -> ItemList [ i ] . prefix_code = prefix;
     item_drop_map_level -> ItemList [ i ] . suffix_code = suffix;
-    
-    FillInItemProperties ( & ( item_drop_map_level->ItemList[ i ] ) , FALSE, TreasureChestRange );
 
-    item_drop_map_level -> ItemList [ i ] . multiplicity = multiplicity ;
+    FillInItemProperties ( & ( item_drop_map_level->ItemList[ i ] ) , FALSE, TreasureChestRange, multiplicity );
     
     item_drop_map_level -> ItemList [ i ] . throw_time = 0.01 ; // something > 0 
     if ( ( prefix == (-1) ) && ( suffix == (-1) ) ) item_drop_map_level -> ItemList [ i ] . is_identified = TRUE ;
@@ -662,7 +651,8 @@ void
 DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange )
 {
     int i;
-
+    int multiplicity;
+    
     //--------------------
     // If given a non-existent item type, we don't do anything
     // of course (and also don't produce a SEGFAULT or something...)
@@ -705,7 +695,16 @@ Couldn't find another array entry to drop another item.",
     CurLevel -> ChestItemList [ i ] . prefix_code = prefix;
     CurLevel -> ChestItemList [ i ] . suffix_code = suffix;
     
-    FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange );
+    //--------------------
+    // In case of cyberbucks, we have to specify the amount of cyberbucks
+    //
+    if ( ItemType == ITEM_MONEY )
+    {
+	multiplicity = 20 * TreasureChestRange + MyRandom( 20 ) + 1;
+    }
+    else multiplicity = 1;
+
+    FillInItemProperties ( & ( CurLevel->ChestItemList[ i ] ) , FALSE , TreasureChestRange, multiplicity );
     
     // PlayItemSound( ItemMap[ ItemType ].sound_number );
     play_item_sound ( ItemType );
@@ -842,7 +841,8 @@ DropRandomItem( int level_num , float x , float y , int TreasureChestRange , int
     //
     if ( ( !ForceDrop ) && ( DropDecision < 100 - ITEM_DROP_PERCENTAGE ) )
     {
-	DropItemAt( ITEM_MONEY , level_num , x , y , -1 , -1 , TreasureChestRange , 1 );
+	DropItemAt( ITEM_MONEY , level_num , x , y , -1 , -1 , TreasureChestRange ,
+		    20 * TreasureChestRange + MyRandom( 20 ) + 1);
 	return;
     }
     

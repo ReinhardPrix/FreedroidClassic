@@ -171,10 +171,10 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 	    Me [ PlayerNum ] .Inventory[ 3 ].type = ITEM_SMALL_HEALTH_POTION;
 	    Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.x = 1;
 	    Me [ PlayerNum ] .Inventory[ 3 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 3 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 3 ] , TRUE , 0 , 1);
 	    break;
 	    
 	case SNIPER_BOT: 
@@ -194,9 +194,9 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 	    Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_HEALTH_POTION;
 	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
 	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 , 1);
 	    break;
 	    
 	case MIND_BOT: 
@@ -216,9 +216,9 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
 	    Me [ PlayerNum ] .Inventory[ 2 ].type = ITEM_SMALL_MANA_POTION;
 	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.x = 1;
 	    Me [ PlayerNum ] .Inventory[ 2 ].inventory_position.y = INVENTORY_GRID_HEIGHT-1;
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 );
-	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 );
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 0 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 1 ] , TRUE , 0 , 1);
+	    FillInItemProperties ( & Me [ PlayerNum ] .Inventory[ 2 ] , TRUE , 0 , 1);
 	    break;
 	default: 
 	    DebugPrintf ( 0 , "\nERROR!! UNKNOWN CHARACTER CLASS REQUESTED!!! Terminating... " );
@@ -241,8 +241,8 @@ InitiateNewCharacter ( int PlayerNum , int CharacterClass )
     Me [ PlayerNum ] .aux1_item.currently_held_in_hand = FALSE;
     Me [ PlayerNum ] .aux2_item.currently_held_in_hand = FALSE;
     
-    FillInItemProperties ( & ( Me [ PlayerNum ] .weapon_item ) , TRUE , 0 );
-    FillInItemProperties ( & ( Me [ PlayerNum ] .drive_item ) , TRUE , 0 );
+    FillInItemProperties ( & ( Me [ PlayerNum ] .weapon_item ) , TRUE , 0 , 1);
+    FillInItemProperties ( & ( Me [ PlayerNum ] .drive_item ) , TRUE , 0 , 1);
     
     
     Item_Held_In_Hand = ( -1 );

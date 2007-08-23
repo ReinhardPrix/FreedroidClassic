@@ -437,7 +437,7 @@ EXTERN int ItemCanBeDroppedInInv ( int ItemType , int InvPos_x , int InvPos_y );
 EXTERN long calculate_item_buy_price ( item* BuyItem );
 EXTERN long calculate_item_repair_price ( item* repair_item );
 EXTERN long calculate_item_sell_price ( item* BuyItem );
-EXTERN void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange );
+EXTERN void FillInItemProperties( item* ThisItem , int FullDuration , int TreasureChestRange , int multiplicity);
 EXTERN void DamageAllEquipment( int player_num ) ;
 EXTERN void DropChestItemAt( int ItemType , float x , float y , int prefix , int suffix , int TreasureChestRange );
 EXTERN void DropItemAt( int ItemType , int level_num , float x , float y , int prefix , int suffix , int TreasureChestRange , int multiplicity );

@@ -616,7 +616,7 @@ ExecuteChatExtra ( char* ExtraCommandString , Enemy ChatDroid )
 	NewItem.type = TempValue  ;
 	NewItem.prefix_code = (-1);
 	NewItem.suffix_code = (-1);
-	FillInItemProperties ( &NewItem , TRUE , 0 );
+	FillInItemProperties ( &NewItem , TRUE , 0 , 1);
 
 	if(*pos2 == ':')
 	    {
