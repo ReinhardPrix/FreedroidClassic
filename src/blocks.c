@@ -4784,6 +4784,49 @@ init_obstacle_data( void )
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_1 = 3.5 ;
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . filename = "iso_restaurant_desk_0004.png" ;
+
+  // crystals
+    obstacle_map [ ISO_CRYSTALS_1 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_1 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_1 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_1 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_1 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_1 ] . filename = "iso_crystal_fields_0001.png";
+
+    obstacle_map [ ISO_CRYSTALS_2 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_2 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_2 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_2 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_2 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_2 ] . filename = "iso_crystal_fields_0002.png";
+
+    obstacle_map [ ISO_CRYSTALS_3 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_3 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_3 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_3 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_3 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_3 ] . filename = "iso_crystal_fields_0003.png";
+
+    obstacle_map [ ISO_CRYSTALS_4 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_4 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_4 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_4 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_4 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_4 ] . filename = "iso_crystal_fields_0004.png";
+
+    obstacle_map [ ISO_CRYSTALS_5 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_5 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_5 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_5 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_5 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_5 ] . filename = "iso_crystal_fields_0005.png";
+
+    obstacle_map [ ISO_CRYSTALS_6 ] . block_area_parm_1 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_6 ] . block_area_parm_2 = 1.05 ;
+    obstacle_map [ ISO_CRYSTALS_6 ] . block_vision_too = FALSE ;
+    obstacle_map [ ISO_CRYSTALS_6 ] . obstacle_short_name = _("Crystal pillar");
+    obstacle_map [ ISO_CRYSTALS_6 ] . obstacle_long_description = _("A pillar made out of crystal.");
+    obstacle_map [ ISO_CRYSTALS_6 ] . filename = "iso_crystal_fields_0006.png";
   
     
   //--------------------
