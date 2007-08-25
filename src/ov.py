@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 
 import sys, os.path
 
@@ -7,7 +9,7 @@ from PyQt4.QtCore import *
 a = QApplication(sys.argv)
 a.setStyle(QStyleFactory.create("Cleanlooks"))
 
-fn = "c:\\home\\basse\\sorsat\\iso_obstacle_0114"
+fn = "../graphics/obstacles/iso_obstacle_0114"
 
 def getCoords(fn):
     f = open(fn, "r")
@@ -135,8 +137,9 @@ GraphicsFileName=%s\n\n
             QMessageBox.critical(self, "Error", "Yikes, offset file (%s) could not be saved. \nwho knows why.. " % (str(self.ofsfn)))
         
 
-    def avaa(self):   
-        fn = QFileDialog.getOpenFileName(self, "valkkaa guva", "c:\\home\\basse\\cvs\\fd_rpg\\graphics\\obstacles\\", "(*.*)")
+    def avaa(self):
+        
+        fn = QFileDialog.getOpenFileName(self, "choose image", "../graphics/obstacles/", "Images (*.jpg *.png)")
         
         self.fn = str(fn)
         self.ofsfn = str(fn).replace(".png", ".offset")            
