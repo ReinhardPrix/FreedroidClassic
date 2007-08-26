@@ -3671,6 +3671,27 @@ init_obstacle_data( void )
   obstacle_map [ ISO_GREY_WALL_END_S ] . block_area_parm_2 = 1.0 ;
   obstacle_map [ ISO_GREY_WALL_END_S ] . filename = "iso_walls_0008.png" ;
 
+  obstacle_map [ ISO_GREY_WALL_CORNER_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_1 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_1 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_1 ] . filename = "iso_wall_corners_0001.png" ;
+
+  obstacle_map [ ISO_GREY_WALL_CORNER_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_2 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_2 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_2 ] . filename = "iso_wall_corners_0002.png" ;
+
+  obstacle_map [ ISO_GREY_WALL_CORNER_3 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_3 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_3 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_3 ] . filename = "iso_wall_corners_0003.png" ;
+  
+  obstacle_map [ ISO_GREY_WALL_CORNER_4 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_4 ] . block_area_parm_1 = 1.1 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_4 ] . block_area_parm_2 = 1.0 ;
+  obstacle_map [ ISO_GREY_WALL_CORNER_4 ] . filename = "iso_wall_corners_0004.png" ;
+  
+
   for( i = ISO_LIGHT_GREEN_WALL_1 ; i <= ISO_FUNKY_WALL_4 ; i++) {
     obstacle_map [ i ] . transparent = TRANSPARENCY_FOR_WALLS ;
   }
