@@ -445,6 +445,8 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *tex
   int kerning = 0;
   if (Font==Menu_BFont) kerning = -4;
 
+  if (Font==FPS_Display_BFont || Font==Blue_BFont || Font==Red_BFont) kerning = -2;
+
   while (text[i] != '\0')
     {
       //--------------------

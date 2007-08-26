@@ -639,6 +639,7 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 	Temp_Clipping_Rect.w=GameConfig . screen_width;
 	Temp_Clipping_Rect.h=GameConfig . screen_height;
     }
+
     
     //--------------------
     // Now we can start to print the actual text to the screen.
@@ -660,11 +661,11 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
       	        DisplayChar (*tmp);
 	    else 
 		{
-                MyCursorX += CharWidth ( GetCurrentFont() , *tmp);
+                MyCursorX += CharWidth ( GetCurrentFont() , *tmp) ;                                
 		switch ( * tmp ) 
 		    {
 		    case 1: SetCurrentFont(Red_BFont); break;
-		    case 2: SetCurrentFont(Blue_BFont); break; 
+		    case 2: SetCurrentFont(Blue_BFont); break;
 		    case 3: SetCurrentFont(FPS_Display_BFont); break;
 		    }
 		}
@@ -701,7 +702,7 @@ DisplayText ( const char *Text, int startx, int starty, const SDL_Rect *clip , f
 void
 DisplayChar (unsigned char c)
 {
-
+    
     if ( c == 1 ) 
     {
 	SetCurrentFont ( Red_BFont );
@@ -718,6 +719,10 @@ DisplayChar (unsigned char c)
 	return;
     }
     
+    // stupid kerning hack, to get smooth font, but tighter look
+    int kerning = 0;
+    if (GetCurrentFont()==FPS_Display_BFont || GetCurrentFont()==Blue_BFont || GetCurrentFont()==Red_BFont) kerning = -2;
+    
     if( c < ' ' || c > GetCurrentFont()->number_of_chars-1){
         printf("l: %u of %u \n",c,GetCurrentFont()->number_of_chars);
        c = '.';
@@ -731,7 +736,7 @@ DisplayChar (unsigned char c)
     // After the char has been displayed, we must move the cursor to its
     // new position.  That depends of course on the char displayed.
     //
-    MyCursorX += CharWidth ( GetCurrentFont() , c);
+    MyCursorX += CharWidth ( GetCurrentFont() , c) +kerning;
     
 }; // void DisplayChar(...)
 
