@@ -492,6 +492,7 @@ TextWidthFont (BFont_Info * Font, char *text)
   //
   int kerning = 0;
   if ( CurrentFont == Menu_BFont ) kerning = -4;
+  if (CurrentFont==FPS_Display_BFont || CurrentFont==Blue_BFont || CurrentFont==Red_BFont) kerning = -2;
 
   while (text[i] != '\0')
     {
