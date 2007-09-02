@@ -429,6 +429,9 @@ enum _non_player_characters
     PERSON_SACD,
     PERSON_TANIA,
     PERSON_KOAN,
+    PERSON_BORIS,
+    PERSON_LINA,
+    PERSON_SERGE,
     LAST_PERSON
   };
 #define MAX_PERSONS             (LAST_PERSON)

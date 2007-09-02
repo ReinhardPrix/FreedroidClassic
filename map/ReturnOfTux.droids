@@ -766,11 +766,32 @@ Allowed Type of Random Droid for this level: 476
 //--------------------
 // This is SADD - secreat area defence droid
 //
-SForce: T=883 X=28 Y=25 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SADDStartGameSquare" RushTux="no" DialogSectionToUse="SADD" ShortLabel="SADD - Secret Area Defence Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+SForce: T=883 X=28 Y=25 Fixed=0 Marker=9997 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SADDStartGameSquare" RushTux="no" DialogSectionToUse="SADD" ShortLabel="SADD - Secret Area Defence Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SForce: T=JAS X=18 Y=17 Fixed=0 Marker=9999 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="TaniaStartGameSquare" RushTux="no" DialogSectionToUse="Tania" ShortLabel="Tania - lonely scientistr" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+//--------------------
+// This is Tania. She is scientist and she is locked inside the base.
+//
+SForce: T=JAS X=18 Y=17 Fixed=0 Marker=9995 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="TaniaStartGameSquare" RushTux="no" DialogSectionToUse="Tania" ShortLabel="Tania - lonely scientistr" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
-SForce: T=598 X=41 Y=19 Fixed=0 Marker=1276 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaDefenceControl" RushTux="no" DialogSectionToUse="SACD" ShortLabel="SACD - Secret Area Control Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+//--------------------
+// This is SACD - secret area control droid
+//
+SForce: T=598 X=41 Y=19 Fixed=0 Marker=9996 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaDefenceControl" RushTux="no" DialogSectionToUse="SACD" ShortLabel="SACD - Secret Area Control Droid" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+//--------------------
+// This is Boris. Leader of scientists locked in secret area
+//
+SForce: T=WOR X=41 Y=37 Fixed=0 Marker=9994 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="BorisStartGameSquare" RushTux="no" DialogSectionToUse="Boris" ShortLabel="Boris -- scientists leader" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+//--------------------
+// This is Lina -- librarian in secret area
+//
+SForce: T=FSC X=41 Y=37 Fixed=0 Marker=9994 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="LinaStartGameSquare" RushTux="no" DialogSectionToUse="Lina" ShortLabel="Lina -- librarian" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
+
+//--------------------
+// This is Serge -- storehouse keeper
+//
+SForce: T=WOR X=41 Y=37 Fixed=0 Marker=9994 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=1 StartUpAtLabel="SergeStartGameSquare" RushTux="no" DialogSectionToUse="Serge" ShortLabel="Serge -- storehouse keeper" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 
 SForce: T=302 X=35 Y=16 Fixed=0 Marker=44 AdvancedCommand=2 Parameter1=0 Parameter2=0 Friendly=0 StartUpAtLabel="SecretAreaCollectorPassage2" RushTux="no" DialogSectionToUse="StandardBotAfterTakeover" ShortLabel="Nemesis" attack_run_only_when_direct_line="no" on_death_drop_item_code=-1
 

@@ -32758,7 +32758,7 @@ t56 x4.50 y17.50 l-1 d-1
 t57 x6.50 y17.50 l-1 d-1 
 t58 x6.50 y19.50 l-1 d-1 
 t55 x4.50 y19.50 l-1 d-1 
-t18 x5.50 y18.50 l-1 d-1 
+t19 x5.50 y18.50 l-1 d-1 
 t323 x4.50 y20.50 l-1 d-1 
 t323 x6.50 y20.50 l-1 d-1 
 t232 x3.50 y20.50 l-1 d-1 
@@ -32771,7 +32771,7 @@ t55 x4.50 y15.50 l-1 d-1
 t56 x4.50 y13.50 l-1 d-1 
 t57 x6.50 y13.50 l-1 d-1 
 t58 x6.50 y15.50 l-1 d-1 
-t18 x5.50 y14.50 l-1 d-1 
+t19 x5.50 y14.50 l-1 d-1 
 t281 x7.50 y15.00 l-1 d-1 
 t281 x7.50 y14.00 l-1 d-1 
 t281 x7.50 y13.00 l-1 d-1 
@@ -32878,7 +32878,7 @@ t330 x30.50 y15.50 l-1 d-1
 t332 x32.50 y15.50 l-1 d-1 
 t56 x30.35 y16.27 l-1 d-1 
 t57 x32.46 y16.29 l-1 d-1 
-t18 x31.10 y18.16 l-1 d-1 
+t19 x31.10 y18.16 l-1 d-1 
 t323 x31.50 y19.50 l-1 d-1 
 t134 x33.50 y18.50 l-1 d-1 
 t134 x33.50 y17.50 l-1 d-1 
@@ -32990,8 +32990,8 @@ t322 x33.50 y3.50 l-1 d-1
 t322 x33.50 y4.50 l-1 d-1 
 t322 x33.50 y5.50 l-1 d-1 
 t322 x33.50 y6.50 l-1 d-1 
-t21 x32.00 y2.00 l-1 d-1 
-t21 x32.00 y3.00 l-1 d-1 
+t22 x32.00 y2.00 l-1 d-1 
+t22 x32.00 y3.00 l-1 d-1 
 t45 x34.50 y2.00 l-1 d-1 
 t45 x35.50 y2.00 l-1 d-1 
 t323 x34.50 y1.50 l-1 d-1 
@@ -33047,7 +33047,7 @@ t329 x39.00 y30.50 l-1 d-1
 t329 x39.00 y29.50 l-1 d-1 
 t55 x35.66 y31.47 l-1 d-1 
 t58 x38.08 y31.54 l-1 d-1 
-t18 x36.50 y29.50 l-1 d-1 
+t19 x36.50 y29.50 l-1 d-1 
 t134 x35.00 y32.50 l-1 d-1 
 t134 x35.00 y32.00 l-1 d-1 
 t134 x39.00 y32.50 l-1 d-1 
@@ -33434,7 +33434,7 @@ t134 x43.00 y39.00 l-1 d-1
 t134 x43.00 y38.00 l-1 d-1 
 t134 x43.00 y37.00 l-1 d-1 
 t137 x43.00 y36.00 l-1 d-1 
-t6 x42.00 y36.00 l-1 d-1 
+t10 x42.00 y36.00 l-1 d-1 
 t233 x42.00 y44.00 l-1 d-1 
 t134 x42.00 y46.00 l-1 d-1 
 t134 x42.00 y45.00 l-1 d-1 
@@ -33683,7 +33683,7 @@ t226 x46.50 y51.50 l-1 d-1
 t226 x46.50 y28.50 l-1 d-1 
 t226 x46.50 y22.50 l-1 d-1 
 t233 x47.00 y21.00 l-1 d-1 
-t7 x46.00 y21.00 l-1 d-1 
+t6 x46.00 y21.00 l-1 d-1 
 t143 x31.44 y22.68 l-1 d-1 
 t144 x32.75 y21.66 l-1 d-1 
 t147 x31.08 y21.31 l-1 d-1 
@@ -33713,6 +33713,9 @@ x=24 y=2 name="SecretAreaExit1"
 x=25 y=2 name="SecretAreaEnterance1"
 x=37 y=26 name="SecretAreaExit2"
 x=37 y=28 name="SecretAreaEnterance2"
+x=41 y=37 name="BorisStartGameSquare"
+x=40 y=47 name="LinaStartGameSquare"
+x=36 y=51 name="SergeStartGameSquare"
 /plabelinfolvl
 pobstaclelabelinfolvl
 obstacle_label.index=0 obstacle_label_name="SADDGun"
@@ -33830,6 +33833,25 @@ Nr.= 48 x=  25 y=  15 rnd=0	 c:   14  47
 Nr.= 49 x=  36 y=   8 rnd=0	 c:   35  46  50
 Nr.= 50 x=  35 y=   4 rnd=0	 c:   49  51
 Nr.= 51 x=  35 y=   3 rnd=0	 c:   50  36
+Nr.= 52 x=  36 y=  51 rnd=0	 c:   53
+Nr.= 53 x=  36 y=  53 rnd=0	 c:   52  54
+Nr.= 54 x=  34 y=  51 rnd=0	 c:   52  53  57
+Nr.= 55 x=  32 y=  52 rnd=0	 c:   56  57  54
+Nr.= 56 x=  29 y=  52 rnd=0	 c:   55
+Nr.= 57 x=  34 y=  52 rnd=0	 c:   52  54  55
+Nr.= 58 x=  40 y=  47 rnd=0	 c:   63
+Nr.= 59 x=  36 y=  48 rnd=0	 c:   62  60  63
+Nr.= 60 x=  30 y=  48 rnd=0	 c:   59
+Nr.= 61 x=  30 y=  46 rnd=0	 c:   62
+Nr.= 62 x=  36 y=  46 rnd=0	 c:   61  59  63
+Nr.= 63 x=  38 y=  48 rnd=0	 c:   59  62  58
+Nr.= 64 x=  41 y=  37 rnd=0	 c:   66  69
+Nr.= 65 x=  38 y=  42 rnd=0	 c:   66
+Nr.= 66 x=  41 y=  42 rnd=0	 c:   65  64
+Nr.= 67 x=  44 y=  47 rnd=0	 c:   68  68
+Nr.= 68 x=  44 y=  34 rnd=0	 c:   67  69
+Nr.= 69 x=  42 y=  34 rnd=0	 c:   64  68  70
+Nr.= 70 x=  42 y=  31 rnd=0	 c:   69
 end_of_level
 ----------------------------------------------------------------------
 Levelnumber: 36
