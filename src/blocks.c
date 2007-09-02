@@ -2887,25 +2887,25 @@ init_obstacle_data( void )
 
   obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_area_parm_1 = 0.7 ;
   obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_area_parm_2 = 0.7 ;
-  obstacle_map [ ISO_DIS_AUTOGUN_N ] . filename = "iso_disautogun_0002.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_N ] . filename = "iso_autogun_0002.png" ;
   obstacle_map [ ISO_DIS_AUTOGUN_N ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_DIS_AUTOGUN_N ] . obstacle_short_name = _("Autogun");
   obstacle_map [ ISO_DIS_AUTOGUN_N ] . obstacle_long_description = _("A not-that-nice autogun. It seems disabled for now.");
   obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_area_parm_1 = 0.7 ;
   obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_area_parm_2 = 0.7 ;
-  obstacle_map [ ISO_DIS_AUTOGUN_S ] . filename = "iso_disautogun_0004.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_S ] . filename = "iso_autogun_0004.png" ;
   obstacle_map [ ISO_DIS_AUTOGUN_S ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_DIS_AUTOGUN_S ] . obstacle_short_name = _("Autogun");
   obstacle_map [ ISO_DIS_AUTOGUN_S ] . obstacle_long_description = _("This killing machine is disabled. For now.");
   obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_area_parm_1 = 0.7 ;
   obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_area_parm_2 = 0.7 ;
-  obstacle_map [ ISO_DIS_AUTOGUN_E ] . filename = "iso_disautogun_0003.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_E ] . filename = "iso_autogun_0003.png" ;
   obstacle_map [ ISO_DIS_AUTOGUN_E ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_DIS_AUTOGUN_E ] . obstacle_short_name = _("Autogun");
   obstacle_map [ ISO_DIS_AUTOGUN_E ] . obstacle_long_description = _("It is looking at you. You are sure it is looking at you. But it does not fire. For now.");
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_area_parm_1 = 0.7 ;
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_area_parm_2 = 0.7 ;
-  obstacle_map [ ISO_DIS_AUTOGUN_W ] . filename = "iso_disautogun_0001.png" ;
+  obstacle_map [ ISO_DIS_AUTOGUN_W ] . filename = "iso_autogun_0001.png" ;
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . block_vision_too = FALSE ;
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . obstacle_short_name = _("Autogun");
   obstacle_map [ ISO_DIS_AUTOGUN_W ] . obstacle_long_description = _("The autogun is disabled.");
@@ -4788,22 +4788,22 @@ init_obstacle_data( void )
     
   obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
   obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_1 = 1.5 ;
-  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_2 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_1 ] . block_area_parm_2 = 5 ;
   obstacle_map [ ISO_RESTAURANT_DESK_1 ] . filename = "iso_restaurant_desk_0001.png" ;
   
   obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_1 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_1 = 5 ;
   obstacle_map [ ISO_RESTAURANT_DESK_2 ] . block_area_parm_2 = 1.5 ;
   obstacle_map [ ISO_RESTAURANT_DESK_2 ] . filename = "iso_restaurant_desk_0002.png" ;
 
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_1 = 1.5 ;
-  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_2 = 3.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_1 = 1.7 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . block_area_parm_2 = 5.5 ;
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_1 ] . filename = "iso_restaurant_desk_0003.png" ;
   
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_type = COLLISION_TYPE_RECTANGLE ;
-  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_1 = 3.5 ;
-  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_2 = 1.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_1 = 5.5 ;
+  obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . block_area_parm_2 = 1.7 ;
   obstacle_map [ ISO_RESTAURANT_BIGSHELF_2 ] . filename = "iso_restaurant_desk_0004.png" ;
 
   // crystals
