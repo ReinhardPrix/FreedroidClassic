@@ -44,7 +44,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Qui suis-je?" 
+New Option Nr=2  OptionText=" Qui suis-je?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=83  PositionY=333  
 Subtitle="Oh seigneur. Ce n'est pas bon. Pas bon."
@@ -53,11 +53,11 @@ Subtitle="*sigh* Une longue période en état d'hibernation peut causer des dommag
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tout vous reviendra dans quelques heures, mais je suppose que ce sera plus facile pour vous si je vous dit tout ce que je sais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Vous êtes un Linarien, une espèce qui n'est pas native de cette planète. Vingt membres de votre espèce sont arrivés ici il y a un siècle." 
+Subtitle="Vous êtes un Linarien, une espèce qui n'est pas native de cette planète. Vingt membres de votre espèce sont arrivés ici il y a un siècle."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il y a eu une... incompréhension, et les humains ont accueilli votre expédition avec des tirs de blaster. Une terrible erreur de notre part."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Quelques uns des tiens ont survécu au massacre et se sont réfugiés dans l'obscurité." 
+Subtitle="Quelques uns des tiens ont survécu au massacre et se sont réfugiés dans l'obscurité."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Pendant ce temps, les Linariens ont acquis la réputation d'être des sauveurs et des héros. Naturellement, actuellement la plupart des gens pensent que tout ça est une totale affabulation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -74,15 +74,15 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=83  PositionY=117  
 Subtitle="C'est une longue histoire. Tout est arrivé il y a cinq mois."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'étais à une manifestation contre MegaSys, une société informatique. Ils ont tué le logiciel libre en trouvant une faille de sécurité redondante dans la license GPL3.14. Alors tout est devenu leur propriété. Salauds."
+Subtitle="J'étais àune manifestation contre MegaSys, une société informatique. Ils ont tué le logiciel libre en trouvant une faille de sécurité redondante dans la license GPL3.14. Alors tout est devenu leur propriété. Salauds."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Une grand nombre de gens se sont insurgés contre cet état de fait. Des protestations et des émeutes ont déferlé tout autour du monde."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lorsque les robots de police se sont approchés, nous pensions qu'ils allaient seulement disperser la foule. Au lieu de ça, ils ont commencé à  nous tuer."
+Subtitle="Lorsque les robots de police se sont approchés, nous pensions qu'ils allaient seulement disperser la foule. Au lieu de ça, ils ont commencé à nous tuer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'ai volé un planneur garé là, et je l'ai utilisé pour m'échapper. Le spectacle vu des airs était horrible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La ville était pleine de flammes, des éclairs des rafales des armes à  feu et des cris des gens. Cette vision n'en finit pas de hanter mes nuits."
+Subtitle="La ville était pleine de flammes, des éclairs des rafales des armes àfeu et des cris des gens. Cette vision n'en finit pas de hanter mes nuits."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="D'abord nous les avons faits, et ensuite ils nous ont défait. Comme c'est ironique."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -96,27 +96,27 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Que s'est-il passé après?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=116  
-Subtitle="J'ai été abattu et je me suis écrasé à quelques kilomètres d'ici."
+Subtitle="J'ai été abattu et je me suis écrasé àquelques kilomètres d'ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Plus tard, j'ai appris que les robots avaient commencé à attaquer tout autour du globe. Les journalistes appelaient ça "Le Grand Assaut". Le nom est resté."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lorsque les robots ont commencé à  intercepter nos émissions de radio, toute communication longue distance est devenue impossible"
+Subtitle="Lorsque les robots ont commencé à intercepter nos émissions de radio, toute communication longue distance est devenue impossible"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je ne sais pas ce qui s'est passé dans le reste du monde après ça. Nous avons été isolés."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Pour ce que j'en sais, la guerre pourrait très bien être déjà terminée."
+Subtitle="Pour ce que j'en sais, la guerre pourrait très bien être déjàterminée."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Oâ¹ suis-je?"
+New Option Nr=6  OptionText=" Où suis-je?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=262  
 Subtitle="Les indigènes appellent l'endroit du 'Temple de Bois'. Nous ne sommes pas trop éloignés d'une ville minière dans laquelle nous avons tenu une protestation contre ces satanées machins."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je suis confus de décevoir, mes mes connaissances en géographie sont un peu déficientes. Je n'ai aucune idée de la région du monde dans laquelle nous nous trouvons."
+Subtitle="Je suis confus de décevoir, mais mes connaissances en géographie sont un peu déficientes. Je n'ai aucune idée de la région du monde dans laquelle nous nous trouvons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="La plupart des gens ici ont un accent allemand, donc si je devais faire une hypothèse, je dirais l'Europe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -130,16 +130,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText=" Pourquoi les Linariens sont ils venus sur ce monde?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=168  PositionY=332  
-Subtitle="La planète tu veux dire ? Personne ne la connait. Tu n'as jamais rien dit à  propos de ça."
+Subtitle="La planète tu veux dire ? Personne ne la connait. Tu n'as jamais rien dit à propos de ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Désolé, je ne peux pas t'aider à  ce propos."
+Subtitle="Désolé, je ne peux pas t'aider à ce propos."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Oâ¹ se situe ce monde dans le vaste univers ?"
+New Option Nr=8  OptionText=" Où se situe ce monde dans le vaste univers ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=169  PositionY=193  
 Subtitle="Je suppose que tu veux dire dans l'univers ?"
@@ -153,9 +153,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Oui, je pense que c'est ton nom pour ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=252  PositionY=193  
-Subtitle="Bien, nous sommes dans un des bras d'une galaxie en spirale, à  trente six mille années lumière du cÅ“ur de la galaxie."
+Subtitle="Bien, nous sommes dans un des bras d'une galaxie en spirale, àtrente six mille années lumière du c½ur de la galaxie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le rayon de cette galaxie est de 43 000 années lumières et sa circonférence est estimée à  270 000 années lumière."
+Subtitle="Le rayon de cette galaxie est de 43 000 années lumières et sa circonférence est estimée à 270 000 années lumière."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="This is a planetary system of ten planets, and we are presently located on the fourth one from our star, Sun."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -172,7 +172,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=83  PositionY=194  
 Subtitle="Je pense que je vais commencer par moi-même."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Francis, Francis Spark. J'ai exercé la fonction d'enseignant dans une petite université avant que l'enfer ne se déchaà®ne."
+Subtitle="Francis, Francis Spark. J'ai exercé la fonction d'enseignant dans une petite université avant que l'enfer ne se déchaîne."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Actuellement, il y a une guerre qui fait rage tout autour du globe. Les humains se battent contre les robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -184,22 +184,22 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" â‡a pourrait être vrai pour n'importe quel endroit. Ta description est trop ambigâ¼e."
+New Option Nr=12  OptionText=" Ça pourrait être vrai pour n'importe quel endroit. Ta description est trop ambigüe."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=253  PositionY=263  
-Subtitle="Sorry, star sciences are my weak point. Maybe someone in the town might know something more."
+Subtitle="Désolé, mes compétences en sciences astronomiques ont atteint leurs limites. Peut être que quelqu'un en ville pourrait en savoir plus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" Je me sens mal... â‰tais-je endormi? Je me rappelle des cauchemars. Un astéroâ¯de fonçant sur une planète et détruisant tout vie..."
+New Option Nr=13  OptionText=" Je me sens mal... Étais-je endormi? Je me rappelle des cauchemars. Un astéroïde fonçant sur une planète et détruisant tout vie..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=28  PositionY=263  
 Subtitle="C'est normal. Tu es resté en stase de sommeil pendant plus de 70 années. La stase n'épargne pas non plus l'esprit. Tes rêves étranges reviendront pendant plusieurs années."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Quelle qu'ait été la raison pour te mettre là  dedans, il faut qu'elle soit sacrément bonne."
+Subtitle="Quelle qu'ait été la raison pour te mettre là dedans, il faut qu'elle soit sacrément bonne."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu as de la chance que je t'ai trouvé et réveillé. Quelques décennies de plus et tu aurais eu des lésions cérébrales irréversibles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -215,13 +215,13 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=252  PositionY=331  
 Subtitle="C'est une petite communauté minière qui n'a pas plus de 500 habitants..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à‡a a été un coup de chance que ça n'ait pas été détruit par les robots. à€ cause de la pauvreté du gisement, la ville ne pourra pas s'offrir de nouveaux modèles."
+Subtitle="Ça a été un coup de chance que ça n'ait pas été détruit par les robots. À cause de la pauvreté du gisement, la ville ne pourra pas s'offrir de nouveaux modèles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tout ce qu'ils avaient au moment de l'attaque robot était la plate-forme de combat du modèle 614. Ils fonctionnaient à  partir d'un vieux système d'exploitation et n'étaient pas affectés par ce qui a rendu les autres robots fous."
+Subtitle="Tout ce qu'ils avaient au moment de l'attaque robot était la plate-forme de combat du modèle 614. Ils fonctionnaient à partir d'un vieux système d'exploitation et n'étaient pas affectés par ce qui a rendu les autres robots fous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Actuellement l'endroit est sous la protection de la Garde Rouge, un groupe de volontaires. Je ne peux pas dire que je sois d'accord avec leurs méthodes." 
+Subtitle="Actuellement l'endroit est sous la protection de la Garde Rouge, un groupe de volontaires. Je ne peux pas dire que je sois d'accord avec leurs méthodes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Néanmoins, je dois admettre qu'être prisonnier des murailles de la ville paraà®t bien plus sympathique que l'alternative d'être éviscéré vivant."
+Subtitle="Néanmoins, je dois admettre qu'être prisonnier des murailles de la ville paraît bien plus sympathique que l'alternative d'être éviscéré vivant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -237,7 +237,7 @@ Subtitle="Tous les robots de l'attaque utilisent un système d'exploitation MegaS
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mais comme on peut s'y attendre, les salauds nient tout en bloc."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement parce que presque tous les robots du monde fonctionnent avec ce bidule, la situation ne paraà®t pas excellente."
+Subtitle="Naturellement parce que presque tous les robots du monde fonctionnent avec ce bidule, la situation ne paraît pas excellente."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 ChangeOption=20 ChangeToValue=1
@@ -257,10 +257,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" â‡a ne peut pas être vrai. Une compagnie ne peut pas contrôler tous les logiciels pour robot dans un monde entier."
+New Option Nr=20  OptionText=" Ça ne peut pas être vrai. Une compagnie ne peut pas contrôler tous les logiciels pour robot dans un monde entier."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=171  PositionY=50  
-Subtitle="à‡a peut. ils ont eu le monopole il y a 30 ans, mais leur dernier concurrent, la communauté open-source, a été défaite il y a environ un an."
+Subtitle="Ça peut. ils ont eu le monopole il y a 30 ans, mais leur dernier concurrent, la communauté open-source, a été défaite il y a environ un an."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Depuis, chaque nouveau robot fabriqué a été fait avec un firmware MegaSys gravé dans ses circuits."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -269,7 +269,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=21  OptionText="Pourquoi est-ce que tu me prépares ça ?"
+New Option Nr=21  OptionText="Pourquoi est-ce que tu m'as réveillé ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=27  PositionY=335  
 Subtitle="La situation dans la ville n'est pas bonne. Les murs s'écroulent et nous avons perdu beaucoup de personnes utiles."

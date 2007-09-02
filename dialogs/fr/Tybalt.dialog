@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Salut ! Je suis nouveau ici."
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Salut. Je suis Tybalt. Je garde le portail de la maison. Seul les personnels autorisés ont accès." 
+Subtitle="Salut. Je suis Tybalt. Je garde le portail de la maison. Seul les personnels autorisés y ont accès." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -42,10 +42,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Pourquoi est ce que le portail est fermé la plupart du temps ?"
+New Option Nr=1  OptionText=" Pourquoi est-ce que le portail est fermé la plupart du temps ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="C'est fermé donc personne ne peut regarder à  l'intérieur tant que je ne regarde pas. C'est pour cela."
+Subtitle="C'est fermé donc personne ne peut regarder à l'intérieur tant que je ne regarde pas. C'est pour cela."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -65,7 +65,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText="THE GATE OPENS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=224  PositionY=154  
-Subtitle="Naturellement. Les membres de la Garde sont toujours autorisés à  entrer dans la salle de garde. La porte est ouverte. Bienvenue chez toi."
+Subtitle="Naturellement. Les membres de la Garde sont toujours autorisés à entrer dans la salle de garde. La porte est ouverte. Bienvenue chez toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="ExecuteActionWithLabel:unlock_guardhouse_door"
@@ -78,7 +78,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=299  PositionY=165  
 Subtitle="Désolé, pal, mais je ne pense pas. Seuls les personnels autorisés ont le droit et ça signifie les membres de la Garde Rouge uniquement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Demande à  Spencer si tu as des questions. Je ne peux pas te laisser passer."
+Subtitle="Demande à Spencer si tu as des questions. Je ne peux pas te laisser passer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 LinkedTo:60
@@ -124,7 +124,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=54  OptionText=" Erm... Je n'en ai pas beaucoup."
+New Option Nr=54  OptionText=" Euh... Je n'ai pas grand chose."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Bien, je ne peux pas ouvrir la porte alors."
@@ -146,7 +146,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=56  OptionText="Ok, maintenant suis moi jusqu'â  la prochaine porte."
+New Option Nr=56  OptionText="Ok, maintenant suis moi jusqu'à la prochaine porte."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Quelle porte ?"
@@ -181,7 +181,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=59  OptionText=" Rends moi mon argent."
+New Option Nr=59  OptionText=" Rends-moi mon argent."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Quel argent ?"

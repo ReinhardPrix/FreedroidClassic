@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici. " 
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Bienvenue, bienvenue ! Je suis Richard. Je suis le gars de l'informatique par ici." 
+Subtitle="Bienvenue, bienvenue ! Je suis Richard. Je suis le gars de l'informatique par ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je travaille la plupart du temps avec ce gros cluster d'ordinateurs, ici, autrement je programme des robots 614 pendant mon temps libre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -43,14 +43,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Un cluster d'ordinateurs? Qu'est-ce que c'est que ça?"
+New Option Nr=1  OptionText=" Un cluster d'ordinateurs ? Qu'est-ce que c'est que ça ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=209  PositionY=280  
-Subtitle="Un cluster est un groupe d'ordinateurs, connectés d'une façon qui les aide à  collaborer dans la résolution de problèmes."
+Subtitle="Un cluster est un groupe d'ordinateurs, connectés d'une façon qui les aide à collaborer dans la résolution de problèmes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Comme ils disent, "deux mains sont mieux que une seule'. Et nous avons beaucoup de mains ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="C'est pourquoi j'appelle ce cluster 'L'Hydre' . Il y beaucoup de têtes à  l'intérieur."
+Subtitle="C'est pourquoi j'appelle ce cluster 'L'Hydre' . Il y beaucoup de têtes à l'intérieur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -69,9 +69,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=6  OptionText=" J'ai un cube de données avec quelques informations. Pouvez vous me dire quelque chose â  ce propos ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
-Subtitle="Intéressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs là  dedans. Peut être que nous pourrions utiliserl'Hydre pour évaluer les données."
+Subtitle="Intéressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs là dedans. Peut être qu'il sera possible d'utiliser l'Hydre pour évaluer les données."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Hé, qu'est-ce que nous avons là  ? Les données sont déjà  prêtes pour l'analyse par un cluster comme le notre. Wow ! C'est terrible !"
+Subtitle="Hé, qu'est-ce que nous avons là ? Les données sont déjà prêtes pour l'analyse par un cluster comme le notre. Wow ! C'est terrible !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je nourrirai l'Hydre avec. Les résultats sont attendus dans peu de temps. L'Hydre ne me laisse jamais attendre trop longtemps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -109,17 +109,17 @@ Subtitle="Naturellement ! Je te l'ai dit, l'Hydre n'a jamais échoué ! Je l'ai co
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il semble probable que les robots peuvent être désactivés par une sorte de champ disrupteur ou quelque chose dans ce genre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'étais occupé par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyé le rapport entier à  Spencer. Il t'en dira plus."
+Subtitle="J'étais occupé par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyé le rapport entier à Spencer. Il t'en dira plus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" â€ plus tard."
+New Option Nr=99  OptionText=" À plus tard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=348  PositionY=273  
-Subtitle="Fais attention, Linarian."
+Subtitle="Fais attention, Linarien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"

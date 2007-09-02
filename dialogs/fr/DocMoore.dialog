@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Vendez-vous de l'équipement médical?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=200  
-Subtitle="Bien sûr. Voici ce que j'ai à  votre disposition en ce moment."
+Subtitle="Bien sûr. Voici ce que j'ai àvotre disposition en ce moment."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 ChangeOption=0 ChangeToValue=0
@@ -70,11 +70,11 @@ Subtitle="Les pilules de force ne sont qu'une variante d'une découverte scientif
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Trois super-pilules différentes furent développés. Une pour la force, une pour la dextérité et une pour la magie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ces pilules fonctionnent à  une échelle nanotechnologique : de toutes petites machines se connectent à  vos tissus musculaires et nerveux."
+Subtitle="Ces pilules fonctionnent à une échelle nanotechnologique : de toutes petites machines se connectent à vos tissus musculaires et nerveux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Les machines se connectent ensemble et forment un tissu artificiel qui a été optimisé pour disposer de qualités propres."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à‰tant donné que cette invention a été réalisée peu avant le Grand Assaut, ces pilules sont très rares."
+Subtitle="Ètant donné que cette invention a été réalisée peu avant le Grand Assaut, ces pilules sont très rares."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mais si tu peux mettre la main dessus, c'est encore mieux, parce que leurs effets sont permanents et, d'après ce que je sais, il n'y a aucun effet secondaire!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -88,7 +88,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=365  PositionY=94  
 Subtitle="Oh non, pas encore un autre. Ces pilules sont un véritable poison."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="En prendre correspond à  un suicide à  retardement."
+Subtitle="En prendre correspond à un suicide à retardement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Bon, prends cet antidote. Il devrait détruire les substances dangereuses contenues dans ton organisme."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -108,7 +108,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=365  PositionY=192  
-Subtitle="Désolé, mais je t'ai déjà  administré une aide médicale."
+Subtitle="Désolé, mais je t'ai déjà administré une aide médicale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Si tu t'empoisonnes toi-même, c'est ton affaire exclusivement et je ne suis pas responsable."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -160,11 +160,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Pouvez-vous me soigner ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=274  
-Subtitle="Bien sûr. à‰tant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
+Subtitle="Bien sûr. Ètant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cependant, les dommages infligés à  soi-même échappent parfois à  cette règle..."
+Subtitle="Cependant, les dommages infligés à soi-même échappent parfois àcette règle..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Voilà , c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
+Subtitle="Voilà,c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
@@ -179,13 +179,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=11  OptionText=" Comment ça, des dommages infligés â  soi-même?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=347  
-Subtitle="Tu vois cet idiot de Bender, là , à  mon seuil ?"
+Subtitle="Tu vois cet idiot de Bender, là, à mon seuil ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il a pris ces satanées pilules d'élargissement cérébral. Donc il est venu me voir pour que je le guérisse. Ok, pas de problème. Mais devine quoi?"
+Subtitle="Il a pris ces satanées pilules d'élargissement cérébral. Donc il est venu me voir pour que je le guérisse. Ok, pas de problème. Mais devine quoi ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il en a pris de nouveau alors que je le lui avais fortement déconseillé. Et maintenant il croit qu'il peut vider mes réserves d'antidote ? Il rêve..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'obtiendra rien de moi. Il serait injuste vis-à -vis de la communauté de gaspiller toutes les réserves pour lui. Ma décision est irrévoquable."
+Subtitle="Il n'obtiendra rien de moi. Il serait injuste vis-à-vis de la communauté de gaspiller toutes les réserves pour lui. Ma décision est irrévoquable."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -195,11 +195,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText=" Pouvez-vous me soigner?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=274  
-Subtitle="Bien sûr. à‰tant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
+Subtitle="Bien sûr. Ètant donné que je suis le seul médecin de cette petite communauté, je suis responsable de la santé de chacun."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cependant, les dommages infligés à  soi-même échappent parfois à  cette règle..."
+Subtitle="Cependant, les dommages infligés à soi-même échappent parfois à cette règle..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Voilà , c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
+Subtitle="Voilà, c'est bon. Tu es complètement guéri. Tu peux partir, maintenant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
@@ -257,7 +257,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=24  OptionText=" Préparez vous Doc. L'espérience va commencer."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Ne fais pas ça !  NE FAIS PAS à‡A !"
+Subtitle="Ne fais pas ça !  NE FAIS PAS ÇA !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="AAAAAAAAAAAAA !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -267,7 +267,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=25  OptionText=" Huh. Le sang humain est dégoâ»tant. Au moins quatre litres. Je me sens mal."
+New Option Nr=25  OptionText=" Huh. Le sang humain est dégoûtant. Au moins quatre litres. Je me sens mal."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=" . . ."
@@ -278,7 +278,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=26  OptionText=" Je suppose que je vais hériter ce tous ces trucs. J'espère que ça ne te dérange pas si je prends tout ?"
+New Option Nr=26  OptionText=" Je suppose que je vais hériter de tous ces trucs. J'espère que ça ne te dérange pas si je prends tout ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=" . . ."
@@ -289,7 +289,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=27  OptionText=" Bien. Je suis très heureux ne peut pas entendre ta désapprobation."
+New Option Nr=27  OptionText=" Bien. Je suis très heureux de pas entendre de désapprobation."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle=" . . ."
@@ -318,10 +318,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" â€ plus tard."
+New Option Nr=99  OptionText=" À plus tard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle="à€ plus tard."
+Subtitle="À plus tard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

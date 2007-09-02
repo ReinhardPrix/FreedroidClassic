@@ -59,7 +59,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Augmente les capacités de hack (coâ»te 300 en liquide, 10 points de compétence supplémentaires)" 
+New Option Nr=4  OptionText=" Augmente les capacités de hack (coûte 300 en liquide, 10 points de compétence supplémentaires)" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=195  PositionY=184  
 ChangeOption=4 ChangeToValue=1
@@ -72,11 +72,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=423  PositionY=183  
-Subtitle="Bien. La chose la plus importante à  propos du hack est de comprendre la nature de la machine que tu veux hacker."
+Subtitle="Bien. La chose la plus importante àpropos du hack est de comprendre la nature de la machine que tu veux hacker."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Une fois que tu t'es représenté ce que les créateurs de la machine ont voulu faire, tu sauras également quel est le meilleur moyen de la hacker."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je vois que ton savoir en hack a déjà  beaucoup augmenté."
+Subtitle="Je vois que ton savoir en hack a déjà beaucoup augmenté."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 DoSomethingExtra="IncreaseHackingSkill"

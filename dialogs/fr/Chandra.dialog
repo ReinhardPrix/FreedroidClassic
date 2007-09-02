@@ -43,7 +43,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Que peux tu me dire â  propos de cet endroit ?"
+New Option Nr=1  OptionText=" Que peux-tu me dire à propos de cet endroit ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=161  
 Subtitle="Cette petite ville existait avant le Grand Assaut. C'était le lieu d'une communauté minière prospère."
@@ -57,26 +57,26 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Oâ» puis-je me procurer un meilleur équipement?"
+New Option Nr=2  OptionText=" Où puis-je me procurer un meilleur équipement ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=109  PositionY=163  
-Subtitle="Le magasin est à  l'est. Mlle Stone a toujours un bon choix d'équipement ici."
+Subtitle="Le magasin est àl'est. Mlle Stone a toujours un bon choix d'équipement ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et la Garde Rouge a toujours les plus gros pistolets et les meilleures armures, mais ils ne les vendent pas à  des non-membres."
+Subtitle="Et la Garde Rouge a toujours les plus gros pistolets et les meilleures armures, mais ils ne les vendent pas à des non-membres."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Alors qu'est-ce qui est étrange â  propos de cette attaque ?"
+New Option Nr=3  OptionText=" Alors qu'est-ce qui est étrange à propos de cette attaque ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=523  PositionY=162  
-Subtitle="En accord avec mes calculs de l'estimation de Fermi, il y a environ sept millions de robots actifs dans la région."
+Subtitle="En accord avec mes calculs issus de l'estimation de Fermi, il y a environ sept millions de robots actifs dans la région."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="D'accord, je pense que vous serez d'accord avec moi au sujet de l'assertion suivante : Si ce sont des robots, alors ils tuent tout ce qui vit."
+Subtitle="D'accord, je pense que vous serez d'accord avec moi au sujet de l'assertion suivante : Si ce sont des robots, alors ils tuent chaque chose vivante."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à€ partir du postulat que vous et moi sommes en vie."
+Subtitle="À partir du postulat que vous et moi sommes en vie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Présentemment, si nous ne sommes pas morts, et si les robots tuent chaque chose vivante..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -97,19 +97,19 @@ Subtitle="Ils pouraient simplement entrer dans la ville et massacrer tout le mon
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mais ils ne le font pas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à‡a ne veut rien dire du tout !"
+Subtitle="Ça ne veut rien dire du tout !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Que voulez vous savoir â  propos des robots hostiles ?"
+New Option Nr=5  OptionText=" Que voulez-vous savoir à propos des robots hostiles ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=162  
-Subtitle="Le phénomène des robots hostiles a occupé mon esprit pendant beaucoup de temps. Il y a quelque chose d'étrange dans ce comportement, que je ne parviens pas à  expliquer."
+Subtitle="Le phénomène des robots hostiles a occupé mon esprit pendant beaucoup de temps. Il y a quelque chose d'étrange dans ce comportement, que je ne parviens pas à expliquer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cela ne concerne pas seulement l'irrationalié des attaques mais également les méthodes et le niveau de tout cela."
+Subtitle="Cela ne concerne pas seulement l'irrationalité des attaques mais également les méthodes et le niveau de tout cela."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=1
 ChangeOption=6 ChangeToValue=1
@@ -119,20 +119,20 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Quels sont les types de robots existants â  l'extérieur ?"
+New Option Nr=6  OptionText=" Quels sont les types de robots existants àl'extérieur ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=95  
 Subtitle="Hmm... Chaque genre de robot a un numéro composé de trois chiffres. Le premier est le plus significatif, il désigne la classe du robot."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'en sais un peu à  propos de trois classes."
+Subtitle="J'en sais un peu à propos de trois classes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ceux dans la catégorie des 100 nettoient les robots anciens. Ils ne font rien d'étrange la plupart du temps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La série des 200 est plus dangereuse. Veillez à  ne pas être attaqué par plus de l'un d'entre eux à  la fois."
+Subtitle="La série des 200 est plus dangereuse. Veillez à ne pas être attaqué par plus de l'un d'entre eux àla fois."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Une référence dans la classe des 300 équivaut à  la mort, donc essayez de les éviter."
+Subtitle="Une référence dans la classe des 300 équivaut à la mort, donc essayez de les éviter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je suis certain qu'il y a beaucoup plus de classes de robot que ça, mais je ne sais rien à  propos d'eux."
+Subtitle="Je suis certain qu'il y a beaucoup plus de classes de robot que ça, mais je ne sais rien à leurs propos."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 ChangeOption=13 ChangeToValue=1
@@ -145,11 +145,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText=" Je veux quitter cet endroit."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=426  PositionY=251  
-Subtitle="Nous tous, Linarian, nous tous."
+Subtitle="Nous tous, Linarien, nous tous."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="L'acte en question est rendu impossible pour la quantité quasi-infinie des robots en dehors des murs de la ville."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu ne peux pas vivre longtemps à  l'extérieur."
+Subtitle="Tu ne peux pas vivre longtemps à l'extérieur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=1
@@ -160,7 +160,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" Non, je répète que je veux quitter cet endroit."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=335  PositionY=251  
-Subtitle="Très simple. Marche à  l'extérieur des murs de la ville, et les robots t'expédieront dans l'autre monde en quelques minutes."
+Subtitle="Très simple. Va te balader àl'extérieur des murs de la ville, et les robots t'expédieront dans l'autre monde en quelques minutes."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Bien que tu veuilles quitter la planète, dans tous les cas cela est impossible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -178,27 +178,27 @@ Subtitle="Mon conseil est d'investir dans un ratelier d'armes. Bien que ça puiss
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Actuellement, il y a un embargo sur la vente de certaines choses. La Garde Rouge veut garder le monopole de l'armement efficace."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu devrais avoir du mal à  trouver quelque chose de décent pour tirer, mais il y a d'autres options."
+Subtitle="Tu devrais avoir du mal à trouver quelque chose de décent pour tirer, mais il y a d'autres options."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ewald vend des potions qui peuvent augmenter tes capacités à  combattre pendant quelques temps. Il garde la composition secrète, et le prix est très élevé."
+Subtitle="Ewald vend des potions qui peuvent augmenter tes capacités à combattre pendant quelques temps. Il garde la composition secrète, et le prix est très élevé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il y avait une personne qui vendait des grenades aussi. Euh... J'ai oublié son nom, la mémoire me fait défaut aujourd'hui. Je suis certain qu'il peut t'aider."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Autrement, tu es livré à  toi-même."
+Subtitle="Autrement, tu es livré à toi-même."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=10  OptionText=" Est-ce que tu penses que je pourrais joindre les gardiens de cette ville ?"
+New Option Nr=10  OptionText=" Est-ce que tu penses que je pourrais rejoindre les gardiens de cette ville ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=293  PositionY=252  
 Subtitle="La Garde Rouge ? Improbable. Tu devras te faire une réputation avant et montrer que tu peux réparer les objets."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement, la Garde Rouge n'est pas une organisation très populaire, donc si tu les rejoins, tu devras t'attendre à  ce que certaines personnes te haà¯ssent."
+Subtitle="Naturellement, la Garde Rouge n'est pas une organisation très populaire, donc si tu les rejoins, tu devras t'attendre à ce que certaines personnes te haïssent."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Comme les anciens le disaient, 'Boni pastoris est tondere pecus, non deglubere'. Une bonne taxe doit être une taxe raisonnable." 
+Subtitle="Comme les anciens le disaient, 'Boni pastoris est tondere pecus, non deglubere'. Une bonne taxe doit être une taxe raisonnable."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -210,9 +210,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=522  PositionY=95  
 Subtitle="Je connais deux modèles. Le 123 et le 139."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Parce qu'ils sont aussi rapides qu'inoffensifs, la Garde Rouge les utilise comme cible d'entraà®nement."
+Subtitle="Parce qu'ils sont aussi rapides qu'inoffensifs, la Garde Rouge les utilise comme cibles d'entraînement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si j'étais toi, je ne les surestimerai pas. "
+Subtitle="Si j'étais toi, je ne les surestimerais pas. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nec Hercules contra plures."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -254,7 +254,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Merci pour tes paroles avisées."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=198  PositionY=102  
-Subtitle="Sentez vous libre de venir ici à  chaque fois que vous le voulez."
+Subtitle="Sens-toi libre de venir ici à chaque fois que tu le souhaite."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

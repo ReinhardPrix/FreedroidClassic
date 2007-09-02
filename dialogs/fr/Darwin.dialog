@@ -33,9 +33,9 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=253  
-Subtitle="Salut. Nous sommes les frères Fleischer."
+Subtitle="Bonjour. Nous sommes les frères Fleischer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je suis Engel. Lui c'est Geist, et il ne parle pas français."
+Subtitle="Je suis Engel. Lui c'est Geist, et il ne sait pas parler."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -71,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Si vous restez ici, plus de robots vont venir et ils vous tueront. Allez dans un endroit oâ¹ vous serez en sécurité, et barricadez vous."
+New Option Nr=3  OptionText=" Si vous restez ici, plus de robots vont venir et ils vous tueront. Allez dans un endroit où vous serez en sécurité, et barricadez-vous."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=277  PositionY=393  
 ChangeOption=3 ChangeToValue=0
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Vous êtes fou. Allez-vous-en tant que vous le pouvez encore."
+New Option Nr=5  OptionText=" Vous êtes fou. Allez vous-en tant que vous le pouvez encore."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Non."
@@ -115,9 +115,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Nulle part. C'est la fin du monde. Il n'y a pas d'aide possible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a une ville un peu au sud d'ici, mais si j'étais vous, je n'irai pas là  bas."
+Subtitle="Il y a une ville un peu au sud d'ici, mais si j'étais vous, je n'irai pas là bas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La Rot Garde fait la loi là -bas, et la cruauté est leur seule réponse."
+Subtitle="La Rot Garde fait la loi là-bas, et la cruauté est leur seule réponse."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="La vraie liberté est vraiment morte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -138,7 +138,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=8  OptionText=" Vous êtes compléte --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="QUOI ?! Qu'est ce que tu veux dire?"
+Subtitle="QUOI ?! Qu'est ce que tu veux dire ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 LinkedTo:9
@@ -149,7 +149,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText=" Erm... Je --"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="QUOI ?! RETIRE à‡A !"
+Subtitle="QUOI ?! RETIRE ÇA !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=9 ChangeToValue=0
 LinkedTo:10
@@ -162,7 +162,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Donnerwetter, tu es un sacré plaisantin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'espère qu'un jour nous nous rencontrerons à  nouveaux, sous de meilleures hospices."
+Subtitle="J'espère qu'un jour nous nous rencontrerons à nouveaux, sous de meilleures hospices."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Puisses-tu alors nous raconter d'autres bonnes blagues salaces que tu connais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -204,7 +204,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText=" Puis-je rejoindre votre cause ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Nein. Notre problème. Notre quête."
+Subtitle="Nein. C'est notre problème. Notre quête."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=73  PositionY=220  
-Subtitle="Excellent. Maintenant retourne d'oà¹ tu viens. Ce n'est pas un endroit qui te convient." 
+Subtitle="Excellent. Maintenant retourne d'où tu viens. Ce n'est pas un endroit qui te convient." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -48,7 +48,7 @@ Subtitle="Ceci est une porte vers une usine de robots automatisée que nous appel
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu es certainement fou si tu désires t'y rendre. Cet endroit est plein de robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Sors de là . Ils peuvent attaquer n'importe quand!"
+Subtitle="Sors de là. Ils peuvent attaquer n'importe quand !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -56,14 +56,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Qu'est ce qui se passe si je ne faits que marcher ici ? Tu vas tenter de m'arrêter ?"
+New Option Nr=2  OptionText=" Qu'est ce qui se passe si je ne fais que marcher ici ? Tu vas tenter de m'arrêter ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=279  PositionY=102  
 Subtitle="bien sûr que non. T'assassiner serait une perte de temps complète."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="les robots feront attention à  ça à  ma place."
+Subtitle="Les robots y veilleront pour moi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Rappelle toi seulement de me donner mes gages avant de te suicider."
+Subtitle="Rappelle-toi seulement de me donner mes gages avant de te suicider."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu n'auras pas besoin d'argent si tu es mort, et moi j'en aurai l'usage, pas vrai ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

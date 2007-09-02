@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Login : tux  Password : *******" 
+New Option Nr=0  OptionText=" Identifiant : tux  Mot de Passe : *******" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
 Subtitle="Dernière connexion sur dev/ttyS0 le Dim, 23 mar 2057. tux@hacked_bot: ~ #" 
@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=1  OptionText=" ./pull_breaks.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186  
-Subtitle="Exploitation des failles, utilisant le script V 1.0.2 (c) gnu.org, 2054 vérification requises. à‰nergie sur les failles. Fait. à‰tat : Tout mouvemement interrompu." 
+Subtitle="Exploitation des failles, utilisant le script V 1.0.2 (c) gnu.org, 2054 vérification requises. Énergie sur les failles. Fait. Ètat : Tout mouvemement interrompu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 DoSomethingExtra="SetCompletelyFixedProperty"
@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" ./follow_me.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=156  PositionY=107  
-Subtitle="Initialisation de la séquence de suivi. à‰nergie sur la faille déplacée. Tentative de conserver la position de Tux. D'accord. On suit Tux."
+Subtitle="Initialisation de la séquence de suivi. Énergie sur la faille déplacée. Tentative de conserver la position de Tux. D'accord. On suit Tux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 DoSomethingExtra="SetFollowTuxProperty"
@@ -69,7 +69,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" ./move_freely.sh"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=250  
-Subtitle="Enlève l'énergie de la faille. Arrêt des opération de routine de patrouille. Fait. à‰tat : en patrouille."
+Subtitle="Enlève l'énergie de la faille. Arrêt des opération de routine de patrouille. Fait. État : en patrouille."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 DoSomethingExtra="SetMoveFreelyProperty"
@@ -160,7 +160,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText="EVERYTHING IS READY."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="()%#@(% THE BLADE IS YOURS. )##%*&%*!"
+Subtitle="()%#@(% L'ÉPÉE EST À TOI. )##%*&%*!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 DoSomethingExtra="GiveItem:120"
@@ -179,7 +179,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" logout"
+New Option Nr=99  OptionText=" déconnexion"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=351  PositionY=231  
 ChangeOption=99 ChangeToValue=1

@@ -46,7 +46,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" J'aimerai faire affaire avec vous."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=276  PositionY=238  
-Subtitle="Parfait. Voici une sélection des objets que je propose à  la vente."
+Subtitle="Parfait. Voici une sélection des objets que je propose à la vente."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Stone"
@@ -68,12 +68,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Que pouvez vous me dire â  propos des gardes ici ?"
+New Option Nr=3  OptionText=" Que pouvez vous me dire à propos des gardes ici ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=174  PositionY=149  
 Subtitle="Ah, la Garde Rouge. "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à‰tranger, le mieux est que tu ne poses pas trop de questions."
+Subtitle="Étranger, le mieux est que tu ne poses pas trop de questions."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ils nous gardent vivant et en sécurité des robots, mais..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -83,16 +83,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Mais...?"
+New Option Nr=4  OptionText=" Mais... ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=276  PositionY=150  
 Subtitle="Ils s'occupent de la ville avec des lois strictes et demandent une totale soumission."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous sommes tous obligés d'obéir à  leurs règles. Nous sommes tous obligés de travailler dur, autrement ils nous frappent."
+Subtitle="Nous sommes tous obligés d'obéir à leurs règles. Nous sommes tous obligés de travailler dur, autrement ils nous frappent."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je suppose que je ne devrai pas me plaindre. Les robots sont de très loin pire à  ce que peuvent être les gardes, mais..."
+Subtitle="Je suppose que je ne devrais pas me plaindre. Les robots sont de très loin pire à ce que peuvent être les gardes, mais..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="àŠtre exploité par un régime sanglant pendant de nombreuses années ou seulement être découpés en morceaux par nos serviteurs originels..."
+Subtitle="Être exploité par un régime sanglant pendant de nombreuses années ou seulement être découpés en morceaux par nos serviteurs originels..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="... Quelle est la différence? "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -168,7 +168,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=276  PositionY=324  
 Subtitle="Je serai achevé dans environ une semaine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La famille Stone a toujours acheté pas cher et vend à  faible marge. Les temps ont changé, mais pas mes prix."
+Subtitle="La famille Stone a toujours acheté pas cher et vend à faible marge. Les temps ont changé, mais pas mes prix."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Les nouvelles taxes, la mondialisation de l'économie et d'autres facteurs assassinent lentement le magasin familial."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -191,14 +191,14 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=13  OptionText=" Puis-je vous aider d'une quelconque façon Mlle Stone ?"
+New Option Nr=13  OptionText=" Puis-je vous aider d'une quelconque façon, Mlle Stone ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=277  PositionY=410  
 Subtitle="Non, il n'y a rien qui puisse être fait de toutes façons. Je n'ai pas assez d'argent pour extraire le magasin de la spirale de la récession."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'aurai besoin de 1000 seulement pour survivre ce mois."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le magasin se meurt, et nous ne pouvons rien faire à  ce sujet."
+Subtitle="Le magasin se meurt, et nous ne pouvons rien faire à ce sujet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 ChangeOption=15 ChangeToValue=1
@@ -216,10 +216,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=15  OptionText=" Il est possible qu'il reste un espoir, Mlle Stone. De combien avez vous besoin exactement ?"
+New Option Nr=15  OptionText=" Il est possible qu'il y ait de l'espoir, Mlle Stone. De combien avez vous besoin exactement ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=362  PositionY=410  
-Subtitle="Je ne pourrai pas moi-même jeter un Å“il aux registres de compatibilité pendant quelques temps. Je suppose que j'ai cinq ou six mille triangles."
+Subtitle="Je ne pourrai pas moi-même jeter un ½il aux registres de compatibilité pendant quelques temps. Je suppose que j'ai cinq ou six mille triangles."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 DoSomethingExtra="PlantCookie:Helping_Stone:"
@@ -228,7 +228,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=16  OptionText=" Quelle dommage que nous ne puissions rien faire â  propos de vote magasin."
+New Option Nr=16  OptionText=" Quelle dommage que nous ne puissions rien faire à propos de vote magasin."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=362  PositionY=325  
 Subtitle="Oui. Six générations se sont succédées en occupant ce magasin..."
@@ -292,10 +292,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=23  OptionText=" J'ai l'argent dont vous avez besoin Mlle Stone. Il est â  vous."
+New Option Nr=23  OptionText=" J'ai l'argent dont vous avez besoin, Mlle Stone. Il est à vous."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=1024  PositionY=178  
-Subtitle="Est-ce... Est-ce que c'est un blague ? Autant d'argent ? Et tu me le donnes, à  moi ?"
+Subtitle="Est-ce... Est-ce que c'est un blague ? Autant d'argent ? Et tu me le donnes, à moi ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Merci ! Merci ! Merci ! Tu es un héros !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -315,7 +315,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" â€ plus tard."
+New Option Nr=99  OptionText=" À plus tard."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=447  PositionY=63  
 Subtitle="NO_SUBTITLE_AND_NO_WAITING_EITHER"

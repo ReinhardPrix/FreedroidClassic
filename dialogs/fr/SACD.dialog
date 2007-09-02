@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Identifiant : admin  Mot de passe : *******" 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=71  PositionY=177  
-Subtitle="Dernière connexion depuis dev/ttyS0 le Dim, 23 mar 2057. admin@sadefence: ~ #" 
+Subtitle="Dernière connexion depuis dev/ttyS0 le Dim, 23 mar 2057. admin@sadefence: ~ #"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -49,7 +49,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
 Subtitle="Désativation des armes..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Connection au contrôleur périphérique..."
+Subtitle="Connexion au contrôleur périphérique..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Armes désactivées."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -87,7 +87,7 @@ Subtitle="Ouverture des portes..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Connection au contrôleur périphérique..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="S'il vous plaà®t entrez votre mot de passe de sécurité :"
+Subtitle="S'il vous plaît entrez votre mot de passe de sécurité :"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 LinkedTo:5
@@ -114,7 +114,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" ctrl+c"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=155  PositionY=186
-Subtitle="Une erreur est survenue à  l'ouverture des portes"
+Subtitle="Une erreur est survenue àl'ouverture des portes"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

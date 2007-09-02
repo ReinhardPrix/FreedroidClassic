@@ -49,9 +49,9 @@ Subtitle="Ton désir de collecter des informations m'amuse. Je vais exaucer ton s
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu dois savoir que le hack est un art. C'est facile de découper ton ennemi en morceau avec une épée ou de le désintégrer avec une grenade... Mais le hack nécessite des compétences."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Regarde ce terminal... Je suis connecté à  un système à  distance. Un inconscient va simplement lancer une centaine d'attaques en même temps, mais un intrus compétent va s'arrêter et réfléchir."
+Subtitle="Regarde ce terminal... Je suis connecté àun système à distance. Un inconscient va simplement lancer une centaine d'attaques en même temps, mais un intrus compétent va s'arrêter et réfléchir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu dois savoir quand tu peux hacker et quant ne pas hacker. Tu dois attaquer l'ennemi qui ne s'y attend pas."
+Subtitle="Tu dois savoir quand tu peux hacker et quand ne pas hacker. Tu dois attaquer l'ennemi qui ne s'y attend pas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Maintenant regarde. Observe avec attention. Regarde comment je rentre dans le système... Oui. Regarde la connexion étincelle, brûle comme une étoile de forte magnitude..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -71,7 +71,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Je ne cherche pas de récompense. Seulement de la gratitude."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=436  PositionY=250  
-Subtitle="Naturellement tu peux le prendre. Je te suis très reconnaissant. à‡a te revient."
+Subtitle="Naturellement tu peux le prendre. Je te suis très reconnaissant. Ça te revient."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -84,7 +84,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" Je veux de l'argent."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=277  PositionY=405  
-Subtitle="Hé... Tiens, prends ces 500 dollars. à‡a devrait être suffisant."
+Subtitle="Hé... Tiens, prends ces 500 dollars. Ça devrait être suffisant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0

@@ -35,7 +35,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=61  PositionY=200  
 Subtitle="Ainsi tu es venu. Je savais que Duncan ne me laisserai pas vivre très longtemps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et je me suis rendu dans cette oasis de paix dans le mode se désséchant et mourrant. Quelle honte."
+Subtitle="Et je me suis rendu dans cette oasis de paix dans le mode se desséchant et mourrant. Quelle honte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'espère transformer le désert entier en un sanctuaire. Et maintenant mes rêves ne deviendront jamais réalité."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -48,7 +48,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText="Avec plaisir."
+New Option Nr=1  OptionText=" Avec plaisir."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=1 ChangeToValue=0
@@ -82,7 +82,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ah, oui. C'est de ma faute, je suis peureux."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Oà¹ que j'aille, la vie me suive."
+Subtitle="Où que j'aille, la vie me suit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je pensais que je pouvais être caché de Duncan dans ce vieux bunker."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -105,7 +105,7 @@ Subtitle="Aussitôt que je m'en vais, chaque chose meurt. J'ai vu ce qui s'est pa
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Parce que cet endroit est seulement un petit morceau de paradis, j'ai décidé de rester ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je ne veux pas que la vie quitte ce merveilleux bunker à  nouveau."
+Subtitle="Je ne veux pas que la vie quitte ce merveilleux bunker à nouveau."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -117,7 +117,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Très simple. Il aime la destruction, et je suis la création."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'y a rien de plus là -dedans."
+Subtitle="Il n'y a rien de plus là-dedans."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=20 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -127,7 +127,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Je dois y aller maintenant."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=512  PositionY=290  
-Subtitle="Cet endroit sera toujours là  pour toi."
+Subtitle="Cet endroit sera toujours làpour toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="CompletelyHealTux"

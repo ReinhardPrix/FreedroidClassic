@@ -41,7 +41,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Qu'est ce qui ne va pas ? Tu parais être en bonne forme état pour une personne morte."
+New Option Nr=1  OptionText=" Qu'est ce qui ne va pas ? Tu parais être en bonne forme pour une personne morte."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=133  PositionY=269  
 Subtitle="Ouais. Je suis l'homme le plus fort du monde. C'est parce que j'ai avalé TOUTES les pilules de force."
@@ -94,7 +94,7 @@ Subtitle="'Agrandiss3z votre cerveau! Achetez des pilules ! P4s ch3r !!!'"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Et tout le monde dans le camp disait que j'étais stupide, alors que ce n'est pas vrai."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alors j'ai pensé que ces pilules les feraient changer d'avis à  mon sujet."
+Subtitle="Alors j'ai pensé que ces pilules les feraient changer d'avis à mon sujet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -106,7 +106,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Mais si tu n'étais pas stupide, pourquoi as tu utilisé les pilules d'augmentation de la masse cérébrale ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=345  PositionY=250  
-Subtitle="Parce qu'ils disaient que j'étais bête. Donc j'étais obligé de réagir, pas vrai ?"
+Subtitle="Parce qu'ils disaient que j'étais bête. Donc j'étais obligé de réagir, n'est-ce pas ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -118,7 +118,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=340  PositionY=147  
 Subtitle="Ouais, le doc pourrait faire quelque chose. Mais il ne fera rien. Je l'ai menacé, mais il ne fera rien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il est très inquiet parce que je ne l'ai pas écouté. C'est lui qui m'a averti à  propos des pilules d'augmentation de la masse cérébrale."
+Subtitle="Il est très inquiet parce que je ne l'ai pas écouté. C'est lui qui m'a averti à propos des pilules d'augmentation de la masse cérébrale."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Elles peuvent être responsables d'atroces manifestations cancéreuses. Mais je ne l'ai pas écouté. Et maintenant, il refuse de m'aider, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -136,7 +136,7 @@ Subtitle="Mec, si tu pouvais le faire, je te donnerais n'importe quoi. J'ai enco
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je pourrais aussi voter pour toi si tu voulais rejoindre la garde de la ville."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Procure moi juste un peu de remède, et je te serai reconnaissant pour toujours !"
+Subtitle="Procure-moi juste un peu de remède, et je te serai reconnaissant pour toujours !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=8 ChangeToValue=0
@@ -165,9 +165,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=9  OptionText=" J'ai ton médicament. Avec les meilleurs souhaits de rétablissement de la part du docteur."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=397  PositionY=442  
-Subtitle="Wow, tu l'as vraiment fait ! Je suppose que tu lui as mis une sacrée raclée."
+Subtitle="Époustouflant, tu l'as vraiment fait ! Je suppose que tu lui as mis une sacrée raclée."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'a pas voulu m'aider même après que je l'ai un peu frappé. Un peu beaucoup."
+Subtitle="Il n'a pas voulu m'aider, même après que je l'ai un peu frappé. Un peu beaucoup."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mec, tu es le plus génial des héros !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -193,7 +193,7 @@ Subtitle="QUOI ? Tu viens de dire que je suis stupide ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ne dis pas ça, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je peux te tuer de façon tellement atroce que personne ne reconnaà®tra ton cadavre !"
+Subtitle="Je peux te tuer de façon tellement atroce que personne ne reconnaîtra ton cadavre !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=10 ChangeToValue=0
 ChangeOption=50 ChangeToValue=1
@@ -201,24 +201,24 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=11  OptionText=" Oâ¹ est-ce que je peux trouver ce docteur ?"
+New Option Nr=11  OptionText=" Où est-ce que je peux trouver ce docteur ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=556  PositionY=218  
-Subtitle="Il est à  l'intérieur de cet immeuble. Je l'attends ici, mec."
+Subtitle="Il est à l'intérieur de cet immeuble. Je l'attends ici, mec."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Quand il sera sorti, peut être que je pourrai le frapper encore un peu. Peut être même qu'il finira alors par m'aider!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ouais, va recevoir une bonne raclée. Ce qui le fera réfléchir ! Quel sale chacal !"
+Subtitle="Ouais, il va recevoir une bonne raclée. Ce qui le fera réfléchir ! Quel sale chacal !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=11 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=12  OptionText=" De quelle genre de médicament as-tu besoin..."
+New Option Nr=12  OptionText=" De quel genre de médicament as-tu besoin..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=394  PositionY=497  
-Subtitle="Qu'est ce que tu as?"
+Subtitle="Qu'est ce que tu as ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Quoi, t'as rien?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -321,7 +321,7 @@ Subtitle="Quoi ? Je ne suis pas idiot ! Compris ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Personne ne dit que je suis stupide ! Je NE SUIS PAS STUPIDE !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="JE VAIS T'à‰CLATER !"
+Subtitle="JE VAIS T'ÈCLATER !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=50 ChangeToValue=0
 DoSomethingExtra="BreakOffAndBecomeHostile"

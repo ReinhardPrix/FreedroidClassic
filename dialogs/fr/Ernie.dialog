@@ -47,7 +47,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText="Surveille juste les alentours."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=175  PositionY=358  
-Subtitle="Ok ! Mais ne cause plus de problèmes ! Ou c'est toi qui aura des problèmes!"
+Subtitle="Ok ! Mais ne cause plus de problèmes ! Ou c'est toi qui auras des problèmes!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -60,7 +60,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="J'aurai aimé t'avoir avec moi dans la mine."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=217  PositionY=216  
-Subtitle="Ok ! Mais ne cause plus de problèmes ! Ou c'est toi qui aura des problèmes!"
+Subtitle="Ok ! Mais ne cause plus de problèmes ! Ou c'est toi qui auras des problèmes!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
@@ -70,10 +70,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText="Je suis ici pour mettre fin â  ton commerce minier."
+New Option Nr=3  OptionText="Je suis ici pour mettre fin à ton commerce minier."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=182  PositionY=103  
-Subtitle="Ok Linarian ! Tu le prends comme ça ! Et de toutes façons je n'aime pas les manchots !"
+Subtitle="Ok Linarien ! Tu le prends comme ça ! Et de toutes façons je n'aime pas les manchots !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0

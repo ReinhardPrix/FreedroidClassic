@@ -49,13 +49,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" Oui, c'est moi." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=491  PositionY=354  
-Subtitle="Je croyais aussi. Mon grand-père me racontait souvent des histoires à  ton sujet. Il disait que tu arriverais en une époque de désespoir."
+Subtitle="Je croyais aussi. Mon grand-père me racontait souvent des histoires à ton sujet. Il disait que tu arriverais en une époque de désespoir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Et maintenant tu es là ."
+Subtitle="Et maintenant tu es là."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'espère que ton arrivée va changer le cours de cette guerre..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tux, si jamais tu trouves celui qui a déclenché le Grand Assaut... BOTTE LUI LE CUL, DE LA PART DE LILY STONE!!!"
+Subtitle="Tux, si jamais tu trouves celui qui a déclenché le Grand Assaut... BOTTE LUI LES FESSES, DE LA PART DE LILY STONE!!!"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0

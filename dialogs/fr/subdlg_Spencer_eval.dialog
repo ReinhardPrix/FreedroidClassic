@@ -50,7 +50,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=13  OptionText="DIXON SUCCESSFUL."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=502  PositionY=378  
-Subtitle=" La division technique a rapporté que tu les avais sortis d'affaire avec leurs difficultés, néanmoins, ils sont restés très vagues à  ce sujet." 
+Subtitle=" La division technique a rapporté que tu les avais sortis d'affaire avec leurs difficultés, néanmoins, ils sont restés très vagues à ce sujet." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Bon travail."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -63,7 +63,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=14  OptionText="DIXON NOT DONE YET"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=501  PositionY=455  
-Subtitle="Dixon, le chef de la division technique, a mentionné il y a quelques jours qu'ils sont à  court de personnel."
+Subtitle="Dixon, le chef de la division technique, a mentionné il y a quelques jours qu'ils sont àcourt de personnel."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=14 ChangeToValue=0
 LinkedTo:17
@@ -74,9 +74,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="MICHELANGELO DONE."
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=625  PositionY=373  
-Subtitle="Le qualité de nourriture a augmenté depuis que tu as rapporté le four à  macro-ondes poura faire la cuisine."
+Subtitle="Le qualité de nourriture a augmenté depuis que tu as rapporté le four à macro-ondes poura faire la cuisine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Avant ça, 12 personnes sont mortes à  cause de la mauvaise qualité de la nourriture, mais mieux vaut tard que jamais."
+Subtitle="Avant ça, 12 personnes sont mortes à cause de la mauvaise qualité de la nourriture, mais mieux vaut tard que jamais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=15 ChangeToValue=0
 LinkedTo:18
@@ -87,11 +87,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="MICHELANGELO NOT DONE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=627  PositionY=454  
-Subtitle="Notre situation a empiré à  cause de la piètre qualité de la nourriture disponible."
+Subtitle="Notre situation a empiré à cause de la piètre qualité de la nourriture disponible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Nous avons également quelques cas de cannibalisme, mais après que j'en ai descendu quelques uns, tout est rentré dans l'ordre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="S'il te plaà®t, parle de notre cuisine et essaie d'arranger la situation."
+Subtitle="S'il te plaît, parle de notre cuisine et essaie d'arranger la situation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=16 ChangeToValue=0
 LinkedTo:18
@@ -168,7 +168,7 @@ Subtitle="Notre docteur refuse de l'aider de toutes façons."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je ne peux pas l'exécuter, parce qu'il est le seul médecin que nous avons ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Oh, et, s'il te plaà®t, prends garde, Bender est facile à  effrayer."
+Subtitle="Oh, et, s'il te plaît, prends garde, Bender est facile à effrayer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=23 ChangeToValue=0
 LinkedTo:24
@@ -205,7 +205,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 Subtitle="Félicitations, tu m'as convaincu que tu pourras être une bon Garde Rouge."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Bienvenue à  bord."
+Subtitle="Bienvenue à bord."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=26 ChangeToValue=0
 DoSomethingExtra="MakeTuxTownGuardMember"
@@ -236,7 +236,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1107  PositionY=373  
 Subtitle="Pas mal, pas mal du tout. Je suis presque convaincu que tu deviendras un membre exemplaire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Fais-en deux de plus, et je te ferai un membre d'équipage."
+Subtitle="Fais-en deux de plus, et je te donnerai un équipage."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=30 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -246,7 +246,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=31  OptionText="TUX SUCKS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=1095  PositionY=469  
-Subtitle="Tu as encore besoin de beaucoup travailler pour gagner ton rang de membre d'équipage. Bonne chance."
+Subtitle="Tu as encore besoin de beaucoup travailler pour gagner ton équipage. Bonne chance."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=31 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

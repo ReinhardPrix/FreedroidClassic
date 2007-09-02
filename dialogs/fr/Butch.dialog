@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=57  PositionY=350  
-Subtitle="Ouais, qu'est ce que tu veux, débutant?"
+Subtitle="Ouais, qu'est ce que tu veux, débutant ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=4 ChangeToValue=1
@@ -42,12 +42,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Dis 'débutant' encore une fois et je t'arracherai la colonne."
+New Option Nr=1  OptionText=" Appelle-moi 'débutant' encore une fois et je t'arracherai la colonne."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Parfait, débutant. Tu es plus vert que l'herbe et tu es un débutant complet."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu peux commencer à  m'arracher la colonne."
+Subtitle="Tu peux commencer à m'arracher la colonne."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ha !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -83,7 +83,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" Et qui es-tu ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Butch... Le maà®tre de l'arène."
+Subtitle="Butch... Le maître de l'arène."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=1 ChangeToValue=0
@@ -129,7 +129,7 @@ Subtitle="Pas mal pour toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu es un débutant complet. Mais un bon débutant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je placerai un bon mot à  Spencer à  propos de ça."
+Subtitle="Je placerai un bon mot à Spencer à propos de ça."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=11 ChangeToValue=1
@@ -140,7 +140,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Je pensais que j'allais me battre contre toi, lâ¢che."
+New Option Nr=8  OptionText=" Je pensais que j'allais me battre contre toi, lâche."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Je n'ai JAMAIS dit ça, débutant."
@@ -149,7 +149,7 @@ Subtitle="Tu a voulu te battre, et c'est ce que tu as obtenu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'ai proposé un combat, et tu l'as accepté également."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il n'y a rien de plus à  dire, débutant."
+Subtitle="Il n'y a rien de plus à dire, débutant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=8 ChangeToValue=0
 ChangeOption=9 ChangeToValue=1
@@ -166,7 +166,7 @@ Subtitle="Débutant, j'ai une seconde arène."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Tu mourras si tu y vas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai pitié de toi, tête de piaf. Ne va pas là  bas."
+Subtitle="J'ai pitié de toi, tête de piaf. Ne va pas là bas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Mais si tu veux vraiment y aller, la porte est ouverte."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -181,11 +181,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=10  OptionText=" Le maître de l'arène est honnête."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Quoi !? Impossible ! Personne n'avait survécu à  la seconde arène avant ça !"
+Subtitle="Quoi !? Impossible ! Personne n'avait survécu à la seconde arène avant ça !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Quelqu'un d'assez fou pour essayer la seconde arène."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu n'es pas un débutant, mais tu es COMPLà‰TEMENT IDIOT !"
+Subtitle="Tu n'es pas un débutant, mais tu es COMPLÈTEMENT IDIOT !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'ai pitié de toi, pauvre fou. Tu mourras jeune."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -255,7 +255,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=16  OptionText="Mais... Mais... "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Pas de mais à  propos de ça, débutant."
+Subtitle="Pas de 'mais' à propos de ça, débutant."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Les robots pissent du noir.
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

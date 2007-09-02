@@ -140,7 +140,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=43  OptionText=" Elbereth"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="4444 ! à‡4 brûl3 ! "
+Subtitle="4444 ! Ç4 brûl3 ! "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="444444444444444444 !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -153,7 +153,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=44  OptionText=" Francis"
 OptionSample=""
 PositionX=200  PositionY=200  
-Subtitle="H4 ! T0n 3spr1t 3s7 à  m01, Francis !"
+Subtitle="H4 ! T0n 3spr1t 3s7 à m01, Francis !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Qu01 ? P4s d3 7r4v4il ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -196,7 +196,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=60  OptionText=" Erm. J'ai des confession â  faire? Mon nom n'est pas Francis."
+New Option Nr=60  OptionText=" Erm. J'ai un aveu à faire? Mon nom n'est pas Francis."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="N00000000NN!!!!!!" 
@@ -239,7 +239,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Il n'y a pas moyen que je signe quoi que ce soit sans le lire." Oublie ça."
+New Option Nr=99  OptionText=" Il n'y a pas moyen que je signe quoi que ce soit sans le lire. Oublie ça."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=318  PositionY=425  
 Subtitle="N00oo00oo0 ! 1l 3s7 73mps p0ur t01 de m0ur1r, p4uvr3 f0u !"

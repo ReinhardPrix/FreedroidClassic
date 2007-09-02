@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Qui es tu ? "
+New Option Nr=0  OptionText=" Qui es-tu ? "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=98  PositionY=280  
 Subtitle="Je suis un robot de sécurité de type 614, un des produits les plus vendus de la compagnie Nicholson."
@@ -41,7 +41,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Avez vous détecté une quelconque activité cybernétique hostile ?"
+New Option Nr=1  OptionText=" Avez-vous détecté une quelconque activité cybernétique hostile ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=204  
 Subtitle="Non. L'ennemi ne s'est pas montré au cours des dernières 24 heures."
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Que pouvez vous me dire â  propos de la série des 614 ? "
+New Option Nr=2  OptionText=" Que pouvez-vous me dire à propos de la série des 614 ? "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=96  PositionY=134  
 Subtitle="Le manuel officiel classe les robots de la série des 614 comme des droïdes de sécurité de première classe."
@@ -67,7 +67,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Quel sont vos objectifs ?"
+New Option Nr=3  OptionText=" Quels sont vos objectifs ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=100  PositionY=71  
 Subtitle="Mes ordres sont de protéger les être vivants de ce camp des attaques des robots ennemis."
@@ -82,9 +82,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=4  OptionText=" Pourquoi n'êtes vous pas hostile aux autres robots ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=223  PositionY=270  
-Subtitle="Je suis issu d'une ancienne génération de robots, je fais fonctionner un système d'exploitation dédié àƒÂ  la sécurité."
+Subtitle="Je suis issu d'une ancienne génération de robots, je fais fonctionner un système d'exploitation dédié à la sécurité."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Aucun des robots de cette série n'étaient affectés par les processus qui pilotèrent l'attaque robot, plus connue sous le nom du Grand Assaut."
+Subtitle="Aucun des robots de cette série n'étaient affectés par les processus qui pilotèrent l'attaque des robots, plus connue sous le nom du Grand Assaut."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Malgré que la Compagnie Nicholson soit démantelée depuis longtemps, aujourd'hui, certaines personnes ont amélioré le fonctionnement et essaient aussi d'améliorer le système d'exploitation utilisé par ma série."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

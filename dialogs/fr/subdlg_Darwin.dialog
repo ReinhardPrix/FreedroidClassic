@@ -58,7 +58,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" Apprends moi comment extraire les pièces des robots." 
+New Option Nr=20  OptionText=" Apprends-moi comment extraire les pièces des robots." 
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
@@ -108,11 +108,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=70  OptionText="FIRST LESSON"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=686  PositionY=264  
-Subtitle="Laisse nous commencer avec l'invrseur d'entropie. C'est vraiment simple." 
+Subtitle="Laisse nous commencer avec l'inverseur d'entropie. C'est vraiment simple." 
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Prends juste un marteau et tape sur le robot sehr fort sur la tête."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Lorsque la tête est grande ouverte, cherche un morceau ressemblant à  deux cercles entourant un cube. C'est ce que tu recherches."
+Subtitle="Lorsque la tête est grande ouverte, cherche un morceau ressemblant à deux cercles entourant un cube. C'est ce que tu recherches."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -146,9 +146,9 @@ Subtitle="Hmmm... Ah, bon. Des supraconducteurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il est relativement facile de les extraire."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Cherche dans le système éléctrique. Les bobines d'induction, les condensateurs et tout ça. Habituellement il y a beaucoup de sehr gut piève ici."
+Subtitle="Cherche dans le système électrique. Les bobines d'induction, les condensateurs et tout ça. Habituellement il y a beaucoup de sehr gut pièce ici."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Utilise des gants en caoutchouc. Juste au cas oà¹, tu sais."
+Subtitle="Utilise des gants en caoutchouc. Juste au cas où, tu sais."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=72 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -161,15 +161,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=73  OptionText="FOURTH LESSON"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=682  PositionY=321  
-Subtitle="Je te raconterai tout à  propos des convertisseurs matière-antimatière."
+Subtitle="Je te raconterai tout à propos des convertisseurs matière-antimatière."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Oui... Les convertisseurs sont un problème."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils sont faciles à  trouver, tout ce que tu dois faire est de regarder du côté du moteur. Mais tu dois te souvenir de quelque chose d'extrêmement important :"
+Subtitle="Ils sont faciles àtrouver, tout ce que tu dois faire est de regarder du côté du moteur. Mais tu dois te souvenir de quelque chose d'extrêmement important :"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Assure-toi que le convertisseur est éteint avant de l'enlever."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Si tu ne l'éteint pas, tu réussiras seulement à  te convertir en anti-matière. Et comme tu le sais, c'est irréversible."
+Subtitle="Si tu ne l'éteins pas, tu réussiras seulement àte convertir en anti-matière. Et comme tu le sais, c'est irréversible."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=73 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -182,15 +182,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=74  OptionText="FINAL LESSON"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=682  PositionY=469  
-Subtitle="Je t'enseignerai à  propos des convertisseurs à  tachyon."
+Subtitle="Je t'enseignerai à propos des convertisseurs à tachyon."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Les tachyons sont des particules très intéressantes. Plusieurs histoires ont été contées à  leur propos."
+Subtitle="Les tachyons sont des particules très intéressantes. Plusieurs histoires ont été contées àleur propos."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je ne sais pas pourquoi les robots en utilisent. Ils ne sont généralement connectés à  rien et n'ont pas de fonction évidente."
+Subtitle="Je ne sais pas pourquoi les robots en utilisent. Ils ne sont généralement connectés àrien et n'ont pas de fonction évidente."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils sont souvent assez chaud lorsque tu les extraits, mais ils se refroidissent rapidement, donc il ne sont pas difficiles à  manipuler."
+Subtitle="Ils sont souvent assez chaud lorsque tu les extrais, mais ils se refroidissent rapidement, donc il ne sont pas difficiles à manipuler."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ils peuvent se situer à  peu près n'importe oà¹, donc il faut passer du temps à  chercher parmis les circuits pour en trouver."
+Subtitle="Ils peuvent se situer à peu près n'importe où, donc il faut passer du temps à chercher parmis les circuits pour en trouver."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=74 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
@@ -203,7 +203,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=75  OptionText="NO MORE LESSONS"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=478  PositionY=77  
-Subtitle="Nein, je t'ai dit tout ce que je savais à  ce propos. Inutile de me demander deux fois, ja ?"
+Subtitle="Nein, je t'ai dit tout ce que je savais àce propos. Inutile de me demander deux fois, ja ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=75 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -230,7 +230,7 @@ OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 Subtitle="Hmmm..."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Tu semble inexpérimenté. Endurcis-toi un peu. Entraà®ne toi, tue des robots."
+Subtitle="Tu semble inexpérimenté. Endurcis-toi un peu. Entraîne-toi, tue des robots."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Alors nous pouvons parler."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -240,7 +240,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=99  OptionText=" Peut être une autre fois."
+New Option Nr=99  OptionText=" Peut-être une autre fois."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=419  PositionY=116  
 ChangeOption=99 ChangeToValue=1

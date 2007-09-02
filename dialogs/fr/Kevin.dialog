@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour... Oh, mon dieu... Vous avez très mauvaise mine... Qui vous a fait ça ? Vous a-t-on torturé ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=841  PositionY=147  
-Subtitle="Salut. à‡a fait quelques semaines que je n'ai pas dormi, alors je suis juste un peu fatigué."
+Subtitle="Salut. Ça fait quelques semaines que je n'ai pas dormi, alors je suis juste un peu fatigué."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Ne t'en fais pas pour moi. Je vais bien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=768  PositionY=242  
-Subtitle="Comme je te l'ai déjà  dit, je ne peux rien t'apprendre en ce moment. Je n'ai pas le temps."
+Subtitle="Comme je te l'ai déjà dit, je ne peux rien t'apprendre en ce moment. Je n'ai pas le temps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je dois faire en sorte que le flux d'énergie soit bien réparti, de sorte que mon projet de recherche puisse continuer."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -68,7 +68,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Pouvez m'enseigner des compétences en hacking ?"
+New Option Nr=3  OptionText=" Pouvez me donner des compétences en hacking ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=656  PositionY=147  
 ChangeOption=3 ChangeToValue=1
@@ -97,13 +97,13 @@ Subtitle="Pas maintenant, je suis occupé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je suis sur un projet de recherche important, en ce moment. C'est peut-être la survie de l'intégralité de la colonie qui en dépend."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il a une importance capitale. Mais ce projet est en danger : il y a quelques robots de maintenance en bas, à  la source d'énergie."
+Subtitle="Il a une importance capitale. Mais ce projet est en danger : il y a quelques robots de maintenance en bas, à la source d'énergie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Il font la "maintenance" des machines en les redémarrant sans cesse. Il faut que cela cesse, mais je ne peux pas quitter cet endroit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je dois équilibrer l'énergie qui reste de telle sorte que mon projet puisse continuer sans interruption."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Alors, si tu descends là -bas et que tu stabilises le flux d'énergie, j'aurais le temps de t'apprendre quelques trucs."
+Subtitle="Alors, si tu descends là-bas et que tu stabilises le flux d'énergie, j'aurais le temps de t'apprendre quelques trucs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=0
 ChangeOption=6 ChangeToValue=1
@@ -115,13 +115,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" Je m'en vais â  la source d'énergie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=542  PositionY=327  
-Subtitle="C'est super. Tu ne peux pas la rater. Ce n'est pas difficile à  trouver. Va dans mon jardin, tu y trouveras l'entrée de la station souterraine."
+Subtitle="C'est super. Tu ne peux pas la rater. Ce n'est pas difficile àtrouver. Va dans mon jardin, tu y trouveras l'entrée de la station souterraine."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ne t'occupe pas des robots du premier sous-sol. Il faut uniquement que tu t'occupes de la source d'énergie, qui se trouve au DEUXIàˆME sous-sol."
+Subtitle="Ne t'occupe pas des robots du premier sous-sol. Il faut uniquement que tu t'occupes de la source d'énergie, qui se trouve au DEUXIÈME sous-sol."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'espère pour toi que tu as un pistolet laser, ou quelque chose comme ça. Les robots te pulvériserons si tu les approches."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Fais au plus vite. J'en ai déjà  marre de stabiliser ce sacré réseau d'énergie."
+Subtitle="Fais au plus vite. J'en ai déjà marre de stabiliser ce sacré réseau d'énergie."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 ChangeOption=6 ChangeToValue=0
@@ -131,7 +131,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=7  OptionText=" Je suis désolé, mais je ne crois pas qu'il y ait quoi que ce soit que je puisse faire â  propos de l'approvisionnement en énergie."
+New Option Nr=7  OptionText=" Je suis désolé, mais je ne crois pas qu'il y ait quoi que ce soit que je puisse faire à propos de l'approvisionnement en énergie."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=656  PositionY=410  
 Subtitle="Dommage. Maintenant, hors de ma vue."
@@ -182,7 +182,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=12  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=233  PositionY=377  
-Subtitle="Je t'ai déjà  récompensé pour ça. Ne me fais pas perdre mon temps, je suis occupé."
+Subtitle="Je t'ai déjà récompensé pour ça. Ne me fais pas perdre mon temps, je suis occupé."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -220,13 +220,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=15  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=362  PositionY=496  
-Subtitle="à‡a serait génial, évidemment. Je sais que la vieille ville entretient une infrastructure d'informations assez satisfaisante. Ils ont là -bas un cluster qui tourne depuis un bout de temps."
+Subtitle="Ça serait génial, évidemment. Je sais que la vieille ville entretient une infrastructure de stockage d'informations assez satisfaisante. Ils ont là-bas un cluster qui tourne depuis un bout de temps."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le seul problème, c'est que je ne peux pas retourner à  la ville. à€ cause d'un vieux différent, je pourrais être tué."
+Subtitle="Le seul problème, c'est que je ne peux pas retourner à la ville. À cause d'un vieux différent, je pourrais être tué."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Par ailleurs, le cluster se trouve à  l'intérieur de la citadelle des guardes. On m'a dit que seul les membres de la Garde rouge ont le droit de pénétrer dans le complexe."
+Subtitle="Par ailleurs, le cluster se trouve à l'intérieur de la citadelle des guardes. On m'a dit que seul les membres de la Garde rouge ont le droit de pénétrer dans le complexe."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais peut-être peux-tu te débrouiller. Pour moi c'est impossible, à  cause de ma mauvaise réputation."
+Subtitle="Mais peut-être peux-tu te débrouiller. Pour moi c'est impossible, à cause de ma mauvaise réputation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je vais te donner le cube de données. Porte-le au personnel de l'administration du cluster. Ils sauront quoi en faire. Et ne mentionne pas mon nom."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -250,16 +250,16 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=17  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=557  PositionY=497  
-Subtitle="You've already agreed to take my data cube to the cluster. I have no influence on this matter anymore."
+Subtitle="Tu as déjà donné ton accord pour apporter mon cube de données au cluster. Je ne peux rien faire de plus avec ce truc."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Le destin de la colonie est entre tes mains. Porte le cube de données au cluster. C'est le seul endroit oà¹ l'on pourra analyser les données correctement."
+Subtitle="Le destin de la colonie est entre tes mains. Porte le cube de données au cluster. C'est le seul endroit où l'on pourra analyser les données correctement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=17 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=18  OptionText=" â€ propos de ce projet que tu disais avoir en cours..."
+New Option Nr=18  OptionText=" À propos de ce projet que tu disais avoir en cours..."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=386  PositionY=241  
 ChangeOption=18 ChangeToValue=0
@@ -271,7 +271,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=19  OptionText="THIS WILL NOT EVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=319  PositionY=390  
-Subtitle="J'ai déjà  reçu les résultats de l'analyse de mes données au cluster."
+Subtitle="J'ai déjà reçu les résultats de l'analyse de mes données au cluster."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Bon travail."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -298,7 +298,7 @@ Subtitle="Ah. Ok."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Eh bien merci de m'avoir prévenu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je crois que ça veut dire "retour au plan de dessin", tout ça...
+Subtitle="Je crois que ça signifie un retour à l'évaluation ...
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=25 ChangeToValue=0
 ChangeOption=26 ChangeToValue=1
@@ -312,7 +312,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Pourquoi? J'ai des copies de sauvegarde qui datent de vendredi dernier. Il n'y a aucune raison de s'inquiéter."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="à‡a prendra un peu de temps avant que je puisse les rassembler à  nouveau, mais tout ira bien."
+Subtitle="Ça prendra un peu de temps avant que je puisse les rassembler à nouveau, mais tout ira bien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=26 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"

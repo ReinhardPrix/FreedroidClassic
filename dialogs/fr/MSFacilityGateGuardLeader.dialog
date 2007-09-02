@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText="THIS WILL NEVER BE VISIBLE"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=64  PositionY=196  
-Subtitle="Hé, Linarien! Qu'est-ce que tu fais ici?" 
+Subtitle="Hé, Linarien ! Qu'est-ce que tu fais ici ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=1 ChangeToValue=1
@@ -84,7 +84,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=170  PositionY=132  
 Subtitle="Est-ce que tu es impatient de mourir ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Vas-t'en !"
+Subtitle="Va-t'en !"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=0
