@@ -62,7 +62,8 @@ New Option Nr=20  OptionText=" I'm ready. Please show me how to extract bot part
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=20 ChangeToValue=0
-ChangeOption=25 ChangeToValue=1
+ChangeOption=25 ChangeToValue=0
+LinkedTo:70
 DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
