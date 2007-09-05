@@ -256,7 +256,7 @@ Item description text="This rifle is a high-end laser weapon. There is only one 
 ----- the following part is only relevant for weapons -----
 Item as gun: recharging time=0.500000
 Item as gun: reloading time=3.000000
-Item as gun: speed of bullets=16.000000
+Item as gun: speed of bullets=32.000000
 Item as gun: angle change of bullets=0.000000
 Item as gun: damage of bullets=8
 Item as gun: modifier for damage of bullets=8
