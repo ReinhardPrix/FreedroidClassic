@@ -145,9 +145,8 @@ better than nothing.  Thanks anyway for your interest in FreedroidRPG.\n\
     mouse_control = TRUE;
     classic_user_rect = FALSE;
     
-    ParseCommandLine ( argc , argv ); 
     
-    InitFreedroid ();   // Initialisation of global variables and arrays
+    InitFreedroid ( argc, argv);   // Initialisation of global variables and arrays
     
 
     while (!QuitProgram)

@@ -1303,7 +1303,8 @@ char fpath[2048];
 
 }; // int Init_Game_Data ( void )
 
-char copyright[] = "\nCopyright (C) 2005 Johannes Prix, Reinhard Prix\n\
+char copyright[] = "\nCopyright (C) 2004 Johannes Prix, Reinhard Prix\n\
+Copyright (C) 2005-2007 Arthur Huillet, Karol Swietlicki\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Freedroid\n\
 under the terms of the GNU General Public License.\n\
@@ -1885,7 +1886,7 @@ ResetGameConfigToDefaultValues ( void )
  *  
  * ----------------------------------------------------------------- */
 void
-InitFreedroid ( void )
+InitFreedroid ( int argc, char ** argv )
 {
 #ifndef USE_SDL_FRAMERATE
     struct timeval timestamp;
@@ -2085,6 +2086,7 @@ I will not be able to load or save games or configurations\n\
 
     LoadGameConfig ();
 
+    ParseCommandLine ( argc, argv );
     //--------------------
     // Adapt button positions for the current screen resolution.  (Note: At this
     // point the command line has been evaluated already, therefore we know if OpenGL

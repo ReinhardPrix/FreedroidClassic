@@ -58,7 +58,7 @@ EXTERN void ResetGameConfigToDefaultValues ( void );
 EXTERN void ShowStartupPercentage ( int Percentage ) ;
 EXTERN void ParseCommandLine ( int argc , char *const argv[] );
 EXTERN void ClearAutomapData( void );
-EXTERN void InitFreedroid ( void );
+EXTERN void InitFreedroid ( int, char ** );
 EXTERN void PrepareStartOfNewCharacter ( void ) ;
 EXTERN void ThouArtDefeated ( void );
 EXTERN void ThouHastWon ( void );
