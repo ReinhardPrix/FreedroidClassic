@@ -455,10 +455,14 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *tex
       // switch the font even multiple times in one big text.
       //                                          jp, 27.7.2002
       //
-      if ( text[i] == 1 ) Font = Red_BFont;
-      else if ( text[i] == 2 ) Font = Blue_BFont;
-      else if ( text[i] == 3 ) Font = FPS_Display_BFont;
-      else x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
+      switch ( text [ i ] )
+	{
+	case 1: Font = Red_BFont; kerning = -2; break;
+	case 2: Font = Blue_BFont; kerning = -2; break;
+	case 3: Font = FPS_Display_BFont; kerning = -2; break;
+	default:
+	      x += PutCharFont (Surface, Font, x, y, text[i]) + kerning;
+	}
       i++;
     }
 }; // void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, char *text)
@@ -491,11 +495,17 @@ TextWidthFont (BFont_Info * Font, char *text)
   // I extend this to give new text width results...
   //
   int kerning = 0;
-  if ( CurrentFont == Menu_BFont ) kerning = -4;
-  if (CurrentFont==FPS_Display_BFont || CurrentFont==Blue_BFont || CurrentFont==Red_BFont) kerning = -2;
+  if ( Font == Menu_BFont ) kerning = -4;
+  if ( Font==FPS_Display_BFont || Font==Blue_BFont || Font==Red_BFont) kerning = -2;
 
   while (text[i] != '\0')
     {
+      switch ( text [ i ] )
+	{
+	case 1: Font = Red_BFont; kerning = -2; break;
+	case 2: Font = Blue_BFont; kerning = -2; break;
+	case 3: Font = FPS_Display_BFont; kerning = -2; break;
+	}
       x += CharWidth (Font, text[i]) + kerning ;
       i++;
     }
