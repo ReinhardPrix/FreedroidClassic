@@ -33,7 +33,7 @@ Beginning of new chat dialog for character="XXXXX"
 New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=107  PositionY=282  
-Subtitle="Bienvenue, bienvenue ! Je suis Richard. Je suis le gars de l'informatique par ici."
+Subtitle="Bienvenue, bienvenue ! Je suis Richard. Je suis l'informaticien du coin."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Je travaille la plupart du temps avec ce gros cluster d'ordinateurs, ici, autrement je programme des robots 614 pendant mon temps libre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -66,7 +66,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" J'ai un cube de données avec quelques informations. Pouvez vous me dire quelque chose â  ce propos ?"
+New Option Nr=6  OptionText=" J'ai un cube de données avec quelques informations. Pouvez vous me dire quelque chose à ce sujet ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=303  PositionY=152  
 Subtitle="Intéressant. Laisse moi donc voir cette chose. Hmm... Oui, il y a vraiment beaucoup de trucs là dedans. Peut être qu'il sera possible d'utiliser l'Hydre pour évaluer les données."
@@ -107,7 +107,7 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=396  PositionY=153  
 Subtitle="Naturellement ! Je te l'ai dit, l'Hydre n'a jamais échoué ! Je l'ai conçue moi-même, et je connais très bien les ordinateurs. Je ne fait jamais d'erreurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il semble probable que les robots peuvent être désactivés par une sorte de champ disrupteur ou quelque chose dans ce genre."
+Subtitle="Il semble probable que les robots puissent être désactivés par une sorte de champ disrupteur ou quelque chose dans ce genre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'étais occupé par l'entretien d'un des noeuds d'Hydra, mais j'ai envoyé le rapport entier à Spencer. Il t'en dira plus."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"

@@ -149,7 +149,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Dites m'en plus â  propos des armes laser."
+New Option Nr=8  OptionText=" Dites m'en plus à propos des armes laser."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=797  PositionY=249  
 Subtitle="Le laser est la technologie employée dans la majorité de notre arsenal. Le principe est de focaliser la lumière en un faisceau étroit pour causer des dommages."
@@ -167,7 +167,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=9  OptionText=" Je me pose des questions â  propos de l'exterminateur."
+New Option Nr=9  OptionText=" Je me pose des questions à propos de l'exterminateur."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=883  PositionY=327  
 Subtitle="Désolé, mais c'est classé confidentiel. Je vous en ai déjà trop dit."

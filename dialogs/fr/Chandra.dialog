@@ -254,7 +254,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=99  OptionText=" Merci pour tes paroles avisées."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=198  PositionY=102  
-Subtitle="Sens-toi libre de venir ici à chaque fois que tu le souhaite."
+Subtitle="Sens-toi libre de venir ici à chaque fois que tu le souhaites."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=99 ChangeToValue=1
 DoSomethingExtra="EndDialog"

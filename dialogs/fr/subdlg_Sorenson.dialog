@@ -40,7 +40,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Certainement. Je le signerai." 
+New Option Nr=1  OptionText=" Certainement. Je le signerai."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Bi3n. V0il4 le con7rat. S1gne !" 
@@ -51,7 +51,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Hum... Ta vois a un étrange accent. Est-ce que tout va bien ?"
+New Option Nr=2  OptionText=" Hum... Ta voix a une étrange intonation. Est-ce que tout va bien ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="519n3 l3 (0n7r47 !!!!"

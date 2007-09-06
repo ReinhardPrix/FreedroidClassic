@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText="Salut ! Je suis nouveau ici. "
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici. "
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=121  PositionY=241  
 Subtitle="Bienvenue ici ! On m'appelle MER. Mes dialogues ne sont pas encore écrits."

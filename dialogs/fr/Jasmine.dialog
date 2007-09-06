@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Salut ! Je suis nouveau ici."
+New Option Nr=0  OptionText=" Bonjour ! Je suis nouveau ici."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=61  PositionY=232  
-Subtitle="Oui. Bonjour. Qu'est-ce que tu veux?"
+Subtitle="Oui. Bonjour. Qu'est-ce que tu veux ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=8 ChangeToValue=1
@@ -70,10 +70,10 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=3  OptionText=" Comment a été ta journée ?"
+New Option Nr=3  OptionText=" Comment vas-tu ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Merdique. Maintenant laisse-moi tranquille."
+Subtitle="C'est nul. Maintenant, laisse-moi tranquille"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -165,13 +165,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=13  OptionText="Hein ?!"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Traceback redirigé vers sortie standard."
+Subtitle="Traceback redirigée vers sortie standard."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Kernel panic dans le module : Jasmine "
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Buffer overrun dans colere.c:1532"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Core dumped. System halted."
+Subtitle="Surcharge du noyau. Arrêt  du système."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=13 ChangeToValue=0
 DoSomethingExtra="DropDead"

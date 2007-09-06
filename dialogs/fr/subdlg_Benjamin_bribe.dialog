@@ -184,9 +184,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=859  PositionY=348  
 Subtitle="C'est une question embarassante. La plus grande part de la puissance de la mini Bombe atomique est fournie lorsque le missile frappe quelque chose."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement la grande vélocité seule de l'impact peut également causer de formidables dégà¢ts."
+Subtitle="Naturellement, à elle seule, la grande vélocité de l'impact peut également causer de formidables dégâts."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Nous ne nous ennuyons pas avec des recherche àce sujet. Ça marche et ça nous suffit."
+Subtitle="Nous ne nous ennuyons pas avec des recherche à ce sujet. Ça marche et ça nous suffit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=12 ChangeToValue=0
 DoSomethingExtra="SubtractGold:50"

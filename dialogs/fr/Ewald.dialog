@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Bonjour. Tu sembles vraiment très joyeux"
+New Option Nr=0  OptionText=" Bonjour. Tu sembles vraiment très joyeux."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=44  PositionY=157  
 Subtitle="Hé ! Je suis Ewald. Je suis un tenancier de bar."
@@ -93,7 +93,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" Je veux une double eau sur la pierre. Mélangée, pas secouée."
+New Option Nr=4  OptionText=" Je veux une double eau sur le comptoir. Mélangée, pas secouée."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=353  PositionY=209  
 Subtitle="Va ici. Il y a une maison. Et si l'eau manque, n'hésite pas àm'en demander plus."
@@ -106,7 +106,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=5  OptionText=" Une eau de glaçon de Long Island s'il te plaît."
+New Option Nr=5  OptionText=" Une eau de glaçon de Long Island s'il ous plaît."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=445  PositionY=319  
 Subtitle="Va ici."
@@ -119,7 +119,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=6  OptionText=" Je n'ai pas beaucoup d'argent... Donne moi un peu d'eau réconfortante."
+New Option Nr=6  OptionText=" Je n'ai pas beaucoup d'argent... Donne moi simplement quelque eau réconfortante."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=576  PositionY=189  
 Subtitle="Eh... Certainement, comme tu veux. Viens ici."
@@ -143,7 +143,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=8  OptionText=" Ahh... De l'eau fraiche ! Donne m'en plus."
+New Option Nr=8  OptionText=" Ahh... De l'eau fraîche ! Donne m'en plus."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Ouais, je pensais bien que tu aimerais ça. Il y en a plus ici."

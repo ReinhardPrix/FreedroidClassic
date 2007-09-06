@@ -170,7 +170,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=58  OptionText=" Je t'ai payé!"
+New Option Nr=58  OptionText=" Je t'ai payé !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Vraiment ? Je ne me rappelle pas de ça."

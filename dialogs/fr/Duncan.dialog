@@ -30,10 +30,10 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText=" Salut... Euh... Qui es-tu?"
+New Option Nr=0  OptionText=" Salut... Euh... Qui es-tu ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=68  PositionY=275  
-Subtitle="Duncan McNamara, Le faiseur de bombe attitré de la Garde Rouge, à ton service."
+Subtitle="Duncan McNamara, le fabriquant de bombes attitré de la garde rouge, à ton service."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=0 ChangeToValue=0
 ChangeOption=90 ChangeToValue=0
@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=1  OptionText=" J'aimerai acheter une bombe."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=181  PositionY=364  
-Subtitle="Oui. Je pense que l'on peut arranger quelque chose. jette un coup d'oeil."
+Subtitle="Oui. Je suis sûr que nous pouvons arranger quelque chose. Voyons un peu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=1 ChangeToValue=0
 ChangeOption=2 ChangeToValue=1
@@ -58,11 +58,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=2  OptionText=" Je vois seulement des grenades. Tu n'as pas quelque chose de plus gros ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=187  PositionY=264  
-Subtitle="Mes plus plates excuses, mais non."
+Subtitle="Mes plus plates excuses, je ne peux pas."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La Garde Rouge interdit la vente de munitions extrêmements destructrices."
+Subtitle="La Garde Rouge interdit formellement la vente de munitions lourdes à grand pouvoir destructeur."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Ce n'est pas encore le moment de la fin de leur règne, donc je reste loyal."
+Subtitle="Ce n'est pas encore le moment de la chute de leur règne, donc je reste loyal."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=2 ChangeToValue=0
 ChangeOption=5 ChangeToValue=1
@@ -76,15 +76,15 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=3  OptionText=" La chute de la Garde Rouge ? Je vais aller leur rapporter que tu prépares une révolution !"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="C'est ma parole contre la tienne. Si tu ne veux pas essayer, sois mon invité."
+Subtitle="C'est ma parole contre la tienne. Si tu es d'accord, sois mon invité."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je ne prépare rien de particulier. Je suis juste impassible face à ce que je prévois comme inévitable."
+Subtitle="Je ne prépare rien. Je fais juste le constat de ce que je vois comme inévitable dans l'avenir."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="J'ai pris part dans beaucoup de conflits et j'ai vu comment les gouvernements s'effondrent."
+Subtitle="J'ai pris part dans beaucoup de conflits, et j'ai vu comment tombent des gouvernements."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Dès que la guerre sera passée, la Garde Rouge va se dissoudre."
+Subtitle="Lorsque la guerre sera terminée, la Garde Rouge va se dissoudre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Naturellement, je fais l'hypothèse de la victoire, qui est hautement improbable en l'état actuel des choses."
+Subtitle="Naturellement, je fais l'hypothèse de la victoire, ce qui n'est pas très probable vu le cours actuel des choses."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=3 ChangeToValue=0
 ChangeOption=4 ChangeToValue=0
@@ -92,12 +92,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=4  OptionText=" La chute de la Garde Rouge ? Dis m'en plus â  ce propos."
+New Option Nr=4  OptionText=" La chute de la Garde Rouge ? Dis m'en plus à ce propos."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Il n'est pas encore temps de parler de ces choses. Viens un autre jour, et nous en discuterons probablement plus en détail."
+Subtitle="Ce n'est pas le moment de parler de telles choses. Vient un autre jour et nous pourrons en discuter plus précisemment."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="La garde Rouge peut avoir les plus puissant laser et canons à plasma... Mais rien ne les sauvera."
+Subtitle="La Garde Rouge peut avoir les canons Lasers et les canons à plasma les plus puissant... Mais rien ne les peut les sauver."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=4 ChangeToValue=0
 ChangeOption=3 ChangeToValue=0
@@ -108,7 +108,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=5  OptionText=" Je veux acheter quelques grenades."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Certainement."
+Subtitle="Sûrement."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=5 ChangeToValue=1
 DoSomethingExtra="InitTradeWithCharacter:Duncan"
@@ -119,7 +119,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=6  OptionText=" Quelles sont les meilleures grenades?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Tu obtiens ce pour quoi tu paies"
+Subtitle="Tu as ce pour quoi tu paies."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=6 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -129,11 +129,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=7  OptionText="Qu'est ce que tu as mis dans les explosifs?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Il y a vingt ans, il y a eu un conflit."
+Subtitle="Il ya vingt ans, il y a eu un conflit."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Une grenade que j'avais projetée a tué beaucoup de... mes compagnons."
+Subtitle="Une grenade que j'ai jetée a tué beaucoup de... mes camarades."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Maintenant je fais plus que de frapper les destroyers."
+Subtitle="À présent, je fais plus que frapper les destructeurs."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=7 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -152,13 +152,13 @@ AlwaysExecuteThisOptionPriorToDialogStart="yes"
 New Option Nr=51  OptionText="STARTING KOAN QUEST"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
-Subtitle="Ah. Bienvenue à nouveau Linarien."
+Subtitle="Ah. Bienvenue à nouveau, Linarien."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="J'ai quelque chose à te demander."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je connais quelqu'un qui a besoin de recevoir une leçon."
+Subtitle="Je connais quelqu'un qui a besoin d'apprendre une leçon."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Intéressé ?
+Subtitle="Intéressé ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=51 ChangeToValue=0
 DoSomethingExtra="ExecuteSubdialog:subdlg_Duncan"
@@ -225,9 +225,9 @@ OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 Subtitle="Quelle magnifique façon de commencer une conversation."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Oui, c'est vrai. Je ne suis pas celui que je semble être."
+Subtitle="Oui, c'est vrai. Je ne suis pas ce que je semble être."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Mais encore une fois, toi non plus, donc je pense que nous allons de pair."
+Subtitle="Mais là encore, par nos pensées nous sommes pareil."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=90 ChangeToValue=0
 ChangeOption=0 ChangeToValue=0
@@ -239,9 +239,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=91  OptionText="Qu'est-ce que tu veux dire? Je suis Tux et personnne d'autre."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Et je suis Duncan McNamara, le fabricant de bombes et rien d'autre."
+Subtitle="Et je suis Duncan McNamara, le fabricant de bombre, et rien d'autre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je crois que le sujet est largement parcouru maintenant."
+Subtitle="Je crois que le sujet a été largement débattu."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=92 ChangeToValue=1
 ChangeOption=2 ChangeToValue=0
@@ -255,11 +255,11 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=92  OptionText="Dis-moi qui tu es. J'ai besoin de savoir."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Il y a vingt ans, les gens étaient prévenant les uns avec les autres."
+Subtitle="Il y a vingt ans, les gens étaient d'un autre genre."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Je te suggère d'être prévenant à mon égard, et je le serai avec toi."
+Subtitle="Je te suggère d'être sympa avec moi, et je le serai avec toi."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle=""De cette façon je garderai mon secret, et tu garderas les tiens?"
+Subtitle="De cette façon je garderai mes secrets, et tu garderas les tiens."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=92 ChangeToValue=0
 ChangeOption=93 ChangeToValue=1
@@ -270,7 +270,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=93  OptionText="Je n'ai pas de secret."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="Et moi non plus."
+Subtitle="Et je fais pareil."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=93 ChangeToValue=0
 AlwaysExecuteThisOptionPriorToDialogStart="no"
@@ -291,9 +291,9 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 New Option Nr=97  OptionText=" Hein ? Comment est-ce que tu sais que je suis Linarien ? Personne ici ne le sait."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-Subtitle="J'ai lu beaucoup de livres à propos des Linarien. C'est tout."
+Subtitle="Je lis beaucoup de livres, Linarien. C'est tout."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Rien de plus et rien de moins."
+Subtitle="Ni plus, ni moins."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 ChangeOption=97 ChangeToValue=0
 ChangeOption=98 ChangeToValue=1

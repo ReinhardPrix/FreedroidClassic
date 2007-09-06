@@ -30,7 +30,7 @@ END OF AUTORS NOTES
 
 Beginning of new chat dialog for character="XXXXX"
 
-New Option Nr=0  OptionText="Bonjour. Savez vous si je peux obtenir une aide quelconque ici?" 
+New Option Nr=0  OptionText="Bonjour. Savez vous si je peux obtenir une aide quelconque ici ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=65  PositionY=241  
 Subtitle="Verschwinde."
@@ -42,7 +42,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Heu... Qu'est ce que tu veux dire?"
+New Option Nr=1  OptionText=" Heu... Qu'est ce que tu veux dire ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=174  PositionY=242  
 Subtitle="Ich bin der Geist, der stets verneint."

@@ -42,12 +42,12 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Spencer m'a dit que tu me donnerais une armure."
+New Option Nr=1  OptionText=" Spencer a dit que tu me donnerais une armure."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=263  PositionY=137  
-Subtitle="Bien sûr. En tant que membre de notre Garde, tu es en droit de porter une armure comme la nôtre. Je peux ajuster ses dimensions de telle sorte qu'elle aille à n'importe qui, même à toi."
+Subtitle="Bien sûr. En tant que membre de notre Garde, tu es en droit de porter une armure comme la nôtre. Je peux ajuster ses dimensions de telle sorte qu'elle aille à n'importe qui, à toi également."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
-Subtitle="Il y a deux types d'armures différents : une armure lourde et une légère."
+Subtitle="Il y a deux types d'armures : une armure lourde et une armure légère."
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
 Subtitle="Alors, ça sera quoi pour toi ?"
 ReplySample="Sorry_No_Voice_Sample_Yet_0.wav"
@@ -57,7 +57,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=2  OptionText=" Qu'est ce que tu fais de tes journées, ici â  l'armurerie ?"
+New Option Nr=2  OptionText=" Qu'est ce que tu fais de tes journées, ici à l'armurerie ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=267  PositionY=192  
 Subtitle="Il y a toujours quelque chose à faire, ne t'en fais pas. Ranger cet endroit me prend déjà pas mal de temps."

@@ -1,0 +1,79 @@
+
+ *  --------------------------------------------------
+ *
+ *  Copyright (c) 2003 Johannes Prix
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ *  MA  02111-1307  USA
+ *
+ =
+ =  Feel free to make any modifications you like.  If you set up
+ =  something cool, please send your file in to the Freedroid project.
+ =
+ * --------------------------------------------------
+
+The title picture in the graphics subdirectory for this mission is : backgrounds/scientist.jpg
+The title song in the sound subdirectory for this mission is : TheBeginning.ogg
+Song name to play in the end title if the mission is completed: TheBeginning.ogg
+
+
+--------------------
+--------------------
+--------------------
+*** START OF PURE SCROLLTEXT DATA ***
+L'éditeur de niveau de FreeDroidRPG
+
+Introduction :
+FreedroidRPG est fourni avec un éditeur de niveaux intégré. Cet éditeur de niveaux devrait vous permettre de contrôler tous les aspects d'une carte normale de freedroidRPG aussi bien que de sauvegarder cette carte.
+
+Déplacements :
+Vous pouvez utiliser le bouton gauche de la souris pour vous déplacer sur la carte aussi bien que les touches directionnelles. Pour changer le niveau courant, vous pouvez également utiliser le 'va au niveau nord/est/ouest/sud' boutons  (si disponibles) ou vous pouvez pressez la touche echap pour entrer le menu et changer de niveau via le menu.
+
+mode d'édition du sol :
+L'éditeur de niveu de freedroidRPG a deux modes de fonctionnement : Le premier mode est le mode d'édition du sol. Dans le mode d'édition du sol, le bouton droit de la souris va 'poser' le dallage de texture du sol. Vous pouvez utiliser le bouton gauche pour sélectionner le type de dallage depuis la barre de sélection. Pour passer du mode d'édition du sol au mode d'édition d'obstacles, vous pouvez utiliser la touche 'f' du clavier.
+
+Mode d'édition des obstacles :
+L'autre mode est le mode d'édition des obstacles. Dans le mode d'édition des obstacles, le bouton droit de la souris va positionner les nouveaux obstacles. Vous pouvez sélectionner le type d'obstacles à déposer par un 'clic gauche' dans la barre de sélection au sommet de l'écran. Comme toujours, déposer des obstacles avec la souris est un peu imprécis. Une façon plus précise de déposer les obstacles est d'utiliser le pavé numérique.
+
+Dans le mode d'édition des obstacles, il y a plusieurs autres touches, qui peuvent vous aider à accroître votre vitesse d'édition.
+Les touches 1-8 d'un clavier normal (pas du pavé numérique!) vont sélectionner le type de mur.
+La touche T sélectionne un téléporteur.
+La touche U va sélectionner un coffre.
+La touche A va sélectionner une alarme.
+
+Dans le mode d'édition des obstacles, vous remarquerez également que si vous formez une ceinture d'obstacles; l'obstacle deviendra 'surbrillant', c'est à dire que la couleur de la carte sera notée. Ça signifie que si un obstacle est actuellement marqué. Si vous appuyez alors sur la touche 'x', l'obstacle en question sera supprimé.
+Parfois, il y a plus d'un obstacle associé avec la carré de terrain associé. Si c'est le cas, vous pouvez utiliser la touche 'n' pour passer d'un obstacle à l'autre.
+
+Positionnement des points de passage :
+Actuellement, les droïdes (et tout ce qui est PNJ - Personnages Non Joueurs) se déplacent dans un niveau en utilisant des points de passage. Pour placer un point de passage, appuyez sur la touche 'w'. Cela devrait activer/désactiver les points de contrôle sur la partie où vous vous trouvez.
+
+Remarque : les points de passage sont également utilisés dans la génération aléatoire de robots. Il est possible que ce soit inapproprié pour certains points de passage. Vous pouvez désactiver ce comportement en appuyant sur la touche 'R'. Le point de passage en question va passer en surbrillance rouge pour montrer que la génération aléatoire a été désactivée.
+
+Connecter des points de passage :
+Les points de passage ne sont pas utilisés tant qu'ils ne sont pas connectés les uns aux autres. Pour connecter un point de passage à un autre point de passage, allez au premier point de passage, appuyez sur la touche 'c' encore une fois. Ceci va établir une unique connexion du premier point de passage vers le second point de passage. Pour permettre aux droïdes de se déplacer entre deux autres points de passage, vou devez faire la même chose avec d'autres points de passage.
+Pour visualiser les chemins possibles pour les droïdes d'un point de passage vers d'autres points de passage, entourez le point de passage avec le carré de sélection. Vous remaruquerez une lign en pointillés qui conduit de ce point de passage à tous les autres points de passage qui sont des cibles potentielles de ce point de passage là.
+
+Placer les étiquettes de carte :
+Les étiquettes de carte ne sont pas la même chose que les étiquettes d'obstables. Les étiquettes de carte peuvent être utilisées dans des buts divers, comme par exemple pour notifier l'endroit ou un téléporteur va déplacer Tux ou pour notifier un endroit qui sera le lieu d'un évènement aprticulier aussitôt que Tux y aura mis un pied. Pour définir une étiquette de carte, appuyez sur le touche 'm' du clavier. La mention à placer dans l'étiquette de carte vous sera alors demandée. Laisser une chaîne vide va entraîner la suppression de l'étiquette de carte dans la sélection. Remarquez qu'il y aura un cercle coloré apparaissant sur toute les cartes qui ont été conçues avec une étiquette de carte.
+
+Placer des étiquettes d'obstacles :
+Les étiquettes d'obstacle sont importantes pour signaler quelques obstacles qui ont une importance dans l'histoire ou les évènements. Si par exemple un évènement est supposé supprimer un mur bloquant particulier, vous devez tout d'abord donner un nom à cet obstacle, auquel il est possible de faire référence plus tard dans la définition de l'évènement.
+Pour placer une étiquette sur un obstacle, vous devez tout d'abord sélectionner cet obstacle (voyez le mode d'édition des obstacle ci-dessus). Dès que l'obstacle en question est séléctionné, vous pouvez utiliser la touche 'h' du clavier. Il vous sera demander la nouvelle étiquette à donner à cet obstacle/ Donner une chaîne vide ici va supprimer tout étiquette de cet obstacle.
+
+*** END OF PURE SCROLLTEXT DATA ***
+
+*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***

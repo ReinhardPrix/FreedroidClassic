@@ -1,0 +1,143 @@
+
+ *  --------------------------------------------------
+ *
+ *   Copyright (c) 2002, 2003 Johannes Prix
+ *   Copyright (c) 2003 Pete Spicer
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ *  MA  02111-1307  USA
+ *
+ =
+ =  Feel free to make any modifications you like.  If you set up
+ =  something cool, please send your file in to the Freedroid project.
+ =
+ * --------------------------------------------------
+
+The title picture in the graphics subdirectory for this mission is : backgrounds/scientist.jpg
+The title song in the sound subdirectory for this mission is : TheBeginning.ogg
+Song name to play in the end title if the mission is completed: TheBeginning.ogg
+
+
+--------------------
+--------------------
+--------------------
+*** START OF PURE SCROLLTEXT DATA ***
+
+  Quel grand jour.
+    Oui, je suis encore saracastique.
+      La planète entière est en proie aux flammes.
+        Des milliers de personnes sont bel et bien mortes.
+          Qwerty et Arensito ne répondent pas.
+
+        Ah oui, j'ai oublié l'essentiel.
+       Ces robots barbares me poursuivent également.
+      Je ne suis pas vraiment réjoui à ce propos, vraiment pas.
+     Je suppose que je vais devoir me transformer en rocher, encore une fois.
+    Pensez vous que ce soit le moment judicieux pour me réveiller ?
+   Levez vous. Venez ici. Sauvez ma peau.
+  S'il vous plaît.
+
+    Dvorak, Première IA
+
+
+
+
+   CONTRÔLES :
+
+ Déplacement :
+
+ Le jeu est contrôlé à partir de la souris : Il faut un clic gauche à l'endroit où vous souhaitez vous déplacer. Gardez le bouton de la souris enfoncé pour vous déplacer dans cette direction. Enfoncer la touche CTRL vous fera courir.
+
+ Attaque :
+ Un clic gauche sur un ennemi va ammener Tux à s'en rapprocher et à commencer à l'attaquer avec son arme actuelle. Si l'arme actuelle est un pistolet, alors Tux va rester immobile et tirer sur le robot.
+
+ Fonctions particulières :
+
+ Utilisez le clic droit pour activer les pouvoirs spéciaux, les dialogues et les compétences. Utilisez la roulette de la souris ou les flèches directionnelles pour passer des fonctions spéciales 'examiner' et 'inventaire' .
+
+
+ Autres touches:
+
+ I ... Ouvre/Ferme l'affichage de l'inventaire
+ C ... Ouvre/Ferme l'affichage de personnage
+ S ... Ouvre/Ferme l'affichage des compétences
+ Q ... Montre les objectifs actuels (statut de la quête)
+ P ... Passe en pause
+ A ... Gardez la touche 'A' pressée pour attaquer sans vous déplacer.
+ R ... Recharge l'arme courante
+ T ... Rend les murs transparents lorsque Tux approche
+ Tab ... Active/Désactive la carte automatique
+ LEFT SHIFT ... Rends les objets du sol visibles
+ Escape ... Va au menu principal
+ F1-F9 Passage rapide dans les compétences/capacités/languages 1-9
+ 1-9 ... Utilisation rapide des objets de l'inventaire
+ Space ... Ferme tous les panneaux ouverts
+ F12 ... Fais un screenshot
+
+ Languages et Compétences :
+Compétences prise de contrôle/Discussion  : Pour parler avec un droïde ami, il suffit de cliquer dessus. Pour prendre le contrôle d'un robot ennemi, sélectionnez la compétence dans l'écran des compétences, et faites un clic droit pour commencer la conversion.
+ Pour le jeu de piratage, vous pouvez utiliser la molette de la souris ou les flèches directionnelles.
+
+
+ Sort de téléportation au refuge : sélectionnez la compétence et faites un clic-droit pour vous téléporter à la ville. Si c'est utilisé dans une ville, le sort vous renverra à l'endroit d'où vous veniez.
+
+ Sort de guérison : sélectionnez le sort de guérison dans l'inventaire de compétences et faites un clic-droit n'importe où à l'écran.
+
+ Sorts d'attaque :
+ Il en exite beaucoup. Pour les utiliser, la manière normale et de le sélectionner et de faire un clic-droit sur l'ennemi que vous prenez pour cible, mais il y a des exceptions à cette règle.
+
+
+
+Si vous êtes en difficulté et que vous avez besoin d'aide, sentez-vous libre de venir demander sur le chan IRC de freedroid, #freedroid sur irc.freenode.net
+
+ C'est tout, bon jeu.
+
+
+
+    Pressez une touche
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ If you are still looking for the "any" key, then please sell your computer and make sure you do not reproduce.
+ Thank you.
+
+
+
+*** END OF PURE SCROLLTEXT DATA ***
+
+*** END OF TITLE FILE *** LEAVE THIS TERMINATOR IN HERE ***

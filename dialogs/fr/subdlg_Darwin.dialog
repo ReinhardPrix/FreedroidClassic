@@ -53,22 +53,42 @@ New Option Nr=2  OptionText="ALREADY TAUGHT?"
 OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
 PositionX=200  PositionY=200  
 ChangeOption=2 ChangeToValue=0
-OnCondition="CookieIsPlanted:know_extract1:" JumpToOption=20 ElseGoto=30
+OnCondition="CookieIsPlanted:know_extract1:" JumpToOption=26 ElseGoto=25
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=20  OptionText=" Apprends-moi comment extraire les pièces des robots." 
+New Option Nr=20  OptionText=" I'm ready. Please show me how to extract bot parts."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
-ChangeOption=30 ChangeToValue=0
-LinkedTo:70
+ChangeOption=20 ChangeToValue=0
+ChangeOption=25 ChangeToValue=1
 DoSomethingExtra="IncreaseProgramVersionName:Extract bot parts"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=30  OptionText=" Dis m'en plus sur l'extraction des pièces des robots."
+New Option Nr=25  OptionText="TEACHING THE FIRST TIME"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=20 ChangeToValue=1
+ChangeOption=25 ChangeToValue=0
+ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=26  OptionText="TEACHING MORE"
+OptionSample="NO_SAMPLE_HERE_AND_DONT_WAIT_EITHER"
+PositionX=200  PositionY=200  
+ChangeOption=26 ChangeToValue=0
+ChangeOption=30 ChangeToValue=1
+ChangeOption=99 ChangeToValue=1
+AlwaysExecuteThisOptionPriorToDialogStart="no"
+
+----------------------------------------------------------------------
+
+New Option Nr=30  OptionText=" Sure. Teach me all that you know."
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=200  PositionY=200  
 ChangeOption=30 ChangeToValue=0
@@ -118,6 +138,7 @@ ChangeOption=70 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="PlantCookie:know_extract1:"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -135,6 +156,7 @@ ChangeOption=71 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="PlantCookie:know_extract2:"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -154,6 +176,7 @@ ChangeOption=72 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="PlantCookie:know_extract3:"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -175,6 +198,7 @@ ChangeOption=73 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="PlantCookie:know_extract4:"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
@@ -196,6 +220,7 @@ ChangeOption=74 ChangeToValue=0
 DoSomethingExtra="SubtractPointsToDistribute:1"
 DoSomethingExtra="SubtractGold:50"
 DoSomethingExtra="PlantCookie:know_extract5:"
+DoSomethingExtra="EndDialog"
 AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------

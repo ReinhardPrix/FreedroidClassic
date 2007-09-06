@@ -45,7 +45,7 @@ AlwaysExecuteThisOptionPriorToDialogStart="no"
 
 ----------------------------------------------------------------------
 
-New Option Nr=1  OptionText=" Pourrais tu m'apprendre à me battre?"
+New Option Nr=1  OptionText=" Pourrais tu m'apprendre à me battre ?"
 OptionSample="Sorry_No_Voice_Sample_Yet_0.wav"
 PositionX=265  PositionY=236  
 ChangeOption=1 ChangeToValue=1
