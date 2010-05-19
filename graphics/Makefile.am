@@ -1,4 +1,4 @@
-SUBDIRS = classic_theme lanzz_theme
+SUBDIRS = classic_theme lanzz_theme para90_theme
 
 graphicsdir = $(pkgdatadir)/graphics
 
