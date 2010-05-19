@@ -1,0 +1,38 @@
+freedroid (1.0.2+cvs040112-1.1local1) unstable; urgency=low
+
+  * Reinhards first Debian package build of freedroidClassic
+
+ -- Reinhard Prix <Reinhard.Prix@aei.mpg.de>  Wed, 19 May 2010 20:17:14 +0200
+
+freedroid (1.0.2+cvs040112-1.1) unstable; urgency=low
+
+  * Non-maintainer upload in order to fix FTBFS on i386
+  * Fixed syntax of debian/changelog (Closes: #464269)
+
+ -- Patrick Winnertz <winnie@debian.org>  Tue, 04 Mar 2008 09:42:38 +0100
+
+freedroid (1.0.2+cvs040112-1) unstable; urgency=low
+
+  * New CVS snapshot:
+  * includes para90_theme and AM_MAINTAINER_MODE, no change required any more.
+  * Generated orig tarball using "make dist" to avoid missing execute bit
+    on various scripts, which hurt autobuilders.
+
+ -- Yann Dirson <dirson@debian.org>  Mon, 12 Jan 2004 20:56:00 +0100
+
+freedroid (1.0.2+cvs040110-1) unstable; urgency=low
+
+  * Upgraded to latest CVS:
+  * includes my build changes.
+  * temporisation in main loop (Closes: #212012).
+  * Added AM_MAINTAINER_MODE in configure.ac and regenerated everything.
+  * Removed reference to inexistant graphics/para90_theme/ in
+    configure.ac and graphics/Makefile.am.
+
+ -- Yann Dirson <dirson@debian.org>  Sat, 10 Jan 2004 21:58:25 +0100
+
+freedroid (1.0.2-1) unstable; urgency=low
+
+  * Initial Release (Closes: #190656).
+
+ -- Yann Dirson <dirson@debian.org>  Thu, 11 Sep 2003 23:46:45 +0200
