@@ -19,15 +19,9 @@ theme configuration.
 
 // blast 'one' is the explosions of bullets hitting e.g. the wall
 How many phases in Blast one : 6
-Time in seconds for the hole animation of blast one : 0.6
 
 // blast 'two' is the explosions of droids hitting e.g. the wall
 How many phases in Blast two : 9
-Time in seconds for the hole animation of blast two : 1.0
-
-// structures for more blasts types will we added by the dev team upon request
-...
-...
 
 
 *** End of themes blast data section ***

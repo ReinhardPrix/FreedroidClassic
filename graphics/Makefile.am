@@ -1,4 +1,4 @@
-SUBDIRS = default_theme lanzz_theme
+SUBDIRS = classic_theme lanzz_theme
 
 graphicsdir = $(pkgdatadir)/graphics
 
