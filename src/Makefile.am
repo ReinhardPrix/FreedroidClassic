@@ -8,7 +8,7 @@ if WIN32
 win32_res = freedroid.rc
 freedroid_LDADD = freedroid.coff
 else
-win32_res = 
+win32_res =
 endif
 
 freedroid_SOURCES = menu.c graphics.c  map.c   init.c  ship.c \
