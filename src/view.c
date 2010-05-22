@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -60,14 +60,14 @@ SDL_Color Flash_Dark  = {230, 230, 230};
 void
 Map2ScreenXY (finepoint mappos, point *screenpos)
 {
-  
+
 
 
 }// Map2ScreenXY()
 
 /*
 -----------------------------------------------------------------
-@Desc: This function assembles the contents of the combat window 
+@Desc: This function assembles the contents of the combat window
        in ne_screen.
 
        Several FLAGS can be used to control its behaviour:
@@ -104,8 +104,8 @@ Assemble_Combat_Picture (int mask)
 #define UPDATE_FPS_HOW_OFTEN 0.75
 
   DebugPrintf (2, "\nvoid Assemble_Combat_Picture(...): Real function call confirmed.");
-  
-  
+
+
 
   SDL_SetClipRect (ne_screen , &User_Rect);
 
@@ -122,7 +122,7 @@ Assemble_Combat_Picture (int mask)
       upleft.x = Me.pos.x - 6; upleft.y = Me.pos.y - 5;
       downright.x = Me.pos.x + 7; downright.y = Me.pos.y + 5;
     }
-    
+
 
   for (line = (int)upleft.y; line < (int)downright.y; line++)
     {
@@ -146,13 +146,13 @@ Assemble_Combat_Picture (int mask)
 	      if ( !IsVisible (&pos) )
 		continue;
 	    }
-	  
+
 	  MapBrick = GetMapBrick( CurLevel, col , line );
 	  TargetRectangle.x = UserCenter_x + (int)rint( (-Me.pos.x+1.0*col-0.5 )*Block_Rect.w);
 	  TargetRectangle.y = UserCenter_y + (int)rint( (-Me.pos.y+1.0*line-0.5 )*Block_Rect.h);
 	  SDL_BlitSurface( MapBlockSurfacePointer[CurLevel->color][MapBrick], NULL, ne_screen, &TargetRectangle);
-	}			// for(col) 
-    }				// for(line) 
+	}			// for(col)
+    }				// for(line)
 
 
   // if we don't use Fullscreen mode, we have to clear the text-background manually
@@ -169,9 +169,9 @@ Assemble_Combat_Picture (int mask)
 
   if ( GameConfig.Draw_Position )
     {
-      PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/6 , 
-		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
-		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) , 
+      PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/6 ,
+		       Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ),
+		       "GPS: X=%d Y=%d Lev=%d" , (int) rintf(Me.pos.x) , (int) rintf(Me.pos.y) ,
 		       CurLevel->levelnum );
     }
 
@@ -186,22 +186,22 @@ Assemble_Combat_Picture (int mask)
 	      FPS_Displayed=(int)(1.0/Frame_Time());
 	      TimeSinceLastFPSUpdate=0;
 	    }
-	  
-	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
+
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x ,
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ),
 			   "FPS: %d " , FPS_Displayed );
 	}
 
       if ( GameConfig.Draw_Energy )
 	{
-	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/2 , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+Full_User_Rect.w/2 ,
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ),
 			   "Energy: %d" , (int)Me.energy);
 	}
       if (GameConfig.Draw_DeathCount)
 	{
-	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 , 
-			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ), 
+	  PrintStringFont( ne_screen , Font0_BFont , Full_User_Rect.x+2*Full_User_Rect.w/3 ,
+			   Full_User_Rect.y+Full_User_Rect.h - FontHeight( Font0_BFont ),
 			   "Deathcount: %d", (int)DeathCount );
 	}
 
@@ -247,7 +247,7 @@ Assemble_Combat_Picture (int mask)
     }
 
   SDL_SetClipRect (ne_screen, NULL);
-  
+
   return;
 
 } // void Assemble_Combat_Picture(...)
@@ -294,7 +294,7 @@ PutInfluence ( int x, int y)
   dst.y = ThirdDigit_Rect.y;
   SDL_BlitSurface( InfluDigitSurfacePointer[ Druidmap[Me.type].druidname[2]-'1'+1 ] , NULL, BuildBlock, &dst);
 
-  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == -1 ) ) 
+  if ( ( (Me.energy*100/Druidmap[Me.type].maxenergy) <= BLINKENERGY) && ( x == -1 ) )
     {
       // In case of low energy, do the fading effect...
       rest = fmod(Me.timer, BLINK_LEN);  // period of fading is given by BLINK_LEN
@@ -330,7 +330,7 @@ PutInfluence ( int x, int y)
     }
 
 
-  if ( x == -1 ) 
+  if ( x == -1 )
     {
       dst.x=UserCenter_x - Block_Rect.w/2;
       dst.y=UserCenter_y - Block_Rect.h/2;
@@ -352,9 +352,9 @@ PutInfluence ( int x, int y)
   //
   if ( ( x == (-1) ) && ( Me.TextVisibleTime < GameConfig.WantedTextVisibleTime ) && GameConfig.Droid_Talk )
     {
-      //      PutStringFont ( ne_screen , Font0_BFont , 
-      //		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 , 
-      //		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 ,  
+      //      PutStringFont ( ne_screen , Font0_BFont ,
+      //		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 ,
+      //		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 ,
       //		      Me.TextToBeDisplayed );
       SetCurrentFont( Font0_BFont );
       DisplayText( Me.TextToBeDisplayed, User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3,
@@ -382,7 +382,7 @@ PutEnemy (int Enum , int x , int y)
   int phase = droid->phase;
   char *name = Druidmap[type].druidname;
 
-  if ( (droid->status == TERMINATED) || (droid->status == OUT) || 
+  if ( (droid->status == TERMINATED) || (droid->status == OUT) ||
        (droid->levelnum != CurLevel->levelnum) )
     return;
 
@@ -410,7 +410,7 @@ PutEnemy (int Enum , int x , int y)
   dst.x = FirstDigit_Rect.x;
   dst.y = FirstDigit_Rect.y;
   SDL_BlitSurface( EnemyDigitSurfacePointer[name[0]-'1'+1 ], NULL, BuildBlock, &dst);
-  
+
   dst.x = SecondDigit_Rect.x;
   dst.y = SecondDigit_Rect.y;
   SDL_BlitSurface( EnemyDigitSurfacePointer[name[1]-'1'+1 ], NULL, BuildBlock, &dst);
@@ -418,9 +418,9 @@ PutEnemy (int Enum , int x , int y)
   dst.x = ThirdDigit_Rect.x;
   dst.y = ThirdDigit_Rect.y;
   SDL_BlitSurface( EnemyDigitSurfacePointer[name[2]-'1'+1], NULL,  BuildBlock, &dst);
-  
+
   // now blit the whole construction to screen:
-  if ( x == -1 ) 
+  if ( x == -1 )
     {
       dst.x=UserCenter_x + (droid->pos.x - Me.pos.x) * Block_Rect.w - Block_Rect.w/2;
       dst.y=UserCenter_y + (droid->pos.y - Me.pos.y) * Block_Rect.h - Block_Rect.h/2;
@@ -435,24 +435,24 @@ PutEnemy (int Enum , int x , int y)
   //--------------------
   // At this point we can assume, that the enemys has been blittet to the
   // screen, whether it's a friendly enemy or not.
-  // 
+  //
   // So now we can add some text the enemys says.  That might be fun.
   //
   if ( (x == -1)
        && ( AllEnemys[Enum].TextVisibleTime < GameConfig.WantedTextVisibleTime )
        && GameConfig.Droid_Talk )
     {
-      PutStringFont ( ne_screen , Font0_BFont , 
-		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Rect.w , 
-		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Rect.h ,  
+      PutStringFont ( ne_screen , Font0_BFont ,
+		      User_Rect.x+(User_Rect.w/2) + Block_Rect.w/3 + (AllEnemys[Enum].pos.x - Me.pos.x) * Block_Rect.w ,
+		      User_Rect.y+(User_Rect.h/2) - Block_Rect.h/2 + (AllEnemys[Enum].pos.y - Me.pos.y) * Block_Rect.h ,
 		      AllEnemys[Enum].TextToBeDisplayed );
     }
 
-  
+
 
   DebugPrintf (2, "\nvoid PutEnemy(int Enum): ENEMY HAS BEEN PUT --> usual end of function reached.\n");
 
-}	// void PutEnemy(int Enum , int x , int y) 
+}	// void PutEnemy(int Enum , int x , int y)
 
 
 // ----------------------------------------------------------------------
@@ -475,8 +475,8 @@ PutAshes (float x, float y)
 } // PutAshes
 
 /*@Function============================================================
-@Desc: PutBullet: draws a Bullet into the combat window.  The only 
-       parameter given is the number of the bullet in the AllBullets 
+@Desc: PutBullet: draws a Bullet into the combat window.  The only
+       parameter given is the number of the bullet in the AllBullets
        array. Everything else is computed in here.
 
 @Ret: void
@@ -494,13 +494,13 @@ PutBullet (int BulletNummer)
 
   //--------------------
   // in case our bullet is of the type "FLASH", we only
-  // draw a big white or black rectangle right over the 
-  // combat window, white for even frames and black for 
+  // draw a big white or black rectangle right over the
+  // combat window, white for even frames and black for
   // odd frames.
   if (CurBullet->type == FLASH)
     {
       // Now the whole window will be filled with either white
-      // or black each frame until the flash is over.  (Flash 
+      // or black each frame until the flash is over.  (Flash
       // deletion after some time is done in CheckBulletCollisions.)
       if ( CurBullet->time_in_seconds <= FLASH_DURATION/4)
 	Fill_Rect (User_Rect, Flash_Light);
@@ -534,7 +534,7 @@ PutBullet (int BulletNummer)
     {
       for ( i=0; i<Bulletmap[ CurBullet->type ].phases ; i++ )
 	{
-	  CurBullet->SurfacePointer[i] = 
+	  CurBullet->SurfacePointer[i] =
 	    rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle , 1.0 , FALSE );
 	}
       DebugPrintf( 1 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
@@ -544,7 +544,7 @@ PutBullet (int BulletNummer)
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
   // LONGER of dimension Block_Rect.w times Block_Rect.h, but of the dimesions of the smallest
   // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
-  // This has to be taken into account when calculating the target position for the 
+  // This has to be taken into account when calculating the target position for the
   // blit of these surfaces!!!!
   dst.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
@@ -558,7 +558,7 @@ PutBullet (int BulletNummer)
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
   // LONGER of dimension Block_Rect.w times Block_Rect.h, but of the dimesions of the smallest
   // rectangle containing the full rotated Block_Rect.h x Block_Rect.w rectangle!!!
-  // This has to be taken into account when calculating the target position for the 
+  // This has to be taken into account when calculating the target position for the
   // blit of these surfaces!!!!
   dst.x = UserCenter_x
     - (Me.pos.x-CurBullet->pos.x)*Block_Rect.w-CurBullet->SurfacePointer[ PhaseOfBullet ]->w/2;
@@ -590,10 +590,10 @@ PutBlast (int BlastNummer)
   if (CurBlast->type == OUT)
     return;
 
-  
+
   dst.x=UserCenter_x - (Me.pos.x - CurBlast->PX)*Block_Rect.w  -Block_Rect.w/2;
   dst.y=UserCenter_y - (Me.pos.y - CurBlast->PY)*Block_Rect.h -Block_Rect.h/2;
-  // SDL_BlitSurface( ne_blocks, 
+  // SDL_BlitSurface( ne_blocks,
   // Blastmap[CurBlast->type].block + ((int) floorf(CurBlast->phase)), ne_screen , &dst);
   SDL_BlitSurface( Blastmap[CurBlast->type].SurfacePointer[ (int)floorf(CurBlast->phase) ] , NULL , ne_screen , &dst);
 
@@ -633,23 +633,23 @@ Fill_Rect (SDL_Rect rect, SDL_Color color)
   pixcolor = SDL_MapRGB (ne_screen->format, color.r, color.g, color.b);
 
   SDL_FillRect (ne_screen, &tmp, pixcolor);
-  
+
   return;
 }
 
 /*-----------------------------------------------------------------
  * @Desc: This function updates the top status bar.
  * To save framerate on slow machines however it will only work
- * if it thinks that work needs to be done. 
+ * if it thinks that work needs to be done.
  * You can however force update if you say so with a flag.
  *
  * BANNER_FORCE_UPDATE=1: Forces the redrawing of the title bar
  *
  * BANNER_DONT_TOUCH_TEXT=2: Prevents DisplayBanner from touching the
  * text.
- * 
+ *
  * BANNER_NO_SDL_UPDATE=4: Prevents any SDL_Update calls.
- * 
+ *
  * -----------------------------------------------------------------*/
 void
 DisplayBanner (const char* left, const char* right,  int flags )
@@ -691,23 +691,23 @@ DisplayBanner (const char* left, const char* right,  int flags )
       right_len = RIGHT_TEXT_LEN;  /* too long, so we cut it! */
       Terminate(ERR);
     }
-  
+
   /* Now prepare the left/right text-boxes */
   memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
-  memset (right_box, ' ', RIGHT_TEXT_LEN);  
-  
+  memset (right_box, ' ', RIGHT_TEXT_LEN);
+
   strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
   strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
-  
+
   left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
   right_box[RIGHT_TEXT_LEN] = '\0';
-  
+
   // --------------------
   // No we see if the screen need an update...
 
-  if ( BannerIsDestroyed || 
-       (flags & BANNER_FORCE_UPDATE ) || 
-       (strcmp( left_box , previous_left_box )) || 
+  if ( BannerIsDestroyed ||
+       (flags & BANNER_FORCE_UPDATE ) ||
+       (strcmp( left_box , previous_left_box )) ||
        (strcmp( right_box , previous_right_box )) )
     {
       // Redraw the whole background of the top status bar
@@ -718,7 +718,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
       // Now the text should be ready and its
       // time to display it...
-      if ( (strcmp( left_box , previous_left_box )) || 
+      if ( (strcmp( left_box , previous_left_box )) ||
 	   (strcmp( right_box , previous_right_box )) ||
 	   ( flags & BANNER_FORCE_UPDATE ) )
 	{

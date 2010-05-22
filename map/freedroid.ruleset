@@ -23,12 +23,12 @@ This file is, as all of Freedroid, put under the GPL License:
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
 
-Feel free to make any modifications you like.  If you set up 
+Feel free to make any modifications you like.  If you set up
 something cool, please send your file in to the Freedroid project.
 
 You can edit it with a standard text editor of your choice.
@@ -43,10 +43,10 @@ as you stick to the following rules:
 3.) Every new robot must begin with the typical "Start of new Robot"
     string AND the asterisks as you see in the existing robots.
     Best copy an existing robots data to a new location at the end
-    of the robot data section and modify the values to your liking. 
+    of the robot data section and modify the values to your liking.
 
 YOU CAN INSERT EXTRA LINES WITH EXTRA TEXT anywhere you like in this file.
-That will not cause any problems.  
+That will not cause any problems.
 
 ----------------------------------------------------------------------
 
@@ -147,12 +147,12 @@ Type of blast this bullet causes when crashing e.g. against a wall : 0
 
 ----------------------------------------------------------------------
 
-*** Start of Robot Data Section: *** 
+*** Start of Robot Data Section: ***
 
 This is the header part of the robot data section:
 Here we have some constants which allow you to multiply a
 factor to ALL robot's values simultanously.  If you want to
-modify only ONE PARTICULAR droid, please seek that droid 
+modify only ONE PARTICULAR droid, please seek that droid
 value in the detailed description of each robot further below
 and make your modifiactions there.
 
@@ -165,7 +165,7 @@ Common factor for all droids score values: 1.0
 
 Now we come to the description of all the droids:
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 001
 Maximum speed of this droid: 5.1
 Class of this droid: 0
@@ -185,9 +185,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted. 
+Notes concerning this droid : robot activity influence device. This helmet is self-powered and will control any robot for a short time. Lasers are turret-mounted.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 123
 Maximum speed of this droid: 2.1
 Class of this droid: 1
@@ -207,9 +207,9 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship. 
+Notes concerning this droid : simpe rubbish diposal robot. Common device in most space craft to maintain a clean ship.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 139
 Maximum speed of this droid: 2.1
 Class of this droid: 1
@@ -229,9 +229,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally. 
+Notes concerning this droid : created by Dr. Masternak to clean up large heaps of rubbish. Its large scoop is used to collect rubbish. It is then crushed internally.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 247
 Maximum speed of this droid: 4.1
 Class of this droid: 2
@@ -251,9 +251,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system. 
+Notes concerning this droid : light duty servant robot. One of the first to use the anti-grav system.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 249
 Maximum speed of this droid: 3.1
 Class of this droid: 2
@@ -273,9 +273,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : cheaper version of the anti-grav servant robot. 
+Notes concerning this droid : cheaper version of the anti-grav servant robot.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 296
 Maximum speed of this droid: 3.1
 Class of this droid: 2
@@ -295,9 +295,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises. 
+Notes concerning this droid : this robot is used mainly for serving drinks. A tray is mounted on the head. Built by Orchard and Marsden Enterprises.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 302
 Maximum speed of this droid: 7.1
 Class of this droid: 3
@@ -317,9 +317,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body. 
+Notes concerning this droid : common device for moving small packages. Clamp is mounted on the lower body.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 329
 Maximum speed of this droid: 3.1
 Class of this droid: 3
@@ -341,7 +341,7 @@ Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : early type messenger robot. Large wheels impede motion on small craft.an
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 420
 Maximum speed of this droid: 3.1
 Class of this droid: 4
@@ -361,9 +361,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : slow maintenance robot. Confined to drive maintenance during flight. 
+Notes concerning this droid : slow maintenance robot. Confined to drive maintenance during flight.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 476
 Maximum speed of this droid: 4.1
 Class of this droid: 4
@@ -383,9 +383,9 @@ Sensor 2 of this droid : 2
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these. 
+Notes concerning this droid : ship maintenance robot. Fitted with multiple arms to carry out repairs to the ship efficiently. All craft built after the Jupiter-incident are supplied with a team of these.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 493
 Maximum speed of this droid: 4.1
 Class of this droid: 4
@@ -405,9 +405,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : slave maintenance droid. Standard version will carry its own toolbox. 
+Notes concerning this droid : slave maintenance droid. Standard version will carry its own toolbox.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 516
 Maximum speed of this droid: 3.1
 Class of this droid: 5
@@ -427,9 +427,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : early crew droid. Able to carry out simple flight checks only. No longer supplied. 
+Notes concerning this droid : early crew droid. Able to carry out simple flight checks only. No longer supplied.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 571
 Maximum speed of this droid: 4.1
 Class of this droid: 5
@@ -449,9 +449,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : standard crew droid. Supplied with the ship. 
+Notes concerning this droid : standard crew droid. Supplied with the ship.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 598
 Maximum speed of this droid: 3.1
 Class of this droid: 5
@@ -471,9 +471,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : a highly sophisticated device. Able to control the Robo-Freighter on its own. 
+Notes concerning this droid : a highly sophisticated device. Able to control the Robo-Freighter on its own.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 614
 Maximum speed of this droid: 3.1
 Class of this droid: 6
@@ -493,9 +493,9 @@ Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device. 
+Notes concerning this droid : low security sentinel droid. Used to protect areas of the ship from intruders. A slow but sure device.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 615
 Maximum speed of this droid: 4.1
 Class of this droid: 6
@@ -517,7 +517,7 @@ Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
 Notes concerning this droid : sophisticated sentinel droid. Only 2000 built by the Nicholson Company. these are now very rare.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 629
 Maximum speed of this droid: 3.1
 Class of this droid: 6
@@ -537,9 +537,9 @@ Sensor 2 of this droid : 3
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version. 
+Notes concerning this droid : low sentinel droid. Lasers are built into the turret. These are mounted on a small tank body. May be fitted with an auto-cannon on-the Gillen version.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 711
 Maximum speed of this droid: 5.1
 Class of this droid: 7
@@ -559,9 +559,9 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military. 
+Notes concerning this droid : heavy duty battle droid. Disruptor is built into the head. One of the first in service with the Military.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 742
 Maximum speed of this droid: 4.1
 Class of this droid: 7
@@ -581,9 +581,9 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : this version is the one mainly used by the Military. 
+Notes concerning this droid : this version is the one mainly used by the Military.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 751
 Maximum speed of this droid: 5.1
 Class of this droid: 7
@@ -603,9 +603,9 @@ Sensor 2 of this droid : 0
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built. 
+Notes concerning this droid : very heavy duty battle droid. Only a few have so far entered service. These are the most powerful battle units ever built.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 821
 Maximum speed of this droid: 6.1
 Class of this droid: 8
@@ -625,9 +625,9 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 2
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors. 
+Notes concerning this droid : a very reliable anti-grav unit is fitted into this droid. It will patrol the ship and eliminate intruders as soon as detected by powerful sensors.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 834
 Maximum speed of this droid: 8.1
 Class of this droid: 8
@@ -647,9 +647,9 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable. 
+Notes concerning this droid : early type anti-grav security droid. Fitted with an over-driven anti-grav unit. This droid is very fast but is not reliable.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 883
 Maximum speed of this droid: 2.1
 Class of this droid: 8
@@ -669,9 +669,9 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 0
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries. 
+Notes concerning this droid : this droid was designed from archive data. For some unknown reason it instils great fear in Human adversaries.
 
-** Start of new Robot: ** 
+** Start of new Robot: **
 Droidname: 999
 Maximum speed of this droid: 6.1
 Class of this droid: 9
@@ -691,7 +691,7 @@ Sensor 2 of this droid : 5
 Sensor 3 of this droid : 3
 Advanced Fighting present in this droid : 1
 Going to request reinforcements typical for this droid : 0
-Notes concerning this droid : experimental command cyborg. Fitted with a new type of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long. 
+Notes concerning this droid : experimental command cyborg. Fitted with a new type of brain. Mounted on a security droid anti-grav unit for convenience. warning: the influence device may not control a primode brain for long.
 
 *** End of Robot Data Section: ***
 

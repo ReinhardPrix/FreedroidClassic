@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -143,7 +143,7 @@ enum _cmds {
 #define COLLISION_STEPSIZE   0.1
 
 /* ************************************************************
- * Highscore related defines 
+ * Highscore related defines
  *************************************************************/
 #define HS_BACKGROUND_FILE     "transfer.jpg"
 #define HS_EMPTY_ENTRY  "--- empty ---"
@@ -178,7 +178,7 @@ enum _alertnames {
   AL_YELLOW,
   AL_AMBER,
   AL_RED,
-  AL_LAST 
+  AL_LAST
 };
 
 
@@ -209,7 +209,7 @@ enum _alertnames {
 
 #define BANNER_BLOCK_FILE       "banner.png"
 #define TITLE_PIC_FILE          "title.jpg"
-#define CONSOLE_PIC_FILE        "console_fg.png" 
+#define CONSOLE_PIC_FILE        "console_fg.png"
 #define CONSOLE_BG_PIC1_FILE    "console_bg1.jpg"
 #define CONSOLE_BG_PIC2_FILE    "console_bg2.jpg"
 #define TAKEOVER_BG_PIC_FILE    "takeover_bg.jpg"
@@ -248,7 +248,7 @@ enum _alertnames {
 
 // The following is the definition of the sound file names used in freedroid
 // DO NOT EVER CHANGE THE ORDER OF APPEARENCE IN THIS LIST PLEASE!!!!!
-// The order of appearance here should match the order of appearance 
+// The order of appearance here should match the order of appearance
 // in the SoundSampleFilenames definition located in sound.c!
 enum _sounds
 {
@@ -288,8 +288,8 @@ enum _sounds
 
 // choose background music by level-color:
 // if filename_raw==BYCOLOR then chose bg_music[color]
-#define BYCOLOR "BYCOLOR"   
- 
+#define BYCOLOR "BYCOLOR"
+
 // The sounds when the influencers energy is low or when he is in transfer mode
 // occur periodically.  These constants specify which intervals are to be used
 // for these periodic happenings...
@@ -314,15 +314,15 @@ enum _sounds
 #define DROID_PHASES            ENEMYPHASES
 
 #define WAIT_LEVELEMPTY		1.0  /* warte bevor Graufaerben (in seconds)*/
-#define WAIT_AFTER_KILLED	2000 // time (in ms) to wait and still display pictures after the destruction of 
+#define WAIT_AFTER_KILLED	2000 // time (in ms) to wait and still display pictures after the destruction of
 #define SHOW_WAIT           3500   // std amount of time to show something
                                    // the players droid.  This is now measured in seconds and can be a float
 #define WAIT_SHIPEMPTY		20
-#define WAIT_TRANSFERMODE	0.3   /* this is a "float" indicating the number of seconds the influence 
-					 stand still with space pressed, before switching into transfermode 
+#define WAIT_TRANSFERMODE	0.3   /* this is a "float" indicating the number of seconds the influence
+					 stand still with space pressed, before switching into transfermode
 					 This variable describes the amount in SECONDS */
 #define WAIT_COLLISION		1 // after a little collision with influ, enemys hold position for a while
-                                  // this variable describes the amount of time in SECONDS 
+                                  // this variable describes the amount of time in SECONDS
 #define ENEMYMAXWAIT 2.0		  // after each robot has reached its current destination waypoint is waits a
                                   // while.  This variable describes the amount of time in SECONDS.  However,
                                   // the final wait time is a random number within [0,ENEMYMAXWAIT].
@@ -346,7 +346,7 @@ enum _directions
 
 /* Maximal number of ... */
 
-#define NUM_MAP_BLOCKS		51  // total number of map-blocks 
+#define NUM_MAP_BLOCKS		51  // total number of map-blocks
 #define NUM_COLORS              7   // how many different level colorings?/different tilesets?
 
 // #define ALLBULLETTYPES		4	/* number of bullet-types */
@@ -479,8 +479,8 @@ enum
   KONSOLE_L=23, KONSOLE_R,    KONSOLE_O,    KONSOLE_U,
   V_ZUTUERE=27, V_HALBTUERE1, V_HALBTUERE2, V_HALBTUERE3, V_GANZTUERE,
   LIFT = 32,    VOID = 33,
-  REFRESH1=34,  REFRESH2,     REFRESH3,    REFRESH4,   
-  ALERT_GREEN=38, ALERT_YELLOW, ALERT_AMBER, ALERT_RED, 
+  REFRESH1=34,  REFRESH2,     REFRESH3,    REFRESH4,
+  ALERT_GREEN=38, ALERT_YELLOW, ALERT_AMBER, ALERT_RED,
   UNUSED2 = 42,   FINE_GRID,
   NUM_MAP_TILES
 };

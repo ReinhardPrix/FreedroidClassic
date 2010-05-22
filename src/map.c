@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,16 +17,16 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
 
 /*----------------------------------------------------------------------
  *
- * Desc: All map-related functions, which also includes loading of decks 
- * and whole ships, starting the lifts and consoles if close to the 
+ * Desc: All map-related functions, which also includes loading of decks
+ * and whole ships, starting the lifts and consoles if close to the
  * paradroid, refreshes as well as determining the map brick that contains
  * specified coordinates are done in this file.
  *
@@ -57,7 +57,7 @@ void GetThisLevelsDroids( char* SectionPointer );
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
   intern-code des Elements, das sich auf (deck x/y) befindet
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 unsigned char
@@ -75,11 +75,11 @@ GetMapBrick (Level deck, float x, float y)
 } /* GetMapBrick() */
 
 /*@Function============================================================
-@Desc: int GetCurrentLift: finds Lift-number to your position 
+@Desc: int GetCurrentLift: finds Lift-number to your position
 
 @Ret: -1: 	Not found !!
 		num: 	Number of cur. Lift in AllLifts[]
-		
+
 @Int:
 * $Function----------------------------------------------------------*/
 int
@@ -96,7 +96,7 @@ GetCurrentLift (void)
   DebugPrintf( 1 , "\nint GetCurrentLift( void ): List of elevators:\n");
   for (i = 0; i < curShip.num_lifts+1; i++)
     {
-      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i , 
+      DebugPrintf( 1 , "\nIndex=%d level=%d gx=%d gy=%d" , i ,
 		   curShip.AllLifts[i].level , curShip.AllLifts[i].x , curShip.AllLifts[i].y );
     }
 
@@ -114,12 +114,12 @@ GetCurrentLift (void)
     return -1;
   else
     return i;
-}; // GetCurrentLift 
+}; // GetCurrentLift
 
 
 /*@Function============================================================
 @Desc: ActSpecialField: checks Influencer on SpecialFields like
-Lifts and Konsoles and acts on it 
+Lifts and Konsoles and acts on it
 
 @Ret: void
 @Int:
@@ -300,7 +300,7 @@ LoadShip (char *filename)
   return OK;
 
 } /* LoadShip () */
-		
+
 /*@Function============================================================
 @Desc: char *StructToMem(Level Lev):
 
@@ -318,12 +318,12 @@ char *StructToMem(Level Lev)
   waypoint *this_wp;
 
   anz_wp = Lev->num_waypoints;
-		
+
   /* estimate the amount of memory needed */
   MemAmount = (xlen+1) * ylen; 	/* Map-memory */
   MemAmount += anz_wp * MAX_WP_CONNECTIONS * 4;
   MemAmount += 50000;		/* Puffer fuer Dimensionen, mark-strings .. */
-  
+
   /* allocate some memory */
   if( (LevelMem = (char*)MyMalloc(MemAmount)) == NULL) {
     DebugPrintf(1, "\n\nError in StructToMem:  Could not allocate memory...\n\nTerminating...\n\n");
@@ -343,9 +343,9 @@ char *StructToMem(Level Lev)
   strcat(LevelMem, "\n" );
   strcat(LevelMem, BACKGROUND_SONG_NAME_STRING );
   strcat(LevelMem, Lev->Background_Song_Name );
-  // strcat(LevelMem, Decknames[Lev->levelnum] ); 
+  // strcat(LevelMem, Decknames[Lev->levelnum] );
   strcat(LevelMem, "\n" );
-  
+
   // Now the beginning of the actual map data is marked:
   strcat(LevelMem, MAP_BEGIN_STRING);
   strcat(LevelMem, "\n");
@@ -362,42 +362,42 @@ char *StructToMem(Level Lev)
     strcat(LevelMem, "\n");
   }
 
-  // --------------------  
-  // The next thing we must do is write the waypoints of this level 
+  // --------------------
+  // The next thing we must do is write the waypoints of this level
 
   strcat(LevelMem, WP_BEGIN_STRING);
   strcat(LevelMem, "\n");
-  
+
   for(i=0; i< Lev->num_waypoints ; i++)
     {
       sprintf(linebuf, "Nr.=%3d x=%4d y=%4d", i, Lev->AllWaypoints[i].x , Lev->AllWaypoints[i].y );
       strcat( LevelMem, linebuf );
       strcat( LevelMem, "\t ");
       strcat (LevelMem, CONNECTION_STRING);
-      
+
       this_wp = &Lev->AllWaypoints[i];
-      for( j=0; j < this_wp->num_connections; j++) 
+      for( j=0; j < this_wp->num_connections; j++)
 	{
 	  sprintf(linebuf, "%2d ", this_wp->connections[j]);
 	  strcat(LevelMem, linebuf);
 	} /* for connections */
       strcat(LevelMem, "\n");
     } /* for waypoints */
-  
+
   strcat(LevelMem, LEVEL_END_STRING);
   strcat(LevelMem, "\n----------------------------------------------------------------------\n");
-  
+
   /* FERTIG:   hat die Memory - Schaetzung gestimmt ?? */
   /* wenn nicht: :-(  */
-  if( strlen(LevelMem) >= MemAmount) 
+  if( strlen(LevelMem) >= MemAmount)
     {
       DebugPrintf(0, "\n\nError in StructToMem:  Estimate of memory was wrong...\nTerminating...\n");
       Terminate(ERR);
-    } 
-  
+    }
+
   /* all ok : */
   return (LevelMem);
-  
+
 } /* Struct to Mem */
 
 /*@Function============================================================
@@ -417,16 +417,16 @@ int SaveShip(char *shipname)
   int i;
 
   DebugPrintf (2, "\nint SaveShip(char *shipname): real function call confirmed.");
-  
+
   /* Get the complete filename */
   strcpy(filename, shipname);
   strcat(filename, SHIP_EXT);
-  
+
   /* count the levels */
   level_anz = 0;
   while(curShip.AllLevels[level_anz++]);
   level_anz --;
-  
+
   DebugPrintf (2, "\nint SaveShip(char *shipname): now opening the ship file...");
 
   /* open file */
@@ -435,7 +435,7 @@ int SaveShip(char *shipname)
     Terminate(ERR);
     return ERR;
   }
-  
+
   //--------------------
   // Now that the file is opend for writing, we can start writing.  And the first thing
   // we will write to the file will be a fine header, indicating what this file is about
@@ -452,18 +452,18 @@ send a short notice (not too large files attached) to the freedroid project.\n\
 freedroid-discussion@lists.sourceforge.net\n\
 ----------------------------------------------------------------------\n\
 \n";
-  fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);  
+  fwrite ( MapHeaderString , strlen( MapHeaderString), sizeof(char), ShipFile);
 
   // Now we write the area name back into the file
-  fwrite ( AREA_NAME_STRING , strlen( AREA_NAME_STRING ), sizeof(char), ShipFile);  
-  fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);  
+  fwrite ( AREA_NAME_STRING , strlen( AREA_NAME_STRING ), sizeof(char), ShipFile);
+  fwrite ( curShip.AreaName , strlen( curShip.AreaName ), sizeof(char), ShipFile);
   fwrite( "\"\n\n  ", strlen( "\"\n\n  " ) , sizeof(char) , ShipFile );
 
   /* Save all Levels */
-  
+
   DebugPrintf (2, "\nint SaveShip(char *shipname): now saving levels...");
 
-  for( i=0; i<level_anz; i++) 
+  for( i=0; i<level_anz; i++)
     {
 
       //--------------------
@@ -472,35 +472,35 @@ freedroid-discussion@lists.sourceforge.net\n\
       //
       array_i =-1;
       array_num = -1;
-      while( curShip.AllLevels[++array_i] != NULL) 
+      while( curShip.AllLevels[++array_i] != NULL)
 	{
 	  if( curShip.AllLevels[array_i]->levelnum == i)
 	    {
-	      if( array_num != -1 ) 
+	      if( array_num != -1 )
 		{
 		  printf("\n\nIdentical Levelnumber Error in SaveShip...\n\nTerminating\n\n");
 		  Terminate(ERR);
 		  return ERR;
-		} 
+		}
 	      else array_num = array_i;
 	    }
-	} // while 
+	} // while
       if ( array_num == -1 ) {
 
 	printf("\n\nMissing Levelnumber error in SaveShip...\n\nTerminating\n\n");
 	Terminate(ERR);
-      
+
 	level_anz ++;
 	continue;
       }
-    
+
       //--------------------
       // Now comes the real saving part FOR ONE LEVEL.  First THE LEVEL is packed into a string and
       // then this string is wirtten to the file.  easy. simple.
       //
       LevelMem = StructToMem(curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
-    
+
       free(LevelMem);
     }
 
@@ -514,18 +514,18 @@ freedroid-discussion@lists.sourceforge.net\n\
   fwrite( END_OF_SHIP_DATA_STRING , strlen( END_OF_SHIP_DATA_STRING ) , sizeof(char) , ShipFile );
   fwrite( "\n\n  ", strlen( "\n\n  " ) , sizeof(char) , ShipFile );
 
-  
+
   DebugPrintf (2, "\nint SaveShip(char *shipname): now closing ship file...");
 
-  if( fclose(ShipFile) == EOF) 
+  if( fclose(ShipFile) == EOF)
     {
       printf("\n\nClosing of ship file failed in SaveShip...\n\nTerminating\n\n");
       Terminate(ERR);
       return ERR;
     }
-  
+
   DebugPrintf (2, "\nint SaveShip(char *shipname): end of function reached.");
-  
+
   return OK;
 } /* SaveShip */
 
@@ -533,7 +533,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 /*@Function============================================================
  * @Desc: Level LevelToStruct(char *data):
  *      This function is for LOADING map data!
- * 	This function extracts the data from *data and writes them 
+ * 	This function extracts the data from *data and writes them
  *      into a Level-struct:
  *
  *	Doors and Waypoints Arrays are initialized too
@@ -555,7 +555,7 @@ LevelToStruct (char *data)
   char* DataPointer;
   int res;
   int tmp;
-  
+
   /* Get the memory for one level */
   loadlevel = (Level) MyMalloc (sizeof (level));
 
@@ -591,14 +591,14 @@ LevelToStruct (char *data)
   /* set position to Waypoint-Data */
   if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
     return(NULL);
-  
+
   // find end of level-data
   if ((level_end = strstr (data, LEVEL_END_STRING)) == NULL)
     return(NULL);
 
   /* now scan the map */
   next_line = map_begin;
-  this_line = strtok (next_line, "\n");	
+  this_line = strtok (next_line, "\n");
 
   /* read MapData */
   for (i = 0; i < loadlevel->ylen; i++)
@@ -638,7 +638,7 @@ LevelToStruct (char *data)
 	}
 
       sscanf( this_line , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
-      
+
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
 
@@ -810,7 +810,7 @@ GetAlerts (Level Lev)
   xlen = Lev->xlen;
   ylen = Lev->ylen;
 
-  // init alert array to -1 
+  // init alert array to -1
   for (i = 0; i < MAX_ALERTS_ON_LEVEL; i++)
     Lev->alerts[i].x = Lev->alerts[i].y = -1;
 
@@ -844,7 +844,7 @@ GetAlerts (Level Lev)
 
 
 /*======================================================================
-  IsWallBlock():  Returns TRUE (1) for blocks classified as "Walls", 
+  IsWallBlock():  Returns TRUE (1) for blocks classified as "Walls",
   		  0 otherwise
  ======================================================================*/
 int
@@ -876,7 +876,7 @@ IsWallBlock (int block)
  *
  ----------------------------------------------------------------------*/
 void
-ResetLevelMap (Level Lev) 
+ResetLevelMap (Level Lev)
 {
   int col;
   int i;
@@ -942,14 +942,14 @@ InterpretMap (Level Lev)
   /* Get Doors Array */
   GetDoors ( Lev );
 
-  // Get Refreshes 
+  // Get Refreshes
   GetRefreshes ( Lev );
 
   // Get Alerts
   GetAlerts (Lev);
 
   return(OK);
-}		
+}
 
 
 /*@Function============================================================
@@ -1006,7 +1006,7 @@ GetLiftConnections (char *filename)
   // At first we read in the rectangles that define where the colums of the
   // lift are, so that we can highlight them later.
   //
-  
+
   curShip.num_lift_rows = 0;
   while ( ( EntryPointer = strstr( EntryPointer , "Elevator Number=" ) ) != NULL )
     {
@@ -1017,7 +1017,7 @@ GetLiftConnections (char *filename)
       ReadValueFromString (EntryPointer, "ElRowY=", "%d", &y);
       ReadValueFromString (EntryPointer, "ElRowW=", "%d", &w);
       ReadValueFromString (EntryPointer, "ElRowH=", "%d", &h);
-      
+
       curShip.LiftRow_Rect[ElevatorIndex].x = x;
       curShip.LiftRow_Rect[ElevatorIndex].y = y;
       curShip.LiftRow_Rect[ElevatorIndex].w = w;
@@ -1035,13 +1035,13 @@ GetLiftConnections (char *filename)
 
   EndOfDeckRectangleSection = LocateStringInData ( Data , "*** End of deck rectangle section ***" );
   EntryPointer = Data ;
-  
+
   while ( ( EntryPointer = strstr( EntryPointer , "DeckNr=" ) ) != NULL )
     {
       ReadValueFromString (EntryPointer, "DeckNr=", "%d", &DeckIndex);
       ReadValueFromString (EntryPointer, "RectNumber=", "%d", &RectIndex);
       EntryPointer ++;  // to prevent doubly taking this entry
-      
+
       curShip.num_level_rects[ DeckIndex ] ++; // count the number of rects for this deck one up
 
       ReadValueFromString (EntryPointer, "DeckX=", "%d", &x);
@@ -1088,10 +1088,10 @@ GetLiftConnections (char *filename)
 
 /*-----------------------------------------------------------------
  * @Desc: This function initializes all enemys
- * 
+ *
  *
  * @Ret: OK or ERR
- * 
+ *
  *-----------------------------------------------------------------*/
 int
 GetCrew (char *filename)
@@ -1142,7 +1142,7 @@ GetCrew (char *filename)
 
 
   //--------------------
-  // Now that the correct crew types have been filled into the 
+  // Now that the correct crew types have been filled into the
   // right structure, it's time to set the energy of the corresponding
   // droids to "full" which means to the maximum of each type.
   //
@@ -1217,18 +1217,18 @@ GetThisLevelsDroids( char* SectionPointer )
 	}
       if ( ListIndex >= Number_Of_Droid_Types )
 	{
-	  DebugPrintf (0, "ERROR: unknown droid type: %s found in data file for level %d\n", 
-		       TypeIndicationString , OurLevelNumber); 
+	  DebugPrintf (0, "ERROR: unknown droid type: %s found in data file for level %d\n",
+		       TypeIndicationString , OurLevelNumber);
 	  Terminate(ERR);
 	}
       else
-	DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." , 
+	DebugPrintf( 1 , "\nType indication string %s translated to type Nr.%d." ,
 		     TypeIndicationString , ListIndex );
       ListOfTypesAllowed[DifferentRandomTypes]=ListIndex;
       DifferentRandomTypes++;
     }
   DebugPrintf( 1 , "\nFound %d different allowed random types for this level. " , DifferentRandomTypes );
-  
+
   //--------------------
   // At this point, the List "ListOfTypesAllowed" has been filled with the NUMBERS of
   // the allowed types.  The number of different allowed types found is also available.
@@ -1253,7 +1253,7 @@ GetThisLevelsDroids( char* SectionPointer )
       AllEnemys[ FreeAllEnemysPosition ].levelnum = OurLevelNumber;
       AllEnemys[ FreeAllEnemysPosition ].status = MOBILE;
 
-    }  // while (enemy-limit of this level not reached) 
+    }  // while (enemy-limit of this level not reached)
 
 
   return;
@@ -1269,7 +1269,7 @@ GetThisLevelsDroids( char* SectionPointer )
        to be to operate this function only from time to time, e.g. after a
        specified delay has passed.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 MoveLevelDoors (void)
@@ -1317,7 +1317,7 @@ MoveLevelDoors (void)
 	  for (j = 0; j < NumEnemys; j++)
 	    {
 	      /* ignore druids that are dead or on other levels */
-	      if (AllEnemys[j].status == OUT || AllEnemys[j].status == TERMINATED || 
+	      if (AllEnemys[j].status == OUT || AllEnemys[j].status == TERMINATED ||
 		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 
@@ -1402,7 +1402,7 @@ DruidPassable (float x, float y)
 prueft, ob der Punkt x/y passierbar ist
 Checkpos: Falls Druid gecheckt wird: aktuelle Check-position
 Checkpos = CENTER means: No Druid check
-			
+
 @Ret: CENTER: 	TRUE
 Directions + (-1) : FALSE
 

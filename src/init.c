@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -38,7 +38,7 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
-#include "getopt.h"   
+#include "getopt.h"
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
@@ -56,7 +56,7 @@ char Previous_Mission_Name[500];
 @Desc: This function loads all the constant variables of the game from
        a dat file, that should be optimally human readable.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 Get_General_Game_Constants (char *data)
@@ -81,7 +81,7 @@ Get_General_Game_Constants (char *data)
   ReadValueFromString (data, ALERT_BONUS_PER_SEC_STRING, "%f", &AlertBonusPerSec);
 
   // Now we read in the speed calibration factor for all bullets
-  ReadValueFromString (data, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING, "%f", 
+  ReadValueFromString (data, COLLISION_LOSE_ENERGY_CALIBRATOR_STRING, "%f",
 		       &collision_lose_energy_calibrator);
 
   // Now we read in the blast radius
@@ -93,8 +93,8 @@ Get_General_Game_Constants (char *data)
   // Now we read in the blast damage amount per 'second' of contact with the blast
   ReadValueFromString( data ,  BLAST_DAMAGE_SPECIFICATION_STRING , "%f" , &Blast_Damage_Per_Second);
 
-  // Now we read in the time is takes for the door to move one phase 
-  ReadValueFromString( data ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%f" , 
+  // Now we read in the time is takes for the door to move one phase
+  ReadValueFromString( data ,  TIME_FOR_DOOR_MOVEMENT_SPECIFICATION_STRING , "%f" ,
 		       &Time_For_Each_Phase_Of_Door_Movement);
 
   DebugPrintf(2 , "\nvoid Get_General_Game_Constants ( void* data ): end of function reached." );
@@ -107,10 +107,10 @@ Get_General_Game_Constants (char *data)
  * but IT DOES NOT LOAD THE FILE, IT ASSUMES IT IS ALREADY LOADED and
  * it only receives a pointer to the start of the bullet section from
  * the calling function.
- * 
+ *
  ----------------------------------------------------------------------*/
 
-void 
+void
 Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
@@ -121,8 +121,8 @@ Get_Bullet_Data ( char* DataPointer )
   float bullet_speed_calibrator;
   float bullet_damage_calibrator;
 
-#define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***" 
-#define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***" 
+#define BULLET_SECTION_BEGIN_STRING "*** Start of Bullet Data Section: ***"
+#define BULLET_SECTION_END_STRING "*** End of Bullet Data Section: ***"
 #define NEW_BULLET_TYPE_BEGIN_STRING "** Start of new bullet specification subsection **"
 
 #define BULLET_RECHARGE_TIME_BEGIN_STRING "Time is takes to recharge this bullet/weapon in seconds :"
@@ -157,7 +157,7 @@ Get_Bullet_Data ( char* DataPointer )
     {
       size = sizeof(bulletspec);
       Bulletmap = MyMalloc ( size * (Number_Of_Bullet_Types + 1) + 1 );
-      DebugPrintf (1, "\nWe have counted %d different bullet types in the game data file." , 
+      DebugPrintf (1, "\nWe have counted %d different bullet types in the game data file." ,
 		   Number_Of_Bullet_Types );
       DebugPrintf (1, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
       // getchar();
@@ -165,7 +165,7 @@ Get_Bullet_Data ( char* DataPointer )
 
   //--------------------
   // Now we start to read the values for each bullet type:
-  // 
+  //
   BulletPointer=DataPointer;
 
   while ( (BulletPointer = strstr ( BulletPointer, NEW_BULLET_TYPE_BEGIN_STRING )) != NULL)
@@ -174,26 +174,26 @@ Get_Bullet_Data ( char* DataPointer )
       BulletPointer ++; // to avoid doubly taking this entry
 
       // Now we read in the recharging time for this bullettype(=weapontype)
-      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%f" , 
+      ReadValueFromString( BulletPointer ,  BULLET_RECHARGE_TIME_BEGIN_STRING , "%f" ,
 			   &Bulletmap[BulletIndex].recharging_time);
 
       // Now we read in the maximal speed this type of bullet can go.
-      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%f" , 
+      ReadValueFromString( BulletPointer ,  BULLET_SPEED_BEGIN_STRING , "%f" ,
 			   &Bulletmap[BulletIndex].speed);
 
       // Now we read in the damage this bullet can do
-      ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" , 
+      ReadValueFromString( BulletPointer ,  BULLET_DAMAGE_BEGIN_STRING , "%d" ,
 			   &Bulletmap[BulletIndex].damage);
 
       // Now we read in the number of phases that are designed for this bullet type
       // THIS IS NOW SPECIFIED IN THE THEME CONFIG FILE
-      // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" , 
+      // ReadValueFromString( BulletPointer ,  BULLET_NUMBER_OF_PHASES_BEGIN_STRING , "%d" ,
       // &Bulletmap[BulletIndex].phases , EndOfBulletData );
 
       // Now we read in the type of blast this bullet will cause when crashing e.g. against the wall
-      ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" , 
+      ReadValueFromString( BulletPointer ,  BULLET_BLAST_TYPE_CAUSED_BEGIN_STRING , "%d" ,
 			   &Bulletmap[BulletIndex].blast);
- 
+
       BulletIndex++;
     }
 
@@ -201,15 +201,15 @@ Get_Bullet_Data ( char* DataPointer )
   // Now that the detailed values for the bullets have been read in,
   // we now read in the general calibration contants and after that
   // the start to apply them right now, so they also take effect.
-  
+
   DebugPrintf (1, "\n\nStarting to read bullet calibration section\n\n");
 
   // Now we read in the speed calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( DataPointer ,  BULLET_SPEED_CALIBRATOR_STRING , "%f" ,
 		       &bullet_speed_calibrator);
 
   // Now we read in the damage calibration factor for all bullets
-  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( DataPointer ,  BULLET_DAMAGE_CALIBRATOR_STRING , "%f" ,
 		       &bullet_damage_calibrator);
 
   //--------------------
@@ -230,7 +230,7 @@ Get_Bullet_Data ( char* DataPointer )
 @Desc: This function loads all the constant variables of the game from
        a dat file, that should be optimally human readable.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 Get_Robot_Data ( void* DataPointer )
@@ -255,9 +255,9 @@ Get_Robot_Data ( void* DataPointer )
 #define SCORE_CALIBRATOR_STRING "Common factor for all droids score values: "
 
 
-#define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***" 
-#define ROBOT_SECTION_END_STRING "*** End of Robot Data Section: ***" 
-#define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **" 
+#define ROBOT_SECTION_BEGIN_STRING "*** Start of Robot Data Section: ***"
+#define ROBOT_SECTION_END_STRING "*** End of Robot Data Section: ***"
+#define NEW_ROBOT_BEGIN_STRING "** Start of new Robot: **"
 #define DROIDNAME_BEGIN_STRING "Droidname: "
 #define MAXSPEED_BEGIN_STRING "Maximum speed of this droid: "
 #define CLASS_BEGIN_STRING "Class of this droid: "
@@ -279,39 +279,39 @@ Get_Robot_Data ( void* DataPointer )
 #define GO_REQUEST_REINFORCEMENTS_BEGIN_STRING "Going to request reinforcements typical for this droid : "
 #define NOTES_BEGIN_STRING "Notes concerning this droid : "
 
-  
+
   RobotPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_BEGIN_STRING );
   EndOfDataPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_END_STRING );
 
-  
+
   DebugPrintf (2, "\n\nStarting to read robot calibration section\n\n");
 
   // Now we read in the speed calibration factor for all droids
-  ReadValueFromString( RobotPointer , MAXSPEED_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , MAXSPEED_CALIBRATOR_STRING , "%f" ,
 		       &maxspeed_calibrator);
 
   // Now we read in the acceleration calibration factor for all droids
-  ReadValueFromString( RobotPointer , ACCELERATION_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , ACCELERATION_CALIBRATOR_STRING , "%f" ,
 		       &acceleration_calibrator);
 
   // Now we read in the maxenergy calibration factor for all droids
-  ReadValueFromString( RobotPointer , MAXENERGY_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , MAXENERGY_CALIBRATOR_STRING , "%f" ,
 		       &maxenergy_calibrator);
 
   // Now we read in the energy_loss calibration factor for all droids
-  ReadValueFromString( RobotPointer , ENERGYLOSS_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , ENERGYLOSS_CALIBRATOR_STRING , "%f" ,
 		       &energyloss_calibrator);
 
   // Now we read in the aggression calibration factor for all droids
-  ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , AGGRESSION_CALIBRATOR_STRING , "%f" ,
 		       &aggression_calibrator);
 
   // Now we read in the score calibration factor for all droids
-  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%f" , 
+  ReadValueFromString( RobotPointer , SCORE_CALIBRATOR_STRING , "%f" ,
 		       &score_calibrator);
 
   DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
-  
+
   // cleanup if previously allocated:
   if (Number_Of_Droid_Types && Druidmap)
     {
@@ -324,7 +324,7 @@ Get_Robot_Data ( void* DataPointer )
       free(Druidmap);
       Druidmap = NULL;
     }
-    
+
   //--------------------
   // At first, we must allocate memory for the droid specifications.
   // How much?  That depends on the number of droids defined in freedroid.ruleset.
@@ -349,64 +349,64 @@ Get_Robot_Data ( void* DataPointer )
       // Now we read in the Name of this droid.  We consider as a name the rest of the
       ReadValueFromString (RobotPointer, DROIDNAME_BEGIN_STRING, "%s", Druidmap[RobotIndex].druidname);
 
-      // Now we read in the maximal speed this droid can go. 
-      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%f" , 
+      // Now we read in the maximal speed this droid can go.
+      ReadValueFromString( RobotPointer , MAXSPEED_BEGIN_STRING , "%f" ,
 			   &Druidmap[RobotIndex].maxspeed);
 
       // Now we read in the class of this droid.
-      ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , CLASS_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].class);
 
-      // Now we read in the maximal acceleration this droid can go. 
-      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%f" , 
+      // Now we read in the maximal acceleration this droid can go.
+      ReadValueFromString( RobotPointer , ACCELERATION_BEGIN_STRING , "%f" ,
 			   &Druidmap[RobotIndex].accel);
 
-      // Now we read in the maximal energy this droid can store. 
-      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%f" , 
+      // Now we read in the maximal energy this droid can store.
+      ReadValueFromString( RobotPointer , MAXENERGY_BEGIN_STRING , "%f" ,
 			   &Druidmap[RobotIndex].maxenergy);
 
       // Now we read in the lose_health rate.
-      ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%f" , 
+      ReadValueFromString( RobotPointer , LOSEHEALTH_BEGIN_STRING , "%f" ,
 			   &Druidmap[RobotIndex].lose_health);
 
       // Now we read in the class of this droid.
-      ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , GUN_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].gun);
 
       // Now we read in the aggression rate of this droid.
-      ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , AGGRESSION_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].aggression);
 
       // Now we read in the flash immunity of this droid.
-      ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , FLASHIMMUNE_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].flashimmune);
 
       // Now we score to be had for destroying one droid of this type
-      ReadValueFromString( RobotPointer , SCORE_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , SCORE_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].score);
 
       // Now we read in the height of this droid of this type
-      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%f" , 
+      ReadValueFromString( RobotPointer , HEIGHT_BEGIN_STRING , "%f" ,
 			   &Druidmap[RobotIndex].height);
 
       // Now we read in the weight of this droid type
-      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , WEIGHT_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].weight);
 
       // Now we read in the drive of this droid of this type
-      ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , DRIVE_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].drive);
 
       // Now we read in the brain of this droid of this type
-      ReadValueFromString( RobotPointer , BRAIN_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , BRAIN_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].brain);
 
       // Now we read in the sensor 1, 2 and 3 of this droid type
-      ReadValueFromString( RobotPointer , SENSOR1_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , SENSOR1_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].sensor1);
-      ReadValueFromString( RobotPointer , SENSOR2_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , SENSOR2_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].sensor2);
-      ReadValueFromString( RobotPointer , SENSOR3_BEGIN_STRING , "%d" , 
+      ReadValueFromString( RobotPointer , SENSOR3_BEGIN_STRING , "%d" ,
 			   &Druidmap[RobotIndex].sensor3);
 
       // Now we read in the notes concerning this droid.  We consider as notes all the rest of the
@@ -421,7 +421,7 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
   DebugPrintf ( 1 , "\n\nApplying the calibration factors to all droids...");
 
-  for ( i=0; i< Number_Of_Droid_Types ; i++ ) 
+  for ( i=0; i< Number_Of_Droid_Types ; i++ )
     {
       Druidmap[i].maxspeed *= maxspeed_calibrator;
       Druidmap[i].accel *= acceleration_calibrator;
@@ -438,7 +438,7 @@ Get_Robot_Data ( void* DataPointer )
 @Desc: This function loads all the constant variables of the game from
        a dat file, that should be optimally human readable.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 Init_Game_Data ( char * Datafilename )
@@ -470,8 +470,8 @@ Init_Game_Data ( char * Datafilename )
   ReadValueFromString (Data, BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING, "%f", &Blastmap[1].total_animation_time);
 
 
-  free ( Data ); 
-  
+  free ( Data );
+
   return;
 
 } // int Init_Game_Data ( void )
@@ -481,7 +481,7 @@ Init_Game_Data ( char * Datafilename )
 /* -----------------------------------------------------------------
  * This function is for stability while working with the SVGALIB, which otherwise would
  * be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
- * graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the 
+ * graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the
  * console will NOT be returned to normal, the keyboard will remain useless and login from
  * outside and shutting down or reseting the console will be the only way to avoid a hard
  * reset!
@@ -489,7 +489,7 @@ Init_Game_Data ( char * Datafilename )
  * instructed to generate a signal ALARM after a specified time has passed.  This signal will
  * be handled by this function, which in turn restores to console to normal and resets the
  * yiff sound server access if applicable. (All this is done via calling Terminate
- * of course.) 
+ * of course.)
  * -----------------------------------------------------------------*/
 static void
 timeout (int sig)
@@ -518,7 +518,7 @@ Please report bugs on our sourceforge-website:\n\
 http://sourceforge.net/projects/freedroid/\n\n";
 
 /* -----------------------------------------------------------------
- *  parse command line arguments and set global switches 
+ *  parse command line arguments and set global switches
  *  exit on error, so we don't need to return success status
  * -----------------------------------------------------------------*/
 void
@@ -553,7 +553,7 @@ parse_command_line (int argc, char *const argv[])
 	  /* version statement -v or --version
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
-	  printf ("\n%s %s  \n", PACKAGE, VERSION); 
+	  printf ("\n%s %s  \n", PACKAGE, VERSION);
 	  printf (copyright);
 	  exit (0);
 	  break;
@@ -582,7 +582,7 @@ parse_command_line (int argc, char *const argv[])
 	  break;
 
 	case 'd':
-	  if (!optarg) 
+	  if (!optarg)
 	    debug_level = 1;
 	  else
 	    debug_level = atoi (optarg);
@@ -614,9 +614,9 @@ parse_command_line (int argc, char *const argv[])
 
 
 /*-----------------------------------------------------------------
- * @Desc: Startwerte fuer neues Spiel einstellen 
- * 
- * @Ret: 
+ * @Desc: Startwerte fuer neues Spiel einstellen
+ *
+ * @Ret:
  *
  *-----------------------------------------------------------------*/
 void
@@ -652,8 +652,8 @@ InitNewMission ( char *MissionName )
   // case the player doesn't want to return to the very beginning
   // but just to replay this mission.
   //
-  strcpy( Previous_Mission_Name , MissionName ); 
-  
+  strcpy( Previous_Mission_Name , MissionName );
+
   DebugPrintf (2, "\nvoid InitNewMission( char *MissionName ): real function call confirmed...");
   DebugPrintf (2, "\nA new mission is being initialized from file %s.\n" , MissionName );
 
@@ -687,7 +687,7 @@ InitNewMission ( char *MissionName )
       AllEnemys[i].energy = -1;
     }
   DebugPrintf (2, "\nvoid InitNewMission( ... ): All enemys have been deleted...");
-  
+
   //--------------------
   //Now its time to start decoding the mission file.
   //For that, we must get it into memory first.
@@ -705,7 +705,7 @@ InitNewMission ( char *MissionName )
 
   //--------------------
   // Now the mission file is read into memory.  That means we can start to decode the details given
-  // in the body of the mission file.  
+  // in the body of the mission file.
 
   //--------------------
   // First we extract the game physics file name from the
@@ -788,7 +788,7 @@ InitNewMission ( char *MissionName )
       DebugPrintf ( 0 , "\n\nERROR! NOT EVEN ONE SINGLE STARTING POINT ENTRY FOUND!  TERMINATING!");
       Terminate( ERR );
     }
-  DebugPrintf (1, "\nFound %d different starting points for the mission in the mission file.", 
+  DebugPrintf (1, "\nFound %d different starting points for the mission in the mission file.",
 	       NumberOfStartPoints );
 
 
@@ -810,7 +810,7 @@ InitNewMission ( char *MissionName )
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
   sscanf( StartPointPointer , "%d" , &StartingYPos );
   Me.pos.y=StartingYPos;
-  DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." , 
+  DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." ,
 		StartingLevel, StartingXPos, StartingYPos );
 
 
@@ -833,7 +833,7 @@ InitNewMission ( char *MissionName )
   //--------------------
   // We start with doing the briefing things...
   // Now we search for the beginning of the mission briefing big section NOT subsection.
-  // We display the title and explanation of controls and such... 
+  // We display the title and explanation of controls and such...
   BriefingSectionPointer = LocateStringInData ( MainMissionPointer , MISSION_BRIEFING_BEGIN_STRING );
   Title ( BriefingSectionPointer );
 
@@ -866,19 +866,19 @@ InitNewMission ( char *MissionName )
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
 
   free (MainMissionPointer);
- 
+
   return;
 
 } /* InitNewGame */
 
 /*-----------------------------------------------------------------
  * @Desc: This function initializes the whole Freedroid game.
- * 
+ *
  * THIS MUST NOT BE CONFUSED WITH INITNEWGAME, WHICH
  * ONLY INITIALIZES A NEW MISSION FOR THE GAME.
- *  
- * 
- *  
+ *
+ *
+ *
  *-----------------------------------------------------------------*/
 void
 
@@ -910,11 +910,11 @@ InitFreedroid (int argc, char *const argv[])
   sprintf (GameConfig.Theme_Name, "classic");
   GameConfig.FullUserRect = TRUE;
   GameConfig.UseFullscreen = FALSE;
-  GameConfig.TakeoverActivates = TRUE;  
+  GameConfig.TakeoverActivates = TRUE;
   GameConfig.ShowDecals = TRUE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
   GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
-  GameConfig.HogCPU = FALSE;	// default to being nice 
+  GameConfig.HogCPU = FALSE;	// default to being nice
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -943,7 +943,7 @@ InitFreedroid (int argc, char *const argv[])
   update_progress (5);
 
   Init_Audio ();
-  
+
   Init_Joy ();
 
   Init_Game_Data("freedroid.ruleset");  // load the default ruleset. This can be */
@@ -955,18 +955,18 @@ InitFreedroid (int argc, char *const argv[])
   // combat window at all is done.
   CurrentCombatScaleFactor = 1;
 
-  /* 
-   * Initialise random-number generator in order to make 
+  /*
+   * Initialise random-number generator in order to make
    * level-start etc really different at each program start
    */
-  srand((unsigned int)SDL_GetTicks() ); 
+  srand((unsigned int)SDL_GetTicks() );
 
   /* initialize/load the highscore list */
   InitHighscores ();
- 
+
   /* Now fill the pictures correctly to the structs */
   if (!InitPictures ())
-    {		
+    {
       DebugPrintf (1, "\n Error in InitPictures reported back...\n");
       Terminate(ERR);
     }
@@ -977,11 +977,11 @@ InitFreedroid (int argc, char *const argv[])
 } /* InitFreedroid() */
 
 /*-----------------------------------------------------------------
- * @Desc: This function does the mission briefing.  It assumes, 
+ * @Desc: This function does the mission briefing.  It assumes,
  *  that a mission file has already been successfully loaded into
  *  memory.  The briefing texts will be extracted and displayed in
  *  scrolling font.
- * 
+ *
  *-----------------------------------------------------------------*/
 void
 Title ( char *MissionBriefingPointer )
@@ -1009,14 +1009,14 @@ Title ( char *MissionBriefingPointer )
 
   SetCurrentFont( Para_BFont );
 
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE ); 
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   // Next we display all the subsections of the briefing section
   // with scrolling font
   NextSubsectionStartPointer = MissionBriefingPointer;
   while (1)
     {
-      NextSubsectionStartPointer = strstr (NextSubsectionStartPointer, 
+      NextSubsectionStartPointer = strstr (NextSubsectionStartPointer,
 					   NEXT_BRIEFING_SUBSECTION_START_STRING);
       if (NextSubsectionStartPointer == NULL)
 	break;
@@ -1037,7 +1037,7 @@ Title ( char *MissionBriefingPointer )
       rect.w -= 10; //leave some border
       if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1)
 	break;  // User pressed 'fire'
- 
+
       free ( PreparedBriefingText );
     }
 
@@ -1087,12 +1087,12 @@ ThouArtVictorious(void)
   if (FirePressedR());
 
   return;
-} 
+}
 
 /*@Function============================================================
-@Desc: Show end-screen 
+@Desc: Show end-screen
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -1122,7 +1122,7 @@ ThouArtDefeated (void)
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
     }
-  
+
 #ifdef HAVE_LIBSDL_MIXER
   Mix_HaltMusic ();
 #endif
@@ -1135,7 +1135,7 @@ ThouArtDefeated (void)
   Assemble_Combat_Picture (DO_SCREEN_UPDATE);
   MakeGridOnScreen (&User_Rect);
 
-  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2, 
+  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2,
 	    Portrait_Rect.w, Portrait_Rect.h);
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   ThouArtDefeatedSound ();
@@ -1146,7 +1146,7 @@ ThouArtDefeated (void)
   DisplayText ("Terminated",  dst.x -h, dst.y + dst.h, &User_Rect);
   printf_SDL(ne_screen, -1, -1, "\n");
   SDL_Flip (ne_screen);
-  
+
   now = SDL_GetTicks ();
 
   while (SDL_GetTicks() - now < SHOW_WAIT) SDL_Delay(1);
@@ -1159,11 +1159,11 @@ ThouArtDefeated (void)
 } // void ThouArtDefeated(void)
 
 /*----------------------------------------------------------------------
- * This function checks, if the influencer has succeeded in his given 
+ * This function checks, if the influencer has succeeded in his given
  * mission.  If not it returns, if yes the Debriefing is
  * started.
  ----------------------------------------------------------------------*/
-void 
+void
 CheckIfMissionIsComplete (void)
 {
   int i;
@@ -1180,7 +1180,7 @@ CheckIfMissionIsComplete (void)
   //  UpdateHighscores();
 
   GameOver = TRUE;
-  
+
 } // void CheckIfMissionIsComplete
 
 // ----------------------------------------------------------------------
@@ -1253,7 +1253,7 @@ FindAllThemes (void)
 	  DebugPrintf (1, "Hmm, seems we found a new theme: %s\n", tname);
 	  // check readabiltiy of "config.theme"
 	  sprintf (fpath, "%s/%s_theme/config.theme", dname, tname);
-	  if ( (fp = fopen (fpath, "r")) != NULL)  
+	  if ( (fp = fopen (fpath, "r")) != NULL)
 	    { // config.theme is readable
 	      fclose(fp);
 	      DebugPrintf (1, "..and config.theme seems readable ... good! \n");
@@ -1261,7 +1261,7 @@ FindAllThemes (void)
 	      for (i=0; i< AllThemes.num_themes; i++)
 		if ( strcmp(tname, AllThemes.theme_name[i])== 0)
 		  break;
-	      if ( i < AllThemes.num_themes ) 
+	      if ( i < AllThemes.num_themes )
 		{ // found it in the list already
 		  DebugPrintf (1, "Theme '%s' is already listed ... \n", tname);
 		  continue;
@@ -1293,7 +1293,7 @@ FindAllThemes (void)
       DebugPrintf (0, "You need to install at least one to run Freedroid!!\n");
       Terminate (ERR);
     }
-  
+
   for (i=0; i< AllThemes.num_themes; i++)
     if ( strcmp (AllThemes.theme_name[i], GameConfig.Theme_Name) == 0)
       break;

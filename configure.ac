@@ -20,13 +20,13 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 
 # Checks for libraries.
-AC_CHECK_LIB([m], [sin],, 
-	AC_MSG_ERROR([libm not found!! 
+AC_CHECK_LIB([m], [sin],,
+	AC_MSG_ERROR([libm not found!!
 No maths library?? What kinda crazy system is that??]))
 
 ##AC_CHECK_LIB([c], [printf],, AC_MSG_ERROR([libc not found!! ]))
 
-AC_PATH_X	
+AC_PATH_X
 AC_PATH_XTRA
 if test x$have_x = xyes; then
 	CFLAGS="$CFLAGS $X_CFLAGS"
@@ -104,7 +104,7 @@ AC_HEADER_TIME
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([memset sqrt strstr strtok strcspn strspn rand])
 
-dnl Don't Check for getopt_long 
+dnl Don't Check for getopt_long
 dnl just use bundled version like hello does, and gnuchess
 
 
@@ -124,7 +124,7 @@ dnl send a signal to automake if we're compiling for win32
 AM_CONDITIONAL(WIN32, test x$win32 = xtrue)
 
 
-AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile graphics/Makefile 
+AC_CONFIG_FILES([Makefile src/Makefile map/Makefile sound/Makefile graphics/Makefile
 graphics/classic_theme/Makefile graphics/lanzz_theme/Makefile graphics/para90_theme/Makefile])
 
 AC_OUTPUT

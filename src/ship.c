@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -67,7 +67,7 @@ SDL_Rect right_rect;
 
 /*-----------------------------------------------------------------
  * @Desc: does all the work when we enter a lift
- * 
+ *
  *-----------------------------------------------------------------*/
 void
 EnterLift (void)
@@ -78,7 +78,7 @@ EnterLift (void)
 
   DebugPrintf (2, "\nvoid EnterLift(void): Function call confirmed.");
 
-  /* Prevent distortion of framerate by the delay coming from 
+  /* Prevent distortion of framerate by the delay coming from
    * the time spend in the menu. */
   Activate_Conservative_Frame_Computation();
 
@@ -112,7 +112,7 @@ EnterLift (void)
 
   // clear the whole screen
   ClearGraphMem();
-  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );      
+  DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   ShowLifts (curLevel, liftrow);
 
@@ -184,15 +184,15 @@ EnterLift (void)
 	    array_num++;
 	}
 
-      
+
       CurLevel = curShip.AllLevels[array_num];
 
       // redistribute the enemys around the level
       //      ShuffleEnemys ();
 
       // set the position of the influencer to the correct locatiohn
-      Me.pos.x = curShip.AllLifts[curLift].x; 
-      Me.pos.y = curShip.AllLifts[curLift].y; 
+      Me.pos.x = curShip.AllLifts[curLift].x;
+      Me.pos.y = curShip.AllLifts[curLift].y;
 
       for (i = 0; i < MAXBLASTS; i++)
 	DeleteBlast( i );
@@ -212,12 +212,12 @@ EnterLift (void)
   Me.TextToBeDisplayed=CurLevel->Level_Enter_Comment;
 
   DebugPrintf (2, "\nvoid EnterLift(void): Usual end of function reached.");
-  
+
   return;
 }	/* EnterLift */
 
 /*-----------------------------------------------------------------
- * @Desc: show side-view of the ship, and hightlight the current 
+ * @Desc: show side-view of the ship, and hightlight the current
  *        level + lift
  *
  *  if level==-1: don't highlight any level
@@ -244,14 +244,14 @@ ShowLifts (int level, int liftrow)
   dst.x += xoffs;
   dst.y += yoffs;
   SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
-  
+
   if (level >= 0)
     for (i=0; i<curShip.num_level_rects[level]; i++)
       {
 	Copy_Rect (curShip.Level_Rects[level][i], src);
 	Copy_Rect (src, dst);
 	dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
-	dst.y += User_Rect.y + yoffs; 
+	dst.y += User_Rect.y + yoffs;
 	SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
       }
 
@@ -260,7 +260,7 @@ ShowLifts (int level, int liftrow)
       Copy_Rect (curShip.LiftRow_Rect[liftrow], src);
       Copy_Rect (src, dst);
       dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
-      dst.y += User_Rect.y + yoffs; 
+      dst.y += User_Rect.y + yoffs;
       SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
     }
 
@@ -277,7 +277,7 @@ This function runs the consoles. This means the following duties:
 	3	* Show a side-elevation on the ship
 	1	* Give all available data on lower druid types
 	0	* Reenter the game without squashing the colortable
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -286,7 +286,7 @@ EnterKonsole (void)
   int ReenterGame = FALSE;
   int i, pos, mousemove_buf;
   SDL_Rect TmpRect;
-  // Prevent distortion of framerate by the delay coming from 
+  // Prevent distortion of framerate by the delay coming from
   // the time spend in the menu.
   Activate_Conservative_Frame_Computation();
 
@@ -319,7 +319,7 @@ EnterKonsole (void)
 
       if (EscapePressedR() || MouseRightPressedR())
 	ReenterGame = TRUE;
-      
+
       if (UpPressedR () || WheelUpPressed())
 	{
 	  MoveMenuPositionSound ();
@@ -329,11 +329,11 @@ EnterKonsole (void)
 	  // this is a dirty hack, but that should be enough for here...
 	  mousemove_buf = last_mouse_event;
 	  if (show_cursor)
-	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
 			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
 	  update_input ();  // this sets a new last_mouse_event
 	  last_mouse_event = mousemove_buf; //... which we override.. ;)
-	  
+
 
 	  PaintConsoleMenu (pos, UPDATE_ONLY);
 	}
@@ -346,7 +346,7 @@ EnterKonsole (void)
 	  // this is a dirty hack, but that should be enough for here...
 	  mousemove_buf = last_mouse_event;
 	  if (show_cursor)
-	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2, 
+	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
 			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
 	  update_input ();  // this sets a new last_mouse_event
 	  last_mouse_event = mousemove_buf; //... which we override.. ;)
@@ -390,7 +390,7 @@ EnterKonsole (void)
 		SDL_Delay(1);
 	      PaintConsoleMenu(pos, 0);
 	      break;
-	    default: 
+	    default:
 	      DebugPrintf (1, "Konsole menu out of bounds... pos = %d", pos);
 	      pos = 0;
 	      break;
@@ -404,7 +404,7 @@ EnterKonsole (void)
   Me.status = MOBILE;
 
   ClearGraphMem();
-  
+
   SDL_SetCursor (crosshair_cursor);
   if (!show_cursor)
     SDL_ShowCursor (SDL_DISABLE);
@@ -444,7 +444,7 @@ PaintConsoleMenu (int pos, int flag)
       sprintf (MenuText, "Logout from console\n\nDroid info\n\nDeck map\n\nShip map");
       DisplayText (MenuText, Cons_Text_Rect.x, Cons_Text_Rect.y+25, &Cons_Text_Rect);
 
-    } // only if not UPDATE_ONLY was required 
+    } // only if not UPDATE_ONLY was required
 
   src.x = Cons_Menu_Rects[0].w * pos;
   src.y = 0;
@@ -459,9 +459,9 @@ PaintConsoleMenu (int pos, int flag)
 
 /*-----------------------------------------------------------------
  * @Desc: Displays the concept view of Level "deck" in Userfenster
- * 	  
+ *
  *	Note: we no longer wait here for a key-press, but return
- *            immediately 
+ *            immediately
  *-----------------------------------------------------------------*/
 void
 ShowDeckMap (Level deck)
@@ -469,7 +469,7 @@ ShowDeckMap (Level deck)
   finepoint tmp;
   tmp.x=Me.pos.x;
   tmp.y=Me.pos.y;
-  
+
   Me.pos.x = CurLevel->xlen/2;
   Me.pos.y = CurLevel->ylen/2;
 
@@ -484,7 +484,7 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() )) 
+  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
     SDL_Delay(1);
 
   SetCombatScaleTo (1.0);
@@ -493,9 +493,9 @@ ShowDeckMap (Level deck)
 } /* ShowDeckMap() */
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 int
@@ -509,7 +509,7 @@ LevelEmpty (void)
 
   for (i = 0; i < NumEnemys; i++)
     {
-      if ((AllEnemys[i].levelnum == levelnum) && 
+      if ((AllEnemys[i].levelnum == levelnum) &&
 	  ( (AllEnemys[i].status != OUT) && (AllEnemys[i].status != TERMINATED) ) )
 	return FALSE;
     }
@@ -517,7 +517,7 @@ LevelEmpty (void)
   return TRUE;
 }
 
-/* ---------------------------------------------------------------------- 
+/* ----------------------------------------------------------------------
  * This function should check if the mouse cursor is in the given Rectangle
  * ---------------------------------------------------------------------- */
 int
@@ -531,7 +531,7 @@ CursorIsOnRect (SDL_Rect *rect)
   if ( (CurPos.x >= rect->x) && (CurPos.x <= rect->x + rect->w) )
     if ( (CurPos.y >= rect->y) && (CurPos.y <= rect->y + rect->h) )
       return (TRUE);
-  
+
   return (FALSE);
 
 }; // int CursorIsOnRect
@@ -629,7 +629,7 @@ GreatDruidShow (void)
     } /* while !finished */
 
   return;
-}; // void GreatDroidShow( void ) 
+}; // void GreatDroidShow( void )
 
 /*------------------------------------------------------------
  * display infopage page of droidtype
@@ -640,7 +640,7 @@ GreatDruidShow (void)
  *  does update the screen: all if flags=0, text-rect if flags=UPDATE_ONLY
  *
  *------------------------------------------------------------*/
-void 
+void
 show_droid_info (int droidtype, int page, int flags)
 {
   char InfoText[1000];
@@ -648,7 +648,7 @@ show_droid_info (int droidtype, int page, int flags)
   bool show_title = FALSE;
   bool show_arrows = FALSE;
   int lineskip, lastline;
-  
+
   SDL_SetClipRect ( ne_screen , NULL );
   SetCurrentFont( Para_BFont );
 
@@ -661,7 +661,7 @@ show_droid_info (int droidtype, int page, int flags)
 
   //  Fill_Rect (Cons_Header_Rect, Black);  // for debugging menu-rects...
 
-  sprintf (DroidName, "  Unit type %s - %s", Druidmap[droidtype].druidname, 
+  sprintf (DroidName, "  Unit type %s - %s", Druidmap[droidtype].druidname,
 	   Classname[Druidmap[droidtype].class]);
 
   switch (page)
@@ -674,7 +674,7 @@ Paradroid to eliminate all rogue robots.");
       sprintf (InfoText, "This is the unit that you wish to control.\n\n Prepare to takeover.");
       break;
     case -1: // Takeover: unit that you control
-      sprintf (InfoText, "This is the unit that you currently control."); 
+      sprintf (InfoText, "This is the unit that you currently control.");
       break;
     case 0:
       show_title = TRUE;
@@ -687,7 +687,7 @@ Weight: %d kg\n\
 Drive : %s \n\
 Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
 	       Druidmap[droidtype].height, Druidmap[droidtype].weight,
-	       Drivenames [ Druidmap[ droidtype].drive], 
+	       Drivenames [ Druidmap[ droidtype].drive],
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
@@ -697,7 +697,7 @@ Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
 Armament : %s\n\
 Sensors  1: %s\n\
                     2: %s\n\
-                    3: %s", 
+                    3: %s",
 	       Weaponnames [ Druidmap[droidtype].gun],
 	       Sensornames[ Druidmap[droidtype].sensor1 ],
 	       Sensornames[ Druidmap[droidtype].sensor2 ],
@@ -742,7 +742,7 @@ Sensors  1: %s\n\
 
       if (droidtype > 0)
 	SDL_BlitSurface ( arrow_down, NULL, ne_screen, &down_rect);
-  
+
       if (page > 0)
 	SDL_BlitSurface ( arrow_left, NULL, ne_screen, &left_rect);
 
@@ -765,19 +765,19 @@ Sensors  1: %s\n\
 
 //----------------------------------------------------------------------
 // show a an animated droid-pic: automatically counts frames and frametimes
-// stored internally, so you just have to keep calling this function to get 
+// stored internally, so you just have to keep calling this function to get
 // an animation. The target-rect dst is only updated when a new frame is set
-// if flags & RESET: to restart a fresh animation at frame 0 
+// if flags & RESET: to restart a fresh animation at frame 0
 // if flags & UPDATE: force a blit of droid-pic
 //
 // cycle_time is the time in seconds for a full animation-cycle,
 // if cycle_time == 0 : display static pic, using only first frame
-// 
+//
 //----------------------------------------------------------------------
 void
 show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 {
-  static SDL_Surface *background = NULL;  
+  static SDL_Surface *background = NULL;
   static SDL_Surface *droid_pics = NULL;
   static int frame_num = 0;
   static int last_droid_type = -1;
@@ -851,7 +851,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   frame_duration = SDL_GetTicks() - last_frame_time;
 
   if (cycle_time && (frame_duration >  1000.0*cycle_time/num_frames) )
-    { 
+    {
       need_new_frame = TRUE;
       frame_num ++;
     }
@@ -862,7 +862,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   if ( (flags & (RESET|UPDATE)) || need_new_frame)
     {
       src_rect.x = frame_num*src_rect.w;
-      
+
       SDL_BlitSurface (background, NULL, ne_screen, &dst);
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
@@ -877,7 +877,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
     }
 
   SDL_SetClipRect (ne_screen, NULL);
-     
+
   return;
 
 } // show_droid_portrait
@@ -894,7 +894,7 @@ AlertLevelWarning (void)
   //  static Uint32 last_blink = 0;
   int i, posx, posy;
   int cur_alert = 0;
-  
+
 
   switch (AlertLevel)
     {
@@ -932,7 +932,7 @@ AlertLevelWarning (void)
       posx = CurLevel->alerts[i].x;
       posy = CurLevel->alerts[i].y;
       if ( posx == -1) 	break;
-      
+
       CurLevel->map[posy][posx] = cur_alert;
     }
 

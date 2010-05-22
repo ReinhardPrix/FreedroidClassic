@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -131,7 +131,7 @@ playground_t ActivationMap;
 playground_t CapsuleCountdown;
 
 /*-----------------------------------------------------------------
- * @Desc: play takeover-game against a druid 
+ * @Desc: play takeover-game against a druid
  *
  * @Ret: TRUE/FALSE:  user has won/lost
  *
@@ -146,7 +146,7 @@ Takeover (int enemynum)
   SDL_Rect buf;
   Uint32 now;
 
-  /* Prevent distortion of framerate by the delay coming from 
+  /* Prevent distortion of framerate by the delay coming from
    * the time spend in the menu.
    */
   Activate_Conservative_Frame_Computation ();
@@ -160,7 +160,7 @@ Takeover (int enemynum)
   Copy_Rect (Classic_User_Rect, User_Rect);
 
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
-  
+
   Fill_Rect (User_Rect, to_bg_color);
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
@@ -195,7 +195,7 @@ Takeover (int enemynum)
 
       CapsuleCurRow[GELB] = 0;
       CapsuleCurRow[VIOLETT] = 0;
-      
+
       DroidNum = enemynum;
       OpponentType = AllEnemys[enemynum].type;
       NumCapsules[YOU] = 3 + ClassOfDruid (Me.type);
@@ -224,7 +224,7 @@ Takeover (int enemynum)
 	  if (Me.energy > Druidmap[DRUID001].maxenergy) Me.energy = Druidmap[DRUID001].maxenergy;
 	  if (Me.health > Druidmap[DRUID001].maxenergy) Me.health = Druidmap[DRUID001].maxenergy;
 
-	  // We allow to gain the current energy/full health that was still in the 
+	  // We allow to gain the current energy/full health that was still in the
 	  // other droid, since all previous damage must be due to fighting damage,
 	  // and this is exactly the sort of damage can usually be cured in refreshes.
 	  Me.energy += AllEnemys[enemynum].energy;
@@ -270,7 +270,7 @@ Takeover (int enemynum)
 	  message = "Deadlock";
 	}			/* LeadColor == REMIS */
 
-      DisplayBanner (message, NULL , 0 );	
+      DisplayBanner (message, NULL , 0 );
       ShowPlayground ();
       now = SDL_GetTicks();
       while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) SDL_Delay(1);
@@ -292,7 +292,7 @@ Takeover (int enemynum)
 
 
 /*@Function============================================================
-@Desc: ChooseColor():	Countdown zum Waehlen der Farbe 
+@Desc: ChooseColor():	Countdown zum Waehlen der Farbe
 
 @Ret: void
 @Int:
@@ -303,7 +303,7 @@ ChooseColor (void)
   int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
   int ColorChosen = FALSE;
   char count_text[80];
-  
+
   Uint32 prev_count_tick, count_tick_len;
 
   count_tick_len = 100; 	/* countdown in 1/10 second steps */
@@ -334,7 +334,7 @@ ChooseColor (void)
 
       /* wait for next countdown tick */
       if ( SDL_GetTicks() >= prev_count_tick + count_tick_len )
-	{ 
+	{
 	  prev_count_tick += count_tick_len; /* set for next tick */
 	  countdown--;		/* Count down */
 	  sprintf (count_text, "Color-%d", countdown);
@@ -371,27 +371,27 @@ PlayGame (void)
   Uint32 prev_move_tick, move_tick_len;    /* tick vars for motion */
   Uint32 last_movekey_time, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
 
-  int up, down, set; 
-  int up_counter, down_counter; 
+  int up, down, set;
+  int up_counter, down_counter;
   int wheel_up, wheel_down;
 
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
-  
+
   up = down = set = FALSE;
   up_counter = down_counter = 0;
   wheel_up = wheel_down = 0;
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
-  
+
   ResetMouseWheel ();  // forget about previous wheel events
 
   CountdownSound();
   while (!FinishTakeover)
     {
       cur_time = SDL_GetTicks ();
-      
-      /* 
+
+      /*
        * here we register if there have been key-press events in the
        * "waiting period" between move-ticks :
        */
@@ -416,8 +416,8 @@ PlayGame (void)
 	{
 	  LeaderColor = YourColor;   /* simple as that */
 	  return;  /* leave now, to avoid changing of LeaderColor! */
-	} 
-	
+	}
+
       if ( cur_time > prev_count_tick + count_tick_len ) /* time to count 1 down */
 	{
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
@@ -438,7 +438,7 @@ PlayGame (void)
 
 
       /* time for movement */
-      if ( cur_time > prev_move_tick + move_tick_len )  
+      if ( cur_time > prev_move_tick + move_tick_len )
 	{
 	  prev_move_tick += move_tick_len; /* set for next motion tick */
 	  EnemyMovements ();
@@ -448,8 +448,8 @@ PlayGame (void)
 	      CapsuleCurRow[YourColor]--;
 	      if (CapsuleCurRow[YourColor] < 1)
 		CapsuleCurRow[YourColor] = NUM_LINES;
-	
-	      if (!UpPressed()) up = FALSE;  
+
+	      if (!UpPressed()) up = FALSE;
 	      if (wheel_up) wheel_up --;
 	    }
 	  if (wheel_down || (down && (SDL_GetTicks() - last_movekey_time > wait_move_ticks)))
@@ -460,7 +460,7 @@ PlayGame (void)
 
 	      if (!DownPressed()) down = FALSE;
 	      if (wheel_down) wheel_down --;
-	    }    
+	    }
 
 	  if ( set && (NumCapsules[YOU] > 0))
 	    {
@@ -520,7 +520,7 @@ PlayGame (void)
 
 /*-----------------------------------------------------------------
  * @Desc: animiert Gegner beim Uebernehm-Spiel
- * 
+ *
  * @Ret: void
  * @Int:
  *-----------------------------------------------------------------*/
@@ -590,7 +590,7 @@ EnemyMovements (void)
 }	/* EnemyMovements */
 
 /*@Function============================================================
- * 
+ *
  *  define all the SDL_Rects for the takeover-game
  *
  *-----------------------------------------------------------------*/
@@ -607,7 +607,7 @@ set_takeover_rects (void)
   /* Set the capsule Blocks */
   for (i = 0; i < NUM_CAPS_BLOCKS; i++, curx += TO_CapsuleRect.w + 2)
     Set_Rect (CapsuleBlocks[i], curx, cury, TO_CapsuleRect.w, TO_CapsuleRect.h-2);
-  
+
   curx = 0;
   cury += TO_FillBlock.h + 2;
 
@@ -634,7 +634,7 @@ set_takeover_rects (void)
   curx = 0;
 
   Set_Rect (ToColumnBlock, curx, cury, TO_ColumnRect.w, TO_ColumnRect.h);
-		
+
   curx += TO_ColumnRect.w + 2;
 
   Set_Rect (ToLeaderBlock, curx, cury, 2*TO_LeaderLed.w-4, TO_LeaderLed.h);
@@ -757,7 +757,7 @@ ShowPlayground (void)
       else
 	color = OpponentColor;
 
-      Set_Rect (dst, xoffs + CurCapsuleStart[color].x, 
+      Set_Rect (dst, xoffs + CurCapsuleStart[color].x,
 		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color] * TO_CapsuleRect.h,
 		0,0);
       if (NumCapsules[player])
@@ -774,7 +774,7 @@ ShowPlayground (void)
     } /* for player */
 
   SDL_Flip (ne_screen);
-  
+
   // give CPU some air, unless requested otherwise
   if (!GameConfig.HogCPU)
     SDL_Delay(1);
@@ -813,7 +813,7 @@ ClearPlayground (void)
 
 /*-----------------------------------------------------------------
  * @Desc: generate a random Playground
- *	
+ *
  * @Ret: void
  *
  *-----------------------------------------------------------------*/
@@ -1063,7 +1063,7 @@ ProcessPlayground (void)
 		    ActivationMap[color][layer][row] = ACTIVE1;
 		  TurnActive = FALSE;
 		}
-	      else 
+	      else
 		ActivationMap[color][layer][row] = INACTIVE;
 
 
@@ -1171,7 +1171,7 @@ ProcessDisplayColumn (void)
   //  Me.Current_Victim_Resistance_Factor = 0.2 * ( (float) 12 - abs( ViolettCounter- GelbCounter ) );
 
   return;
-}; // ProcessDisplayColumn 
+}; // ProcessDisplayColumn
 
 /*@Function============================================================
 @Desc: ProcessCapsules():	does the countdown of the capsules and
@@ -1227,7 +1227,7 @@ IsActive (int color, int row)
 /*-----------------------------------------------------------------
  *
  * Animate the active cables: this is done by cycling over
- * the active phases ACTIVE1-ACTIVE3, which are represented by 
+ * the active phases ACTIVE1-ACTIVE3, which are represented by
  * different pictures in the playground
  *
  *-----------------------------------------------------------------*/
@@ -1241,7 +1241,7 @@ AnimateCurrents (void)
       for (row = 0; row < NUM_LINES; row ++)
 	if (ActivationMap[color][layer][row] >= ACTIVE1)
 	  {
-	    ActivationMap[color][layer][row] ++; 
+	    ActivationMap[color][layer][row] ++;
 	    if (ActivationMap[color][layer][row] == NUM_PHASES)
 	      ActivationMap[color][layer][row] = ACTIVE1;
 	  }

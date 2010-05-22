@@ -1,20 +1,20 @@
 .\" Process this file with
 .\" groff -man -Tascii freedroid.6
-.\" 
+.\"
 .\" Or even better, use
-.\" 
-.\"    man -l freedroid.6 
-.\" 
+.\"
+.\"    man -l freedroid.6
+.\"
 .\" to test the local copy of the man page source file.
-.\" 
+.\"
 .TH FREEDROID 6 "MARCH 2003" Linux "User Manuals"
 .SH NAME
 freedroid \- a free Paradroid clone
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH SYNOPSIS
 .B freedroid [ options
 .B ]
@@ -23,25 +23,25 @@ freedroid \- a free Paradroid clone
 is a remake of the classic C64 home computer game Paradroid by Andrew Braybrook, including
 also various extensions.
 .\" While the original in-game graphics and game screen size from the C64 version are still the
-.\" default, we have also chosen to offer an additional theme with improved graphics, 
+.\" default, we have also chosen to offer an additional theme with improved graphics,
 .\" additional background music and also animated 3d versions of the droids in the game.
 
 The player takes control of the so-called 001 influence device and must clear a freighter
 of robots by either shooting them or seizing control over them.
 Seizing control is done in a small logic subgame, in which you have to connect more
 electrical connections within 10 seconds than your opponent.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH OPTIONS
 .TP 8
 .B -v \fRor\fB --version
 Prints out Freedroid version information.
 .TP 8
 .B -q \fRor\fB --nosound
-Suppress all sound output.  
+Suppress all sound output.
 Very useful if you don't have your sound card configured yet or
 don't have any sound hardware at all.
 .TP 8
@@ -62,11 +62,11 @@ stderr, i.e. in most cases to the console you started Freedroid from.  The varia
 controls how much debug output you would like to have.  LEVEL 0 is the default and means (almost)
 no debug output.  LEVEL 1 prints the most important debug messages and LEVEL 2 or LEVEL 3 print
 (almost) all debug output, which might be quite a lot.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH HOW TO PLAY
 .B Moving and Firing
 .RS
@@ -77,7 +77,7 @@ space in addition or by holding a joystick direction and pressing a joystick but
 .RE
 .B Entering Elevators and Consoles
 .RS
-The influence device can move from one deck to another deck using the elevators of the freighter.  
+The influence device can move from one deck to another deck using the elevators of the freighter.
 To do this, you must step onto an elevator plate, and then either press the e key or press the middle mouse button or appropriate joystick button.
 Entering consoles is done in a similar way.  You have to stand directly in front of a console terminal and then press the e key to activate the console.
 Inside the console you will have access to a small scale map of the current deck, a side elevation of the ship and to the droid database of the ship.  Note however, that access to the droid database is achieved via the security clearance of the host you currently control, i.e. you will only be able to view droid data for droids that are lower or equal to the host you currently control.
@@ -88,11 +88,11 @@ To take control of another robot, you must first enter transfer mode.  This is d
 .RE
 .B Playing the takeover subgame
 .RS
-After the takeover subgame was initiated, the two droids struggling for control will be presented.  
-Then the player gets to decide which side of the takeover game he wants to play.  
-The player on the left side takes the yellow color, the player on the right side takes the magenta color.  
+After the takeover subgame was initiated, the two droids struggling for control will be presented.
+Then the player gets to decide which side of the takeover game he wants to play.
+The player on the left side takes the yellow color, the player on the right side takes the magenta color.
 Note that which side to choose may be the most important decision of the takeover subgame,
-cause one side may host strong tactical advantages over the other.  
+cause one side may host strong tactical advantages over the other.
 After sides have been chosen, the takeover capsules will be placed.
 Each droid has a limited number of capsules to place and must try to convert the central status bar to his color.
 The number of capsules you have at your disposal depends on the clearance of the host you currently control.
@@ -103,22 +103,22 @@ being burnt out and destroyed if no host was present.
 .RE
 .B Notes on energy loss
 .RS
-The influence device depends on hosts to control.  Whether currently controlling a host or not, the influence device will always lose energy due to construction properties.  When taking control of a new host, the influence device will also take control of the energy this droid had left, which will be even more the higher the bot you take control of.  However, higher droids also tend to put up more resistance against the control of the influence device, resulting in faster loss of energy.  Therefore it is recommended to change hosts frequently in order to keep the influence device well powered.  Note that there are some refresh field, where some of the energy lost so far can be restored.  But note also, that 
+The influence device depends on hosts to control.  Whether currently controlling a host or not, the influence device will always lose energy due to construction properties.  When taking control of a new host, the influence device will also take control of the energy this droid had left, which will be even more the higher the bot you take control of.  However, higher droids also tend to put up more resistance against the control of the influence device, resulting in faster loss of energy.  Therefore it is recommended to change hosts frequently in order to keep the influence device well powered.  Note that there are some refresh field, where some of the energy lost so far can be restored.  But note also, that
 .B only energy loss due to collisions, explosions and enemy fire
 can be restored this way, while energy loss due to host resistance is permanently lost until the host is changed again.
 .RE
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH PROJECT HOME PAGE AND LATEST VERSIONS
 The Freedroid project features a home page at freedroid.sourceforge.net.  The project itself is hosted at the Sourceforge.  The project summary page at http://sourceforge.net/projects/freedroid/ can be used to access download and status information.  Note that home page and project summary page are shared with the FreedroidRPG development branch as well.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH FILES
 .I ~/.freedroidClassic/highscores
 .RS
@@ -127,41 +127,41 @@ The high scores file of Freedroid.
 .I ~/.freedroidClassic/config
 .RS
 The file containing all configuration setting of this user.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH ENVIRONMENT
 Freedroid does currently not care about any environment variables.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH DIAGNOSTICS
 Debug output can be produced by using the -d or --debug command line options as described above.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH BUGS
 Freedroid can now be considered pretty stable.  However we're sure that there are still some bugs here and there.  If you encounter any problems or bugs, please send mail to <freedroid-discussion@lists.sourceforge.net>.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH AUTHORS
-Johannes Prix, 
+Johannes Prix,
 Reinhard Prix,
-Bastian Salmela, 
+Bastian Salmela,
 Lanzz.
-.\" 
-.\" 
-.\" 
-.\" 
-.\" 
+.\"
+.\"
+.\"
+.\"
+.\"
 .SH "SEE ALSO"
 .BR freedroidRPG (6),

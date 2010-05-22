@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -96,16 +96,16 @@ Mix_Music *MusicSongs[NUM_COLORS];
 Mix_Music *Tmp_MOD_File;
 #endif
 
-void 
+void
 Init_Audio(void)
 {
-#ifndef HAVE_LIBSDL_MIXER  
+#ifndef HAVE_LIBSDL_MIXER
   return;
 #else
   char *fpath;
   int i;
   int audio_rate = 22050;
-  Uint16 audio_format = AUDIO_S16; 
+  Uint16 audio_format = AUDIO_S16;
   int audio_channels = 2;
   //  int audio_buffers = 4096;
   int audio_buffers = 2048;
@@ -117,29 +117,29 @@ Init_Audio(void)
 
   // Now SDL_AUDIO is initialized here:
 
-  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 ) 
+  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 )
     {
       DebugPrintf (0, "WARNING: SDL Sound subsystem could not be initialized.\n\
 Continuing with sound disabled\n");
       sound_on = FALSE;
       return;
-    } 
+    }
   else
     DebugPrintf(1, "SDL Audio initialisation successful.\n");
 
   // Now that we have initialized the audio SubSystem, we must open
   // an audio channel.  This will be done here (see code from Mixer-Tutorial):
 
-  if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) ) 
+  if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) )
     {
       DebugPrintf (0, "WARNING: SDL audio channel could not be opened. \n");
       DebugPrintf (0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", Mix_GetError());
       sound_on = FALSE;
       return;
     }
-  else 
+  else
     DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
-  
+
   if (Mix_AllocateChannels(20) != 20)
     DebugPrintf (0, "\nWARNING: could not get all 20 mixer-channels I asked for...\n");
 
@@ -151,7 +151,7 @@ Continuing with sound disabled\n");
   for (i = 1; i < ALL_SOUNDS; i++)
     {
       fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, NO_THEME, WARNONLY);
-      if (fpath) Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath); 
+      if (fpath) Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
       if ( Loaded_WAV_Files[i] == NULL )
 	{
 	  DebugPrintf (0, "Could not load Sound-sample: %s\n", SoundSampleFilenames[ i ]);
@@ -177,7 +177,7 @@ Continuing with sound disabled\n");
       else
 	DebugPrintf ( 1 , "\nSuccessfully loaded file %s.", MusicFiles[ i ]);
     } // for
-  
+
 
   //--------------------
   // Now that the music files have been loaded successfully, it's time to set
@@ -191,7 +191,7 @@ Continuing with sound disabled\n");
 #endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
-void 
+void
 Set_BG_Music_Volume(float NewVolume)
 {
 
@@ -205,7 +205,7 @@ Set_BG_Music_Volume(float NewVolume)
 #endif // HAVE_LIBSDL_MIXER
 } // void Set_BG_Music_Volume(float NewVolume)
 
-void 
+void
 Set_Sound_FX_Volume(float NewVolume)
 {
   int i;
@@ -240,9 +240,9 @@ EndCountdownSound (void)
 }
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -252,9 +252,9 @@ CrySound (void)
 }
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -264,7 +264,7 @@ TransferSound (void)
 }
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
 This function is intended to provide a convenient way of switching
 between different backround sounds in freedroid.
@@ -277,7 +277,7 @@ Technical details:
 
 
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -293,7 +293,7 @@ Switch_Background_Music_To ( char* filename_raw )
 
   if ( !sound_on ) return;
 
-  if ( filename_raw == NULL ) 
+  if ( filename_raw == NULL )
     {
       Mix_PauseMusic(); // pause currently played background music
       paused = TRUE;
@@ -330,8 +330,8 @@ Switch_Background_Music_To ( char* filename_raw )
     }
   else  // not using BYCOLOR mechanism: just play specified song
     {
-      if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);      
-      fpath = find_file (filename_raw, SOUND_DIR, NO_THEME, WARNONLY);    
+      if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);
+      fpath = find_file (filename_raw, SOUND_DIR, NO_THEME, WARNONLY);
       if (fpath) Tmp_MOD_File = Mix_LoadMUS (fpath);
       if ( Tmp_MOD_File == NULL )
 	{
@@ -341,8 +341,8 @@ Switch_Background_Music_To ( char* filename_raw )
 	  return;
 	} // if ( !Loaded_WAV...
       Mix_PlayMusic (Tmp_MOD_File, -1);
-    }      
-  
+    }
+
   Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
 
 #endif // HAVE_LIBSDL_MIXER
@@ -351,9 +351,9 @@ Switch_Background_Music_To ( char* filename_raw )
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -377,13 +377,13 @@ This usually just means that too many samples where played at the same time\n",
     DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
 
 #endif // HAVE_LIBSDL_MIXER
-  
+
 }  // void Play_Sound(int Tune)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -396,9 +396,9 @@ GotHitSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -411,9 +411,9 @@ GotIntoBlastSound (void)
 }				// void GotIntoBlastSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -427,9 +427,9 @@ RefreshSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -441,9 +441,9 @@ MoveLiftSound (void)
 }				// void MoveLiftSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -455,9 +455,9 @@ MenuItemSelectedSound (void)
 }				// void MoveLiftSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -470,9 +470,9 @@ MoveMenuPositionSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -484,9 +484,9 @@ ThouArtDefeatedSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -500,9 +500,9 @@ EnterLiftSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -517,9 +517,9 @@ LeaveLiftSound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -558,9 +558,9 @@ Fire_Bullet_Sound (int BulletType)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -572,9 +572,9 @@ Takeover_Set_Capsule_Sound (void)
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -586,9 +586,9 @@ Takeover_Game_Won_Sound (void)
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -600,9 +600,9 @@ Takeover_Game_Deadlock_Sound (void)
 }				// void FireBulletSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -615,9 +615,9 @@ Takeover_Game_Lost_Sound (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -631,9 +631,9 @@ BounceSound (void)
 }				// void BounceSound(void)
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void

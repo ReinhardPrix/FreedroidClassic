@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -172,7 +172,7 @@ ApplyFilter (SDL_Surface *surf, float fred, float fgreen, float fblue)
 	{
 	  GetRGBA (surf, x, y, &red, &green, &blue, &alpha);
 
-	  if (alpha == SDL_ALPHA_TRANSPARENT) 
+	  if (alpha == SDL_ALPHA_TRANSPARENT)
 	    continue;
 
 	  red *= fred;
@@ -254,7 +254,7 @@ static SDL_Cursor *init_system_cursor(const char *image[])
 ----------------------------------------------------------------------
 */
 
-void 
+void
 DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 {
   int i;
@@ -280,14 +280,14 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	{
 	  pixx = User_Rect.x + User_Rect.w/2 - Block_Rect.w * (Me.pos.x - x1 );
 	  pixy = UserCenter_y - Block_Rect.h * (Me.pos.y - y1 ) + i ;
-	  if ( (pixx <= User_Rect.x) || 
-	       (pixx >= User_Rect.x + User_Rect.w -1) || 
-	       (pixy <= User_Rect.y ) || 
-	       (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
+	  if ( (pixx <= User_Rect.x) ||
+	       (pixx >= User_Rect.x + User_Rect.w -1) ||
+	       (pixy <= User_Rect.y ) ||
+	       (pixy >= User_Rect.y + User_Rect.h -1) ) continue;
 	  putpixel( ne_screen , pixx , pixy , Color );
 	  putpixel( ne_screen , pixx-1 , pixy , Color );
 	}
-      return; 
+      return;
     }
 
   if (x1 > x2) // in this case, just interchange 1 and 2
@@ -310,10 +310,10 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
     {
       pixx=User_Rect.x + User_Rect.w/2 - Block_Rect.w * (Me.pos.x - x1 ) + i;
       pixy= UserCenter_y - Block_Rect.h * (Me.pos.y - y1 ) + i * slope ;
-      if ( (pixx <= User_Rect.x) || 
-	   (pixx >= User_Rect.x + User_Rect.w -1) || 
-	   (pixy <= User_Rect.y ) || 
-	   (pixy >= User_Rect.y + User_Rect.h -1) ) continue; 
+      if ( (pixx <= User_Rect.x) ||
+	   (pixx >= User_Rect.x + User_Rect.w -1) ||
+	   (pixy <= User_Rect.y ) ||
+	   (pixy >= User_Rect.y + User_Rect.h -1) ) continue;
       putpixel( ne_screen , pixx , pixy , Color );
       putpixel( ne_screen , pixx , pixy -1 , Color );
     }
@@ -326,7 +326,7 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 /*-----------------------------------------------------------------
  * This function saves a screenshot to disk.
  * The screenshots are names "Screenshot_XX.bmp" where XX is a
- * running number.  
+ * running number.
  *
  * NOTE:  This function does NOT check for existing screenshots,
  *        but will silently overwrite them.  No problem in most
@@ -338,7 +338,7 @@ TakeScreenshot(void)
 {
   static int Number_Of_Screenshot=0;
   char Screenshoot_Filename[100];
-  
+
   Activate_Conservative_Frame_Computation();
 
   sprintf( Screenshoot_Filename , "Screenshot_%d.bmp", Number_Of_Screenshot );
@@ -360,14 +360,14 @@ TakeScreenshot(void)
 /*
 ----------------------------------------------------------------------
 @Desc: This function draws a "grid" on the screen, that means every
-       "second" pixel is blacked out, thereby generation a fading 
-       effect.  This function was created to fade the background of the 
+       "second" pixel is blacked out, thereby generation a fading
+       effect.  This function was created to fade the background of the
        Escape menu and its submenus.
 
 @Ret: none
 ----------------------------------------------------------------------
 */
-void 
+void
 MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 {
   int x,y;
@@ -376,17 +376,17 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): real function call confirmed.");
   SDL_LockSurface( ne_screen );
-  for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++) 
+  for ( y = Grid_Rectangle->y ; y < (Grid_Rectangle->h + Grid_Rectangle->y) ; y++)
     {
-      for ( x = Grid_Rectangle->x ; x < (Grid_Rectangle->x + Grid_Rectangle->w) ; x++ ) 
+      for ( x = Grid_Rectangle->x ; x < (Grid_Rectangle->x + Grid_Rectangle->w) ; x++ )
 	{
-	  if ((x+y)%2 == 0) 
+	  if ((x+y)%2 == 0)
 	    {
 	      putpixel( ne_screen, x, y, 0 );
 	    }
 	}
     }
-  
+
   SDL_UnlockSurface( ne_screen );
   DebugPrintf (2, "\nvoid MakeGridOnScreen(...): end of function reached.");
 } // void MakeGridOnSchreen(void)
@@ -395,7 +395,7 @@ MakeGridOnScreen( SDL_Rect* Grid_Rectangle )
 /*----------------------------------------------------------------------
  * This function load an image and displays it directly to the ne_screen
  * but without updating it.
- * This might be very handy, especially in the Title() function to 
+ * This might be very handy, especially in the Title() function to
  * display the title image and perhaps also for displaying the ship
  * and that.
  *
@@ -404,16 +404,16 @@ void
 DisplayImage(char *datafile)
 {
   SDL_Surface *image;
-  
+
   image = IMG_Load(datafile);
   if ( image == NULL ) {
     DebugPrintf(0, "ERROR: Couldn't load image %s: %s\n", datafile, IMG_GetError());
     Terminate(ERR);
   }
-  
+
   if (GameConfig.scale != 1.0)
     ScalePic (&image, GameConfig.scale);
-  
+
   SDL_BlitSurface(image, NULL, ne_screen, NULL);
 
   SDL_FreeSurface(image);
@@ -430,7 +430,7 @@ DisplayImage(char *datafile)
  * in the first call we assume the Block_Rect to be the original game-size
  * and store this value for future rescalings
  ----------------------------------------------------------------------*/
-void 
+void
 SetCombatScaleTo(float scale)
 {
   int i, j;
@@ -448,7 +448,7 @@ SetCombatScaleTo(float scale)
 	if (MapBlockSurfacePointer[j][i] != OrigMapBlockSurfacePointer[j][i])
 	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
 	// then zoom..
-	tmp = zoomSurface(OrigMapBlockSurfacePointer[j][i], scale, scale, 0);  
+	tmp = zoomSurface(OrigMapBlockSurfacePointer[j][i], scale, scale, 0);
 	// and optimize
 	MapBlockSurfacePointer[j][i]=SDL_DisplayFormat (tmp);
 	SDL_FreeSurface(tmp); // free the old surface
@@ -465,7 +465,7 @@ SetCombatScaleTo(float scale)
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 */
-void 
+void
 LoadThemeConfigurationFile(void)
 {
   char *Data;
@@ -475,14 +475,14 @@ LoadThemeConfigurationFile(void)
   char *EndOfThemesBlastData;
   char *EndOfThemesDigitData;
   int BulletIndex;
-  
+
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
-#define END_OF_THEME_BLAST_DATA_STRING "*** End of themes blast data section ***" 
-#define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***" 
-#define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***" 
+#define END_OF_THEME_BLAST_DATA_STRING "*** End of themes blast data section ***"
+#define END_OF_THEME_BULLET_DATA_STRING "*** End of themes bullet data section ***"
+#define END_OF_THEME_DIGIT_DATA_STRING "*** End of themes digit data section ***"
 
   fpath = find_file ("config.theme", GRAPHICS_DIR, USE_THEME, CRITICAL);
-  
+
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
 
   EndOfThemesBulletData = LocateStringInData ( Data , END_OF_THEME_BULLET_DATA_STRING );
@@ -491,7 +491,7 @@ LoadThemeConfigurationFile(void)
 
   //--------------------
   // Now the file is read in entirely and
-  // we can start to analyze its content, 
+  // we can start to analyze its content,
   //
 #define BLAST_ONE_NUMBER_OF_PHASES_STRING "How many phases in Blast one :"
 #define BLAST_TWO_NUMBER_OF_PHASES_STRING "How many phases in Blast two :"
@@ -532,11 +532,11 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 	  Terminate(ERR);
 	}
       ReadValueFromString (ReadPointer, "we will use number of phases=", "%d", &Bulletmap[BulletIndex].phases);
-      ReadValueFromString (ReadPointer, "and number of phase changes per second=", "%f", 
+      ReadValueFromString (ReadPointer, "and number of phase changes per second=", "%f",
 			   &Bulletmap[BulletIndex].phase_changes_per_second);
       ReadPointer++;
     }
-  
+
   // --------------------
   // Also decidable from the theme is where in the robot to
   // display the digits.  This must also be read from the configuration
@@ -567,7 +567,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
 /*-----------------------------------------------------------------
  * @Desc: get the pics for: druids, bullets, blasts
- * 				
+ *
  * 	reads all blocks and puts the right pointers into
  * 	the various structs
  *
@@ -609,22 +609,22 @@ InitPictures (void)
     for (col = 0; col < NUM_MAP_BLOCKS; col ++)
       {
 	FreeIfUsed (OrigMapBlockSurfacePointer[line][col]);
-	OrigMapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &OrigBlock_Rect,0); 
+	OrigMapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &OrigBlock_Rect,0);
 	MapBlockSurfacePointer[line][col] = OrigMapBlockSurfacePointer[line][col];
       }
   update_progress (20);
   //---------- get Droid-model  blocks
   fpath = find_file (DROID_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
   Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
-  for (col = 0; col < DROID_PHASES; col ++) 
+  for (col = 0; col < DROID_PHASES; col ++)
     {
       FreeIfUsed (InfluencerSurfacePointer[col]);
       FreeIfUsed (EnemySurfacePointer[col]);
       InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &OrigBlock_Rect, 0);
       EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &OrigBlock_Rect, 0);
       /* Droid pics are only used in _internal_ blits ==> clear per-surf alpha */
-      SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0); 
-      SDL_SetAlpha (EnemySurfacePointer[col], 0, 0); 
+      SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0);
+      SDL_SetAlpha (EnemySurfacePointer[col], 0, 0);
     }
 
   //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
@@ -644,7 +644,7 @@ InitPictures (void)
 
   //---------- get Blast blocks
   fpath = find_file (BLAST_BLOCK_FILE, GRAPHICS_DIR, USE_THEME, CRITICAL);
-  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);	
+  Load_Block (fpath, 0, 0, NULL, INIT_ONLY);
   for (line = 0; line <  ALLBLASTTYPES; line ++)
     for (col = 0; col < Blastmap[line].phases; col ++)
       {
@@ -681,9 +681,9 @@ InitPictures (void)
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
     {
-      //  create the tmp block-build storage 
+      //  create the tmp block-build storage
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_DisplayFormatAlpha (tmp); 
+      BuildBlock = SDL_DisplayFormatAlpha (tmp);
       SDL_FreeSurface (tmp);
 
       // takeover background pics
@@ -742,7 +742,7 @@ InitPictures (void)
       strcpy (fname, "Ashes.png");
       fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, WARNONLY);
       if (!fpath)
-	{ 
+	{
 	  DebugPrintf (0, "WARNING: deactivated display of droid-decals\n");
 	  GameConfig.ShowDecals = FALSE;
       }
@@ -807,7 +807,7 @@ load_raw_pic (char *fpath)
 	Terminate (ERR);
       }
     fclose (fp);
-    
+
 
     return (SDL_RWFromMem(mem, size) );
 
@@ -816,7 +816,7 @@ load_raw_pic (char *fpath)
 
 /*------------------------------------------------------------
  * General block-reading routine: get block from pic-file
- * 
+ *
  * fpath: full pathname of picture-file; if NULL: use previous SDL-surf
  * line, col: block-position in pic-file to read block from
  * block: dimension of blocks to consider: if NULL: copy whole pic
@@ -845,7 +845,7 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
       if (pic)  // previous pic?
 	SDL_FreeSurface (pic);
       pic = IMG_Load (fpath);
-      
+
     }
 
   if ( (flags & INIT_ONLY) != FALSE )
@@ -898,9 +898,9 @@ Init_Video (void)
   char *YN[2] = {"no", "yes"};
 
   /* Initialize the SDL library */
-  // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) 
+  // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 )
 
-  if ( SDL_Init (SDL_INIT_VIDEO) == -1 ) 
+  if ( SDL_Init (SDL_INIT_VIDEO) == -1 )
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
@@ -909,7 +909,7 @@ Init_Video (void)
 
   // Now SDL_TIMER is initialized here:
 
-  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 ) 
+  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 )
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
@@ -923,7 +923,7 @@ Init_Video (void)
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
   vid_bpp = vid_info->vfmt->BitsPerPixel;
-  
+
   DebugPrintf (0, "Video info summary from SDL:\n");
   DebugPrintf (0, "----------------------------------------------------------------------\n");
   DebugPrintf (0, "Is it possible to create hardware surfaces: %s\n" , YN[vid_info->hw_available]);
@@ -936,12 +936,12 @@ Init_Video (void)
   DebugPrintf (0, "Are software to hardware alpha blits accelerated: %s\n", YN[vid_info->blit_sw_A]);
   DebugPrintf (0, "Are color fills accelerated: %s\n", YN[vid_info->blit_fill]);
   DebugPrintf (0, "Total amount of video memory in Kilobytes: %d\n", vid_info->video_mem);
-  DebugPrintf (0, "Pixel format of the video device: bpp = %d, bytes/pixel = %d\n", 
+  DebugPrintf (0, "Pixel format of the video device: bpp = %d, bytes/pixel = %d\n",
 	       vid_bpp, vid_info->vfmt->BytesPerPixel);
   DebugPrintf (0, "Video Driver Name: %s\n", vid_driver);
   DebugPrintf (0, "----------------------------------------------------------------------\n");
 
-  
+
   //  flags = SDL_HWSURFACE | SDL_DOUBLEBUF;
   vid_flags = 0;
   if (GameConfig.UseFullscreen) vid_flags |= SDL_FULLSCREEN;
@@ -956,7 +956,7 @@ Init_Video (void)
   if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , vid_flags)) )
     {
       DebugPrintf (0, "ERORR: Couldn't set %d x %d video mode. SDL: %s\n",
-		   Screen_Rect.w, Screen_Rect.h, SDL_GetError()); 
+		   Screen_Rect.w, Screen_Rect.h, SDL_GetError());
       exit(-1);
     }
 
@@ -972,9 +972,9 @@ Init_Video (void)
 } /* InitVideo () */
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -985,7 +985,7 @@ ClearGraphMem ( void )
   // DisplayBanner function of the matter...
   BannerIsDestroyed=TRUE;
 
-  // 
+  //
   SDL_SetClipRect( ne_screen, NULL );
 
   // Now we fill the screen with black color...
@@ -1000,30 +1000,30 @@ ClearGraphMem ( void )
  * Return the pixel value at (x, y)
  * NOTE: The surface must be locked before calling this!
  *----------------------------------------------------------------------*/
-Uint32 
+Uint32
 getpixel(SDL_Surface *surface, int x, int y)
 {
   int bpp = surface->format->BytesPerPixel;
   /* Here p is the address to the pixel we want to retrieve */
   Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-  
-  switch(bpp) 
+
+  switch(bpp)
     {
     case 1:
       return *p;
-      
+
     case 2:
       return *(Uint16 *)p;
-      
+
     case 3:
       if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
 	return p[0] << 16 | p[1] << 8 | p[2];
       else
 	return p[0] | p[1] << 8 | p[2] << 16;
-      
+
     case 4:
       return *(Uint32 *)p;
-      
+
     default:
       return 0;       /* shouldn't happen, but avoids warnings */
     }
@@ -1075,7 +1075,7 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 /*----------------------------------------------------------------------
  *
  *----------------------------------------------------------------------*/
-int 
+int
 Load_Fonts (void)
 {
   char *fpath;
@@ -1121,7 +1121,7 @@ Load_Fonts (void)
 
 //------------------------------------------------------------
 // display "white noise" effect in Rect.
-// algorith basically stolen from 
+// algorith basically stolen from
 // Greg Knauss's "xteevee" hack in xscreensavers.
 //
 // timeout is in ms
@@ -1145,11 +1145,11 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   int now;
 
   for (i=0; i< NOISE_COLORS; i++)
-    { 
+    {
       color = (Uint8)(((double)(i+1.0)/NOISE_COLORS)*255.0);
       grey[i] = SDL_MapRGB(ne_screen->format, color, color, color);
     }
-  
+
   // produce the tiles
   tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, vid_bpp, 0, 0, 0, 0);
   tmp2 = SDL_DisplayFormat (tmp);
@@ -1176,7 +1176,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   Play_Sound (WHITE_NOISE);
 
   now = SDL_GetTicks();
-  
+
   while (1)
     {
       // pick an old enough tile
@@ -1194,7 +1194,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 	} while (next_tile == -1);
       memmove(used_tiles,used_tiles+1,sizeof(used_tiles)-1);
       used_tiles[sizeof(used_tiles)-1] = next_tile;
-      
+
       // make sure we can blit the full rect without clipping! (would change *rect!)
       SDL_GetClipRect (ne_screen, &clip_rect);
       SDL_SetClipRect (ne_screen, NULL);
@@ -1235,7 +1235,7 @@ ScaleGraphics (float scale)
   ScaleRect (FirstDigit_Rect, scale);
   ScaleRect (SecondDigit_Rect, scale);
   ScaleRect (ThirdDigit_Rect, scale);
-  
+
 
   // note: only rescale these rects the first time!!
   if (first_call)
@@ -1252,13 +1252,13 @@ ScaleGraphics (float scale)
       }
   //  printf_SDL (ne_screen, -1, -1, ".");
   //---------- rescale Droid-model  blocks
-  for (col = 0; col < DROID_PHASES; col ++) 
+  for (col = 0; col < DROID_PHASES; col ++)
     {
       ScalePic (&InfluencerSurfacePointer[col], scale);
       ScalePic (&EnemySurfacePointer[col], scale);
       /* Droid pics are only used in _internal_ blits ==> clear per-surf alpha */
-      SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0); 
-      SDL_SetAlpha (EnemySurfacePointer[col], 0, 0); 
+      SDL_SetAlpha (InfluencerSurfacePointer[col], 0, 0);
+      SDL_SetAlpha (EnemySurfacePointer[col], 0, 0);
     }
 
   //  printf_SDL (ne_screen, -1, -1, ".");
@@ -1281,8 +1281,8 @@ ScaleGraphics (float scale)
       ScalePic (&InfluDigitSurfacePointer[col], scale);
       ScalePic (&EnemyDigitSurfacePointer[col], scale);
       /* Digits are only used in _internal_ blits ==> clear per-surf alpha */
-      SDL_SetAlpha (InfluDigitSurfacePointer[col], 0, 0); 
-      SDL_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0); 
+      SDL_SetAlpha (InfluDigitSurfacePointer[col], 0, 0);
+      SDL_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0);
     }
   //  printf_SDL (ne_screen, -1, -1, ".");
 
@@ -1296,10 +1296,10 @@ ScaleGraphics (float scale)
   // the following are not theme-specific and are therefore only loaded once!
   if (first_call)
     {
-      //  create a new tmp block-build storage 
+      //  create a new tmp block-build storage
       FreeIfUsed (BuildBlock);
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_DisplayFormatAlpha (tmp); 
+      BuildBlock = SDL_DisplayFormatAlpha (tmp);
       SDL_FreeSurface (tmp);
 
       // takeover pics
@@ -1323,7 +1323,7 @@ ScaleGraphics (float scale)
       if (Decal_pics[1]) ScalePic (&Decal_pics[1], scale);
 
     } // if first_call
-  
+
   printf_SDL (ne_screen, -1, -1, " ok\n");
 
   first_call = FALSE;
@@ -1372,30 +1372,30 @@ ScaleStatRects (float scale)
   ScaleRect (Cons_Header_Rect, scale);
   ScaleRect (Cons_Menu_Rect, scale);
   ScaleRect (Cons_Text_Rect, scale);
-  
+
   ScaleRect (Cons_Menu_Rects[0], scale);
   ScaleRect (Cons_Menu_Rects[1], scale);
   ScaleRect (Cons_Menu_Rects[2], scale);
   ScaleRect (Cons_Menu_Rects[3], scale);
 
   ScaleRect (ConsMenuItem_Rect, scale);
-  
+
   ScaleRect (LeftInfo_Rect, scale);
   ScaleRect (RightInfo_Rect, scale);
 
   for (i=0; i<NUM_FILL_BLOCKS; i++)
     ScaleRect (FillBlocks[i], scale);
-  
+
   for (i = 0; i < NUM_CAPS_BLOCKS; i++)
     ScaleRect (CapsuleBlocks[i], scale);
-  
+
   for (j = 0; j < 2*NUM_PHASES; j++)
     for (i = 0; i < TO_BLOCKS; i++)
       ScaleRect (ToGameBlocks[j*TO_BLOCKS+i], scale);
 
   for (i = 0; i < NUM_GROUND_BLOCKS; i++)
     ScaleRect (ToGroundBlocks[i], scale);
-  
+
   ScaleRect (ToColumnBlock, scale);
   ScaleRect (ToLeaderBlock, scale);
 
@@ -1433,20 +1433,20 @@ toggle_fullscreen (void)
   Uint32 vid_flags = ne_screen->flags;
 
   //  SDL_WM_ToggleFullScreen (ne_screen);
-  
-  if (GameConfig.UseFullscreen) 
+
+  if (GameConfig.UseFullscreen)
     vid_flags &= ~SDL_FULLSCREEN;
   else
     vid_flags |= SDL_FULLSCREEN;
 
   if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h, 0, vid_flags)) )
     {
-      DebugPrintf (0, "ERORR occured when trying ot toggle windowed/fullscreen %d x %d video mode.\n", 
+      DebugPrintf (0, "ERORR occured when trying ot toggle windowed/fullscreen %d x %d video mode.\n",
 		   Screen_Rect.w, Screen_Rect.h);
       DebugPrintf (0, "SDL-Error: %s\n", SDL_GetError() );
       Terminate (ERR);
     }
-  
+
   if ( ne_screen->flags != vid_flags )
     {
       DebugPrintf (0, "WARNING: Failed to toggle windowed/fullscreen mode!\n");

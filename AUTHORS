@@ -1,8 +1,8 @@
 -*- mode: text -*-
 This is intended to be a relatively complete list of contributions to
 Freedroid, which includes either sending patches, graphics or new
-missions/levels/maps. 
-Please contact one of the authors if you think you have been omitted.  
+missions/levels/maps.
+Please contact one of the authors if you think you have been omitted.
 We also thank everyone who has sent bug-reports, but it would be too
 excessive to list these contributions individually here as well.
 
@@ -23,8 +23,8 @@ additional Themes
 
 Porting
 -------
-* Jason Kingan <jasonk@toast442.org> 
-   patches and ProjectBuilder files for MacOS X port 
+* Jason Kingan <jasonk@toast442.org>
+   patches and ProjectBuilder files for MacOS X port
 
 * Reinhard Prix <rprix@users.sourceforge.net>
   Win32 port

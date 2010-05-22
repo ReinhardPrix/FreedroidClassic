@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -26,7 +26,7 @@
 /*----------------------------------------------------------------------
  *
  * Desc: all Bullet AND Blast - related functions.
- *	 
+ *
  *
  *----------------------------------------------------------------------*/
 
@@ -77,7 +77,7 @@ MoveBullets (void)
 
       CurBullet->prev_pos.x = CurBullet->pos.x;
       CurBullet->prev_pos.y = CurBullet->pos.y;
-      
+
       CurBullet->pos.x += CurBullet->speed.x * Frame_Time ();
       CurBullet->pos.y += CurBullet->speed.y * Frame_Time ();
 
@@ -90,9 +90,9 @@ MoveBullets (void)
 
 
 /*@Function============================================================
-@Desc: delete bullet of given number, set it type=OUT, put it at x/y=-1/-1 
+@Desc: delete bullet of given number, set it type=OUT, put it at x/y=-1/-1
        and create a Bullet-blast if with_blast==TRUE
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -114,11 +114,11 @@ DeleteBullet (int Bulletnumber)
   //  StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 
   //--------------------
-  // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to 
+  // maybe, the bullet had several SDL_Surfaces attached to it.  Then we need to
   // free the SDL_Surfaces again as well...
   //
   // if ( ( CurBullet->type != FLASH) && ( CurBullet->type != OUT ) )
-  if ( CurBullet->Surfaces_were_generated ) 
+  if ( CurBullet->Surfaces_were_generated )
     {
       DebugPrintf( 1 , "\nvoid DeleteBullet(...): freeing this bullets attached surfaces...");
       for ( i=0 ; i < Bulletmap[ CurBullet->type ].phases ; i++ )
@@ -191,7 +191,7 @@ StartBlast (float x, float y, int type)
 
   if (type == DRUIDBLAST)
     {
-     DruidBlastSound (); 
+     DruidBlastSound ();
     }
 
 }				/* StartBlast */
@@ -236,9 +236,9 @@ DeleteBlast (int Blastnummer)
 }
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 int
@@ -278,7 +278,7 @@ CheckBulletCollisions (int num)
   finepoint step;
   int num_check_steps, stepnum;
   int i;
-  
+
 
   switch (CurBullet->type)
     {
@@ -287,7 +287,7 @@ CheckBulletCollisions (int num)
     case OUT:
       return;
       break;
-      
+
       // --------------------
       // Next we handle the case that the bullet is of type FLASH
     case FLASH:
@@ -300,18 +300,18 @@ CheckBulletCollisions (int num)
 	  CurBullet->mine = FALSE;
 	  return;
 	}
-      
+
       // if the flash is not yet over, do some checking for who gets
-      // hurt by it.  
+      // hurt by it.
       // Two different methode for doing this are available:
       // The first but less elegant Method is just to check for
       // flash immunity, for distance and visiblity.
       // The second and more elegant method is to recursively fill
       // out the room where the flash-maker is in and to hurt all
       // robots in there except of course for those immune.
-      if ( CurBullet->time_in_frames != 1 ) 
+      if ( CurBullet->time_in_frames != 1 )
 	break; // we only do the damage once and thats at frame nr. 1 of the flash
-      
+
       for (i = 0; i < NumEnemys; i++)
 	{
 	  // !! dont't forget: Only droids on our level are harmed!! (bugfix)
@@ -325,25 +325,25 @@ CheckBulletCollisions (int num)
 	      EnemyHitByBulletText( i );
 	    }
 	}
-      
-      // droids with flash are always flash-immune! 
+
+      // droids with flash are always flash-immune!
       // -> we don't get hurt by our own flashes!
       if (!InvincibleMode && !Druidmap[Me.type].flashimmune)
 	Me.energy -= Bulletmap[FLASH].damage ;
-      
+
       return;
       break;
 
       // --------------------
       // If its a "normal" Bullet, several checks have to be
-      // done, one for collisions with background, 
+      // done, one for collisions with background,
       // one for collision with influencer
       // some for collisions with enemys
       // and some for collisions with other bullets
       // and some for collisions with blast
       //
     default:
-      
+
       // first check for collision with background
       step.x = CurBullet->pos.x - CurBullet->prev_pos.x;
       step.y = CurBullet->pos.y - CurBullet->prev_pos.y;
@@ -351,10 +351,10 @@ CheckBulletCollisions (int num)
       if (num_check_steps == 0) num_check_steps = 1;
       step.x /= 1.0* num_check_steps;
       step.y /= 1.0* num_check_steps;
-      
+
       CurBullet->pos.x = CurBullet->prev_pos.x;
       CurBullet->pos.y = CurBullet->prev_pos.y;
-      
+
       for (stepnum=0; stepnum < num_check_steps; stepnum++)
 	{
 	  CurBullet->pos.x += step.x;
@@ -364,9 +364,9 @@ CheckBulletCollisions (int num)
 	    {
 	      StartBlast (CurBullet->pos.x, CurBullet->pos.y, BULLETBLAST);
 	      DeleteBullet (num);
-	      return;			
+	      return;
 	    }
-      
+
 	  // check for collision with influencer
 	  if (!CurBullet->mine)
 	    {
@@ -375,10 +375,10 @@ CheckBulletCollisions (int num)
 	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2)  // FIXME: don't use DRUIDHITDIST2!!
 		{
 		  GotHitSound ();
-	  
+
 		  if (!InvincibleMode)
 		    Me.energy -= Bulletmap[CurBullet->type].damage;	/* Energie verlieren */
-	  
+
 		  DeleteBullet( num );
 		  return;			/* Bullet ist hin */
 		}
@@ -387,13 +387,13 @@ CheckBulletCollisions (int num)
 	      // check for collision with enemys
 	  for (i = 0; i < NumEnemys; i++)
 	    {
-	      if (AllEnemys[i].status == OUT || AllEnemys[i].status == TERMINATED || 
+	      if (AllEnemys[i].status == OUT || AllEnemys[i].status == TERMINATED ||
 		  AllEnemys[i].levelnum != level)
 		continue;
-	  
+
 	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
 	      ydist = CurBullet->pos.y - AllEnemys[i].pos.y;
-	  
+
 	      if ((xdist * xdist + ydist * ydist) < DRUIDHITDIST2) // FIXME
 		{
 		  // The enemy who was hit, loses some energy, depending on the bullet
@@ -418,9 +418,9 @@ CheckBulletCollisions (int num)
 	  for (i = 0; i < MAXBULLETS; i++)
 	    {
 	      if (i == num) continue;  // never check for collision with youself.. ;)
-	      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets.. 
-	      if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets.. 
-	      
+	      if (AllBullets[i].type == OUT) continue; // never check for collisions with dead bullets..
+	      if (AllBullets[i].type == FLASH) continue; // never check for collisions with flashes bullets..
+
 	      xdist = AllBullets[i].pos.x-CurBullet->pos.x;
 	      ydist = AllBullets[i].pos.y-CurBullet->pos.y;
 	      if ( xdist*xdist + ydist*ydist > BULLET_COLL_DIST2 ) continue;
@@ -428,26 +428,26 @@ CheckBulletCollisions (int num)
 	      // it seems like we have a collision of two bullets!
 	      // both will be deleted and replaced by blasts..
 	      DebugPrintf (1, "\nBullet-Bullet-Collision detected...");
-	  
+
 	      StartBlast(CurBullet->pos.x, CurBullet->pos.y, DRUIDBLAST);
-	      //	??why start two blasts? 
+	      //	??why start two blasts?
 	      // StartBlast(AllBullets[num].pos.x, AllBullets[num].pos.y, DRUIDBLAST);
 	      DeleteBullet (num);
 	      DeleteBullet (i);
 	    }
-	  
+
 	} // for numsteps < num_check_steps
 
       break;
     } // switch ( Bullet-Type )
 } /* CheckBulletCollisions */
-  
+
 /*@Function============================================================
   @Desc: CheckBlastCollsions(int num)
   checkt Collisionen des Blasts num mit Bullets und Druids
   UND reagiert darauf
-  
-  @Ret: void 
+
+  @Ret: void
   @Int:
   * $Function----------------------------------------------------------*/
 void
@@ -510,7 +510,7 @@ CheckBlastCollisions (int num)
       if (!InvincibleMode)
 	{
 	  Me.energy -= Blast_Damage_Per_Second * Frame_Time ();
-	  
+
 	  // So the influencer got some damage from the hot blast
 	  // Now most likely, he then will also say so :)
 	  if ( !CurBlast->MessageWasDone )
@@ -518,9 +518,9 @@ CheckBlastCollisions (int num)
 	      AddInfluBurntText();
 	      CurBlast->MessageWasDone=TRUE;
 	    }
-	  
+
 	}
-      // In order to avoid a new sound EVERY frame we check for how long the previous blast 
+      // In order to avoid a new sound EVERY frame we check for how long the previous blast
       // lies back in time.  LastBlastHit is a float, that counts SECONDS real-time !!
       if (LastGotIntoBlastSound > 1.2)
 	{

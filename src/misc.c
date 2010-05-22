@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -26,7 +26,7 @@
 /*----------------------------------------------------------------------
  *
  * Desc: miscellaeous helpful functions for Freedroid
- *	 
+ *
  *----------------------------------------------------------------------*/
 
 #define _misc_c
@@ -53,7 +53,7 @@ int framenr = 0;
 
 SDL_Color progress_color = {200, 20, 20};
 
-extern int key_cmds[CMD_LAST][3]; 
+extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
 
 // ------------------------------------------------------------
@@ -65,7 +65,7 @@ int sign (float x)
     return (0);
   else if (x > 0.0)
     return (1);
-  else 
+  else
     return (-1);
 }
 
@@ -88,8 +88,8 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
     }
 
   found += strlen (var_name);
-  
-  // skip whitespace,tab, =, : 
+
+  // skip whitespace,tab, =, :
   found += strspn(found, " \t=:");
 
   ret = sscanf (found, fmt, var);
@@ -154,7 +154,7 @@ LoadGameConfig (void)
     }
 
   sprintf (ConfigDir, "%s/.freedroidClassic", homedir);
-  
+
   if (stat(ConfigDir, &statbuf) == -1) {
     DebugPrintf (1, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
 #if __WIN32__
@@ -184,7 +184,7 @@ LoadGameConfig (void)
     }
 
   size = FS_filelength (fp);
-  
+
   // Now read the raw data
   data = MyMalloc (size+10);
   read_size = fread ( data, 1, size, fp);
@@ -211,7 +211,7 @@ LoadGameConfig (void)
       free (data);
       return (ERR);
     }
-  
+
   read_variable (data, DRAW_FRAMERATE,           "%d", &GameConfig.Draw_Framerate);
   read_variable (data, DRAW_ENERGY,              "%d", &GameConfig.Draw_Energy);
   read_variable (data, DRAW_POSITION,            "%d", &GameConfig.Draw_Position);
@@ -242,7 +242,7 @@ LoadGameConfig (void)
   return (OK);
 
 } // LoadGameConfig
-    
+
 /*----------------------------------------------------------------------
  * SaveGameConfig: do just that
  *
@@ -253,17 +253,17 @@ SaveGameConfig (void)
   char fname[255];
   FILE *fp;
   int i;
-  
+
   if ( ConfigDir[0] == '\0')
     return (ERR);
-  
+
   sprintf (fname, "%s/config", ConfigDir);
   if( (fp = fopen (fname, "w")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
       return (ERR);
     }
-  
+
   // Now write the actual data, line by line
   fprintf (fp, "%s = %s\n", VERSION_STRING, VERSION);
   fprintf (fp, "%s = %d\n", DRAW_FRAMERATE, GameConfig.Draw_Framerate);
@@ -287,12 +287,12 @@ SaveGameConfig (void)
 
   // now write the keyboard->cmd mappings
   for (i=0; i < CMD_LAST; i++)
-    fprintf (fp, "%s \t= %d_%d_%d\n", 
-	     cmd_strings[i], key_cmds[i][0], key_cmds[i][1], key_cmds[i][2]); 
+    fprintf (fp, "%s \t= %d_%d_%d\n",
+	     cmd_strings[i], key_cmds[i][0], key_cmds[i][1], key_cmds[i][2]);
 
   fclose (fp);
   return (OK);
-  
+
 } // SaveGameConfig()
 
 
@@ -303,7 +303,7 @@ it, copys it there and returns it.
 The original source string specified should in no way be modified.
 ----------------------------------------------------------------------*/
 char*
-ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString ) 
+ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString )
 {
   char* SearchPointer;
   char* EndOfStringPointer;
@@ -367,7 +367,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 
       // Now we allocate memory and copy the string...
       StringLength = EndOfStringPointer - SearchPointer ;
-      
+
       ReturnString = MyMalloc ( StringLength + 1 );
       strncpy ( ReturnString , SearchPointer , StringLength );
       ReturnString[ StringLength ] = 0;
@@ -385,7 +385,7 @@ other string.
 ----------------------------------------------------------------------
 */
 int
-CountStringOccurences ( char* SearchString , char* TargetString ) 
+CountStringOccurences ( char* SearchString , char* TargetString )
 {
   int Counter=0;
   char* CountPointer;
@@ -398,18 +398,18 @@ CountStringOccurences ( char* SearchString , char* TargetString )
       Counter++;
     }
   return ( Counter );
-}; // CountStringOccurences ( char* SearchString , char* TargetString ) 
+}; // CountStringOccurences ( char* SearchString , char* TargetString )
 
 /*
 ----------------------------------------------------------------------
-This function read in a file with the specified name, allocated 
+This function read in a file with the specified name, allocated
 memory for it of course, looks for the file end string and then
 terminates the whole read in file with a 0 character, so that it
 can easily be treated like a common string.
 ----------------------------------------------------------------------
 */
-char* 
-ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) 
+char*
+ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
 {
   struct stat stbuf;
   FILE *DataFile;
@@ -419,7 +419,7 @@ ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
 
   DebugPrintf ( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The filename is: %s" , filename );
 
-  // Read the whole theme data to memory 
+  // Read the whole theme data to memory
   if ((DataFile = fopen ( filename , "r")) == NULL)
     {
       DebugPrintf (0, "\n\
@@ -523,7 +523,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   DebugPrintf( 1 , "\nchar* ReadAndMallocAndTerminateFile ( char* filename ) : The content of the read file: \n%s" , Data );
 
   return ( Data );
-}; // char* ReadAndMallocAndTerminateFile( char* filename) 
+}; // char* ReadAndMallocAndTerminateFile( char* filename)
 
 /*
 ----------------------------------------------------------------------
@@ -535,7 +535,7 @@ The return value is a pointer to the first instance where the substring
 we are searching is found in the main text.
 ----------------------------------------------------------------------
 */
-char* 
+char*
 LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
 {
   char* temp;
@@ -568,7 +568,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
     {
       DebugPrintf( 2 , "\nchar* LocateStringInDate ( char* SearchBeginText , char* SearchTextPointer ) : String %s successfully located within data. " , SearchTextPointer );
     }
-  
+
   return ( temp );
 
 };
@@ -592,8 +592,8 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 
   if ( sscanf (pos, FormatString, dst) == EOF )
     {
-      DebugPrintf (0, "\n ERROR: ReadValueFromString(): could not read value %s of label %s with format %s\n", 
-		   pos, FormatString, label ); 
+      DebugPrintf (0, "\n ERROR: ReadValueFromString(): could not read value %s of label %s with format %s\n",
+		   pos, FormatString, label );
       Terminate(ERR);
     }
   else
@@ -603,7 +603,7 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 }
 
 /*-----------------------------------------------------------------
- * find a given filename in subdir relative to FD_DATADIR, 
+ * find a given filename in subdir relative to FD_DATADIR,
  *
  * if you pass NULL as "subdir", it will be ignored
  *
@@ -614,10 +614,10 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
  *  WARNONLY: warn and return NULL
  *  CRITICAL: Error-message and Terminate
  *
- * returns pointer to _static_ string array File_Path, which 
+ * returns pointer to _static_ string array File_Path, which
  * contains the full pathname of the file.
  *
- * !! do never try to free the returned string !! 
+ * !! do never try to free the returned string !!
  * or to keep using it after a new call to find_file!
  *
  *-----------------------------------------------------------------*/
@@ -631,11 +631,11 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 
   if ( (critical != IGNORE) && (critical != WARNONLY) && (critical != CRITICAL) )
     {
-      DebugPrintf (0, "WARNING: unknown critical-value passed to find_file(): %d. Assume CRITICAL\n", 
+      DebugPrintf (0, "WARNING: unknown critical-value passed to find_file(): %d. Assume CRITICAL\n",
 		   critical);
       critical = CRITICAL;
     }
-    
+
   if (!fname)
     {
       DebugPrintf (0, "\nError: find_file() called with empty filename!\n");
@@ -662,7 +662,7 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 	}
 
       strcat (File_Path, fname);
-      
+
       if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
 	{
 	  fclose (fp);
@@ -696,18 +696,18 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 	}
     }
 
-  return (File_Path);  
+  return (File_Path);
 
 } /* find_file */
 
 /*@Function============================================================
 @Desc: realise Pause-Mode: the game process is halted,
-       while the graphics and animations are not.  This mode 
+       while the graphics and animations are not.  This mode
        can further be toggled from PAUSE to CHEESE, which is
        a feature from the original program that should probably
        allow for better screenshots.
-       
-@Ret: 
+
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 Pause (void)
@@ -728,7 +728,7 @@ Pause (void)
 	  AnimateRefresh ();
 	  AnimateEnemys ();
 	}
-      
+
       DisplayBanner (NULL, NULL, 0);
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
@@ -745,19 +745,19 @@ Pause (void)
 
       if ( SpacePressedR() )
 	Pause = FALSE;
-      
+
     } /* while (Pause) */
 
   return;
-} // Pause () 
+} // Pause ()
 
 
 /*@Function============================================================
 @Desc: This function starts the time-taking process.  Later the results
        of this function will be used to calculate the current framerate
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
-void 
+void
 StartTakingTimeForFPSCalculation(void)
 {
   /* This ensures, that 0 is never an encountered framenr,
@@ -765,7 +765,7 @@ StartTakingTimeForFPSCalculation(void)
    * Take the time now for calculating the frame rate
    * (DO NOT MOVE THIS COMMAND PLEASE!) */
   framenr++;
-  
+
   One_Frame_SDL_Ticks = SDL_GetTicks();
 
 } // void StartTakingTimeForFPSCalculation(void)
@@ -773,15 +773,15 @@ StartTakingTimeForFPSCalculation(void)
 
 /*@Function============================================================
 @Desc: This function computes the framerate that has been experienced
-       in this frame.  It will be used to correctly calibrate all 
+       in this frame.  It will be used to correctly calibrate all
        movements of game objects.
 
        NOTE:  To query the actual framerate a DIFFERENT function must
        be used, namely Frame_Time().
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
-void 
+void
 ComputeFPSForThisFrame(void)
 {
 
@@ -791,7 +791,7 @@ ComputeFPSForThisFrame(void)
   // since the initialisation of the SDL.
   // The second way is to use gettimeofday, a standard ANSI C function I guess,
   // defined in time.h or so.
-  // 
+  //
   // I have arranged for a definition set in defs.h to switch between the two
   // methods of ramerate calculation.  THIS MIGHT INDEED MAKE SENSE, SINCE THERE
   // ARE SOME UNEXPLAINED FRAMERATE PHENOMENA WHICH HAVE TO TO WITH KEYBOARD
@@ -804,11 +804,11 @@ ComputeFPSForThisFrame(void)
   oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
 
   FPSover1 = 1000.0/(float)oneframedelay;
-  
+
 } // void ComputeFPSForThisFrame(void)
 
 /*@Function============================================================
-  @Desc: 
+  @Desc:
 
  * This function is the key to independence of the framerate for various game elements.
  * It returns the average time needed to draw one frame.
@@ -828,15 +828,15 @@ ComputeFPSForThisFrame(void)
  * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
  * which can be conveniently called from eveywhere.
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 float
 Frame_Time (void)
 {
   static float previous_time;
-  
-  if ( SkipAFewFrames ) 
+
+  if ( SkipAFewFrames )
     return previous_time;
 
   previous_time = (1.0 / FPSover1);
@@ -847,7 +847,7 @@ Frame_Time (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
  * With framerate computation, there is a problem when some interuption occurs, like e.g.
  * the options menu is called or the debug menu is called or the console or the elevator
@@ -861,10 +861,10 @@ Frame_Time (void)
  * This counter is most conveniently set via the function Activate_Conservative_Frame_Computation,
  * which can be conveniently called from eveywhere.
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
-void 
+void
 Activate_Conservative_Frame_Computation(void)
 {
   SkipAFewFrames=TRUE;
@@ -915,10 +915,10 @@ MyRandom (int UpperBound)
 
   tmp = 1.0* rand() / RAND_MAX; /* random number in [0;1] */
 
-  /* 
+  /*
    * we always round OFF for the resulting int, therefore
    * we first add 0.99999 to make sure that Obergrenze has
-   * roughly the same probablity as the other numbers 
+   * roughly the same probablity as the other numbers
    */
   dice_val = (int)( tmp * (1.0 * UpperBound + 0.99999) );
   return (dice_val);
@@ -958,7 +958,7 @@ Teleport (int LNum, int X, int Y)
   int i;
 
   if (curLevel != CurLevel->levelnum)
-    {	
+    {
 
       //--------------------
       // In case a real level change has happend,
@@ -1010,7 +1010,7 @@ Teleport (int LNum, int X, int Y)
 @Desc: 	This function is used for terminating freedroid.  It will close
         the SDL submodules and exit.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void
 Terminate (int ExitCode)
@@ -1038,7 +1038,7 @@ Terminate (int ExitCode)
        success and terminates in case of "out of memory", so we dont
        need to do this always in the code.
 
-@Ret: 
+@Ret:
 * $Function----------------------------------------------------------*/
 void *
 MyMalloc (long Mamount)
@@ -1060,7 +1060,7 @@ MyMalloc (long Mamount)
 
 /*----------------------------------------------------------------------
  * FS_filelength().. (taken from quake2)
- * 		contrary to stat() this fct is nice and portable, 
+ * 		contrary to stat() this fct is nice and portable,
  *----------------------------------------------------------------------*/
 int
 FS_filelength (FILE *f)
@@ -1072,7 +1072,7 @@ FS_filelength (FILE *f)
   fseek (f, 0, SEEK_END);
   end = ftell (f);
   fseek (f, pos, SEEK_SET);
-  
+
   return end;
 }
 
@@ -1104,10 +1104,10 @@ init_progress (char *text)
     }
 
   oldfont = GetCurrentFont ();
-  
+
   SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
   SDL_BlitSurface( progress_meter_pic, NULL, ne_screen , &ProgressMeter_Rect );
-  
+
   Copy_Rect (ProgressText_Rect, dst);
   dst.x += ProgressMeter_Rect.x;
   dst.y += ProgressMeter_Rect.y;
@@ -1142,7 +1142,7 @@ update_progress (int percent)
   SDL_BlitSurface (progress_filler_pic, &src, ne_screen, &dst);
 
   SDL_UpdateRects (ne_screen, 1, &dst);
-  
+
   return;
 
 } // update_progress()

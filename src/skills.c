@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -289,7 +289,7 @@ HandleCurrentlyActivatedSkill( void )
 
 
 /* ----------------------------------------------------------------------
- * This function checks if a given screen position lies within the 
+ * This function checks if a given screen position lies within the
  * strength plus button or not
  * ---------------------------------------------------------------------- */
 int
@@ -332,7 +332,7 @@ CursorIsOnWhichSkillButton( int x , int y )
 /* ----------------------------------------------------------------------
  * This function displays the skills screen.
  * ---------------------------------------------------------------------- */
-void 
+void
 ShowSkillsScreen ( void )
 {
   static SDL_Rect ButtonRect;
@@ -355,7 +355,7 @@ ShowSkillsScreen ( void )
   DebugPrintf (2, "\nvoid ShowInventoryMessages( ... ): Function call confirmed.");
 
   //--------------------
-  // If the log is not set to visible right now, we do not need to 
+  // If the log is not set to visible right now, we do not need to
   // do anything more, but to restore the usual user rectangle size
   // back to normal and to return...
   //
@@ -370,7 +370,7 @@ ShowSkillsScreen ( void )
   // --------------------
   // Some things like the loading of the character screen
   // need to be done only once at the first call of this
-  // function. 
+  // function.
   //
   if ( SkillScreenImage == NULL )
     {
@@ -385,11 +385,11 @@ ShowSkillsScreen ( void )
       // for our inventory screen.
       //
       SkillScreenRect.x = CHARACTERRECT_X;
-      SkillScreenRect.y = 0; 
+      SkillScreenRect.y = 0;
       SkillScreenRect.w = CHARACTERRECT_W;
       SkillScreenRect.h = CHARACTERRECT_H;
     }
-  
+
   //--------------------
   // At this point we know, that the skill screen is desired and must be
   // displayed in-game:
@@ -398,7 +398,7 @@ ShowSkillsScreen ( void )
   SDL_BlitSurface ( SkillScreenImage , NULL , Screen , &SkillScreenRect );
 
   //--------------------
-  // Now we fill in the skills available to this bot.  ( For now, these skills 
+  // Now we fill in the skills available to this bot.  ( For now, these skills
   // are not class-specific, like in diablo or something, but this is our first
   // approach to the topic after all.... :)
   //
@@ -414,19 +414,19 @@ ShowSkillsScreen ( void )
       //--------------------
       // First we write the name of the skill to the screen
       //
-      DisplayText( SkillName[i] , 16 + 64 + 16 + SkillScreenRect.x , 
+      DisplayText( SkillName[i] , 16 + 64 + 16 + SkillScreenRect.x ,
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y , &SkillScreenRect );
-      
+
       //--------------------
       // Now we write the competence of the players character in that skill to the screen
       //
       sprintf( CharText , "Skill Level: %d " , Me[0].SkillLevel[i] );
-      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x ,
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + FontHeight( GetCurrentFont() ) , &SkillScreenRect );
       sprintf( CharText , "Mana cost: %d " , ManaCostTable[i][Me[0].SkillLevel[i]] );
-      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x , 
+      DisplayText( CharText , 16 + 64 + 16 + SkillScreenRect.x ,
 		   16 + 20 + i * (64 + 16) + SkillScreenRect.y + 2 * FontHeight( GetCurrentFont() ) , &SkillScreenRect );
-      
+
     }
 
   //--------------------

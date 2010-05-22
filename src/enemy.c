@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -63,7 +63,7 @@ CheckDroidDistribution (int level)
 	ok = FALSE;
       }
 
-  if (ok) 
+  if (ok)
     DebugPrintf (0, "Seems ok.\n");
 
 
@@ -79,7 +79,7 @@ CheckDroidDistribution (int level)
 		     AllEnemys[i].speed.x);
     } /* for (i<NumEnemys) */
 
-  
+
   return;
 }
 
@@ -88,10 +88,10 @@ CheckDroidDistribution (int level)
 /* ----------------------------------------------------------------------
  * This function tests, if a Robot can go a direct straigt line from
  * x1 y1 to x2 y2 without hitting a wall or another obstacle.
- * 
+ *
  * The return value is TRUE or FALSE accoringly.
  * ----------------------------------------------------------------------*/
-int 
+int
 DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
 {
   float LargerDistance;
@@ -122,7 +122,7 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
   for ( i = 0 ; i < Steps ; i++ )
     {
 
-      if ( IsPassable ( CheckPosition.x , CheckPosition.y , CENTER ) != CENTER ) 
+      if ( IsPassable ( CheckPosition.x , CheckPosition.y , CENTER ) != CENTER )
 	{
 	  DebugPrintf( 1 , "\n DirectLineWalkable (...) : Connection analysis revealed : OBSTACLES!! NO WAY!!!");
 	  return FALSE;
@@ -140,9 +140,9 @@ DirectLineWalkable( float x1 , float y1 , float x2 , float y2 )
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -211,7 +211,7 @@ ShuffleEnemys (void)
   // keep a little list of which waypoints have already been used
   for ( i=0 ; i < num_wp; i++)
     used_wp[i] = FALSE;
-  
+
   nth_enemy = 0;
   for (i = 0; i < NumEnemys ; i++)
     {
@@ -223,11 +223,11 @@ ShuffleEnemys (void)
 	{
 	  if (!warned)
 	    {
-	      DebugPrintf (0, "\nWARNING: Less waypoints (%d) than enemys on level %d? !\n", 
+	      DebugPrintf (0, "\nWARNING: Less waypoints (%d) than enemys on level %d? !\n",
 			   num_wp, CurLevel->levelnum );
 	      DebugPrintf (0, "...cannot insert all droids on this level!\n");
 	    }
-	  
+
 	  warned = TRUE;
 	  AllEnemys[i].status = OUT;
 	  continue;
@@ -250,12 +250,12 @@ ShuffleEnemys (void)
 
 /* ----------------------------------------------------------------------
  * This function checks if the connection between two points is free of
- * droids.  
+ * droids.
  *
  * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
  *
  ----------------------------------------------------------------------*/
-void 
+void
 SelectNextWaypointClassical( int EnemyNum )
 {
   int num_con;
@@ -280,7 +280,7 @@ SelectNextWaypointClassical( int EnemyNum )
     {
       ThisRobot->lastwaypoint = ThisRobot->nextwaypoint;
       ThisRobot->warten = MyRandom (ENEMYMAXWAIT);
-      
+
       /* suche moegliche Verbindung von hier */
       DebugPrintf (2, "/* suche moegliche Verbindung von hier */\n");
 
@@ -295,12 +295,12 @@ SelectNextWaypointClassical( int EnemyNum )
 
 /* ----------------------------------------------------------------------
  * This function checks if the connection between two points is free of
- * droids.  
+ * droids.
  *
  * MAP TILES ARE NOT TAKEN INTO CONSIDERATION, ONLY DROIDS!!!
  *
  ----------------------------------------------------------------------*/
-int 
+int
 CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid )
 {
   float LargerDistance;
@@ -339,7 +339,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 
 	  // so it seems that we need to test this one!!
 	  if ( ( fabsf(AllEnemys[j].pos.x - CheckPosition.x ) < 2*Droid_Radius ) &&
-	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*Droid_Radius ) ) 
+	       ( fabsf(AllEnemys[j].pos.y - CheckPosition.y ) < 2*Droid_Radius ) )
 	    {
 	      DebugPrintf( 2, "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED !");
 	      return FALSE;
@@ -347,7 +347,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
 	}
 
       if ( ( fabsf( Me.pos.x - CheckPosition.x ) < 2*Droid_Radius ) &&
-	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*Droid_Radius ) ) 
+	   ( fabsf( Me.pos.y - CheckPosition.y ) < 2*Droid_Radius ) )
 	{
 	  DebugPrintf( 2 , "\nCheckIfWayIsFreeOfDroids (...) : Connection analysis revealed : TRAFFIC-BLOCKED-INFLUENCER !");
 	  return FALSE;
@@ -369,7 +369,7 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
  * there, the function does nothing more.
  *
  ----------------------------------------------------------------------*/
-void 
+void
 MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
 {
   finepoint Restweg;
@@ -425,7 +425,7 @@ MoveThisRobotThowardsHisWaypoint ( int EnemyNum )
  * present within the classical paradroid game.
  *
  ----------------------------------------------------------------------*/
-void 
+void
 SelectNextWaypointAdvanced ( int EnemyNum )
 {
   int i,j;
@@ -488,8 +488,8 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  return;
 	}
 
-						   
-      
+
+
       // search for possible connections from here...
       DebugPrintf (2, "\nMoveRobotAdvanced: searching for possible connections...");
 
@@ -504,7 +504,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
       if ( j < MAX_WP_CONNECTIONS )
 	{
 
-	  // At this point, we should check, if there is another waypoint 
+	  // At this point, we should check, if there is another waypoint
 	  // and also if the way there is free of other droids
 	  for ( i = 0; i < j ; i++ )
 	    {
@@ -531,7 +531,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  while ( !SolutionFound )
 	    {
 	      TestConnection = MyRandom (MAX_WP_CONNECTIONS - 1);
-	      
+
 	      if ( WpList[nextwp].connections[ TestConnection ] == (-1) ) continue;
 	      if ( !FreeWays[TestConnection] ) continue;
 
@@ -544,14 +544,14 @@ SelectNextWaypointAdvanced ( int EnemyNum )
 	  DebugPrintf (1, "\nWeird waypoint %d has no connections!\n", nextwp);
 	  // Terminate(ERR);
 	}
-      
+
       /* setze neuen Waypoint */
       ThisRobot->nextwaypoint = trywp;
     }			/* if */
 } // void MoveThisRobotAdvanced ( int EnemyNum )
 
 
-void 
+void
 MoveThisEnemy( int EnemyNum )
 {
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
@@ -577,10 +577,10 @@ MoveThisEnemy( int EnemyNum )
 	}
       return;	// this one's down, so we can move on to the next
     }
-  
+
   // robots that still have to wait also do not need to
   // be processed for movement
-  if ( ThisRobot->warten > 0) 
+  if ( ThisRobot->warten > 0)
     return;
 
   // Now check for collisions of this enemy with his colleagues
@@ -612,7 +612,7 @@ MoveEnemys (void)
   for (i = 0; i < NumEnemys; i++)
      {
 
-       if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED) || 
+       if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED) ||
 	    (AllEnemys[i].levelnum != CurLevel->levelnum) )
 	 continue;
 
@@ -649,7 +649,7 @@ AttackInfluence (int enemynum)
   // need to move anything for this reason or for that
   //
 
-  // ignore robots on other levels 
+  // ignore robots on other levels
   if ( ThisRobot->levelnum != CurLevel->levelnum) return;
 
   // ignore dead robots as well...
@@ -675,7 +675,7 @@ AttackInfluence (int enemynum)
   if ( dist2 >= FIREDIST2 ) return; // distance limitation only for MS mechs
 
   if ( ThisRobot->firewait ) return;
-  
+
   if ( !IsVisible (&ThisRobot->pos))
     return;
 
@@ -688,7 +688,7 @@ AttackInfluence (int enemynum)
 
   Fire_Bullet_Sound ( guntype );
 
-  // find a bullet entry, that isn't currently used... 
+  // find a bullet entry, that isn't currently used...
   for (j = 0; j < MAXBULLETS; j++)
     {
       if (AllBullets[j].type == OUT)
@@ -703,7 +703,7 @@ AttackInfluence (int enemynum)
   CurBullet = &AllBullets[j];
   // determine the direction of the shot, so that it will go into the direction of
   // the target
-  
+
   if (fabsf (xdist) > fabsf (ydist))
     {
       CurBullet->speed.x = Bulletmap[guntype].speed;
@@ -714,7 +714,7 @@ AttackInfluence (int enemynum)
 	  CurBullet->speed.y = -CurBullet->speed.y;
 	}
     }
-  
+
   if (fabsf (xdist) < fabsf (ydist))
     {
       CurBullet->speed.y = Bulletmap[guntype].speed;
@@ -725,30 +725,30 @@ AttackInfluence (int enemynum)
 	  CurBullet->speed.y = -CurBullet->speed.y;
 	}
     }
-  
-  CurBullet->angle = - ( 90 + 180 * atan2 ( CurBullet->speed.y,  CurBullet->speed.x ) / M_PI );  
-  
+
+  CurBullet->angle = - ( 90 + 180 * atan2 ( CurBullet->speed.y,  CurBullet->speed.x ) / M_PI );
+
   /* Bullets im Zentrum des Schuetzen starten */
   CurBullet->pos.x = ThisRobot->pos.x;
   CurBullet->pos.y = ThisRobot->pos.y;
-  
+
   /* Bullets so abfeuern, dass sie nicht den Schuetzen treffen */
   CurBullet->pos.x +=
     (CurBullet->speed.x) / fabsf (Bulletmap[guntype].speed) * 0.5;
   CurBullet->pos.y +=
     (CurBullet->speed.y) / fabsf (Bulletmap[guntype].speed) * 0.5;
-  
+
   /* Dem Bullettype entsprechend lange warten vor naechstem Schuss */
 
   ThisRobot->firewait = Bulletmap[Druidmap[ThisRobot->type].gun].recharging_time ;
-      
+
   /* Bullettype gemaess dem ueblichen guntype fuer den robottyp setzen */
   CurBullet->type = guntype;
   CurBullet->time_in_frames = 0;
   CurBullet->time_in_seconds = 0;
-  
+
   //}	/* if */
-  
+
 }   /* AttackInfluence */
 
 /*@Function============================================================
@@ -774,7 +774,7 @@ CheckEnemyEnemyCollision (int enemynum)
   for (i = 0; i < NumEnemys ; i++)
     {
       // check only collisions of LIVING enemys on this level
-      if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED) 
+      if ( (AllEnemys[i].status == OUT) || (AllEnemys[i].status == TERMINATED)
 	   || AllEnemys[i].levelnum != curlev)
 	continue;
       // dont check yourself...
@@ -791,7 +791,7 @@ CheckEnemyEnemyCollision (int enemynum)
       if ( dist <= 2*Droid_Radius)
 	{
 
-	  // am I waiting already?  If so, keep waiting... 
+	  // am I waiting already?  If so, keep waiting...
 	  if (AllEnemys[enemynum].warten)
 	    {
 	      /* weiter warten */
@@ -835,9 +835,9 @@ CheckEnemyEnemyCollision (int enemynum)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void

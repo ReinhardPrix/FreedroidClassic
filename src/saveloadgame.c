@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002 Johannes Prix
  *   Copyright (c) 1994, 2002 Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -54,7 +54,7 @@
 /* ----------------------------------------------------------------------
  * This function saves the current game of Freedroid to a file.
  * ---------------------------------------------------------------------- */
-int 
+int
 SaveGame( void )
 {
   char *SaveGameHeaderString;
@@ -80,7 +80,7 @@ SaveGame( void )
   //
   if ( Me[0].energy <= 0 )
     {
-      DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" , 
+      DoMenuSelection( "\n\n    Surely you do not really want do save a game \n\n    where your tux is dead, do you?" ,
 		       MenuTexts , 1 , NULL , NULL );
       return ( OK );
     }
@@ -88,7 +88,7 @@ SaveGame( void )
 
   //--------------------
   // get home-directory to save in
-  if ( (homedir = getenv("HOME")) == NULL ) 
+  if ( (homedir = getenv("HOME")) == NULL )
     {
       DebugPrintf ( 0 , "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for saving. Abort.\n");
@@ -116,7 +116,7 @@ Sorry...\n\
 ----------------------------------------------------------------------\n\
 \n" );
       Terminate(ERR);
-    } 
+    }
   else
     {
       DebugPrintf( SAVE_LOAD_GAME_DEBUG , "\nShip data for saved game seems to have been saved correctly.\n");
@@ -126,8 +126,8 @@ Sorry...\n\
   // First, we must determine the save game file name
   //
   sprintf (filename, "%s/%s%s", homedir, Me[0].character_name, ".savegame");
-  
-  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ..."); 
+
+  DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveShip(char *shipname): now opening the savegame file for writing ...");
 
   //--------------------
   // Now that we know which filename to use, we can open the save file for writing
@@ -137,7 +137,7 @@ Sorry...\n\
     Terminate(ERR);
     // return ERR;
   }
-  
+
   //--------------------
   // Now that the file is opend for writing, we can start writing.  And the first thing
   // we will write to the file will be a fine header, indicating what this file is about
@@ -174,42 +174,42 @@ If you have questions concerning Freedroid, please send mail to:\n\
 \n\
 freedroid-discussion@lists.sourceforge.net\n\
 \n";
-  fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);  
+  fwrite ( SaveGameHeaderString , strlen( SaveGameHeaderString), sizeof(char), SaveGameFile);
 
   //--------------------
   // Since no other information than the dynamic pointer CurLevel is available
   // to tell the current level number, we must write out that information explicitly
   //
-  fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);  
+  fwrite ( LEVELNUM_EXPL_STRING , strlen ( LEVELNUM_EXPL_STRING ) , sizeof(char), SaveGameFile);
   sprintf( linebuf , "%d\n", CurLevel->levelnum );
-  fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);  
+  fwrite ( linebuf , strlen ( linebuf ) , sizeof(char), SaveGameFile);
 
   // --------------------
   // Now we write the influencer raw data start string out to the file and of course
   // then the real raw influencer data follow suit afterwards.
   //
-  fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );  
-  // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ), 
-  // sizeof(char), SaveGameFile );  
-  fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );  
+  fwrite ( INFLUENCER_STRUCTURE_RAW_DATA_STRING , strlen( INFLUENCER_STRUCTURE_RAW_DATA_STRING ),
+	   sizeof(char), SaveGameFile );
+  fwrite ( &(Me) , sizeof( influence_t ) , sizeof( char ) , SaveGameFile );
+  // fwrite ( DROID001_RAW_DATA_STRING , strlen( DROID001_RAW_DATA_STRING ),
+  // sizeof(char), SaveGameFile );
+  fwrite ( &( Druidmap[ DRUID001 ]) , sizeof( druidspec ) , sizeof( char ) , SaveGameFile );
 
   // --------------------
   // Now we write the enemy raw data start string out to the file and of course
   // then the real raw enemy data follow suit afterwards.
   //
-  fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );  
+  fwrite ( ALLENEMYS_RAW_DATA_STRING , strlen( ALLENEMYS_RAW_DATA_STRING ),
+	   sizeof(char), SaveGameFile );
+  fwrite ( &(AllEnemys) , sizeof( enemy ) * MAX_ENEMYS_ON_SHIP , sizeof( char ) , SaveGameFile );
 
   // --------------------
   // Now we write the bullet raw data start string out to the file and of course
   // then the real raw enemy data follow suit afterwards.
   //
-  fwrite ( ALLBULLETS_RAW_DATA_STRING , strlen( ALLBULLETS_RAW_DATA_STRING ), 
-	   sizeof(char), SaveGameFile );  
-  fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );  
+  fwrite ( ALLBULLETS_RAW_DATA_STRING , strlen( ALLBULLETS_RAW_DATA_STRING ),
+	   sizeof(char), SaveGameFile );
+  fwrite ( & ( AllBullets ) , sizeof( bullet ) * MAXBULLETS , sizeof( char ) , SaveGameFile );
 
 
   //--------------------
@@ -218,18 +218,18 @@ freedroid-discussion@lists.sourceforge.net\n\
   // will be needed by the loading function to detect the end of the file and that the
   // file is really there and complete.  So we add this last string to the file:
   //
-  fwrite ( END_OF_SAVEDGAME_DATA_STRING , strlen( END_OF_SAVEDGAME_DATA_STRING ), 
+  fwrite ( END_OF_SAVEDGAME_DATA_STRING , strlen( END_OF_SAVEDGAME_DATA_STRING ),
 	   sizeof(char), SaveGameFile );
 
-  if( fclose( SaveGameFile ) == EOF) 
+  if( fclose( SaveGameFile ) == EOF)
     {
       printf("\n\nClosing of ship file failed in SaveGame...\n\nTerminating\n\n");
       Terminate(ERR);
       // return ERR;
     }
-  
+
   DebugPrintf ( SAVE_LOAD_GAME_DEBUG , "\nint SaveGame( void ): end of function reached.");
-  
+
   return OK;
 }; // void SaveGame( void )
 
@@ -237,7 +237,7 @@ freedroid-discussion@lists.sourceforge.net\n\
 /* ----------------------------------------------------------------------
  * This function saves the current game of Freedroid to a file.
  * ---------------------------------------------------------------------- */
-int 
+int
 LoadGame( void )
 {
   char *homedir;
@@ -264,7 +264,7 @@ LoadGame( void )
   // button.  Then a new game is loaded and the game-over status has
   // to be restored as well of course.
   //
-  GameOver = FALSE; 
+  GameOver = FALSE;
 
   //--------------------
   // Before we decode the details of the old game, we load the map
@@ -273,7 +273,7 @@ LoadGame( void )
   //
 
   // get home-directory to load from
-  if ( (homedir = getenv("HOME")) == NULL ) 
+  if ( (homedir = getenv("HOME")) == NULL )
     {
       DebugPrintf (0, "ERROR: Environment does not contain HOME variable... \n\
 I need to know that for loading. Abort.\n");
@@ -303,7 +303,7 @@ I need to know that for loading. Abort.\n");
   // Before we start decoding the details, we get the former level-number where the
   // influencer was walking and construct a new 'CurLevel' out of it.
   //
-  ReadValueFromString( LoadGameData ,  LEVELNUM_EXPL_STRING , "%d" , 
+  ReadValueFromString( LoadGameData ,  LEVELNUM_EXPL_STRING , "%d" ,
 		       &current_geographics_levelnum , LoadGameData + 30000 );
   CurLevel = curShip.AllLevels[ current_geographics_levelnum ];
 
@@ -313,7 +313,7 @@ I need to know that for loading. Abort.\n");
   // We assume, that our target strings will be found, so we give 3000000 as the search area
   // length, since we do not know it exactly
   //
-  InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING , 
+  InfluencerRawDataPointer = MyMemmem( LoadGameData , 3000000 , INFLUENCER_STRUCTURE_RAW_DATA_STRING ,
 				       strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) );
   InfluencerRawDataPointer += strlen ( INFLUENCER_STRUCTURE_RAW_DATA_STRING ) ;
   memcpy( &Me , InfluencerRawDataPointer , sizeof ( influence_t ) );
@@ -327,7 +327,7 @@ I need to know that for loading. Abort.\n");
   // We assume, that our target strings will be found, so we give 3000000 as the search area
   // length, since we do not know it exactly
   //
-  EnemyRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLENEMYS_RAW_DATA_STRING , 
+  EnemyRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLENEMYS_RAW_DATA_STRING ,
 				  strlen ( ALLENEMYS_RAW_DATA_STRING ) );
   EnemyRawDataPointer += strlen ( ALLENEMYS_RAW_DATA_STRING ) ;
   memcpy( &(AllEnemys) , EnemyRawDataPointer , sizeof ( enemy ) * MAX_ENEMYS_ON_SHIP );
@@ -337,14 +337,14 @@ I need to know that for loading. Abort.\n");
   // We assume, that our target strings will be found, so we give 10000000 as the search area
   // length, since we do not know it exactly
   //
-  BulletRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLBULLETS_RAW_DATA_STRING , 
+  BulletRawDataPointer = MyMemmem( LoadGameData , 30000000 , ALLBULLETS_RAW_DATA_STRING ,
 				   strlen ( ALLBULLETS_RAW_DATA_STRING ) );
   BulletRawDataPointer += strlen ( ALLBULLETS_RAW_DATA_STRING ) ;
   memcpy( &(AllBullets) , BulletRawDataPointer , sizeof ( bullet ) * MAXBULLETS );
 
   //--------------------
   // When the original game was still going on, some dynamic things like pointers to some
-  // constructed text field might have been used.  Now these dynamic things somewhere in 
+  // constructed text field might have been used.  Now these dynamic things somewhere in
   // memory of course do not exist, so any pointer previously refering to them, must be
   // set to acceptable values before an accident (SEGFAULT) occurs!
   //

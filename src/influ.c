@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -51,13 +51,13 @@ void InfluEnemyCollisionLoseEnergy (int enemynum);	/* influ can lose energy on c
 void PermanentLoseEnergy (void);	/* influ permanently loses energy */
 int NoInfluBulletOnWay (void);
 
-#define max(x,y) ((x) < (y) ? (y) : (x) ) 
+#define max(x,y) ((x) < (y) ? (y) : (x) )
 #define MAXIMAL_STEP_SIZE ( 7.0/20 )
 
 int CurrentZeroRingIndex=0;
 
 
-void 
+void
 InitInfluPositionHistory( void )
 {
   int RingPosition;
@@ -70,7 +70,7 @@ InitInfluPositionHistory( void )
     }
 } // void InitInfluPositionHistory( void )
 
-float 
+float
 GetInfluPositionHistoryX( int HowLongPast )
 {
   int RingPosition;
@@ -79,12 +79,12 @@ GetInfluPositionHistoryX( int HowLongPast )
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
-  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length
 
   return Me.Position_History_Ring_Buffer[ RingPosition ].x;
 }
 
-float 
+float
 GetInfluPositionHistoryY( int HowLongPast )
 {
   int RingPosition;
@@ -93,12 +93,12 @@ GetInfluPositionHistoryY( int HowLongPast )
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
-  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length
 
   return Me.Position_History_Ring_Buffer[ RingPosition ].y;
 }
 
-float 
+float
 GetInfluPositionHistoryZ( int HowLongPast )
 {
   int RingPosition;
@@ -107,7 +107,7 @@ GetInfluPositionHistoryZ( int HowLongPast )
 
   RingPosition += MAX_INFLU_POSITION_HISTORY; // We don't want any negative values, for safety
 
-  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length 
+  RingPosition %= MAX_INFLU_POSITION_HISTORY; // We do MODULO for the Ring buffer length
 
   return Me.Position_History_Ring_Buffer[ RingPosition ].z;
 }
@@ -251,9 +251,9 @@ MoveInfluence (void)
 
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 int
@@ -273,7 +273,7 @@ NoInfluBulletOnWay (void)
 /*@Function============================================================
 @Desc: AnimateInfluence: zaehlt die Phasen weiter, falls der Roboter
 							mehrphasig ist
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -312,7 +312,7 @@ doors, consoles, boxes and all other map elements.
 In case of a collision, the position and speed of the influencer are
 adapted accordingly.
 NOTE: Of course this functions HAS to take into account the current framerate!
-     
+
 @Ret: void
 @Int:
 * $Function----------------------------------------------------------*/
@@ -323,13 +323,13 @@ CheckInfluenceWallCollisions (void)
   float SX = Me.speed.x * Frame_Time ();
   float SY = Me.speed.y * Frame_Time ();
   finepoint lastpos;
-  int res; 
+  int res;
   int NumberOfShifts=0;
   int safty_sx = 0, safty_sy = 0;	/* wegstoss - Geschwindigkeiten (falls noetig) */
   int NorthSouthAxisBlocked=FALSE;
   int EastWestAxisBlocked=FALSE;
   int H_Door_Sliding_Active = FALSE;
-  
+
 
   int crashx = FALSE, crashy = FALSE;	/* Merker wo kollidiert wurde */
 
@@ -369,7 +369,7 @@ CheckInfluenceWallCollisions (void)
 	{
 	  EastWestAxisBlocked = FALSE;
 	}
-      else 
+      else
 	{
 	  EastWestAxisBlocked = TRUE;
 	}
@@ -383,10 +383,10 @@ CheckInfluenceWallCollisions (void)
 	  // NorthSouthCorrectionDone=TRUE;
 	  Me.pos.y = lastpos.y;
 	  Me.speed.y = 0;
-	  
+
 	  // if its an open door, we also correct the east-west position, in the
 	  // sense that we move thowards the middle
-	  if ( (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y - 0.5 ) == H_GANZTUERE ) || 
+	  if ( (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y - 0.5 ) == H_GANZTUERE ) ||
 	       (GetMapBrick(CurLevel, Me.pos.x , Me.pos.y + 0.5 ) == H_GANZTUERE ) )
 	    {
 	      Me.pos.x += copysignf ( PUSHSPEED * Frame_Time() , ( rintf(Me.pos.x) - Me.pos.x ));
@@ -402,7 +402,7 @@ CheckInfluenceWallCollisions (void)
 
 	  // if its an open door, we also correct the north-south position, in the
 	  // sense that we move thowards the middle
-	  if ( (GetMapBrick(CurLevel, Me.pos.x +0.5 , Me.pos.y) == V_GANZTUERE ) || 
+	  if ( (GetMapBrick(CurLevel, Me.pos.x +0.5 , Me.pos.y) == V_GANZTUERE ) ||
 	       (GetMapBrick(CurLevel, Me.pos.x -0.5 , Me.pos.y) == V_GANZTUERE ) )
 	    Me.pos.y += copysignf (PUSHSPEED * Frame_Time() , ( rintf(Me.pos.y) - Me.pos.y ));
 	}
@@ -410,7 +410,7 @@ CheckInfluenceWallCollisions (void)
       if ( EastWestAxisBlocked && NorthSouthAxisBlocked )
 	{
 	  // printf("\nBOTH AXES BLOCKED... Corner handling activated...");
-	  // in case both axes were blocked, we must be at a corner.  
+	  // in case both axes were blocked, we must be at a corner.
 	  // both axis-blocked-routines have been executed, so the speed has
 	  // been set to absolutely zero and we are at the previous position.
 	  //
@@ -429,8 +429,8 @@ CheckInfluenceWallCollisions (void)
       // simply reverting to the last influ coordinated, where influ was NOT BLOCKED.
       // For this reason, a history of influ-coordinates has been introduced.  This will all
       // be done here and now:
-      
-      if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
+
+      if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) &&
 	   (DruidPassable ( GetInfluPositionHistoryX( 0 ) , GetInfluPositionHistoryY( 0 ) ) != CENTER) &&
 	   (DruidPassable ( GetInfluPositionHistoryX( 1 ) , GetInfluPositionHistoryY( 1 ) ) != CENTER) )
 	{
@@ -443,7 +443,7 @@ CheckInfluenceWallCollisions (void)
 
   return;
 
-#endif 
+#endif
 
   switch (res)
     {
@@ -482,7 +482,7 @@ CheckInfluenceWallCollisions (void)
 	{
 	  printf("\nEast-west-Axis seems to be free.");
 	}
-      else 
+      else
 	{
 	  printf("\nEast-west-Axis seems NOT to be free.");
 	  printf("\nCorrection movement and position in this direction...");
@@ -587,12 +587,12 @@ CheckInfluenceWallCollisions (void)
   // For this reason, a history of influ-coordinates has been introduced.  This will all
   // be done here and now:
 
-  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) && 
+  if ( (DruidPassable (Me.pos.x, Me.pos.y) != CENTER) &&
        (DruidPassable ( GetInfluPositionHistoryX ( 0 ) , GetInfluPositionHistoryY ( 0 ) != CENTER ) ) &&
-       (DruidPassable ( GetInfluPositionHistoryX ( 1 ) , GetInfluPositionHistoryY ( 1 ) != CENTER ) ) ) 
+       (DruidPassable ( GetInfluPositionHistoryX ( 1 ) , GetInfluPositionHistoryY ( 1 ) != CENTER ) ) )
     {
       Me.pos.x = GetInfluPositionHistoryX ( 2 );
-      Me.pos.y = GetInfluPositionHistoryY ( 2 );      
+      Me.pos.y = GetInfluPositionHistoryY ( 2 );
     }
 
 } /* CheckInfluenceWallCollisions */
@@ -693,14 +693,14 @@ ExplodeInfluencer (void)
   Play_Sound (INFLUEXPLOSION_SOUND);
 
   return;
-  
+
   DebugPrintf (2, "\nvoid ExplodeInfluencer(void): Usual end of function reached.");
 }				/* ExplodeInfluencer */
 
 /*@Function============================================================
-@Desc: 
+@Desc:
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -752,21 +752,21 @@ CheckInfluenceEnemyCollision (void)
 	      COLLISION_PUSHSPEED * (Me.speed.y / fabsf (Me.speed.y));
 	  else if (ydist)
 	    Me.speed.y = COLLISION_PUSHSPEED * (ydist / fabsf (ydist));
-	  
+
 	  // move the influencer a little bit out of the enemy AND the enemy a little bit out of the influ
-	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ; 
+	  max_step_size = ((Frame_Time()) < ( MAXIMAL_STEP_SIZE ) ? (Frame_Time()) : ( MAXIMAL_STEP_SIZE )) ;
 	  Me.pos.x += copysignf( max_step_size , Me.pos.x - AllEnemys[i].pos.x ) ;
 	  Me.pos.y += copysignf( max_step_size , Me.pos.y - AllEnemys[i].pos.y ) ;
 	  AllEnemys[i].pos.x -= copysignf( Frame_Time() , Me.pos.x - AllEnemys[i].pos.x ) ;
 	  AllEnemys[i].pos.y -= copysignf( Frame_Time() , Me.pos.y - AllEnemys[i].pos.y ) ;
 	  // Me.pos.x += Me.speed.x * Frame_Time ();
 	  // Me.pos.y += Me.speed.y * Frame_Time ();
-	  
+
 	  // there might be walls close too, so lets check again for collisions with them
 	  CheckInfluenceWallCollisions ();
-	  
+
 	  BounceSound ();
-	      
+
 	  // shortly stop this enemy, then send him back to previous waypoint
 	  if (!AllEnemys[i].warten)
 	    {
@@ -798,7 +798,7 @@ CheckInfluenceEnemyCollision (void)
 /*@Function============================================================
 @Desc: Fire-Routine for the Influencer only !! (should be changed)
 
-@Ret: 
+@Ret:
 @Int:
 * $Function----------------------------------------------------------*/
 void
@@ -869,7 +869,7 @@ FireBullet (void)
 
   DebugPrintf( 1 , "\nFireBullet(...) : Phase of bullet=%d." , CurBullet->phase );
   DebugPrintf( 1 , "\nFireBullet(...) : angle of bullet=%f." , CurBullet->angle );
-  
+
   //  printf_SDL(ne_screen, User_Rect.x, User_Rect.y, "Bullet speed: %g %g ",
   //	     CurBullet->speed.x, CurBullet->speed.y);
   //  getchar_raw();
@@ -887,7 +887,7 @@ FireBullet (void)
 
   return;
 
-}; // FireBullet 
+}; // FireBullet
 
 /*@Function============================================================
 @Desc: RefreshInfluencer(): Refresh fields can be used to regain energy
@@ -965,7 +965,7 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
     {
       if (InvincibleMode)
 	return;
-      
+
       Me.energy -=
 	(Druidmap[enemytype].class - Druidmap[Me.type].class) * collision_lose_energy_calibrator;
 

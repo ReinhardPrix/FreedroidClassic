@@ -16,7 +16,7 @@ various Ideas for next release (1.1.0)
 Bugs
 =======
 
-Outstanding release-critical bugs (priority: high) 
+Outstanding release-critical bugs (priority: high)
 --------------------------------------------------
 - limit fps to get smoother play?
 
@@ -37,8 +37,8 @@ Outstanding normal bugs (priority: normal)
 
 Outstanding tuning/design bugs and general TODO (priority: low)
 --------------------------------------------------------------
-- check if we cannot improve smoothness of scrolling/gameplay, 
-  maybe by reducing fps and explicitly keeping it constant..?? 
+- check if we cannot improve smoothness of scrolling/gameplay,
+  maybe by reducing fps and explicitly keeping it constant..??
   ..there always is some small 'jitter', worst on non-dma machines!
   -> use RLE acceleration?
   -> use double-buffer + HWSURF + SDL_Flip() to avoid flicker/shearing?
@@ -66,7 +66,7 @@ Resolved bugs
         This "dat" file should be well documented and ascii editable.
 
 - DONE  Saving of Ships does NOT work correctly in the LevelEditor
-        integrated in the game 
+        integrated in the game
         (rp): PORT the map-editor 'maped' ?
         -->A maped clone has been integrated into the game
 - DONE  Lift: show level-change in lift: probably just some
@@ -75,19 +75,19 @@ Resolved bugs
 - DONE  Incredible file sizes of ne_....bmp files should be reduced, e.g. by using gif file
         format instead, to reduce package size.
 - DONE  Robots now "jitter" until they reach their waypoint: adapt to new
-        coordinate-treatment: 
+        coordinate-treatment:
   (jp:) This does only happen with "slow" machines.  I had that too at
         first and then adapted the constant.  Will be more cautios and
         work over the constant again.
 - (DONE) make sure all svgalib references are removed
-- (rp) autoconf/automake: complete SDL checks 
+- (rp) autoconf/automake: complete SDL checks
 - (DONE) Frage: weiss irgendwer wozu die globale Variable "BeamLine" dient??
          (rp) erschien mir nutzlos, und hab' die Variable jetzt eliminiert,
          hoffe dass niemand sie doch gebraucht haette...
 	 (jp:) War fuer eine PlusExtension, die noch dazu instabil war.  Wir
 	       koennen problemlos darauf verzichen bis auf weiteres.
 - (DONE) "Ghosts" (i.e. Enemeys go throught walls...)
-- NEW! but DONE! 
+- NEW! but DONE!
         There is a very strange bug:  When the influ switches to weapon
         mode or just is in WEAPON mode, the framerate GOES UP AND ALMOST
 	DOUBLES!!!  This double framerate and the sudden change in framerate
@@ -104,18 +104,18 @@ Resolved bugs
 - (DONE) (jp:) wenn man ganz am rechts unteren Rand einer rechteckigen Kartenform
                steht wird die Framerate nachweislich bei mir HALBIERT!  Das liegt
                an den vielen IsVisible-Abfragen, die scheinbar irgendwo aus der
-               Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr 
+               Karte hinaus im Speicher die Sichtbarkeit uberpruefen.  Sehr
                fragwuerdig
          (jp:) appearently this bug has been resolved somewhere since it was encounteres
                while using SVGALIB and might have been resolved with the new and corrected
                get-ship-routines of rp or so.  At least this bug cannot be found on my
                machine any more.
 - DONE     (rp:) game should be able to check if yiff is actually _running_ and
-                 complain if not and/or continue  
+                 complain if not and/or continue
            (jp:) I do not see this problem.  If yiff is not started, it will be
 	         started.  If yiff is already started, thats it and yiff will be used.
    	         So why check if yiff is already running?
-	         Also I have added extensive error handling and error documentation 
+	         Also I have added extensive error handling and error documentation
 	         for the user, so I consider the problem now fixed.
            (jp:) YIFF has been entirely removed, to this really is handled...
 - (DONE)   Schussfrequenz des 001 zu hoch
@@ -131,14 +131,14 @@ Resolved bugs
 - (DONE)   (rp/jp?) Ship-console endlich ordentlich machen, haufenweise
 	   Robo-graphics noetig:  Graphics sind jetzt da, einbauen noch noetig.
 	   --> Konsole ist jetzt relativ ansehnlich.  Weitere
-	   Verbesserungsvorschaege erwuenscht. 
+	   Verbesserungsvorschaege erwuenscht.
 	   (Bei zu viel Text, scheint immernoch ein segfault zu drohen
 - (DONE)   correct the too fast refresh movement and effect
 	   Refreshes sollten jetzt ordentlich arbeiten.  Etwas kalibrieren koennte man
 	   sie vielleicht noch.
 - (DONE)   correct the too fast explosion (blast) damage effect
 	   --> sowohl fuer Feinde als auch fuer den Influ sollte das
-	   jetzt angemessen wirken 
+	   jetzt angemessen wirken
 - (DONE)   (rp) Takeover game still looks 'unfinished'
 	   --> der Reinhard hat da scheinbar weitgehend aufger\"aumt...
 - (DONE)   (jp) "Fieps-pieps" music ist im Originalspiel nur am Anfang, im Haupt-spiel
@@ -149,21 +149,21 @@ Resolved bugs
            I also encounter OTHER 001 druids of black color!
                Especially after having died at least once before!  Very strange!
            (rp: this should now work ok)
-- (rp)     Timing in takeover game 
+- (rp)     Timing in takeover game
 - (DONE)   Concept view is ugly
 - (DONE)   Pause stopped working with SDL-port
 - (DONE)   Uebernommener 302 is zu schnell, 420 is zu langsam..., etc etc
            (jp: finde ich nicht.  Ist zwar nicht 100% Originalgetreu, aber ich finde schon,
            dann die Geschwindigkeit des entsprechenden Robots dann auch fuer den 001 gelten
            sollte, wenn er einen dieser Robots uebernommen hat.)
-- (DONE)   proper Highscore list 
+- (DONE)   proper Highscore list
            --> Highscore list is accessible via the ESCAPE menu (single player submenu)
 - (DONE)   Debriefing ordentlich
            debriefing sieht jetzt gar nicht so schlecht aus.
 - (DONE)   Lift-entry: man muss zu lange auf Space sein bis man in den Lift
            kommt. Das "Lift-fahren" ist auch zu schwerfaellig.
-- (DONE)   Blitz-schuesse flimmern jetzt zu stark/lang	
-           --> nicht mehr, seit die Framerate durch weniger debug-messages 
+- (DONE)   Blitz-schuesse flimmern jetzt zu stark/lang
+           --> nicht mehr, seit die Framerate durch weniger debug-messages
            generell hoch ist und Flashes Framerate-abhaengig lang leben
 - (rp) should have maximally one 999 on commando-bridge
   (jp: I think I've encountered 0 often, later 2 on other ships,
@@ -178,7 +178,7 @@ Resolved bugs
 	 time we want to use it and DO NOT NEED to store is somewhere.
 - hide mouse pointer
   (would that really be a good idea?)
-  YES: only relevant for Freedroid-window, and has ben done already 
+  YES: only relevant for Freedroid-window, and has ben done already
 
 - (rp?) The game gets stuck in the very left elevator on the deck above the
           very lowest deck.  Might have something to do with map topics
@@ -206,13 +206,13 @@ Resolved bugs
 
 - Farbpalettenrotation fuer Bulletcolor austauschen, da sie die
   Framerate verschlingt!! (we should check that first, though)
-  (wird sowieso automatisch behoben bzw. automatisch umgestellt, 
+  (wird sowieso automatisch behoben bzw. automatisch umgestellt,
   wenn wir mit der neuen Engine dann auf TrueColor-Modus umstellen.
 
 - (rp) Joystick shooting should determine direction more precisely
        (difficult to shoot "straight")
        (DONE)
-- (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5) 
+- (jp/rp) "Ghost" bullets firing on me on empyy levels (eg. level 5)
   then also had some ghost bullets coming from nowhere on other
   (no-empty) levels
   ---> has already been removed.  That was only a symtom while I was
@@ -232,10 +232,10 @@ Resolved bugs
           the current cursor is defines via pixel-map contants in the code, haha.
 
 - bullet to top-right seems to be "offset" to top with respect to
-  displayed bullet-pic (which is positioned correctly), i.e. 
+  displayed bullet-pic (which is positioned correctly), i.e.
   collisions with wall or robots take place as if it was higher in y...
   jp: --> Problem fixed.  The rotated Block is no longer of size Block_Width x Block_Height
-          but of the size of the smalled rectrangle containing the uncroped rotated 
+          but of the size of the smalled rectrangle containing the uncroped rotated
 	  square of this size.
 
 - DONE Put the 'shipname' into the maps file.  Currently 'Paradroid' is always displayed
@@ -245,9 +245,9 @@ Resolved bugs
   exactly on the screen and perhaps also give the scaling factor used for generating
   the map as additional text to the picture.
 
-- (jp) There is still a lot of german in the code.  Since we are growing more and more 
+- (jp) There is still a lot of german in the code.  Since we are growing more and more
        international, that should be removed and better sooner than later, as well in
-       the comments as in the choice of some old variable names, which are from 
+       the comments as in the choice of some old variable names, which are from
        historical origin, long before I started using the internet at all.
 
 - (rp) missing "takeover announcement" of droid opponent
@@ -255,7 +255,7 @@ Resolved bugs
 - (rp) Build-environment: make sure SDL/X,jpeg etc tests work ok!
   (seems ok so far..)
 
-- (jp) some missing "color rotations": takeover-mode 
+- (jp) some missing "color rotations": takeover-mode
 
 - Walls are too "sticky", would be better playable if one could "slide"
   (jp:)  That has been completely resolved, at least for my machine!!
@@ -263,14 +263,14 @@ Resolved bugs
 
 - (rp) Levelnumber should be the index in curShip.AllLevels for simplicity
 
-- (jp) add more sounds:  
+- (jp) add more sounds:
   We might use a new sound file for every different level. That would be
   nice.  But where to get that?
 
 - save highscores to disk
 
 - (rp+jp) use GNU coding standards (see doc file 'gnu-standards')
-       
+
 
 - !! We should have a common bug/patch mailing address somewhere !!
   freedroid@....
@@ -293,7 +293,7 @@ Resolved bugs
 - (rp) sometimes droids get created in "piles", i.e. on top of each other
   FIXED!!: forgot to ActivateConservativeFrameComputation() in
   ThouArtDefeated() ==> huge Frame_Time() in first step of new game!
-  
+
 - mouse-cursor visible/invisible should be done in input.c !
   (done)
 
@@ -303,7 +303,7 @@ Resolved bugs
 - missing 711 ...
   (done)
 
-- make sure droid shuffling is randon enough, also concerning the 
+- make sure droid shuffling is randon enough, also concerning the
   waypoints used (seems a a bit predictable right now...)
   (done)
 
@@ -328,12 +328,12 @@ Resolved bugs
 - acoustic "countdown" in takeover game might be useful!
   --> (done)
 - load all droid pics at startup, to avoid delays in DroidShow
-  (done) 
+  (done)
 - make sure game doesnt SegFault when files are missing
   (should be done now: pass criticality of file to find_file())
 - change laser-rifle pic in classic theme
   (done)
-- separate 'takeover'-mode  from 'activate' ? 
+- separate 'takeover'-mode  from 'activate' ?
   (done! I think that's much better!)
 - adapt Key-description to new "activate" keys
   (done)
@@ -358,7 +358,7 @@ Resolved bugs
   (fixed)
 - accelerate explosions, make sure blast-duration is not theme-configurable
   (done)
-- check and adjust 614 parameters (too fast shot-rate!) and  
+- check and adjust 614 parameters (too fast shot-rate!) and
   (better now;)
 - add explosion-decals ? (switchable)
   (done)

@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -51,13 +51,13 @@ int MyCursorY;
 char TextBuffer[10000];
 extern int vid_bpp;
 
-void 
+void
 EnemyHitByBulletText( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
   if ( !GameConfig.Droid_Talk ) return;
-  
+
   ThisRobot->TextVisibleTime=0;
 
   switch (MyRandom(4))
@@ -83,15 +83,15 @@ EnemyHitByBulletText( int Enum )
 
 }; // void EnemyHitByBullet( int Enum );
 
-void 
+void
 EnemyInfluCollisionText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
   if ( !GameConfig.Droid_Talk ) return;
-  
+
   ThisRobot->TextVisibleTime=0;
-	      
+
   switch (MyRandom(1))
     {
     case 0:
@@ -107,15 +107,15 @@ EnemyInfluCollisionText ( int Enum )
 } // void AddStandingAndAimingText( int Enum )
 
 
-void 
+void
 AddStandingAndAimingText ( int Enum )
 {
   Enemy ThisRobot=&AllEnemys[ Enum ];
 
   if ( !GameConfig.Droid_Talk ) return;
-  
+
   ThisRobot->TextVisibleTime=0;
-	      
+
   if ( ( fabsf (Me.speed.x) < 1 ) && ( fabsf (Me.speed.y) < 1 ) )
     {
       ThisRobot->TextToBeDisplayed="Yeah, stay like that, haha.";
@@ -134,9 +134,9 @@ AddInfluBurntText( void )
   int FinalTextNr;
 
   if ( !GameConfig.Droid_Talk ) return;
-  
+
   Me.TextVisibleTime=0;
-  
+
   FinalTextNr=MyRandom ( 6 );
   switch ( FinalTextNr )
     {
@@ -204,7 +204,7 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
       if (!DisplayText (Text, rect->x, (int)InsertLine, rect))
 	{
 	  ret = 0;  /* Text has been scrolled outside Rect */
-	  break;  
+	  break;
 	}
       SDL_Flip (ne_screen);
 
@@ -215,7 +215,7 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 	{
 	  just_started = FALSE;
 	  now = SDL_GetTicks();
-	  while ( (!FirePressed()) && (SDL_GetTicks() - now < SHOW_WAIT)) 
+	  while ( (!FirePressed()) && (SDL_GetTicks() - now < SHOW_WAIT))
 	    SDL_Delay(1);  // wait before scrolling
 
 	  //--------------------
@@ -275,16 +275,16 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 }				// void ScrollText(void)
 
 /*-----------------------------------------------------------------
- * @Desc: prints *Text beginning at positions startx/starty, 
- * 
+ * @Desc: prints *Text beginning at positions startx/starty,
+ *
  *	and respecting the text-borders set by clip_rect
  *      -> this includes clipping but also automatic line-breaks
  *      when end-of-line is reached
- * 
+ *
  *    if startx/y == -1, write at current position, given by MyCursorX/Y.
  *
  *      if clip_rect==NULL, no clipping is performed
- *      
+ *
  *      NOTE: the previous clip-rectange is restored before
  *            the function returns!
  *
@@ -302,7 +302,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 
   SDL_Rect store_clip;
 
-  if ( startx != -1 ) MyCursorX = startx;		
+  if ( startx != -1 ) MyCursorX = startx;
   if ( starty != -1 ) MyCursorY = starty;
 
   SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
@@ -338,7 +338,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
 	  MyCursorX = clip->x;
 	  MyCursorY += FontHeight (GetCurrentFont()) * TEXT_STRETCH;
 	}
-	
+
 
     } // while !FensterVoll()
 
@@ -351,7 +351,7 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
    if ( clip && ((MyCursorY < clip->y) || (starty > clip->y + clip->h) ))
      return FALSE;  /* no text was written inside clip */
    else
-     return TRUE; 
+     return TRUE;
 
 } // DisplayText(...)
 
@@ -377,7 +377,7 @@ DisplayChar (unsigned char c)
   // new position.  That depends of course on the char displayed.
   //
   MyCursorX += CharWidth ( GetCurrentFont() , c);
-  
+
 } // void DisplayChar(...)
 
 
@@ -386,13 +386,13 @@ DisplayChar (unsigned char c)
   of text or if we need a linebreak:
   returns TRUE if linebreak is needed, FALSE otherwise
 
-  NOTE: this function only does something if *textpos is pointing on a space, 
+  NOTE: this function only does something if *textpos is pointing on a space,
    i.e. a word-beginning, otherwise it just returns TRUE
-  
+
   rp: added argument clip, which contains the text-window we're writing in
        (formerly known as "TextBorder")
 
-  @Ret: 
+  @Ret:
   @Int:
 * $Function----------------------------------------------------------*/
 bool
@@ -410,7 +410,7 @@ linebreak_needed (char *textpos , const SDL_Rect *clip)
     }
 
   // only relevant if we're at the beginning of a word
-  if ( *textpos != ' ')  
+  if ( *textpos != ' ')
     return (FALSE);
 
   // In case of a space, see if the next word will still fit on the line
@@ -424,17 +424,17 @@ linebreak_needed (char *textpos , const SDL_Rect *clip)
       NeededSpace += w;
       if ( MyCursorX+NeededSpace > clip->x + clip->w - w )
 	return (TRUE);
-      
+
       pointer ++;
     } // while
 
   return (FALSE);
-  
+
 } // bool linebreak_needed
 
 
 /*-----------------------------------------------------------------
- * @Desc: reads a string of "MaxLen" from User-input, and echos it 
+ * @Desc: reads a string of "MaxLen" from User-input, and echos it
  *        either to stdout or using graphics-text, depending on the
  *        parameter "echo":	echo=0    no echo
  * 		               	echo=1    print using printf
@@ -443,10 +443,10 @@ linebreak_needed (char *textpos , const SDL_Rect *clip)
  *     values of echo > 2 are ignored and treated like echo=0
  *
  *  NOTE: MaxLen is the maximal _strlen_ of the string (excl. \0 !)
- * 
+ *
  * @Ret: char *: String is allocated _here_!!!
  *       (dont forget to free it !)
- * 
+ *
  *-----------------------------------------------------------------*/
 char *
 GetString (int MaxLen, int echo)
@@ -468,7 +468,7 @@ GetString (int MaxLen, int echo)
   x0 = MyCursorX;
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
-  
+
   store = SDL_CreateRGBSurface(0, Screen_Rect.w, height, vid_bpp, 0, 0, 0, 0);
   Set_Rect (store_rect, x0, y0, Screen_Rect.w, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
@@ -478,7 +478,7 @@ GetString (int MaxLen, int echo)
 
   memset (input, '.', MaxLen);
   input[MaxLen] = 0;
-  
+
   finished = FALSE;
   curpos = 0;
 
@@ -488,18 +488,18 @@ GetString (int MaxLen, int echo)
       SDL_BlitSurface (store, NULL, ne_screen, &tmp_rect);
       PutString (ne_screen, x0, y0, input);
       SDL_Flip (ne_screen);
-      
-      key = getchar_raw ();  
-      
-      if (key == SDLK_RETURN) 
+
+      key = getchar_raw ();
+
+      if (key == SDLK_RETURN)
 	{
 	  input[curpos] = 0;
 	  finished = TRUE;
 	}
-      else if ( (key < SDLK_DELETE) && isprint (key) && (curpos < MaxLen) )  
+      else if ( (key < SDLK_DELETE) && isprint (key) && (curpos < MaxLen) )
 	{
 	  /* printable characters are entered in string */
-	  input[curpos] = (char) key;   
+	  input[curpos] = (char) key;
 	  curpos ++;
 	}
       else if (key == SDLK_BACKSPACE)
@@ -507,7 +507,7 @@ GetString (int MaxLen, int echo)
 	  if ( curpos > 0 ) curpos --;
 	  input[curpos] = '.';
 	}
-      
+
     } /* while(!finished) */
 
   DebugPrintf (2, "\n\nchar *GetString(..):  The final string is:\n");
@@ -533,7 +533,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
   int ret;
   if (x == -1) x = MyCursorX;
   if (y == -1) y = MyCursorY;
-  
+
   MyCursorX = x + CharWidth (GetCurrentFont(), c);
   MyCursorY = y;
 
@@ -548,14 +548,14 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 /*-----------------------------------------------------------------
  * behaves similarly as gl_printf() of svgalib, using the BFont
  * print function PrintString().
- *  
- *  sets current position of MyCursor[XY],  
+ *
+ *  sets current position of MyCursor[XY],
  *     if last char is '\n': to same x, next line y
  *     to end of string otherwise
  *
- * Added functionality to PrintString() is: 
+ * Added functionality to PrintString() is:
  *  o) passing -1 as coord uses previous x and next-line y for printing
- *  o) Screen is updated immediatly after print, using SDL_flip()                       
+ *  o) Screen is updated immediatly after print, using SDL_flip()
  *
  *-----------------------------------------------------------------*/
 void
@@ -564,7 +564,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
   va_list args;
   int i, h, textlen;
 
-  
+
   va_start (args, fmt);
 
   if (x == -1) x = MyCursorX;

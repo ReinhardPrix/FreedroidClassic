@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -39,7 +39,7 @@
 #include "proto.h"
 
 // earlier SDL versions didn't define these...
-#ifndef SDL_BUTTON_WHEELUP 
+#ifndef SDL_BUTTON_WHEELUP
 #define SDL_BUTTON_WHEELUP 4
 #endif
 #ifndef SDL_BUTTON_WHEELDOWN
@@ -65,7 +65,7 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
     {SDLK_DOWN,	  JOY_DOWN, 	's' },		// CMD_DOWN
     {SDLK_LEFT,   JOY_LEFT, 	'a' },		// CMD_LEFT
     {SDLK_RIGHT,  JOY_RIGHT, 	'd' },		// CMD_RIGHT
-    {SDLK_SPACE,  JOY_BUTTON1,   MOUSE_BUTTON1 },// CMD_FIRE  
+    {SDLK_SPACE,  JOY_BUTTON1,   MOUSE_BUTTON1 },// CMD_FIRE
     {SDLK_RETURN, SDLK_RSHIFT, 	'e' }, 		// CMD_ACTIVATE
     {SDLK_SPACE,  JOY_BUTTON2,   MOUSE_BUTTON2 },// CMD_TAKEOVER
     {'q', 	  'q', 		 'q'  }, 	// CMD_QUIT,
@@ -75,9 +75,9 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
 
 char *keystr[INPUT_LAST];
 
-char *cmd_strings[CMD_LAST] = 
+char *cmd_strings[CMD_LAST] =
   {
-    "UP", 
+    "UP",
     "DOWN",
     "LEFT",
     "RIGHT",
@@ -125,7 +125,7 @@ init_keystr (void)
   keystr[SDLK_MINUS]	= "-";
   keystr[SDLK_PERIOD]	= ".";
   keystr[SDLK_SLASH]	= "/";
-  keystr[SDLK_0]	= "0";	
+  keystr[SDLK_0]	= "0";
   keystr[SDLK_1]	= "1";
   keystr[SDLK_2]	= "2";
   keystr[SDLK_3]	= "3";
@@ -240,7 +240,7 @@ init_keystr (void)
   keystr[SDLK_RSUPER]	= "RSuper";
   keystr[SDLK_MODE]	= "Mode";
   keystr[SDLK_COMPOSE]	= "Compose";
-    
+
   /* Miscellaneous function keys */
   keystr[SDLK_HELP]	= "Help";
   keystr[SDLK_PRINT]	= "Print";
@@ -259,9 +259,9 @@ init_keystr (void)
   keystr[MOUSE_WHEELDOWN]="WheelDown";
 
   keystr[JOY_UP]	= "JoyUp";
-  keystr[JOY_DOWN]	= "JoyDown"; 
-  keystr[JOY_LEFT]	= "JoyLeft"; 
-  keystr[JOY_RIGHT]	= "JoyRight"; 
+  keystr[JOY_DOWN]	= "JoyDown";
+  keystr[JOY_LEFT]	= "JoyLeft";
+  keystr[JOY_RIGHT]	= "JoyRight";
   keystr[JOY_BUTTON1] 	= "Joy1";
   keystr[JOY_BUTTON2] 	= "Joy2";
   keystr[JOY_BUTTON3] 	= "Joy3";
@@ -299,10 +299,10 @@ void Init_Joy (void)
       DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
 
       /* aktivate Joystick event handling */
-      SDL_JoystickEventState (SDL_ENABLE); 
+      SDL_JoystickEventState (SDL_ENABLE);
 
     }
-  else 
+  else
     joy = NULL;  /* signals that no yoystick is present */
 
 
@@ -310,11 +310,11 @@ void Init_Joy (void)
 }
 
 // FIXME: remove that obsolete stuff...
-void 
+void
 ReactToSpecialKeys(void)
 {
 
-  if ( cmd_is_active(CMD_QUIT) ) 
+  if ( cmd_is_active(CMD_QUIT) )
     QuitGameMenu();
 
   if ( cmd_is_activeR(CMD_PAUSE) )
@@ -324,7 +324,7 @@ ReactToSpecialKeys(void)
     TakeScreenshot();
 
   // this stuff remains hardcoded to keys
-  if ( KeyIsPressedR('c') && AltPressed() && CtrlPressed() && ShiftPressed() ) 
+  if ( KeyIsPressedR('c') && AltPressed() && CtrlPressed() && ShiftPressed() )
     Cheatmenu ();
 
   if ( EscapePressedR() )
@@ -336,10 +336,10 @@ ReactToSpecialKeys(void)
 //----------------------------------------------------------------------
 // main input-reading routine
 //----------------------------------------------------------------------
-int 
+int
 update_input (void)
 {
-  Uint8 axis; 
+  Uint8 axis;
 
   // switch mouse-cursor visibility as a function of time of last activity
   if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
@@ -373,7 +373,7 @@ update_input (void)
 	      input_axis.x = event.jaxis.value;
 
 	      // this is a bit tricky, because we want to allow direction keys
-	      // to be soft-released. When mapping the joystick->keyboard, we 
+	      // to be soft-released. When mapping the joystick->keyboard, we
 	      // therefore have to make sure that this mapping only occurs when
 	      // and actual _change_ of the joystick-direction ('digital') occurs
 	      // so that it behaves like "set"/"release"
@@ -397,7 +397,7 @@ update_input (void)
 	    {
 	      input_axis.y = event.jaxis.value;
 
-	      if (joy_sensitivity*event.jaxis.value > 10000)  
+	      if (joy_sensitivity*event.jaxis.value > 10000)
 		{
 		  input_state[JOY_DOWN] = PRESSED;
 		  input_state[JOY_UP] =  FALSE;
@@ -413,49 +413,49 @@ update_input (void)
 		  input_state[JOY_DOWN] = FALSE;
 		}
 	    }
-		
+
 	  break;
-	  
-	case SDL_JOYBUTTONDOWN: 
+
+	case SDL_JOYBUTTONDOWN:
 	  // first button
 	  if (event.jbutton.button == 0)
 	    input_state[JOY_BUTTON1] = PRESSED;
 
 	  // second button
-	  else if (event.jbutton.button == 1) 
+	  else if (event.jbutton.button == 1)
 	    input_state[JOY_BUTTON2] = PRESSED;
 
 	  // and third button
-	  else if (event.jbutton.button == 2) 
+	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = PRESSED;
 
 	  axis_is_active = TRUE;
 	  break;
 
 	case SDL_JOYBUTTONUP:
-	  // first button 
+	  // first button
 	  if (event.jbutton.button == 0)
 	    input_state[JOY_BUTTON1] = FALSE;
 
 	  // second button
-	  else if (event.jbutton.button == 1) 
+	  else if (event.jbutton.button == 1)
 	    input_state[JOY_BUTTON2] = FALSE;
 
 	  // and third button
-	  else if (event.jbutton.button == 2) 
+	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = FALSE;
 
 	  axis_is_active = FALSE;
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  input_axis.x = event.button.x - UserCenter_x + 16; 
-	  input_axis.y = event.button.y - UserCenter_y + 16; 	  
+	  input_axis.x = event.button.x - UserCenter_x + 16;
+	  input_axis.y = event.button.y - UserCenter_y + 16;
 
 	  last_mouse_event = SDL_GetTicks ();
 
 	  break;
-	  
+
 	  /* Mouse control */
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
@@ -467,7 +467,7 @@ update_input (void)
 	  if (event.button.button == SDL_BUTTON_RIGHT)
 	    input_state[MOUSE_BUTTON2] = PRESSED;
 
-	  if (event.button.button == SDL_BUTTON_MIDDLE)  
+	  if (event.button.button == SDL_BUTTON_MIDDLE)
 	    input_state[MOUSE_BUTTON3] = PRESSED;
 
 	  // wheel events are immediately released, so we rather
@@ -506,9 +506,9 @@ update_input (void)
 }
 
 /*-----------------------------------------------------------------
- * Desc: should do roughly what getchar() does, but in raw 
- * 	 (SLD) keyboard mode. 
- * 
+ * Desc: should do roughly what getchar() does, but in raw
+ * 	 (SLD) keyboard mode.
+ *
  * Return: the (SDLKey) of the next key-pressed event cast to (int)
  *
  *-----------------------------------------------------------------*/
@@ -517,32 +517,32 @@ getchar_raw (void)
 {
   SDL_Event event;
   int Returnkey = 0;
-  
+
   //  keyboard_update ();   /* treat all pending keyboard-events */
 
   while ( !Returnkey )
     {
       SDL_WaitEvent (&event);    /* wait for next event */
-      
+
       switch (event.type)
 	{
 	case SDL_KEYDOWN:
-	  /* 
+	  /*
 	   * here we use the fact that, I cite from SDL_keyboard.h:
 	   * "The keyboard syms have been cleverly chosen to map to ASCII"
-	   * ... I hope that this design feature is portable, and durable ;)  
+	   * ... I hope that this design feature is portable, and durable ;)
 	   */
 	  Returnkey = (int) event.key.keysym.sym;
-	  if ( event.key.keysym.mod & KMOD_SHIFT ) 
+	  if ( event.key.keysym.mod & KMOD_SHIFT )
 	    Returnkey = toupper( (int)event.key.keysym.sym );
 	  break;
 
-	case SDL_JOYBUTTONDOWN: 
+	case SDL_JOYBUTTONDOWN:
 	  if (event.jbutton.button == 0)
 	    Returnkey = JOY_BUTTON1;
-	  else if (event.jbutton.button == 1) 
+	  else if (event.jbutton.button == 1)
 	    Returnkey = JOY_BUTTON2;
-	  else if (event.jbutton.button == 2) 
+	  else if (event.jbutton.button == 2)
 	    Returnkey = JOY_BUTTON3;
 	  break;
 
@@ -551,7 +551,7 @@ getchar_raw (void)
 	    Returnkey = MOUSE_BUTTON1;
 	  else if (event.button.button == SDL_BUTTON_RIGHT)
 	    Returnkey = MOUSE_BUTTON2;
-	  else if (event.button.button == SDL_BUTTON_MIDDLE)  
+	  else if (event.button.button == SDL_BUTTON_MIDDLE)
 	    Returnkey = MOUSE_BUTTON3;
 	  else if (event.button.button == SDL_BUTTON_WHEELUP)
 	    Returnkey = MOUSE_WHEELUP;
@@ -620,7 +620,7 @@ KeyIsPressedR (SDLKey key)
   return (ret);
 }
 
-void 
+void
 ReleaseKey (SDLKey key)
 {
   input_state[key] = FALSE;
@@ -663,9 +663,9 @@ any_key_pressed (void)
 
   for (i=0; i<SDLK_LAST; i++)
     if ( just_pressed(input_state[i]) )
-      { 
+      {
 	clear_fresh(input_state[i]);
-	ret = TRUE; 
+	ret = TRUE;
 	break;
       }
   if ( just_pressed(input_state[JOY_BUTTON1]) )
@@ -693,8 +693,8 @@ cmd_is_active (enum _cmds cmd)
       Terminate (ERR);
     }
 
-  if ( KeyIsPressed( key_cmds[cmd][0] ) || 
-       KeyIsPressed( key_cmds[cmd][1] ) || 
+  if ( KeyIsPressed( key_cmds[cmd][0] ) ||
+       KeyIsPressed( key_cmds[cmd][1] ) ||
        KeyIsPressed( key_cmds[cmd][2] ))
     return (TRUE);
   else
@@ -714,8 +714,8 @@ cmd_is_activeR (enum _cmds cmd)
       Terminate (ERR);
     }
 
-  if ( KeyIsPressedR( key_cmds[cmd][0] ) || 
-       KeyIsPressedR( key_cmds[cmd][1] ) || 
+  if ( KeyIsPressedR( key_cmds[cmd][0] ) ||
+       KeyIsPressedR( key_cmds[cmd][1] ) ||
        KeyIsPressedR( key_cmds[cmd][2] ))
     return (TRUE);
   else

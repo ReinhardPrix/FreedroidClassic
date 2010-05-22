@@ -1,7 +1,7 @@
 
 ----------------------------------------------------------------------
-This is a Freedroid droids file.  
-It describes the droids that are to be put into an area for a 
+This is a Freedroid droids file.
+It describes the droids that are to be put into an area for a
 certain Freedroid mission.  This file is, as all of Freedroid,
 put under the GPL License:
 
@@ -23,12 +23,12 @@ put under the GPL License:
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
 
-Feel free to make any modifications you like.  If you set up 
+Feel free to make any modifications you like.  If you set up
 something cool, please send your file in to the Freedroid project.
 
 ----------------------------------------------------------------------
@@ -36,8 +36,8 @@ something cool, please send your file in to the Freedroid project.
 *** Beginning of Droid Data ***
 
 ** Beginning of new Level **
-Level=0 
-Maximum number of Random Droids=8 
+Level=0
+Maximum number of Random Droids=8
 Minimum number of Random Droids=7
 Allowed Type of Random Droid for this level: 476
 Allowed Type of Random Droid for this level: 493

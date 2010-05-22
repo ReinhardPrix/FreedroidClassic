@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -132,7 +132,7 @@ typedef struct
   int aggression;		/* The aggressiveness of this druidtype */
   int flashimmune;		/* is the droid immune to FLASH-bullets */
   int score;			/* score for the elimination of one droid of this type */
-  float height;                // the height of this droid  
+  float height;                // the height of this droid
   int weight;                // the weight of this droid
   int drive;
   int brain;
@@ -192,7 +192,7 @@ typedef struct
   int phases;			/* how many phases in motion to show */
   float phase_changes_per_second; // how many different phases to display every second
   int blast;			/* which blast does this bullet create */
-  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
+  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing
                                                           // the bullet images of this bullet
 }
 bulletspec, *Bulletspec;
@@ -209,7 +209,7 @@ typedef struct
   bool mine;
   int owner;
   float angle;
-  int Surfaces_were_generated; 
+  int Surfaces_were_generated;
   SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];
 }
 bullet, *Bullet;
@@ -220,7 +220,7 @@ typedef struct
   unsigned char *picpointer;
   SDL_Rect *block;     /* the coordinates of the blocks in ne_blocks */
   float total_animation_time;
-  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing 
+  SDL_Surface *SurfacePointer[ MAX_PHASES_IN_A_BULLET ];   // A pointer to the surfaces containing
                                                            // the blast images of this blast type
 }
 blastspec, *Blastspec;

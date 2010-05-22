@@ -32,8 +32,8 @@
 
 /* ---- Prototypes */
 
-/* 
- 
+/*
+
  rotozoomSurface()
 
  Rotates and zoomes a 32bit or 8bit 'src' surface to newly created 'dst' surface.
@@ -51,8 +51,8 @@ SDL_Surface *rotozoomSurface(SDL_Surface * src, double angle, double zoom, int s
 void rotozoomSurfaceSize(int width, int height, double angle, double zoom, int *dstwidth,
 					  int *dstheight);
 
-/* 
- 
+/*
+
  zoomSurface()
 
  Zoomes a 32bit or 8bit 'src' surface to newly created 'dst' surface.

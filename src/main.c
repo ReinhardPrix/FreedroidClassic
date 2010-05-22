@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,8 +17,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -49,7 +49,7 @@ extern bool show_cursor;
 void UpdateCountersForThisFrame (void);
 
 /*-----------------------------------------------------------------
- * @Desc: the heart of the Game 
+ * @Desc: the heart of the Game
  *
  * @Ret: void
  *
@@ -98,11 +98,11 @@ main (int argc, char * argv[])
 
       // release fire-keys
       if (FirePressedR()) ;
-      
+
       show_droid_info (Me.type, -3, 0);  // show unit-intro page
       show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, RESET);
       now=SDL_GetTicks();
-      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR())) 
+      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR()))
 	show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
 
       ClearGraphMem();
@@ -116,7 +116,7 @@ main (int argc, char * argv[])
 
       while (!GameOver && !QuitProgram)
 	{
-	  StartTakingTimeForFPSCalculation(); 
+	  StartTakingTimeForFPSCalculation();
 
 	  UpdateCountersForThisFrame ();
 
@@ -125,9 +125,9 @@ main (int argc, char * argv[])
 	  if (show_cursor) SDL_ShowCursor(SDL_ENABLE);
 	  else SDL_ShowCursor(SDL_DISABLE);
 
-	  MoveLevelDoors ();	
+	  MoveLevelDoors ();
 
-	  AnimateRefresh ();	
+	  AnimateRefresh ();
 
 	  ExplodeBlasts ();	// move blasts to the right current "phase" of the blast
 
@@ -137,7 +137,7 @@ main (int argc, char * argv[])
 
 	  MoveBullets ();   // leave this in front of graphics output: time_in_frames should start with 1
 
-	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE ); 
+	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
 	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
@@ -197,7 +197,7 @@ UpdateCountersForThisFrame (void)
   Me.LastCrysoundTime += Frame_Time ();
   Me.timer += Frame_Time();
   if (CurLevel->timer >= 0.0) CurLevel->timer -= Frame_Time ();
-    
+
   Me.LastTransferSoundTime += Frame_Time();
   Me.TextVisibleTime += Frame_Time();
   LevelDoorsNotMovedTime += Frame_Time();
@@ -226,20 +226,20 @@ UpdateCountersForThisFrame (void)
   if (AlertLevel > AL_RED) AlertLevel = AL_RED;
   // player gets a bonus/second in AlertLevel
   RealScore += AlertLevel * AlertBonusPerSec * Frame_Time();
-  
+
 
   for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
 
       if (AllEnemys[i].status == OUT ) continue;
 
-      if (AllEnemys[i].warten > 0) 
+      if (AllEnemys[i].warten > 0)
 	{
 	  AllEnemys[i].warten -= Frame_Time() ;
 	  if (AllEnemys[i].warten < 0) AllEnemys[i].warten = 0;
 	}
 
-      if (AllEnemys[i].firewait > 0) 
+      if (AllEnemys[i].firewait > 0)
 	{
 	  AllEnemys[i].firewait -= Frame_Time() ;
 	  if (AllEnemys[i].firewait <= 0) AllEnemys[i].firewait=0;

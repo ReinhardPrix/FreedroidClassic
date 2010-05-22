@@ -1,4 +1,4 @@
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -17,14 +17,14 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
 
 /*-----------------------------------------------------------------
- * highscore list mangagement 
+ * highscore list mangagement
  *-----------------------------------------------------------------*/
 
 #define _highscore_c
@@ -41,7 +41,7 @@
  * set up a new highscore list: load from disk if found
  *
  *-----------------------------------------------------------------*/
-void 
+void
 InitHighscores (void)
 {
   int i;
@@ -54,10 +54,10 @@ InitHighscores (void)
       if ( (file = fopen (fname, "r")) == NULL)
 	DebugPrintf (1, "WARNING: no highscores file found... \n");
     }
-    
+
   num_highscores = MAX_HIGHSCORES;  /* hardcoded for now... */
   Highscores = MyMalloc (num_highscores * sizeof(Highscore_entry) + 10);
-  
+
   for (i=0; i< num_highscores; i++)
     {
       Highscores[i] = MyMalloc (sizeof(highscore_entry));
@@ -100,7 +100,7 @@ SaveHighscores (void)
       DebugPrintf (0, "WARNING: failed to create highscores file. Giving up... \n");
       return (ERR);
     }
-    
+
   for (i=0; i < MAX_HIGHSCORES;  i++)
     fwrite (Highscores[i], sizeof(highscore_entry), sizeof(char), file);
 
@@ -111,7 +111,7 @@ SaveHighscores (void)
 } // SaveHighscores
 
 /*----------------------------------------------------------------------
- * managing of highscore entries: check if user has entered the list, 
+ * managing of highscore entries: check if user has entered the list,
  * and if so, insert a new entry
  *
  *----------------------------------------------------------------------*/
@@ -131,8 +131,8 @@ UpdateHighscores (void)
   score = RealScore;
 
   // reset score counters
-  RealScore = 0.0; 
-  ShowScore = 0.0; 
+  RealScore = 0.0;
+  ShowScore = 0.0;
 
 
   if (score <= 0)  /* don't even bother.. */
@@ -163,7 +163,7 @@ UpdateHighscores (void)
 
   Assemble_Combat_Picture ( 0);
   MakeGridOnScreen (&User_Rect);
-  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2, 
+  Set_Rect (dst, UserCenter_x - Portrait_Rect.w/2, UserCenter_y - Portrait_Rect.h/2,
 	    Portrait_Rect.w, Portrait_Rect.h);
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   h = FontHeight (Para_BFont);
@@ -180,7 +180,7 @@ UpdateHighscores (void)
   tsec = time (NULL);
   timeinfo = gmtime (&tsec);
   sprintf (new_entry->date, "%02d/%02d/%02d", timeinfo->tm_mday, timeinfo->tm_mon +1,
-	   timeinfo->tm_year-100); 
+	   timeinfo->tm_year-100);
 
   new_entry->score = score;
   Highscores[entry] = new_entry;
@@ -194,7 +194,7 @@ UpdateHighscores (void)
 
 /*-----------------------------------------------------------------
  *
- * Display the high scores of the single player game.  
+ * Display the high scores of the single player game.
  * This function is actually a submenu of the big EscapeMenu.
  *
  *-----------------------------------------------------------------*/
@@ -213,9 +213,9 @@ ShowHighscores (void)
   DisplayBanner( NULL , NULL , BANNER_FORCE_UPDATE );
 
   prev_font = GetCurrentFont();
-  SetCurrentFont (Highscore_BFont);  
+  SetCurrentFont (Highscore_BFont);
 
-  len = CharWidth (GetCurrentFont(), '9'); 
+  len = CharWidth (GetCurrentFont(), '9');
 
   x0 = Screen_Rect.w/8;
   x1 = x0 + 3*len;
@@ -228,7 +228,7 @@ ShowHighscores (void)
 
 
   CenteredPrintString (ne_screen, y0, "Top %d  scores\n", num_highscores);
-  
+
   for (i=0; i<num_highscores; i++)
     {
       PrintString (ne_screen, x0, y0 + (i+2)*height, "%d", i+1);
@@ -239,7 +239,7 @@ ShowHighscores (void)
 	PrintString (ne_screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
     }
   SDL_Flip (ne_screen);
-  
+
   wait4key();
 
   SetCurrentFont (prev_font);

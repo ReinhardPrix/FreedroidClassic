@@ -23,12 +23,12 @@ This file is, as all of Freedroid, put under the GPL License:
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
 
-Feel free to make any modifications you like.  If you set up 
+Feel free to make any modifications you like.  If you set up
 something cool, please send your file in to the Freedroid project.
 
 --------------------------------------------------
@@ -51,7 +51,7 @@ The structure of a mission file is simple.
 * A missing file termination string should be present to indicate
   the end and the integrity of the mission file.
 
-What all these strings must look like can easily deduced 
+What all these strings must look like can easily deduced
 directly form the following example.
 
 --------------------------------------------------
@@ -99,7 +99,7 @@ The 001 Influence Device consists of a helmet, which, when placed over a robots 
 
 * End of Mission Briefing Text Subsection *
 * New Mission Briefing Text Subsection *
-An Influence Device can transmit data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to access the console. 
+An Influence Device can transmit data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to access the console.
 
 
 Press Fire to skip instructions
@@ -108,7 +108,7 @@ Press Fire to skip instructions
 
 
 * New Mission Briefing Text Subsection *
-Clear the freighter of robots by destroying them with twin lasers or by transferring control to them. 
+Clear the freighter of robots by destroying them with twin lasers or by transferring control to them.
 
 Control is via keyboard, mouse or joystick.
 
@@ -133,9 +133,9 @@ To enter the game-menu press Escape.
 Success!!! Congratulations!!
 You have made it!
 
-We hope you have enjoyed this piece of C64 nostalgia. 
-Watch out for further FreeDroid based games: 
-FreeDroidRPG for the role-play fans, and 
+We hope you have enjoyed this piece of C64 nostalgia.
+Watch out for further FreeDroid based games:
+FreeDroidRPG for the role-play fans, and
 FreeDroidWorld for a multi-player arcade version.
 
 See http://freedroid.sourceforge.net for further details.

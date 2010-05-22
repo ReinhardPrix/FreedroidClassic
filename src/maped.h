@@ -1,10 +1,10 @@
-/* 
- * Map - editor related defs' struct's etc. 
+/*
+ * Map - editor related defs' struct's etc.
  * Taken from the separate old DOS maped code.
  *
  */
 
-/* 
+/*
  *
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
@@ -23,8 +23,8 @@
  *  GNU General Public License for more details.
  *
  *  You should have received a copy of the GNU General Public License
- *  along with Freedroid; see the file COPYING. If not, write to the 
- *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  *  MA  02111-1307  USA
  *
  */
@@ -106,7 +106,7 @@
 
 
 /* Sprunggroesse bei Ctrl-cursor: */
-#define JUMP		5	
+#define JUMP		5
 
 
 /* Parameter zum Aussehen */
@@ -152,7 +152,7 @@
 #define TO_BOXCHAR		"Ë"
 #define TU_BOXCHAR		"Ê"
 
-#define FLOOR_BOXCHAR	'.'		
+#define FLOOR_BOXCHAR	'.'
 #define VOID_BOXCHAR		'\''	/* This HAS to be a char !!! for DrawBox() */
 
 /* Colors */
