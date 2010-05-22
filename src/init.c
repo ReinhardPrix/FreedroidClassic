@@ -1211,7 +1211,7 @@ FindAllThemes (void)
       if (location == 0)
 	strcpy (dname, FD_DATADIR);   /* first scan FD_DATADIR */
       if (location == 1)
-	strcpy (dname, ".."); /* then the local graphics-dir */
+	strcpy (dname, LOCAL_DATADIR); /* then the local fallback */
 
       strcat (dname, "/graphics");
 

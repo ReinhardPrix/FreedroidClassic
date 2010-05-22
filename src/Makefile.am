@@ -20,6 +20,8 @@ freedroid_SOURCES = menu.c graphics.c  map.c   init.c  ship.c \
 	getopt.c getopt1.c getopt.h \
 	$(win32_res)
 
+freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
+
 
 WINDRES = i586-mingw32msvc-windres
 freedroid.coff: freedroid.rc ../graphics/paraicon.ico

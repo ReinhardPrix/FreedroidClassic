@@ -624,15 +624,19 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 char *
 find_file (char *fname, char *subdir, int use_theme, int critical)
 {
-  static char File_Path[500];   /* hope this will be enough */
+  static char File_Path[1024] = "";   /* hope this will be enough */
+  int len = sizeof(File_Path);
+
+  char Theme_Dir[1024] = "";
+  const char *datadir = NULL;
+
   FILE *fp;  // this is the file we want to find?
   int i;
   bool found = FALSE;
 
   if ( (critical != IGNORE) && (critical != WARNONLY) && (critical != CRITICAL) )
     {
-      DebugPrintf (0, "WARNING: unknown critical-value passed to find_file(): %d. Assume CRITICAL\n",
-		   critical);
+      DebugPrintf (0, "WARNING: unknown critical-value passed to find_file(): %d. Assume CRITICAL\n", critical);
       critical = CRITICAL;
     }
 
@@ -647,21 +651,15 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
   for (i=0; i < 2; i++)
     {
       if (i==0)
-	strcpy (File_Path, "..");   /* first try local subdirs */
+        datadir = LOCAL_DATADIR;
       if (i==1)
-	strcpy (File_Path, FD_DATADIR); /* then the FD_DATADIR */
-
-      strcat (File_Path, "/");
-      strcat (File_Path, subdir);
-      strcat (File_Path, "/");
+        datadir = FD_DATADIR;
 
       if (use_theme == USE_THEME)
-	{
-	  strcat (File_Path, GameConfig.Theme_Name);
-	  strcat (File_Path, "_theme/");
-	}
+        snprintf ( Theme_Dir, sizeof(Theme_Dir), "%s_theme/", GameConfig.Theme_Name );
 
-      strcat (File_Path, fname);
+      snprintf ( File_Path, len, "%s/%s/%s%s"   , datadir, subdir, Theme_Dir, fname );
+      File_Path[len-1] = 0;  /* make sure */
 
       if ( (fp = fopen (File_Path, "r")) != NULL)  /* found it? */
 	{
@@ -670,6 +668,9 @@ find_file (char *fname, char *subdir, int use_theme, int critical)
 	  DebugPrintf (1, "find_file() found %s in %s\n", fname, File_Path);
 	  break;
 	}
+      else
+        DebugPrintf (1, "find_file() did NOT find %s in %s\n", fname, File_Path);
+
     } /* for i */
 
   if (!found)
