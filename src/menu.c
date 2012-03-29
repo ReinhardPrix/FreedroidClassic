@@ -117,6 +117,7 @@ InitiateMenu (bool with_droids)
 void
 QuitGameMenu (void)
 {
+#ifndef ANDROID
   InitiateMenu (TRUE);
 
   PutString (ne_screen, User_Rect.x + User_Rect.w/10,
@@ -125,6 +126,7 @@ QuitGameMenu (void)
 
   while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
   if (KeyIsPressed('y'))
+#endif
     Terminate (OK);
 }
 
@@ -142,13 +144,19 @@ EscapeMenu (void)
   enum
     {
       BACK2GAME=1,
+#ifndef ANDROID
       POS_GRAPHICS_SOUND_OPTIONS,
+#endif
       POS_LEGACY_OPTIONS,
       POS_ON_SCREEN_DISPLAYS,
+#ifndef ANDROID
       POS_LEVEL_EDITOR,
+#endif
       POS_HIGHSCORES,
       POS_CREDITS,
+#ifndef ANDROID
       POS_KEYCONFIG,
+#endif
       POS_QUIT
     };
 
@@ -170,13 +178,19 @@ EscapeMenu (void)
       pos = 0;
 
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
+#ifndef ANDROID
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Graphics & Sound" );
+#endif
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
+#ifndef ANDROID
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
+#endif
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Highscores");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Credits");
+#ifndef ANDROID
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Configure Keys");
+#endif
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Quit Game");
 
       SDL_Flip( ne_screen );
@@ -201,28 +215,34 @@ EscapeMenu (void)
 		case BACK2GAME:
 		  finished = TRUE;
 		  break;
+#ifndef ANDROID
 		case POS_GRAPHICS_SOUND_OPTIONS:
 		  GraphicsSound_Options_Menu();
 		  break;
+#endif
 		case POS_ON_SCREEN_DISPLAYS:
 		  On_Screen_Display_Options_Menu();
 		  break;
 		case POS_LEGACY_OPTIONS:
 		  Options_Menu();
 		  break;
-		case POS_LEVEL_EDITOR:
-		  LevelEditor();
-		  finished = TRUE;
-		  break;
+#ifndef ANDROID
+                case POS_LEVEL_EDITOR:
+                  LevelEditor();
+                  finished = TRUE;
+                  break;
+#endif
 		case POS_HIGHSCORES:
 		  ShowHighscores();
 		  break;
 		case POS_CREDITS:
 		  Credits_Menu();
 		  break;
-		case POS_KEYCONFIG:
-		  Key_Config_Menu();
-		  break;
+#ifndef ANDROID
+                case POS_KEYCONFIG:
+                  Key_Config_Menu();
+                  break;
+#endif
 		case POS_QUIT:
 		  QuitGameMenu ();
 		  break;

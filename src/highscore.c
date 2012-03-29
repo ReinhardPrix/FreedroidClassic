@@ -168,13 +168,19 @@ UpdateHighscores (void)
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   h = FontHeight (Para_BFont);
   DisplayText ("Great Score !",  dst.x - h, dst.y - h, &User_Rect);
+#ifndef ANDROID
   DisplayText ("Enter your name: ",  dst.x - 5*h, dst.y + dst.h, &User_Rect);
+#endif
   SDL_Flip (ne_screen);
 
   SDL_SetClipRect (ne_screen, NULL);
+#ifndef ANDROID
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);
+#else
+  strcpy (new_entry->name, "Player");
+#endif
   printf_SDL(ne_screen, -1, -1, "\n");
 
   tsec = time (NULL);

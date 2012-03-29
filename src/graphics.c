@@ -922,7 +922,11 @@ Init_Video (void)
 
   vid_info = SDL_GetVideoInfo (); /* just curious */
   SDL_VideoDriverName (vid_driver, 80);
+#ifdef ANDROID
+  vid_bpp = 16; // Hardcoded Android default
+#else
   vid_bpp = vid_info->vfmt->BitsPerPixel;
+#endif
 
   DebugPrintf (0, "Video info summary from SDL:\n");
   DebugPrintf (0, "----------------------------------------------------------------------\n");

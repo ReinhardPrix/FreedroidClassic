@@ -234,7 +234,8 @@ enum _alertnames {
 #define FONT0_FILE		"font05.png"
 #define FONT1_FILE		"font05_green.png"
 #define FONT2_FILE		"font05_red.png"
-#define ICON_FILE		"paraicon.bmp"
+//#define ICON_FILE		"paraicon.bmp"
+#define ICON_FILE		"paraicon_48x48.png"
 
 
 // **********************************************************************

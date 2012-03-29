@@ -60,9 +60,6 @@
 
 #include <signal.h>
 
-#ifdef HAVE_SYS_SOUNDCARD_H
-#include <sys/soundcard.h>
-#endif
 #ifdef HAVE_SYS_IOCTL_H
 #include <sys/ioctl.h>
 #endif
@@ -79,10 +76,10 @@
 #include <dirent.h>
 #endif
 
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 #ifdef HAVE_LIBSDL_MIXER
-#include "SDL_mixer.h"
+#include <SDL/SDL_mixer.h>
 #endif
 

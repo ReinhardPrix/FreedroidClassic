@@ -31,6 +31,10 @@
 
 #define _misc_c
 
+#ifdef ANDROID
+#include <android/log.h>
+#endif
+
 #include "system.h"
 
 #include "defs.h"
@@ -162,7 +166,8 @@ LoadGameConfig (void)
     DebugPrintf (1, "ok\n");
     return (OK);
 #else
-    if (mkdir (ConfigDir, S_IREAD|S_IWRITE|S_IEXEC) == -1)
+    mode_t mode = 0777; //S_IREAD|S_IWRITE|S_IEXEC
+    if (mkdir (ConfigDir, mode) == -1)
       {
 	DebugPrintf (0, "WARNING: Failed to create config-dir: %s. Giving up...\n", ConfigDir);
 	return (ERR);
@@ -894,9 +899,13 @@ DebugPrintf (int db_level, char *fmt, ...)
 
   if (db_level <= debug_level)
     {
+#ifndef ANDROID
       vsnprintf (buffer, 5000, fmt, args);
       fprintf (stderr, buffer);
       fflush (stderr);
+#else
+      __android_log_print ( ANDROID_LOG_INFO, "FreeDroid", buffer );
+#endif
     }
 
   va_end (args);

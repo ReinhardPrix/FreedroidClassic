@@ -19,6 +19,8 @@ AM_CONFIG_HEADER(config.h)
 AC_PROG_CC
 AC_PROG_MAKE_SET
 
+AM_PROG_CC_C_O
+
 # Checks for libraries.
 AC_CHECK_LIB([m], [sin],,
 	AC_MSG_ERROR([libm not found!!
@@ -82,7 +84,7 @@ you need the SDL_mixer library if you want sound!
 --> compiling without sound support
 --------------------------------------------------]))
 
-AC_CHECK_LIB([vorbis], [ov_open],, AC_MSG_WARN([
+AC_CHECK_LIB([vorbis], [main],, AC_MSG_WARN([
 --------------------------------------------------
 libvorbis not found!
 You need the Vorbis libs installed if you want
@@ -92,8 +94,7 @@ Freedroid to be able to play Ogg files (e.g. the Intro theme)
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h \
-			  unistd.h dirent.h sys/soundcard.h])
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h unistd.h dirent.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
