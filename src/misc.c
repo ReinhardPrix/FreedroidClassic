@@ -899,8 +899,8 @@ DebugPrintf (int db_level, char *fmt, ...)
 
   if (db_level <= debug_level)
     {
-#ifndef ANDROID
       vsnprintf (buffer, 5000, fmt, args);
+#ifndef ANDROID
       fprintf (stderr, buffer);
       fflush (stderr);
 #else
