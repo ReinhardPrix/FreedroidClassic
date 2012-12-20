@@ -227,8 +227,8 @@ ShowHighscores (void)
   len = CharWidth (GetCurrentFont(), '9');
 
   x0 = Screen_Rect.w/8;
-  x1 = x0 + 3*len;
-  x2 = x1 + 9*len;
+  x1 = x0 + 2*len;
+  x2 = x1 + 11*len;
   x3 = x2 + MAX_NAME_LEN*len;
 
   height = FontHeight (GetCurrentFont());
