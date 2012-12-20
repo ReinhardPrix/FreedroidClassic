@@ -902,8 +902,8 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.WantedTextVisibleTime = 3;
   GameConfig.Droid_Talk = FALSE;
 
-  GameConfig.Draw_Framerate = TRUE;
-  GameConfig.Draw_Energy = TRUE;
+  GameConfig.Draw_Framerate = FALSE;
+  GameConfig.Draw_Energy = FALSE;
   GameConfig.Draw_DeathCount = FALSE;
   GameConfig.Draw_Position = FALSE;
 
