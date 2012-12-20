@@ -1197,6 +1197,7 @@ FindAllThemes (void)
   char *pos;
   int len;
   FILE *fp;
+  classic_theme_index = 0;	// default: override if we actually find 'classic' theme
 
   // just to make sure...
   AllThemes.num_themes = 0;
@@ -1269,6 +1270,8 @@ FindAllThemes (void)
 	      else
 		{ // not yet listed --> we found a new theme!
 		  DebugPrintf (0, "Found new graphics-theme: %s \n", tname);
+                  if ( strcmp(tname, "classic") == 0 )
+                    classic_theme_index = AllThemes.num_themes;
 		  AllThemes.theme_name[AllThemes.num_themes] = MyMalloc (strlen(tname)+1);
 		  strcpy (AllThemes.theme_name[AllThemes.num_themes], tname);
 		  AllThemes.num_themes ++;

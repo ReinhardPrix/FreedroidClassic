@@ -515,7 +515,7 @@ enum
 		  GameConfig.AllMapVisible = TRUE;
 		  GameConfig.FullUserRect = FALSE;
 		  Copy_Rect (Classic_User_Rect, User_Rect);
-		  new_tnum = 0;
+		  new_tnum = classic_theme_index;
 		  reload_theme = TRUE;
 		  break;
 

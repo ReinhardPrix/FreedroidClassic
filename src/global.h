@@ -169,6 +169,7 @@ EXTERN SDL_Color Black;
 #define EXTERN extern
 #endif
 EXTERN themelist_t AllThemes;
+EXTERN int classic_theme_index;
 EXTERN SDL_Cursor *crosshair_cursor;
 EXTERN SDL_Cursor  *arrow_cursor;
 EXTERN int Number_Of_Bullet_Types;
