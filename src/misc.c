@@ -156,14 +156,16 @@ LoadGameConfig (void)
       DebugPrintf ( 0 , "WARNING: Environment does not contain HOME variable...using local dir\n");
       homedir = ".";
     }
+  else
+    DebugPrintf (0, "found environment HOME = '%s'\n", homedir );
 
   sprintf (ConfigDir, "%s/.freedroidClassic", homedir);
 
   if (stat(ConfigDir, &statbuf) == -1) {
-    DebugPrintf (1, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
+    DebugPrintf (0, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
 #if __WIN32__
     _mkdir (ConfigDir);
-    DebugPrintf (1, "ok\n");
+    DebugPrintf (0, "Found config-dir '%s'\n", ConfigDir );
     return (OK);
 #else
     mode_t mode = 0777; //S_IREAD|S_IWRITE|S_IEXEC
@@ -174,7 +176,7 @@ LoadGameConfig (void)
       }
     else
       {
-	DebugPrintf (1, "ok\n");
+	DebugPrintf (0, "Successfully created config-dir '%s'\n", ConfigDir );
 	return (OK);
       }
 #endif
@@ -187,6 +189,8 @@ LoadGameConfig (void)
       DebugPrintf (0, "WARNING: failed to open config-file: %s\n", fname);
       return (ERR);
     }
+  else
+    DebugPrintf (0, "Successfully opened config-file '%s' for reading\n", fname);
 
   size = FS_filelength (fp);
 

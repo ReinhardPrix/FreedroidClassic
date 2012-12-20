@@ -1197,7 +1197,7 @@ FindAllThemes (void)
   char *pos;
   int len;
   FILE *fp;
-  classic_theme_index = 0;	// default: override if we actually find 'classic' theme
+  classic_theme_index = 0;	// default: override when we actually find 'classic' theme
 
   // just to make sure...
   AllThemes.num_themes = 0;
@@ -1298,14 +1298,19 @@ FindAllThemes (void)
     }
 
   for (i=0; i< AllThemes.num_themes; i++)
-    if ( strcmp (AllThemes.theme_name[i], GameConfig.Theme_Name) == 0)
-      break;
+    {
+      if ( strcmp (AllThemes.theme_name[i], GameConfig.Theme_Name) == 0)
+        {
+          DebugPrintf (0, "Found selected theme %s from GameConfig.\n", GameConfig.Theme_Name);
+          break;
+        }
+    }
+
   if (i >= AllThemes.num_themes)
     {
-      DebugPrintf (0, "WARNING: selected theme %s not valid! Using first theme in list.\n",
-		   GameConfig.Theme_Name);
-      strcpy (GameConfig.Theme_Name, AllThemes.theme_name[0]);
-      AllThemes.cur_tnum = 0;
+      DebugPrintf (0, "WARNING: selected theme %s not valid! Using classic theme.\n", GameConfig.Theme_Name);
+      strcpy (GameConfig.Theme_Name, AllThemes.theme_name[classic_theme_index]);
+      AllThemes.cur_tnum = classic_theme_index;
     }
   else
     AllThemes.cur_tnum = i;

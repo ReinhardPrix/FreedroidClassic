@@ -52,8 +52,11 @@ InitHighscores (void)
     {
       sprintf (fname, "%s/highscores", ConfigDir);
       if ( (file = fopen (fname, "r")) == NULL)
-	DebugPrintf (1, "WARNING: no highscores file found... \n");
+	DebugPrintf (0, "WARNING: no highscores file found... \n");
+      else
+        DebugPrintf (0, "Found highscore file '%s'\n", fname );
     }
+
 
   num_highscores = MAX_HIGHSCORES;  /* hardcoded for now... */
   Highscores = MyMalloc (num_highscores * sizeof(Highscore_entry) + 10);
@@ -105,6 +108,7 @@ SaveHighscores (void)
     fwrite (Highscores[i], sizeof(highscore_entry), sizeof(char), file);
 
   fclose (file);
+  DebugPrintf (0, "Successfully updated highscores file '%s'\n", fname );
 
   return (OK);
 
@@ -185,8 +189,7 @@ UpdateHighscores (void)
 
   tsec = time (NULL);
   timeinfo = gmtime (&tsec);
-  sprintf (new_entry->date, "%02d/%02d/%02d", timeinfo->tm_mday, timeinfo->tm_mon +1,
-	   timeinfo->tm_year-100);
+  sprintf (new_entry->date, "%02d/%02d/%02d", timeinfo->tm_year - 100, timeinfo->tm_mon +1, timeinfo->tm_mday );
 
   new_entry->score = score;
   Highscores[entry] = new_entry;
