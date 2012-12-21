@@ -911,7 +911,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.FullUserRect = TRUE;
   GameConfig.UseFullscreen = FALSE;
   GameConfig.TakeoverActivates = TRUE;
-  GameConfig.ShowDecals = TRUE;
+  GameConfig.ShowDecals = FALSE;
   GameConfig.AllMapVisible = TRUE;    // classic setting: map always visible
   GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
   GameConfig.HogCPU = FALSE;	// default to being nice
