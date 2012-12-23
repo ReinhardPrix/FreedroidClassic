@@ -1,10 +1,11 @@
-Project webpage:  http://sourceforge.net/projects/freedroid/
+FREEDROID CLASSIC:  R E A D M E
+--------------------------
 
+Freedroid Classic sources:  https://github.com/ReinhardPrix/FreedroidClassic
+Original homepage, now mostly devoted to the RPG spin-off 'Freedroid RPG': http://www.freedroid.org/
 
-    FREEDROID :  R E A D M E
-   --------------------------
-This is a clone of the classic game "Paradroid" on Commodore 64
-with some improvements and extensions to the original version.
+This is a FreeSoftware (GPL) remake of the classic game "Paradroid" on Commodore 64
+(by Andrew Braybrook) with some improvements and extensions.
 
 Installation & Compilation
 --------------------------
@@ -20,4 +21,3 @@ In case of problems, read the documentation or email us via the project's
 mailing-list: freedroid-discussion@lists.sourceforge.net
 
 Have Fun with Freedroid!
-
