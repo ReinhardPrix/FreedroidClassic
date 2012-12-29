@@ -11,3 +11,9 @@
 /missing
 *.o
 Makefile
+config.h
+config.log
+config.status
+src/.deps/
+src/freedroid
+stamp-h1
