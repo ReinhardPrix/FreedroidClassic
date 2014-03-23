@@ -172,8 +172,13 @@ UpdateHighscores (void)
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   h = FontHeight (Para_BFont);
   DisplayText ("Great Score !",  dst.x - h, dst.y - h, &User_Rect);
-#ifndef ANDROID
+#if !defined ANDROID && !defined ARCADEINPUT
   DisplayText ("Enter your name: ",  dst.x - 5*h, dst.y + dst.h, &User_Rect);
+#endif
+#ifdef ARCADEINPUT 
+  DisplayText ("Choose with U/D (L/R skips 5), Act = case,",  dst.x - 9*h, dst.y + dst.h, &User_Rect);
+  DisplayText ("RShoulder = backspace, Fire to enter,",  dst.x - 9*h, dst.y + dst.h + h, &User_Rect);
+  DisplayText ("Start when ready: ",  dst.x - 9*h, dst.y + dst.h + h*2, &User_Rect);
 #endif
   SDL_Flip (ne_screen);
 

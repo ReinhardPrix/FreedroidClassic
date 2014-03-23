@@ -476,7 +476,18 @@ GetString (int MaxLen, int echo)
   /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
 
+#ifdef ARCADEINPUT
+  char emptychar=' '; //for "empty" input line / backspace etc...
+  int blink_time=200; // For adjusting fast <->slow blink; in ms
+  static Uint32 last_frame_time; //  = SDL_GetTicks();
+  Uint32 frame_duration;
+  bool tocapital=1; // To keep track which to type... default = CAPITALS
+  int inputchar=0; // initial char = A
+  char arcadechar[]="abcdefghijklmnopqrstuvwxyz 1234567890.-+/"; // Alternative - use counter to keep track of pos in this string
+  char curchar='a'; // Just so I don't need to repeat toupper + tests...
+#else // NORMAL INPUT
   char emptychar='.'; //for "empty" input linue / backspace etc...
+#endif // ARCADEINPUT
 
   memset (input, emptychar, MaxLen);
   input[MaxLen] = 0;
@@ -491,6 +502,59 @@ GetString (int MaxLen, int echo)
       PutString (ne_screen, x0, y0, input);
       SDL_Flip (ne_screen);
 
+#ifdef ARCADEINPUT
+      if ( inputchar < 0 ) inputchar+=(strlen (arcadechar)); //+1 because we chose (>)1 past the point...
+      if ( inputchar > strlen(arcadechar)-1 ) inputchar-=(strlen (arcadechar));
+      curchar=tocapital ? toupper(arcadechar[inputchar]) : arcadechar[inputchar] ;
+      if ( ( frame_duration = SDL_GetTicks() - last_frame_time ) > blink_time/2 ) { 
+        input[curpos] = curchar; // arcadechar[inputchar];
+	if ( frame_duration > blink_time ) last_frame_time = SDL_GetTicks();
+	} else input[curpos] = emptychar; // Hmm., how to get character widht? If using '.', or any fill character, we'd need to know
+
+      if (KeyIsPressedR(SDLK_RETURN)) // For GCW0, maybe we need a prompt to say [PRESS ENTER WHEN FINISHED], or any other key we may choose...
+ 	{
+ 	  input[curpos] = 0; // The last char is currently shown but, not entered into the string...
+// 	  input[curpos] = key; // Not sure which one would be expected by most users; the last blinking char is input or not?
+// 	  Oh! We'd also need (if above is uncommented) to: 
+// 	  input[curpos+1) = 0;
+ 	  finished = TRUE;
+ 	}
+      else if (UpPressedR()) // UP 
+       /* Currently, the key will work ON RELEASE; we might change this to 
+	* ON PRESS and add a counter / delay after which while holding, will 
+	* scroll trough the chars */
+ 	{
+        inputchar++;
+ 	}
+      else if (DownPressedR())// DOWN 
+ 	{
+        inputchar--;
+ 	}
+      else if (FirePressedR())// FIRE
+        {
+ 	  // ADVANCE CURSOR
+        input[curpos] = curchar; // in clase blinked out...
+	curpos ++;
+	  // inputchar=0; // Uncommment to preselect A for every char...
+ 	}
+      else if (LeftPressedR())
+ 	{
+ 	  inputchar-=5;
+ 	}
+      else if (RightPressedR())
+ 	{
+ 	  inputchar+=5;
+ 	}
+      else if (cmd_is_activeR(CMD_ACTIVATE)) // CAPITAL <-> small
+        {
+          tocapital=!tocapital;
+	}
+      else if (KeyIsPressedR(SDLK_BACKSPACE)) // Or any othe key we choose for the GCW0!
+ 	{
+ 	  input[curpos] = emptychar;
+ 	  if ( curpos > 0 ) curpos --;
+        } // (el)ifs PressedR's
+#else // NORMAL INPUT
       key = getchar_raw ();
 
       if (key == SDLK_RETURN)
@@ -509,6 +573,7 @@ GetString (int MaxLen, int echo)
 	  if ( curpos > 0 ) curpos --;
 	  input[curpos] = '.';
 	}
+#endif // ARCADEINPUT
 
     } /* while(!finished) */
 
