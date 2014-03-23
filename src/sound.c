@@ -86,7 +86,11 @@ char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
   "starpaws.mod",                     // YELLOW
   "The_Last_V8.mod",                  // GREEN
   "dreamfish-green_beret.mod",        // GRAY
-  "dreamfish-sanxion.mod",            // BLUE
+#ifdef GCW0
+  "dreamfish-green_beret.mod",        // GRAY
+#else
+  "dreamfish-sanxion.mod",            // BLUE // CRASHES the GCW0 ???
+#endif
   "kollaps-tron.mod",                 // GREENBLUE
   "dreamfish-uridium2_loader.mod"     // DARK
 };

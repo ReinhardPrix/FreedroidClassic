@@ -83,3 +83,8 @@
 #include <SDL_mixer.h>
 #endif
 
+#ifdef GCW0
+#ifndef ARCADEINPUT
+#define ARCADEINPUT
+#endif
+#endif

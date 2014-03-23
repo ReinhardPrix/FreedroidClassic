@@ -183,7 +183,7 @@ UpdateHighscores (void)
   SDL_Flip (ne_screen);
 
   SDL_SetClipRect (ne_screen, NULL);
-#ifndef ANDROID
+#if !defined ANDROID
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);

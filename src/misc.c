@@ -748,7 +748,11 @@ Pause (void)
       SDL_Delay (1);
 
       ComputeFPSForThisFrame();
+#ifdef GCW0
+      if (Gcw0LSPressedR() || Gcw0RSPressedR())
+#else
       if (KeyIsPressedR ('c'))
+#endif
 	{
 	  if (Me.status != CHEESE) Me.status = CHEESE;
 	  else Me.status = PAUSE;

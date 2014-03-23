@@ -120,14 +120,31 @@ QuitGameMenu (void)
 #ifndef ANDROID
   InitiateMenu (TRUE);
 
+#ifdef GCW0
+  PutString (ne_screen, User_Rect.x + User_Rect.w/3,
+	      User_Rect.y + User_Rect.h/2, "Press A to quit");
+#else
   PutString (ne_screen, User_Rect.x + User_Rect.w/10,
 	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
+#endif
   SDL_Flip (ne_screen);
 
+#ifdef GCW0
+  while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
+  if ( (Gcw0APressed()) ) {  
+    Terminate (OK);
+  }
+  while ( (!Gcw0AnyButtonPressedR()) ) SDL_Delay(1); // In case FirePressed && !Gcw0APressed() -> might cause a loop otherwise in the menu...
+#else
   while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
   if (KeyIsPressed('y'))
-#endif
     Terminate (OK);
+#endif
+
+#else // ANDROID
+    Terminate (OK);
+#endif // ANDROID
+
 }
 
 
@@ -149,7 +166,7 @@ EscapeMenu (void)
 #endif
       POS_LEGACY_OPTIONS,
       POS_ON_SCREEN_DISPLAYS,
-#ifndef ANDROID
+#if !defined ANDROID && !defined GCW0 // Haven't looked at level editor keys, if they are feasibly re-defined for GCW0 it could be enabled...
       POS_LEVEL_EDITOR,
 #endif
       POS_HIGHSCORES,
@@ -183,7 +200,7 @@ EscapeMenu (void)
 #endif
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
-#ifndef ANDROID
+#if !defined ANDROID && !defined GCW0
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
 #endif
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Highscores");
@@ -226,7 +243,7 @@ EscapeMenu (void)
 		case POS_LEGACY_OPTIONS:
 		  Options_Menu();
 		  break;
-#ifndef ANDROID
+#if !defined ANDROID && !defined GCW0
                 case POS_LEVEL_EDITOR:
                   LevelEditor();
                   finished = TRUE;
@@ -402,7 +419,11 @@ Display_Key_Config (int selx, int sely)
   //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
 
   PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+#ifdef GCW0
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
+#else
   PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
+#endif
 
   PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
   PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
@@ -684,7 +705,9 @@ enum
   { SET_BG_MUSIC_VOLUME=1,
     SET_SOUND_FX_VOLUME,
     SET_GAMMA_CORRECTION,
+#ifndef GCW0
     SET_FULLSCREEN_FLAG,
+#endif
     SET_HOG_CPU,
     BACK
   };
@@ -707,8 +730,10 @@ enum
 		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
+#ifndef GCW0
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Fullscreen Mode: %s", GameConfig.UseFullscreen ? "ON" : "OFF");
+#endif
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Use 100%% CPU: %s", GameConfig.HogCPU ? "ON" : "OFF");
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, "Back");
@@ -729,6 +754,7 @@ enum
 
 	  switch (MenuPosition)
 	    {
+#ifndef GCW0
 	    case SET_FULLSCREEN_FLAG:
 	      if (MenuChooseR())
 		{
@@ -736,6 +762,7 @@ enum
 		  MenuItemSelectedSound();
 		}
 	      break;
+#endif
 
 	    case SET_HOG_CPU:
 	      if (MenuChooseR())
