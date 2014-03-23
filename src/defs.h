@@ -284,7 +284,11 @@ enum _alertnames {
 #define STANDARD_MISSION        "Paradroid.mission"
 #define NEW_MISSION             "CleanPrivateGoodsStorageCellar.mission"
 
+#ifdef GCW0
+#define PARA_FONT_FILE 		"parafontold.png"
+#else
 #define PARA_FONT_FILE 		"parafont.png"
+#endif
 #define FONT0_FILE		"font05.png"
 #define FONT1_FILE		"font05_green.png"
 #define FONT2_FILE		"font05_red.png"

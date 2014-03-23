@@ -17,3 +17,4 @@ config.status
 src/.deps/
 src/freedroid
 stamp-h1
+/GCWZeroInstall

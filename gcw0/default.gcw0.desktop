@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Freedroid
+Comment=Clone of the C64 game Paradroid
+Exec=bin/freedroid -d -r 0.5
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=share/freedroid/graphics/paraicon
+Categories=games;
+X-OD-Manual=FreeDroid-gcw0-manualandlicense.txt
