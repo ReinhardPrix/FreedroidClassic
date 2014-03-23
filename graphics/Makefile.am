@@ -10,6 +10,6 @@ graphics_DATA = 001.png 999.png \
 	Ashes.png banner.png console_bg1.jpg console_bg2.jpg console_fg.png \
 	credits.jpg font05_green.png font05.png font05_red.png parafont.png \
 	progress_filler.png progress_meter.png takeover_bg.jpg title.jpg transfer.jpg \
-	paraicon_48x48.png paraicon.bmp
+	paraicon_48x48.png paraicon.bmp parafontold.png
 
 EXTRA_DIST = $(graphics_DATA)

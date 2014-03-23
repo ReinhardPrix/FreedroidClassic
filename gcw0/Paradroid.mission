@@ -1,0 +1,157 @@
+
+--------------------------------------------------
+This is a mission file for Freedroid.
+It describes the starting point, objectives and other parameters
+of a mission to be completed within freedroid.
+This file is, as all of Freedroid, put under the GPL License:
+
+ *
+ *   Copyright (c) 1994, 2002, 2003  Johannes Prix
+ *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
+ *
+ *
+ *  This file is part of Freedroid
+ *
+ *  Freedroid is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  Freedroid is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with Freedroid; see the file COPYING. If not, write to the
+ *  Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ *  MA  02111-1307  USA
+ *
+
+Feel free to make any modifications you like.  If you set up
+something cool, please send your file in to the Freedroid project.
+
+--------------------------------------------------
+
+The structure of a mission file is simple.
+* There must be a starting string indicating the
+  start of the real mission data.
+* A mission name must be specified
+* A mission briefing text must be specified
+* A mission target must be specified.
+* A "ship" must be specified, where a "ship" could also
+  be for example a small automated mining community or
+  a building complex somewhere on a planet.
+* A crew file must be specified, where the information which
+  droids are to be generated in which levels can be found.
+* A "game.dat" file must be specified, containing all the
+  droid specifications and the constants for the game
+  physics.
+* An elevator file must be specified.
+* A missing file termination string should be present to indicate
+  the end and the integrity of the mission file.
+
+What all these strings must look like can easily deduced
+directly form the following example.
+
+--------------------------------------------------
+
+*** Start of Mission File ***
+
+Mission Name: Classical Paradroid Mission
+
++++
++++ At first we specify the other files, that also contain essential
++++ information about this mission, e.g. maps and droids and that
++++
+Physics ('game.dat') file to use for this mission: freedroid.ruleset
+Ship file to use for this mission: Paradroid.maps
+Lift file to use for this mission: Paradroid.elevators
+Crew file to use for this mission: Paradroid.droids
+
+Influs mission start comment="Ok. I'm on board.  Let's get to work."
+
++++
++++ For the classical paradroid mission, several different
++++ starting points are allowed:
++++
+Possible Start Point : Level=4 XPos=1 YPos=1
+Possible Start Point : Level=5 XPos=3 YPos=1
+Possible Start Point : Level=6 XPos=2 YPos=1
+Possible Start Point : Level=7 XPos=2 YPos=1
+
+** Start of Mission Briefing Text Section **
+
+The title picture in the graphics subdirectory for this mission is : title.jpg
+The title song in the sound subdirectory for this mission is : Paradroid.ogg
+Song name to play in the end title if the mission is completed: android-commando_hiscore.mod
+
+
+* New Mission Briefing Text Subsection *
+(UP/DOWN:SCROLL)
+A fleet of Robo-freighters on its way to the Beta Ceti system reported entering an uncharted field of asteroids. Each ship carries a cargo of battle droids to reinforce the outworld defences. Two distress beacons have been discovered. Similar Messages were stored on each. The ships had been bombarded by a powerful radionic beam from one of the asteroids. All of the robots on the ships, including those in storage, became hyper-active. The crews report an attack by droids, isolating them on the bridge. They cannot reach the shuttle and can hold out for only a couple more hours.  Since these beacons were located two days ago, we can only fear the worst.  Some of the fleet was last seen heading for enemy space. In enemy hands the droids can be used against our forces. Docking would be impossible but we can beam aboard a prototype Influence Device.
+
+Press Fire (default:Y) to skip instructions
+
+* End of Mission Briefing Text Subsection *
+* New Mission Briefing Text Subsection *
+The 001 Influence Device consists of a helmet, which, when placed over a robots control unit can halt the normal activities of that robot for a short time. The helmet has its own energy supply and powers the robot itself, at an upgraded capability. The helmet also uses an energy cloak for protection of the host. The helmet is fitted with twin lasers mounted in a turret. These can be focused on any target inside a range of eight metres. Most of the device's resources are channelled towards holding control of the host robot, as it attempts to resume 'normal' operation. It is therefore necessary to change the host robot often to prevent the device from burning out. Transfer to a new robot requires the device to drain its host of energy in order to take  over. Failure to achieve transfer results in the device being a free agent once more.
+
+
+* End of Mission Briefing Text Subsection *
+* New Mission Briefing Text Subsection *
+An Influence Device can transmit data to your console.  A small-scale plan of the whole deck is available, as well as a side elevation of the ship. Robots are represented on-screen as a symbol showing a three-digit number. The first digit shown is the important one, the class of the robot. It denotes the strength also. To find out more about any given robot, use the robot enquiry system at a console. Only data about units of a lower class than your current host is available, since it is the host's security clearance which is used to access the console.
+
+
+Press Fire to skip instructions
+
+* End of Mission Briefing Text Subsection *
+
+
+* New Mission Briefing Text Subsection *
+Clear the freighter of robots by destroying them with twin lasers or by transferring control to them.
+
+Motion control: Use D-Pad or the analog nub. 
+Robots navigation units are limited to 8-directional acceleration, but their weapons can target at any angle.
+ 
+Buttons:
+A or Y: Fire 
+B or X: Activate 
+Shoulder Buttons: Takeover-mode
+
+To fire, you also need to give a direction. You can not fire while in Takeover mode.
+You can also enter takeover mode by holding a fire 
+
+To enter lifts or consoles: Press activate.
+If you collide with a droid while in takeover mode, you enter the takeover-game.
+If you win, you can control this droid for a while, if you lose and you controlled another droid before, you revert to the 001 influence device, otherwise you are destroyed.
+
+To enter the game-menu press Select. 
+Start will pause the game.
+
+    Press Fire to Play
+
+* End of Mission Briefing Text Subsection *
+
+
+
+** Beginning of End Title Text Section **
+
+Success!!! Congratulations!!
+You have made it!
+
+We hope you have enjoyed this piece of C64 nostalgia.
+Watch out for further FreeDroid based games:
+FreeDroidRPG for the role-play fans, and
+FreeDroidWorld for a multi-player arcade version.
+
+See http://freedroid.sourceforge.net for further details.
+
+Press Fire to play again.
+
+** End of End Title Text Section **
+
+*** End of Mission File ***
+
+
+

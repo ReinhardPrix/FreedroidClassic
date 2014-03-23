@@ -61,6 +61,18 @@ int input_state[INPUT_LAST];	// array of states (pressed/released) of all keys
 
 int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
   {
+#ifdef GCW0
+    {SDLK_UP, 	  JOY_UP, 	0 },		// CMD_UP
+    {SDLK_DOWN,	  JOY_DOWN, 	0 },		// CMD_DOWN
+    {SDLK_LEFT,   JOY_LEFT, 	0 },		// CMD_LEFT
+    {SDLK_RIGHT,  JOY_RIGHT, 	0 },		// CMD_RIGHT
+    {SDLK_SPACE,  SDLK_LCTRL,  0 },// CMD_FIRE
+    {SDLK_LALT, SDLK_LSHIFT, 	0 }, 		// CMD_ACTIVATE
+    {SDLK_BACKSPACE,  SDLK_TAB,  0 },// CMD_TAKEOVER
+    {0, 	  0, 		0  }, 	// CMD_QUIT,
+    {SDLK_RETURN, 0, 0  }, 			// CMD_PAUSE,
+    {0, 0, 0 }  		// CMD_SCREENSHOT
+#else
     {SDLK_UP, 	  JOY_UP, 	'w' },		// CMD_UP
     {SDLK_DOWN,	  JOY_DOWN, 	's' },		// CMD_DOWN
     {SDLK_LEFT,   JOY_LEFT, 	'a' },		// CMD_LEFT
@@ -71,6 +83,7 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
     {'q', 	  'q', 		 'q'  }, 	// CMD_QUIT,
     {SDLK_PAUSE, 'p', 'p'  }, 			// CMD_PAUSE,
     {SDLK_F12, SDLK_F12, SDLK_F12 }  		// CMD_SCREENSHOT
+#endif
   };
 
 char *keystr[INPUT_LAST];
@@ -104,13 +117,22 @@ char *cmd_strings[CMD_LAST] =
 void
 init_keystr (void)
 {
+  keystr[0]             = "NONE"; // Empty bind will otherwise crash on some platforms - also, we choose "NONE" as a placeholder...
+#ifdef GCW0 // The GCW0 may change to joystick input altogether in the future - which will make these ifdefs unnecessary, I hope...
+  keystr[SDLK_BACKSPACE] = "RSldr";
+  keystr[SDLK_TAB]	= "LSldr";
+  keystr[SDLK_RETURN]	= "Start";
+  keystr[SDLK_SPACE]	= "Y";
+  keystr[SDLK_ESCAPE]	= "Select";
+#else
   keystr[SDLK_BACKSPACE] = "BS";
   keystr[SDLK_TAB]	= "Tab";
-  keystr[SDLK_CLEAR]	= "Clear";
   keystr[SDLK_RETURN]	= "Return";
-  keystr[SDLK_PAUSE]	= "Pause";
-  keystr[SDLK_ESCAPE]	= "Esc";
   keystr[SDLK_SPACE]	= "Space";
+  keystr[SDLK_ESCAPE]	= "Esc";
+#endif
+  keystr[SDLK_CLEAR]	= "Clear";
+  keystr[SDLK_PAUSE]	= "Pause";
   keystr[SDLK_EXCLAIM]	= "!";
   keystr[SDLK_QUOTEDBL]	= "\"";
   keystr[SDLK_HASH]	= "#";
@@ -228,12 +250,18 @@ init_keystr (void)
   keystr[SDLK_NUMLOCK]	= "NumLock";
   keystr[SDLK_CAPSLOCK]	= "CapsLock";
   keystr[SDLK_SCROLLOCK]= "ScrlLock";
-  keystr[SDLK_RSHIFT]	= "RShift";
+#ifdef GCW0
+  keystr[SDLK_LSHIFT]	= "X";
+  keystr[SDLK_LCTRL]	= "A";
+  keystr[SDLK_LALT]	= "B";
+#else
   keystr[SDLK_LSHIFT]	= "LShift";
-  keystr[SDLK_RCTRL]	= "RCtrl";
   keystr[SDLK_LCTRL]	= "LCtrl";
-  keystr[SDLK_RALT]	= "RAlt";
   keystr[SDLK_LALT]	= "LAlt";
+#endif
+  keystr[SDLK_RSHIFT]	= "RShift";
+  keystr[SDLK_RCTRL]	= "RCtrl";
+  keystr[SDLK_RALT]	= "RAlt";
   keystr[SDLK_RMETA]	= "RMeta";
   keystr[SDLK_LMETA]	= "LMeta";
   keystr[SDLK_LSUPER]	= "LSuper";
@@ -314,7 +342,7 @@ void
 ReactToSpecialKeys(void)
 {
 
-  if ( cmd_is_active(CMD_QUIT) )
+  if ( cmd_is_activeR(CMD_QUIT) )
     QuitGameMenu();
 
   if ( cmd_is_activeR(CMD_PAUSE) )
@@ -360,10 +388,16 @@ update_input (void)
 	case SDL_KEYDOWN:
 	  current_modifiers = event.key.keysym.mod;
 	  input_state[event.key.keysym.sym] = PRESSED;
+#ifdef GCW0
+	  if ( input_axis.x || input_axis.y ) axis_is_active = TRUE; // 4 GCW-0 ; breaks cursor keys after axis has been active...
+#endif
 	  break;
 	case SDL_KEYUP:
 	  current_modifiers = event.key.keysym.mod;
 	  input_state[event.key.keysym.sym] = RELEASED;
+#ifdef GCW0
+	  axis_is_active = FALSE;
+#endif
 	  break;
 
 	case SDL_JOYAXISMOTION:

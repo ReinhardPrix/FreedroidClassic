@@ -76,10 +76,15 @@
 #include <dirent.h>
 #endif
 
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL.h>
+#include <SDL_image.h>
 
 #ifdef HAVE_LIBSDL_MIXER
-#include <SDL/SDL_mixer.h>
+#include <SDL_mixer.h>
 #endif
 
+#ifdef GCW0
+#ifndef ARCADEINPUT
+#define ARCADEINPUT
+#endif
+#endif
