@@ -314,7 +314,7 @@ void
 ReactToSpecialKeys(void)
 {
 
-  if ( cmd_is_active(CMD_QUIT) )
+  if ( cmd_is_activeR(CMD_QUIT) )
     QuitGameMenu();
 
   if ( cmd_is_activeR(CMD_PAUSE) )

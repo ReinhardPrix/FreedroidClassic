@@ -75,6 +75,12 @@ SDL_image library needed for Freedroid!
 see http://www.libsdl.org/
 --------------------------------------------------]))
 
+AC_CHECK_LIB([SDL_gfx], [zoomSurface],, AC_MSG_ERROR([ 
+-------------------------------------------------- 
+SDL_gfx needed to run Freedroid 
+see http://www.libpng.org/pub/png/libpng.html 
+--------------------------------------------------])) 
+
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
 AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio],, AC_MSG_WARN([
 --------------------------------------------------

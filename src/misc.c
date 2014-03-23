@@ -126,6 +126,7 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
 #define FULL_USER_RECT               "FullUserRect"
 #define USE_FULLSCREEN               "UseFullscreen"
 #define TAKEOVER_ACTIVATES           "TakeoverActivates"
+#define FIRE_HOLD_TAKEOVER           "FireHoldTakeover"
 #define SHOW_DECALS                  "ShowDecals"
 #define ALL_MAP_VISIBLE              "AllMapVisible"
 #define VID_SCALE_FACTOR             "Vid_ScaleFactor"
@@ -234,6 +235,7 @@ LoadGameConfig (void)
   read_variable (data, FULL_USER_RECT,           "%d", &GameConfig.FullUserRect);
   read_variable (data, USE_FULLSCREEN,           "%d", &GameConfig.UseFullscreen);
   read_variable (data, TAKEOVER_ACTIVATES,       "%d", &GameConfig.TakeoverActivates);
+  read_variable (data, FIRE_HOLD_TAKEOVER,       "%d", &GameConfig.FireHoldTakeover);
   read_variable (data, SHOW_DECALS,              "%d", &GameConfig.ShowDecals);
   read_variable (data, ALL_MAP_VISIBLE,          "%d", &GameConfig.AllMapVisible);
   read_variable (data, VID_SCALE_FACTOR,         "%f", &GameConfig.scale);
@@ -269,7 +271,7 @@ SaveGameConfig (void)
   sprintf (fname, "%s/config", ConfigDir);
   if( (fp = fopen (fname, "w")) == NULL)
     {
-      DebugPrintf (0, "WARNING: failed to create config-file: %s\n");
+      DebugPrintf (0, "WARNING: failed to create config-file: %s\n", fname);
       return (ERR);
     }
 
@@ -288,6 +290,7 @@ SaveGameConfig (void)
   fprintf (fp, "%s = %d\n", FULL_USER_RECT, GameConfig.FullUserRect);
   fprintf (fp, "%s = %d\n", USE_FULLSCREEN, GameConfig.UseFullscreen);
   fprintf (fp, "%s = %d\n", TAKEOVER_ACTIVATES, GameConfig.TakeoverActivates);
+  fprintf (fp, "%s = %d\n", FIRE_HOLD_TAKEOVER, GameConfig.FireHoldTakeover);
   fprintf (fp, "%s = %d\n", SHOW_DECALS, GameConfig.ShowDecals);
   fprintf (fp, "%s = %d\n", ALL_MAP_VISIBLE, GameConfig.AllMapVisible);
   fprintf (fp, "%s = %f\n", VID_SCALE_FACTOR, GameConfig.scale);
@@ -745,7 +748,6 @@ Pause (void)
       SDL_Delay (1);
 
       ComputeFPSForThisFrame();
-
       if (KeyIsPressedR ('c'))
 	{
 	  if (Me.status != CHEESE) Me.status = CHEESE;
@@ -753,9 +755,10 @@ Pause (void)
 	  Cheese = !Cheese;
 	} /* if (CPressed) */
 
-      if ( SpacePressedR() )
+      if ( FirePressedR() || cmd_is_activeR(CMD_PAUSE) ) {
+        while (cmd_is_active(CMD_PAUSE)) SDL_Delay(1);
 	Pause = FALSE;
-
+      }
     } /* while (Pause) */
 
   return;

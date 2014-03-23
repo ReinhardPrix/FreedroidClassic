@@ -476,7 +476,9 @@ GetString (int MaxLen, int echo)
   /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
 
-  memset (input, '.', MaxLen);
+  char emptychar='.'; //for "empty" input linue / backspace etc...
+
+  memset (input, emptychar, MaxLen);
   input[MaxLen] = 0;
 
   finished = FALSE;

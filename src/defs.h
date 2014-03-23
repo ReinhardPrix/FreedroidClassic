@@ -136,7 +136,34 @@ enum _cmds {
 #define LeftPressedR() (cmd_is_activeR(CMD_LEFT))
 #define RightPressedR() (cmd_is_activeR(CMD_RIGHT))
 
+#define AnyCmdActive() (cmd_is_active(CMD_FIRE) || cmd_is_active(CMD_ACTIVATE) || cmd_is_active(CMD_TAKEOVER) ) 
+#define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) ) 
+
 #define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
+
+/* Now that I've added ability to clear binds, one can break Freedroid if one 
+ * unbinds all UP / DOWN keys. That's why I've added these, with a fallback key
+ * too, so that one can ALWAYS navigate the menu.
+ * Currently MenuBack is not used. */
+#define MenuUpR() (UpPressedR() || WheelUpPressed() || KeyIsPressedR(SDLK_UP))
+#define MenuDownR() (DownPressedR() || WheelDownPressed() || KeyIsPressedR(SDLK_DOWN) )
+#define MenuChooseR() (FirePressedR() || ReturnPressedR() || SpacePressedR())
+#define MenuLeftR() (LeftPressedR() || MouseLeftPressed() || KeyIsPressedR(SDLK_LEFT))
+#define MenuRightR() (RightPressedR() || MouseRightPressed() || KeyIsPressedR(SDLK_RIGHT) )
+#define MenuBackR() (EscapePressedR()) // Not used ATM; but in the future, we might need in case a device has no Escape...
+
+// For clearing a key in keyconfig (can be redefined here):
+#define ClearBoundKeyR() (KeyIsPressedR(SDLK_BACKSPACE)) // Works for GCW0 too, currently, since backspace = RShoulder
+
+/* Now for the pressed defines... */
+#define MenuUp() (UpPressed() || WheelUpPressed() || KeyIsPressed(SDLK_UP))
+#define MenuDown() (DownPressed() || WheelDownPressed() || KeyIsPressed(SDLK_DOWN) )
+#define MenuChoose() (FirePressed() || ReturnPressed() || SpacePressed())
+#define MenuLeft() (LeftPressed() || MouseLeftPressed() || KeyIsPressed(SDLK_LEFT))
+#define MenuRight() (RightPressed() || MouseRightPressed() || KeyIsPressed(SDLK_RIGHT) )
+#define MenuBack() (EscapePressed()) // Not used ATM; but in the future, we might need in case a device has no Escape...
+
+#define ClearBoundKey() (KeyIsPressed(SDLK_BACKSPACE)) // Works for GCW0 too, currently, since backspace = RShoulder
 
 // ----------------------------------------
 
