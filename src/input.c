@@ -104,6 +104,7 @@ char *cmd_strings[CMD_LAST] =
 void
 init_keystr (void)
 {
+  keystr[0]             = "NONE"; // Empty bind will otherwise crash on some platforms - also, we choose "NONE" as a placeholder...
   keystr[SDLK_BACKSPACE] = "BS";
   keystr[SDLK_TAB]	= "Tab";
   keystr[SDLK_CLEAR]	= "Clear";
