@@ -9,7 +9,7 @@ excessive to list these contributions individually here as well.
 Authors  (main code + "classic theme")
 -------
 Johannes Prix <johannesprix@users.sourceforge.net>
-Reinhard Prix <rprix@users.sourceforge.net>
+Reinhard Prix <reinhard.prix@posteo.de>
 
 additional artwork
 ------------------
@@ -26,8 +26,9 @@ Porting
 * Jason Kingan <jasonk@toast442.org>
    patches and ProjectBuilder files for MacOS X port
 
-* Reinhard Prix <rprix@users.sourceforge.net>
+* Reinhard Prix <reinhard.prix@posteo.de>
   Win32 port
+  Android port
 
 Misc
 ----
