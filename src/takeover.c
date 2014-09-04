@@ -154,6 +154,7 @@ Takeover (int enemynum)
   // release fire keys
   SpacePressedR();
   MouseLeftPressedR();
+  AnyCmdActiveR();
 
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
@@ -406,7 +407,7 @@ PlayGame (void)
 	  last_movekey_time = SDL_GetTicks();
 	}
 
-      set  = set  || (SpacePressed() || MouseLeftPressed());
+      set  = set  || FirePressed();
 
       if (WheelUpPressed()) wheel_up ++;
       if (WheelDownPressed()) wheel_down ++;

@@ -104,6 +104,7 @@ char *cmd_strings[CMD_LAST] =
 void
 init_keystr (void)
 {
+  keystr[0]             = "NONE"; // Empty bind will otherwise crash on some platforms - also, we choose "NONE" as a placeholder...
   keystr[SDLK_BACKSPACE] = "BS";
   keystr[SDLK_TAB]	= "Tab";
   keystr[SDLK_CLEAR]	= "Clear";
@@ -314,7 +315,7 @@ void
 ReactToSpecialKeys(void)
 {
 
-  if ( cmd_is_active(CMD_QUIT) )
+  if ( cmd_is_activeR(CMD_QUIT) )
     QuitGameMenu();
 
   if ( cmd_is_activeR(CMD_PAUSE) )

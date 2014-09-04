@@ -206,7 +206,7 @@ EscapeMenu (void)
 	    }
 
 
-	  if (FirePressedR()||ReturnPressedR())
+	  if (MenuChooseR())
 	    {
 	      MenuItemSelectedSound();
 	      key = TRUE;
@@ -251,14 +251,14 @@ EscapeMenu (void)
 		}
 	    }
 
-	  if (UpPressedR () || WheelUpPressed() )
+	  if (MenuUpR())
 	    {
 	      key = TRUE;
 	      if (MenuPosition > 1) MenuPosition--;
 	      else MenuPosition = POS_QUIT;
 	      MoveMenuPositionSound();
 	    }
-	  if (DownPressedR() || WheelDownPressed() )
+	  if (MenuDownR())
 	    {
 	      key = TRUE;
 	      if ( MenuPosition < POS_QUIT ) MenuPosition++;
@@ -316,7 +316,7 @@ Key_Config_Menu (void)
 	      key = TRUE;
 	    }
 
-	  if (FirePressedR()||ReturnPressed())
+	  if (MenuChooseR())
 	    {
 	      MenuItemSelectedSound();
 	      key = TRUE;
@@ -328,7 +328,7 @@ Key_Config_Menu (void)
 		  oldkey = key_cmds[sely-2][selx-1];
 		  key_cmds[sely-2][selx-1] = '_';
 		  Display_Key_Config (selx, sely);
-		  newkey = getchar_raw();
+		  newkey = getchar_raw(); // || joystick input!
 		  if (newkey == SDLK_ESCAPE)
 		    key_cmds[sely-2][selx-1] = oldkey;
 		  else
@@ -337,36 +337,43 @@ Key_Config_Menu (void)
 
 	    } // if FirePressed()
 
-	  if (UpPressedR() || WheelUpPressed ())
+	  if (MenuUpR())
 	    {
 	      if ( sely > 1 ) sely--;
 	      else sely = LastMenuPos;
 	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  if (DownPressedR() || WheelDownPressed ())
+	  if (MenuDownR())
 	    {
 	      if ( sely < LastMenuPos ) sely++;
 	      else sely = 1;
 	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  if (RightPressedR())
+	  if (MenuRightR())
 	    {
 	      if ( selx < 3 ) selx++;
 	      else selx = 1;
 	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  if (LeftPressedR())
+	  if (MenuLeftR())
 	    {
 	      if ( selx > 1 ) selx--;
 	      else selx = 3;
 	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
+           /* There should really be a way to clear a key; this is dirty... 
+	    * On a PC, one could just set a "junk" key, but not on a device with 
+	    * limited buttons */ 
+	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
+	    {
+		    key_cmds[sely-2][selx-1] = 0;
+	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
 
-	} // while !key
+	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
 
     } // while !finished
 
@@ -395,6 +402,7 @@ Display_Key_Config (int selx, int sely)
   //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
 
   PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
 
   PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
   PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
@@ -446,6 +454,7 @@ enum
     POS_SHOW_DECALS,
     POS_MAP_VISIBLE,
     POS_TAKEOVER_IS_ACTIVATE,
+    POS_FIRE_HOLD_TAKEOVER,
     POS_BACK
   };
 
@@ -485,6 +494,9 @@ enum
 		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
 
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
+		   "Hold Fire to Transfer: %s", GameConfig.FireHoldTakeover ? "YES":"NO" );
+
+      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Back");
 
       SDL_Flip( ne_screen );
@@ -502,7 +514,7 @@ enum
 		reload_theme = TRUE;
 	    }
 
-	  if (FirePressedR()||ReturnPressedR())
+	  if (MenuChooseR())
 	    {
 	      MenuItemSelectedSound();
 	      key = TRUE;
@@ -512,6 +524,7 @@ enum
 		  GameConfig.Droid_Talk = FALSE;
 		  GameConfig.ShowDecals = FALSE;
 		  GameConfig.TakeoverActivates = TRUE;
+		  GameConfig.FireHoldTakeover = TRUE;
 		  GameConfig.AllMapVisible = TRUE;
 		  GameConfig.FullUserRect = FALSE;
 		  Copy_Rect (Classic_User_Rect, User_Rect);
@@ -545,6 +558,9 @@ enum
 		case POS_TAKEOVER_IS_ACTIVATE:
 		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
 		  break;
+		case POS_FIRE_HOLD_TAKEOVER:
+		  GameConfig.FireHoldTakeover = !GameConfig.FireHoldTakeover;
+		  break;
 
 		case POS_BACK:
 		  finished = TRUE;
@@ -554,7 +570,7 @@ enum
 		}
 	    } // if FirePressed
 
-	  if (UpPressedR() || WheelUpPressed())
+	  if (MenuUpR())
 	    {
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = POS_BACK;
@@ -563,7 +579,7 @@ enum
 	      ReleaseKey (SDLK_RIGHT); // clear any r-l movement
 	      ReleaseKey (SDLK_LEFT);
 	    }
-	  if (DownPressedR() || WheelDownPressed())
+	  if (MenuDownR())
 	    {
 	      if ( MenuPosition < POS_BACK ) MenuPosition++;
 	      else MenuPosition = 1;
@@ -574,7 +590,7 @@ enum
 	    }
 
 
-	  if (LeftPressedR() )
+	  if (MenuLeftR() )
 	    {
 	      switch (MenuPosition)
 		{
@@ -592,7 +608,7 @@ enum
 		  break;
 		}
 	    }
-	  if (RightPressedR() || MouseRightPressedR() )
+	  if (MenuRightR() )
 	    {
 	      switch (MenuPosition)
 		{
@@ -707,24 +723,22 @@ enum
 	      finished = TRUE;
 	      key = TRUE;
 	    }
-	  if (RightPressed() || LeftPressed() || MouseLeftPressed() ||
-	      FirePressed() || ReturnPressed()|| MouseRightPressed())
+          if (MenuLeft() || MenuRight() || MenuChoose())
 	    key = TRUE;
 
 
 	  switch (MenuPosition)
 	    {
 	    case SET_FULLSCREEN_FLAG:
-	      if (FirePressedR()||ReturnPressedR())
+	      if (MenuChooseR())
 		{
 		  toggle_fullscreen();
 		  MenuItemSelectedSound();
 		}
 	      break;
 
-
 	    case SET_HOG_CPU:
-	      if (FirePressedR()||ReturnPressedR())
+	      if (MenuChooseR())
 		{
 		  GameConfig.HogCPU = !GameConfig.HogCPU;
 		  MenuItemSelectedSound();
@@ -732,7 +746,7 @@ enum
 	      break;
 
 	    case BACK:
-	      if (FirePressedR()||ReturnPressedR())
+	      if (MenuChooseR())
 		{
 		  MenuItemSelectedSound();
 		  finished=TRUE;
@@ -740,14 +754,14 @@ enum
 	      break;
 
 	    case SET_BG_MUSIC_VOLUME:
-	      if (RightPressedR()||MouseRightPressedR())
+	      if (MenuRightR())
 		{
 		  if ( GameConfig.Current_BG_Music_Volume < 1 )
 		    GameConfig.Current_BG_Music_Volume += 0.05;
 		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
 		  MoveMenuPositionSound();
 		}
-	      if (LeftPressedR()||MouseLeftPressedR())
+	      if (MenuLeftR())
 		{
 		  if ( GameConfig.Current_BG_Music_Volume > 0 )
 		    GameConfig.Current_BG_Music_Volume -= 0.05;
@@ -757,14 +771,14 @@ enum
 	      break;
 
 	      case SET_SOUND_FX_VOLUME:
-		if (RightPressedR()||MouseRightPressedR())
+		if (MenuRightR())
 		  {
 		    if ( GameConfig.Current_Sound_FX_Volume < 1 )
 		      GameConfig.Current_Sound_FX_Volume += 0.05;
 		    Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
 		    MoveMenuPositionSound();
 		  }
-		if (LeftPressedR()||MouseLeftPressedR())
+		if (MenuLeftR())
 		  {
 		    if ( GameConfig.Current_Sound_FX_Volume > 0 )
 		      GameConfig.Current_Sound_FX_Volume -= 0.05;
@@ -774,7 +788,7 @@ enum
 		break;
 
 	      case SET_GAMMA_CORRECTION:
-		if (RightPressedR()||MouseRightPressedR())
+		if (MenuRightR())
 		  {
 		    GameConfig.Current_Gamma_Correction+=0.05;
 		    SDL_SetGamma( GameConfig.Current_Gamma_Correction ,
@@ -782,7 +796,7 @@ enum
 				  GameConfig.Current_Gamma_Correction );
 		    MoveMenuPositionSound();
 		  }
-		if (LeftPressedR()||MouseLeftPressedR())
+		if (MenuLeftR())
 		  {
 		    GameConfig.Current_Gamma_Correction-=0.05;
 		    SDL_SetGamma( GameConfig.Current_Gamma_Correction ,
@@ -798,14 +812,14 @@ enum
 	    } // switch MenuPosition
 
 
-	  if (UpPressedR() || WheelUpPressed ())
+	  if (MenuUpR())
 	    {
 	      key = TRUE;
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
 	    }
-	  if (DownPressedR() || WheelDownPressed())
+	  if (MenuDownR())
 	    {
 	      key = TRUE;
 	      if ( MenuPosition < BACK ) MenuPosition++;
@@ -873,7 +887,7 @@ enum
 	      key = TRUE;
 	    }
 
-	  if (FirePressedR()||ReturnPressed())
+	  if (MenuChooseR())
 	    {
 	      MenuItemSelectedSound();
 	      key = TRUE;
@@ -903,14 +917,14 @@ enum
 		}
 	    } // if FirePressed()
 
-	  if (UpPressedR() || WheelUpPressed ())
+	  if (MenuUpR())
 	    {
 	      if ( MenuPosition > 1 ) MenuPosition--;
 	      else MenuPosition = BACK;
 	      MoveMenuPositionSound();
 	      key = TRUE;
 	    }
-	  if (DownPressedR() || WheelDownPressed ())
+	  if (MenuDownR())
 	    {
 	      if ( MenuPosition < BACK ) MenuPosition++;
 	      else MenuPosition = 1;
