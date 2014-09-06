@@ -1231,6 +1231,13 @@ ScaleGraphics (float scale)
   SDL_Surface *tmp;
   int line, col, i, j;
 
+/* For some reason we need to SetAlpha every time on OS X */
+  for (col = 0; col < 10; col++)
+    {
+      /* Digits are only used in _internal_ blits ==> clear per-surf alpha */
+      SDL_SetAlpha (InfluDigitSurfacePointer[col], 0, 0);
+      SDL_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0);
+    }
   if (scale == 1.0)
     return;
 
