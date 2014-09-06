@@ -44,8 +44,6 @@
 #include "map.h"
 #include "proto.h"
 
-#include "SDL_rotozoom.h"
-
 SDL_Color Black = {0, 0, 0};
 SDL_Color Flash_Light = {11, 11, 11};
 SDL_Color Flash_Dark  = {230, 230, 230};

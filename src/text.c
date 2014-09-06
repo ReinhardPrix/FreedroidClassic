@@ -42,7 +42,6 @@
 #include "proto.h"
 #include "global.h"
 #include "text.h"
-#include "SDL_rotozoom.h"
 
 /* Current text (virtual) "cursor" position */
 int MyCursorX;

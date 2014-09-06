@@ -41,7 +41,6 @@
 #include "proto.h"
 #include "map.h"
 #include "text.h"
-#include "SDL_rotozoom.h"
 #include "takeover.h"
 
 const SDL_VideoInfo *vid_info;	/* info about current video mode */

@@ -78,6 +78,7 @@
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_rotozoom.h>
 
 #ifdef HAVE_LIBSDL_MIXER
 #include <SDL/SDL_mixer.h>
