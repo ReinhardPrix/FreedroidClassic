@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroid, 1.1.0-pre1)
+AC_INIT(freedroid, 1.0.4)
 
 dnl Setup for automake
 SDL_VERSION=1.2.3

@@ -4,9 +4,6 @@ man_MANS = freedroid.6
 
 EXTRA_DIST = $(man_MANS) mac-osx
 
-dist-hook:
-	rm -rf `find $(distdir) -name CVS`
-
 ## Win32 specific stuff follows here
 
 win_txts = COPYING AUTHORS README Releasetext freedroid-man
