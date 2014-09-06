@@ -905,10 +905,10 @@ DebugPrintf (int db_level, char *fmt, ...)
     {
       vsnprintf (buffer, 5000, fmt, args);
 #ifndef ANDROID
-      fprintf (stderr, buffer);
+      fprintf (stderr, "%s", buffer);
       fflush (stderr);
 #else
-      __android_log_print ( ANDROID_LOG_INFO, "FreeDroid", buffer );
+      __android_log_print ( ANDROID_LOG_INFO, "FreeDroid", "%s", buffer );
 #endif
     }
 

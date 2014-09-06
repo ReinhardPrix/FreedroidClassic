@@ -554,13 +554,13 @@ parse_command_line (int argc, char *const argv[])
 	   * following gnu-coding standards for command line interfaces */
 	case 'v':
 	  printf ("\n%s %s  \n", PACKAGE, VERSION);
-	  printf (copyright);
+	  printf ("%s", copyright);
 	  exit (0);
 	  break;
 
 	case 'h':
 	case '?':
-	  printf (usage_string);
+	  printf ("%s", usage_string);
 	  exit (0);
 	  break;
 
