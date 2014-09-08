@@ -122,6 +122,33 @@ enum _cmds {
 #define EscapePressedR() KeyIsPressedR (SDLK_ESCAPE)
 #define SpacePressedR() KeyIsPressedR (SDLK_SPACE)
 
+#ifdef GCW0 // GCW0 keys are currently mapped to SDL key by the firmware... 
+#define Gcw0APressed() (KeyIsPressed(SDLK_LCTRL))
+#define Gcw0BPressed() (KeyIsPressed(SDLK_LALT))
+#define Gcw0XPressed() (KeyIsPressed(SDLK_LSHIFT))
+#define Gcw0YPressed() (KeyIsPressed(SDLK_SPACE))
+#define Gcw0RSPressed() (KeyIsPressed(SDLK_BACKSPACE))
+#define Gcw0LSPressed() (KeyIsPressed(SDLK_TAB))
+#define Gcw0StartPressed() (KeyIsPressed(SDLK_RETURN))
+#define Gcw0SelectPressed() (KeyIsPressed(SDLK_ESCAPE))
+
+#define Gcw0AnyButtonPressed() (Gcw0APressed() || Gcw0BPressed()\
+        || Gcw0XPressed() || Gcw0YPressed() || Gcw0LSPressed() || Gcw0RSPressed()\
+	|| Gcw0StartPressed() || Gcw0SelectPressed())
+
+#define Gcw0APressedR() (KeyIsPressedR(SDLK_LCTRL))
+#define Gcw0BPressedR() (KeyIsPressedR(SDLK_LALT))
+#define Gcw0XPressedR() (KeyIsPressedR(SDLK_LSHIFT))
+#define Gcw0YPressedR() (KeyIsPressedR(SDLK_SPACE))
+#define Gcw0RSPressedR() (KeyIsPressedR(SDLK_BACKSPACE))
+#define Gcw0LSPressedR() (KeyIsPressedR(SDLK_TAB))
+#define Gcw0StartPressedR() (KeyIsPressedR(SDLK_RETURN))
+#define Gcw0SelectPressedR() (KeyIsPressedR(SDLK_ESCAPE))
+
+#define Gcw0AnyButtonPressedR() (Gcw0APressedR() || Gcw0BPressedR()\
+        || Gcw0XPressedR() || Gcw0YPressedR() || Gcw0LSPressedR()\
+	|| Gcw0RSPressedR() || Gcw0StartPressedR() || Gcw0SelectPressedR())
+#endif // GCW0 keys
 
 #define UpPressed() (cmd_is_active(CMD_UP))
 #define DownPressed() (cmd_is_active(CMD_DOWN))
@@ -136,7 +163,34 @@ enum _cmds {
 #define LeftPressedR() (cmd_is_activeR(CMD_LEFT))
 #define RightPressedR() (cmd_is_activeR(CMD_RIGHT))
 
+#define AnyCmdActive() (cmd_is_active(CMD_FIRE) || cmd_is_active(CMD_ACTIVATE) || cmd_is_active(CMD_TAKEOVER) ) 
+#define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) ) 
+
 #define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
+
+/* Now that I've added ability to clear binds, one can break Freedroid if one 
+ * unbinds all UP / DOWN keys. That's why I've added these, with a fallback key
+ * too, so that one can ALWAYS navigate the menu.
+ * Currently MenuBack is not used. */
+#define MenuUpR() (UpPressedR() || WheelUpPressed() || KeyIsPressedR(SDLK_UP))
+#define MenuDownR() (DownPressedR() || WheelDownPressed() || KeyIsPressedR(SDLK_DOWN) )
+#define MenuChooseR() (FirePressedR() || ReturnPressedR() || SpacePressedR())
+#define MenuLeftR() (LeftPressedR() || MouseLeftPressed() || KeyIsPressedR(SDLK_LEFT))
+#define MenuRightR() (RightPressedR() || MouseRightPressed() || KeyIsPressedR(SDLK_RIGHT) )
+#define MenuBackR() (EscapePressedR()) // Not used ATM; but in the future, we might need in case a device has no Escape...
+
+// For clearing a key in keyconfig (can be redefined here):
+#define ClearBoundKeyR() (KeyIsPressedR(SDLK_BACKSPACE)) // Works for GCW0 too, currently, since backspace = RShoulder
+
+/* Now for the pressed defines... */
+#define MenuUp() (UpPressed() || WheelUpPressed() || KeyIsPressed(SDLK_UP))
+#define MenuDown() (DownPressed() || WheelDownPressed() || KeyIsPressed(SDLK_DOWN) )
+#define MenuChoose() (FirePressed() || ReturnPressed() || SpacePressed())
+#define MenuLeft() (LeftPressed() || MouseLeftPressed() || KeyIsPressed(SDLK_LEFT))
+#define MenuRight() (RightPressed() || MouseRightPressed() || KeyIsPressed(SDLK_RIGHT) )
+#define MenuBack() (EscapePressed()) // Not used ATM; but in the future, we might need in case a device has no Escape...
+
+#define ClearBoundKey() (KeyIsPressed(SDLK_BACKSPACE)) // Works for GCW0 too, currently, since backspace = RShoulder
 
 // ----------------------------------------
 

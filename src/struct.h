@@ -81,6 +81,7 @@ typedef struct
   int 	FullUserRect;   		// use "full" or "classic" (=small) User_Rect
   int UseFullscreen;			// toggle for use of fullscreen vs. X11-window
   int TakeoverActivates;		// toggle if takeover-mode also does 'Activate' (i.e. lifts/consoles)
+  int FireHoldTakeover;			// Activate Takeover-mode after a delay if fire is held without a direction
   int ShowDecals;       		// show dead droids-ashes...
   int AllMapVisible;    		// complete map is visible?
   float scale;  	 		// scale the whole graphics by this at load-time

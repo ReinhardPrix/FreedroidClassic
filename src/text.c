@@ -43,6 +43,21 @@
 #include "global.h"
 #include "text.h"
 
+#ifdef ARCADEINPUT
+/* Characters (ASCII codes) for ARCADEINPUT; comment tells which characters are in question. 
+ * Easy (?) to modify to include other characters (or remove), */
+// Should this be moved to a .h (text.h) ?
+#define ARCADEINPUTMAX 69 
+static const int arcadeinputchar[ARCADEINPUTMAX+1] = { // So we got 70 characters to choose from...
+/* 0-9:   */  48, 49, 50, 51, 52, 53, 54, 55, 56, 57, // 0-9
+/* 11:    */  61, // =
+/* 12-17: */  42, 43, 44, 45, 46, 47, // *-+,./
+/* 18-14: */  65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, // A-Z (25 chars)
+/* 43:    */  32, // space // 43
+/* 44-69: */  97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122 // a-z
+};
+#endif
+
 /* Current text (virtual) "cursor" position */
 int MyCursorX;
 int MyCursorY;
@@ -431,7 +446,6 @@ linebreak_needed (char *textpos , const SDL_Rect *clip)
 
 } // bool linebreak_needed
 
-
 /*-----------------------------------------------------------------
  * @Desc: reads a string of "MaxLen" from User-input, and echos it
  *        either to stdout or using graphics-text, depending on the
@@ -474,8 +488,18 @@ GetString (int MaxLen, int echo)
 
   /* Speicher fuer Eingabe reservieren */
   input     = MyMalloc (MaxLen + 5);
+#ifdef ARCADEINPUT
+  char emptychar=' '; //for "empty" input line / backspace etc...
+  int blink_time=200; // For adjusting fast <->slow blink; in ms
+  static Uint32 last_frame_time; //  = SDL_GetTicks();
+  Uint32 frame_duration;
 
-  memset (input, '.', MaxLen);
+  int inputchar=17; // initial char = A
+#else // NORMAL INPUT
+  char emptychar='.'; //for "empty" input linue / backspace etc...
+#endif // ARCADEINPUT
+
+  memset (input, emptychar, MaxLen);
   input[MaxLen] = 0;
 
   finished = FALSE;
@@ -488,6 +512,63 @@ GetString (int MaxLen, int echo)
       PutString (ne_screen, x0, y0, input);
       SDL_Flip (ne_screen);
 
+#ifdef ARCADEINPUT
+      if ( inputchar < 0 ) inputchar+=(ARCADEINPUTMAX+1); //+1 because we chose (>)1 past the point...
+      if ( inputchar > ARCADEINPUTMAX ) inputchar-=(ARCADEINPUTMAX+1);
+      key=arcadeinputchar[inputchar];
+
+      if ( ( frame_duration = SDL_GetTicks() - last_frame_time ) > blink_time/2 ) { 
+        input[curpos] = (char) key; // We want to show the currently chosen character
+	if ( frame_duration > blink_time ) last_frame_time = SDL_GetTicks();
+	} else input[curpos] = emptychar; // Hmm., how to get character widht? If using '.', or any fill character, we'd need to know
+
+      if (KeyIsPressedR(SDLK_RETURN)) // For GCW0, maybe we need a prompt to say [PRESS ENTER WHEN FINISHED], or any other key we may choose...
+ 	{
+ 	  input[curpos] = 0; // The last char is currently shown but, not entered into the string...
+// 	  input[curpos] = key; // Not sure which one would be expected by most users; the last blinking char is input or not?
+ 	  finished = TRUE;
+ 	}
+      else if (UpPressedR()) // UP 
+       /* Currently, the key will work ON RELEASE; we might change this to 
+	* ON PRESS and add a counter / delay after which while holding, will 
+	* scroll trough the chars */
+ 	{
+        inputchar++;
+ 	}
+      else if (DownPressedR())// DOWN 
+ 	{
+        inputchar--;
+ 	}
+      else if (FirePressedR())// FIRE
+        {
+ 	  // ADVANCE CURSOR
+	input[curpos]=(char)key; // Needed in case character has just blinked out...
+	curpos ++;
+	  // key=startkey; // Reselect A or not?
+ 	}
+      else if (LeftPressedR())
+ 	{
+ 	  inputchar-=5;
+ 	}
+      else if (RightPressedR())
+ 	{
+ 	  inputchar+=5;
+ 	}
+      else if (cmd_is_activeR(CMD_ACTIVATE)) // CAPITAL <-> small
+        {
+	  if ( inputchar >= 17 && inputchar <= 42 ) { 
+	    inputchar=44+(inputchar-17);
+	  } else if ( inputchar >= 44 && inputchar <= 69 ) {
+	    inputchar=17+(inputchar-44);
+	  }
+	}
+ 	// else if ... other functions to consider: SPACE
+      else if (KeyIsPressedR(SDLK_BACKSPACE)) // Or any othe key we choose for the GCW0!
+ 	{
+ 	  input[curpos] = emptychar;
+ 	  if ( curpos > 0 ) curpos --;
+        } // (el)ifs Pressed
+#else // NORMAL INPUT
       key = getchar_raw ();
 
       if (key == SDLK_RETURN)
@@ -506,8 +587,9 @@ GetString (int MaxLen, int echo)
 	  if ( curpos > 0 ) curpos --;
 	  input[curpos] = '.';
 	}
-
+#endif // ARCADEINPUT
     } /* while(!finished) */
+
 
   DebugPrintf (2, "\n\nchar *GetString(..):  The final string is:\n");
   DebugPrintf (2,  input );
@@ -517,6 +599,16 @@ GetString (int MaxLen, int echo)
   return (input);
 
 } /* GetString() */
+
+//  
+/*  Proposed: void ShowInstructionsForInput () { 
+ *    Show some instructions for using the input method; i.e.: 
+ *    up/down to choose, left/right to skip 5 chars, 
+ *    FIRE to place char, 
+ *    START to finish, 
+ *    right shoulder for bspace 
+ *    etc. whatever is possible in the function GetString...} */
+
 
 /*-----------------------------------------------------------------
  *

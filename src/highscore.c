@@ -172,13 +172,18 @@ UpdateHighscores (void)
   SDL_BlitSurface (pic999, NULL, ne_screen, &dst);
   h = FontHeight (Para_BFont);
   DisplayText ("Great Score !",  dst.x - h, dst.y - h, &User_Rect);
-#ifndef ANDROID
+#if !defined ANDROID && !defined ARCADEINPUT
   DisplayText ("Enter your name: ",  dst.x - 5*h, dst.y + dst.h, &User_Rect);
+#endif
+#ifdef ARCADEINPUT 
+  DisplayText ("Enter with U/D, (L/R skip 5 chars),",  dst.x - 6*h, dst.y + dst.h, &User_Rect);
+  DisplayText ("Act = toggle case, Fire to enter,",  dst.x - 5*h, dst.y + dst.h + h, &User_Rect);
+  DisplayText ("Start when ready: ",  dst.x - 5*h, dst.y + dst.h + h*2, &User_Rect);
 #endif
   SDL_Flip (ne_screen);
 
   SDL_SetClipRect (ne_screen, NULL);
-#ifndef ANDROID
+#if !defined ANDROID
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
   free (tmp_name);

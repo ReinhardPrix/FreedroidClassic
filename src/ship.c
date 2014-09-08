@@ -295,6 +295,7 @@ EnterKonsole (void)
   SpacePressedR();
   MouseLeftPressedR();
   MouseRightPressedR();
+  AnyCmdActiveR();
 
   ResetMouseWheel ();
 

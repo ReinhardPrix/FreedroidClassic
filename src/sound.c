@@ -86,7 +86,11 @@ char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
   "starpaws.mod",                     // YELLOW
   "The_Last_V8.mod",                  // GREEN
   "dreamfish-green_beret.mod",        // GRAY
-  "dreamfish-sanxion.mod",            // BLUE
+#ifdef GCW0
+  "dreamfish-green_beret.mod",        // GRAY
+#else
+  "dreamfish-sanxion.mod",            // BLUE // CRASHES the GCW0 ???
+#endif
   "kollaps-tron.mod",                 // GREENBLUE
   "dreamfish-uridium2_loader.mod"     // DARK
 };
@@ -217,7 +221,7 @@ Set_Sound_FX_Volume(float NewVolume)
   // Set the volume IN the loaded files, if SDL is used...
   // This is done here for the Files 1,2,3 and 4, since these
   // are background music files.
-  for ( i=5 ; i<ALL_SOUNDS ; i++ )
+  for ( i=1 ; i<ALL_SOUNDS ; i++ )
     {
       Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
     }

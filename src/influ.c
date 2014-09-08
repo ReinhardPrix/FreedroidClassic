@@ -180,8 +180,9 @@ MoveInfluence (void)
   if (RightPressed())
     Me.speed.x += accel;
 
-  if (!SpacePressed())
-    Me.status = MOBILE;
+//  We only need this check if we want held fire to cause activate 
+  if (!AnyCmdActive()) // Used to be !SpacePressed, which causes any fire button != SPACE behave differently than space
+     Me.status = MOBILE;
 
   if (TransferCounter == 1)
     {
@@ -192,8 +193,8 @@ MoveInfluence (void)
   if (cmd_is_active(CMD_ACTIVATE)) // activate mode for Konsole and Lifts
     Me.status = ACTIVATE;
 
-  if ( (FirePressed ()) && (NoDirectionPressed ()) &&(Me.status != WEAPON) && (Me.status != TRANSFERMODE) )
-    TransferCounter += Frame_Time();
+   if ( GameConfig.FireHoldTakeover && (FirePressed ()) && (NoDirectionPressed ()) &&(Me.status != WEAPON) && (Me.status != TRANSFERMODE) ) // Proposed FireActivatePressed here...
+   TransferCounter += Frame_Time(); // Or make it an option!
 
   if ( (FirePressed() ) && (!NoDirectionPressed () ) && (Me.status != TRANSFERMODE) )
     Me.status = WEAPON;
