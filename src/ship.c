@@ -444,7 +444,7 @@ PaintConsoleMenu (int pos, int flag)
 
     } // only if not UPDATE_ONLY was required
 
-  src.x = Cons_Menu_Rects[0].w * pos;
+  src.x = Cons_Menu_Rects[0].w * pos + 2*pos*GameConfig.scale;
   src.y = 0;
   src.w = Cons_Menu_Rect.w;
   src.h = 4 * Cons_Menu_Rect.h;
