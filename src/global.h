@@ -30,6 +30,7 @@
 #include "system.h"
 #include "BFont.h"
 #include "takeover.h"
+#include "struct.h"
 
 #undef EXTERN
 #ifdef _main_c

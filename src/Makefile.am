@@ -11,13 +11,41 @@ else
 win32_res =
 endif
 
-freedroid_SOURCES = menu.c graphics.c  map.c   init.c  ship.c \
-	takeover.c bullet.c  influ.c  misc.c  text.c  sound.c \
-	enemy.c input.c  main.c  view.c BFont.c defs.h \
-	map.h vars.h takeover.h global.h \
-	text.h proto.h struct.h system.h BFont.h maped.h \
-	highscore.c getopt.c getopt1.c getopt.h \
-	$(win32_res)
+freedroid_SOURCES = \
+		BFont.c \
+		BFont.h \
+		bullet.c \
+		config.h \
+		defs.h \
+		enemy.c \
+		getopt.c \
+		getopt.h \
+		getopt1.c \
+		global.h \
+		graphics.c \
+		highscore.c \
+		influ.c \
+		init.c \
+		input.c \
+		level_editor.c \
+		main.c \
+		map.c \
+		map.h \
+		maped.h \
+		menu.c \
+		misc.c \
+		proto.h \
+		ship.c \
+		sound.c \
+		struct.h \
+		system.h \
+		takeover.c \
+		takeover.h \
+		text.c \
+		text.h \
+		vars.h \
+		view.c \
+		$(win32_res)
 
 freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
 
