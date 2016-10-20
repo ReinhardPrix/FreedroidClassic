@@ -31,6 +31,7 @@
 
 #define _menu_c
 
+// ----- includes --------------------
 #include "system.h"
 
 #include "defs.h"
@@ -39,11 +40,34 @@
 #include "proto.h"
 #include "map.h"
 
+// ----- global variables --------------------
 extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
 extern char *keystr[INPUT_LAST];
 
-void Single_Player_Menu (void);
+
+SDL_Surface *Menu_Background = NULL;
+int fheight;  // font height of Menu-font
+
+// ----- Macros --------------------
+#define HANDLE_MOVEMENT_KEYS \
+  if (MenuUpR()) { \
+     key = TRUE; \
+     if (MenuPosition > 1) { MenuPosition--; } \
+     else { MenuPosition = (END-1); } \
+     ReleaseKey (SDLK_RIGHT); ReleaseKey (SDLK_LEFT); \
+     MoveMenuPositionSound(); \
+  } \
+  if (MenuDownR()) { \
+     key = TRUE; \
+     if ( MenuPosition < (END-1) ) { MenuPosition++; } \
+     else { MenuPosition = 1; } \
+     ReleaseKey (SDLK_RIGHT); \
+     ReleaseKey (SDLK_LEFT); \
+     MoveMenuPositionSound(); \
+  }
+
+// ----- local prototypes ----------
 void Credits_Menu (void);
 void Options_Menu (void);
 
@@ -52,9 +76,6 @@ void GraphicsSound_Options_Menu (void);
 void On_Screen_Display_Options_Menu (void);
 void Key_Config_Menu (void);
 void Display_Key_Config (int selx, int sely);
-
-SDL_Surface *Menu_Background = NULL;
-int fheight;  // font height of Menu-font
 
 /*@Function============================================================
 @Desc: This function prepares the screen for the big Escape menu and
@@ -105,7 +126,10 @@ InitiateMenu (bool with_droids)
 void
 QuitGameMenu (void)
 {
-#ifndef ANDROID
+#ifdef ANDROID
+  Terminate (OK);
+#endif
+
   InitiateMenu (TRUE);
 
 #ifdef GCW0
@@ -118,7 +142,7 @@ QuitGameMenu (void)
   SDL_Flip (ne_screen);
 #ifdef GCW0
   while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
-  if ( (Gcw0APressed()) ) {  
+  if ( (Gcw0APressed()) ) {
     while ( (!Gcw0AnyButtonPressedR()) ) SDL_Delay(1); // In case FirePressed && !Gcw0APressed() -> would cause a loop otherwise in the menu...
     Terminate (OK);
   }
@@ -128,8 +152,9 @@ QuitGameMenu (void)
     Terminate (OK);
 #endif
 
-#endif // ANDROID
-}
+  return;
+
+} // QuitGameMenu()
 
 
 
@@ -144,8 +169,9 @@ EscapeMenu (void)
 {
   enum
     {
-      BACK2GAME=1,
+      START = 0,
 #ifndef ANDROID
+      BACK2GAME,
       POS_GRAPHICS_SOUND_OPTIONS,
 #endif
       POS_LEGACY_OPTIONS,
@@ -158,8 +184,21 @@ EscapeMenu (void)
 #ifndef ANDROID
       POS_KEYCONFIG,
 #endif
-      POS_QUIT
+      POS_QUIT,
+      END
     };
+
+  static const struct {
+    const char *const name;	/**< coordinate name */
+  const double scale;		/**< multiplicative scaling factor of the coordinate */
+  const char *const help;	/**< help string explaining the coordinate's meaning and units */
+} DopplerCoordinates[DOPPLERCOORD_LAST] = {
+
+  [DOPPLERCOORD_FREQ]     = {"freq",    SCALE_T,          "Frequency [Units: Hz]."},
+  [DOPPLERCOORD_F1DOT]    = {"f1dot",   POW2(SCALE_T),    "First spindown [Units: Hz/s]."},
+  [DOPPLERCOORD_F2DOT]    = {"f2dot",   POW3(SCALE_T),    "Second spindown [Units: Hz/s^2]."},
+  [DOPPLERCOORD_F3DOT]    = {"f3dot",   POW4(SCALE_T),    "Third spindown [Units: Hz/s^3]."},
+    
 
   bool key=FALSE;
   bool finished = FALSE;
@@ -178,12 +217,12 @@ EscapeMenu (void)
 
       pos = 0;
 
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
 #ifndef ANDROID
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Graphics & Sound" );
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Graphics & Sound" );
 #endif
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Legacy Options");
+      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "On-Screen Displays" );
 #if !defined ANDROID && !defined GCW0
       PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
 #endif
@@ -213,10 +252,10 @@ EscapeMenu (void)
 	      key = TRUE;
 	      switch (MenuPosition)
 		{
+#ifndef ANDROID
 		case BACK2GAME:
 		  finished = TRUE;
 		  break;
-#ifndef ANDROID
 		case POS_GRAPHICS_SOUND_OPTIONS:
 		  GraphicsSound_Options_Menu();
 		  break;
@@ -252,22 +291,7 @@ EscapeMenu (void)
 		}
 	    }
 
-	  if (MenuUpR())
-	    {
-	      key = TRUE;
-	      if (MenuPosition > 1) MenuPosition--;
-	      else MenuPosition = POS_QUIT;
-	      MoveMenuPositionSound();
-	    }
-	  if (MenuDownR())
-	    {
-	      key = TRUE;
-	      if ( MenuPosition < POS_QUIT ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-
-	    }
-
+          HANDLE_MOVEMENT_KEYS();
 
 	} // while !key
 
@@ -285,149 +309,6 @@ EscapeMenu (void)
   return;
 
 } // EscapeMenu
-
-// ------------------------------------------------------------
-// show/edit keyboard-config
-// ------------------------------------------------------------
-void
-Key_Config_Menu (void)
-{
-  int LastMenuPos = 1 + CMD_LAST;
-  int selx = 1, sely = 1;   // currently selected menu-position
-  bool finished = FALSE;
-  bool key = FALSE;
-  int posy = 0;
-  int i;
-  int oldkey, newkey = -1;
-
-  enum { BACK};
-
-  while (!finished)
-    {
-      key = FALSE;
-
-      while (!key)
-	{
-	  Display_Key_Config (selx, sely);
-	  SDL_Delay(1);
-
-	  if ( EscapePressedR() )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-
-	  if (MenuChooseR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-
-	      if (sely == 1)
-		finished = TRUE;
-	      else
-		{
-		  oldkey = key_cmds[sely-2][selx-1];
-		  key_cmds[sely-2][selx-1] = '_';
-		  Display_Key_Config (selx, sely);
-		  newkey = getchar_raw(); // || joystick input!
-		  if (newkey == SDLK_ESCAPE)
-		    key_cmds[sely-2][selx-1] = oldkey;
-		  else
-		    key_cmds[sely-2][selx-1] = newkey;
-		}
-
-	    } // if FirePressed()
-
-	  if (MenuUpR())
-	    {
-	      if ( sely > 1 ) sely--;
-	      else sely = LastMenuPos;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuDownR())
-	    {
-	      if ( sely < LastMenuPos ) sely++;
-	      else sely = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuRightR())
-	    {
-	      if ( selx < 3 ) selx++;
-	      else selx = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuLeftR())
-	    {
-	      if ( selx > 1 ) selx--;
-	      else selx = 3;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-           /* There should really be a way to clear a key; this is dirty... 
-	    * On a PC, one could just set a "junk" key, but not on a device with 
-	    * limited buttons */ 
-	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
-	    {
-		    key_cmds[sely-2][selx-1] = 0;
-	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
-
-	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
-
-    } // while !finished
-
-  return;
-
-} // Key_Config_Menu()
-
-// ------------------------------------------------------------
-// subroutine to display the current key-config and highlight
-//  current selection
-// ------------------------------------------------------------
-#define PosFont(x,y) ( (((x)!=selx)||((y)!=sely)) ? Font1_BFont : Font2_BFont )
-void
-Display_Key_Config (int selx, int sely)
-{
-  int startx = Full_User_Rect.x + 1.2*Block_Rect.w;
-  int starty = Full_User_Rect.y + FontHeight(GetCurrentFont());
-  int col1 = startx + 7.5 * CharWidth(GetCurrentFont(), 'O');
-  int col2 = col1 + 6.5 * CharWidth(GetCurrentFont(), 'O');
-  int col3 = col2 + 6.5 * CharWidth(GetCurrentFont(), 'O');
-  int posy = 0;
-  int i;
-
-  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
-
-  PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
-#ifdef GCW0
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
-#else
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
-#endif
-
-  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
-  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
-  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
-  posy ++;
-
-  for (i=0; i < CMD_LAST; i++)
-    {
-      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
-      PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
-      PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
-      PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
-      posy ++;
-    }
-
-  SDL_Flip( ne_screen );
-
-  return;
-} // Display_Key_Config
 
 /*@Function============================================================
 @Desc: This function provides a the options menu.  This menu is a
@@ -458,9 +339,11 @@ enum
     POS_DROID_TALK,
     POS_SHOW_DECALS,
     POS_MAP_VISIBLE,
+#ifndef ANDROID
     POS_TAKEOVER_IS_ACTIVATE,
     POS_FIRE_HOLD_TAKEOVER,
     POS_BACK
+#endif
   };
 
 
@@ -494,7 +377,7 @@ enum
 
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "All Map Visible: %s", GameConfig.AllMapVisible ? "ON" : "OFF");
-
+#ifndef ANDROID
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
 
@@ -503,7 +386,7 @@ enum
 
       PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
 		   "Back");
-
+#endif
       SDL_Flip( ne_screen );
 
       while (!key)
@@ -560,16 +443,17 @@ enum
 		  GameConfig.AllMapVisible = !GameConfig.AllMapVisible;
 		  InitiateMenu (TRUE);
 		  break;
+#ifndef ANDROID
 		case POS_TAKEOVER_IS_ACTIVATE:
 		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
 		  break;
 		case POS_FIRE_HOLD_TAKEOVER:
 		  GameConfig.FireHoldTakeover = !GameConfig.FireHoldTakeover;
 		  break;
-
 		case POS_BACK:
 		  finished = TRUE;
 		  break;
+#endif
 		default:
 		  break;
 		}
@@ -684,6 +568,7 @@ GraphicsSound_Options_Menu (void)
   bool finished = FALSE;
   bool key = FALSE;
   int pos;
+
 
 enum
   { SET_BG_MUSIC_VOLUME=1,
@@ -863,11 +748,13 @@ On_Screen_Display_Options_Menu (void)
   bool key = FALSE;
 
 enum
-  { SHOW_POSITION=1,
+  {
+    SHOW_POSITION=1,
     SHOW_FRAMERATE,
     SHOW_ENERGY,
     SHOW_DEATHCOUNT,
-    BACK };
+    BACK
+  };
 
   while (!finished)
     {
@@ -1281,6 +1168,154 @@ LevelEditMenu (void)
 
   return (Done);
 } // LevelEditMenu
+
+// ======================================================================
+
+// ------------------------------------------------------------
+// show/edit keyboard-config
+// ------------------------------------------------------------
+void
+Key_Config_Menu (void)
+{
+  int LastMenuPos = 1 + CMD_LAST;
+  int selx = 1, sely = 1;   // currently selected menu-position
+  bool finished = FALSE;
+  bool key = FALSE;
+  int posy = 0;
+  int i;
+  int oldkey, newkey = -1;
+
+  enum { BACK};
+
+  while (!finished)
+    {
+      key = FALSE;
+
+      while (!key)
+	{
+	  Display_Key_Config (selx, sely);
+	  SDL_Delay(1);
+
+	  if ( EscapePressedR() )
+	    {
+	      finished = TRUE;
+	      key = TRUE;
+	    }
+
+	  if (MenuChooseR())
+	    {
+	      MenuItemSelectedSound();
+	      key = TRUE;
+
+	      if (sely == 1)
+		finished = TRUE;
+	      else
+		{
+		  oldkey = key_cmds[sely-2][selx-1];
+		  key_cmds[sely-2][selx-1] = '_';
+		  Display_Key_Config (selx, sely);
+		  newkey = getchar_raw(); // || joystick input!
+		  if (newkey == SDLK_ESCAPE)
+		    key_cmds[sely-2][selx-1] = oldkey;
+		  else
+		    key_cmds[sely-2][selx-1] = newkey;
+		}
+
+	    } // if FirePressed()
+
+	  if (MenuUpR())
+	    {
+	      if ( sely > 1 ) sely--;
+	      else sely = LastMenuPos;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuDownR())
+	    {
+	      if ( sely < LastMenuPos ) sely++;
+	      else sely = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuRightR())
+	    {
+	      if ( selx < 3 ) selx++;
+	      else selx = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuLeftR())
+	    {
+	      if ( selx > 1 ) selx--;
+	      else selx = 3;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+           /* There should really be a way to clear a key; this is dirty... 
+	    * On a PC, one could just set a "junk" key, but not on a device with 
+	    * limited buttons */ 
+	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
+	    {
+		    key_cmds[sely-2][selx-1] = 0;
+	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
+
+	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
+
+    } // while !finished
+
+  return;
+
+} // Key_Config_Menu()
+
+// ------------------------------------------------------------
+// subroutine to display the current key-config and highlight
+//  current selection
+// ------------------------------------------------------------
+#define PosFont(x,y) ( (((x)!=selx)||((y)!=sely)) ? Font1_BFont : Font2_BFont )
+void
+Display_Key_Config (int selx, int sely)
+{
+  int startx = Full_User_Rect.x + 1.2*Block_Rect.w;
+  int starty = Full_User_Rect.y + FontHeight(GetCurrentFont());
+  int col1 = startx + 7.5 * CharWidth(GetCurrentFont(), 'O');
+  int col2 = col1 + 6.5 * CharWidth(GetCurrentFont(), 'O');
+  int col3 = col2 + 6.5 * CharWidth(GetCurrentFont(), 'O');
+  int posy = 0;
+  int i;
+
+  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+
+  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
+
+  PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+#ifdef GCW0
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
+#else
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
+#endif
+
+  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
+  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
+  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
+  posy ++;
+
+  for (i=0; i < CMD_LAST; i++)
+    {
+      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
+      PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
+      PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
+      PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
+      posy ++;
+    }
+
+  SDL_Flip( ne_screen );
+
+  return;
+} // Display_Key_Config
+
+
+// ======================================================================
 
 // ----------------------------------------------------------------------
 // Cheat menu
