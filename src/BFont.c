@@ -259,14 +259,13 @@ PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 }
 
 void
-PutString (SDL_Surface * Surface, int x, int y, char *text)
+PutString (SDL_Surface * Surface, int x, int y, const char *text)
 {
   PutStringFont (Surface, CurrentFont, x, y, text);
 }
 
 void
-PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-	       char *text)
+PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, const char *text)
 {
   int i = 0;
   while (text[i] != '\0')

@@ -44,7 +44,6 @@
 
 // ----- prototypes --------------------
 void Show_Waypoints(void);
-void LevelEditor(void);
 void DeleteWaypoint (level *level, int num);
 void CreateWaypoint (level *level, int BlockX, int BlockY);
 

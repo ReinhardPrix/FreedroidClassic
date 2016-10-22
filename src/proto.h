@@ -235,8 +235,9 @@ EXTERN void init_keystr (void);
 EXTERN void InitiateMenu (bool with_droids);
 EXTERN void QuitGameMenu (void);
 EXTERN void Cheatmenu (void);
-EXTERN void EscapeMenu (void);
+EXTERN void showMainMenu (void);
 EXTERN bool LevelEditMenu (void);
+EXTERN void LevelEditor(void);
 
 /* misc.c */
 #undef EXTERN

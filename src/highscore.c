@@ -209,7 +209,7 @@ UpdateHighscores (void)
 /*-----------------------------------------------------------------
  *
  * Display the high scores of the single player game.
- * This function is actually a submenu of the big EscapeMenu.
+ * This function is actually a submenu of the MainMenu.
  *
  *-----------------------------------------------------------------*/
 void

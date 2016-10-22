@@ -356,7 +356,7 @@ ReactToSpecialKeys(void)
     Cheatmenu ();
 
   if ( EscapePressedR() )
-    EscapeMenu ();
+    showMainMenu ();
 
 
 } // void ReactToSpecialKeys(void)

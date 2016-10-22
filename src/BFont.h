@@ -53,11 +53,10 @@ int TextWidth (char *text);
 int TextWidthFont (BFont_Info * Font, char *text);
 
 /* Write a string on the "Surface" with the current font */
-void PutString (SDL_Surface * Surface, int x, int y, char *text);
+void PutString (SDL_Surface * Surface, int x, int y, const char *text);
 
 /* Write a string on the "Surface" with the specified font */
-void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-		    char *text);
+void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, const char *text);
 
 /* Write a left-aligned string on the "Surface" with the current font */
 void LeftPutString (SDL_Surface * Surface, int y, char *text);

@@ -1,5 +1,6 @@
 /*
  *
+ *   Copyright (c) 2016  Reinhard Prix
  *   Copyright (c) 1994, 2002, 2003  Johannes Prix
  *   Copyright (c) 1994, 2002, 2003  Reinhard Prix
  *
@@ -31,6 +32,7 @@
 
 #define _menu_c
 
+// ----- includes --------------------
 #include "system.h"
 
 #include "defs.h"
@@ -39,25 +41,453 @@
 #include "proto.h"
 #include "map.h"
 
+// ----- global variables --------------------
 extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
 extern char *keystr[INPUT_LAST];
 
-void Single_Player_Menu (void);
-void Credits_Menu (void);
-void Options_Menu (void);
-
-bool LevelEditMenu (void);
-void GraphicsSound_Options_Menu (void);
-void On_Screen_Display_Options_Menu (void);
-void Key_Config_Menu (void);
-void Display_Key_Config (int selx, int sely);
 
 SDL_Surface *Menu_Background = NULL;
 int fheight;  // font height of Menu-font
 
+// ----- Macros --------------------
+// ----- local types ----------
+typedef enum
+{
+  ACTION_NONE,
+  ACTION_INFO,
+  ACTION_BACK,
+  ACTION_CLICK,
+  ACTION_LEFT,
+  ACTION_RIGHT,
+  ACTION_UP,
+  ACTION_DOWN
+} MenuAction_t;
+
+typedef struct MenuEntry_s
+{
+  const char *name;			/**< menu entry string */
+  const char *(*handler)();		/**< handler & info function for this menu entry (none if NULL) */
+  const struct MenuEntry_s *submenu; 	/**< enter this submenu (if non-NULL) */
+} MenuEntry_t;
+
+
+// ----- local prototypes ----------
+void Credits_Menu (void);
+void Options_Menu (void);
+
+void GraphicsSound_Options_Menu (void);
+void On_Screen_Display_Options_Menu (void);
+void Key_Config_Menu (void);
+
+void Display_Key_Config (int selx, int sely);
+bool LevelEditMenu (void);
+
+void ShowMenu ( const MenuEntry_t *menu );
+
+const char *handle_StrictlyClassic ( MenuAction_t action );
+const char *handle_WindowType ( MenuAction_t action );
+const char *handle_Theme ( MenuAction_t action );
+const char *handle_DroidTalk ( MenuAction_t action );
+const char *handle_AllMapVisible ( MenuAction_t action );
+const char *handle_ShowDecals ( MenuAction_t action );
+const char *handle_TransferIsActivate ( MenuAction_t action );
+const char *handle_FireIsTransfer ( MenuAction_t action );
+
+const char *handle_MusicVolume ( MenuAction_t action );
+const char *handle_SoundVolume ( MenuAction_t action );
+const char *handle_Fullscreen ( MenuAction_t action );
+
+const char *handle_ShowPosition ( MenuAction_t action );
+const char *handle_ShowFramerate ( MenuAction_t action );
+const char *handle_ShowEnergy ( MenuAction_t action );
+const char *handle_ShowDeathCount ( MenuAction_t action );
+
+const char *handle_LevelEditor ( MenuAction_t action );
+const char *handle_ShowHighscores ( MenuAction_t action );
+const char *handle_Credits_Menu ( MenuAction_t action );
+const char *handle_Key_Config_Menu ( MenuAction_t action );
+const char *handle_QuitGameMenu ( MenuAction_t action );
+
+void setTheme ( int theme_index );
+const char *isToggleOn ( int toggle );
+void flipToggle ( int *toggle );
+void menuChangeFloat ( MenuAction_t action, float *val, float step, float min_val, float max_val );
+
+// ----- define menus ----------
+MenuEntry_t LegacyMenu[] =
+  {
+    { "Back",			NULL,			NULL },
+    { "Set Strictly Classic",	handle_StrictlyClassic,	NULL },
+    { "Combat window: ", 	handle_WindowType, 	NULL },
+    { "Graphics theme: ", 	handle_Theme,		NULL },
+    { "Droid Talk: ", 		handle_DroidTalk,	NULL },
+    { "Show Decals: ", 		handle_ShowDecals,	NULL },
+    { "All Map Visible: ", 	handle_AllMapVisible,	NULL },
+    { "Transfer = Activate: ", 	handle_TransferIsActivate, NULL },
+    { "Hold Fire to Transfer: ",handle_FireIsTransfer,	NULL },
+    { NULL,			NULL, 			NULL }
+  };
+
+MenuEntry_t GraphicsSoundMenu[] =
+  {
+    { "Back", 			NULL,			NULL },
+    { "Music volume: ", 	handle_MusicVolume,	NULL },
+    { "Sound volume: ", 	handle_SoundVolume,	NULL },
+    { "Fullscreen Mode: ", 	handle_Fullscreen,	NULL },
+    { NULL,			NULL, 			NULL }
+  };
+
+MenuEntry_t HUDMenu[] =
+{
+  { "Back", 			NULL,			NULL },
+  { "Show Position: ", 		handle_ShowPosition,	NULL },
+  { "Show Framerate: ",		handle_ShowFramerate,	NULL },
+  { "Show Energy: ",		handle_ShowEnergy,	NULL },
+//  { "Show DeathCount: ",	handle_ShowDeathCount,	NULL },
+  { NULL,			NULL, 			NULL }
+};
+
+
+MenuEntry_t MainMenu[] =
+  {
+    { "Back to Game", 		NULL, 					NULL },
+    { "Graphics & Sound", 	NULL, 					GraphicsSoundMenu },
+    { "Legacy Options", 	NULL,					LegacyMenu },
+    { "HUD Settings",		NULL, 					HUDMenu },
+    { "Level Editor",		handle_LevelEditor,			NULL },
+    { "Highscores", 		handle_ShowHighscores, 			NULL },
+    { "Credits", 		handle_Credits_Menu, 			NULL },
+    { "Configure Keys", 	handle_Key_Config_Menu, 		NULL },
+    { "Quit Game",		handle_QuitGameMenu, 			NULL },
+    { NULL,			NULL, 					NULL }
+  };
+
+
+const char *
+isToggleOn ( int toggle )
+{
+  return toggle ? "YES" : "NO";
+}
+void
+flipToggle ( int *toggle )
+{
+  if (toggle)
+    {
+      (*toggle) = !(*toggle);
+      MenuItemSelectedSound();
+    }
+  return;
+}
+
+void
+setTheme ( int theme_index )
+{
+  if ( (theme_index < 0) || ( theme_index > AllThemes.num_themes - 1 ) )
+    {
+      DebugPrintf ( 0, "%s: Coding error: invalid theme index '%s' requested, must be within [0, %d]\n", __func__, theme_index, AllThemes.num_themes - 1 );
+      Terminate(ERR);
+    }
+  AllThemes.cur_tnum = theme_index;
+  strcpy ( GameConfig.Theme_Name, AllThemes.theme_name [ AllThemes.cur_tnum ] );
+  InitPictures();
+  return;
+} // setTheme()
+void
+menuChangeFloat ( MenuAction_t action, float *val, float step, float min_val, float max_val )
+{
+  if ( (action == ACTION_RIGHT) && ( (*val) < max_val ) )
+    {
+      (*val) += step;
+      if ( (*val) > max_val ) (*val) = max_val;
+      MoveLiftSound();
+    }
+  if ( (action == ACTION_LEFT) && ( (*val) > min_val ) )
+    {
+      (*val) -= step;
+      if ( (*val) < min_val ) (*val) = min_val;
+      MoveLiftSound();
+    }
+  return;
+} // menuChangeFloat()
+
+
+// ========== menu entry handler functions ====================
+const char *
+handle_StrictlyClassic ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK )
+    {
+      GameConfig.Droid_Talk = FALSE;
+      GameConfig.ShowDecals = FALSE;
+      GameConfig.TakeoverActivates = TRUE;
+      GameConfig.FireHoldTakeover = TRUE;
+      GameConfig.AllMapVisible = TRUE;
+
+      // set window type
+      GameConfig.FullUserRect = FALSE;
+      Copy_Rect (Classic_User_Rect, User_Rect);
+      // set theme
+      setTheme ( classic_theme_index );
+      InitiateMenu (TRUE);
+      MenuItemSelectedSound();
+    }
+
+  return NULL;
+}
+
+const char *
+handle_WindowType ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return GameConfig.FullUserRect ? "Full" : "Classic";
+  }
+
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
+    {
+      flipToggle ( &GameConfig.FullUserRect );
+      if ( GameConfig.FullUserRect )
+        Copy_Rect ( Full_User_Rect, User_Rect );
+      else
+        Copy_Rect ( Classic_User_Rect, User_Rect );
+
+      InitiateMenu (TRUE);
+    }
+  return NULL;
+} // handle_WindowType()
+
+const char *
+handle_Theme ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return AllThemes.theme_name [ AllThemes.cur_tnum ];
+  }
+
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
+    {
+      int tnum = AllThemes.cur_tnum;
+      if ( (action == ACTION_CLICK) && (action == ACTION_RIGHT) )
+        tnum ++;
+      else
+        tnum --;
+
+      if ( tnum < 0 ) tnum = AllThemes.num_themes - 1;
+      if ( tnum > AllThemes.num_themes - 1 ) tnum = 0;
+
+      setTheme ( tnum );
+      InitiateMenu (TRUE);
+    }
+
+  return NULL;
+} // handle_Theme()
+
+const char *
+handle_DroidTalk ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.Droid_Talk );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.Droid_Talk );
+  }
+  return NULL;
+}
+
+const char *
+isAllMapVisible ( void )
+{
+
+}
+const char *
+handle_AllMapVisible ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.AllMapVisible );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
+    {
+      flipToggle ( &GameConfig.AllMapVisible );
+      InitiateMenu (TRUE);
+    }
+  return NULL;
+}
+
+const char *
+handle_ShowDecals ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.ShowDecals );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
+    {
+      flipToggle ( &GameConfig.ShowDecals );
+      InitiateMenu (TRUE);
+    }
+  return NULL;
+}
+
+const char *
+handle_TransferIsActivate ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.TakeoverActivates );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.TakeoverActivates );
+  }
+  return NULL;
+}
+
+const char *
+handle_FireIsTransfer ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.FireHoldTakeover );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.FireHoldTakeover );
+  }
+  return NULL;
+}
+
+const char *
+handle_MusicVolume ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%1.2f" , GameConfig.Current_BG_Music_Volume );
+    return buf;
+  }
+
+  menuChangeFloat ( action, &(GameConfig.Current_BG_Music_Volume), 0.05, 0, 1 );
+  Set_BG_Music_Volume ( GameConfig.Current_BG_Music_Volume );
+  return NULL;
+}
+
+const char *
+handle_SoundVolume ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%1.2f" , GameConfig.Current_Sound_FX_Volume );
+    return buf;
+  }
+
+  menuChangeFloat ( action, &(GameConfig.Current_Sound_FX_Volume), 0.05, 0, 1 );
+  Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
+  return NULL;
+}
+
+const char *
+handle_Fullscreen ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.UseFullscreen );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+      toggle_fullscreen();
+      MenuItemSelectedSound();
+  }
+  return NULL;
+}
+
+
+
+const char *
+handle_ShowPosition ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.Draw_Position );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.Draw_Position );
+    InitiateMenu (TRUE);
+  }
+  return NULL;
+}
+const char *
+handle_ShowFramerate ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.Draw_Framerate );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.Draw_Framerate );
+    InitiateMenu (TRUE);
+  }
+  return NULL;
+}
+const char *
+handle_ShowEnergy ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.Draw_Energy );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.Draw_Energy );
+    InitiateMenu (TRUE);
+  }
+  return NULL;
+}
+const char *
+handle_ShowDeathCount ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return isToggleOn ( GameConfig.Draw_DeathCount );
+  }
+  if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
+    flipToggle ( &GameConfig.Draw_DeathCount );
+    InitiateMenu (TRUE);
+  }
+  return NULL;
+}
+
+const char *handle_LevelEditor ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+    LevelEditor();
+  }
+  return NULL;
+}
+const char *handle_ShowHighscores ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+    ShowHighscores();
+  }
+  return NULL;
+}
+const char *handle_Credits_Menu ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+    Credits_Menu();
+  }
+  return NULL;
+}
+const char *handle_Key_Config_Menu ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+    Key_Config_Menu();
+  }
+  return NULL;
+}
+const char *handle_QuitGameMenu ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+    QuitGameMenu();
+  }
+  return NULL;
+}
+
+// ========== Function definitions ==========
+
+// simple wrapper to ShowMenu() to provide the external entry point into the main menu
+void showMainMenu (void)
+{
+  return ShowMenu ( MainMenu );
+} // showMainMenu()
+
 /*@Function============================================================
-@Desc: This function prepares the screen for the big Escape menu and
+@Desc: This function prepares the screen for a menu and
        its submenus.  This means usual content of the screen, i.e. the
        combat screen and top status bar, is "faded out", the rest of
        the screen is cleared.  This function resolves some redundance
@@ -118,7 +548,7 @@ QuitGameMenu (void)
   SDL_Flip (ne_screen);
 #ifdef GCW0
   while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
-  if ( (Gcw0APressed()) ) {  
+  if ( (Gcw0APressed()) ) {
     while ( (!Gcw0AnyButtonPressedR()) ) SDL_Delay(1); // In case FirePressed && !Gcw0APressed() -> would cause a loop otherwise in the menu...
     Terminate (OK);
   }
@@ -129,727 +559,121 @@ QuitGameMenu (void)
 #endif
 
 #endif // ANDROID
-}
+} // QuitGameMenu()
 
 
-
-/*@Function============================================================
-@Desc: This function provides a the big escape menu from where you can
-       get into different submenus.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
+//
+// Generic menu handler
+//
 void
-EscapeMenu (void)
+ShowMenu ( const MenuEntry_t MenuEntries[] )
 {
-  enum
-    {
-      BACK2GAME=1,
-#ifndef ANDROID
-      POS_GRAPHICS_SOUND_OPTIONS,
-#endif
-      POS_LEGACY_OPTIONS,
-      POS_ON_SCREEN_DISPLAYS,
-#if !defined ANDROID && !defined GCW0 // Haven't looked at level editor keys, if they are feasibly re-defined for GCW0 it could be enabled...
-      POS_LEVEL_EDITOR,
-#endif
-      POS_HIGHSCORES,
-      POS_CREDITS,
-#ifndef ANDROID
-      POS_KEYCONFIG,
-#endif
-      POS_QUIT
-    };
-
-  bool key=FALSE;
   bool finished = FALSE;
+  int menu_pos = 0;
+  int num_entries = 0;
+  while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
-  int pos=0;
-  int MenuPosition=1;
+  InitiateMenu ( TRUE );
 
-  InitiateMenu(TRUE);
-
-  while (!finished)
+  while ( !finished )
     {
-      key = FALSE;
+      int i;
+      const char* (*handler)( MenuAction_t action ) = MenuEntries[menu_pos].handler;
+      const MenuEntry_t *submenu = MenuEntries[menu_pos].submenu;
+
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
+      // print menu
+      for ( i = 0; i < num_entries; i ++ )
+        {
+          char fullName[256];
+          const char *arg = NULL;
+          if ( MenuEntries[i].handler ) {
+            arg = (*MenuEntries[i].handler)( ACTION_INFO );
+          }
+          sprintf ( fullName, "%s%s", MenuEntries[i].name, (arg == NULL) ? "" : arg );
+          PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y + i * fheight, fullName );
+        }
 
-      pos = 0;
-
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Back to Game");
-#ifndef ANDROID
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Graphics & Sound" );
-#endif
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"Legacy Options");
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight,"On-Screen Displays" );
-#if !defined ANDROID && !defined GCW0
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Level Editor");
-#endif
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Highscores");
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Credits");
-#ifndef ANDROID
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Configure Keys");
-#endif
-      PutString (ne_screen, OptionsMenu_Rect.x,Menu_Rect.y+(pos++)*fheight, "Quit Game");
-
+      PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
       SDL_Flip( ne_screen );
 
-      while (!key)
+      MenuAction_t action = ACTION_NONE;
+      while ( action == ACTION_NONE )
 	{
+
 	  SDL_Delay (1);
+          if ( EscapePressedR() ) 	action = ACTION_BACK;
+          if ( MenuChooseR() )		action = ACTION_CLICK;
+          if ( MenuUpR() )		action = ACTION_UP;
+          if ( MenuDownR() )		action = ACTION_DOWN;
+          if ( MenuRightR() )		action = ACTION_RIGHT;
+          if ( MenuLeftR() )		action = ACTION_LEFT;
 
-	  if (EscapePressedR() )
-	    {
+          switch ( action )
+            {
+            case ACTION_BACK:
 	      finished = TRUE;
-	      key = TRUE;
-	    }
+              break;
 
+            case ACTION_CLICK:
+              if ( !handler && !submenu ) {
+                finished = TRUE;
+                break;
+              }
+              if ( handler ) {
+                (*handler)(action);
+              }
+              if ( submenu ) {
+                ShowMenu ( submenu );
+                InitiateMenu (TRUE);
+              }
+              break;
 
-	  if (MenuChooseR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition)
-		{
-		case BACK2GAME:
-		  finished = TRUE;
-		  break;
-#ifndef ANDROID
-		case POS_GRAPHICS_SOUND_OPTIONS:
-		  GraphicsSound_Options_Menu();
-		  break;
-#endif
-		case POS_ON_SCREEN_DISPLAYS:
-		  On_Screen_Display_Options_Menu();
-		  break;
-		case POS_LEGACY_OPTIONS:
-		  Options_Menu();
-		  break;
-#if !defined ANDROID && !defined GCW0
-                case POS_LEVEL_EDITOR:
-                  LevelEditor();
-                  finished = TRUE;
-                  break;
-#endif
-		case POS_HIGHSCORES:
-		  ShowHighscores();
-		  break;
-		case POS_CREDITS:
-		  Credits_Menu();
-		  break;
-#ifndef ANDROID
-                case POS_KEYCONFIG:
-                  Key_Config_Menu();
-                  break;
-#endif
-		case POS_QUIT:
-		  QuitGameMenu ();
-		  break;
-		default:
-		  break;
-		}
-	    }
+            case ACTION_RIGHT:
+            case ACTION_LEFT:
+              if ( handler ) {
+                (*handler)(action);
+              }
+              break;
 
-	  if (MenuUpR())
-	    {
-	      key = TRUE;
-	      if (MenuPosition > 1) MenuPosition--;
-	      else MenuPosition = POS_QUIT;
+            case ACTION_UP:
+	      if (menu_pos > 0) {
+                menu_pos--;
+              } else {
+                menu_pos = num_entries - 1;
+              }
 	      MoveMenuPositionSound();
-	    }
-	  if (MenuDownR())
-	    {
-	      key = TRUE;
-	      if ( MenuPosition < POS_QUIT ) MenuPosition++;
-	      else MenuPosition = 1;
+              break;
+
+            case ACTION_DOWN:
+	      if ( menu_pos < num_entries - 1 ) {
+                menu_pos++;
+              } else {
+                menu_pos = 0;
+              }
 	      MoveMenuPositionSound();
-
-	    }
-
-
-	} // while !key
-
+              break;
+            } // switch(action)
+	} // while (action == ACTION_NONE)
 
     } // while !finished
 
   ClearGraphMem();
+  SDL_ShowCursor ( SDL_ENABLE );  // reactivate mouse-cursor for game
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
-  BannerIsDestroyed=TRUE;
-  Me.status=MOBILE;
-
-  SDL_ShowCursor (SDL_ENABLE);  // reactivate mouse-cursor for game
+  BannerIsDestroyed = TRUE;
+  Me.status = MOBILE;
 
   return;
 
-} // EscapeMenu
-
-// ------------------------------------------------------------
-// show/edit keyboard-config
-// ------------------------------------------------------------
-void
-Key_Config_Menu (void)
-{
-  int LastMenuPos = 1 + CMD_LAST;
-  int selx = 1, sely = 1;   // currently selected menu-position
-  bool finished = FALSE;
-  bool key = FALSE;
-  int posy = 0;
-  int i;
-  int oldkey, newkey = -1;
-
-  enum { BACK};
-
-  while (!finished)
-    {
-      key = FALSE;
-
-      while (!key)
-	{
-	  Display_Key_Config (selx, sely);
-	  SDL_Delay(1);
-
-	  if ( EscapePressedR() )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-
-	  if (MenuChooseR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-
-	      if (sely == 1)
-		finished = TRUE;
-	      else
-		{
-		  oldkey = key_cmds[sely-2][selx-1];
-		  key_cmds[sely-2][selx-1] = '_';
-		  Display_Key_Config (selx, sely);
-		  newkey = getchar_raw(); // || joystick input!
-		  if (newkey == SDLK_ESCAPE)
-		    key_cmds[sely-2][selx-1] = oldkey;
-		  else
-		    key_cmds[sely-2][selx-1] = newkey;
-		}
-
-	    } // if FirePressed()
-
-	  if (MenuUpR())
-	    {
-	      if ( sely > 1 ) sely--;
-	      else sely = LastMenuPos;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuDownR())
-	    {
-	      if ( sely < LastMenuPos ) sely++;
-	      else sely = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuRightR())
-	    {
-	      if ( selx < 3 ) selx++;
-	      else selx = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuLeftR())
-	    {
-	      if ( selx > 1 ) selx--;
-	      else selx = 3;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-           /* There should really be a way to clear a key; this is dirty... 
-	    * On a PC, one could just set a "junk" key, but not on a device with 
-	    * limited buttons */ 
-	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
-	    {
-		    key_cmds[sely-2][selx-1] = 0;
-	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
-
-	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
-
-    } // while !finished
-
-  return;
-
-} // Key_Config_Menu()
-
-// ------------------------------------------------------------
-// subroutine to display the current key-config and highlight
-//  current selection
-// ------------------------------------------------------------
-#define PosFont(x,y) ( (((x)!=selx)||((y)!=sely)) ? Font1_BFont : Font2_BFont )
-void
-Display_Key_Config (int selx, int sely)
-{
-  int startx = Full_User_Rect.x + 1.2*Block_Rect.w;
-  int starty = Full_User_Rect.y + FontHeight(GetCurrentFont());
-  int col1 = startx + 7.5 * CharWidth(GetCurrentFont(), 'O');
-  int col2 = col1 + 6.5 * CharWidth(GetCurrentFont(), 'O');
-  int col3 = col2 + 6.5 * CharWidth(GetCurrentFont(), 'O');
-  int posy = 0;
-  int i;
-
-  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
-
-  PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
-#ifdef GCW0
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
-#else
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
-#endif
-
-  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
-  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
-  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
-  posy ++;
-
-  for (i=0; i < CMD_LAST; i++)
-    {
-      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
-      PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
-      PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
-      PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
-      posy ++;
-    }
-
-  SDL_Flip( ne_screen );
-
-  return;
-} // Display_Key_Config
-
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-Options_Menu (void)
-{
-  int MenuPosition=1;
-  bool finished = FALSE;
-  bool key = FALSE;
-  int pos;
-  bool reload_theme = FALSE;
-  bool toggle_window = FALSE;
-  char theme_string[40];
-  char window_string[40];
-  int new_tnum = AllThemes.cur_tnum;
-
-enum
-  {
-    POS_RESET=1,
-    POS_FULL_WINDOW,
-    POS_SET_THEME,
-    POS_DROID_TALK,
-    POS_SHOW_DECALS,
-    POS_MAP_VISIBLE,
-    POS_TAKEOVER_IS_ACTIVATE,
-    POS_FIRE_HOLD_TAKEOVER,
-    POS_BACK
-  };
-
-
-  while (!finished)
-    {
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-      key = FALSE;
-
-      sprintf (theme_string, "Graphics theme: %s", AllThemes.theme_name[new_tnum]);
-
-      strcpy (window_string, "Combat window: ");
-      if (GameConfig.FullUserRect) strcat (window_string, "Full");
-      else strcat (window_string, "Classic");
-
-
-
-      PutInfluence( Menu_Rect.x,
-		    Menu_Rect.y + ( MenuPosition - 1.5 ) *fheight);
-      pos = 0;
-
-      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		 "Set to Strictly Classic");
-
-      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, window_string);
-      PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, theme_string);
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Droid Talk : %s", GameConfig.Droid_Talk ? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Show Decals : %s", GameConfig.ShowDecals ? "ON" : "OFF");
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "All Map Visible: %s", GameConfig.AllMapVisible ? "ON" : "OFF");
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Transfer = Activate: %s", GameConfig.TakeoverActivates ? "YES":"NO" );
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Hold Fire to Transfer: %s", GameConfig.FireHoldTakeover ? "YES":"NO" );
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Back");
-
-      SDL_Flip( ne_screen );
-
-      while (!key)
-	{
-
-	  SDL_Delay(1);
-
-	  if ( EscapePressedR () )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	      if (MenuPosition == POS_SET_THEME)
-		reload_theme = TRUE;
-	    }
-
-	  if (MenuChooseR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition)
-		{
-		case POS_RESET:
-		  GameConfig.Droid_Talk = FALSE;
-		  GameConfig.ShowDecals = FALSE;
-		  GameConfig.TakeoverActivates = TRUE;
-		  GameConfig.FireHoldTakeover = TRUE;
-		  GameConfig.AllMapVisible = TRUE;
-		  GameConfig.FullUserRect = FALSE;
-		  Copy_Rect (Classic_User_Rect, User_Rect);
-		  new_tnum = classic_theme_index;
-		  reload_theme = TRUE;
-		  break;
-
-
-		case POS_FULL_WINDOW:
-		  toggle_window = TRUE;
-		  break;
-		case POS_SET_THEME:
-		  if (!MouseLeftPressed() )MoveMenuPositionSound();
-		  new_tnum--;
-		  if (new_tnum < 0)
-		    new_tnum = AllThemes.num_themes - 1;
-		  reload_theme = TRUE;
-		  break;
-
-		case POS_DROID_TALK:
-		  GameConfig.Droid_Talk = !GameConfig.Droid_Talk;
-		  break;
-		case POS_SHOW_DECALS:
-		  GameConfig.ShowDecals = !GameConfig.ShowDecals;
-		  InitiateMenu (TRUE);
-		  break;
-		case POS_MAP_VISIBLE:
-		  GameConfig.AllMapVisible = !GameConfig.AllMapVisible;
-		  InitiateMenu (TRUE);
-		  break;
-		case POS_TAKEOVER_IS_ACTIVATE:
-		  GameConfig.TakeoverActivates = !GameConfig.TakeoverActivates;
-		  break;
-		case POS_FIRE_HOLD_TAKEOVER:
-		  GameConfig.FireHoldTakeover = !GameConfig.FireHoldTakeover;
-		  break;
-
-		case POS_BACK:
-		  finished = TRUE;
-		  break;
-		default:
-		  break;
-		}
-	    } // if FirePressed
-
-	  if (MenuUpR())
-	    {
-	      if ( MenuPosition > 1 ) MenuPosition--;
-	      else MenuPosition = POS_BACK;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	      ReleaseKey (SDLK_RIGHT); // clear any r-l movement
-	      ReleaseKey (SDLK_LEFT);
-	    }
-	  if (MenuDownR())
-	    {
-	      if ( MenuPosition < POS_BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	      ReleaseKey (SDLK_RIGHT); // clear any r-l movement
-	      ReleaseKey (SDLK_LEFT);
-	    }
-
-
-	  if (MenuLeftR() )
-	    {
-	      switch (MenuPosition)
-		{
-		case POS_SET_THEME:
-		  key = TRUE;
-		  if (!MouseLeftPressed() ) MoveMenuPositionSound();
-
-		  new_tnum--;
-		  if (new_tnum < 0)
-		    new_tnum = AllThemes.num_themes - 1;
-		  reload_theme = TRUE;
-		  break;
-
-		default:
-		  break;
-		}
-	    }
-	  if (MenuRightR() )
-	    {
-	      switch (MenuPosition)
-		{
-		case POS_SET_THEME:
-		  key = TRUE;
-		  MenuItemSelectedSound();
-
-		  new_tnum++;
-		  if (new_tnum > AllThemes.num_themes -1)
-		    new_tnum = 0;
-		  reload_theme = TRUE;
-		  break;
-
-		default:
-		  break;
-		}
-	    }
-
-
-	} // while !key
-
-
-      if (reload_theme)
-	{
-	  if (new_tnum != AllThemes.cur_tnum)
-	    {
-	      AllThemes.cur_tnum = new_tnum;
-	      strcpy (GameConfig.Theme_Name, AllThemes.theme_name[AllThemes.cur_tnum]);
-	      InitPictures();
-	    }
-	  reload_theme = FALSE;
-	  InitiateMenu (TRUE);
-	}
-      if (toggle_window)
-	{
-	  GameConfig.FullUserRect = ! GameConfig.FullUserRect;
-	  if (GameConfig.FullUserRect)
-	    Copy_Rect (Full_User_Rect, User_Rect);
-	  else
-	    Copy_Rect (Classic_User_Rect, User_Rect);
-
-	  InitiateMenu (TRUE);
-	  toggle_window = FALSE;
-	}
-
-
-
-    } // while !finished
-
-  return;
-
-} // Options_Menu
-
+} // ShowMenu()
 
 
 /*@Function============================================================
 @Desc: This function provides a the options menu.  This menu is a
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-GraphicsSound_Options_Menu (void)
-{
-  int MenuPosition=1;
-  bool finished = FALSE;
-  bool key = FALSE;
-  int pos;
-
-enum
-  { SET_BG_MUSIC_VOLUME=1,
-    SET_SOUND_FX_VOLUME,
-    SET_GAMMA_CORRECTION,
-#ifndef GCW0
-    SET_FULLSCREEN_FLAG,
-#endif
-    SET_HOG_CPU,
-    BACK
-  };
-
-
-
-  while (!finished)
-    {
-      key = FALSE;
-
-      pos = 0;
-
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-      PutInfluence (Menu_Rect.x, Menu_Rect.y+ (MenuPosition-1.5)*fheight);
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Background Music: %1.2f" , GameConfig.Current_BG_Music_Volume );
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Sound Effects: %1.2f", GameConfig.Current_Sound_FX_Volume );
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Gamma: %1.2f", GameConfig.Current_Gamma_Correction );
-#ifndef GCW0
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Fullscreen Mode: %s", GameConfig.UseFullscreen ? "ON" : "OFF");
-#endif
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight,
-		   "Use 100%% CPU: %s", GameConfig.HogCPU ? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+(pos++)*fheight, "Back");
-      SDL_Flip( ne_screen );
-
-      while (!key)
-	{
-	  SDL_Delay (1);
-
-	  if ( EscapePressedR () )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-          if (MenuLeft() || MenuRight() || MenuChoose())
-//	  if (RightPressed() || LeftPressed() || MouseLeftPressed() ||
-//	      FirePressed() || ReturnPressed()|| MouseRightPressed())
-	    key = TRUE;
-
-
-	  switch (MenuPosition)
-	    {
-#ifndef GCW0
-	    case SET_FULLSCREEN_FLAG:
-	      if (MenuChooseR())
-		{
-		  toggle_fullscreen();
-		  MenuItemSelectedSound();
-		}
-	      break;
-#endif
-
-	    case SET_HOG_CPU:
-	      if (MenuChooseR())
-		{
-		  GameConfig.HogCPU = !GameConfig.HogCPU;
-		  MenuItemSelectedSound();
-		}
-	      break;
-
-	    case BACK:
-	      if (MenuChooseR())
-		{
-		  MenuItemSelectedSound();
-		  finished=TRUE;
-		}
-	      break;
-
-	    case SET_BG_MUSIC_VOLUME:
-	      if (MenuRightR())
-		{
-		  if ( GameConfig.Current_BG_Music_Volume < 1 )
-		    GameConfig.Current_BG_Music_Volume += 0.05;
-		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
-		  MoveMenuPositionSound();
-		}
-	      if (MenuLeftR())
-		{
-		  if ( GameConfig.Current_BG_Music_Volume > 0 )
-		    GameConfig.Current_BG_Music_Volume -= 0.05;
-		  Set_BG_Music_Volume( GameConfig.Current_BG_Music_Volume );
-		  MoveMenuPositionSound();
-		}
-	      break;
-
-	      case SET_SOUND_FX_VOLUME:
-		if (MenuRightR())
-		  {
-		    if ( GameConfig.Current_Sound_FX_Volume < 1 )
-		      GameConfig.Current_Sound_FX_Volume += 0.05;
-		    Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		    MoveMenuPositionSound();
-		  }
-		if (MenuLeftR())
-		  {
-		    if ( GameConfig.Current_Sound_FX_Volume > 0 )
-		      GameConfig.Current_Sound_FX_Volume -= 0.05;
-		    Set_Sound_FX_Volume( GameConfig.Current_Sound_FX_Volume );
-		    MoveMenuPositionSound();
-		  }
-		break;
-
-	      case SET_GAMMA_CORRECTION:
-		if (MenuRightR())
-		  {
-		    GameConfig.Current_Gamma_Correction+=0.05;
-		    SDL_SetGamma( GameConfig.Current_Gamma_Correction ,
-				  GameConfig.Current_Gamma_Correction ,
-				  GameConfig.Current_Gamma_Correction );
-		    MoveMenuPositionSound();
-		  }
-		if (MenuLeftR())
-		  {
-		    GameConfig.Current_Gamma_Correction-=0.05;
-		    SDL_SetGamma( GameConfig.Current_Gamma_Correction ,
-				  GameConfig.Current_Gamma_Correction ,
-				  GameConfig.Current_Gamma_Correction );
-		    MoveMenuPositionSound();
-		  }
-		break;
-	    default:
-	      DebugPrintf (0, "WARNING: illegal menu selection: %d\n", MenuPosition);
-	      break;
-
-	    } // switch MenuPosition
-
-
-	  if (MenuUpR())
-	    {
-	      key = TRUE;
-	      if ( MenuPosition > 1 ) MenuPosition--;
-	      else MenuPosition = BACK;
-	      MoveMenuPositionSound();
-	    }
-	  if (MenuDownR())
-	    {
-	      key = TRUE;
-	      if ( MenuPosition < BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	    }
-	} // while !key
-
-    } // while !finished
-
-  return;
-
-}; // GraphicsSound_Options_Menu
-
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a
-       submenu of the big EscapeMenu.  Here you can change sound vol.,
+       submenu of the MainMenu.  Here you can change sound vol.,
        gamma correction, fullscreen mode, display of FPS and such
        things.
 
@@ -863,11 +687,13 @@ On_Screen_Display_Options_Menu (void)
   bool key = FALSE;
 
 enum
-  { SHOW_POSITION=1,
+  {
+    SHOW_POSITION=1,
     SHOW_FRAMERATE,
     SHOW_ENERGY,
     SHOW_DEATHCOUNT,
-    BACK };
+    BACK
+  };
 
   while (!finished)
     {
@@ -908,7 +734,7 @@ enum
 		{
 		case SHOW_POSITION:
 		  GameConfig.Draw_Position=!GameConfig.Draw_Position;
-		  InitiateMenu (TRUE);
+
 		  break;
 		case SHOW_FRAMERATE:
 		  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
@@ -955,7 +781,7 @@ enum
 
 /*@Function============================================================
 @Desc: This function provides the credits screen.  It is a submenu of
-       the big EscapeMenu.  Here you can see who helped developing the
+       the big MainMenu.  Here you can see who helped developing the
        game, currently jp, rp and bastian.
 
 @Ret:  none
@@ -1281,6 +1107,154 @@ LevelEditMenu (void)
 
   return (Done);
 } // LevelEditMenu
+
+// ======================================================================
+
+// ------------------------------------------------------------
+// show/edit keyboard-config
+// ------------------------------------------------------------
+void
+Key_Config_Menu (void)
+{
+  int LastMenuPos = 1 + CMD_LAST;
+  int selx = 1, sely = 1;   // currently selected menu-position
+  bool finished = FALSE;
+  bool key = FALSE;
+  int posy = 0;
+  int i;
+  int oldkey, newkey = -1;
+
+  enum { BACK};
+
+  while (!finished)
+    {
+      key = FALSE;
+
+      while (!key)
+	{
+	  Display_Key_Config (selx, sely);
+	  SDL_Delay(1);
+
+	  if ( EscapePressedR() )
+	    {
+	      finished = TRUE;
+	      key = TRUE;
+	    }
+
+	  if (MenuChooseR())
+	    {
+	      MenuItemSelectedSound();
+	      key = TRUE;
+
+	      if (sely == 1)
+		finished = TRUE;
+	      else
+		{
+		  oldkey = key_cmds[sely-2][selx-1];
+		  key_cmds[sely-2][selx-1] = '_';
+		  Display_Key_Config (selx, sely);
+		  newkey = getchar_raw(); // || joystick input!
+		  if (newkey == SDLK_ESCAPE)
+		    key_cmds[sely-2][selx-1] = oldkey;
+		  else
+		    key_cmds[sely-2][selx-1] = newkey;
+		}
+
+	    } // if FirePressed()
+
+	  if (MenuUpR())
+	    {
+	      if ( sely > 1 ) sely--;
+	      else sely = LastMenuPos;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuDownR())
+	    {
+	      if ( sely < LastMenuPos ) sely++;
+	      else sely = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuRightR())
+	    {
+	      if ( selx < 3 ) selx++;
+	      else selx = 1;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+	  if (MenuLeftR())
+	    {
+	      if ( selx > 1 ) selx--;
+	      else selx = 3;
+	      MoveMenuPositionSound();
+	      key = TRUE;
+	    }
+           /* There should really be a way to clear a key; this is dirty... 
+	    * On a PC, one could just set a "junk" key, but not on a device with 
+	    * limited buttons */ 
+	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
+	    {
+		    key_cmds[sely-2][selx-1] = 0;
+	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
+
+	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
+
+    } // while !finished
+
+  return;
+
+} // Key_Config_Menu()
+
+// ------------------------------------------------------------
+// subroutine to display the current key-config and highlight
+//  current selection
+// ------------------------------------------------------------
+#define PosFont(x,y) ( (((x)!=selx)||((y)!=sely)) ? Font1_BFont : Font2_BFont )
+void
+Display_Key_Config (int selx, int sely)
+{
+  int startx = Full_User_Rect.x + 1.2*Block_Rect.w;
+  int starty = Full_User_Rect.y + FontHeight(GetCurrentFont());
+  int col1 = startx + 7.5 * CharWidth(GetCurrentFont(), 'O');
+  int col2 = col1 + 6.5 * CharWidth(GetCurrentFont(), 'O');
+  int col3 = col2 + 6.5 * CharWidth(GetCurrentFont(), 'O');
+  int posy = 0;
+  int i;
+
+  SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+
+  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
+
+  PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+#ifdef GCW0
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
+#else
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
+#endif
+
+  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
+  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
+  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
+  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
+  posy ++;
+
+  for (i=0; i < CMD_LAST; i++)
+    {
+      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
+      PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
+      PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
+      PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
+      posy ++;
+    }
+
+  SDL_Flip( ne_screen );
+
+  return;
+} // Display_Key_Config
+
+
+// ======================================================================
 
 // ----------------------------------------------------------------------
 // Cheat menu
