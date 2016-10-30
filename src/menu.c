@@ -640,6 +640,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
       SDL_Flip( ne_screen );
+      SDL_Delay ( 50 );
 
       action = ACTION_NONE;
       while ( action == ACTION_NONE )
@@ -692,6 +693,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               }
               break;
             case ACTION_NONE:
+              SDL_Delay(1);
               break;
             } // switch(action)
 	} // while (action == ACTION_NONE)
