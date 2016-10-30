@@ -108,11 +108,11 @@ Init_Audio(void)
 #else
   char *fpath;
   int i;
-  int audio_rate = 22050;
-  Uint16 audio_format = AUDIO_S16;
-  int audio_channels = 2;
+  int audio_rate = MIX_DEFAULT_FREQUENCY; //  22050;
+  Uint16 audio_format = MIX_DEFAULT_FORMAT;
+  int audio_channels = 2;	// = stereo
   //  int audio_buffers = 4096;
-  int audio_buffers = 2048;
+  int audio_buffers = 100; // higher = less risk of sound skips, but more lag
 
   DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
@@ -370,7 +370,7 @@ Play_Sound (int Tune)
 
   if ( !sound_on ) return;
 
-  Newest_Sound_Channel = Mix_PlayChannel(-1, Loaded_WAV_Files[Tune] , 0);
+  Newest_Sound_Channel = Mix_PlayChannel (-1, Loaded_WAV_Files[Tune], 0);
   if ( Newest_Sound_Channel == -1 )
     {
       DebugPrintf (0, "WARNING: Could not play sound-sample: %s Error: %s\n\
