@@ -80,6 +80,7 @@ void Display_Key_Config (int selx, int sely);
 bool LevelEditMenu (void);
 
 void ShowMenu ( const MenuEntry_t *menu );
+MenuAction_t getMenuAction ( void );
 
 const char *handle_StrictlyClassic ( MenuAction_t action );
 const char *handle_WindowType ( MenuAction_t action );
@@ -120,8 +121,10 @@ MenuEntry_t LegacyMenu[] =
     { "Droid Talk: ", 		handle_DroidTalk,	NULL },
     { "Show Decals: ", 		handle_ShowDecals,	NULL },
     { "All Map Visible: ", 	handle_AllMapVisible,	NULL },
+#ifndef ANDROID
     { "Transfer = Activate: ", 	handle_TransferIsActivate, NULL },
     { "Hold Fire to Transfer: ",handle_FireIsTransfer,	NULL },
+#endif
     { NULL,			NULL, 			NULL }
   };
 
@@ -151,11 +154,15 @@ MenuEntry_t MainMenu[] =
     { "Graphics & Sound", 	NULL, 					GraphicsSoundMenu },
     { "Legacy Options", 	NULL,					LegacyMenu },
     { "HUD Settings",		NULL, 					HUDMenu },
+#ifndef ANDROID
     { "Level Editor",		handle_LevelEditor,			NULL },
+#endif
     { "Highscores", 		handle_ShowHighscores, 			NULL },
     { "Credits", 		handle_Credits_Menu, 			NULL },
+#ifndef ANDROID
     { "Configure Keys", 	handle_Key_Config_Menu, 		NULL },
     { "Quit Game",		handle_QuitGameMenu, 			NULL },
+#endif
     { NULL,			NULL, 					NULL }
   };
 
@@ -168,11 +175,11 @@ isToggleOn ( int toggle )
 void
 flipToggle ( int *toggle )
 {
-  if (toggle)
-    {
-      (*toggle) = !(*toggle);
-      MenuItemSelectedSound();
-    }
+  if (toggle) {
+    //MoveLiftSound();
+    MenuItemSelectedSound();
+    (*toggle) = !(*toggle);
+  }
   return;
 }
 
@@ -194,15 +201,15 @@ menuChangeFloat ( MenuAction_t action, float *val, float step, float min_val, fl
 {
   if ( (action == ACTION_RIGHT) && ( (*val) < max_val ) )
     {
+      MoveLiftSound();
       (*val) += step;
       if ( (*val) > max_val ) (*val) = max_val;
-      MoveLiftSound();
     }
   if ( (action == ACTION_LEFT) && ( (*val) > min_val ) )
     {
+      MoveLiftSound();
       (*val) -= step;
       if ( (*val) < min_val ) (*val) = min_val;
-      MoveLiftSound();
     }
   return;
 } // menuChangeFloat()
@@ -214,6 +221,7 @@ handle_StrictlyClassic ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK )
     {
+      MenuItemSelectedSound();
       GameConfig.Droid_Talk = FALSE;
       GameConfig.ShowDecals = FALSE;
       GameConfig.TakeoverActivates = TRUE;
@@ -226,7 +234,6 @@ handle_StrictlyClassic ( MenuAction_t action )
       // set theme
       setTheme ( classic_theme_index );
       InitiateMenu (TRUE);
-      MenuItemSelectedSound();
     }
 
   return NULL;
@@ -261,6 +268,7 @@ handle_Theme ( MenuAction_t action )
 
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
     {
+      MoveLiftSound();
       int tnum = AllThemes.cur_tnum;
       if ( (action == ACTION_CLICK) && (action == ACTION_RIGHT) )
         tnum ++;
@@ -440,35 +448,40 @@ handle_ShowDeathCount ( MenuAction_t action )
 
 const char *handle_LevelEditor ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+  if ( action == ACTION_CLICK ) {
+    MenuItemSelectedSound();
     LevelEditor();
   }
   return NULL;
 }
 const char *handle_ShowHighscores ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+  if ( action == ACTION_CLICK ) {
+    MenuItemSelectedSound();
     ShowHighscores();
   }
   return NULL;
 }
 const char *handle_Credits_Menu ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+  if ( action == ACTION_CLICK ) {
+    MenuItemSelectedSound();
     Credits_Menu();
   }
   return NULL;
 }
 const char *handle_Key_Config_Menu ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+  if ( action == ACTION_CLICK ) {
+    MenuItemSelectedSound();
     Key_Config_Menu();
   }
   return NULL;
 }
 const char *handle_QuitGameMenu ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK || action == ACTION_RIGHT ) {
+  if ( action == ACTION_CLICK ) {
+    MenuItemSelectedSound();
     QuitGameMenu();
   }
   return NULL;
@@ -557,6 +570,39 @@ QuitGameMenu (void)
 #endif // ANDROID
 } // QuitGameMenu()
 
+// get menu input actions
+// NOTE: built-in time delay to ensure spurious key-repetitions
+// such as from touchpad 'wheel' or android joystic emulation
+// don't create unexpected menu movements:
+// ==> ignore all movement commands withing delay_ms milliseconds of each other
+MenuAction_t
+getMenuAction ( void )
+{
+  MenuAction_t action = ACTION_NONE;
+
+  if ( FirePressedR() || ReturnPressedR() || SpacePressedR() ) {
+    action = ACTION_CLICK;
+  }
+  if ( RightPressedR() || KeyIsPressedR(SDLK_RIGHT) ) {
+    action = ACTION_RIGHT;
+  }
+  if ( LeftPressedR() || KeyIsPressedR(SDLK_LEFT) ) {
+    action = ACTION_LEFT;
+  }
+  if ( UpPressedR() || WheelUpPressed() || KeyIsPressedR(SDLK_UP) ) {
+    action = ACTION_UP;
+  }
+  if ( DownPressedR() || WheelDownPressed() || KeyIsPressedR(SDLK_DOWN) ) {
+    action = ACTION_DOWN;
+  }
+  if ( EscapePressedR() ) {
+    action = ACTION_BACK;
+  }
+
+  return action;
+
+} // getMenuAction()
+
 
 //
 // Generic menu handler
@@ -570,6 +616,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
   InitiateMenu ( TRUE );
+  MenuAction_t action = ACTION_NONE;
 
   while ( !finished )
     {
@@ -594,18 +641,10 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
       SDL_Flip( ne_screen );
 
-      MenuAction_t action = ACTION_NONE;
+      action = ACTION_NONE;
       while ( action == ACTION_NONE )
 	{
-
-	  SDL_Delay (1);
-          if ( EscapePressedR() ) 	action = ACTION_BACK;
-          if ( MenuChooseR() )		action = ACTION_CLICK;
-          if ( MenuUpR() )		action = ACTION_UP;
-          if ( MenuDownR() )		action = ACTION_DOWN;
-          if ( MenuRightR() )		action = ACTION_RIGHT;
-          if ( MenuLeftR() )		action = ACTION_LEFT;
-
+          action = getMenuAction();
           switch ( action )
             {
             case ACTION_BACK:
@@ -614,6 +653,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
             case ACTION_CLICK:
               if ( !handler && !submenu ) {
+                MenuItemSelectedSound();
                 finished = TRUE;
                 break;
               }
@@ -621,6 +661,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
                 (*handler)(action);
               }
               if ( submenu ) {
+                MenuItemSelectedSound();
                 ShowMenu ( submenu );
                 InitiateMenu (TRUE);
               }
@@ -634,21 +675,23 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               break;
 
             case ACTION_UP:
+              MoveMenuPositionSound();
 	      if (menu_pos > 0) {
                 menu_pos--;
               } else {
                 menu_pos = num_entries - 1;
               }
-	      MoveMenuPositionSound();
               break;
 
             case ACTION_DOWN:
+              MoveMenuPositionSound();
 	      if ( menu_pos < num_entries - 1 ) {
                 menu_pos++;
               } else {
                 menu_pos = 0;
               }
-	      MoveMenuPositionSound();
+              break;
+            case ACTION_NONE:
               break;
             } // switch(action)
 	} // while (action == ACTION_NONE)
