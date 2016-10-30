@@ -74,10 +74,6 @@ typedef struct MenuEntry_s
 
 // ----- local prototypes ----------
 void Credits_Menu (void);
-void Options_Menu (void);
-
-void GraphicsSound_Options_Menu (void);
-void On_Screen_Display_Options_Menu (void);
 void Key_Config_Menu (void);
 
 void Display_Key_Config (int selx, int sely);
@@ -669,115 +665,6 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   return;
 
 } // ShowMenu()
-
-
-/*@Function============================================================
-@Desc: This function provides a the options menu.  This menu is a
-       submenu of the MainMenu.  Here you can change sound vol.,
-       gamma correction, fullscreen mode, display of FPS and such
-       things.
-
-@Ret:  none
-* $Function----------------------------------------------------------*/
-void
-On_Screen_Display_Options_Menu (void)
-{
-  int MenuPosition=1;
-  bool finished = FALSE;
-  bool key = FALSE;
-
-enum
-  {
-    SHOW_POSITION=1,
-    SHOW_FRAMERATE,
-    SHOW_ENERGY,
-    SHOW_DEATHCOUNT,
-    BACK
-  };
-
-  while (!finished)
-    {
-      key = FALSE;
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+0*fheight,
-		   "Show Position: %s", GameConfig.Draw_Position ? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+1*fheight,
-		   "Show Framerate: %s", GameConfig.Draw_Framerate? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+2*fheight,
-		   "Show Energy: %s", GameConfig.Draw_Energy? "ON" : "OFF");
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+3*fheight,
-		   "Show DeathCount: %s", GameConfig.Draw_DeathCount ? "ON" : "OFF");
-
-      PrintString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y+4*fheight, "Back");
-
-      SDL_Flip( ne_screen );
-
-      while (!key)
-	{
-
-	  SDL_Delay(1);
-
-	  if ( EscapePressedR() )
-	    {
-	      finished = TRUE;
-	      key = TRUE;
-	    }
-
-	  if (MenuChooseR())
-	    {
-	      MenuItemSelectedSound();
-	      key = TRUE;
-	      switch (MenuPosition)
-		{
-		case SHOW_POSITION:
-		  GameConfig.Draw_Position=!GameConfig.Draw_Position;
-
-		  break;
-		case SHOW_FRAMERATE:
-		  GameConfig.Draw_Framerate=!GameConfig.Draw_Framerate;
-		  InitiateMenu (TRUE);
-		  break;
-		case SHOW_ENERGY:
-		  GameConfig.Draw_Energy=!GameConfig.Draw_Energy;
-		  InitiateMenu (TRUE);
-		  break;
-		case SHOW_DEATHCOUNT:
-		  GameConfig.Draw_DeathCount = !GameConfig.Draw_DeathCount;
-		  InitiateMenu (TRUE);
-		  break;
-		case BACK:
-		  finished = TRUE;
-		  break;
-		default:
-		  break;
-		}
-	    } // if FirePressed()
-
-	  if (MenuUpR())
-	    {
-	      if ( MenuPosition > 1 ) MenuPosition--;
-	      else MenuPosition = BACK;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuDownR())
-	    {
-	      if ( MenuPosition < BACK ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	} // while !key
-
-    } // while !finished
-
-  return;
-
-}; // On_Screen_Display_Options_Menu
-
 
 /*@Function============================================================
 @Desc: This function provides the credits screen.  It is a submenu of
