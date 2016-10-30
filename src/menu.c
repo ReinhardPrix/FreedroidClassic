@@ -61,7 +61,8 @@ typedef enum
   ACTION_LEFT,
   ACTION_RIGHT,
   ACTION_UP,
-  ACTION_DOWN
+  ACTION_DOWN,
+  ACTION_DELETE
 } MenuAction_t;
 
 typedef struct MenuEntry_s
@@ -580,6 +581,9 @@ getMenuAction ( void )
 {
   MenuAction_t action = ACTION_NONE;
 
+  if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
+    action = ACTION_DELETE;
+  }
   if ( FirePressedR() || ReturnPressedR() || SpacePressedR() ) {
     action = ACTION_CLICK;
   }
@@ -1055,32 +1059,32 @@ Key_Config_Menu (void)
   int posy = 0;
   int i;
   int oldkey, newkey = -1;
+  MenuAction_t action = ACTION_NONE;
 
   enum { BACK};
 
   while (!finished)
     {
-      key = FALSE;
+      Display_Key_Config (selx, sely);
+      SDL_Delay ( 50 );
 
-      while (!key)
+      action = ACTION_NONE;
+      while ( action == ACTION_NONE )
 	{
-	  Display_Key_Config (selx, sely);
-	  SDL_Delay(1);
-
-	  if ( EscapePressedR() )
-	    {
+          action = getMenuAction();
+          switch ( action )
+            {
+            case ACTION_BACK:
 	      finished = TRUE;
-	      key = TRUE;
-	    }
+              break;
 
-	  if (MenuChooseR())
-	    {
+            case ACTION_CLICK:
 	      MenuItemSelectedSound();
-	      key = TRUE;
 
-	      if (sely == 1)
+	      if (sely == 1) {
 		finished = TRUE;
-	      else
+              }
+              else
 		{
 		  oldkey = key_cmds[sely-2][selx-1];
 		  key_cmds[sely-2][selx-1] = '_';
@@ -1091,46 +1095,42 @@ Key_Config_Menu (void)
 		  else
 		    key_cmds[sely-2][selx-1] = newkey;
 		}
+              break;
 
-	    } // if FirePressed()
-
-	  if (MenuUpR())
-	    {
+            case ACTION_UP:
 	      if ( sely > 1 ) sely--;
 	      else sely = LastMenuPos;
 	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuDownR())
-	    {
+              break;
+
+            case ACTION_DOWN:
 	      if ( sely < LastMenuPos ) sely++;
 	      else sely = 1;
 	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuRightR())
-	    {
+              break;
+
+            case ACTION_RIGHT:
 	      if ( selx < 3 ) selx++;
 	      else selx = 1;
 	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  if (MenuLeftR())
-	    {
+              break;
+
+            case ACTION_LEFT:
 	      if ( selx > 1 ) selx--;
 	      else selx = 3;
 	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-           /* There should really be a way to clear a key; this is dirty... 
-	    * On a PC, one could just set a "junk" key, but not on a device with 
-	    * limited buttons */ 
-	  if (ClearBoundKeyR()) // Currently this = backspace, but in the future...
-	    {
-		    key_cmds[sely-2][selx-1] = 0;
-	    } // Hmm, hopefully nothing nasty happens if back is selected... it doesn't seem to do anything
+              break;
 
-	} // while !key /* TODO: A user can't add joystick axises trough this menu! */
+            case ACTION_DELETE:
+              key_cmds[sely-2][selx-1] = 0;
+              MenuItemSelectedSound();
+              break;
+            case ACTION_NONE:
+              SDL_Delay(1);
+              break;
+            } // switch(action)
+
+        } // while action == ACTION_NONE
 
     } // while !finished
 
