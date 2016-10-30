@@ -342,8 +342,9 @@ void
 ReactToSpecialKeys(void)
 {
 
-  if ( cmd_is_activeR(CMD_QUIT) )
-    QuitGameMenu();
+  if ( cmd_is_activeR(CMD_QUIT) ) {
+    handle_QuitGame( ACTION_CLICK );
+  }
 
   if ( cmd_is_activeR(CMD_PAUSE) )
     Pause ();

@@ -170,6 +170,19 @@ enum _cmds {
 
 // ----------------------------------------
 
+typedef enum
+{
+  ACTION_NONE,
+  ACTION_INFO,
+  ACTION_BACK,
+  ACTION_CLICK,
+  ACTION_LEFT,
+  ACTION_RIGHT,
+  ACTION_UP,
+  ACTION_DOWN,
+  ACTION_DELETE
+} MenuAction_t;
+
 #define COLLISION_STEPSIZE   0.1
 
 /* ************************************************************

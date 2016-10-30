@@ -52,19 +52,6 @@ int fheight;  // font height of Menu-font
 
 // ----- Macros --------------------
 // ----- local types ----------
-typedef enum
-{
-  ACTION_NONE,
-  ACTION_INFO,
-  ACTION_BACK,
-  ACTION_CLICK,
-  ACTION_LEFT,
-  ACTION_RIGHT,
-  ACTION_UP,
-  ACTION_DOWN,
-  ACTION_DELETE
-} MenuAction_t;
-
 typedef struct MenuEntry_s
 {
   const char *name;			/**< menu entry string */
@@ -74,11 +61,10 @@ typedef struct MenuEntry_s
 
 
 // ----- local prototypes ----------
-void Credits_Menu (void);
 void Key_Config_Menu (void);
-
 void Display_Key_Config (int selx, int sely);
 bool LevelEditMenu (void);
+void ShowCredits (void);
 
 void ShowMenu ( const MenuEntry_t *menu );
 MenuAction_t getMenuAction ( void );
@@ -102,10 +88,10 @@ const char *handle_ShowEnergy ( MenuAction_t action );
 const char *handle_ShowDeathCount ( MenuAction_t action );
 
 const char *handle_LevelEditor ( MenuAction_t action );
-const char *handle_ShowHighscores ( MenuAction_t action );
-const char *handle_Credits_Menu ( MenuAction_t action );
-const char *handle_Key_Config_Menu ( MenuAction_t action );
-const char *handle_QuitGameMenu ( MenuAction_t action );
+const char *handle_Highscores ( MenuAction_t action );
+const char *handle_Credits ( MenuAction_t action );
+const char *handle_ConfigureKeys ( MenuAction_t action );
+const char *handle_QuitGame ( MenuAction_t action );
 
 void setTheme ( int theme_index );
 const char *isToggleOn ( int toggle );
@@ -151,20 +137,20 @@ MenuEntry_t HUDMenu[] =
 
 MenuEntry_t MainMenu[] =
   {
-    { "Back to Game", 		NULL, 					NULL },
-    { "Graphics & Sound", 	NULL, 					GraphicsSoundMenu },
-    { "Legacy Options", 	NULL,					LegacyMenu },
-    { "HUD Settings",		NULL, 					HUDMenu },
+    { "Back to Game", 		NULL, 				NULL },
+    { "Graphics & Sound", 	NULL, 				GraphicsSoundMenu },
+    { "Legacy Options", 	NULL,				LegacyMenu },
+    { "HUD Settings",		NULL, 				HUDMenu },
 #ifndef ANDROID
-    { "Level Editor",		handle_LevelEditor,			NULL },
+    { "Level Editor",		handle_LevelEditor,		NULL },
 #endif
-    { "Highscores", 		handle_ShowHighscores, 			NULL },
-    { "Credits", 		handle_Credits_Menu, 			NULL },
+    { "Highscores", 		handle_Highscores, 		NULL },
+    { "Credits", 		handle_Credits, 		NULL },
 #ifndef ANDROID
-    { "Configure Keys", 	handle_Key_Config_Menu, 		NULL },
-    { "Quit Game",		handle_QuitGameMenu, 			NULL },
+    { "Configure Keys", 	handle_ConfigureKeys, 		NULL },
+    { "Quit Game",		handle_QuitGame, 		NULL },
 #endif
-    { NULL,			NULL, 					NULL }
+    { NULL,			NULL, 				NULL }
   };
 
 
@@ -455,7 +441,7 @@ const char *handle_LevelEditor ( MenuAction_t action )
   }
   return NULL;
 }
-const char *handle_ShowHighscores ( MenuAction_t action )
+const char *handle_Highscores ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK ) {
     MenuItemSelectedSound();
@@ -463,15 +449,18 @@ const char *handle_ShowHighscores ( MenuAction_t action )
   }
   return NULL;
 }
-const char *handle_Credits_Menu ( MenuAction_t action )
+const char *handle_Credits ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK ) {
     MenuItemSelectedSound();
-    Credits_Menu();
+    ShowCredits();
   }
+
   return NULL;
-}
-const char *handle_Key_Config_Menu ( MenuAction_t action )
+
+} // handle_Credits()
+
+const char *handle_ConfigureKeys ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK ) {
     MenuItemSelectedSound();
@@ -479,14 +468,37 @@ const char *handle_Key_Config_Menu ( MenuAction_t action )
   }
   return NULL;
 }
-const char *handle_QuitGameMenu ( MenuAction_t action )
+const char *handle_QuitGame ( MenuAction_t action )
 {
-  if ( action == ACTION_CLICK ) {
-    MenuItemSelectedSound();
-    QuitGameMenu();
+  if ( action != ACTION_CLICK ) {
+    return NULL;
   }
+
+  MenuItemSelectedSound();
+  InitiateMenu (TRUE);
+
+#ifdef GCW0
+  PutString (ne_screen, User_Rect.x + User_Rect.w/3,
+             User_Rect.y + User_Rect.h/2, "Press A to quit");
+#else
+  PutString (ne_screen, User_Rect.x + User_Rect.w/10,
+             User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
+#endif
+  SDL_Flip (ne_screen);
+#ifdef GCW0
+  while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
+  if ( (Gcw0APressed()) ) {
+    while ( (!Gcw0AnyButtonPressedR()) ) SDL_Delay(1); // In case FirePressed && !Gcw0APressed() -> would cause a loop otherwise in the menu...
+    Terminate (OK);
+  }
+#else
+  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
+  if (KeyIsPressed('y'))
+    Terminate (OK);
+#endif
+
   return NULL;
-}
+} // handle_QuitGame()
 
 // ========== Function definitions ==========
 
@@ -542,35 +554,6 @@ InitiateMenu (bool with_droids)
 
 
 // ----------------------------------------------------------------------
-void
-QuitGameMenu (void)
-{
-#ifndef ANDROID
-  InitiateMenu (TRUE);
-
-#ifdef GCW0
-  PutString (ne_screen, User_Rect.x + User_Rect.w/3,
-	      User_Rect.y + User_Rect.h/2, "Press A to quit");
-#else
-  PutString (ne_screen, User_Rect.x + User_Rect.w/10,
-	      User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
-#endif
-  SDL_Flip (ne_screen);
-#ifdef GCW0
-  while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
-  if ( (Gcw0APressed()) ) {
-    while ( (!Gcw0AnyButtonPressedR()) ) SDL_Delay(1); // In case FirePressed && !Gcw0APressed() -> would cause a loop otherwise in the menu...
-    Terminate (OK);
-  }
-#else
-  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
-  if (KeyIsPressed('y'))
-    Terminate (OK);
-#endif
-
-#endif // ANDROID
-} // QuitGameMenu()
-
 // get menu input actions
 // NOTE: built-in time delay to ensure spurious key-repetitions
 // such as from touchpad 'wheel' or android joystic emulation
@@ -723,7 +706,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 @Ret:  none
 * $Function----------------------------------------------------------*/
 void
-Credits_Menu (void)
+ShowCredits (void)
 {
   int h, em;
   SDL_Rect screen;
@@ -787,7 +770,7 @@ Credits_Menu (void)
 
   return;
 
-} // Credits_Menu
+} // Show_Credits()
 
 
 
