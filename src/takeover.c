@@ -373,14 +373,12 @@ PlayGame (void)
   Uint32 last_movekey_time, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
 
   int up, down, set;
-  int up_counter, down_counter;
   int wheel_up, wheel_down;
 
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
 
   up = down = set = FALSE;
-  up_counter = down_counter = 0;
   wheel_up = wheel_down = 0;
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
