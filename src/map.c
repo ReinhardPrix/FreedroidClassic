@@ -194,7 +194,7 @@ void
 AnimateRefresh (void)
 {
   static float InnerWaitCounter = 0;
-  static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
+  //static int InnerPhase = 0;	/* Zaehler fuer innere Phase */
   int i, j;
   int x, y;
 
@@ -205,8 +205,7 @@ AnimateRefresh (void)
   // if( (((int)rintf(InnerWaitCounter)) % INNER_REFRESH_COUNTER) == 0) {
   // InnerPhase ++;
   // InnerPhase %= INNER_PHASES;
-
-  InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
+  //InnerPhase = (((int) rintf (InnerWaitCounter)) % INNER_PHASES);
 
 
   for (i = 0; i < MAX_REFRESHES_ON_LEVEL; i++)
@@ -547,7 +546,6 @@ LevelToStruct (char *data)
   char *map_begin, *wp_begin, *level_end;
   char *this_line, *next_line;
   char *pos;
-  size_t len;
   int i;
   int nr, x, y;
   int k;
@@ -965,14 +963,11 @@ GetLiftConnections (char *filename)
   char *fpath;
   char *Data;
   char *EntryPointer;
-  char *EndOfDeckRectangleSection;
   int i;
   int Label;
   int DeckIndex;
   int RectIndex;
   int ElevatorIndex;
-  char* EndOfLiftRectangleSection;
-  char* EndOfLiftConnectionData;
   Lift CurLift;
 
   int x,y,w,h;
@@ -999,8 +994,6 @@ GetLiftConnections (char *filename)
   */
 
   EntryPointer = LocateStringInData ( Data , START_OF_LIFT_RECTANGLE_DATA_STRING );
-  EndOfLiftRectangleSection = LocateStringInData ( Data , "*** End of elevator rectangles ***" );
-
 
   //--------------------
   // At first we read in the rectangles that define where the colums of the
@@ -1033,7 +1026,6 @@ GetLiftConnections (char *filename)
   //
   for ( i = 0 ; i < MAX_LEVELS ; i++ )   curShip.num_level_rects[i] = 0; // this initializes zeros for the number
 
-  EndOfDeckRectangleSection = LocateStringInData ( Data , "*** End of deck rectangle section ***" );
   EntryPointer = Data ;
 
   while ( ( EntryPointer = strstr( EntryPointer , "DeckNr=" ) ) != NULL )
@@ -1064,7 +1056,6 @@ GetLiftConnections (char *filename)
       Terminate(ERR);
     }
 
-  EndOfLiftConnectionData = LocateStringInData ( Data , END_OF_LIFT_CONNECTION_DATA_STRING );
   EntryPointer = Data;
 
   while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )

@@ -433,8 +433,7 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   Waypoint WpList;		/* Pointer to waypoint-liste */
   int nextwp;
   finepoint nextwp_pos;
-  int trywp;
-  float maxspeed;
+  int trywp = 0;
   Enemy ThisRobot=&AllEnemys[ EnemyNum ];
   int FreeWays[ MAX_WP_CONNECTIONS ];
   int SolutionFound;
@@ -446,7 +445,6 @@ SelectNextWaypointAdvanced ( int EnemyNum )
   // We do some definitions to save us some more typing later...
   WpList = CurLevel->AllWaypoints;
   nextwp = ThisRobot->nextwaypoint;
-  maxspeed = Druidmap[ ThisRobot->type ].maxspeed;
   nextwp_pos.x = WpList[nextwp].x;
   nextwp_pos.y = WpList[nextwp].y;
 

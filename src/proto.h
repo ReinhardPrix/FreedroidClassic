@@ -137,6 +137,7 @@ EXTERN void ScalePic (SDL_Surface **pic, float scale);
 EXTERN void ScaleStatRects (float scale);
 EXTERN void toggle_fullscreen (void);
 EXTERN SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
+EXTERN int Load_Fonts (void);
 
 /* map.c */
 #undef EXTERN
@@ -163,6 +164,7 @@ EXTERN int IsPassable (float x, float y, int Checkpos);
 EXTERN int DruidPassable (float x, float y);
 EXTERN int IsVisible (Finepoint objpos);
 EXTERN int InterpretMap (Level Lev);
+EXTERN void ResetLevelMap (Level Lev);
 
 /* sound.c  OR nosound.c */
 #undef EXTERN
@@ -240,6 +242,7 @@ EXTERN void showMainMenu (void);
 EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
 EXTERN MenuAction_t getMenuAction ( Uint32 wait_repeat_ticks );
+EXTERN const char *handle_QuitGame ( MenuAction_t action );
 
 /* misc.c */
 #undef EXTERN

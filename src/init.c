@@ -114,7 +114,6 @@ void
 Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
-  char *EndOfBulletData;
   int i, size;
   int BulletIndex=0;
 
@@ -136,8 +135,6 @@ Get_Bullet_Data ( char* DataPointer )
 #define BULLET_DAMAGE_CALIBRATOR_STRING "Common factor for all bullet's damage values: "
 
   BulletPointer = LocateStringInData ( DataPointer , BULLET_SECTION_BEGIN_STRING );
-  EndOfBulletData = LocateStringInData ( DataPointer , BULLET_SECTION_END_STRING );
-
   DebugPrintf (2, "\n\nStarting to read bullet data...\n\n");
   //--------------------
   // At first, we must allocate memory for the droid specifications.
@@ -237,7 +234,6 @@ Get_Robot_Data ( void* DataPointer )
 {
   int RobotIndex = 0;
   char *RobotPointer;
-  char *EndOfDataPointer;
   int i, size;
 
   float maxspeed_calibrator;
@@ -281,8 +277,6 @@ Get_Robot_Data ( void* DataPointer )
 
 
   RobotPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_BEGIN_STRING );
-  EndOfDataPointer = LocateStringInData ( DataPointer , ROBOT_SECTION_END_STRING );
-
 
   DebugPrintf (2, "\n\nStarting to read robot calibration section\n\n");
 
@@ -477,27 +471,6 @@ Init_Game_Data ( char * Datafilename )
 } // int Init_Game_Data ( void )
 
 
-
-/* -----------------------------------------------------------------
- * This function is for stability while working with the SVGALIB, which otherwise would
- * be inconvenient if not dangerous in the following respect:  When SVGALIB has switched to
- * graphic mode and has grabbed the keyboard in raw mode and the program gets stuck, the
- * console will NOT be returned to normal, the keyboard will remain useless and login from
- * outside and shutting down or reseting the console will be the only way to avoid a hard
- * reset!
- * Therefore this function is introduced.  When Paradroid starts up, the operating system is
- * instructed to generate a signal ALARM after a specified time has passed.  This signal will
- * be handled by this function, which in turn restores to console to normal and resets the
- * yiff sound server access if applicable. (All this is done via calling Terminate
- * of course.)
- * -----------------------------------------------------------------*/
-static void
-timeout (int sig)
-{
-  DebugPrintf (2, "\n\nstatic void timeout(int sig): Automatic termination NOW!!");
-  Terminate (0);
-}				/* timeout */
-
 char copyright[] = "\nCopyright (C) 2003 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Freedroid under the terms of the\n\
@@ -525,7 +498,6 @@ void
 parse_command_line (int argc, char *const argv[])
 {
   int c;
-  int timeout_time;		/* timeout to restore text-mode */
 
   static struct option long_options[] = {
     {"version", 	0, 0, 'v'},

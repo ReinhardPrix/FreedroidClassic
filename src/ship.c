@@ -308,7 +308,9 @@ EnterKonsole (void)
   SpacePressedR();
   MouseLeftPressedR();
   MouseRightPressedR();
-  AnyCmdActiveR();
+  ReleaseKey (CMD_FIRE);
+  ReleaseKey (CMD_ACTIVATE);
+  ReleaseKey (CMD_TAKEOVER);
 
   ResetMouseWheel ();
 

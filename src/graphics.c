@@ -470,9 +470,6 @@ LoadThemeConfigurationFile(void)
   char *Data;
   char *ReadPointer;
   char *fpath;
-  char *EndOfThemesBulletData;
-  char *EndOfThemesBlastData;
-  char *EndOfThemesDigitData;
   int BulletIndex;
 
 #define END_OF_THEME_DATA_STRING "**** End of theme data section ****"
@@ -483,10 +480,6 @@ LoadThemeConfigurationFile(void)
   fpath = find_file ("config.theme", GRAPHICS_DIR, USE_THEME, CRITICAL);
 
   Data = ReadAndMallocAndTerminateFile( fpath , END_OF_THEME_DATA_STRING ) ;
-
-  EndOfThemesBulletData = LocateStringInData ( Data , END_OF_THEME_BULLET_DATA_STRING );
-  EndOfThemesBlastData  = LocateStringInData ( Data , END_OF_THEME_BLAST_DATA_STRING  );
-  EndOfThemesDigitData  = LocateStringInData ( Data , END_OF_THEME_DIGIT_DATA_STRING  );
 
   //--------------------
   // Now the file is read in entirely and
@@ -779,7 +772,6 @@ InitPictures (void)
 SDL_RWops *
 load_raw_pic (char *fpath)
 {
-    struct stat statbuf;
     FILE *fp;
     off_t size;
     void *mem;
@@ -1228,7 +1220,7 @@ ScaleGraphics (float scale)
 {
   static bool first_call = TRUE;
   SDL_Surface *tmp;
-  int line, col, i, j;
+  int line, col;
 
 /* For some reason we need to SetAlpha every time on OS X */
   for (col = 0; col < 10; col++)

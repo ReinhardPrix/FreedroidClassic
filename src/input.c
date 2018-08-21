@@ -109,7 +109,7 @@ char *cmd_strings[CMD_LAST] =
 #define RELEASED	(FALSE|FRESH_BIT)
 
 #define is_down(x) ((x) & (~FRESH_BIT) )
-#define just_pressed(x) ( (x) & PRESSED == PRESSED)
+#define just_pressed(x) ( ((x) & PRESSED) == PRESSED)
 
 #define clear_fresh(x) do { (x) &= ~FRESH_BIT; } while(0)
 

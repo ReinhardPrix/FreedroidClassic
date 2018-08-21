@@ -1105,7 +1105,6 @@ init_progress (char *text)
 {
   char *fpath;
   SDL_Rect dst;
-  BFont_Info *oldfont;
 
   if (text == NULL)
     text = "Progress...";
@@ -1123,8 +1122,6 @@ init_progress (char *text)
       ScaleRect (ProgressBar_Rect, GameConfig.scale);
       ScaleRect (ProgressText_Rect, GameConfig.scale);
     }
-
-  oldfont = GetCurrentFont ();
 
   SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
   SDL_BlitSurface( progress_meter_pic, NULL, ne_screen , &ProgressMeter_Rect );

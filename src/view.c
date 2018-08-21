@@ -95,7 +95,6 @@ Assemble_Combat_Picture (int mask)
   SDL_Rect TxtRect;
   finepoint pos, vect;
   float len;
-  bool vis = TRUE;
   grob_point upleft, downright;
 
 
@@ -126,7 +125,6 @@ Assemble_Combat_Picture (int mask)
     {
       for (col = (int)upleft.x; col < (int)downright.x; col++)
 	{
-	  vis = TRUE;
 	  if ( !GameConfig.AllMapVisible && ( (mask & SHOW_FULL_MAP) == 0x0) )
 	    {
 	      pos.x = col;

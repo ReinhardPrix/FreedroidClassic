@@ -122,7 +122,7 @@ enum _cmds {
 #define EscapePressedR() KeyIsPressedR (SDLK_ESCAPE)
 #define SpacePressedR() KeyIsPressedR (SDLK_SPACE)
 
-#ifdef GCW0 // GCW0 keys are currently mapped to SDL key by the firmware... 
+#ifdef GCW0 // GCW0 keys are currently mapped to SDL key by the firmware...
 #define Gcw0APressed() (KeyIsPressed(SDLK_LCTRL))
 #define Gcw0BPressed() (KeyIsPressed(SDLK_LALT))
 #define Gcw0XPressed() (KeyIsPressed(SDLK_LSHIFT))
@@ -163,8 +163,8 @@ enum _cmds {
 #define LeftPressedR() (cmd_is_activeR(CMD_LEFT))
 #define RightPressedR() (cmd_is_activeR(CMD_RIGHT))
 
-#define AnyCmdActive() (cmd_is_active(CMD_FIRE) || cmd_is_active(CMD_ACTIVATE) || cmd_is_active(CMD_TAKEOVER) ) 
-#define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) ) 
+#define AnyCmdActive() (cmd_is_active(CMD_FIRE) || cmd_is_active(CMD_ACTIVATE) || cmd_is_active(CMD_TAKEOVER) )
+#define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) )
 
 #define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
 

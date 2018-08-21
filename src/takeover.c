@@ -154,7 +154,9 @@ Takeover (int enemynum)
   // release fire keys
   SpacePressedR();
   MouseLeftPressedR();
-  AnyCmdActiveR();
+  ReleaseKey (CMD_FIRE);
+  ReleaseKey (CMD_ACTIVATE);
+  ReleaseKey (CMD_TAKEOVER);
 
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
@@ -368,9 +370,9 @@ PlayGame (void)
   int FinishTakeover = FALSE;
   int row;
 
-  Uint32 prev_count_tick, count_tick_len;  /* tick vars for count-down */
-  Uint32 prev_move_tick, move_tick_len;    /* tick vars for motion */
-  Uint32 last_movekey_time, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
+  Uint32 prev_count_tick = 0, count_tick_len;  /* tick vars for count-down */
+  Uint32 prev_move_tick = 0, move_tick_len;    /* tick vars for motion */
+  Uint32 last_movekey_time = 0, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
 
   int up, down, set;
   int wheel_up, wheel_down;
@@ -659,8 +661,6 @@ ShowPlayground (void)
   int block;
   int xoffs, yoffs;
   SDL_Rect dst;
-  SDL_Rect bak;
-
 
   xoffs = Classic_User_Rect.x;
   yoffs = Classic_User_Rect.y;

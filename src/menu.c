@@ -284,11 +284,6 @@ handle_DroidTalk ( MenuAction_t action )
 }
 
 const char *
-isAllMapVisible ( void )
-{
-
-}
-const char *
 handle_AllMapVisible ( MenuAction_t action )
 {
   if ( action == ACTION_INFO ) {
@@ -711,7 +706,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               last_move_tick = SDL_GetTicks();
               break;
 
-            case ACTION_NONE:
+            default:
               break;
             } // switch(action)
 	}
@@ -1068,9 +1063,6 @@ Key_Config_Menu (void)
   int LastMenuPos = 1 + CMD_LAST;
   int selx = 1, sely = 1;   // currently selected menu-position
   bool finished = FALSE;
-  bool key = FALSE;
-  int posy = 0;
-  int i;
   int oldkey, newkey = -1;
   MenuAction_t action = ACTION_NONE;
 
@@ -1138,12 +1130,12 @@ Key_Config_Menu (void)
               key_cmds[sely-2][selx-1] = 0;
               MenuItemSelectedSound();
               break;
-            case ACTION_NONE:
-              SDL_Delay(1);
+            default:
               break;
             } // switch(action)
 
         } // while action == ACTION_NONE
+      SDL_Delay(1);
 
     } // while !finished
 
@@ -1211,7 +1203,7 @@ Cheatmenu (void)
   int Weiter;
   int LNum, X, Y, num;
   int i, l;
-  int x0, y0, line;
+  int x0, y0;
   Waypoint WpList;      /* pointer on current waypoint-list  */
   BFont_Info *font;
   char *status;
@@ -1227,7 +1219,6 @@ Cheatmenu (void)
 				/* no other it seems.. */
   x0 = 50;
   y0 = 20;
-  line = 0;
 
   Weiter = FALSE;
   while (!Weiter)
