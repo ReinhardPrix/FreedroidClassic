@@ -564,6 +564,28 @@ getMenuAction ( void )
 {
   MenuAction_t action = ACTION_NONE;
 
+  // special handling of joystick actions: can't be released, as joystick
+  // keeps producing 'events', so we need a timout for joystick actions
+  // to avoid control "running-off" in menus, takeover and lift handling
+  static Uint32 last_joy_tick = 0;	// timestamp of previous joystick action
+  const Uint32 joy_delay = 1000;
+
+  if ( JoyAxisMotion() )
+    {
+      Uint32 now = SDL_GetTicks();
+      Uint32 delay = now - last_joy_tick;
+      if ( delay <=  joy_delay )
+        { // ignore
+          return ACTION_NONE;
+        }
+      else
+        {
+          last_joy_tick = now;
+          DebugPrintf (0, "Joystick motion detected, delay since last: %d ms > %d ms:", delay, joy_delay );
+          DebugPrintf ( 0, "\n============================== accepted ==============================\n" );
+        }
+    } // if joystick axis even registered
+
   if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
     action = ACTION_DELETE;
   }
@@ -679,6 +701,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
                 menu_pos = 0;
               }
               break;
+
             case ACTION_NONE:
               SDL_Delay(1);
               break;

@@ -685,7 +685,12 @@ NoDirectionPressed (void)
 //----------------------------------------------------------------------
 // check if a particular key has been pressed
 
-
+int
+JoyAxisMotion ( void )
+{
+  update_input();
+  return ( input_state[JOY_UP] || input_state[JOY_DOWN] || input_state[JOY_LEFT] || input_state[JOY_RIGHT] );
+}
 
 // check if any keys or buttons1 are pressed
 bool

@@ -214,6 +214,7 @@ EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 
 EXTERN bool any_key_pressed (void);
+EXTERN int JoyAxisMotion ( void );
 
 EXTERN bool KeyIsPressed (SDLKey key);
 EXTERN bool KeyIsPressedR (SDLKey key);
