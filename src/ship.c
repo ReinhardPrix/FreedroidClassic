@@ -112,16 +112,15 @@ EnterLift (void)
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  Uint32 wait_move_ticks = 100;
+  const Uint32 wait_move_ticks = 100;
   static Uint32 last_move_tick = 0;
-  MenuAction_t action;
+  MenuAction_t action = ACTION_NONE;
   bool finished = FALSE;
-
   while ( !finished )
     {
       ShowLifts (curLevel, liftrow);
 
-      action = getMenuAction();
+      action = getMenuAction( 500 );
       if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
         {
           switch ( action )
@@ -296,7 +295,6 @@ This function runs the consoles. This means the following duties:
 void
 EnterKonsole (void)
 {
-  int ReenterGame = FALSE;
   int i, pos, mousemove_buf;
   SDL_Rect TmpRect;
   // Prevent distortion of framerate by the delay coming from
@@ -316,6 +314,10 @@ EnterKonsole (void)
 
   Me.status = CONSOLE;
 
+#ifdef ANDROID
+  show_cursor = FALSE;
+#endif
+
   SDL_SetCursor (arrow_cursor);
 
   SetCurrentFont( Para_BFont );
@@ -324,50 +326,16 @@ EnterKonsole (void)
   PaintConsoleMenu (pos, 0);
 
   /* Gesamtkonsolenschleife */
-
-  while (!ReenterGame)
+  const Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
+  MenuAction_t action = ACTION_NONE;
+  bool finished = FALSE;
+  while ( !finished )
     {
-      SDL_Delay(1);
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
-      if (EscapePressedR() || MouseRightPressedR())
-	ReenterGame = TRUE;
-
-      if (UpPressedR () || WheelUpPressed())
-	{
-	  MoveMenuPositionSound ();
-	  if (pos > 0) pos--;
-	  else pos = 3;
-	  // when warping the mouse-cursor: don't count that as a mouse-activity
-	  // this is a dirty hack, but that should be enough for here...
-	  mousemove_buf = last_mouse_event;
-	  if (show_cursor)
-	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
-	  update_input ();  // this sets a new last_mouse_event
-	  last_mouse_event = mousemove_buf; //... which we override.. ;)
-
-
-	  PaintConsoleMenu (pos, UPDATE_ONLY);
-	}
-      if (DownPressedR () || WheelDownPressed())
-	{
-	  MoveMenuPositionSound ();
-	  if (pos < 3) pos++;
-	  else pos = 0;
-	  // when warping the mouse-cursor: don't count that as a mouse-activity
-	  // this is a dirty hack, but that should be enough for here...
-	  mousemove_buf = last_mouse_event;
-	  if (show_cursor)
-	    SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-			   Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
-	  update_input ();  // this sets a new last_mouse_event
-	  last_mouse_event = mousemove_buf; //... which we override.. ;)
-
-	  PaintConsoleMenu (pos, UPDATE_ONLY);
-	}
-
+#ifndef ANDROID
       // check if the mouse-cursor is on any of the console-menu points
       for (i=0; i < 4; i++)
 	if (show_cursor && (pos != i) && CursorIsOnRect(&Cons_Menu_Rects[i]) )
@@ -376,42 +344,89 @@ EnterKonsole (void)
 	    pos = i;
 	    PaintConsoleMenu (pos, UPDATE_ONLY);
 	  }
+#endif
+      action = getMenuAction( 500 );
+      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
+        {
+          switch ( action )
+            {
+            case ACTION_BACK:
+	      finished = TRUE;
+              break;
 
-      if (FirePressedR())
-	{
-	  MenuItemSelectedSound();
-	  switch (pos)
-	    {
-	    case 0:
-	      ReenterGame = TRUE;
-	      break;
-	    case 1:
-	      GreatDruidShow ();
-	      PaintConsoleMenu (pos, 0);
-	      break;
-	    case 2:
-	      ClearGraphMem();
-	      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
-	      ShowDeckMap (CurLevel);
-	      PaintConsoleMenu(pos, 0);
-	      break;
-	    case 3:
-	      ClearGraphMem();
-	      DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
-	      ShowLifts (CurLevel->levelnum, -1);
+            case ACTION_UP:
+              if (pos > 0) pos--;
+              else pos = 3;
+              // when warping the mouse-cursor: don't count that as a mouse-activity
+              // this is a dirty hack, but that should be enough for here...
+              if (show_cursor)
+                {
+                  mousemove_buf = last_mouse_event;
+                  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  update_input ();  // this sets a new last_mouse_event
+                  last_mouse_event = mousemove_buf; //... which we override.. ;)
+                }
+              PaintConsoleMenu (pos, UPDATE_ONLY);
+              MoveMenuPositionSound ();
+              last_move_tick = SDL_GetTicks();
+              break;
 
-	      while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-		SDL_Delay(1);
-	      PaintConsoleMenu(pos, 0);
-	      break;
-	    default:
-	      DebugPrintf (1, "Konsole menu out of bounds... pos = %d", pos);
-	      pos = 0;
-	      break;
-	    } // switch
-	} // if SpacePressed
+            case ACTION_DOWN:
+              if (pos < 3) pos++;
+              else pos = 0;
+              // when warping the mouse-cursor: don't count that as a mouse-activity
+              // this is a dirty hack, but that should be enough for here...
+              if (show_cursor)
+                {
+                  mousemove_buf = last_mouse_event;
+                  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  update_input ();  // this sets a new last_mouse_event
+                  last_mouse_event = mousemove_buf; //... which we override.. ;)
+                }
+              PaintConsoleMenu (pos, UPDATE_ONLY);
+              MoveMenuPositionSound ();
+              last_move_tick = SDL_GetTicks();
+              break;
 
-    }	/* (while !ReenterGane) */
+            case ACTION_CLICK:
+              MenuItemSelectedSound();
+              switch (pos)
+                {
+                case 0:
+                  finished = TRUE;
+                  break;
+                case 1:
+                  GreatDruidShow ();
+                  PaintConsoleMenu (pos, 0);
+                  break;
+                case 2:
+                  ClearGraphMem();
+                  DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
+                  ShowDeckMap (CurLevel);
+                  PaintConsoleMenu(pos, 0);
+                  break;
+                case 3:
+                  ClearGraphMem();
+                  DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
+                  ShowLifts (CurLevel->levelnum, -1);
+                  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
+                    SDL_Delay(1);
+                  PaintConsoleMenu(pos, 0);
+                  break;
+                default:
+                  DebugPrintf (1, "Konsole menu out of bounds... pos = %d", pos);
+                  pos = 0;
+                  break;
+                } // switch
+              break;
+            default:
+              break;
+            } // switch(action)
+        } // if time-since-last move > wait
+      SDL_Delay(1);	// don't hog CPU
+    } // while(!finished)
 
   Copy_Rect (TmpRect, User_Rect);
 
@@ -659,7 +674,6 @@ show_droid_info (int droidtype, int page, int flags)
 {
   char InfoText[1000];
   char DroidName[80];
-  bool show_title = FALSE;
   bool show_arrows = FALSE;
   int lineskip, lastline;
 
@@ -691,7 +705,6 @@ Paradroid to eliminate all rogue robots.");
       sprintf (InfoText, "This is the unit that you currently control.");
       break;
     case 0:
-      show_title = TRUE;
       show_arrows = TRUE;
       sprintf (InfoText, "\
 Entry : %02d\n\
@@ -705,7 +718,6 @@ Brain : %s",   droidtype+1, Classes[Druidmap[droidtype].class],
 	       Brainnames[ Druidmap[droidtype].brain ]);
       break;
     case 1:
-      show_title = TRUE;
       show_arrows = TRUE;
       sprintf( InfoText , "\
 Armament : %s\n\
@@ -718,7 +730,6 @@ Sensors  1: %s\n\
 	       Sensornames[ Druidmap[droidtype].sensor3 ]);
       break;
     case 2:
-      show_title = TRUE;
       show_arrows = TRUE;
       sprintf (InfoText, "Notes: %s", Druidmap[droidtype].notes);
       break;

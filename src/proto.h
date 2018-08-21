@@ -239,7 +239,7 @@ EXTERN void Cheatmenu (void);
 EXTERN void showMainMenu (void);
 EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
-EXTERN MenuAction_t getMenuAction ( void );
+EXTERN MenuAction_t getMenuAction ( Uint32 wait_repeat_ticks );
 
 /* misc.c */
 #undef EXTERN

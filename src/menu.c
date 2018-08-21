@@ -563,7 +563,7 @@ InitiateMenu (bool with_droids)
 // don't create unexpected menu movements:
 // ==> ignore all movement commands withing delay_ms milliseconds of each other
 MenuAction_t
-getMenuAction ( void )
+getMenuAction ( Uint32 wait_repeat_ticks )
 {
   // 'normal' menu action keys get released
   if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
@@ -584,7 +584,6 @@ getMenuAction ( void )
 
   // ----- up/down motion: allow for key-repeat, but carefully control repeat rate (modelled on takeover game)
   static Uint32 last_movekey_time = 0;
-  const Uint32 wait_repeat_ticks = 250;    /* number of ticks to wait before "key-repeat" */
 
   static int up = FALSE;
   static int down = FALSE;
@@ -628,14 +627,15 @@ getMenuAction ( void )
 void
 ShowMenu ( const MenuEntry_t MenuEntries[] )
 {
-  bool finished = FALSE;
   int menu_pos = 0;
   int num_entries = 0;
   while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
   InitiateMenu ( TRUE );
   MenuAction_t action = ACTION_NONE;
-
+  const Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
+  bool finished = FALSE;
   while ( !finished )
     {
       int i;
@@ -659,9 +659,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
       SDL_Flip( ne_screen );
 
-      Uint32 wait_move_ticks = 100;
-      static Uint32 last_move_tick = 0;
-      action = getMenuAction();
+      action = getMenuAction( 250 );
       if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
 	{
           switch ( action )
@@ -1086,7 +1084,7 @@ Key_Config_Menu (void)
       action = ACTION_NONE;
       while ( action == ACTION_NONE )
 	{
-          action = getMenuAction();
+          action = getMenuAction( 250 );
           switch ( action )
             {
             case ACTION_BACK:
