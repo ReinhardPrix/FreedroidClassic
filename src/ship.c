@@ -112,54 +112,69 @@ EnterLift (void)
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  ShowLifts (curLevel, liftrow);
+  Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
+  MenuAction_t action;
+  bool finished = FALSE;
 
-  while (! FirePressedR())
+  while ( !finished )
     {
-      if (UpPressedR () || WheelUpPressed ())
-	if (upLift != -1)
-	  {			/* gibt es noch einen Lift hoeher ? */
-	    if (curShip.AllLifts[upLift].x == 99)
-	      {
-		DebugPrintf (0, "Lift out of order, so sorry ..");
-	      }
-	    else
-	      {
-		downLift = curLift;
-		curLift = upLift;
-		curLevel = curShip.AllLifts[curLift].level;
-		upLift = curShip.AllLifts[curLift].up;
+      ShowLifts (curLevel, liftrow);
 
-		ShowLifts (curLevel, liftrow);
+      action = getMenuAction();
+      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
+        {
+          switch ( action )
+            {
+            case ACTION_CLICK:
+              finished = TRUE;
+              break;
 
-		MoveLiftSound ();
-	      }
-	  }			/* if uplevel */
+            case ACTION_UP:
+              last_move_tick = SDL_GetTicks();
+              if (upLift != -1)
+                {			/* gibt es noch einen Lift hoeher ? */
+                  if (curShip.AllLifts[upLift].x == 99)
+                    {
+                      DebugPrintf (0, "Lift out of order, so sorry ..");
+                    }
+                  else
+                    {
+                      downLift = curLift;
+                      curLift = upLift;
+                      curLevel = curShip.AllLifts[curLift].level;
+                      upLift = curShip.AllLifts[curLift].up;
+                      ShowLifts (curLevel, liftrow);
+                      MoveLiftSound ();
+                    }
+                } /* if uplevel */
+              break;
 
-
-      if (DownPressedR () || WheelDownPressed ())
-	if (downLift != -1)
-	  {			/* gibt es noch einen Lift tiefer ? */
-	    if (curShip.AllLifts[downLift].x == 99)
-	      {
-		printf ("Lift Out of order, so sorry ..");
-	      }
-	    else
-	      {
-		upLift = curLift;
-		curLift = downLift;
-		curLevel = curShip.AllLifts[curLift].level;
-		downLift = curShip.AllLifts[curLift].down;
-
-		ShowLifts (curLevel, liftrow);
-
-		MoveLiftSound ();
-	      }
-	  }			/* if downlevel */
-
-      SDL_Delay(10);
-
-    }				/* while !SpaceReleased */
+            case ACTION_DOWN:
+              last_move_tick = SDL_GetTicks();
+              if (downLift != -1)
+                {			/* gibt es noch einen Lift tiefer ? */
+                  if (curShip.AllLifts[downLift].x == 99)
+                    {
+                      DebugPrintf (0, "Lift Out of order, so sorry ..");
+                    }
+                  else
+                    {
+                      upLift = curLift;
+                      curLift = downLift;
+                      curLevel = curShip.AllLifts[curLift].level;
+                      downLift = curShip.AllLifts[curLift].down;
+                      ShowLifts (curLevel, liftrow);
+                      MoveLiftSound ();
+                    }
+                } /* if downlevel */
+              break;
+            default:
+              break;
+            } // switch(action)
+        }
+      SDL_Delay(1);	// don't hog CPU
+    } // while !finished
 
   //--------------------
   // It might happen, that the influencer enters the elevator, but then decides to

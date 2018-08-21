@@ -67,7 +67,6 @@ bool LevelEditMenu (void);
 void ShowCredits (void);
 
 void ShowMenu ( const MenuEntry_t *menu );
-MenuAction_t getMenuAction ( void );
 
 const char *handle_StrictlyClassic ( MenuAction_t action );
 const char *handle_WindowType ( MenuAction_t action );

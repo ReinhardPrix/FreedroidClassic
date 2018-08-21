@@ -239,6 +239,7 @@ EXTERN void Cheatmenu (void);
 EXTERN void showMainMenu (void);
 EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
+EXTERN MenuAction_t getMenuAction ( void );
 
 /* misc.c */
 #undef EXTERN
