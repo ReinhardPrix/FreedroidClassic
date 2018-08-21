@@ -564,27 +564,16 @@ getMenuAction ( void )
 {
   MenuAction_t action = ACTION_NONE;
 
-  // special handling of joystick actions: can't be released, as joystick
-  // keeps producing 'events', so we need a timout for joystick actions
-  // to avoid control "running-off" in menus, takeover and lift handling
-  static Uint32 last_joy_tick = 0;	// timestamp of previous joystick action
-  const Uint32 joy_delay = 1000;
+  // special handling of up/down actions: repeat with controlled rate if kept pressed
+  static Uint32 last_move_tick = 0;	// timestamp of previous move action
+  const Uint32 move_delay = 180;
 
-  if ( JoyAxisMotion() )
-    {
-      Uint32 now = SDL_GetTicks();
-      Uint32 delay = now - last_joy_tick;
-      if ( delay <=  joy_delay )
-        { // ignore
-          return ACTION_NONE;
-        }
-      else
-        {
-          last_joy_tick = now;
-          DebugPrintf (0, "Joystick motion detected, delay since last: %d ms > %d ms:", delay, joy_delay );
-          DebugPrintf ( 0, "\n============================== accepted ==============================\n" );
-        }
-    } // if joystick axis even registered
+  Uint32 now = SDL_GetTicks();
+  Uint32 delay = now - last_move_tick;
+  if ( delay <=  move_delay )
+    { // ignore
+      return ACTION_NONE;
+    }
 
   if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
     action = ACTION_DELETE;
@@ -598,14 +587,20 @@ getMenuAction ( void )
   if ( LeftPressedR() || KeyIsPressedR(SDLK_LEFT) ) {
     action = ACTION_LEFT;
   }
-  if ( UpPressedR() || WheelUpPressed() || KeyIsPressedR(SDLK_UP) ) {
+  if ( UpPressed() || WheelUpPressed() || KeyIsPressed(SDLK_UP) ) {
     action = ACTION_UP;
   }
-  if ( DownPressedR() || WheelDownPressed() || KeyIsPressedR(SDLK_DOWN) ) {
+  if ( DownPressed() || WheelDownPressed() || KeyIsPressed(SDLK_DOWN) ) {
     action = ACTION_DOWN;
   }
   if ( EscapePressedR() ) {
     action = ACTION_BACK;
+  }
+
+  if ( action != ACTION_NONE ) {
+    last_move_tick = now;
+  } else {	// no action resets repeat-counter
+    last_move_tick = 0;
   }
 
   return action;
