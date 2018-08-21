@@ -471,7 +471,7 @@ Init_Game_Data ( char * Datafilename )
 } // int Init_Game_Data ( void )
 
 
-char copyright[] = "\nCopyright (C) 2003 Johannes Prix, Reinhard Prix\n\
+char copyright[] = "\nCopyright (C) 2003-2018 Johannes Prix, Reinhard Prix\n\
 Freedroid comes with NO WARRANTY to the extent permitted by law.\n\
 You may redistribute copies of Freedroid under the terms of the\n\
 GNU General Public License.\n\
