@@ -148,8 +148,8 @@ MenuEntry_t MainMenu[] =
     { "Credits", 		handle_Credits, 		NULL },
 #ifndef ANDROID
     { "Configure Keys", 	handle_ConfigureKeys, 		NULL },
-    { "Quit Game",		handle_QuitGame, 		NULL },
 #endif
+    { "Quit Game",		handle_QuitGame, 		NULL },
     { NULL,			NULL, 				NULL }
   };
 
@@ -477,6 +477,10 @@ const char *handle_QuitGame ( MenuAction_t action )
   MenuItemSelectedSound();
   InitiateMenu (TRUE);
 
+#ifdef ANDROID
+  Terminate (OK);
+#endif
+
 #ifdef GCW0
   PutString (ne_screen, User_Rect.x + User_Rect.w/3,
              User_Rect.y + User_Rect.h/2, "Press A to quit");
@@ -562,48 +566,59 @@ InitiateMenu (bool with_droids)
 MenuAction_t
 getMenuAction ( void )
 {
-  MenuAction_t action = ACTION_NONE;
-
-  // special handling of up/down actions: repeat with controlled rate if kept pressed
-  static Uint32 last_move_tick = 0;	// timestamp of previous move action
-  const Uint32 move_delay = 180;
-
-  Uint32 now = SDL_GetTicks();
-  Uint32 delay = now - last_move_tick;
-  if ( delay <=  move_delay )
-    { // ignore
-      return ACTION_NONE;
-    }
-
+  // 'normal' menu action keys get released
   if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
-    action = ACTION_DELETE;
+    return ACTION_DELETE;
   }
   if ( FirePressedR() || ReturnPressedR() || SpacePressedR() ) {
-    action = ACTION_CLICK;
+    return ACTION_CLICK;
   }
   if ( RightPressedR() || KeyIsPressedR(SDLK_RIGHT) ) {
-    action = ACTION_RIGHT;
+    return ACTION_RIGHT;
   }
   if ( LeftPressedR() || KeyIsPressedR(SDLK_LEFT) ) {
-    action = ACTION_LEFT;
-  }
-  if ( UpPressed() || WheelUpPressed() || KeyIsPressed(SDLK_UP) ) {
-    action = ACTION_UP;
-  }
-  if ( DownPressed() || WheelDownPressed() || KeyIsPressed(SDLK_DOWN) ) {
-    action = ACTION_DOWN;
+    return ACTION_LEFT;
   }
   if ( EscapePressedR() ) {
-    action = ACTION_BACK;
+    return ACTION_BACK;
   }
 
-  if ( action != ACTION_NONE ) {
-    last_move_tick = now;
-  } else {	// no action resets repeat-counter
-    last_move_tick = 0;
-  }
+  // ----- up/down motion: allow for key-repeat, but carefully control repeat rate (modelled on takeover game)
+  static Uint32 last_movekey_time = 0;
+  const Uint32 wait_repeat_ticks = 250;    /* number of ticks to wait before "key-repeat" */
 
-  return action;
+  static int up = FALSE;
+  static int down = FALSE;
+
+  // we register if there have been key-press events in the "waiting period" between move-ticks
+  if ( !up && (UpPressed () || KeyIsPressed(SDLK_UP)) )
+    {
+      up = TRUE;
+      last_movekey_time = SDL_GetTicks();
+      return ACTION_UP;
+    }
+  if (!down && (DownPressed() || KeyIsPressed(SDLK_DOWN)) )
+    {
+      down = TRUE;
+      last_movekey_time = SDL_GetTicks();
+      return ACTION_DOWN;
+    }
+
+  if (!(UpPressed()||KeyIsPressed(SDLK_UP)))   { up = FALSE; }
+  if (!(DownPressed()||KeyIsPressed(SDLK_DOWN))) { down = FALSE; }
+
+  // check if enough time since we registered last new move-action
+  if ( SDL_GetTicks() - last_movekey_time > wait_repeat_ticks )
+    {
+      if ( up ) {
+        return ACTION_UP;
+      }
+      if ( down ) {
+        return ACTION_DOWN;
+      }
+    }
+
+  return ACTION_NONE;
 
 } // getMenuAction()
 
@@ -644,12 +659,12 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
       PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
       SDL_Flip( ne_screen );
-      SDL_Delay ( 50 );
 
-      action = ACTION_NONE;
-      while ( action == ACTION_NONE )
+      Uint32 wait_move_ticks = 100;
+      static Uint32 last_move_tick = 0;
+      action = getMenuAction();
+      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
 	{
-          action = getMenuAction();
           switch ( action )
             {
             case ACTION_BACK:
@@ -686,6 +701,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               } else {
                 menu_pos = num_entries - 1;
               }
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_DOWN:
@@ -695,14 +711,14 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               } else {
                 menu_pos = 0;
               }
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_NONE:
-              SDL_Delay(1);
               break;
             } // switch(action)
-	} // while (action == ACTION_NONE)
-
+	}
+      SDL_Delay(1);	// don't hog CPU
     } // while !finished
 
   ClearGraphMem();
@@ -919,8 +935,6 @@ LevelEditMenu (void)
 	      if (FirePressedR()||ReturnPressedR())
 		{
 		  MenuItemSelectedSound();
-		  Weiter=!Weiter;
-		  Done = TRUE;
 		  {
 		    int i;
 		    for (i = 0; i < curShip.num_levels; i++)
@@ -931,6 +945,7 @@ LevelEditMenu (void)
 		  }
 
 		  SetCombatScaleTo( 1 );
+                  return TRUE;	// return from Level Editor
 		}
 	      break;
 
