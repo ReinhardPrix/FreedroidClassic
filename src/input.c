@@ -67,7 +67,7 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
     {SDLK_LEFT,   JOY_LEFT, 	0 },		// CMD_LEFT
     {SDLK_RIGHT,  JOY_RIGHT, 	0 },		// CMD_RIGHT
     {SDLK_SPACE,  SDLK_LCTRL,  0 },// CMD_FIRE
-    {SDLK_LALT, SDLK_LSHIFT, 	0 }, 		// CMD_ACTIVATE
+    {SDLK_LALT,   JOY_BUTTON2,	0 }, 		// CMD_ACTIVATE
     {SDLK_BACKSPACE,  SDLK_TAB,  0 },// CMD_TAKEOVER
     {0, 	  0, 		0  }, 	// CMD_QUIT,
     {SDLK_RETURN, 0, 0  }, 			// CMD_PAUSE,
@@ -290,9 +290,10 @@ init_keystr (void)
   keystr[JOY_DOWN]	= "JoyDown";
   keystr[JOY_LEFT]	= "JoyLeft";
   keystr[JOY_RIGHT]	= "JoyRight";
-  keystr[JOY_BUTTON1] 	= "Joy1";
-  keystr[JOY_BUTTON2] 	= "Joy2";
-  keystr[JOY_BUTTON3] 	= "Joy3";
+  keystr[JOY_BUTTON1] 	= "Joy-A";
+  keystr[JOY_BUTTON2] 	= "Joy-B";
+  keystr[JOY_BUTTON3] 	= "Joy-X";
+  keystr[JOY_BUTTON4] 	= "Joy-Y";
 
   return;
 } // init_keystr()
@@ -464,6 +465,10 @@ update_input (void)
 	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = PRESSED;
 
+	  // and fourth button
+          else if (event.jbutton.button == 3)
+	    input_state[JOY_BUTTON4] = PRESSED;
+
 	  axis_is_active = TRUE;
 	  break;
 
@@ -479,6 +484,10 @@ update_input (void)
 	  // and third button
 	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = FALSE;
+
+	  // and fourth button
+          else if (event.jbutton.button == 3)
+	    input_state[JOY_BUTTON4] = PRESSED;
 
 	  axis_is_active = FALSE;
 	  break;
@@ -579,6 +588,8 @@ getchar_raw (void)
 	    Returnkey = JOY_BUTTON2;
 	  else if (event.jbutton.button == 2)
 	    Returnkey = JOY_BUTTON3;
+          else if (event.jbutton.button == 3)
+	    Returnkey = JOY_BUTTON4;
 	  break;
 
 	case SDL_MOUSEBUTTONDOWN:

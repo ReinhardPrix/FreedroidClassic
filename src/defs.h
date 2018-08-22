@@ -81,6 +81,7 @@ enum  _pointer_states {
   JOY_BUTTON1,
   JOY_BUTTON2,
   JOY_BUTTON3,
+  JOY_BUTTON4,
 
   INPUT_LAST
 };
