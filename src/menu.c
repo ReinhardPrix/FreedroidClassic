@@ -567,21 +567,17 @@ getMenuAction ( Uint32 wait_repeat_ticks )
   if ( FirePressedR() || ReturnPressedR() || SpacePressedR() ) {
     return ACTION_CLICK;
   }
-  if ( RightPressedR() || KeyIsPressedR(SDLK_RIGHT) ) {
-    return ACTION_RIGHT;
-  }
-  if ( LeftPressedR() || KeyIsPressedR(SDLK_LEFT) ) {
-    return ACTION_LEFT;
-  }
-  if ( EscapePressedR() ) {
+  if ( cmd_is_activeR(CMD_BACK) || KeyIsPressedR(SDLK_ESCAPE) ) {
     return ACTION_BACK;
   }
 
   // ----- up/down motion: allow for key-repeat, but carefully control repeat rate (modelled on takeover game)
   static Uint32 last_movekey_time = 0;
 
-  static int up = FALSE;
-  static int down = FALSE;
+  static int up    = FALSE;
+  static int down  = FALSE;
+  static int left  = FALSE;
+  static int right = FALSE;
 
   // we register if there have been key-press events in the "waiting period" between move-ticks
   if ( !up && (UpPressed () || KeyIsPressed(SDLK_UP)) )
@@ -596,9 +592,23 @@ getMenuAction ( Uint32 wait_repeat_ticks )
       last_movekey_time = SDL_GetTicks();
       return ACTION_DOWN;
     }
+  if ( !left && (LeftPressed() || KeyIsPressed(SDLK_LEFT)) )
+    {
+      left = TRUE;
+      last_movekey_time = SDL_GetTicks();
+      return ACTION_LEFT;
+    }
+  if ( !right && (RightPressed() || KeyIsPressed(SDLK_RIGHT)) )
+    {
+      right = TRUE;
+      last_movekey_time = SDL_GetTicks();
+      return ACTION_RIGHT;
+    }
 
-  if (!(UpPressed()||KeyIsPressed(SDLK_UP)))   { up = FALSE; }
-  if (!(DownPressed()||KeyIsPressed(SDLK_DOWN))) { down = FALSE; }
+  if (! (UpPressed()   || KeyIsPressed(SDLK_UP)))    { up   = FALSE; }
+  if (! (DownPressed() || KeyIsPressed(SDLK_DOWN)))  { down = FALSE; }
+  if (! (LeftPressed() || KeyIsPressed(SDLK_LEFT)))  { left = FALSE; }
+  if (! (RightPressed()|| KeyIsPressed(SDLK_RIGHT))) { right= FALSE; }
 
   // check if enough time since we registered last new move-action
   if ( SDL_GetTicks() - last_movekey_time > wait_repeat_ticks )
@@ -608,6 +618,12 @@ getMenuAction ( Uint32 wait_repeat_ticks )
       }
       if ( down ) {
         return ACTION_DOWN;
+      }
+      if ( left ) {
+        return ACTION_LEFT;
+      }
+      if ( right ) {
+        return ACTION_RIGHT;
       }
     }
 
@@ -627,20 +643,22 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
   InitiateMenu ( TRUE );
+  while ( any_key_is_pressedR() ) // wait for all key/controller-release
+    SDL_Delay(1);
+
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
   static Uint32 last_move_tick = 0;
   bool finished = FALSE;
   while ( !finished )
     {
-      int i;
       const char* (*handler)( MenuAction_t action ) = MenuEntries[menu_pos].handler;
       const MenuEntry_t *submenu = MenuEntries[menu_pos].submenu;
 
       SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
       // print menu
-      for ( i = 0; i < num_entries; i ++ )
+      for ( int i = 0; i < num_entries; i ++ )
         {
           char fullName[256];
           const char *arg = NULL;
@@ -655,61 +673,71 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
       SDL_Flip( ne_screen );
 
       action = getMenuAction( 250 );
-      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
-	{
-          switch ( action )
-            {
-            case ACTION_BACK:
-	      finished = TRUE;
-              break;
+      bool allow_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
+      switch ( action )
+        {
+        case ACTION_BACK:
+          finished = TRUE;
+          break;
 
-            case ACTION_CLICK:
-              if ( !handler && !submenu ) {
-                MenuItemSelectedSound();
-                finished = TRUE;
-                break;
-              }
-              if ( handler ) {
-                (*handler)(action);
-              }
-              if ( submenu ) {
-                MenuItemSelectedSound();
-                ShowMenu ( submenu );
-                InitiateMenu (TRUE);
-              }
-              break;
+        case ACTION_CLICK:
+          if ( !handler && !submenu ) {
+            MenuItemSelectedSound();
+            finished = TRUE;
+            break;
+          }
+          if ( handler ) {
+            wait_for_all_keys_released();
+            (*handler)(action);
+          }
+          if ( submenu ) {
+            MenuItemSelectedSound();
+            wait_for_all_keys_released();
+            ShowMenu ( submenu );
+            InitiateMenu (TRUE);
+          }
+          break;
 
-            case ACTION_RIGHT:
-            case ACTION_LEFT:
-              if ( handler ) {
-                (*handler)(action);
-              }
-              break;
+        case ACTION_RIGHT:
+        case ACTION_LEFT:
+          if ( !allow_move ) {
+            continue;
+          }
+          if ( handler ) {
+            (*handler)(action);
+          }
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            case ACTION_UP:
-              MoveMenuPositionSound();
-	      if (menu_pos > 0) {
-                menu_pos--;
-              } else {
-                menu_pos = num_entries - 1;
-              }
-              last_move_tick = SDL_GetTicks();
-              break;
+        case ACTION_UP:
+          if ( !allow_move ) {
+            continue;
+          }
+          MoveMenuPositionSound();
+          if (menu_pos > 0) {
+            menu_pos--;
+          } else {
+            menu_pos = num_entries - 1;
+          }
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            case ACTION_DOWN:
-              MoveMenuPositionSound();
-	      if ( menu_pos < num_entries - 1 ) {
-                menu_pos++;
-              } else {
-                menu_pos = 0;
-              }
-              last_move_tick = SDL_GetTicks();
-              break;
+        case ACTION_DOWN:
+          if ( !allow_move ) {
+            continue;
+          }
+          MoveMenuPositionSound();
+          if ( menu_pos < num_entries - 1 ) {
+            menu_pos++;
+          } else {
+            menu_pos = 0;
+          }
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            default:
-              break;
-            } // switch(action)
-	}
+        default:
+          break;
+        } // switch(action)
       SDL_Delay(1);	// don't hog CPU
     } // while !finished
 
@@ -719,6 +747,9 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   // to have the top status bar redrawn...
   BannerIsDestroyed = TRUE;
   Me.status = MOBILE;
+
+  while ( any_key_is_pressedR() ) // wait for all key/controller-release
+    SDL_Delay(1);
 
   return;
 
@@ -790,7 +821,7 @@ ShowCredits (void)
 
   SDL_Flip( ne_screen );
 
-  wait4key();
+  wait_for_key_pressed();
 
   SetCurrentFont (oldfont);
 
@@ -1060,83 +1091,76 @@ LevelEditMenu (void)
 void
 Key_Config_Menu (void)
 {
-  int LastMenuPos = 1 + CMD_LAST;
+  int LastMenuPos = CMD_LAST;
   int selx = 1, sely = 1;   // currently selected menu-position
-  bool finished = FALSE;
   int oldkey, newkey = -1;
   MenuAction_t action = ACTION_NONE;
+  const Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
 
-  enum { BACK};
-
+  bool finished = FALSE;
   while (!finished)
     {
       Display_Key_Config (selx, sely);
-      SDL_Delay ( 50 );
 
-      action = ACTION_NONE;
-      while ( action == ACTION_NONE )
-	{
-          action = getMenuAction( 250 );
+      action = getMenuAction( 250 );
+      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
+        {
           switch ( action )
             {
             case ACTION_BACK:
-	      finished = TRUE;
+              finished = TRUE;
               break;
 
             case ACTION_CLICK:
-	      MenuItemSelectedSound();
+              MenuItemSelectedSound();
 
-	      if (sely == 1) {
-		finished = TRUE;
-              }
-              else
-		{
-		  oldkey = key_cmds[sely-2][selx-1];
-		  key_cmds[sely-2][selx-1] = '_';
-		  Display_Key_Config (selx, sely);
-		  newkey = getchar_raw(); // || joystick input!
-		  if (newkey == SDLK_ESCAPE)
-		    key_cmds[sely-2][selx-1] = oldkey;
-		  else
-		    key_cmds[sely-2][selx-1] = newkey;
-		}
+              oldkey = key_cmds[sely-1][selx-1];
+              key_cmds[sely-1][selx-1] = '_';
+              Display_Key_Config (selx, sely);
+              newkey = getchar_raw(); // includes joystick input!
+              key_cmds[sely-1][selx-1] = newkey;
+              while ( any_key_is_pressedR() ) // wait for key/controller-release
+                SDL_Delay(1);
               break;
 
             case ACTION_UP:
-	      if ( sely > 1 ) sely--;
-	      else sely = LastMenuPos;
-	      MoveMenuPositionSound();
+              if ( sely > 1 ) sely--;
+              else sely = LastMenuPos;
+              MoveMenuPositionSound();
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_DOWN:
-	      if ( sely < LastMenuPos ) sely++;
-	      else sely = 1;
-	      MoveMenuPositionSound();
+              if ( sely < LastMenuPos ) sely++;
+              else sely = 1;
+              MoveMenuPositionSound();
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_RIGHT:
-	      if ( selx < 3 ) selx++;
-	      else selx = 1;
-	      MoveMenuPositionSound();
+              if ( selx < 3 ) selx++;
+              else selx = 1;
+              MoveMenuPositionSound();
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_LEFT:
-	      if ( selx > 1 ) selx--;
-	      else selx = 3;
-	      MoveMenuPositionSound();
+              if ( selx > 1 ) selx--;
+              else selx = 3;
+              MoveMenuPositionSound();
+              last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_DELETE:
-              key_cmds[sely-2][selx-1] = 0;
+              key_cmds[sely-1][selx-1] = 0;
               MenuItemSelectedSound();
               break;
             default:
               break;
             } // switch(action)
-
-        } // while action == ACTION_NONE
+        } // if now - last_move_tick > wait_move_ticks
       SDL_Delay(1);
-
     } // while !finished
 
   return;
@@ -1157,31 +1181,30 @@ Display_Key_Config (int selx, int sely)
   int col2 = col1 + 6.5 * CharWidth(GetCurrentFont(), 'O');
   int col3 = col2 + 6.5 * CharWidth(GetCurrentFont(), 'O');
   int posy = 0;
-  int i;
+  int lheight = FontHeight (Font0_BFont) + 2;
 
   SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
 
-  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*fheight);
-
-  PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*fheight, "Back");
+  //      PutInfluence (startx - 1.1*Block_Rect.w, starty + (MenuPosition-1.5)*lheight);
+  //PrintStringFont (ne_screen, (sely==1)? Font2_BFont:Font1_BFont, startx, starty+(posy++)*lheight, "Back");
 #ifdef GCW0
   PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(RShldr to clear an entry)");
 #else
   PrintStringFont (ne_screen, Font0_BFont, col1, starty, "(Backspace to clear an entry)");
 #endif
-
-  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*fheight, "Command");
-  PrintStringFont (ne_screen, Font0_BFont, col1, starty + (posy)*fheight, "Key1");
-  PrintStringFont (ne_screen, Font0_BFont, col2, starty + (posy)*fheight, "Key2");
-  PrintStringFont (ne_screen, Font0_BFont, col3, starty + (posy)*fheight, "Key3");
+  posy++;
+  PrintStringFont (ne_screen, Font0_BFont, startx, starty + (posy)*lheight, "Command");
+  PrintStringFont (ne_screen, Font0_BFont, col1,   starty + (posy)*lheight, "Key1");
+  PrintStringFont (ne_screen, Font0_BFont, col2,   starty + (posy)*lheight, "Key2");
+  PrintStringFont (ne_screen, Font0_BFont, col3,   starty + (posy)*lheight, "Key3");
   posy ++;
 
-  for (i=0; i < CMD_LAST; i++)
+  for (int i=0; i < CMD_LAST; i++)
     {
-      PrintStringFont (ne_screen, Font0_BFont, startx, starty+(posy)*fheight, cmd_strings[i]);
-      PrintStringFont (ne_screen, PosFont(1,2+i), col1, starty+(posy)*fheight, keystr[key_cmds[i][0]]);
-      PrintStringFont (ne_screen, PosFont(2,2+i), col2, starty+(posy)*fheight, keystr[key_cmds[i][1]]);
-      PrintStringFont (ne_screen, PosFont(3,2+i), col3, starty+(posy)*fheight, keystr[key_cmds[i][2]]);
+      PrintStringFont (ne_screen, Font0_BFont,  startx, starty+(posy)*lheight, cmd_strings[i]);
+      PrintStringFont (ne_screen, PosFont(1,1+i), col1, starty+(posy)*lheight, keystr[key_cmds[i][0]]);
+      PrintStringFont (ne_screen, PosFont(2,1+i), col2, starty+(posy)*lheight, keystr[key_cmds[i][1]]);
+      PrintStringFont (ne_screen, PosFont(3,1+i), col3, starty+(posy)*lheight, keystr[key_cmds[i][2]]);
       posy ++;
     }
 

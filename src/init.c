@@ -1323,7 +1323,7 @@ For more information about Free Software see the GPL licence (in the file COPYIN
 or visit http://www.gnu.org.\n\n\n Press fire to play.", rect.x, rect.y, &rect);
   SDL_Flip (ne_screen);
 
-  wait4key();
+  wait_for_key_pressed();
 
   return;
 }
