@@ -819,10 +819,10 @@ ComputeFPSForThisFrame(void)
 
   if (SkipAFewFrames) return;
 
-  Now_SDL_Ticks=SDL_GetTicks();
-  oneframedelay=Now_SDL_Ticks-One_Frame_SDL_Ticks;
-
-  FPSover1 = 1000.0/(float)oneframedelay;
+  Now_SDL_Ticks = SDL_GetTicks();
+  oneframedelay = Now_SDL_Ticks - One_Frame_SDL_Ticks;
+  oneframedelay = (oneframedelay > 0)? oneframedelay : 1;   // avoid division by zero
+  FPSover1 = 1000.0 / oneframedelay;
 
 } // void ComputeFPSForThisFrame(void)
 
