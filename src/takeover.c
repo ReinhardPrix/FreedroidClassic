@@ -836,7 +836,7 @@ InventPlayground (void)
 	      if (ToPlayground[color][layer][row] != KABEL)
 		continue;
 
-	      newElement = MyRandom (TO_ELEMENTS);
+	      newElement = MyRandom (TO_ELEMENTS-1);
 	      if (MyRandom (MAX_PROB) > ElementProb[newElement])
 		{
 		  row--;
@@ -968,7 +968,8 @@ InventPlayground (void)
 		  break;
 
 		default:
-		  row--;
+                  DebugPrintf ( 0, "ERROR: unknown element '%d' drawn (must be within [0,%d])\n", newElement, TO_ELEMENTS-1 );
+                  row --;
 		  break;
 
 		}		/* switch NewElement */

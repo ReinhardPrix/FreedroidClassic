@@ -923,25 +923,27 @@ DebugPrintf (int db_level, char *fmt, ...)
 }
 
 /*@Function============================================================
-@Desc: This function is used to generate an integer in range of all
-       numbers from 0 to UpperBound.
+@Desc: This function is used to generate a random integer in the range
+from [0 to UpperBound] (inclusive), distributed uniformly.
 
 @Ret:  the generated integer
 * $Function----------------------------------------------------------*/
 int
 MyRandom (int UpperBound)
 {
-  float tmp;
-  int dice_val;    /* the result in [0, Obergrenze] */
+  double tmp;
+  int dice_val;    /* the result in [0, UpperBound] */
 
-  tmp = 1.0* rand() / RAND_MAX; /* random number in [0;1] */
+  tmp = 1.0 * (UpperBound+1.0) * (rand() / (RAND_MAX+1.0)); /* random float in [0,UpperBound+1) */
 
-  /*
-   * we always round OFF for the resulting int, therefore
-   * we first add 0.99999 to make sure that Obergrenze has
-   * roughly the same probablity as the other numbers
-   */
-  dice_val = (int)( tmp * (1.0 * UpperBound + 0.99999) );
+  // now round down to get uniformly distributed ints in the 'bins' [0, UpperBound]
+
+  dice_val = (int)(tmp);
+
+  if ( dice_val < 0 || dice_val > UpperBound ) {
+    DebugPrintf ( 0, "ERROR, dice_val = %d not in [0, %d]\n", dice_val, UpperBound );
+    exit(-1);
+  }
   return (dice_val);
 } /* MyRandom () */
 
