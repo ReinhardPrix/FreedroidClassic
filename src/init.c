@@ -1039,7 +1039,8 @@ ThouArtVictorious(void)
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   // release fire
-  if (FirePressedR());
+  if (FirePressedR())
+    ;
 
   now=SDL_GetTicks();
 
@@ -1061,7 +1062,8 @@ ThouArtVictorious(void)
   ScrollText (DebriefingText , &rect , 6 );
 
   // release fire
-  if (FirePressedR());
+  if (FirePressedR())
+    ;
 
   return;
 }

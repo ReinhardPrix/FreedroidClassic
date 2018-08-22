@@ -206,7 +206,7 @@ EXTERN void Takeover_Game_Lost_Sound (void);
 #else
 #define EXTERN extern
 #endif
-EXTERN void ReleaseKey (SDLKey key);
+EXTERN void ReleaseKey (int key);
 EXTERN int update_input(void);
 EXTERN int getchar_raw (void);
 EXTERN void ResetMouseWheel (void);
@@ -218,8 +218,8 @@ EXTERN void ReactToSpecialKeys(void);
 EXTERN bool any_key_pressed (void);
 EXTERN int JoyAxisMotion ( void );
 
-EXTERN bool KeyIsPressed (SDLKey key);
-EXTERN bool KeyIsPressedR (SDLKey key);
+EXTERN bool KeyIsPressed (int key);
+EXTERN bool KeyIsPressedR (int key);
 EXTERN bool ModIsPressed (SDLMod mod);
 
 EXTERN bool NoDirectionPressed (void);

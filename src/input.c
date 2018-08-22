@@ -635,7 +635,7 @@ WheelDownPressed (void)
 }
 
 bool
-KeyIsPressed (SDLKey key)
+KeyIsPressed (int key)
 {
   update_input();
 
@@ -645,7 +645,7 @@ KeyIsPressed (SDLKey key)
 
 // does the same as KeyIsPressed, but automatically releases the key as well..
 bool
-KeyIsPressedR (SDLKey key)
+KeyIsPressedR (int key)
 {
   bool ret;
 
@@ -656,7 +656,7 @@ KeyIsPressedR (SDLKey key)
 }
 
 void
-ReleaseKey (SDLKey key)
+ReleaseKey (int key)
 {
   input_state[key] = FALSE;
   return;
