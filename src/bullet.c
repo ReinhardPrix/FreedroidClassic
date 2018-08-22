@@ -72,7 +72,7 @@ MoveBullets (void)
     {
       CurBullet = &AllBullets[i];
 
-      if ( (CurBullet->type == OUT) )
+      if ( CurBullet->type == OUT )
 	continue;
 
       CurBullet->prev_pos.x = CurBullet->pos.x;

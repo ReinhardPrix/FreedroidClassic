@@ -319,7 +319,7 @@ ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString ,
 {
   char* SearchPointer;
   char* EndOfStringPointer;
-  char* ReturnString;
+  char* ReturnString = NULL;
   int StringLength;
 
   if ( (SearchPointer = strstr ( SearchString , StartIndicationString )) == NULL )

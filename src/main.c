@@ -97,7 +97,9 @@ main (int argc, char * argv[])
 
 
       // release fire-keys
-      if (FirePressedR()) ;
+      ReleaseKey (CMD_FIRE);
+      ReleaseKey (CMD_ACTIVATE);
+      ReleaseKey (CMD_TAKEOVER);
 
       show_droid_info (Me.type, -3, 0);  // show unit-intro page
       show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, RESET);

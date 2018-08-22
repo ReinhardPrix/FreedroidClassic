@@ -152,8 +152,7 @@ Takeover (int enemynum)
   Activate_Conservative_Frame_Computation ();
 
   // release fire keys
-  SpacePressedR();
-  MouseLeftPressedR();
+  FirePressedR();
   ReleaseKey (CMD_FIRE);
   ReleaseKey (CMD_ACTIVATE);
   ReleaseKey (CMD_TAKEOVER);
