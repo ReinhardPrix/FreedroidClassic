@@ -519,7 +519,8 @@ const char *handle_LE_SizeX ( MenuAction_t action )
   menuChangeInt ( action, &(CurLevel->xlen), 1, 0, MAX_MAP_COLS-1 );
   size_t newmem = CurLevel->xlen * sizeof( CurLevel->map[0][0] );
   // adjust memory sizes for new value
-  for ( int row = 0 ; row < CurLevel->ylen ; row++ )
+  int row;
+  for ( row = 0 ; row < CurLevel->ylen ; row++ )
     {
       CurLevel->map[row] = realloc( CurLevel->map[row], newmem );
       if ( CurLevel->map[row] == NULL ) {
@@ -1155,7 +1156,8 @@ Display_Key_Config (int selx, int sely)
   PrintStringFont (ne_screen, Font0_BFont, col3,   starty + (posy)*lheight, "Key3");
   posy ++;
 
-  for (int i=0; i < CMD_LAST; i++)
+  int i;
+  for (i=0; i < CMD_LAST; i++)
     {
       PrintStringFont (ne_screen, Font0_BFont,  startx, starty+(posy)*lheight, cmd_strings[i]);
       PrintStringFont (ne_screen, PosFont(1,1+i), col1, starty+(posy)*lheight, keystr[key_cmds[i][0]]);
