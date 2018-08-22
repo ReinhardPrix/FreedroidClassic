@@ -479,8 +479,8 @@ const char *handle_QuitGame ( MenuAction_t action )
   PutString (ne_screen, User_Rect.x + User_Rect.w/3,
              User_Rect.y + User_Rect.h/2, "Press A to quit");
 #else
-  PutString (ne_screen, User_Rect.x + User_Rect.w/10,
-             User_Rect.y + User_Rect.h/2, "Do you really want to quit? (y/n) ");
+  PutString (ne_screen, User_Rect.x + User_Rect.w/5,
+             User_Rect.y + User_Rect.h/2, "Hit 'y' or press Fire to quit");
 #endif
   SDL_Flip (ne_screen);
 #ifdef GCW0
@@ -490,9 +490,11 @@ const char *handle_QuitGame ( MenuAction_t action )
     Terminate (OK);
   }
 #else
-  while ( (!KeyIsPressed('n')) && (!KeyIsPressed('y')) ) SDL_Delay(1);
-  if (KeyIsPressed('y'))
+  wait_for_all_keys_released();
+  int key = wait_for_key_pressed();
+  if ( (key == 'y') || (key == key_cmds[CMD_FIRE][0]) || (key == key_cmds[CMD_FIRE][1]) || (key == key_cmds[CMD_FIRE][2]) ) {
     Terminate (OK);
+  }
 #endif
 
   return NULL;

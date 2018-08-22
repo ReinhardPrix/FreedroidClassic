@@ -722,13 +722,14 @@ wait_for_all_keys_released (void)
   return;
 }
 
-void
+int
 wait_for_key_pressed ( void )
 {
-  while ( ! any_key_just_pressed() ) {
+  int key;
+  while ( (key = any_key_just_pressed()) == 0 ) {
     SDL_Delay(1);
   }
-  return;
+  return key;
 }
 
 bool
@@ -762,25 +763,22 @@ JoyAxisMotion ( void )
 }
 
 // check if any keys have been 'freshly' pressed
-bool
+// if yes, return key-code, otherwise -1
+int
 any_key_just_pressed (void)
 {
-  int i;
-  bool ret = FALSE;
-
   update_input();
 
-  for (i=0; i < INPUT_LAST; i++)
+  for (int key=0; key < INPUT_LAST; key++)
     {
-      if ( just_pressed(input_state[i]) )
+      if ( just_pressed(input_state[key]) )
         {
-          clear_fresh(input_state[i]);
-          ret = TRUE;
-          break;
+          clear_fresh(input_state[key]);
+          return key;
         }
     }
 
-  return (ret);
+  return 0;
 
 }  // any_key_just_pressed()
 
