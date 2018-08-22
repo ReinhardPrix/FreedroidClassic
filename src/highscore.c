@@ -254,7 +254,7 @@ ShowHighscores (void)
     }
   SDL_Flip (ne_screen);
 
-  wait4key();
+  wait_for_key_pressed();
 
   SetCurrentFont (prev_font);
 

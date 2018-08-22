@@ -66,12 +66,15 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
     {SDLK_DOWN,	  JOY_DOWN, 	0 },		// CMD_DOWN
     {SDLK_LEFT,   JOY_LEFT, 	0 },		// CMD_LEFT
     {SDLK_RIGHT,  JOY_RIGHT, 	0 },		// CMD_RIGHT
-    {SDLK_SPACE,  SDLK_LCTRL,  0 },// CMD_FIRE
-    {SDLK_LALT, SDLK_LSHIFT, 	0 }, 		// CMD_ACTIVATE
-    {SDLK_BACKSPACE,  SDLK_TAB,  0 },// CMD_TAKEOVER
-    {0, 	  0, 		0  }, 	// CMD_QUIT,
+    {SDLK_SPACE,  SDLK_LCTRL,  0 },             // CMD_FIRE
+    {SDLK_LALT,   JOY_BUTTON2,	0 }, 		// CMD_ACTIVATE
+    {SDLK_BACKSPACE,  SDLK_TAB,  0 },           // CMD_TAKEOVER
+    {0, 	  0, 		0  }, 	        // CMD_QUIT,
     {SDLK_RETURN, 0, 0  }, 			// CMD_PAUSE,
-    {0, 0, 0 }  		// CMD_SCREENSHOT
+    {0, 0, 0 },  		                // CMD_SCREENSHOT
+    {0,           0,              0  },		// CMD_FULLSCREEN,
+    {SDLK_ESCAPE, JOY_BUTTON4,    0 },	        // CMD_MENU,
+    {SDLK_ESCAPE, JOY_BUTTON2,   MOUSE_BUTTON2 }// CMD_BACK
 #else
     {SDLK_UP, 	  JOY_UP, 	'w' },		// CMD_UP
     {SDLK_DOWN,	  JOY_DOWN, 	's' },		// CMD_DOWN
@@ -80,9 +83,12 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
     {SDLK_SPACE,  JOY_BUTTON1,   MOUSE_BUTTON1 },// CMD_FIRE
     {SDLK_RETURN, SDLK_RSHIFT, 	'e' }, 		// CMD_ACTIVATE
     {SDLK_SPACE,  JOY_BUTTON2,   MOUSE_BUTTON2 },// CMD_TAKEOVER
-    {'q', 	  'q', 		 'q'  }, 	// CMD_QUIT,
-    {SDLK_PAUSE, 'p', 'p'  }, 			// CMD_PAUSE,
-    {SDLK_F12, SDLK_F12, SDLK_F12 }  		// CMD_SCREENSHOT
+    {'q', 	  0, 		 0  }, 	        // CMD_QUIT,
+    {SDLK_PAUSE,  'p',           0  },	        // CMD_PAUSE,
+    {SDLK_F12,    0,             0  }, 	        // CMD_SCREENSHOT
+    {'f',         0,             0  },		// CMD_FULLSCREEN,
+    {SDLK_ESCAPE, JOY_BUTTON4,   0  },		// CMD_MENU,
+    {SDLK_ESCAPE, JOY_BUTTON2,   MOUSE_BUTTON2 }// CMD_BACK
 #endif
   };
 
@@ -99,7 +105,10 @@ char *cmd_strings[CMD_LAST] =
     "TAKEOVER",
     "QUIT",
     "PAUSE",
-    "SCREENSHOT"
+    "SCREENSHOT",
+    "FULLSCREEN",
+    "MENU",
+    "BACK"
   };
 
 #define FRESH_BIT   	(0x01<<8)
@@ -290,9 +299,10 @@ init_keystr (void)
   keystr[JOY_DOWN]	= "JoyDown";
   keystr[JOY_LEFT]	= "JoyLeft";
   keystr[JOY_RIGHT]	= "JoyRight";
-  keystr[JOY_BUTTON1] 	= "Joy1";
-  keystr[JOY_BUTTON2] 	= "Joy2";
-  keystr[JOY_BUTTON3] 	= "Joy3";
+  keystr[JOY_BUTTON1] 	= "Joy-A";
+  keystr[JOY_BUTTON2] 	= "Joy-B";
+  keystr[JOY_BUTTON3] 	= "Joy-X";
+  keystr[JOY_BUTTON4] 	= "Joy-Y";
 
   return;
 } // init_keystr()
@@ -352,13 +362,17 @@ ReactToSpecialKeys(void)
   if ( cmd_is_active (CMD_SCREENSHOT) )
     TakeScreenshot();
 
+  if ( cmd_is_activeR ( CMD_FULLSCREEN ) ) {
+    toggle_fullscreen();
+  }
+
+  if ( cmd_is_activeR ( CMD_MENU ) ) {
+    showMainMenu ();
+  }
+
   // this stuff remains hardcoded to keys
   if ( KeyIsPressedR('c') && AltPressed() && CtrlPressed() && ShiftPressed() )
     Cheatmenu ();
-
-  if ( EscapePressedR() )
-    showMainMenu ();
-
 
 } // void ReactToSpecialKeys(void)
 
@@ -464,6 +478,10 @@ update_input (void)
 	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = PRESSED;
 
+	  // and fourth button
+          else if (event.jbutton.button == 3)
+	    input_state[JOY_BUTTON4] = PRESSED;
+
 	  axis_is_active = TRUE;
 	  break;
 
@@ -479,6 +497,10 @@ update_input (void)
 	  // and third button
 	  else if (event.jbutton.button == 2)
 	    input_state[JOY_BUTTON3] = FALSE;
+
+	  // and fourth button
+          else if (event.jbutton.button == 3)
+	    input_state[JOY_BUTTON4] = PRESSED;
 
 	  axis_is_active = FALSE;
 	  break;
@@ -552,6 +574,7 @@ getchar_raw (void)
 {
   SDL_Event event;
   int Returnkey = 0;
+  Uint8 axis = 0;
 
   //  keyboard_update ();   /* treat all pending keyboard-events */
 
@@ -579,7 +602,35 @@ getchar_raw (void)
 	    Returnkey = JOY_BUTTON2;
 	  else if (event.jbutton.button == 2)
 	    Returnkey = JOY_BUTTON3;
+          else if (event.jbutton.button == 3)
+	    Returnkey = JOY_BUTTON4;
 	  break;
+
+        case SDL_JOYAXISMOTION:
+	  axis = event.jaxis.axis;
+          if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
+	    {
+	      if (joy_sensitivity*event.jaxis.value > 10000)   /* about half tilted */
+		{
+		  Returnkey = JOY_RIGHT;
+		}
+	      else if (joy_sensitivity*event.jaxis.value < -10000)
+		{
+		  Returnkey = JOY_LEFT;
+		}
+            }
+          else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
+	    {
+	      if (joy_sensitivity*event.jaxis.value > 10000)
+		{
+		  Returnkey = JOY_DOWN;
+		}
+	      else if (joy_sensitivity*event.jaxis.value < -10000)
+		{
+                  Returnkey = JOY_UP;
+		}
+            }
+          break;
 
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
@@ -662,6 +713,25 @@ ReleaseKey (int key)
   return;
 }
 
+void
+wait_for_all_keys_released (void)
+{
+  while ( any_key_is_pressedR() ) {
+    SDL_Delay(1);
+  }
+  return;
+}
+
+int
+wait_for_key_pressed ( void )
+{
+  int key;
+  while ( (key = any_key_just_pressed()) == 0 ) {
+    SDL_Delay(1);
+  }
+  return key;
+}
+
 bool
 ModIsPressed (SDLMod mod)
 {
@@ -692,37 +762,43 @@ JoyAxisMotion ( void )
   return ( input_state[JOY_UP] || input_state[JOY_DOWN] || input_state[JOY_LEFT] || input_state[JOY_RIGHT] );
 }
 
-// check if any keys or buttons1 are pressed
-bool
-any_key_pressed (void)
+// check if any keys have been 'freshly' pressed
+// if yes, return key-code, otherwise -1
+int
+any_key_just_pressed (void)
 {
-  int i;
-  bool ret = FALSE;
-
   update_input();
 
-  for (i=0; i<SDLK_LAST; i++)
-    if ( just_pressed(input_state[i]) )
-      {
-	clear_fresh(input_state[i]);
-	ret = TRUE;
-	break;
+  for (int key=0; key < INPUT_LAST; key++)
+    {
+      if ( just_pressed(input_state[key]) )
+        {
+          clear_fresh(input_state[key]);
+          return key;
+        }
+    }
+
+  return 0;
+
+}  // any_key_just_pressed()
+
+// check if any keys are in a current 'pressed' state, and soft-release them
+bool
+any_key_is_pressedR (void)
+{
+  update_input();
+
+  for ( int key=0; key < INPUT_LAST; key ++)
+    {
+      if ( (input_state[key] & PRESSED) ) {
+        input_state[key] = 0;
+        return TRUE;
       }
-  if ( just_pressed(input_state[JOY_BUTTON1]) )
-    {
-      clear_fresh (input_state[JOY_BUTTON1]);
-      ret = TRUE;
     }
 
-  if ( just_pressed(input_state[MOUSE_BUTTON1]) )
-    {
-      ret = TRUE;
-      clear_fresh (input_state[MOUSE_BUTTON1]);
-    }
+  return FALSE;
 
-  return (ret);
-
-}  // any_key_pressed()
+}  // any_key_is_pressed()
 
 bool
 cmd_is_active (enum _cmds cmd)
@@ -754,12 +830,11 @@ cmd_is_activeR (enum _cmds cmd)
       Terminate (ERR);
     }
 
-  if ( KeyIsPressedR( key_cmds[cmd][0] ) ||
-       KeyIsPressedR( key_cmds[cmd][1] ) ||
-       KeyIsPressedR( key_cmds[cmd][2] ))
-    return (TRUE);
-  else
-    return (FALSE);
+  bool c1 = KeyIsPressedR( key_cmds[cmd][0] );
+  bool c2 = KeyIsPressedR( key_cmds[cmd][1] );
+  bool c3 = KeyIsPressedR( key_cmds[cmd][2] );
+
+  return ( (c1 || c2 || c3) );
 
 } // cmd_is_active()
 

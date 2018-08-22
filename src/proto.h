@@ -215,7 +215,10 @@ EXTERN bool WheelDownPressed(void);
 EXTERN void Init_Joy(void);
 EXTERN void ReactToSpecialKeys(void);
 
-EXTERN bool any_key_pressed (void);
+EXTERN int any_key_just_pressed (void);
+EXTERN bool any_key_is_pressedR (void);
+EXTERN void wait_for_all_keys_released (void);
+EXTERN int wait_for_key_pressed(void);
 EXTERN int JoyAxisMotion ( void );
 
 EXTERN bool KeyIsPressed (int key);

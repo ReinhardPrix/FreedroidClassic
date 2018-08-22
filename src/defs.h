@@ -81,6 +81,7 @@ enum  _pointer_states {
   JOY_BUTTON1,
   JOY_BUTTON2,
   JOY_BUTTON3,
+  JOY_BUTTON4,
 
   INPUT_LAST
 };
@@ -99,6 +100,9 @@ enum _cmds {
   CMD_QUIT,
   CMD_PAUSE,
   CMD_SCREENSHOT,
+  CMD_FULLSCREEN,
+  CMD_MENU,
+  CMD_BACK,
   CMD_LAST
 };
 
@@ -165,8 +169,6 @@ enum _cmds {
 
 #define AnyCmdActive() (cmd_is_active(CMD_FIRE) || cmd_is_active(CMD_ACTIVATE) || cmd_is_active(CMD_TAKEOVER) )
 #define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) )
-
-#define wait4key()  do {while(1) {if(any_key_pressed()) break; else SDL_Delay(50);}; } while(0)
 
 // ----------------------------------------
 

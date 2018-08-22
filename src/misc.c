@@ -244,8 +244,10 @@ LoadGameConfig (void)
   // read in keyboard-config
   for (i=0; i < CMD_LAST; i++)
     {
-      read_variable (data, cmd_strings[i], "%s", &lbuf);
-      sscanf (lbuf, "%d_%d_%d", &(key_cmds[i][0]), &(key_cmds[i][1]), &(key_cmds[i][2]) );
+      int status = read_variable (data, cmd_strings[i], "%s", &lbuf);
+      if ( status == OK ) {
+        sscanf (lbuf, "%d_%d_%d", &(key_cmds[i][0]), &(key_cmds[i][1]), &(key_cmds[i][2]) );
+      }
     }
 
   free (data);
