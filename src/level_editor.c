@@ -228,7 +228,16 @@ LevelEditor(void)
 
   while ( !Done )
     {
-      SDL_Delay(1);
+      if ( cmd_is_activeR ( CMD_MENU ) ) {
+	showLevelEditorMenu();
+        if ( quit_LevelEditor ) {
+          Done = TRUE;
+          CurrentCombatScaleFactor = 1;
+          SetCombatScaleTo (CurrentCombatScaleFactor);
+          quit_LevelEditor = FALSE;
+        }
+        continue;
+      }
 
       BlockX=rintf(Me.pos.x);
       BlockY=rintf(Me.pos.y);
@@ -467,12 +476,6 @@ LevelEditor(void)
 	}
       if ((SpacePressed() || MouseLeftPressed()))
 	CurLevel->map[BlockY][BlockX]=FLOOR;
-
-      // After Level editing is done and escape has been pressed,
-      // display the Menu with level save options and all that.
-
-      if (EscapePressedR())
-	Done = LevelEditMenu();
 
     } // while (!Done)
 

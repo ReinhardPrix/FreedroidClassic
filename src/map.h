@@ -104,11 +104,13 @@ char *ColorNames[] = {
   "Gray",
   "Blue",
   "Turquoise",
-  "Dark",
-  NULL
+  "Dark"
 };
+
+int numLevelColors = sizeof(ColorNames)/sizeof(ColorNames[0]);
 #else
 extern char *ColorNames[];
+extern int numLevelColors;
 #endif
 
 

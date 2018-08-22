@@ -63,7 +63,6 @@ typedef struct MenuEntry_s
 // ----- local prototypes ----------
 void Key_Config_Menu (void);
 void Display_Key_Config (int selx, int sely);
-bool LevelEditMenu (void);
 void ShowCredits (void);
 
 void ShowMenu ( const MenuEntry_t *menu );
@@ -86,24 +85,35 @@ const char *handle_ShowFramerate ( MenuAction_t action );
 const char *handle_ShowEnergy ( MenuAction_t action );
 const char *handle_ShowDeathCount ( MenuAction_t action );
 
-const char *handle_LevelEditor ( MenuAction_t action );
+const char *handle_OpenLevelEditor ( MenuAction_t action );
 const char *handle_Highscores ( MenuAction_t action );
 const char *handle_Credits ( MenuAction_t action );
 const char *handle_ConfigureKeys ( MenuAction_t action );
 const char *handle_QuitGame ( MenuAction_t action );
 
+const char *handle_LE_Exit ( MenuAction_t action );
+const char *handle_LE_LevelNumber ( MenuAction_t action );
+const char *handle_LE_Color ( MenuAction_t action );
+const char *handle_LE_SizeX ( MenuAction_t action );
+const char *handle_LE_SizeY ( MenuAction_t action );
+const char *handle_LE_Name ( MenuAction_t action );
+const char *handle_LE_Music ( MenuAction_t action );
+const char *handle_LE_Comment ( MenuAction_t action );
+const char *handle_LE_SaveShip ( MenuAction_t action );
+
 void setTheme ( int theme_index );
 const char *isToggleOn ( int toggle );
 void flipToggle ( int *toggle );
 void menuChangeFloat ( MenuAction_t action, float *val, float step, float min_val, float max_val );
+void menuChangeInt ( MenuAction_t action, int *val, int step, int min_val, int max_val );
 
 // ----- define menus ----------
 MenuEntry_t LegacyMenu[] =
   {
     { "Back",			NULL,			NULL },
     { "Set Strictly Classic",	handle_StrictlyClassic,	NULL },
-    { "Combat window: ", 	handle_WindowType, 	NULL },
-    { "Graphics theme: ", 	handle_Theme,		NULL },
+    { "Combat Window: ", 	handle_WindowType, 	NULL },
+    { "Graphics Theme: ", 	handle_Theme,		NULL },
     { "Droid Talk: ", 		handle_DroidTalk,	NULL },
     { "Show Decals: ", 		handle_ShowDecals,	NULL },
     { "All Map Visible: ", 	handle_AllMapVisible,	NULL },
@@ -117,8 +127,8 @@ MenuEntry_t LegacyMenu[] =
 MenuEntry_t GraphicsSoundMenu[] =
   {
     { "Back", 			NULL,			NULL },
-    { "Music volume: ", 	handle_MusicVolume,	NULL },
-    { "Sound volume: ", 	handle_SoundVolume,	NULL },
+    { "Music Volume: ", 	handle_MusicVolume,	NULL },
+    { "Sound Volume: ", 	handle_SoundVolume,	NULL },
     { "Fullscreen Mode: ", 	handle_Fullscreen,	NULL },
     { NULL,			NULL, 			NULL }
   };
@@ -133,6 +143,19 @@ MenuEntry_t HUDMenu[] =
   { NULL,			NULL, 			NULL }
 };
 
+MenuEntry_t LevelEditorMenu[] =
+{
+  { "Exit Level Editor", 	handle_LE_Exit,         NULL },
+  { "Current Level: ", 		handle_LE_LevelNumber,	NULL },
+  { "Level Color: ",		handle_LE_Color,	NULL },
+  { "Levelsize X: ",		handle_LE_SizeX,	NULL },
+  { "Levelsize Y: ",		handle_LE_SizeY,	NULL },
+  { "Level Name: ", 		handle_LE_Name,		NULL },
+  //{ "Background Music: ",	handle_LE_Music,	NULL },
+  //{ "Level Comment: ",	handle_LE_Comment,	NULL },
+  { "Save ship: ",              handle_LE_SaveShip,	NULL },
+  { NULL,			NULL, 			NULL }
+};
 
 MenuEntry_t MainMenu[] =
   {
@@ -141,7 +164,7 @@ MenuEntry_t MainMenu[] =
     { "Legacy Options", 	NULL,				LegacyMenu },
     { "HUD Settings",		NULL, 				HUDMenu },
 #ifndef ANDROID
-    { "Level Editor",		handle_LevelEditor,		NULL },
+    { "Level Editor",		handle_OpenLevelEditor,		NULL },
 #endif
     { "Highscores", 		handle_Highscores, 		NULL },
     { "Credits", 		handle_Credits, 		NULL },
@@ -199,6 +222,14 @@ menuChangeFloat ( MenuAction_t action, float *val, float step, float min_val, fl
     }
   return;
 } // menuChangeFloat()
+void
+menuChangeInt ( MenuAction_t action, int *val, int step, int min_val, int max_val )
+{
+  float float_val = (float)(*val);
+  menuChangeFloat ( action, &float_val, step, min_val, max_val );
+  (*val) = (int)round(float_val);
+  return;
+} // menuChangeInt()
 
 
 // ========== menu entry handler functions ====================
@@ -427,7 +458,7 @@ handle_ShowDeathCount ( MenuAction_t action )
   return NULL;
 }
 
-const char *handle_LevelEditor ( MenuAction_t action )
+const char *handle_OpenLevelEditor ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK ) {
     MenuItemSelectedSound();
@@ -435,6 +466,165 @@ const char *handle_LevelEditor ( MenuAction_t action )
   }
   return NULL;
 }
+
+const char *handle_LE_Exit ( MenuAction_t action )
+{
+  if ( action == ACTION_CLICK )
+    {
+      MenuItemSelectedSound();
+      quit_LevelEditor = TRUE;
+      quit_Menu = TRUE;
+    }
+  return NULL;
+}
+
+const char *handle_LE_LevelNumber ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%d" , CurLevel->levelnum );
+    return buf;
+  }
+
+  int curlevel = CurLevel->levelnum;
+  menuChangeInt ( action, &curlevel, 1, 0, curShip.num_levels -1 );
+  Teleport ( curlevel, 3 , 3 );
+  Switch_Background_Music_To ( BYCOLOR );
+  InitiateMenu(FALSE);
+
+  return NULL;
+}
+
+const char *handle_LE_Color ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return ColorNames[CurLevel->color];
+  }
+  menuChangeInt ( action, &(CurLevel->color), 1, 0, numLevelColors-1 );
+  Switch_Background_Music_To ( BYCOLOR );
+  InitiateMenu(FALSE);
+
+  return NULL;
+}
+
+const char *handle_LE_SizeX ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%d" , CurLevel->xlen );
+    return buf;
+  }
+
+  int oldxlen = CurLevel->xlen;
+  menuChangeInt ( action, &(CurLevel->xlen), 1, 0, MAX_MAP_COLS-1 );
+  size_t newmem = CurLevel->xlen * sizeof( CurLevel->map[0][0] );
+  // adjust memory sizes for new value
+  for ( int row = 0 ; row < CurLevel->ylen ; row++ )
+    {
+      CurLevel->map[row] = realloc( CurLevel->map[row], newmem );
+      if ( CurLevel->map[row] == NULL ) {
+        DebugPrintf ( 0, "Failed to re-allocate to %z bytes in map row %d\n", newmem, row );
+        Terminate(ERR);
+      }
+      if ( CurLevel->xlen > oldxlen ) { // fill new map area with VOID
+        CurLevel->map[ row ] [ CurLevel->xlen - 1 ] = VOID;
+      }
+    }
+  InitiateMenu(FALSE);
+  return NULL;
+}
+
+const char *handle_LE_SizeY ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%d" , CurLevel->ylen );
+    return buf;
+  }
+
+  int oldylen = CurLevel->ylen;
+  menuChangeInt ( action, &(CurLevel->ylen), 1, 0, MAX_MAP_ROWS-1 );
+  if ( oldylen > CurLevel->ylen )
+    {
+      free ( CurLevel->map[oldylen - 1] );
+      CurLevel->map[oldylen - 1] = NULL;
+    }
+  else if ( oldylen < CurLevel->ylen )
+    {
+      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc ( CurLevel->xlen * sizeof( CurLevel->map[0][0] ) );
+      memset ( CurLevel->map[ CurLevel->ylen-1 ], VOID, CurLevel->xlen * sizeof( CurLevel->map[0][0] ) );
+    }
+
+  InitiateMenu (FALSE);
+  return NULL;
+}
+
+const char *handle_LE_Name ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return CurLevel->Levelname;
+  }
+
+  if ( action == ACTION_CLICK )
+    {
+      DisplayText ("New level name: ", Menu_Rect.x-2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect );
+      SDL_Flip( ne_screen );
+      free ( CurLevel->Levelname );
+      CurLevel->Levelname = GetString(15, 2);
+      InitiateMenu (FALSE);
+    }
+
+  return NULL;
+}
+
+const char *handle_LE_Music ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return CurLevel->Background_Song_Name;
+  }
+
+  if ( action == ACTION_CLICK )
+    {
+      DisplayText ("Music filename: ", Menu_Rect.x - 2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect);
+      SDL_Flip( ne_screen );
+      free ( CurLevel->Background_Song_Name );
+      CurLevel->Background_Song_Name = GetString(20, 2);
+      Switch_Background_Music_To ( CurLevel->Background_Song_Name );
+    }
+
+  return NULL;
+}
+
+const char *handle_LE_Comment ( MenuAction_t action )
+{
+  if ( action == ACTION_INFO ) {
+    return CurLevel->Level_Enter_Comment;
+  }
+  return NULL;
+}
+
+const char *handle_LE_SaveShip ( MenuAction_t action )
+{
+  const char *shipname = "Testship";
+  static char fname[255];
+  snprintf ( fname, sizeof(fname)-1, "%s%s", shipname, SHIP_EXT );
+  if ( action == ACTION_INFO ) {
+    return fname;
+  }
+  if ( action == ACTION_CLICK )
+    {
+      SaveShip( shipname );
+      char output[255];
+      snprintf ( output, sizeof(output)-1, "Ship saved as '%s'", fname );
+      CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont), output );
+      SDL_Flip ( ne_screen );
+      wait_for_key_pressed();
+      InitiateMenu (FALSE);
+    }
+
+  return NULL;
+}
+
 const char *handle_Highscores ( MenuAction_t action )
 {
   if ( action == ACTION_CLICK ) {
@@ -505,8 +695,16 @@ const char *handle_QuitGame ( MenuAction_t action )
 // simple wrapper to ShowMenu() to provide the external entry point into the main menu
 void showMainMenu (void)
 {
-  return ShowMenu ( MainMenu );
+  ShowMenu ( MainMenu );
 } // showMainMenu()
+
+// simple wrapper to ShowMenu() to provide the external entry point into the Level Editor menu
+void
+showLevelEditorMenu (void)
+{
+  quit_LevelEditor = FALSE;
+  ShowMenu ( LevelEditorMenu );
+}
 
 /*@Function============================================================
 @Desc: This function prepares the screen for a menu and
@@ -644,7 +842,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   int num_entries = 0;
   while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
-  InitiateMenu ( TRUE );
+  InitiateMenu ( FALSE );
   while ( any_key_is_pressedR() ) // wait for all key/controller-release
     SDL_Delay(1);
 
@@ -652,6 +850,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   const Uint32 wait_move_ticks = 100;
   static Uint32 last_move_tick = 0;
   bool finished = FALSE;
+  quit_Menu = FALSE;
   while ( !finished )
     {
       const char* (*handler)( MenuAction_t action ) = MenuEntries[menu_pos].handler;
@@ -741,6 +940,9 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
           break;
         } // switch(action)
       SDL_Delay(1);	// don't hog CPU
+      if ( quit_Menu ) {
+        finished = TRUE;
+      }
     } // while !finished
 
   ClearGraphMem();
@@ -830,260 +1032,6 @@ ShowCredits (void)
   return;
 
 } // Show_Credits()
-
-
-
-//----------------------------------------------------------------------
-// returns FALSE if level-editing should continue, TRUE if user chose 'back'
-//----------------------------------------------------------------------
-
-bool
-LevelEditMenu (void)
-{
-  bool key = FALSE;
-  int xoffs = 0;
-  int Weiter=FALSE;
-  char* OldMapPointer;
-  int MenuPosition=1;
-  bool Done = FALSE;
-  int i;
-
-
-  enum {
-    BACK = 1,
-    CHANGE_LEVEL_POSITION,
-    CHANGE_COLOR,
-    CHANGE_SIZE_X,
-    CHANGE_SIZE_Y,
-    SET_LEVEL_NAME,
-    SET_BACKGROUND_SONG_NAME,
-    SET_LEVEL_COMMENT,
-    SAVE_LEVEL_POSITION,
-    LAST
-    };
-
-
-  InitiateMenu (FALSE);
-  while (!Weiter)
-    {
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-      SDL_Delay(1);
-
-      PutInfluence (Menu_Rect.x, Menu_Rect.y + (MenuPosition-1.5)*fheight);
-
-      CenteredPutString ( ne_screen ,  1*FontHeight(Menu_BFont),    "LEVEL EDITOR");
-
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 0*fheight,
-		   "Quit Level Editor");
-
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 1*fheight,
-		   "Current: %d.  Level +/-" , CurLevel->levelnum );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 2*fheight,
-		   "Change level color: %s", ColorNames[CurLevel->color]);
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 3*fheight,
-		   "Levelsize in X: %d.  -/+" , CurLevel->xlen );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 4*fheight,
-		   "Levelsize in Y: %d.  -/+" , CurLevel->ylen );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 5*fheight,
-		   "Level name: %s" , CurLevel->Levelname );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 6*fheight,
-		   "Background music: %s" , CurLevel->Background_Song_Name );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 7*fheight,
-		   "Level Comment: %s" , CurLevel->Level_Enter_Comment );
-      PrintString (ne_screen, OptionsMenu_Rect.x-xoffs, Menu_Rect.y + 8*fheight,
-		   "Save ship as  'Testship.shp'");
-
-      SDL_Flip ( ne_screen );
-
-      key = FALSE;
-      while (!key)
-	{
-	  SDL_Delay(1);
-
-	  if (LeftPressed()||RightPressed()||MouseLeftPressed()||MouseRightPressed()||SpacePressed())
-	    key = TRUE;
-
-	  if ( EscapePressedR() )
-	    {
-	      Weiter=TRUE;
-	      key=TRUE;
-	    }
-
-
-	  switch (MenuPosition)
-	    {
-	    case SAVE_LEVEL_POSITION:
-	      if (FirePressedR()||ReturnPressedR())
-		{
-		  MenuItemSelectedSound();
-		  SaveShip("Testship");
-		  CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont),"Ship saved as 'Testship.shp'\n");
-		  SDL_Flip ( ne_screen );
-		  while ( !FirePressedR() && !EscapePressedR() && !ReturnPressedR() ) SDL_Delay(1);
-		}
-	      break;
-	    case SET_LEVEL_NAME:
-	      if (FirePressedR()||ReturnPressedR())
-		{
-		  MenuItemSelectedSound();
-		  DisplayText ("New level name: ",
-			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight,
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Levelname = GetString(15, 2);
-		  Weiter=!Weiter;
-		}
-	      break;
-	    case SET_BACKGROUND_SONG_NAME:
-	      if (FirePressedR()||ReturnPressedR())
-		{
-		  MenuItemSelectedSound();
-		  DisplayText ("Bg music filename: ",
-			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight,
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Background_Song_Name=GetString(20, 2);
-		}
-	      break;
-	    case SET_LEVEL_COMMENT:
-	      if (FirePressedR()||ReturnPressedR())
-		{
-		  MenuItemSelectedSound();
-		  DisplayText ("New level-comment :",
-			       Menu_Rect.x-50, Menu_Rect.x+ 5*fheight,
-			       &Full_User_Rect);
-		  SDL_Flip( ne_screen );
-		  CurLevel->Level_Enter_Comment=GetString(15 , FALSE );
-		}
-	      break;
-	    case BACK:
-	      if (FirePressedR()||ReturnPressedR())
-		{
-		  MenuItemSelectedSound();
-		  {
-		    int i;
-		    for (i = 0; i < curShip.num_levels; i++)
-		      {
-			ResetLevelMap (curShip.AllLevels[i]);	// close all doors
-			InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
-		      }
-		  }
-
-		  SetCombatScaleTo( 1 );
-                  return TRUE;	// return from Level Editor
-		}
-	      break;
-
-	    case CHANGE_LEVEL_POSITION:
-	      if (LeftPressedR()||MouseLeftPressedR())
-		{
-		  if ( CurLevel->levelnum > 0 )
-		    Teleport ( CurLevel->levelnum -1 , 3 , 3 );
-		  InitiateMenu(FALSE);
-		  MoveMenuPositionSound();
-		}
-	      if ( RightPressedR()||MouseRightPressedR() )
-		{
-		  if ( CurLevel->levelnum < curShip.num_levels -1 )
-		    Teleport ( CurLevel->levelnum +1 , 3 , 3 );
-		  InitiateMenu(FALSE);
-		  MoveMenuPositionSound();
-		}
-	      break;
-
-	    case CHANGE_COLOR:
-	      if ( (RightPressedR()||MouseRightPressedR()) && (CurLevel->color  < 6 ) )
-		{
-		  CurLevel->color++;
-		  InitiateMenu(FALSE);
-		  MoveMenuPositionSound();
-		}
-
-	      if ( (LeftPressedR()||MouseLeftPressedR()) && (CurLevel->color > 0) )
-		{
-		  CurLevel->color--;
-		  InitiateMenu(FALSE);
-		  MoveMenuPositionSound();
-		}
-	      break;
-
-	    case CHANGE_SIZE_X:
-	      if ( RightPressedR()||MouseRightPressedR() )
-		{
-		  CurLevel->xlen++;
-		  // In case of enlargement, we need to do more:
-		  for ( i = 0 ; i < CurLevel->ylen ; i++ )
-		    {
-		      OldMapPointer=CurLevel->map[i];
-		      CurLevel->map[i] = MyMalloc( CurLevel->xlen +1) ;
-		      memcpy( CurLevel->map[i] , OldMapPointer , CurLevel->xlen-1 );
-		      // We don't want to fill the new area with junk, do we? So we set it VOID
-		      CurLevel->map[ i ] [ CurLevel->xlen-1 ] = VOID;
-		    }
-		  InitiateMenu (FALSE);
-		  MoveMenuPositionSound();
-		}
-	      if (LeftPressedR()||MouseLeftPressedR())
-		{
-		  CurLevel->xlen--; // making it smaller is always easy:  just modify the value for size
-		  // allocation of new memory or things like that are not nescessary.
-		  InitiateMenu (FALSE);
-		  MoveMenuPositionSound();
-		}
-	      break;
-
-	    case CHANGE_SIZE_Y:
-	      if ( RightPressedR()||MouseRightPressedR() )
-		{
-		  CurLevel->ylen++;
-
-		  // In case of enlargement, we need to do more:
-		  CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc( CurLevel->xlen +1) ;
-
-		  // We don't want to fill the new area with junk, do we? So we set it VOID
-		  memset( CurLevel->map[ CurLevel->ylen-1 ] , VOID , CurLevel->xlen );
-		  InitiateMenu (FALSE);
-		  MoveMenuPositionSound();
-		}
-
-	      if (LeftPressedR()||MouseLeftPressedR())
-		{
-		  CurLevel->ylen--; // making it smaller is always easy:  just modify the value for size
-		  // allocation of new memory or things like that are not nescessary.
-		  InitiateMenu (FALSE);
-		  MoveMenuPositionSound();
-		}
-	      break;
-
-	    default:
-	      DebugPrintf(0, "WARNING: nonexistant Menu selection: %d\n", MenuPosition);
-	      break;
-
-	    } // switch MenuPosition
-
-	      // If the user pressed up or down, the cursor within
-	      // the level editor menu has to be moved, which is done here:
-	  if (UpPressedR() || WheelUpPressed ())
-	    {
-	      key = TRUE;
-	      if (MenuPosition > 1) MenuPosition--;
-	      else MenuPosition = LAST-1;
-	      MoveMenuPositionSound();
-	    }
-	  if (DownPressedR() || WheelDownPressed ())
-	    {
-	      key = TRUE;
-	      if ( MenuPosition < LAST-1 ) MenuPosition++;
-	      else MenuPosition = 1;
-	      MoveMenuPositionSound();
-	    }
-
-	} // while !key
-
-    } // while !Weiter
-
-  return (Done);
-} // LevelEditMenu
 
 // ======================================================================
 

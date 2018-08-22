@@ -474,7 +474,7 @@ GetString (int MaxLen, int echo)
 
   if (echo == 1)		/* echo to stdout */
     {
-      printf ("\nGetString(): sorry, echo=1 currently not implemented!\n");
+      DebugPrintf (0, "\nGetString(): sorry, echo=1 currently not implemented!\n");
       return NULL;
     }
 
