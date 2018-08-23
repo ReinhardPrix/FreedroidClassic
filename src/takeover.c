@@ -171,13 +171,17 @@ Takeover (int enemynum)
 
   show_droid_info ( Me.type, -1 , 0);
   show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, UPDATE);
-  while (!FirePressedR())
+  while (!FirePressedR()) {
     show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
+    SDL_Delay(1);
+  }
 
   show_droid_info ( AllEnemys[enemynum].type, -2 ,0);
   show_droid_portrait (Cons_Droid_Rect,  AllEnemys[enemynum].type, DROID_ROTATION_TIME, UPDATE);
-  while (!FirePressedR())
+  while (!FirePressedR()) {
     show_droid_portrait (Cons_Droid_Rect,  AllEnemys[enemynum].type, DROID_ROTATION_TIME, 0);
+    SDL_Delay(1);
+  }
 
   SDL_BlitSurface (takeover_bg_pic, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
@@ -349,6 +353,7 @@ ChooseColor (void)
       if (countdown == 0)
 	ColorChosen = TRUE;
 
+      SDL_Delay(1); // don't hog CPU
     } /* while(!ColorChosen) */
 
   return;
@@ -772,10 +777,6 @@ ShowPlayground (void)
     } /* for player */
 
   SDL_Flip (ne_screen);
-
-  // give CPU some air, unless requested otherwise
-  if (!GameConfig.HogCPU)
-    SDL_Delay(1);
 
   return;
 

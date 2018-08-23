@@ -847,27 +847,31 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   static Uint32 last_move_tick = 0;
   bool finished = FALSE;
   quit_Menu = FALSE;
+  bool need_update = TRUE;
   while ( !finished )
     {
       const char* (*handler)( MenuAction_t action ) = MenuEntries[menu_pos].handler;
       const MenuEntry_t *submenu = MenuEntries[menu_pos].submenu;
 
-      SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
-
-      // print menu
-      for ( int i = 0; i < num_entries; i ++ )
+      if ( need_update )
         {
-          char fullName[256];
-          const char *arg = NULL;
-          if ( MenuEntries[i].handler ) {
-            arg = (*MenuEntries[i].handler)( ACTION_INFO );
-          }
-          sprintf ( fullName, "%s%s", MenuEntries[i].name, (arg == NULL) ? "" : arg );
-          PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y + i * fheight, fullName );
+          SDL_BlitSurface (Menu_Background, NULL, ne_screen, NULL);
+          // print menu
+          int i;
+          for ( i = 0; i < num_entries; i ++ )
+            {
+              char fullName[256];
+              const char *arg = NULL;
+              if ( MenuEntries[i].handler ) {
+                arg = (*MenuEntries[i].handler)( ACTION_INFO );
+              }
+              sprintf ( fullName, "%s%s", MenuEntries[i].name, (arg == NULL) ? "" : arg );
+              PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y + i * fheight, fullName );
+            }
+          PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
+          SDL_Flip( ne_screen );
+          need_update = FALSE;
         }
-
-      PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
-      SDL_Flip( ne_screen );
 
       action = getMenuAction( 250 );
       bool allow_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
@@ -891,8 +895,9 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
             MenuItemSelectedSound();
             wait_for_all_keys_released();
             ShowMenu ( submenu );
-            InitiateMenu (TRUE);
+            InitiateMenu (FALSE);
           }
+          need_update = TRUE;
           break;
 
         case ACTION_RIGHT:
@@ -904,6 +909,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
             (*handler)(action);
           }
           last_move_tick = SDL_GetTicks();
+          need_update = TRUE;
           break;
 
         case ACTION_UP:
@@ -917,6 +923,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
             menu_pos = num_entries - 1;
           }
           last_move_tick = SDL_GetTicks();
+          need_update = TRUE;
           break;
 
         case ACTION_DOWN:
@@ -930,15 +937,18 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
             menu_pos = 0;
           }
           last_move_tick = SDL_GetTicks();
+          need_update = TRUE;
           break;
 
         default:
           break;
         } // switch(action)
-      SDL_Delay(1);	// don't hog CPU
+
       if ( quit_Menu ) {
         finished = TRUE;
       }
+
+      SDL_Delay(1);	// don't hog CPU
     } // while !finished
 
   ClearGraphMem();
