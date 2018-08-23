@@ -47,11 +47,13 @@ const SDL_VideoInfo *vid_info;	/* info about current video mode */
 int vid_bpp;
 
 int fonts_loaded = FALSE;
+char *portrait_raw_mem[NUM_DROIDS];
 
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
-SDL_RWops *load_raw_pic (char *fpath);
+SDL_RWops *load_raw_pic (const char *fpath, char **raw_mem );
+BFont_Info *Duplicate_Font ( const BFont_Info * in_font );
 
 /* XPM */
 static const char *crosshair_xpm[] = {
@@ -720,7 +722,7 @@ InitPictures (void)
 	      fpath = find_file (fname, GRAPHICS_DIR, NO_THEME, CRITICAL);
 	    }
 
-	  packed_portraits[i] = load_raw_pic (fpath);
+	  packed_portraits[i] = load_raw_pic (fpath, &portrait_raw_mem[i] );
 	}
 
       update_progress (95);
@@ -770,11 +772,15 @@ InitPictures (void)
  * load a pic into memory and return the SDL_RWops pointer to it
  *----------------------------------------------------------------------*/
 SDL_RWops *
-load_raw_pic (char *fpath)
+load_raw_pic (const char *fpath, char **raw_mem )
 {
     FILE *fp;
     off_t size;
-    void *mem;
+
+    if ( raw_mem == NULL || (*raw_mem) != NULL ) {
+      DebugPrintf ( 0, "Invalid input 'raw_mem': must be pointing to NULL pointer\n");
+      Terminate ( ERR );
+    }
 
     // sanity check
     if (!fpath)
@@ -791,8 +797,8 @@ load_raw_pic (char *fpath)
       }
 
     size = FS_filelength (fp);
-    mem = MyMalloc (size);
-    if (fread (mem, 1, size, fp) != size)
+    (*raw_mem) = MyMalloc (size);
+    if (fread ( (*raw_mem), 1, size, fp) != size)
       {
 	DebugPrintf (0, "ERROR reading file %s. Giving up...\n", fpath);
 	Terminate (ERR);
@@ -800,7 +806,7 @@ load_raw_pic (char *fpath)
     fclose (fp);
 
 
-    return (SDL_RWFromMem(mem, size) );
+    return (SDL_RWFromMem( (*raw_mem), size) );
 
 }
 
@@ -830,6 +836,11 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
 
   if (!fpath && !pic)		/* we need some info.. */
     return (NULL);
+
+  if ( (pic != NULL) && (flags == FREE_ONLY) ) {
+    SDL_FreeSurface (pic);
+    return NULL;
+  }
 
   if (fpath) // initialize: read & malloc new pic, dont' return a copy!!
     {
@@ -945,7 +956,17 @@ Init_Video (void)
     {
       SDL_WM_SetCaption ("Freedroid", "");
       fpath = find_file (ICON_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
-      if (fpath) SDL_WM_SetIcon( IMG_Load (fpath), NULL);
+      if ( fpath == NULL ) {
+        DebugPrintf ( 0, "Could not find icon file '%s'\n", ICON_FILE );
+      } else {
+        SDL_Surface *img = IMG_Load (fpath);
+        if ( img == NULL ) {
+          DebugPrintf ( 0, "IMG_Load failed for icon file '%s'\n", fpath );
+        } else {
+          SDL_WM_SetIcon( img, NULL);
+          SDL_FreeSurface ( img );
+        }
+      }
     }
 
   if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , vid_flags)) )
@@ -1104,15 +1125,28 @@ Load_Fonts (void)
     }
 
 
-  Menu_BFont = Para_BFont;
-
-  /* choose a font for highscore displaying... */
-  Highscore_BFont = Para_BFont;
+  Menu_BFont      = Duplicate_Font ( Para_BFont );
+  Highscore_BFont = Duplicate_Font ( Para_BFont );
 
   fonts_loaded = TRUE;
 
   return (OK);
 } // Load_Fonts ()
+
+BFont_Info *
+Duplicate_Font ( const BFont_Info * in_font )
+{
+  BFont_Info *out_font = MyMalloc ( sizeof(out_font[0]) );
+
+  memcpy ( out_font, in_font, sizeof(out_font[0]) );
+  out_font->Surface = SDL_ConvertSurface ( in_font->Surface, in_font->Surface->format, in_font->Surface->flags);
+  if ( out_font->Surface == NULL ) {
+    DebugPrintf ( 0, "Duplicate_Font: failed to copy SDL_Surface using SDL_ConvertSurface()\n");
+    Terminate ( ERR );
+  }
+
+  return out_font;
+}
 
 //------------------------------------------------------------
 // display "white noise" effect in Rect.
@@ -1455,6 +1489,77 @@ toggle_fullscreen (void)
     }
   else
     GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
+
+  return;
+}
+
+#define FreeSurfaceArrary(arr) do{   for ( i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {   SDL_FreeSurface ( arr[i] ); } } while(0)
+void
+FreeGraphics ( void )
+{
+  int i;
+
+  // free RWops structures
+  for ( i = 0; i < sizeof(packed_portraits)/sizeof(packed_portraits[0]); i ++ ) {
+    if ( packed_portraits[i] != NULL ) {
+      SDL_RWclose( packed_portraits[i] );
+    }
+  }
+
+  for ( i = 0; i < sizeof(portrait_raw_mem)/sizeof(portrait_raw_mem[0]); i++) {
+    free ( portrait_raw_mem[i] );
+  }
+
+  SDL_FreeSurface ( ne_screen );
+
+  FreeSurfaceArrary ( EnemySurfacePointer );
+  FreeSurfaceArrary ( InfluencerSurfacePointer );
+  FreeSurfaceArrary ( InfluDigitSurfacePointer );
+  FreeSurfaceArrary ( EnemyDigitSurfacePointer );
+  FreeSurfaceArrary ( Decal_pics );
+
+  int j;
+  for ( i = 0; i < NUM_COLORS; i ++ ) {
+    for ( j = 0; j < NUM_MAP_BLOCKS; j ++ ) {
+      SDL_FreeSurface ( OrigMapBlockSurfacePointer[i][j] );
+    }
+  }
+
+  SDL_FreeSurface ( BuildBlock );
+  SDL_FreeSurface ( banner_pic );
+  SDL_FreeSurface ( pic999 );
+  // SDL_RWops *packed_portraits[NUM_DROIDS];
+  SDL_FreeSurface ( takeover_bg_pic );
+  SDL_FreeSurface ( console_pic );
+  SDL_FreeSurface ( console_bg_pic1 );
+  SDL_FreeSurface ( console_bg_pic2 );
+
+  SDL_FreeSurface ( arrow_up );
+  SDL_FreeSurface ( arrow_down );
+  SDL_FreeSurface ( arrow_right );
+  SDL_FreeSurface ( arrow_left );
+
+  SDL_FreeSurface ( ship_off_pic );
+  SDL_FreeSurface ( ship_on_pic );
+  SDL_FreeSurface ( progress_meter_pic );
+  SDL_FreeSurface ( progress_filler_pic );
+  SDL_FreeSurface ( to_blocks );
+
+  // free fonts
+  BFont_Info *fonts[] = { Menu_BFont, Para_BFont, Highscore_BFont, Font0_BFont, Font1_BFont, Font2_BFont };
+  for ( i = 0; i < sizeof(fonts)/sizeof(fonts[0]); i ++ ) {
+    if ( fonts[i] != NULL ) {
+        SDL_FreeSurface ( fonts[i]->Surface );
+      }
+    free ( fonts[i] );
+  }
+
+  // free Load_Block()-internal buffer
+  Load_Block (NULL, 0, 0, NULL, FREE_ONLY);
+
+  // free cursors
+  SDL_FreeCursor ( crosshair_cursor );
+  SDL_FreeCursor ( arrow_cursor );
 
   return;
 }

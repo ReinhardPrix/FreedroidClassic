@@ -1051,6 +1051,15 @@ Terminate (int ExitCode)
       SaveHighscores ();
     }
 
+  // ----- free memory
+  FreeShipMemory();
+  FreeDroidPics();
+  FreeGraphics();
+  FreeSounds();
+  FreeMenuData();
+  FreeGameMem();
+
+  // ----- exit
   DebugPrintf(0, "Thank you for playing Freedroid.\n\n");
   SDL_Quit();
   exit (ExitCode);

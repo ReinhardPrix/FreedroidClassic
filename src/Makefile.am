@@ -1,6 +1,8 @@
      ## Process this file with automake to produce Makefile.in
 
 ##AM_CFLAGS=@CFLAGS@
+## use this to turn on clang's memory-leak sanitizer, see https://clang.llvm.org/docs/AddressSanitizer.html
+## AM_CFLAGS = -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 
 bin_PROGRAMS = freedroid
 
