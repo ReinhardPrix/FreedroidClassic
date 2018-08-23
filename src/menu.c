@@ -840,8 +840,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
   while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
 
   InitiateMenu ( FALSE );
-  while ( any_key_is_pressedR() ) // wait for all key/controller-release
-    SDL_Delay(1);
+  wait_for_all_keys_released();
 
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
@@ -870,11 +869,16 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
               PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y + i * fheight, fullName );
             }
           PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
+#ifndef ANDROID
           SDL_Flip( ne_screen );
+#endif
           need_update = FALSE;
         }
-
+#ifdef ANDROID
+      SDL_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
+#endif
       action = getMenuAction( 250 );
+
       bool allow_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
       switch ( action )
         {
