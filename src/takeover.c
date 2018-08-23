@@ -151,11 +151,7 @@ Takeover (int enemynum)
    */
   Activate_Conservative_Frame_Computation ();
 
-  // release fire keys
-  FirePressedR();
-  ReleaseKey (CMD_FIRE);
-  ReleaseKey (CMD_ACTIVATE);
-  ReleaseKey (CMD_TAKEOVER);
+  wait_for_all_keys_released();
 
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
@@ -317,6 +313,7 @@ ChooseColor (void)
   prev_count_tick = SDL_GetTicks ();
 
   ResetMouseWheel ();  // forget about previous wheel events
+  wait_for_all_keys_released();
 
   while (!ColorChosen)
     {
@@ -376,55 +373,27 @@ PlayGame (void)
 
   Uint32 prev_count_tick = 0, count_tick_len;  /* tick vars for count-down */
   Uint32 prev_move_tick = 0, move_tick_len;    /* tick vars for motion */
-  Uint32 last_movekey_time = 0, wait_move_ticks = 110;    /* number of ticks to wait before "key-repeat" */
-
-  int up, down, set;
-  int wheel_up, wheel_down;
 
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */
 
-  up = down = set = FALSE;
-  wheel_up = wheel_down = 0;
-
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
 
   ResetMouseWheel ();  // forget about previous wheel events
+  wait_for_all_keys_released();
+  MenuAction_t action = ACTION_NONE;;
 
   CountdownSound();
   while (!FinishTakeover)
     {
       cur_time = SDL_GetTicks ();
 
-      /*
-       * here we register if there have been key-press events in the
-       * "waiting period" between move-ticks :
-       */
-      if ( !up && UpPressed () )
-	{
-	  up = TRUE;
-	  last_movekey_time = SDL_GetTicks();
-	}
-      if (!down && DownPressed() )
-	{
-	  down = TRUE;
-	  last_movekey_time = SDL_GetTicks();
-	}
+      bool do_update_move  = (cur_time > prev_move_tick  + move_tick_len);
+      bool do_update_count = (cur_time > prev_count_tick + count_tick_len);
 
-      set  = set  || FirePressed();
-
-      if (WheelUpPressed()) wheel_up ++;
-      if (WheelDownPressed()) wheel_down ++;
-
-      /* allow for a WIN-key that give immedate victory */
-      if ( KeyIsPressedR ('w') && CtrlPressed() && AltPressed() )
+      if ( do_update_count ) /* time to count 1 down */
 	{
-	  LeaderColor = YourColor;   /* simple as that */
-	  return;  /* leave now, to avoid changing of LeaderColor! */
-	}
-
-      if ( cur_time > prev_count_tick + count_tick_len ) /* time to count 1 down */
-	{
+          do_update_count = FALSE;
 	  prev_count_tick += count_tick_len;  /* set for next countdown tick */
 	  countdown--;
 	  sprintf (count_text, "Finish-%d", countdown);
@@ -441,51 +410,49 @@ PlayGame (void)
 
 	} /* if (countdown_tick has occurred) */
 
+      if ( do_update_move )
+        {
+          do_update_move = FALSE;
+          prev_move_tick += move_tick_len; /* set for next motion tick */
+          action = getMenuAction ( 110 );
+          /* allow for a WIN-key that give immedate victory */
+          if ( KeyIsPressedR ('w') && CtrlPressed() && AltPressed() ) {
+            LeaderColor = YourColor;   /* simple as that */
+            return;
+          }
 
-      /* time for movement */
-      if ( cur_time > prev_move_tick + move_tick_len )
-	{
-	  prev_move_tick += move_tick_len; /* set for next motion tick */
-	  EnemyMovements ();
+          if ( action & ACTION_UP )
+            {
+              CapsuleCurRow[YourColor]--;
+              if (CapsuleCurRow[YourColor] < 1) {
+                CapsuleCurRow[YourColor] = NUM_LINES;
+              }
+            }
 
-	  if (wheel_up || (up && (SDL_GetTicks() - last_movekey_time > wait_move_ticks)))
-	    {
-	      CapsuleCurRow[YourColor]--;
-	      if (CapsuleCurRow[YourColor] < 1)
-		CapsuleCurRow[YourColor] = NUM_LINES;
-
-	      if (!UpPressed()) up = FALSE;
-	      if (wheel_up) wheel_up --;
-	    }
-	  if (wheel_down || (down && (SDL_GetTicks() - last_movekey_time > wait_move_ticks)))
-	    {
+          if ( action & ACTION_DOWN )
+            {
 	      CapsuleCurRow[YourColor]++;
-	      if (CapsuleCurRow[YourColor] > NUM_LINES)
+	      if (CapsuleCurRow[YourColor] > NUM_LINES) {
 		CapsuleCurRow[YourColor] = 1;
+              }
+            }
 
-	      if (!DownPressed()) down = FALSE;
-	      if (wheel_down) wheel_down --;
-	    }
+          if ( action & ACTION_CLICK )
+            {
+              row = CapsuleCurRow[YourColor] - 1;
+              if ( (NumCapsules[YOU] > 0) && (row >= 0) && (ToPlayground[YourColor][0][row] != KABELENDE) && (ActivationMap[YourColor][0][row] == INACTIVE) )
+                {
+                  NumCapsules[YOU]--;
+                  CapsuleCurRow[YourColor] = 0;
+                  ToPlayground[YourColor][0][row] = VERSTAERKER;
+                  ActivationMap[YourColor][0][row] = ACTIVE1;
+                  CapsuleCountdown[YourColor][0][row] = CAPSULE_COUNTDOWN * 2;
+                  Takeover_Set_Capsule_Sound ();
+                }
+            }
 
-	  if ( set && (NumCapsules[YOU] > 0))
-	    {
-	      set = FALSE;
-	      row = CapsuleCurRow[YourColor] - 1;
-	      if ((row >= 0) &&
-		  (ToPlayground[YourColor][0][row] != KABELENDE) &&
-		  (ActivationMap[YourColor][0][row] == INACTIVE))
-		{
-		  NumCapsules[YOU]--;
-		  CapsuleCurRow[YourColor] = 0;
-		  ToPlayground[YourColor][0][row] = VERSTAERKER;
-		  ActivationMap[YourColor][0][row] = ACTIVE1;
-		  CapsuleCountdown[YourColor][0][row] = CAPSULE_COUNTDOWN * 2;
-
-		  Takeover_Set_Capsule_Sound ();
-		}	/* if (row > 0 && ... ) */
-	    } /* if ( set ) */
-
-	  ProcessCapsules ();	/* count down the lifetime of the capsules */
+          EnemyMovements ();
+          ProcessCapsules ();	/* count down the lifetime of the capsules */
 
 	  ProcessPlayground ();
 	  ProcessPlayground ();
@@ -493,11 +460,10 @@ PlayGame (void)
 	  ProcessPlayground ();	/* this has to be done several times to be sure */
 
 	  ProcessDisplayColumn ();
+          ShowPlayground ();
+	} // if do_update_move
 
-	} /* if (motion_tick has occurred) */
-
-      ShowPlayground ();
-
+      SDL_Delay(1);
     }	/* while !FinishTakeover */
 
   /* Schluss- Countdown */
@@ -519,7 +485,8 @@ PlayGame (void)
 
     }	/* while (countdown) */
 
-    return;
+  wait_for_all_keys_released();
+  return;
 
 } /* PlayGame() */
 
