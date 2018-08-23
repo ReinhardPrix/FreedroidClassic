@@ -661,10 +661,6 @@ const char *handle_QuitGame ( MenuAction_t action )
   MenuItemSelectedSound();
   InitiateMenu (TRUE);
 
-#ifdef ANDROID
-  Terminate (OK);
-#endif
-
 #ifdef GCW0
   PutString (ne_screen, User_Rect.x + User_Rect.w/3,
              User_Rect.y + User_Rect.h/2, "Press A to quit");
