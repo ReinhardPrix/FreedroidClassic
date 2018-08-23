@@ -62,6 +62,8 @@ SDL_Rect down_rect;
 SDL_Rect left_rect;
 SDL_Rect right_rect;
 
+static SDL_Surface *droid_background = NULL;
+static SDL_Surface *droid_pics = NULL;
 
 /*-----------------------------------------------------------------
  * @Desc: does all the work when we enter a lift
@@ -827,8 +829,6 @@ Sensors  1: %s\n\
 void
 show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 {
-  static SDL_Surface *background = NULL;
-  static SDL_Surface *droid_pics = NULL;
   static int frame_num = 0;
   static int last_droid_type = -1;
   static Uint32 last_frame_time = 0;
@@ -840,18 +840,18 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
   SDL_SetClipRect (ne_screen, &dst);
 
-  if (!background) // first call
+  if (!droid_background) // first call
     {
       tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
-      background = SDL_DisplayFormat (tmp);
+      droid_background = SDL_DisplayFormat (tmp);
       SDL_FreeSurface (tmp);
-      SDL_BlitSurface (ne_screen, &dst, background, NULL);
+      SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       Copy_Rect (Portrait_Rect, src_rect);
     }
 
   if (flags & RESET)
     {
-      SDL_BlitSurface (ne_screen, &dst, background, NULL);
+      SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       frame_num  = 0;
       last_frame_time = SDL_GetTicks ();
     }
@@ -913,7 +913,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
     {
       src_rect.x = frame_num*src_rect.w;
 
-      SDL_BlitSurface (background, NULL, ne_screen, &dst);
+      SDL_BlitSurface (droid_background, NULL, ne_screen, &dst);
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
       SDL_UpdateRects (ne_screen, 1, &dst);
@@ -984,4 +984,12 @@ AlertLevelWarning (void)
   return;
 }
 
+void
+FreeDroidPics ( void )
+{
+  SDL_FreeSurface ( droid_pics );
+  SDL_FreeSurface ( droid_background );
+  return;
+
+}
 #undef _ship_c

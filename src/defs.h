@@ -39,6 +39,7 @@
 #define RESET 0x01
 #define UPDATE 0x02
 #define INIT_ONLY 0x04
+#define FREE_ONLY 0x08
 
 #define DROID_ROTATION_TIME 3.0
 #define NUM_DECAL_PICS    2

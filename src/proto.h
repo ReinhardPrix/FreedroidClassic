@@ -52,6 +52,7 @@ EXTERN void CheckIfMissionIsComplete (void);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
 EXTERN void Win32Disclaimer (void);
+EXTERN void FreeGameMem ( void );
 
 /* influ.c */
 #undef EXTERN
@@ -138,6 +139,7 @@ EXTERN void ScaleStatRects (float scale);
 EXTERN void toggle_fullscreen (void);
 EXTERN SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 EXTERN int Load_Fonts (void);
+EXTERN void FreeGraphics ( void );
 
 /* map.c */
 #undef EXTERN
@@ -152,6 +154,8 @@ EXTERN void ActSpecialField (float, float);
 
 EXTERN int LoadShip (char *shipname);
 EXTERN int SaveShip(const char *shipname);
+EXTERN void FreeLevelMemory ( level* lvl );
+EXTERN void FreeShipMemory ( void );
 EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
@@ -198,6 +202,7 @@ EXTERN void Takeover_Set_Capsule_Sound (void);
 EXTERN void Takeover_Game_Won_Sound (void);
 EXTERN void Takeover_Game_Deadlock_Sound (void);
 EXTERN void Takeover_Game_Lost_Sound (void);
+EXTERN void FreeSounds ( void );
 
 /* input.c */
 #undef EXTERN
@@ -247,6 +252,7 @@ EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
 EXTERN MenuAction_t getMenuAction ( Uint32 wait_repeat_ticks );
 EXTERN const char *handle_QuitGame ( MenuAction_t action );
+EXTERN void FreeMenuData ( void );
 
 /* misc.c */
 #undef EXTERN
@@ -314,6 +320,7 @@ EXTERN void show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time,
 void ShowLifts (int level, int liftrow);
 void PaintConsoleMenu (int pos,int flag);
 void AlertLevelWarning (void);
+void FreeDroidPics ( void );
 
 /* text.c */
 #undef EXTERN

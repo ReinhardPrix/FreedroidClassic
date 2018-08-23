@@ -1074,6 +1074,7 @@ GetLiftConnections (char *filename)
 
   curShip.num_lifts = Label;
 
+  free ( Data );
   return OK;
 }; // int GetLiftConnections(char *shipname)
 
@@ -1147,6 +1148,7 @@ GetCrew (char *filename)
       NumEnemys++;
     }
 
+  free ( MainDroidsFilePointer );
   return (OK);
 } /* GetCrew () */
 
@@ -1779,6 +1781,36 @@ IsVisible (Finepoint objpos)
 
   return TRUE;
 }				// int IsVisible(Point objpos)
+
+void
+FreeLevelMemory ( level* lvl )
+{
+  if ( lvl == NULL ) {
+    return;
+  }
+
+  free ( lvl->Levelname );
+  free ( lvl->Background_Song_Name );
+  free ( lvl->Level_Enter_Comment );
+
+  int row;
+  for ( row = 0; row < lvl->ylen; row ++ ) {
+    free ( lvl->map[row] );
+  }
+  return;
+}
+
+void
+FreeShipMemory ( void )
+{
+  int i;
+  for (i = 0; i < curShip.num_levels; i++) {
+    FreeLevelMemory ( curShip.AllLevels[i] );
+    free ( curShip.AllLevels[i] );
+  }
+
+  return;
+}
 
 
 #undef _map_c

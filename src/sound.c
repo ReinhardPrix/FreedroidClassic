@@ -651,5 +651,24 @@ DruidBlastSound (void)
 
 }				// void BounceSound(void)
 
+void
+FreeSounds ( void )
+{
+#ifdef HAVE_LIBSDL_MIXER
+  int i;
+  for (i = 0; i < sizeof(Loaded_WAV_Files)/sizeof(Loaded_WAV_Files[0]); i++) {
+    Mix_FreeChunk ( Loaded_WAV_Files[i] );
+  }
 
+  for ( i = 0; i < sizeof(MusicSongs)/sizeof(MusicSongs[0]); i ++ ) {
+    Mix_FreeMusic ( MusicSongs[i] );
+  }
+  Mix_FreeMusic ( Tmp_MOD_File );
+
+  Mix_CloseAudio ();
+  SDL_CloseAudio ();
+
+#endif
+  return;
+}
 #undef _sound_c

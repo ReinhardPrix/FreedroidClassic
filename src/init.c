@@ -44,6 +44,7 @@ void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
 
 void FindAllThemes (void);
+void FreeDruidmap ( void );
 
 char* DebriefingText;
 char DebriefingSong[500];
@@ -114,7 +115,7 @@ void
 Get_Bullet_Data ( char* DataPointer )
 {
   char *BulletPointer;
-  int i, size;
+  int i;
   int BulletIndex=0;
 
   float bullet_speed_calibrator;
@@ -152,8 +153,9 @@ Get_Bullet_Data ( char* DataPointer )
   //
   if ( Bulletmap == NULL )
     {
-      size = sizeof(bulletspec);
-      Bulletmap = MyMalloc ( size * (Number_Of_Bullet_Types + 1) + 1 );
+      size_t mem = Number_Of_Bullet_Types * sizeof(Bulletmap[0]);
+      Bulletmap = MyMalloc ( mem );
+      memset ( Bulletmap, 0, mem );
       DebugPrintf (1, "\nWe have counted %d different bullet types in the game data file." ,
 		   Number_Of_Bullet_Types );
       DebugPrintf (1, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
@@ -234,7 +236,7 @@ Get_Robot_Data ( void* DataPointer )
 {
   int RobotIndex = 0;
   char *RobotPointer;
-  int i, size;
+  int i;
 
   float maxspeed_calibrator;
   float acceleration_calibrator;
@@ -307,17 +309,7 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf ( 1 , "\n\nStarting to read Robot data...\n\n" );
 
   // cleanup if previously allocated:
-  if (Number_Of_Droid_Types && Druidmap)
-    {
-      for (i=0; i< Number_Of_Droid_Types; i++)
-	if (Druidmap[i].notes) {
-	  free (Druidmap[i].notes);
-	  Druidmap[i].notes = NULL;
-	}
-
-      free(Druidmap);
-      Druidmap = NULL;
-    }
+  FreeDruidmap();
 
   //--------------------
   // At first, we must allocate memory for the droid specifications.
@@ -327,8 +319,9 @@ Get_Robot_Data ( void* DataPointer )
 
   // Now that we know how many robots are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory.
-  size = sizeof(druidspec);
-  Druidmap = MyMalloc ( size * (Number_Of_Droid_Types + 1) + 1 );
+  size_t mem = Number_Of_Droid_Types * sizeof(Bulletmap[0]);
+  Druidmap = MyMalloc ( mem );
+  memset ( Druidmap, 0, mem );
   DebugPrintf(1, "\nWe have counted %d different druid types in the game data file." , Number_Of_Droid_Types );
   DebugPrintf (2, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
 
@@ -718,8 +711,7 @@ InitNewMission ( char *MissionName )
   // here would SegFault eventually!
   //  if (Me.TextToBeDisplayed) free (Me.TextToBeDisplayed);
 
-  Me.TextToBeDisplayed =
-    ReadAndMallocStringFromData ( MainMissionPointer , "Influs mission start comment=\"" , "\"" ) ;
+  Me.TextToBeDisplayed = NULL;
   Me.TextVisibleTime = 0;
 
 
@@ -1012,10 +1004,10 @@ Title ( char *MissionBriefingPointer )
       Copy_Rect(Full_User_Rect, rect);
       rect.x += 10;
       rect.w -= 10; //leave some border
-      if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1)
+      if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1) {
+        free ( PreparedBriefingText );
 	break;  // User pressed 'fire'
-
-      free ( PreparedBriefingText );
+      }
     }
 
   return;
@@ -1328,5 +1320,62 @@ or visit http://www.gnu.org.\n\n\n Press fire to play.", rect.x, rect.y, &rect);
   return;
 }
 
+void
+FreeDruidmap ( void )
+{
+  if ( Druidmap == NULL ) {
+    return;
+  }
+  int i;
+  for (i=0; i < Number_Of_Droid_Types; i++) {
+    free (Druidmap[i].notes);
+  }
+  free(Druidmap);
+
+  return;
+}
+
+void
+FreeGameMem ( void )
+{
+  int i, j;
+
+  // free bullet map
+  if ( Bulletmap != NULL )
+    {
+      for ( i = 0; i < Number_Of_Bullet_Types; i ++ )
+        {
+          int len = sizeof(Bulletmap[0].SurfacePointer)/sizeof(Bulletmap[0].SurfacePointer[0]);
+          for ( j = 0; j < len; j ++ ) {
+            SDL_FreeSurface ( Bulletmap[i].SurfacePointer[j] );
+          }
+        }
+      free ( Bulletmap );
+    }
+
+  // free blast map
+  for ( i = 0; i < sizeof(Blastmap)/sizeof(Blastmap[0]); i ++ ) {
+    int len = sizeof(Blastmap[0].SurfacePointer)/sizeof(Blastmap[0].SurfacePointer[0]);
+    for ( j = 0; j < len; j ++ ) {
+      SDL_FreeSurface ( Blastmap[i].SurfacePointer[j] );
+    }
+  }
+
+  // free droid map
+  FreeDruidmap();
+
+  // free highscores list
+  for ( i = 0; i < num_highscores; i ++ ) {
+    free ( Highscores[i] );
+  }
+  free ( Highscores );
+
+  // free constant text blobs
+  free ( DebriefingText );
+
+  free ( Me.TextToBeDisplayed );
+
+  return;
+}
 
 #undef _init_c
