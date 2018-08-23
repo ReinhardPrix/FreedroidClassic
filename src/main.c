@@ -96,16 +96,16 @@ main (int argc, char * argv[])
 	}
 
 
-      // release fire-keys
-      ReleaseKey (CMD_FIRE);
-      ReleaseKey (CMD_ACTIVATE);
-      ReleaseKey (CMD_TAKEOVER);
+      // release all keys
+      wait_for_all_keys_released();
 
       show_droid_info (Me.type, -3, 0);  // show unit-intro page
       show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, RESET);
       now=SDL_GetTicks();
-      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR()))
+      while (  (SDL_GetTicks() - now < SHOW_WAIT) && (!FirePressedR())) {
 	show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
+        SDL_Delay(1);
+      }
 
       ClearGraphMem();
       DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE |BANNER_NO_SDL_UPDATE);

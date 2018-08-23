@@ -171,18 +171,19 @@ enum _cmds {
 #define AnyCmdActiveR() (cmd_is_activeR(CMD_FIRE) || cmd_is_activeR(CMD_ACTIVATE) || cmd_is_activeR(CMD_TAKEOVER) )
 
 // ----------------------------------------
-
+#define IDX2BIT(i) (1UL << ((unsigned long)(i)))
 typedef enum
 {
-  ACTION_NONE,
-  ACTION_INFO,
-  ACTION_BACK,
-  ACTION_CLICK,
-  ACTION_LEFT,
-  ACTION_RIGHT,
-  ACTION_UP,
-  ACTION_DOWN,
-  ACTION_DELETE
+  ACTION_NONE  = 0,
+  ACTION_INFO  = IDX2BIT(0),
+  ACTION_BACK  = IDX2BIT(1),
+  ACTION_CLICK = IDX2BIT(2),
+  ACTION_LEFT  = IDX2BIT(3),
+  ACTION_RIGHT = IDX2BIT(4),
+  ACTION_UP    = IDX2BIT(5),
+  ACTION_DOWN  = IDX2BIT(6),
+  ACTION_DELETE= IDX2BIT(7),
+  ACTION_LAST  = IDX2BIT(8),
 } MenuAction_t;
 
 #define COLLISION_STEPSIZE   0.1

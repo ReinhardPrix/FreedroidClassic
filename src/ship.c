@@ -127,6 +127,7 @@ EnterLift (void)
             {
             case ACTION_CLICK:
               finished = TRUE;
+              wait_for_all_keys_released();
               break;
 
             case ACTION_UP:
@@ -304,14 +305,7 @@ EnterKonsole (void)
   Copy_Rect (User_Rect, TmpRect);
   Copy_Rect (Full_User_Rect, User_Rect);
 
-  // make sure to release fire keys
-  SpacePressedR();
-  MouseLeftPressedR();
-  MouseRightPressedR();
-  ReleaseKey (CMD_FIRE);
-  ReleaseKey (CMD_ACTIVATE);
-  ReleaseKey (CMD_TAKEOVER);
-
+  wait_for_all_keys_released();
   ResetMouseWheel ();
 
   Me.status = CONSOLE;
@@ -332,28 +326,28 @@ EnterKonsole (void)
   static Uint32 last_move_tick = 0;
   MenuAction_t action = ACTION_NONE;
   bool finished = FALSE;
+  bool need_update = TRUE;
   while ( !finished )
     {
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
-#ifndef ANDROID
       // check if the mouse-cursor is on any of the console-menu points
       for (i=0; i < 4; i++)
 	if (show_cursor && (pos != i) && CursorIsOnRect(&Cons_Menu_Rects[i]) )
 	  {
 	    MoveMenuPositionSound ();
 	    pos = i;
-	    PaintConsoleMenu (pos, UPDATE_ONLY);
+            need_update = TRUE;
 	  }
-#endif
-      action = getMenuAction( 500 );
+      action = getMenuAction( 250 );
       if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
         {
           switch ( action )
             {
             case ACTION_BACK:
 	      finished = TRUE;
+              wait_for_all_keys_released();
               break;
 
             case ACTION_UP:
@@ -369,8 +363,8 @@ EnterKonsole (void)
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
-              PaintConsoleMenu (pos, UPDATE_ONLY);
               MoveMenuPositionSound ();
+              need_update = TRUE;
               last_move_tick = SDL_GetTicks();
               break;
 
@@ -387,13 +381,15 @@ EnterKonsole (void)
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
-              PaintConsoleMenu (pos, UPDATE_ONLY);
               MoveMenuPositionSound ();
+              need_update = TRUE;
               last_move_tick = SDL_GetTicks();
               break;
 
             case ACTION_CLICK:
               MenuItemSelectedSound();
+              wait_for_all_keys_released();
+              need_update = TRUE;
               switch (pos)
                 {
                 case 0:
@@ -413,8 +409,7 @@ EnterKonsole (void)
                   ClearGraphMem();
                   DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
                   ShowLifts (CurLevel->levelnum, -1);
-                  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-                    SDL_Delay(1);
+                  wait_for_key_pressed();
                   PaintConsoleMenu(pos, 0);
                   break;
                 default:
@@ -427,6 +422,17 @@ EnterKonsole (void)
               break;
             } // switch(action)
         } // if time-since-last move > wait
+
+      if ( need_update ) {
+        PaintConsoleMenu (pos, UPDATE_ONLY);
+#ifndef ANDROID
+        SDL_Flip (ne_screen);
+#endif
+        need_update = FALSE;
+      }
+#ifdef ANDROID
+      SDL_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
+#endif
       SDL_Delay(1);	// don't hog CPU
     } // while(!finished)
 
@@ -483,8 +489,6 @@ PaintConsoleMenu (int pos, int flag)
   src.h = 4 * Cons_Menu_Rect.h;
   SDL_BlitSurface (console_pic, &src, ne_screen, &Cons_Menu_Rect);
 
-  SDL_Flip (ne_screen);
-
   return;
 }	// PaintConsoleMenu ()
 
@@ -515,8 +519,7 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-    SDL_Delay(1);
+  wait_for_key_pressed();
 
   SetCombatScaleTo (1.0);
 
@@ -577,7 +580,6 @@ GreatDruidShow (void)
   int droidtype;
   int page;
   bool finished = FALSE;
-  bool key = FALSE;
 
   droidtype = Me.type;
   page = 0;
@@ -585,78 +587,99 @@ GreatDruidShow (void)
   show_droid_info (droidtype, page, 0);
   show_droid_portrait (Cons_Droid_Rect, droidtype, 0.0, UPDATE|RESET);
 
-  SpacePressedR();
-  MouseLeftPressedR();
+  wait_for_all_keys_released();
+  bool need_update = TRUE;
+  const Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
 
   while (!finished)
     {
       show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
-      SDL_Delay(1);
+
       if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
       else SDL_ShowCursor (SDL_DISABLE);
 
-      if (key)
+      if ( need_update )
 	{
 	  show_droid_info (droidtype, page, UPDATE_ONLY);
-	  show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, UPDATE);
-	  key = FALSE;
+	  need_update = FALSE;
 	}
 
-      if (MouseLeftPressedR ())
-	{
-	  if ( CursorIsOnRect (&left_rect) && (page > 0) )
-	    {
-	      page --;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  else if (CursorIsOnRect (&right_rect) && (page < 2) )
-	    {
-	      page ++;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  else if (CursorIsOnRect (&up_rect) && (droidtype < Me.type) )
-	    {
-	      droidtype ++;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	  else if (CursorIsOnRect (&down_rect) && (droidtype > 0))
-	    {
-	      droidtype --;
-	      MoveMenuPositionSound();
-	      key = TRUE;
-	    }
-	}
-      if (SpacePressedR() || EscapePressedR() || MouseRightPressedR())
-	finished = TRUE;
+      MenuAction_t action = ACTION_NONE;
+      // special handling of mouse-clicks: check if move-arrows were clicked on
+      if (MouseLeftPressedR ()) {
+        if ( CursorIsOnRect (&left_rect) ) {
+          action = ACTION_LEFT;
+        }
+        else if (CursorIsOnRect (&right_rect) ) {
+          action = ACTION_RIGHT;
+        }
+        else if (CursorIsOnRect (&up_rect) ) {
+          action = ACTION_UP;
+        }
+        else if (CursorIsOnRect (&down_rect) ) {
+          action = ACTION_DOWN;
+        }
+      } else {
+        action = getMenuAction ( 250 );
+      }
 
-      if ( (UpPressedR()||WheelUpPressed()) && (droidtype < Me.type) )
-	{
-	  droidtype ++;
-	  MoveMenuPositionSound();
-	  key = TRUE;
-	}
-      if ( (DownPressedR()||WheelDownPressed()) && (droidtype > 0) )
-	{
-	  droidtype --;
-	  MoveMenuPositionSound();
-	  key = TRUE;
-	}
-      if (RightPressedR() && (page < 2) )
-	{
-	  page ++;
-	  MoveMenuPositionSound();
-	  key = TRUE;
-	}
-      if (LeftPressedR() && (page > 0) )
-	{
-	  page --;
-	  MoveMenuPositionSound();
-	  key = TRUE;
-	}
+      bool time_for_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
+      switch ( action )
+        {
+        case ACTION_BACK:
+        case ACTION_CLICK:
+          finished = TRUE;
+          wait_for_all_keys_released();
+          break;
 
+        case ACTION_UP:
+          if ( !time_for_move ) continue;
+
+          if ( droidtype < Me.type ) {
+            MoveMenuPositionSound();
+            droidtype ++;
+            need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
+          }
+          break;
+
+        case ACTION_DOWN:
+          if ( !time_for_move ) continue;
+
+          if ( droidtype > 0 ) {
+            MoveMenuPositionSound();
+            droidtype --;
+            need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
+          }
+          break;
+
+        case ACTION_RIGHT:
+          if ( !time_for_move ) continue;
+
+          if ( page < 2 ) {
+            MoveMenuPositionSound();
+            page ++;
+            need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
+          }
+          break;
+
+        case ACTION_LEFT:
+          if ( !time_for_move ) continue;
+
+          if ( page > 0 ) {
+            MoveMenuPositionSound();
+            page --;
+            need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
+          }
+        default:
+          break;
+        } // switch(action)
+
+      SDL_Delay(1); // don't hog CPU
     } /* while !finished */
 
   return;
@@ -895,12 +918,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
       SDL_UpdateRects (ne_screen, 1, &dst);
 
-      // don't use full CPU unless requested
-      if (!GameConfig.HogCPU)
-	SDL_Delay(1);
-
       last_frame_time = SDL_GetTicks();
-
     }
 
   SDL_SetClipRect (ne_screen, NULL);

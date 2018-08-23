@@ -769,7 +769,8 @@ any_key_just_pressed (void)
 {
   update_input();
 
-  for (int key=0; key < INPUT_LAST; key++)
+  int key;
+  for (key=0; key < INPUT_LAST; key++)
     {
       if ( just_pressed(input_state[key]) )
         {
@@ -788,7 +789,8 @@ any_key_is_pressedR (void)
 {
   update_input();
 
-  for ( int key=0; key < INPUT_LAST; key ++)
+  int key;
+  for ( key=0; key < INPUT_LAST; key ++)
     {
       if ( (input_state[key] & PRESSED) ) {
         input_state[key] = 0;
