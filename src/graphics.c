@@ -1501,7 +1501,9 @@ FreeGraphics ( void )
 
   // free RWops structures
   for ( i = 0; i < sizeof(packed_portraits)/sizeof(packed_portraits[0]); i ++ ) {
-    SDL_RWclose( packed_portraits[i] );
+    if ( packed_portraits[i] != NULL ) {
+      SDL_RWclose( packed_portraits[i] );
+    }
   }
 
   for ( i = 0; i < sizeof(portrait_raw_mem)/sizeof(portrait_raw_mem[0]); i++) {
@@ -1546,7 +1548,9 @@ FreeGraphics ( void )
   // free fonts
   BFont_Info *fonts[] = { Menu_BFont, Para_BFont, Highscore_BFont, Font0_BFont, Font1_BFont, Font2_BFont };
   for ( i = 0; i < sizeof(fonts)/sizeof(fonts[0]); i ++ ) {
-    SDL_FreeSurface ( fonts[i]->Surface );
+    if ( fonts[i] != NULL ) {
+        SDL_FreeSurface ( fonts[i]->Surface );
+      }
     free ( fonts[i] );
   }
 

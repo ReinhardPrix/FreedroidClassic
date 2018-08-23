@@ -657,13 +657,14 @@ FreeSounds ( void )
 #ifdef HAVE_LIBSDL_MIXER
   int i;
   for (i = 0; i < sizeof(Loaded_WAV_Files)/sizeof(Loaded_WAV_Files[0]); i++) {
-    Mix_FreeChunk ( Loaded_WAV_Files[i] );
+    if ( Loaded_WAV_Files[i] != NULL ) { Mix_FreeChunk ( Loaded_WAV_Files[i] ); }
   }
 
   for ( i = 0; i < sizeof(MusicSongs)/sizeof(MusicSongs[0]); i ++ ) {
-    Mix_FreeMusic ( MusicSongs[i] );
+    if ( MusicSongs[i] != NULL )  { Mix_FreeMusic ( MusicSongs[i] ); }
   }
-  Mix_FreeMusic ( Tmp_MOD_File );
+
+  if ( Tmp_MOD_File ) { Mix_FreeMusic ( Tmp_MOD_File ); }
 
   Mix_CloseAudio ();
   SDL_CloseAudio ();
