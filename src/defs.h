@@ -414,7 +414,8 @@ enum _directions
 	WARNING leave them here, they are required in struct.h
 */
 #define MAX_WP_CONNECTIONS 	12
-#define MAXMAPLINES 		50
+#define MAX_MAP_ROWS 		255
+#define MAX_MAP_COLS 		255
 #define MAX_ENEMYS_ON_SHIP	300
 #define MAX_CHAT_KEYWORDS_PER_DROID 30
 #define MAX_INFLU_POSITION_HISTORY 100

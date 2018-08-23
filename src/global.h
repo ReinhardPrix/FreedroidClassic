@@ -277,4 +277,14 @@ EXTERN SDL_Rect TO_CapsuleRect;
 EXTERN SDL_Rect TO_GroundRect;
 EXTERN SDL_Rect TO_ColumnRect;
 
+#undef EXTERN
+#ifdef _menu_c
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+EXTERN bool quit_LevelEditor;
+EXTERN bool quit_Menu;
+
+
 #endif  // _global_h

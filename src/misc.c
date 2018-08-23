@@ -636,7 +636,7 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
  *
  *-----------------------------------------------------------------*/
 char *
-find_file (char *fname, char *subdir, int use_theme, int critical)
+find_file (const char *fname, char *subdir, int use_theme, int critical)
 {
   static char File_Path[1024] = "";   /* hope this will be enough */
   int len = sizeof(File_Path);

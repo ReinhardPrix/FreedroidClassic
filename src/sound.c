@@ -285,7 +285,7 @@ Technical details:
 @Int:
 * $Function----------------------------------------------------------*/
 void
-Switch_Background_Music_To ( char* filename_raw )
+Switch_Background_Music_To ( const char* filename_raw )
 {
   char* fpath;
   static int prev_color = -1;
@@ -336,14 +336,16 @@ Switch_Background_Music_To ( char* filename_raw )
     {
       if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);
       fpath = find_file (filename_raw, SOUND_DIR, NO_THEME, WARNONLY);
-      if (fpath) Tmp_MOD_File = Mix_LoadMUS (fpath);
+      if ( fpath == NULL ) {
+        DebugPrintf (0, "\nError loading sound-file: %s\n", filename_raw);
+        return;
+      }
+      Tmp_MOD_File = Mix_LoadMUS (fpath);
       if ( Tmp_MOD_File == NULL )
 	{
-	  DebugPrintf (0, "\nError loading sound-file: %s\n", filename_raw);
 	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
-	  sound_on = FALSE;
-	  return;
-	} // if ( !Loaded_WAV...
+          return;
+        }
       Mix_PlayMusic (Tmp_MOD_File, -1);
     }
 

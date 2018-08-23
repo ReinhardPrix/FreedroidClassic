@@ -405,7 +405,7 @@ char *StructToMem(Level Lev)
 @Ret: OK | ERR
 @Int:
 * $Function----------------------------------------------------------*/
-int SaveShip(char *shipname)
+int SaveShip( const char *shipname)
 {
   char *LevelMem;		/* linear memory for one Level */
   char *MapHeaderString;
@@ -603,7 +603,7 @@ LevelToStruct (char *data)
     {
       if ((this_line = strtok (NULL, "\n")) == NULL)
 	return(NULL);
-      loadlevel->map[i] = MyMalloc( loadlevel->xlen + 10 );
+      loadlevel->map[i] = MyMalloc( loadlevel->xlen * sizeof( loadlevel->map[0][0] ) );
       pos = this_line;
       pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace
 
