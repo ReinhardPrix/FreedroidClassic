@@ -757,15 +757,18 @@ InitiateMenu (bool with_droids)
 MenuAction_t
 getMenuAction ( Uint32 wait_repeat_ticks )
 {
+  MenuAction_t action = ACTION_NONE;
+
   // 'normal' menu action keys get released
   if ( KeyIsPressedR ( SDLK_BACKSPACE ) ) {
-    return ACTION_DELETE;
-  }
-  if ( FirePressedR() || ReturnPressedR() || SpacePressedR() ) {
-    return ACTION_CLICK;
+    action = ACTION_DELETE;
   }
   if ( cmd_is_activeR(CMD_BACK) || KeyIsPressedR(SDLK_ESCAPE) ) {
-    return ACTION_BACK;
+    action = ACTION_BACK;
+  }
+
+  if ( FirePressed() || ReturnPressedR() ) {
+    action = ACTION_CLICK;
   }
 
   // ----- up/down motion: allow for key-repeat, but carefully control repeat rate (modelled on takeover game)
@@ -781,25 +784,25 @@ getMenuAction ( Uint32 wait_repeat_ticks )
     {
       up = TRUE;
       last_movekey_time = SDL_GetTicks();
-      return ACTION_UP;
+      action |= ACTION_UP;
     }
   if (!down && (DownPressed() || KeyIsPressed(SDLK_DOWN)) )
     {
       down = TRUE;
       last_movekey_time = SDL_GetTicks();
-      return ACTION_DOWN;
+      action |= ACTION_DOWN;
     }
   if ( !left && (LeftPressed() || KeyIsPressed(SDLK_LEFT)) )
     {
       left = TRUE;
       last_movekey_time = SDL_GetTicks();
-      return ACTION_LEFT;
+      action |= ACTION_LEFT;
     }
   if ( !right && (RightPressed() || KeyIsPressed(SDLK_RIGHT)) )
     {
       right = TRUE;
       last_movekey_time = SDL_GetTicks();
-      return ACTION_RIGHT;
+      action |= ACTION_RIGHT;
     }
 
   if (! (UpPressed()   || KeyIsPressed(SDLK_UP)))    { up   = FALSE; }
@@ -811,20 +814,20 @@ getMenuAction ( Uint32 wait_repeat_ticks )
   if ( SDL_GetTicks() - last_movekey_time > wait_repeat_ticks )
     {
       if ( up ) {
-        return ACTION_UP;
+        action |= ACTION_UP;
       }
       if ( down ) {
-        return ACTION_DOWN;
+        action |= ACTION_DOWN;
       }
       if ( left ) {
-        return ACTION_LEFT;
+        action |= ACTION_LEFT;
       }
       if ( right ) {
-        return ACTION_RIGHT;
+        action |= ACTION_RIGHT;
       }
     }
 
-  return ACTION_NONE;
+  return action;
 
 } // getMenuAction()
 
@@ -879,11 +882,12 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 #endif
       action = getMenuAction( 250 );
 
-      bool allow_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
+      bool time_for_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
       switch ( action )
         {
         case ACTION_BACK:
           finished = TRUE;
+          wait_for_all_keys_released();
           break;
 
         case ACTION_CLICK:
@@ -907,9 +911,8 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
         case ACTION_RIGHT:
         case ACTION_LEFT:
-          if ( !allow_move ) {
-            continue;
-          }
+          if ( !time_for_move ) continue;
+
           if ( handler ) {
             (*handler)(action);
           }
@@ -918,9 +921,8 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
           break;
 
         case ACTION_UP:
-          if ( !allow_move ) {
-            continue;
-          }
+          if ( !time_for_move ) continue;
+
           MoveMenuPositionSound();
           if (menu_pos > 0) {
             menu_pos--;
@@ -932,9 +934,8 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
           break;
 
         case ACTION_DOWN:
-          if ( !allow_move ) {
-            continue;
-          }
+          if ( !time_for_move ) continue;
+
           MoveMenuPositionSound();
           if ( menu_pos < num_entries - 1 ) {
             menu_pos++;
@@ -1065,62 +1066,71 @@ Key_Config_Menu (void)
       Display_Key_Config (selx, sely);
 
       action = getMenuAction( 250 );
-      if ( SDL_GetTicks() - last_move_tick > wait_move_ticks )
+      bool time_for_move = (SDL_GetTicks() - last_move_tick > wait_move_ticks);
+
+      switch ( action )
         {
-          switch ( action )
-            {
-            case ACTION_BACK:
-              finished = TRUE;
-              break;
+        case ACTION_BACK:
+          finished = TRUE;
+          wait_for_all_keys_released();
+          break;
 
-            case ACTION_CLICK:
-              MenuItemSelectedSound();
+        case ACTION_CLICK:
+          MenuItemSelectedSound();
 
-              oldkey = key_cmds[sely-1][selx-1];
-              key_cmds[sely-1][selx-1] = '_';
-              Display_Key_Config (selx, sely);
-              newkey = getchar_raw(); // includes joystick input!
-              key_cmds[sely-1][selx-1] = newkey;
-              while ( any_key_is_pressedR() ) // wait for key/controller-release
-                SDL_Delay(1);
-              break;
+          oldkey = key_cmds[sely-1][selx-1];
+          key_cmds[sely-1][selx-1] = '_';
+          Display_Key_Config (selx, sely);
+          newkey = getchar_raw(); // includes joystick input!
+          key_cmds[sely-1][selx-1] = newkey;
+          wait_for_all_keys_released();
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            case ACTION_UP:
-              if ( sely > 1 ) sely--;
-              else sely = LastMenuPos;
-              MoveMenuPositionSound();
-              last_move_tick = SDL_GetTicks();
-              break;
+        case ACTION_UP:
+          if ( !time_for_move ) continue;
 
-            case ACTION_DOWN:
-              if ( sely < LastMenuPos ) sely++;
-              else sely = 1;
-              MoveMenuPositionSound();
-              last_move_tick = SDL_GetTicks();
-              break;
+          if ( sely > 1 ) sely--;
+          else sely = LastMenuPos;
+          MoveMenuPositionSound();
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            case ACTION_RIGHT:
-              if ( selx < 3 ) selx++;
-              else selx = 1;
-              MoveMenuPositionSound();
-              last_move_tick = SDL_GetTicks();
-              break;
+        case ACTION_DOWN:
+          if ( !time_for_move ) continue;
 
-            case ACTION_LEFT:
-              if ( selx > 1 ) selx--;
-              else selx = 3;
-              MoveMenuPositionSound();
-              last_move_tick = SDL_GetTicks();
-              break;
+          if ( sely < LastMenuPos ) sely++;
+          else sely = 1;
+          MoveMenuPositionSound();
+          last_move_tick = SDL_GetTicks();
+          break;
 
-            case ACTION_DELETE:
-              key_cmds[sely-1][selx-1] = 0;
-              MenuItemSelectedSound();
-              break;
-            default:
-              break;
-            } // switch(action)
-        } // if now - last_move_tick > wait_move_ticks
+        case ACTION_RIGHT:
+          if ( !time_for_move ) continue;
+
+          if ( selx < 3 ) selx++;
+          else selx = 1;
+          MoveMenuPositionSound();
+          last_move_tick = SDL_GetTicks();
+          break;
+
+        case ACTION_LEFT:
+          if ( !time_for_move ) continue;
+
+          if ( selx > 1 ) selx--;
+          else selx = 3;
+          MoveMenuPositionSound();
+          last_move_tick = SDL_GetTicks();
+          break;
+
+        case ACTION_DELETE:
+          key_cmds[sely-1][selx-1] = 0;
+          MenuItemSelectedSound();
+          break;
+        default:
+          break;
+        } // switch(action)
+
       SDL_Delay(1);
     } // while !finished
 

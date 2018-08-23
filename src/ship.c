@@ -127,6 +127,7 @@ EnterLift (void)
             {
             case ACTION_CLICK:
               finished = TRUE;
+              wait_for_all_keys_released();
               break;
 
             case ACTION_UP:
@@ -346,6 +347,7 @@ EnterKonsole (void)
             {
             case ACTION_BACK:
 	      finished = TRUE;
+              wait_for_all_keys_released();
               break;
 
             case ACTION_UP:
@@ -386,6 +388,7 @@ EnterKonsole (void)
 
             case ACTION_CLICK:
               MenuItemSelectedSound();
+              wait_for_all_keys_released();
               need_update = TRUE;
               switch (pos)
                 {
@@ -406,8 +409,7 @@ EnterKonsole (void)
                   ClearGraphMem();
                   DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
                   ShowLifts (CurLevel->levelnum, -1);
-                  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-                    SDL_Delay(1);
+                  wait_for_key_pressed();
                   PaintConsoleMenu(pos, 0);
                   break;
                 default:
@@ -517,8 +519,7 @@ ShowDeckMap (Level deck)
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
 
-  while (! (FirePressedR() || EscapePressedR() || MouseRightPressedR() ))
-    SDL_Delay(1);
+  wait_for_key_pressed();
 
   SetCombatScaleTo (1.0);
 
@@ -588,6 +589,9 @@ GreatDruidShow (void)
 
   wait_for_all_keys_released();
   bool need_update = TRUE;
+  const Uint32 wait_move_ticks = 100;
+  static Uint32 last_move_tick = 0;
+
   while (!finished)
     {
       show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
@@ -604,7 +608,6 @@ GreatDruidShow (void)
       MenuAction_t action = ACTION_NONE;
       // special handling of mouse-clicks: check if move-arrows were clicked on
       if (MouseLeftPressedR ()) {
-        DebugPrintf ( 0, "MouseLeftPress registered\n");
         if ( CursorIsOnRect (&left_rect) ) {
           action = ACTION_LEFT;
         }
@@ -621,41 +624,56 @@ GreatDruidShow (void)
         action = getMenuAction ( 250 );
       }
 
+      bool time_for_move = ( SDL_GetTicks() - last_move_tick > wait_move_ticks );
       switch ( action )
         {
         case ACTION_BACK:
+        case ACTION_CLICK:
           finished = TRUE;
+          wait_for_all_keys_released();
           break;
 
         case ACTION_UP:
+          if ( !time_for_move ) continue;
+
           if ( droidtype < Me.type ) {
             MoveMenuPositionSound();
             droidtype ++;
             need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
           }
           break;
 
         case ACTION_DOWN:
+          if ( !time_for_move ) continue;
+
           if ( droidtype > 0 ) {
             MoveMenuPositionSound();
             droidtype --;
             need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
           }
           break;
 
         case ACTION_RIGHT:
+          if ( !time_for_move ) continue;
+
           if ( page < 2 ) {
             MoveMenuPositionSound();
             page ++;
             need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
           }
           break;
 
         case ACTION_LEFT:
+          if ( !time_for_move ) continue;
+
           if ( page > 0 ) {
             MoveMenuPositionSound();
             page --;
             need_update = TRUE;
+            last_move_tick = SDL_GetTicks();
           }
         default:
           break;
