@@ -1077,6 +1077,8 @@ ThouArtDefeated (void)
 
   ExplodeInfluencer ();
 
+  wait_for_all_keys_released();
+
   now = SDL_GetTicks();
 
   while ( (delay=SDL_GetTicks() - now) < WAIT_AFTER_KILLED)
@@ -1091,6 +1093,9 @@ ThouArtDefeated (void)
       MoveEnemys ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
+      if ( any_key_just_pressed() ) {
+        break;
+      }
     }
 
 #ifdef HAVE_LIBSDL_MIXER
@@ -1119,7 +1124,13 @@ ThouArtDefeated (void)
 
   now = SDL_GetTicks ();
 
-  while (SDL_GetTicks() - now < SHOW_WAIT) SDL_Delay(1);
+  wait_for_all_keys_released();
+  while (SDL_GetTicks() - now < SHOW_WAIT) {
+    SDL_Delay(1);
+    if ( any_key_just_pressed() ) {
+      break;
+    }
+  }
 
   UpdateHighscores ();
 
