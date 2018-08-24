@@ -77,8 +77,6 @@ EXTERN SDL_Rect ProgressText_Rect;
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
 EXTERN float FPSover1;
-EXTERN float FPSover10;
-EXTERN float FPSover100;
 EXTERN char *Alertcolor[AL_LAST];
 EXTERN char *Shipnames[ALLSHIPS];
 

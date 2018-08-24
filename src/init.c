@@ -1331,6 +1331,7 @@ FreeDruidmap ( void )
     free (Druidmap[i].notes);
   }
   free(Druidmap);
+  Druidmap = NULL;
 
   return;
 }
@@ -1343,21 +1344,23 @@ FreeGameMem ( void )
   // free bullet map
   if ( Bulletmap != NULL )
     {
-      for ( i = 0; i < Number_Of_Bullet_Types; i ++ )
-        {
-          int len = sizeof(Bulletmap[0].SurfacePointer)/sizeof(Bulletmap[0].SurfacePointer[0]);
-          for ( j = 0; j < len; j ++ ) {
-            SDL_FreeSurface ( Bulletmap[i].SurfacePointer[j] );
-          }
+      int num_pics = sizeof(Bulletmap[0].SurfacePointer)/sizeof(Bulletmap[0].SurfacePointer[0]);
+      for ( i = 0; i < Number_Of_Bullet_Types; i ++ ) {
+        for ( j = 0; j < num_pics; j ++ ) {
+          SDL_FreeSurface ( Bulletmap[i].SurfacePointer[j] );
         }
+      }
       free ( Bulletmap );
+      Bulletmap = NULL;
     }
 
   // free blast map
-  for ( i = 0; i < sizeof(Blastmap)/sizeof(Blastmap[0]); i ++ ) {
-    int len = sizeof(Blastmap[0].SurfacePointer)/sizeof(Blastmap[0].SurfacePointer[0]);
-    for ( j = 0; j < len; j ++ ) {
+  int num_blasttypes  = sizeof(Blastmap)/sizeof(Blastmap[0]);
+  int num_blastphases = sizeof(Blastmap[0].SurfacePointer)/sizeof(Blastmap[0].SurfacePointer[0]);
+  for ( i = 0; i < num_blasttypes; i ++ ) {
+    for ( j = 0; j < num_blastphases; j ++ ) {
       SDL_FreeSurface ( Blastmap[i].SurfacePointer[j] );
+      Blastmap[i].SurfacePointer[j] = NULL;
     }
   }
 
@@ -1365,15 +1368,17 @@ FreeGameMem ( void )
   FreeDruidmap();
 
   // free highscores list
-  for ( i = 0; i < num_highscores; i ++ ) {
-    free ( Highscores[i] );
+  if ( Highscores != NULL ) {
+    for ( i = 0; i < num_highscores; i ++ ) {
+      free ( Highscores[i] );
+    }
+    free ( Highscores );
+    Highscores = NULL;
   }
-  free ( Highscores );
 
   // free constant text blobs
   free ( DebriefingText );
-
-  free ( Me.TextToBeDisplayed );
+  DebriefingText = NULL;
 
   return;
 }
