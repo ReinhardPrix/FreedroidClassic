@@ -788,8 +788,7 @@ CheckInfluenceEnemyCollision (void)
 	  Takeover (i);
 
 	  if (LevelEmpty ())
-	    CurLevel->empty = WAIT_LEVELEMPTY;
-
+	    CurLevel->empty = TRUE;
 	}			/* if !Transfer else .. */
 
     }				/* for */
