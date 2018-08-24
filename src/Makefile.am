@@ -1,10 +1,9 @@
-     ## Process this file with automake to produce Makefile.in
-
+## Process this file with automake to produce Makefile.in
 ##AM_CFLAGS=@CFLAGS@
-## use this to turn on clang's memory-leak sanitizer, see https://clang.llvm.org/docs/AddressSanitizer.html
-## AM_CFLAGS = -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls
 
 bin_PROGRAMS = freedroid
+
+EXTRA_PROGRAMS = freedroidDebug
 
 if WIN32
 win32_res = freedroid.rc
@@ -49,10 +48,13 @@ freedroid_SOURCES = \
 		view.c \
 		$(win32_res)
 
-freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
+## clang santizer flags: turn on clang's memory-leak sanitizer, see https://clang.llvm.org/docs/AddressSanitizer.html
+freedroidDebug_CFLAGS = $(AM_CFLAGS) -g3 -Og -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
+freedroidDebug_SOURCES = $(freedroid_SOURCES)
 
+freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
+freedroidDebug_CPPFLAGS = $(freedroid_CPPFLAGS)
 
 WINDRES = i586-mingw32msvc-windres
 freedroid.coff: freedroid.rc ../graphics/paraicon.ico
 	$(WINDRES) -i freedroid.rc -o freedroid.coff -O COFF
-
