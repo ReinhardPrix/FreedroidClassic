@@ -211,8 +211,10 @@ Takeover (int enemynum)
       SDL_Flip (ne_screen);
 
       ChooseColor ();
+      wait_for_all_keys_released();
 
       PlayGame ();
+      wait_for_all_keys_released();
 
       /* Ausgang beurteilen und returnen */
       if (InvincibleMode || (LeaderColor == YourColor))
@@ -428,7 +430,12 @@ PlayGame (void)
         {
           do_update_move = FALSE;
           prev_move_tick += move_tick_len; /* set for next motion tick */
-          action = getMenuAction ( 110 );
+#ifndef ANDROID
+          Uint32 key_repeat_delay = 110;	// PC default, allows for quick-repeat key hits
+#else
+          Uint32 key_repeat_delay = 150;	// better to avoid accidential key-repeats on touchscreen
+#endif
+          action = getMenuAction ( key_repeat_delay );
           /* allow for a WIN-key that give immedate victory */
           if ( KeyIsPressedR ('w') && CtrlPressed() && AltPressed() ) {
             LeaderColor = YourColor;   /* simple as that */
