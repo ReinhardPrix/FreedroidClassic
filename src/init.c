@@ -711,7 +711,7 @@ InitNewMission ( char *MissionName )
   // here would SegFault eventually!
   //  if (Me.TextToBeDisplayed) free (Me.TextToBeDisplayed);
 
-  Me.TextToBeDisplayed = NULL;
+  Me.TextToBeDisplayed = "Ok. I'm on board.  Let's get to work.";	// taken from Paradroid.mission
   Me.TextVisibleTime = 0;
 
 
