@@ -286,6 +286,7 @@ EXTERN void *MyMalloc (long);
 EXTERN int FS_filelength (FILE *f);
 EXTERN void init_progress (char *txt);
 EXTERN void update_progress (int percent);
+EXTERN void set_time_factor ( float timeFactor );
 
 /* enemy.c */
 #undef EXTERN

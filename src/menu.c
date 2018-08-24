@@ -75,6 +75,7 @@ const char *handle_AllMapVisible ( MenuAction_t action );
 const char *handle_ShowDecals ( MenuAction_t action );
 const char *handle_TransferIsActivate ( MenuAction_t action );
 const char *handle_FireIsTransfer ( MenuAction_t action );
+const char *handle_EmptyLevelSpeedup ( MenuAction_t action );
 
 const char *handle_MusicVolume ( MenuAction_t action );
 const char *handle_SoundVolume ( MenuAction_t action );
@@ -121,6 +122,7 @@ MenuEntry_t LegacyMenu[] =
     { "Transfer = Activate: ", 	handle_TransferIsActivate, NULL },
     { "Hold Fire to Transfer: ",handle_FireIsTransfer,	NULL },
 #endif
+    { "Empty Level Speedup: ",  handle_EmptyLevelSpeedup, NULL },
     { NULL,			NULL, 			NULL }
   };
 
@@ -244,6 +246,7 @@ handle_StrictlyClassic ( MenuAction_t action )
       GameConfig.TakeoverActivates = TRUE;
       GameConfig.FireHoldTakeover = TRUE;
       GameConfig.AllMapVisible = TRUE;
+      GameConfig.emptyLevelSpeedup = 1.0;
 
       // set window type
       GameConfig.FullUserRect = FALSE;
@@ -367,11 +370,24 @@ handle_FireIsTransfer ( MenuAction_t action )
 }
 
 const char *
+handle_EmptyLevelSpeedup ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%3.1f" , GameConfig.emptyLevelSpeedup );
+    return buf;
+  }
+
+  menuChangeFloat ( action, &(GameConfig.emptyLevelSpeedup), 0.1, 0.5, 2.0 );
+  return NULL;
+}
+
+const char *
 handle_MusicVolume ( MenuAction_t action )
 {
   static char buf[256];
   if ( action == ACTION_INFO ) {
-    sprintf ( buf, "%1.2f" , GameConfig.Current_BG_Music_Volume );
+    sprintf ( buf, "%4.2f" , GameConfig.Current_BG_Music_Volume );
     return buf;
   }
 
@@ -385,7 +401,7 @@ handle_SoundVolume ( MenuAction_t action )
 {
   static char buf[256];
   if ( action == ACTION_INFO ) {
-    sprintf ( buf, "%1.2f" , GameConfig.Current_Sound_FX_Volume );
+    sprintf ( buf, "%4.2f" , GameConfig.Current_Sound_FX_Volume );
     return buf;
   }
 

@@ -86,6 +86,7 @@ typedef struct
   int AllMapVisible;    		// complete map is visible?
   float scale;  	 		// scale the whole graphics by this at load-time
   int HogCPU;				// use 100% CPU or leave it some air to breathe?
+  float emptyLevelSpeedup;		// time speedup factor to use on empty levels
 }
 config_t;
 

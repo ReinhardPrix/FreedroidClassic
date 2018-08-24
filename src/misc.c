@@ -52,6 +52,7 @@ long onehundredframedelay = 0;
 Uint32 Now_SDL_Ticks;
 Uint32 One_Frame_SDL_Ticks;
 int framenr = 0;
+static float currentTimeFactor = 1.0;
 
 SDL_Color progress_color = {200, 20, 20};
 
@@ -129,6 +130,7 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
 #define ALL_MAP_VISIBLE              "AllMapVisible"
 #define VID_SCALE_FACTOR             "Vid_ScaleFactor"
 #define HOG_CPU			     "Hog_Cpu"
+#define EMPTY_LEVEL_SPEEDUP          "EmptyLevelSpeedup"
 
 /*----------------------------------------------------------------------
  * LoadGameConfig(): load saved options from config-file
@@ -238,6 +240,7 @@ LoadGameConfig (void)
   read_variable (data, ALL_MAP_VISIBLE,          "%d", &GameConfig.AllMapVisible);
   read_variable (data, VID_SCALE_FACTOR,         "%f", &GameConfig.scale);
   read_variable (data, HOG_CPU,			 "%d", &GameConfig.HogCPU);
+  read_variable (data, EMPTY_LEVEL_SPEEDUP,	 "%f", &GameConfig.emptyLevelSpeedup);
 
   // read in keyboard-config
   for (i=0; i < CMD_LAST; i++)
@@ -295,7 +298,7 @@ SaveGameConfig (void)
   fprintf (fp, "%s = %d\n", ALL_MAP_VISIBLE, GameConfig.AllMapVisible);
   fprintf (fp, "%s = %f\n", VID_SCALE_FACTOR, GameConfig.scale);
   fprintf (fp, "%s = %d\n", HOG_CPU, GameConfig.HogCPU);
-
+  fprintf (fp, "%s = %f\n", EMPTY_LEVEL_SPEEDUP, GameConfig.emptyLevelSpeedup);
 
   // now write the keyboard->cmd mappings
   for (i=0; i < CMD_LAST; i++)
@@ -860,7 +863,7 @@ Frame_Time (void)
     previous_time = (1.0 / FPSover1);
   }
 
-  return (previous_time);
+  return (previous_time * currentTimeFactor);
 
 } // float Frame_Time(void)
 
@@ -1176,5 +1179,13 @@ update_progress (int percent)
   return;
 
 } // update_progress()
+
+// update the factor affecting the current speed of 'time flow'
+void
+set_time_factor ( float timeFactor )
+{
+  currentTimeFactor = timeFactor;
+  return;
+}
 
 #undef _misc_c
