@@ -45,12 +45,10 @@
 int read_variable (char *data, char *var_name, char *fmt, void *var);
 
 char *homedir = NULL;
-char ConfigDir[255]="\0";
 
 long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
-float FPSover1 = 10;
 Uint32 Now_SDL_Ticks;
 Uint32 One_Frame_SDL_Ticks;
 int framenr = 0;
@@ -853,12 +851,14 @@ ComputeFPSForThisFrame(void)
 float
 Frame_Time (void)
 {
-  static float previous_time;
+  static float previous_time = 0.1;
 
   if ( SkipAFewFrames )
     return previous_time;
 
-  previous_time = (1.0 / FPSover1);
+  if ( FPSover1 > 0 ) {
+    previous_time = (1.0 / FPSover1);
+  }
 
   return (previous_time);
 
