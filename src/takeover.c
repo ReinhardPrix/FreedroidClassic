@@ -477,9 +477,16 @@ PlayGame (void)
   /* Schluss- Countdown */
   countdown = CAPSULE_COUNTDOWN;
 
+  wait_for_all_keys_released();
+  bool fast_forward = FALSE;
   while (countdown--)
     {
-      while ( SDL_GetTicks() < prev_count_tick + count_tick_len ) ;
+      if ( !fast_forward ) {
+        SDL_Delay ( count_tick_len );
+      }
+      if ( any_key_just_pressed() ) {
+        fast_forward = TRUE;
+      }
       prev_count_tick += count_tick_len;
       ProcessCapsules ();	/* count down the lifetime of the capsules */
       ProcessCapsules ();	/* do it twice this time to be faster */
@@ -490,6 +497,7 @@ PlayGame (void)
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
       ShowPlayground ();
+      SDL_Delay(1);
       SDL_Flip (ne_screen);
     }	/* while (countdown) */
 
