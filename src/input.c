@@ -719,6 +719,7 @@ wait_for_all_keys_released (void)
   while ( any_key_is_pressedR() ) {
     SDL_Delay(1);
   }
+  ResetMouseWheel();
   return;
 }
 

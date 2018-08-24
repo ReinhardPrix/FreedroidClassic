@@ -315,14 +315,13 @@ ChooseColor (void)
 
   prev_count_tick = SDL_GetTicks ();
 
-  ResetMouseWheel ();  // forget about previous wheel events
   wait_for_all_keys_released();
 
   MenuAction_t action = ACTION_NONE;
   while (!ColorChosen)
     {
       action = getMenuAction ( 110 );
-      if ( action & ACTION_RIGHT )
+      if ( action & (ACTION_RIGHT|ACTION_DOWN_WHEEL) )
         {
 	  if (YourColor != VIOLETT) {
             MoveMenuPositionSound();
@@ -331,7 +330,7 @@ ChooseColor (void)
 	  OpponentColor = GELB;
 	}
 
-      if ( action & ACTION_LEFT ) {
+      if ( action & (ACTION_LEFT|ACTION_UP_WHEEL) ) {
         if (YourColor != GELB) {
           MoveMenuPositionSound();
         }
@@ -388,7 +387,6 @@ PlayGame (void)
 
   prev_count_tick = prev_move_tick = SDL_GetTicks (); /* start tick clock */
 
-  ResetMouseWheel ();  // forget about previous wheel events
   wait_for_all_keys_released();
   MenuAction_t action = ACTION_NONE;;
 
@@ -430,7 +428,7 @@ PlayGame (void)
             return;
           }
 
-          if ( action & ACTION_UP )
+          if ( action & (ACTION_UP|ACTION_UP_WHEEL) )
             {
               CapsuleCurRow[YourColor]--;
               if (CapsuleCurRow[YourColor] < 1) {
@@ -438,7 +436,7 @@ PlayGame (void)
               }
             }
 
-          if ( action & ACTION_DOWN )
+          if ( action & (ACTION_DOWN|ACTION_DOWN_WHEEL) )
             {
 	      CapsuleCurRow[YourColor]++;
 	      if (CapsuleCurRow[YourColor] > NUM_LINES) {

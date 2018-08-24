@@ -83,15 +83,12 @@ EnterLift (void)
   Activate_Conservative_Frame_Computation();
 
   /* make sure to release the fire-key */
-  SpacePressedR();
-  MouseLeftPressedR();
-  MouseRightPressedR();
+  wait_for_all_keys_released();
 
   /* Prevent the influ from coming out of the lift in transfer mode
    * by turning off transfer mode as soon as the influ enters the lift */
   Me.status= ELEVATOR;
 
-  ResetMouseWheel ();  // forget previous mouse-wheel action
   SDL_ShowCursor(SDL_DISABLE);
 
   curLevel = CurLevel->levelnum;
@@ -133,6 +130,7 @@ EnterLift (void)
               break;
 
             case ACTION_UP:
+            case ACTION_UP_WHEEL:
               last_move_tick = SDL_GetTicks();
               if (upLift != -1)
                 {			/* gibt es noch einen Lift hoeher ? */
@@ -153,6 +151,7 @@ EnterLift (void)
               break;
 
             case ACTION_DOWN:
+            case ACTION_DOWN_WHEEL:
               last_move_tick = SDL_GetTicks();
               if (downLift != -1)
                 {			/* gibt es noch einen Lift tiefer ? */
@@ -308,7 +307,6 @@ EnterKonsole (void)
   Copy_Rect (Full_User_Rect, User_Rect);
 
   wait_for_all_keys_released();
-  ResetMouseWheel ();
 
   Me.status = CONSOLE;
 

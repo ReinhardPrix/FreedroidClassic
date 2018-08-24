@@ -737,8 +737,6 @@ InitiateMenu (bool with_droids)
   if (Menu_Background) SDL_FreeSurface (Menu_Background);
   Menu_Background = SDL_DisplayFormat (ne_screen);  // keep a global copy of background
 
-  ResetMouseWheel ();
-
   SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
   SetCurrentFont ( Menu_BFont );
   fheight = FontHeight (GetCurrentFont()) + 2;
@@ -826,6 +824,13 @@ getMenuAction ( Uint32 wait_repeat_ticks )
         action |= ACTION_RIGHT;
       }
     }
+  // special handling of mouse wheel: register every event, no need for key-repeat delays
+  if ( WheelUpPressed() ) {
+    action |= ACTION_UP_WHEEL;
+  }
+  if ( WheelDownPressed() ) {
+    action |= ACTION_DOWN_WHEEL;
+  }
 
   return action;
 
@@ -922,7 +927,8 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
         case ACTION_UP:
           if ( !time_for_move ) continue;
-
+          // intentional fall-through
+        case ACTION_UP_WHEEL:
           MoveMenuPositionSound();
           if (menu_pos > 0) {
             menu_pos--;
@@ -935,7 +941,8 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
         case ACTION_DOWN:
           if ( !time_for_move ) continue;
-
+          // intentional fall-through
+        case ACTION_DOWN_WHEEL:
           MoveMenuPositionSound();
           if ( menu_pos < num_entries - 1 ) {
             menu_pos++;
@@ -1089,7 +1096,8 @@ Key_Config_Menu (void)
 
         case ACTION_UP:
           if ( !time_for_move ) continue;
-
+          // intentional fall-through
+        case ACTION_UP_WHEEL:
           if ( sely > 1 ) sely--;
           else sely = LastMenuPos;
           MoveMenuPositionSound();
@@ -1098,7 +1106,8 @@ Key_Config_Menu (void)
 
         case ACTION_DOWN:
           if ( !time_for_move ) continue;
-
+          // intentional fall-through
+        case ACTION_DOWN_WHEEL:
           if ( sely < LastMenuPos ) sely++;
           else sely = 1;
           MoveMenuPositionSound();
