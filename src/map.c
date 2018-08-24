@@ -248,9 +248,10 @@ LoadShip (char *filename)
   char *Buffer;
   int i;
 
-#define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
+  FreeShipMemory();	// clear vestiges of previous ship data, if any
 
   /* Read the whole ship-data to memory */
+#define END_OF_SHIP_DATA_STRING "*** End of Ship Data ***"
   fpath = find_file (filename, MAP_DIR, NO_THEME, CRITICAL);
   ShipData = ReadAndMallocAndTerminateFile( fpath , END_OF_SHIP_DATA_STRING ) ;
 
