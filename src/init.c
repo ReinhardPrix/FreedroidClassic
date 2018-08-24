@@ -319,9 +319,8 @@ Get_Robot_Data ( void* DataPointer )
 
   // Now that we know how many robots are defined in freedroid.ruleset, we can allocate
   // a fitting amount of memory.
-  size_t mem = Number_Of_Droid_Types * sizeof(Bulletmap[0]);
+  size_t mem = Number_Of_Droid_Types * sizeof(Druidmap[0]);
   Druidmap = MyMalloc ( mem );
-  memset ( Druidmap, 0, mem );
   DebugPrintf(1, "\nWe have counted %d different druid types in the game data file." , Number_Of_Droid_Types );
   DebugPrintf (2, "\nMEMORY HAS BEEN ALLOCATED.\nTHE READING CAN BEGIN.\n" );
 
