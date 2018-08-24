@@ -151,8 +151,6 @@ Takeover (int enemynum)
    */
   Activate_Conservative_Frame_Computation ();
 
-  wait_for_all_keys_released();
-
   // Takeover game always uses Classic User_Rect:
   Copy_Rect (User_Rect, buf);
   Copy_Rect (Classic_User_Rect, User_Rect);
@@ -167,6 +165,8 @@ Takeover (int enemynum)
 
   show_droid_info ( Me.type, -1 , 0);
   show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, UPDATE);
+
+  wait_for_all_keys_released();
   while (!FirePressedR()) {
     show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, 0);
     SDL_Delay(1);
@@ -174,6 +174,7 @@ Takeover (int enemynum)
 
   show_droid_info ( AllEnemys[enemynum].type, -2 ,0);
   show_droid_portrait (Cons_Droid_Rect,  AllEnemys[enemynum].type, DROID_ROTATION_TIME, UPDATE);
+  wait_for_all_keys_released();
   while (!FirePressedR()) {
     show_droid_portrait (Cons_Droid_Rect,  AllEnemys[enemynum].type, DROID_ROTATION_TIME, 0);
     SDL_Delay(1);
@@ -182,6 +183,7 @@ Takeover (int enemynum)
   SDL_BlitSurface (takeover_bg_pic, NULL, ne_screen, NULL);
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
+  wait_for_all_keys_released();
   while (!FinishTakeover)
     {
       /* Init Color-column and Capsule-Number for each opponenet and your color */
@@ -277,8 +279,14 @@ Takeover (int enemynum)
       ShowPlayground ();
       SDL_Flip (ne_screen);
 
+      wait_for_all_keys_released();
       now = SDL_GetTicks();
-      while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) SDL_Delay(1);
+      while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) {
+#ifdef ANDROID
+        SDL_Flip(ne_screen);
+#endif
+        SDL_Delay(1);
+      }
 
     }	/* while !FinishTakeover */
 
@@ -286,7 +294,6 @@ Takeover (int enemynum)
   Copy_Rect (buf, User_Rect);
 
   ClearGraphMem();
-  SDL_Flip(ne_screen);
 
   if (LeaderColor == YourColor)
     return TRUE;
