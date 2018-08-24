@@ -370,7 +370,7 @@ enum _sounds
 #define DROID_PHASES            ENEMYPHASES
 
 #define WAIT_LEVELEMPTY		0.5  /* warte bevor Graufaerben (in seconds)*/
-#define SLOWMO_LEVELEMPTY       0.33  // slow-motion effect on last blast when level is going empty
+#define SLOWMO_FACTOR           0.33  // slow-motion effect on last blast when level is going empty
 #define WAIT_AFTER_KILLED	2000 // time (in ms) to wait and still display pictures after the destruction of
 #define SHOW_WAIT           3500   // std amount of time to show something
                                    // the players droid.  This is now measured in seconds and can be a float

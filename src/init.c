@@ -1031,9 +1031,7 @@ ThouArtVictorious(void)
   Me.status = VICTORY;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  // release fire
-  if (FirePressedR())
-    ;
+  wait_for_all_keys_released();
 
   now=SDL_GetTicks();
 
@@ -1054,9 +1052,7 @@ ThouArtVictorious(void)
   SetCurrentFont( Para_BFont);
   ScrollText (DebriefingText , &rect , 6 );
 
-  // release fire
-  if (FirePressedR())
-    ;
+  wait_for_all_keys_released();
 
   return;
 }
@@ -1085,8 +1081,8 @@ ThouArtDefeated (void)
 
   while ( (delay=SDL_GetTicks() - now) < WAIT_AFTER_KILLED)
     {
-      // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPoverSover1
-      FPSover1 *= 2.0;
+      // add "slow motion effect" for final explosion
+      set_time_factor ( SLOWMO_FACTOR );
 
       StartTakingTimeForFPSCalculation();
       DisplayBanner (NULL, NULL,  0 );
@@ -1099,6 +1095,7 @@ ThouArtDefeated (void)
         break;
       }
     }
+  set_time_factor ( 1.0 );
 
 #ifdef HAVE_LIBSDL_MIXER
   Mix_HaltMusic ();

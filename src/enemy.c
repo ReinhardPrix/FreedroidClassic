@@ -573,7 +573,7 @@ MoveThisEnemy( int EnemyNum )
 
 	  CurLevel->empty = TRUE;
 	  CurLevel->timer = WAIT_LEVELEMPTY;
-          set_time_factor ( SLOWMO_LEVELEMPTY );	// watch final explosion in slow-motion
+          set_time_factor ( SLOWMO_FACTOR );	// watch final explosion in slow-motion
 	}
       return;	// this one's down, so we can move on to the next
     }
