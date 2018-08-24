@@ -49,7 +49,7 @@ freedroid_SOURCES = \
 		$(win32_res)
 
 ## clang santizer flags: turn on clang's memory-leak sanitizer, see https://clang.llvm.org/docs/AddressSanitizer.html
-freedroidDebug_CFLAGS = $(AM_CFLAGS) -g3 -Og -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls
+freedroidDebug_CFLAGS = $(AM_CFLAGS) -g3 -Og -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-common
 freedroidDebug_SOURCES = $(freedroid_SOURCES)
 
 freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
