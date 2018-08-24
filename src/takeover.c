@@ -206,6 +206,7 @@ Takeover (int enemynum)
       InventPlayground ();
 
       ShowPlayground ();
+      SDL_Flip (ne_screen);
 
       ChooseColor ();
 
@@ -274,6 +275,8 @@ Takeover (int enemynum)
 
       DisplayBanner (message, NULL , 0 );
       ShowPlayground ();
+      SDL_Flip (ne_screen);
+
       now = SDL_GetTicks();
       while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) SDL_Delay(1);
 
@@ -315,25 +318,30 @@ ChooseColor (void)
   ResetMouseWheel ();  // forget about previous wheel events
   wait_for_all_keys_released();
 
+  MenuAction_t action = ACTION_NONE;
   while (!ColorChosen)
     {
-      if (RightPressedR() || WheelDownPressed())
-	{
-	  if (YourColor != VIOLETT) MoveMenuPositionSound();
+      action = getMenuAction ( 110 );
+      if ( action & ACTION_RIGHT )
+        {
+	  if (YourColor != VIOLETT) {
+            MoveMenuPositionSound();
+          }
 	  YourColor = VIOLETT;
 	  OpponentColor = GELB;
 	}
-      if (LeftPressedR() || WheelUpPressed())
-	{
-	  if (YourColor != GELB) MoveMenuPositionSound();
-	  YourColor = GELB;
-	  OpponentColor = VIOLETT;
-	}
 
-      if (FirePressedR())
-	{
-	  ColorChosen = TRUE;
-	}
+      if ( action & ACTION_LEFT ) {
+        if (YourColor != GELB) {
+          MoveMenuPositionSound();
+        }
+        YourColor = GELB;
+        OpponentColor = VIOLETT;
+      }
+
+      if ( action & ACTION_CLICK ) {
+        ColorChosen = TRUE;
+      }
 
       /* wait for next countdown tick */
       if ( SDL_GetTicks() >= prev_count_tick + count_tick_len )
@@ -350,6 +358,7 @@ ChooseColor (void)
       if (countdown == 0)
 	ColorChosen = TRUE;
 
+      SDL_Flip (ne_screen);
       SDL_Delay(1); // don't hog CPU
     } /* while(!ColorChosen) */
 
@@ -463,6 +472,7 @@ PlayGame (void)
           ShowPlayground ();
 	} // if do_update_move
 
+      SDL_Flip (ne_screen);
       SDL_Delay(1);
     }	/* while !FinishTakeover */
 
@@ -482,7 +492,7 @@ PlayGame (void)
       ProcessPlayground ();	/* this has to be done several times to be sure */
       ProcessDisplayColumn ();
       ShowPlayground ();
-
+      SDL_Flip (ne_screen);
     }	/* while (countdown) */
 
   wait_for_all_keys_released();
@@ -742,8 +752,6 @@ ShowPlayground (void)
 			   ne_screen, &dst);
 	} /* for capsules */
     } /* for player */
-
-  SDL_Flip (ne_screen);
 
   return;
 
