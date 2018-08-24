@@ -1068,10 +1068,9 @@ Terminate (int ExitCode)
 
 
 /*@Function============================================================
-@Desc: This function works a malloc, except that it also checks for
-       success and terminates in case of "out of memory", so we dont
-       need to do this always in the code.
-
+@Desc: This function usese calloc, so memory is automatically 0-initialized!
+       The function also checks for success and terminates in case of
+       "out of memory", so we dont need to do this always in the code.
 @Ret:
 * $Function----------------------------------------------------------*/
 void *
