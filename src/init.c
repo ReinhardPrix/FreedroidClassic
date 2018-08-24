@@ -1004,11 +1004,11 @@ Title ( char *MissionBriefingPointer )
       rect.x += 10;
       rect.w -= 10; //leave some border
       if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1) {
-        free ( PreparedBriefingText );
 	break;  // User pressed 'fire'
       }
-    }
+    } // while(1)
 
+  free ( PreparedBriefingText );
   return;
 
 } /* Title() */
