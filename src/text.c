@@ -309,12 +309,15 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
  *             out of clip-rect completely)
  *-----------------------------------------------------------------*/
 int
-DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
+DisplayText (const char *Text, int startx, int starty, const SDL_Rect *clip)
 {
-  char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
+  const char *tmp;	/* Beweg. Zeiger auf aktuelle Position im Ausgabe-Text */
   SDL_Rect Temp_Clipping_Rect; // adding this to prevent segfault in case of NULL as parameter
-
   SDL_Rect store_clip;
+
+  if ( Text == NULL ) {
+    return FALSE;
+  }
 
   if ( startx != -1 ) MyCursorX = startx;
   if ( starty != -1 ) MyCursorY = starty;
@@ -330,7 +333,6 @@ DisplayText (char *Text, int startx, int starty, const SDL_Rect *clip)
       Temp_Clipping_Rect.w=Screen_Rect.w;
       Temp_Clipping_Rect.h=Screen_Rect.h;
     }
-
 
   tmp = Text;			/* running text-pointer */
 
@@ -410,11 +412,11 @@ DisplayChar (unsigned char c)
   @Int:
 * $Function----------------------------------------------------------*/
 bool
-linebreak_needed (char *textpos , const SDL_Rect *clip)
+linebreak_needed (const char *textpos , const SDL_Rect *clip)
 {
   int w;
   int NeededSpace;
-  char *pointer;
+  const char *pointer;
 
   // sanity check
   if (textpos == NULL)
