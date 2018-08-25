@@ -47,8 +47,10 @@
 char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
-   "Collision_Sound_0.wav",
-   "GotIntoBlast_Sound_0.wav",
+   // "Collision_Sound_0.wav", // replaced by damage-dependent-sounds:  Collision_[Neutral|GotDamaged|DamagedEnemy]
+   "Collision_Neutral.wav",
+   "Collision_GotDamaged.wav",
+   "Collision_DamagedEnemy.wav",
    //"GotIntoBlast_Sound_0.wav", // replaced by GotIntoBlast_Sound_1.wav
    "GotIntoBlast_Sound_1.wav",
    "MoveElevator_Sound_0.wav",
@@ -161,7 +163,7 @@ Continuing with sound disabled\n");
       if ( Loaded_WAV_Files[i] == NULL )
 	{
 	  DebugPrintf (0, "Could not load Sound-sample: %s\n", SoundSampleFilenames[ i ]);
-	  DebugPrintf (0, "WARNING: Continuing with sound disabled\n", Mix_GetError());
+	  DebugPrintf (0, "WARNING: Continuing with sound disabled. Error = %d\n", Mix_GetError());
 	  sound_on = FALSE;
 	  return;
 	} // if ( !Loaded_WAV...
@@ -621,6 +623,21 @@ Takeover_Game_Lost_Sound (void)
   Play_Sound ( TAKEOVER_GAME_LOST_SOUND );
 }				// void FireBulletSound(void)
 
+void
+CollisionGotDamagedSound ( void )
+{
+  if ( !sound_on ) return;
+
+  Play_Sound ( COLLISION_GOT_DAMAGED_SOUND );
+}
+
+void
+CollisionDamagedEnemySound ( void )
+{
+  if ( !sound_on ) return;
+
+  Play_Sound ( COLLISION_DAMAGED_ENEMY_SOUND );
+}
 
 /*@Function============================================================
 @Desc:
