@@ -49,6 +49,8 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Blast_Sound_0.wav",
    "Collision_Sound_0.wav",
    "GotIntoBlast_Sound_0.wav",
+   //"GotIntoBlast_Sound_0.wav", // replaced by GotIntoBlast_Sound_1.wav
+   "GotIntoBlast_Sound_1.wav",
    "MoveElevator_Sound_0.wav",
    "Refresh_Sound_0.wav",
    "LeaveElevator_Sound_0.wav",
