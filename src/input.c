@@ -717,6 +717,9 @@ void
 wait_for_all_keys_released (void)
 {
   while ( any_key_is_pressedR() ) {
+#ifdef ANDROID
+    SDL_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
+#endif
     SDL_Delay(1);
   }
   ResetMouseWheel();
@@ -728,6 +731,9 @@ wait_for_key_pressed ( void )
 {
   int key;
   while ( (key = any_key_just_pressed()) == 0 ) {
+#ifdef ANDROID
+    SDL_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
+#endif
     SDL_Delay(1);
   }
   return key;

@@ -1206,6 +1206,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 
   now = SDL_GetTicks();
 
+  wait_for_all_keys_released();
   while (1)
     {
       // pick an old enough tile
@@ -1234,6 +1235,10 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 
       if ( (timeout && (SDL_GetTicks()-now > timeout)))
 	break;
+
+      if ( any_key_just_pressed() ) {
+        break;
+      }
 
     } // while (! finished)
 

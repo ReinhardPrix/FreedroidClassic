@@ -75,6 +75,7 @@ const char *handle_AllMapVisible ( MenuAction_t action );
 const char *handle_ShowDecals ( MenuAction_t action );
 const char *handle_TransferIsActivate ( MenuAction_t action );
 const char *handle_FireIsTransfer ( MenuAction_t action );
+const char *handle_EmptyLevelSpeedup ( MenuAction_t action );
 
 const char *handle_MusicVolume ( MenuAction_t action );
 const char *handle_SoundVolume ( MenuAction_t action );
@@ -121,6 +122,7 @@ MenuEntry_t LegacyMenu[] =
     { "Transfer = Activate: ", 	handle_TransferIsActivate, NULL },
     { "Hold Fire to Transfer: ",handle_FireIsTransfer,	NULL },
 #endif
+    { "Empty Level Speedup: ",  handle_EmptyLevelSpeedup, NULL },
     { NULL,			NULL, 			NULL }
   };
 
@@ -244,6 +246,7 @@ handle_StrictlyClassic ( MenuAction_t action )
       GameConfig.TakeoverActivates = TRUE;
       GameConfig.FireHoldTakeover = TRUE;
       GameConfig.AllMapVisible = TRUE;
+      GameConfig.emptyLevelSpeedup = 1.0;
 
       // set window type
       GameConfig.FullUserRect = FALSE;
@@ -367,11 +370,24 @@ handle_FireIsTransfer ( MenuAction_t action )
 }
 
 const char *
+handle_EmptyLevelSpeedup ( MenuAction_t action )
+{
+  static char buf[256];
+  if ( action == ACTION_INFO ) {
+    sprintf ( buf, "%3.1f" , GameConfig.emptyLevelSpeedup );
+    return buf;
+  }
+
+  menuChangeFloat ( action, &(GameConfig.emptyLevelSpeedup), 0.1, 0.5, 2.0 );
+  return NULL;
+}
+
+const char *
 handle_MusicVolume ( MenuAction_t action )
 {
   static char buf[256];
   if ( action == ACTION_INFO ) {
-    sprintf ( buf, "%1.2f" , GameConfig.Current_BG_Music_Volume );
+    sprintf ( buf, "%4.2f" , GameConfig.Current_BG_Music_Volume );
     return buf;
   }
 
@@ -385,7 +401,7 @@ handle_SoundVolume ( MenuAction_t action )
 {
   static char buf[256];
   if ( action == ACTION_INFO ) {
-    sprintf ( buf, "%1.2f" , GameConfig.Current_Sound_FX_Volume );
+    sprintf ( buf, "%4.2f" , GameConfig.Current_Sound_FX_Volume );
     return buf;
   }
 
@@ -663,13 +679,16 @@ const char *handle_QuitGame ( MenuAction_t action )
   InitiateMenu (TRUE);
 
 #ifdef GCW0
-  PutString (ne_screen, User_Rect.x + User_Rect.w/3,
-             User_Rect.y + User_Rect.h/2, "Press A to quit");
+  const char *quit_string = "Press A to quit";
 #else
-  PutString (ne_screen, User_Rect.x + User_Rect.w/5,
-             User_Rect.y + User_Rect.h/2, "Hit 'y' or press Fire to quit");
+  const char *quit_string = "Hit 'y' or press Fire to quit";
 #endif
+  int text_width = TextWidth ( quit_string );
+  int text_x = User_Rect.x + (User_Rect.w - text_width)/2;
+  int text_y = User_Rect.y + (User_Rect.h - fheight)/2;
+  PutString (ne_screen, text_x, text_y, quit_string);
   SDL_Flip (ne_screen);
+
 #ifdef GCW0
   while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
   if ( (Gcw0APressed()) ) {
@@ -843,12 +862,26 @@ getMenuAction ( Uint32 wait_repeat_ticks )
 void
 ShowMenu ( const MenuEntry_t MenuEntries[] )
 {
-  int menu_pos = 0;
-  int num_entries = 0;
-  while ( MenuEntries[num_entries].name != NULL ) { num_entries ++; }
-
   InitiateMenu ( FALSE );
   wait_for_all_keys_released();
+
+  // figure out menu-start point to make it centered
+  int num_entries = 0;
+  int menu_width = 0;
+  int entry_len;
+  while ( MenuEntries[num_entries].name != NULL ) {
+    entry_len = TextWidth ( MenuEntries[num_entries].name );
+    if ( entry_len > menu_width) {
+      menu_width = entry_len;
+    }
+    num_entries ++;
+  }
+  int menu_height = num_entries * fheight;
+  int menu_x = Full_User_Rect.x + (Full_User_Rect.w - menu_width)/2;
+  int menu_y = Full_User_Rect.y + (Full_User_Rect.h - menu_height)/2;
+  int influ_x = menu_x - Block_Rect.w - fheight;
+
+  int menu_pos = 0;
 
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
@@ -874,9 +907,9 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
                 arg = (*MenuEntries[i].handler)( ACTION_INFO );
               }
               sprintf ( fullName, "%s%s", MenuEntries[i].name, (arg == NULL) ? "" : arg );
-              PutString (ne_screen, OptionsMenu_Rect.x, Menu_Rect.y + i * fheight, fullName );
+              PutString (ne_screen, menu_x, menu_y + i * fheight, fullName );
             }
-          PutInfluence (Menu_Rect.x, Menu_Rect.y + (menu_pos - 0.5) * fheight);
+          PutInfluence (influ_x, menu_y + (menu_pos - 0.5) * fheight);
 #ifndef ANDROID
           SDL_Flip( ne_screen );
 #endif

@@ -175,7 +175,10 @@ UpdateHighscores (void)
 #if !defined ANDROID && !defined ARCADEINPUT
   DisplayText ("Enter your name: ",  dst.x - 5*h, dst.y + dst.h, &User_Rect);
 #endif
-#ifdef ARCADEINPUT 
+#ifdef ANDROID
+  wait_for_key_pressed();
+#endif
+#ifdef ARCADEINPUT
   DisplayText ("Enter with U/D, (L/R skip 5 chars),",  dst.x - 6*h, dst.y + dst.h, &User_Rect);
   DisplayText ("Act = toggle case, Fire to enter,",  dst.x - 5*h, dst.y + dst.h + h, &User_Rect);
   DisplayText ("Start when ready: ",  dst.x - 5*h, dst.y + dst.h + h*2, &User_Rect);

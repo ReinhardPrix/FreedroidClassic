@@ -630,6 +630,7 @@ InitNewMission ( char *MissionName )
   ThisMessageTime = 0;
   LevelDoorsNotMovedTime = 0.0;
   DeathCount = 0;
+  set_time_factor ( 1.0 );
 
   /* Delete all bullets and blasts */
   for (i = 0; i < MAXBULLETS; i++)
@@ -883,6 +884,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
 #endif
   GameConfig.HogCPU = FALSE;	// default to being nice
+  GameConfig.emptyLevelSpeedup = 1.5;	// speed up *time* in empty levels (ie also energy-loss rate)
 
   // now load saved options from the config-file
   LoadGameConfig ();
@@ -1029,9 +1031,7 @@ ThouArtVictorious(void)
   Me.status = VICTORY;
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
-  // release fire
-  if (FirePressedR())
-    ;
+  wait_for_all_keys_released();
 
   now=SDL_GetTicks();
 
@@ -1052,9 +1052,7 @@ ThouArtVictorious(void)
   SetCurrentFont( Para_BFont);
   ScrollText (DebriefingText , &rect , 6 );
 
-  // release fire
-  if (FirePressedR())
-    ;
+  wait_for_all_keys_released();
 
   return;
 }
@@ -1077,12 +1075,14 @@ ThouArtDefeated (void)
 
   ExplodeInfluencer ();
 
+  wait_for_all_keys_released();
+
   now = SDL_GetTicks();
 
   while ( (delay=SDL_GetTicks() - now) < WAIT_AFTER_KILLED)
     {
-      // bit of a dirty hack:  get "slow motion effect" by fiddlig with FPoverSover1
-      FPSover1 *= 2.0;
+      // add "slow motion effect" for final explosion
+      set_time_factor ( SLOWMO_FACTOR );
 
       StartTakingTimeForFPSCalculation();
       DisplayBanner (NULL, NULL,  0 );
@@ -1091,7 +1091,11 @@ ThouArtDefeated (void)
       MoveEnemys ();
       Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
       ComputeFPSForThisFrame ();
+      if ( any_key_just_pressed() ) {
+        break;
+      }
     }
+  set_time_factor ( 1.0 );
 
 #ifdef HAVE_LIBSDL_MIXER
   Mix_HaltMusic ();
@@ -1119,7 +1123,13 @@ ThouArtDefeated (void)
 
   now = SDL_GetTicks ();
 
-  while (SDL_GetTicks() - now < SHOW_WAIT) SDL_Delay(1);
+  wait_for_all_keys_released();
+  while (SDL_GetTicks() - now < SHOW_WAIT) {
+    SDL_Delay(1);
+    if ( any_key_just_pressed() ) {
+      break;
+    }
+  }
 
   UpdateHighscores ();
 

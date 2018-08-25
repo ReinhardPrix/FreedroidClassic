@@ -154,12 +154,23 @@ main (int argc, char * argv[])
 	  CheckInfluenceWallCollisions ();	/* Testen ob der Weg nicht durch Mauern verstellt ist */
 	  CheckInfluenceEnemyCollision ();
 
-
-	  if (CurLevel->empty == TRUE && CurLevel->timer <= 0.0 && CurLevel->color != PD_DARK)
-	    {
-	      CurLevel->color = PD_DARK;
-	      Switch_Background_Music_To (BYCOLOR);  // start new background music
-	    }			/* if */
+          // control speed of time-flow: dark-levels=emptyLevelSpeedup, normal-levels=1.0
+          if ( ! CurLevel->empty )
+            {
+              set_time_factor ( 1.0 );
+            }
+          else
+            {
+              if ( CurLevel->color == PD_DARK )
+                {
+                  set_time_factor ( GameConfig.emptyLevelSpeedup );
+                } // if level is already dark
+              else if ( CurLevel->timer <= 0 ) // time to switch off the lights ...
+                {
+                  CurLevel->color = PD_DARK;
+                  Switch_Background_Music_To (BYCOLOR);  // start new background music
+                } // if wait timer hit 0
+            } // if level empty
 
 	  CheckIfMissionIsComplete ();
 

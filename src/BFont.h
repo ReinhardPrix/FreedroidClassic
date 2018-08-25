@@ -47,10 +47,10 @@ int PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 		 int c);
 
 /* Returns the width, in pixels, of the text calculated with the current font*/
-int TextWidth (char *text);
+int TextWidth (const char *text);
 
 /* Returns the width, in pixels, of the text calculated with the specified font*/
-int TextWidthFont (BFont_Info * Font, char *text);
+int TextWidthFont (BFont_Info * Font, const char *text);
 
 /* Write a string on the "Surface" with the current font */
 void PutString (SDL_Surface * Surface, int x, int y, const char *text);

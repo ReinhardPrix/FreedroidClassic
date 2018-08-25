@@ -277,13 +277,13 @@ PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, const cha
 
 
 int
-TextWidth (char *text)
+TextWidth (const char *text)
 {
   return TextWidthFont (CurrentFont, text);
 }
 
 int
-TextWidthFont (BFont_Info * Font, char *text)
+TextWidthFont (BFont_Info * Font, const char *text)
 {
   int i = 0, x = 0;
 
