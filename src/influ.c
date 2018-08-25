@@ -766,8 +766,6 @@ CheckInfluenceEnemyCollision (void)
 	  // there might be walls close too, so lets check again for collisions with them
 	  CheckInfluenceWallCollisions ();
 
-	  BounceSound ();
-
 	  // shortly stop this enemy, then send him back to previous waypoint
 	  if (!AllEnemys[i].warten)
 	    {
@@ -961,25 +959,23 @@ InfluEnemyCollisionLoseEnergy (int enemynum)
 {
   int enemytype = AllEnemys[enemynum].type;
 
-  if (Me.type <= enemytype)
+  float damage = (Druidmap[Me.type].class - Druidmap[enemytype].class) * collision_lose_energy_calibrator;
+
+  if ( damage < 0 ) // we took damage
     {
-      if (InvincibleMode)
+      CollisionGotDamagedSound();
+      if (InvincibleMode) {
 	return;
+      }
+      Me.energy += damage;
+      }
+  else if ( damage == 0 ) {	// nobody got hurt
+    BounceSound ();
+  } else { // damage > 0: enemy got damaged
 
-      Me.energy -=
-	(Druidmap[enemytype].class - Druidmap[Me.type].class) * collision_lose_energy_calibrator;
-
-
-      /*      Me.energy -=
-	(Druidmap[enemytype].weight -
-	Druidmap[Me.type].weight ) * collision_lose_energy_calibrator * 0.01 ; */
-    }
-  else
-    AllEnemys[enemynum].energy -=
-	 - (Druidmap[enemytype].class - Druidmap[Me.type].class) * collision_lose_energy_calibrator;
-  //      (Druidmap[Me.type].weight -
-  //       Druidmap[enemytype].weight ) * collision_lose_energy_calibrator * 0.01;
-  //    else AllEnemys[enemynum].energy -= BOUNCE_LOSE_ENERGY;
+    AllEnemys[enemynum].energy -= damage;
+    CollisionDamagedEnemySound();
+  }
 
   return;
 }; // void InfluEnemyCollisionLoseEnergy(int enemynum)

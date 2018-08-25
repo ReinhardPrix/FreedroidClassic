@@ -196,6 +196,8 @@ EXTERN void EnterLiftSound (void);
 EXTERN void LeaveLiftSound (void);
 EXTERN void Fire_Bullet_Sound (int);
 EXTERN void BounceSound (void);
+EXTERN void CollisionGotDamagedSound ( void );
+EXTERN void CollisionDamagedEnemySound ( void );
 EXTERN void DruidBlastSound (void);
 EXTERN void ThouArtDefeatedSound (void);
 EXTERN void Takeover_Set_Capsule_Sound (void);
