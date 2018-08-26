@@ -253,7 +253,7 @@ handle_StrictlyClassic ( MenuAction_t action )
       Copy_Rect (Classic_User_Rect, User_Rect);
       // set theme
       setTheme ( classic_theme_index );
-      InitiateMenu (TRUE);
+      InitiateMenu (FALSE);
     }
 
   return NULL;
@@ -274,7 +274,7 @@ handle_WindowType ( MenuAction_t action )
       else
         Copy_Rect ( Classic_User_Rect, User_Rect );
 
-      InitiateMenu (TRUE);
+      InitiateMenu (FALSE);
     }
   return NULL;
 } // handle_WindowType()
@@ -299,7 +299,7 @@ handle_Theme ( MenuAction_t action )
       if ( tnum > AllThemes.num_themes - 1 ) tnum = 0;
 
       setTheme ( tnum );
-      InitiateMenu (TRUE);
+      InitiateMenu (FALSE);
     }
 
   return NULL;
@@ -326,7 +326,7 @@ handle_AllMapVisible ( MenuAction_t action )
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
     {
       flipToggle ( &GameConfig.AllMapVisible );
-      InitiateMenu (TRUE);
+      InitiateMenu (FALSE);
     }
   return NULL;
 }
@@ -340,7 +340,7 @@ handle_ShowDecals ( MenuAction_t action )
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) )
     {
       flipToggle ( &GameConfig.ShowDecals );
-      InitiateMenu (TRUE);
+      InitiateMenu (FALSE);
     }
   return NULL;
 }
@@ -433,7 +433,7 @@ handle_ShowPosition ( MenuAction_t action )
   }
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
     flipToggle ( &GameConfig.Draw_Position );
-    InitiateMenu (TRUE);
+    InitiateMenu (FALSE);
   }
   return NULL;
 }
@@ -445,7 +445,7 @@ handle_ShowFramerate ( MenuAction_t action )
   }
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
     flipToggle ( &GameConfig.Draw_Framerate );
-    InitiateMenu (TRUE);
+    InitiateMenu (FALSE);
   }
   return NULL;
 }
@@ -457,7 +457,7 @@ handle_ShowEnergy ( MenuAction_t action )
   }
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
     flipToggle ( &GameConfig.Draw_Energy );
-    InitiateMenu (TRUE);
+    InitiateMenu (FALSE);
   }
   return NULL;
 }
@@ -469,7 +469,7 @@ handle_ShowDeathCount ( MenuAction_t action )
   }
   if ( (action == ACTION_CLICK) || (action == ACTION_LEFT) || (action == ACTION_RIGHT) ) {
     flipToggle ( &GameConfig.Draw_DeathCount );
-    InitiateMenu (TRUE);
+    InitiateMenu (FALSE);
   }
   return NULL;
 }
@@ -676,7 +676,7 @@ const char *handle_QuitGame ( MenuAction_t action )
   }
 
   MenuItemSelectedSound();
-  InitiateMenu (TRUE);
+  InitiateMenu (FALSE);
 
 #ifdef GCW0
   const char *quit_string = "Press A to quit";
