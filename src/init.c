@@ -957,7 +957,7 @@ void
 Title ( char *MissionBriefingPointer )
 {
   char* NextSubsectionStartPointer;
-  char* PreparedBriefingText;
+  char* PreparedBriefingText = NULL;
   char* TerminationPointer;
   char Buffer[500];
   int ThisTextLength;
@@ -998,6 +998,7 @@ Title ( char *MissionBriefingPointer )
 	  Terminate(ERR);
 	}
       ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
+      free ( PreparedBriefingText );
       PreparedBriefingText = MyMalloc (ThisTextLength + 10);
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
@@ -1011,6 +1012,7 @@ Title ( char *MissionBriefingPointer )
     } // while(1)
 
   free ( PreparedBriefingText );
+  PreparedBriefingText = NULL;
   return;
 
 } /* Title() */
