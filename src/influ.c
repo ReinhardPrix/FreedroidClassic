@@ -502,7 +502,7 @@ CheckInfluenceWallCollisions (void)
 	{
 	  crashx = TRUE;	/* In X wurde gecrasht */
 	  sign = (SX < 0) ? -1 : 1;
-	  SX = fabsf (SX);
+	  SX = abs (SX);
 	  NumberOfShifts=0;
 	  while (--SX
 		 && (DruidPassable (lastpos.x + sign * SX, lastpos.y) !=
@@ -518,7 +518,7 @@ CheckInfluenceWallCollisions (void)
 	{
 	  crashy = TRUE;	/* in Y wurde gecrasht */
 	  sign = (SY < 0) ? -1 : 1;
-	  SY = fabsf (SY);
+	  SY = abs (SY);
 	  NumberOfShifts=0;
 	  while (--SY
 		 && (DruidPassable (lastpos.x, lastpos.y + sign * SY) !=
@@ -727,9 +727,9 @@ CheckInfluenceEnemyCollision (void)
       xdist = Me.pos.x - AllEnemys[i].pos.x;
       ydist = Me.pos.y - AllEnemys[i].pos.y;
 
-      if ( fabsf (xdist) > 1)
+      if (abs (xdist) > 1)
 	continue;
-      if ( fabsf (ydist) > 1)
+      if (abs (ydist) > 1)
 	continue;
 
       dist2 = sqrt( (xdist * xdist) + (ydist * ydist) );

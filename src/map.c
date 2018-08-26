@@ -1315,10 +1315,10 @@ MoveLevelDoors (void)
 		  AllEnemys[j].levelnum != CurLevel->levelnum)
 		continue;
 
-	      xdist = fabsf (AllEnemys[j].pos.x - doorx);
+	      xdist = abs (AllEnemys[j].pos.x - doorx);
 	      if (xdist < Block_Rect.w)
 		{
-		  ydist = fabsf (AllEnemys[j].pos.y - doory);
+		  ydist = abs (AllEnemys[j].pos.y - doory);
 		  if (ydist < Block_Rect.h)
 		    {
 		      dist2 = xdist * xdist + ydist * ydist;

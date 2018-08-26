@@ -312,9 +312,8 @@ CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLe
   DebugPrintf( 2, "\nint CheckIfWayIsFreeOfDroids (...) : Checking from %d-%d to %d-%d.", (int) x1, (int) y1 , (int) x2, (int) y2 );
   fflush(stdout);
 
-  float dist_x = fabsf( x1 - x2);
-  float dist_y = fabsf( y1 - y2);
-  LargerDistance = fmaxf( dist_x, dist_y );
+  if ( abs(x1-x2) > abs (y1-y2) ) LargerDistance=fabsf(x1-x2);
+  else LargerDistance=fabsf(y1-y2);
 
   Steps=LargerDistance * 4 ;   // We check four times on each map tile...
   if ( Steps == 0 ) return TRUE;
