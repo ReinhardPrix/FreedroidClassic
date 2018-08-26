@@ -764,7 +764,7 @@ JoyAxisMotion ( void )
 }
 
 // check if any keys have been 'freshly' pressed
-// if yes, return key-code, otherwise -1
+// if yes, return key-code, otherwise 0
 int
 any_key_just_pressed (void)
 {

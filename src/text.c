@@ -43,6 +43,8 @@
 #include "global.h"
 #include "text.h"
 
+extern int key_cmds[CMD_LAST][3];
+
 #ifdef ARCADEINPUT
 /* Characters (ASCII codes) for ARCADEINPUT; comment tells which characters are in question. 
  * Easy (?) to modify to include other characters (or remove), */
@@ -186,7 +188,7 @@ AddInfluBurntText( void )
  *  scrolls a given text down inside the given rect
  *
  * returns : 0  if end of text was scolled out
- *           1  if user pressed space
+ *           1  if user pressed fire
  *-----------------------------------------------------------------*/
 int
 ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
@@ -211,6 +213,7 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
     if (*textpt == '\n')
       Number_Of_Line_Feeds++;
 
+  wait_for_all_keys_released();
   while (1)
     {
       prev_tick = SDL_GetTicks ();
@@ -229,22 +232,23 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 	{
 	  just_started = FALSE;
 	  now = SDL_GetTicks();
-	  while ( (!FirePressed()) && (SDL_GetTicks() - now < SHOW_WAIT))
-	    SDL_Delay(1);  // wait before scrolling
-
-	  //--------------------
-	  // Returning from this function is only possible after the minimum display time has been
-	  // reached.  This is useful for the game-won-phase, where the text must not disappear, even
-	  // if several clicks occur from heavy combat just instants before.
-	  //
-	  if ( (FirePressed()) && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
-	    {
-	      ret = 1;
-	      break;
-	    }
+          int key;
+	  while ( ((key=any_key_just_pressed()) == 0) && (SDL_GetTicks() - now < SHOW_WAIT)) {
+	    SDL_Delay(1);  // wait before starting auto-scroll
+          }
+          if ( (key == key_cmds[CMD_FIRE][0]) || (key == key_cmds[CMD_FIRE][1]) || (key == key_cmds[CMD_FIRE][2]) ) {
+            DebugPrintf(0, "in just_started: Fire registered\n");
+            ret = 1;
+            break;
+          }
 	  prev_tick = SDL_GetTicks ();
-	}
+	} // if just_started
 
+      if ( FirePressedR() ) {
+        DebugPrintf(0, "outside just_started: Fire registered\n");
+        ret = 1;
+        break;
+      }
 
       if (UpPressed () || WheelUpPressed())
 	{
@@ -257,17 +261,6 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
 	  speed +=5;
 	  if (speed > maxspeed)
 	    speed = maxspeed;
-	}
-
-      //--------------------
-      // Returning from this function is only possible after the minimum display time has been
-      // reached.  This is useful for the game-won-phase, where the text must not disappear, even
-      // if several clicks occur from heavy combat just instants before.
-      //
-      if ( (FirePressedR()) && ( ( SDL_GetTicks() - first_tick ) >= 1000 * SecondsMinimumDuration ) )
-	{
-	  ret = 1;
-	  break;
 	}
 
       InsertLine -= 1.0 * (SDL_GetTicks() - prev_tick) * speed /1000.0;
