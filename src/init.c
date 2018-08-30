@@ -884,7 +884,7 @@ InitFreedroid (int argc, char *const argv[])
   GameConfig.scale = 1.0;  	 // overall scaling of _all_ graphics (e.g. for 320x200 displays)
 #endif
   GameConfig.HogCPU = FALSE;	// default to being nice
-  GameConfig.emptyLevelSpeedup = 1.5;	// speed up *time* in empty levels (ie also energy-loss rate)
+  GameConfig.emptyLevelSpeedup = 1.0;	// speed up *time* in empty levels (ie also energy-loss rate)
 
   // now load saved options from the config-file
   LoadGameConfig ();
