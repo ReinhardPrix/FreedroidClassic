@@ -4,10 +4,8 @@
 This file was generated using the Freedroid level editor.
 Please feel free to make any modifications you like, but in order for you
 to have an easier time, it is recommended that you use the Freedroid level
-editor for this purpose.  If you have created some good new maps, please
-send a short notice (not too large files attached) to the freedroid project.
+editor for this purpose.
 
-freedroid-discussion@lists.sourceforge.net
 ----------------------------------------------------------------------
 
 Area name="U.S.S. Paradroid"
@@ -61,7 +59,7 @@ Levelnumber: 1
 xlen of this level: 48
 ylen of this level: 16
 color of this level: 5
-Name of this level=engeneering
+Name of this level=engineering
 Comment of the Influencer on entering this level="This is a level, like many other levels.
 Name of background song for this level=BYCOLOR
 begin_map
