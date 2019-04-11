@@ -450,6 +450,10 @@ SetCombatScaleTo(float scale)
 	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
 	// then zoom..
 	tmp = zoomSurface(OrigMapBlockSurfacePointer[j][i], scale, scale, 0);
+        if ( tmp == NULL ) {
+          DebugPrintf (0, "ERROR: zoomSurface() failed for scale = %g.\n", scale);
+          Terminate (ERR);
+        }
 	// and optimize
 	MapBlockSurfacePointer[j][i]=SDL_DisplayFormat (tmp);
 	SDL_FreeSurface(tmp); // free the old surface
@@ -1386,6 +1390,10 @@ ScalePic (SDL_Surface **pic, float scale)
 
   tmp = *pic;
   *pic = zoomSurface (tmp, scale, scale, 0);
+  if ( (*pic) == NULL ) {
+    DebugPrintf (0, "ERROR: zoomSurface() failed for scale = %g.\n", scale);
+    Terminate (ERR);
+  }
   SDL_FreeSurface (tmp);
 
   return;
