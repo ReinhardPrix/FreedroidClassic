@@ -554,9 +554,9 @@ parse_command_line (int argc, char *const argv[])
 
 	case 'r':
 	  GameConfig.scale = (float)atof (optarg);
-	  if (GameConfig.scale == 0)
+	  if (GameConfig.scale <= 0)
 	    {
-	      DebugPrintf (0, "ERROR: illegal scale entered: %s\n", optarg);
+	      DebugPrintf (0, "ERROR: illegal scale entered, needs to be >0: %s\n", optarg);
 	      Terminate (ERR);
 	    }
 	  DebugPrintf (1, "Graphics scale set to %f\n", GameConfig.scale);
