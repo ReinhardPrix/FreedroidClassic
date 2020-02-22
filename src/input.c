@@ -395,7 +395,7 @@ update_input (void)
       switch( event.type )
 	{
 	case SDL_QUIT:
-	  printf("\n\nUser requestet Termination...\n\nTerminating...");
+	  printf("\n\nUser requested termination...\n\nTerminating...");
 	  Terminate(0);
 	  break;
 	  /* Look for a keypress */
