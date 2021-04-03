@@ -216,7 +216,9 @@ Set_BG_Music_Volume(float NewVolume)
 void
 Set_Sound_FX_Volume(float NewVolume)
 {
+#ifdef HAVE_LIBSDL_MIXER
   int i;
+#endif
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else
@@ -291,9 +293,11 @@ Technical details:
 void
 Switch_Background_Music_To ( const char* filename_raw )
 {
+#ifdef HAVE_LIBSDL_MIXER
   char* fpath;
   static int prev_color = -1;
   static bool paused = FALSE;
+#endif
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
