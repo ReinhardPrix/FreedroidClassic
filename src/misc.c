@@ -1160,6 +1160,8 @@ update_progress (int percent)
 {
   SDL_Rect dst, src;
 
+  src.w = 0;
+
   Copy_Rect (ProgressBar_Rect, dst);
 
   dst.h = (Uint16) (1.0*ProgressBar_Rect.h * percent / 100.0);

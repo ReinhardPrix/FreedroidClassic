@@ -290,7 +290,7 @@ handle_Theme ( MenuAction_t action )
     {
       MoveLiftSound();
       int tnum = AllThemes.cur_tnum;
-      if ( (action == ACTION_CLICK) && (action == ACTION_RIGHT) )
+      if ( (action == ACTION_CLICK) || (action == ACTION_RIGHT) )
         tnum ++;
       else
         tnum --;
