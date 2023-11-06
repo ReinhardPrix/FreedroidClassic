@@ -142,7 +142,8 @@ read_variable (char *data, char *var_name, char *fmt, void *var)
 int
 LoadGameConfig (void)
 {
-  char fname[255];
+  const char *base = "config";
+  char fname[sizeof(ConfigDir) + strlen(base) + 2];
   FILE *fp;
   char *data;
   off_t size, read_size;
@@ -183,7 +184,7 @@ LoadGameConfig (void)
 #endif
   }
 
-  sprintf (fname, "%s/config", ConfigDir);
+  sprintf (fname, "%s/%s", ConfigDir, base);
 
   if( (fp = fopen (fname, "r")) == NULL)
     {
@@ -264,14 +265,15 @@ LoadGameConfig (void)
 int
 SaveGameConfig (void)
 {
-  char fname[255];
+  const char *base = "config";
+  char fname[sizeof(ConfigDir) + strlen(base) + 2];
   FILE *fp;
   int i;
 
   if ( ConfigDir[0] == '\0')
     return (ERR);
 
-  sprintf (fname, "%s/config", ConfigDir);
+  sprintf (fname, "%s/%s", ConfigDir, base);
   if( (fp = fopen (fname, "w")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to create config-file: %s\n", fname);
@@ -639,7 +641,7 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
 char *
 find_file (const char *fname, char *subdir, int use_theme, int critical)
 {
-  static char File_Path[1024] = "";   /* hope this will be enough */
+  static char File_Path[2048] = "";   /* hope this will be enough */
   int len = sizeof(File_Path);
 
   char Theme_Dir[1024] = "";

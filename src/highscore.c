@@ -45,12 +45,13 @@ void
 InitHighscores (void)
 {
   int i;
-  char fname[255];
+  const char *base = "highscores";
+  char fname[sizeof(ConfigDir)+strlen(base)+2];
   FILE *file = NULL;
 
   if (ConfigDir[0] != '\0')
     {
-      sprintf (fname, "%s/highscores", ConfigDir);
+      sprintf (fname, "%s/%s", ConfigDir, base);
       if ( (file = fopen (fname, "r")) == NULL)
 	DebugPrintf (0, "WARNING: no highscores file found... \n");
       else
@@ -88,7 +89,8 @@ int
 SaveHighscores (void)
 {
   int i;
-  char fname[255];
+  const char *base = "highscores";
+  char fname[sizeof(ConfigDir) + strlen(base) + 2];
   FILE *file = NULL;
 
   if (ConfigDir[0] == '\0')
@@ -97,7 +99,7 @@ SaveHighscores (void)
       return (ERR);
     }
 
-  sprintf (fname, "%s/highscores", ConfigDir);
+  sprintf (fname, "%s/%s", ConfigDir, base);
   if ( (file = fopen (fname, "w")) == NULL)
     {
       DebugPrintf (0, "WARNING: failed to create highscores file. Giving up... \n");

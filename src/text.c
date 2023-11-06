@@ -200,12 +200,12 @@ ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
   int maxspeed = 150;
   SDL_Surface* Background;
   int ret = 0;
-  Uint32 first_tick, prev_tick, now;
+  Uint32 prev_tick, now;
   bool just_started = TRUE;
 
   Background = SDL_DisplayFormat( ne_screen );
 
-  first_tick = SDL_GetTicks ();
+  // first_tick = SDL_GetTicks ();
 
   // count the number of lines in the text
   textpt = Text;

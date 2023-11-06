@@ -631,7 +631,7 @@ const char *handle_LE_SaveShip ( MenuAction_t action )
   if ( action == ACTION_CLICK )
     {
       SaveShip( shipname );
-      char output[255];
+      char output[512];
       snprintf ( output, sizeof(output)-1, "Ship saved as '%s'", fname );
       CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont), output );
       SDL_Flip ( ne_screen );
@@ -1095,7 +1095,7 @@ Key_Config_Menu (void)
 {
   int LastMenuPos = CMD_LAST;
   int selx = 1, sely = 1;   // currently selected menu-position
-  int oldkey, newkey = -1;
+  int newkey = -1;
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
   static Uint32 last_move_tick = 0;
@@ -1118,7 +1118,7 @@ Key_Config_Menu (void)
         case ACTION_CLICK:
           MenuItemSelectedSound();
 
-          oldkey = key_cmds[sely-1][selx-1];
+          // oldkey = key_cmds[sely-1][selx-1];
           key_cmds[sely-1][selx-1] = '_';
           Display_Key_Config (selx, sely);
           newkey = getchar_raw(); // includes joystick input!

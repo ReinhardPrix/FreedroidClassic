@@ -1172,7 +1172,7 @@ void
 FindAllThemes (void)
 {
   int i, location;
-  char dname[500], tname[100], fpath[500];
+  char dname[500], tname[100], fpath[1024];
   DIR *dir;
   struct stat buf;
   struct dirent *entry;
