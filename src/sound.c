@@ -86,6 +86,15 @@ Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
 char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
+#ifdef ANDROID
+  "AnarchyMenu1.mod.ogg",                 // RED
+  "starpaws.mod.ogg",                     // YELLOW
+  "The_Last_V8.mod.ogg",                  // GREEN
+  "dreamfish-green_beret.mod.ogg",        // GRAY
+  "dreamfish-sanxion.mod.ogg",            // BLUE // CRASHES the GCW0 ???
+  "kollaps-tron.mod.ogg",                 // GREENBLUE
+  "dreamfish-uridium2_loader.mod.ogg"     // DARK
+#else
   "AnarchyMenu1.mod",                 // RED
   "starpaws.mod",                     // YELLOW
   "The_Last_V8.mod",                  // GREEN
@@ -97,6 +106,7 @@ char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
 #endif
   "kollaps-tron.mod",                 // GREENBLUE
   "dreamfish-uridium2_loader.mod"     // DARK
+#endif // ANDROID
 };
 
 #ifdef HAVE_LIBSDL_MIXER
