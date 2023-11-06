@@ -29,3 +29,9 @@ FreeDroid_bundle: src/freedroid
 	echo "FreeDroid Classic " > $(bundle_contents)/PkgInfo
 	$(INSTALL_PROGRAM) $< $(bundle_contents)/MacOS/
 
+
+android-data:
+	mkdir -p AndroidData
+	zip -r AndroidData/data-1.2.2.zip graphics/ sound/*.wav sound/*.ogg map/
+	cp graphics/title.jpg AndroidData/logo.jpg
+
