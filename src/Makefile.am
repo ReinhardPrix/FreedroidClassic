@@ -19,9 +19,6 @@ freedroid_SOURCES = \
 		config.h \
 		defs.h \
 		enemy.c \
-		getopt.c \
-		getopt.h \
-		getopt1.c \
 		global.h \
 		graphics.c \
 		highscore.c \

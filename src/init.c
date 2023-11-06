@@ -38,7 +38,7 @@
 #include "global.h"
 #include "proto.h"
 #include "text.h"
-#include "getopt.h"
+#include <getopt.h>
 
 void Init_Game_Data( char* Datafilename );
 void Get_Bullet_Data ( char* DataPointer );
