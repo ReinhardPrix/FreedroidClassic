@@ -65,10 +65,16 @@ SDL_Rect ProgressText_Rect = {213, 390, 157, 30};
 
 int ShipEmptyCounter = 0;	/* counter to Message: you have won(this ship */
 
-influence_t Me = {
-  DRUID001, TRANSFERMODE, {0, 0}, {120, 48}, 100, 100, 0, 0, 0, 0, 0, 0, NULL };
+influence_t Me =
+  {
+    .type = DRUID001,
+    .status = TRANSFERMODE,
+    .pos = {120, 48},
+    .health = 100,
+    .energy = 100
+  };
 
-char *InfluenceModeNames[] = {
+const char *InfluenceModeNames[] = {
   "Mobile",
   "Transfer",
   "Weapon",
@@ -90,7 +96,7 @@ char *InfluenceModeNames[] = {
 };
 
 
-char *Classname[] = {
+const char *Classname[] = {
   "Influence device",
   "Disposal robot",
   "Servant robot",
@@ -104,7 +110,7 @@ char *Classname[] = {
   NULL
 };
 
-char *Classes[] = {
+const char *Classes[] = {
   "influence",
   "disposal",
   "servant",
@@ -118,21 +124,21 @@ char *Classes[] = {
   "error"
 };
 
-char *Shipnames[ALLSHIPS] = {
+const char *Shipnames[ALLSHIPS] = {
   "Paradroid",
   "Metahawk",
   "Graftgold",
   NULL
 };
 
-char *Alertcolor[AL_LAST] = {
+const char *Alertcolor[AL_LAST] = {
   "green",
   "yellow",
   "amber",
   "red"
 };
 
-char *Drivenames[] = {
+const char *Drivenames[] = {
   "none",
   "tracks",
   "anti-grav",
@@ -142,7 +148,7 @@ char *Drivenames[] = {
   "error"
 };
 
-char *Sensornames[] = {
+const char *Sensornames[] = {
   " - ",
   "spectral",
   "infra-red",
@@ -152,14 +158,14 @@ char *Sensornames[] = {
   "error"
 };
 
-char *Brainnames[] = {
+const char *Brainnames[] = {
   "none",
   "neutronic",
   "primode",
   "error"
 };
 
-char *Weaponnames[] = {      // Bullet-names:
+const char *Weaponnames[] = {      // Bullet-names:
   "none",                    // pulse
   "lasers",                  // single
   "lasers",                  // Military

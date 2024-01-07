@@ -44,24 +44,13 @@
 #include "map.h"
 #include "proto.h"
 
-SDL_Color Black = {0, 0, 0};
-SDL_Color Flash_Light = {11, 11, 11};
-SDL_Color Flash_Dark  = {230, 230, 230};
+SDL_Color Black = {.r = 0, .g = 0, .b = 0};
+SDL_Color Flash_Light = {.r = 11, .g = 11, .b = 11};
+SDL_Color Flash_Dark  = {.r = 230, .g = 230, .b = 230};
 
 #define BLINK_LEN 1.0   // length of one blink cycle at low energy (in s)
 
-/*----------------------------------------------------------------------
- * Map2ScreenXY (): translate a map-pos (x,y) to screen-coords (X,Y)
- *                  using influ-position Me.pos
- *
- *----------------------------------------------------------------------*/
-void
-Map2ScreenXY (finepoint mappos, point *screenpos)
-{
-
-
-
-}// Map2ScreenXY()
+// local prototypes
 
 /*
 -----------------------------------------------------------------
@@ -93,7 +82,7 @@ Assemble_Combat_Picture (int mask)
   static int FPS_Displayed=1;
   SDL_Rect TargetRectangle;
   SDL_Rect TxtRect;
-  finepoint pos, vect;
+  finepoint pos;
   float len;
   grob_point upleft, downright;
 
@@ -129,15 +118,16 @@ Assemble_Combat_Picture (int mask)
 	    {
 	      pos.x = col;
 	      pos.y = line;
-	      vect.x = Me.pos.x - pos.x;
-	      vect.y = Me.pos.y - pos.y;
-	      len = sqrt( vect.x * vect.x + vect.y * vect.y) + 0.01;
-	      vect.x /= len;
-	      vect.y /= len;
+              finepoint offs;
+	      offs.x = Me.pos.x - pos.x;
+	      offs.y = Me.pos.y - pos.y;
+	      len = sqrt( offs.x * offs.x + offs.y * offs.y) + 0.01;
+	      offs.x /= len;
+	      offs.y /= len;
 	      if (len > 0.5)
 		{
-		  pos.x += vect.x;
-		  pos.y += vect.y;
+		  pos.x += offs.x;
+		  pos.y += offs.y;
 		}
 	      if ( !IsVisible (&pos) )
 		continue;
@@ -603,13 +593,13 @@ PutBlast (int BlastNummer)
 @Ret: none
 * $Function----------------------------------------------------------*/
 void
-SetUserfenster (int color)
+SetUserfenster (int fillcolor)
 {
   SDL_Rect tmp;
 
   Set_Rect (tmp, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
 
-  SDL_FillRect( ne_screen , &tmp, color );
+  SDL_FillRect( ne_screen , &tmp, fillcolor );
 
   return;
 }				/* SetUserFenster() */
@@ -619,14 +609,14 @@ SetUserfenster (int color)
  *
  *-----------------------------------------------------------------*/
 void
-Fill_Rect (SDL_Rect rect, SDL_Color color)
+Fill_Rect (SDL_Rect rect, SDL_Color fillcolor)
 {
   Uint32 pixcolor;
   SDL_Rect tmp;
 
   Copy_Rect (rect, tmp);
 
-  pixcolor = SDL_MapRGB (ne_screen->format, color.r, color.g, color.b);
+  pixcolor = SDL_MapRGB (ne_screen->format, fillcolor.r, fillcolor.g, fillcolor.b);
 
   SDL_FillRect (ne_screen, &tmp, pixcolor);
 
@@ -692,8 +682,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
   memset (left_box,  ' ', LEFT_TEXT_LEN);  /* pad with spaces */
   memset (right_box, ' ', RIGHT_TEXT_LEN);
 
-  strncpy (left_box,  left, left_len);  /* this drops terminating \0 ! */
-  strncpy (right_box, right, left_len);  /* this drops terminating \0 ! */
+  memcpy (left_box,  left, left_len * sizeof(left[0]));  /* this drops terminating \0 ! */
+  memcpy (right_box, right, left_len * sizeof(right[0]));  /* this drops terminating \0 ! */
 
   left_box [LEFT_TEXT_LEN]  = '\0';     /* that's right, we want padding! */
   right_box[RIGHT_TEXT_LEN] = '\0';

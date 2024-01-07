@@ -55,8 +55,6 @@ Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ti
 
 SDLMod current_modifiers;
 
-SDL_Event event;
-
 int input_state[INPUT_LAST];	// array of states (pressed/released) of all keys
 
 int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
@@ -92,9 +90,9 @@ int key_cmds[CMD_LAST][3] =  // array of mappings {key1,key2,key3 -> cmd}
 #endif
   };
 
-char *keystr[INPUT_LAST];
+const char *keystr[INPUT_LAST];
 
-char *cmd_strings[CMD_LAST] =
+const char *cmd_strings[CMD_LAST] =
   {
     "UP",
     "DOWN",
@@ -122,6 +120,8 @@ char *cmd_strings[CMD_LAST] =
 
 #define clear_fresh(x) do { (x) &= ~FRESH_BIT; } while(0)
 
+// local prototypes
+int sgn (int x);
 
 void
 init_keystr (void)
@@ -383,7 +383,8 @@ int
 update_input (void)
 {
   Uint8 axis;
-
+  SDL_Event event;
+  
   // switch mouse-cursor visibility as a function of time of last activity
   if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
     show_cursor = FALSE;

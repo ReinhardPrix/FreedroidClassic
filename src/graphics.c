@@ -49,11 +49,13 @@ int vid_bpp;
 int fonts_loaded = FALSE;
 char *portrait_raw_mem[NUM_DROIDS];
 
+// local prototypes
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 SDL_RWops *load_raw_pic (const char *fpath, char **raw_mem );
 BFont_Info *Duplicate_Font ( const BFont_Info * in_font );
+void LoadThemeConfigurationFile(void);
 
 /* XPM */
 static const char *crosshair_xpm[] = {
@@ -256,7 +258,7 @@ static SDL_Cursor *init_system_cursor(const char *image[])
 */
 
 void
-DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
+DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int linecolor )
 {
   int i;
   int pixx;
@@ -285,8 +287,8 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	       (pixx >= User_Rect.x + User_Rect.w -1) ||
 	       (pixy <= User_Rect.y ) ||
 	       (pixy >= User_Rect.y + User_Rect.h -1) ) continue;
-	  putpixel( ne_screen , pixx , pixy , Color );
-	  putpixel( ne_screen , pixx-1 , pixy , Color );
+	  putpixel( ne_screen , pixx , pixy , linecolor );
+	  putpixel( ne_screen , pixx-1 , pixy , linecolor );
 	}
       return;
     }
@@ -315,8 +317,8 @@ DrawLineBetweenTiles( float x1 , float y1 , float x2 , float y2 , int Color )
 	   (pixx >= User_Rect.x + User_Rect.w -1) ||
 	   (pixy <= User_Rect.y ) ||
 	   (pixy >= User_Rect.y + User_Rect.h -1) ) continue;
-      putpixel( ne_screen , pixx , pixy , Color );
-      putpixel( ne_screen , pixx , pixy -1 , Color );
+      putpixel( ne_screen , pixx , pixy , linecolor );
+      putpixel( ne_screen , pixx , pixy -1 , linecolor );
     }
 
   // SDL_UnlockSurface( ne_screen );
@@ -779,7 +781,7 @@ SDL_RWops *
 load_raw_pic (const char *fpath, char **raw_mem )
 {
     FILE *fp;
-    off_t size;
+    size_t size;
 
     if ( raw_mem == NULL || (*raw_mem) != NULL ) {
       DebugPrintf ( 0, "Invalid input 'raw_mem': must be pointing to NULL pointer\n");
@@ -901,7 +903,7 @@ Init_Video (void)
   char vid_driver[81];
   Uint32 vid_flags;  		/* flags for SDL video mode */
   char *fpath;
-  char *YN[2] = {"no", "yes"};
+  const char *YN[2] = {"no", "yes"};
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 )
@@ -1165,11 +1167,9 @@ Duplicate_Font ( const BFont_Info * in_font )
 void
 white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 {
-  int i;
   int x, y;
   int signal_strengh = 60;
   Uint32 grey[NOISE_COLORS];
-  Uint8 color;
   SDL_Surface *tmp, *tmp2;
   SDL_Surface *noise_tiles[NOISE_TILES];
   SDL_Rect clip_rect;
@@ -1177,10 +1177,10 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   int next_tile;
   int now;
 
-  for (i=0; i< NOISE_COLORS; i++)
+  for (int i=0; i< NOISE_COLORS; i++)
     {
-      color = (Uint8)(((double)(i+1.0)/NOISE_COLORS)*255.0);
-      grey[i] = SDL_MapRGB(ne_screen->format, color, color, color);
+      Uint8 color_i = (Uint8)(((double)(i+1.0)/NOISE_COLORS)*255.0);
+      grey[i] = SDL_MapRGB(ne_screen->format, color_i, color_i, color_i);
     }
 
   // produce the tiles
@@ -1189,7 +1189,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   SDL_FreeSurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
   //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
-  for (i=0; i< NOISE_TILES; i++)
+  for (int i=0; i< NOISE_TILES; i++)
     {
       noise_tiles[i] = SDL_DisplayFormat(tmp2);
 
@@ -1217,7 +1217,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       do
 	{
 	  next_tile = rand()%NOISE_TILES;
-	  for (i = 0; i < sizeof(used_tiles); i++)
+	  for (size_t i = 0; i < sizeof(used_tiles); i++)
 	    {
 	      if (next_tile == used_tiles[i])
 		{
@@ -1237,7 +1237,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
       SDL_Delay(25);
 
-      if ( (timeout && (SDL_GetTicks()-now > timeout)))
+      if ( (timeout != 0) && ((int)(SDL_GetTicks() - now) > timeout) )
 	break;
 
       if ( any_key_just_pressed() ) {
@@ -1249,7 +1249,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
   //restore previous clip-rectange
   SDL_SetClipRect (ne_screen, &clip_rect);
 
-  for (i=0; i<NOISE_TILES; i++)
+  for (int i=0; i<NOISE_TILES; i++)
     SDL_FreeSurface (noise_tiles[i]);
 
   return;
@@ -1406,8 +1406,6 @@ ScalePic (SDL_Surface **pic, float scale)
 void
 ScaleStatRects (float scale)
 {
-  int i, j;
-
   ScaleRect (Block_Rect, scale);
   ScaleRect (User_Rect, scale);
   ScaleRect (Classic_User_Rect, scale);
@@ -1432,24 +1430,24 @@ ScaleStatRects (float scale)
   ScaleRect (LeftInfo_Rect, scale);
   ScaleRect (RightInfo_Rect, scale);
 
-  for (i=0; i<NUM_FILL_BLOCKS; i++)
+  for (int i=0; i<NUM_FILL_BLOCKS; i++)
     ScaleRect (FillBlocks[i], scale);
 
-  for (i = 0; i < NUM_CAPS_BLOCKS; i++)
+  for (int i = 0; i < NUM_CAPS_BLOCKS; i++)
     ScaleRect (CapsuleBlocks[i], scale);
 
-  for (j = 0; j < 2*NUM_PHASES; j++)
-    for (i = 0; i < TO_BLOCKS; i++)
+  for (int j = 0; j < 2*NUM_PHASES; j++)
+    for (int i = 0; i < TO_BLOCKS; i++)
       ScaleRect (ToGameBlocks[j*TO_BLOCKS+i], scale);
 
-  for (i = 0; i < NUM_GROUND_BLOCKS; i++)
+  for (int i = 0; i < NUM_GROUND_BLOCKS; i++)
     ScaleRect (ToGroundBlocks[i], scale);
 
   ScaleRect (ToColumnBlock, scale);
   ScaleRect (ToLeaderBlock, scale);
 
 
-  for (i=0; i < TO_COLORS; i++)
+  for (int i=0; i < TO_COLORS; i++)
     {
       ScalePoint (LeftCapsulesStart[i],scale);
       ScalePoint (CurCapsuleStart[i],scale);
@@ -1506,20 +1504,20 @@ toggle_fullscreen (void)
   return;
 }
 
-#define FreeSurfaceArrary(arr) do{   for ( i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {   SDL_FreeSurface ( arr[i] ); } } while(0)
+#define FreeSurfaceArrary(arr) do{   for ( size_t i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {   SDL_FreeSurface ( arr[i] ); } } while(0)
 void
 FreeGraphics ( void )
 {
-  int i;
-
+  size_t num_packed_portraits = sizeof(packed_portraits) / sizeof(packed_portraits[0]);
   // free RWops structures
-  for ( i = 0; i < sizeof(packed_portraits)/sizeof(packed_portraits[0]); i ++ ) {
+  for ( size_t i = 0; i < num_packed_portraits; i ++ ) {
     if ( packed_portraits[i] != NULL ) {
       SDL_RWclose( packed_portraits[i] );
     }
   }
 
-  for ( i = 0; i < sizeof(portrait_raw_mem)/sizeof(portrait_raw_mem[0]); i++) {
+  size_t num_raw_mem = sizeof(portrait_raw_mem)/sizeof(portrait_raw_mem[0]);
+  for ( size_t i = 0; i < num_raw_mem; i++) {
     free ( portrait_raw_mem[i] );
   }
 
@@ -1531,9 +1529,8 @@ FreeGraphics ( void )
   FreeSurfaceArrary ( EnemyDigitSurfacePointer );
   FreeSurfaceArrary ( Decal_pics );
 
-  int j;
-  for ( i = 0; i < NUM_COLORS; i ++ ) {
-    for ( j = 0; j < NUM_MAP_BLOCKS; j ++ ) {
+  for ( int i = 0; i < NUM_COLORS; i ++ ) {
+    for ( int j = 0; j < NUM_MAP_BLOCKS; j ++ ) {
       SDL_FreeSurface ( OrigMapBlockSurfacePointer[i][j] );
     }
   }
@@ -1560,7 +1557,8 @@ FreeGraphics ( void )
 
   // free fonts
   BFont_Info *fonts[] = { Menu_BFont, Para_BFont, Highscore_BFont, Font0_BFont, Font1_BFont, Font2_BFont };
-  for ( i = 0; i < sizeof(fonts)/sizeof(fonts[0]); i ++ ) {
+  size_t num_fonts = sizeof(fonts) / sizeof(fonts[0]);
+  for ( size_t i = 0; i < num_fonts; i ++ ) {
     if ( fonts[i] != NULL ) {
         SDL_FreeSurface ( fonts[i]->Surface );
       }

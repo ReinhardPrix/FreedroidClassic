@@ -124,7 +124,7 @@ int DisplayColumn[NUM_LINES] = {
 };
 
 
-SDL_Color to_bg_color = {130,130,130};
+SDL_Color to_bg_color = {.r = 130, .g = 130, .b = 130};
 
 playground_t ToPlayground;
 playground_t ActivationMap;
@@ -142,7 +142,7 @@ Takeover (int enemynum)
   int row;
   int FinishTakeover = FALSE;
   static int RejectEnergy = 0;	/* your energy if you're rejected */
-  char *message;
+  const char *message;
   SDL_Rect buf;
   Uint32 now;
 
@@ -658,7 +658,6 @@ void
 ShowPlayground (void)
 {
   int i, j;
-  int color, player;
   int block;
   int xoffs, yoffs;
   SDL_Rect dst;
@@ -750,25 +749,26 @@ ShowPlayground (void)
       }
 
   /* Show the capsules left for each player */
-  for (player = 0; player < 2; player++)
+  for (int player = 0; player < 2; player++)
     {
+      int drawcolor;
       if (player == YOU)
-	color = YourColor;
+	drawcolor = YourColor;
       else
-	color = OpponentColor;
+	drawcolor = OpponentColor;
 
-      Set_Rect (dst, xoffs + CurCapsuleStart[color].x,
-		yoffs + CurCapsuleStart[color].y + CapsuleCurRow[color] * TO_CapsuleRect.h,
+      Set_Rect (dst, xoffs + CurCapsuleStart[drawcolor].x,
+		yoffs + CurCapsuleStart[drawcolor].y + CapsuleCurRow[drawcolor] * TO_CapsuleRect.h,
 		0,0);
       if (NumCapsules[player])
-	SDL_BlitSurface (to_blocks, &CapsuleBlocks[color], ne_screen, &dst);
+	SDL_BlitSurface (to_blocks, &CapsuleBlocks[drawcolor], ne_screen, &dst);
 
 
       for (i = 0; i < NumCapsules[player]-1; i++)
 	{
-	  Set_Rect (dst, xoffs + LeftCapsulesStart[color].x,
-		    yoffs + LeftCapsulesStart[color].y + i*TO_CapsuleRect.h, 0, 0);
-	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[color],
+	  Set_Rect (dst, xoffs + LeftCapsulesStart[drawcolor].x,
+		    yoffs + LeftCapsulesStart[drawcolor].y + i*TO_CapsuleRect.h, 0, 0);
+	  SDL_BlitSurface (to_blocks, &CapsuleBlocks[drawcolor],
 			   ne_screen, &dst);
 	} /* for capsules */
     } /* for player */
@@ -786,17 +786,17 @@ ShowPlayground (void)
 void
 ClearPlayground (void)
 {
-  int color, layer, row;
+  int layer, row;
 
-  for (color = GELB; color < TO_COLORS; color++)
+  for (int to_color = GELB; to_color < TO_COLORS; to_color++)
     for (layer = 0; layer < NUM_LAYERS; layer++)
       for (row = 0; row < NUM_LINES; row++)
 	{
-	  ActivationMap[color][layer][row] = INACTIVE;
+	  ActivationMap[to_color][layer][row] = INACTIVE;
 	  if (layer < TO_COLORS - 1)
-	    ToPlayground[color][layer][row] = KABEL;
+	    ToPlayground[to_color][layer][row] = KABEL;
 	  else
-	    ToPlayground[color][layer][row] = INACTIVE;
+	    ToPlayground[to_color][layer][row] = INACTIVE;
 	}
 
   for (row = 0; row < NUM_LINES; row++)
@@ -817,18 +817,17 @@ InventPlayground (void)
   int anElement;
   int newElement;
   int row, layer;
-  int color = GELB;
 
   /* first clear the playground: we depend on this !! */
   ClearPlayground ();
 
-  for (color = GELB; color < TO_COLORS; color++)
+  for (int to_color = GELB; to_color < TO_COLORS; to_color++)
     {
       for (layer = 1; layer < NUM_LAYERS - 1; layer++)
 	{
 	  for (row = 0; row < NUM_LINES; row++)
 	    {
-	      if (ToPlayground[color][layer][row] != KABEL)
+	      if (ToPlayground[to_color][layer][row] != KABEL)
 		continue;
 
 	      newElement = MyRandom (TO_ELEMENTS-1);
@@ -841,25 +840,25 @@ InventPlayground (void)
 	      switch (newElement)
 		{
 		case EL_KABEL:	/* has not to be set any more */
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
-		    ToPlayground[color][layer][row] = LEER;
+		    ToPlayground[to_color][layer][row] = LEER;
 		  break;
 
 		case EL_KABELENDE:
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
-		    ToPlayground[color][layer][row] = LEER;
+		    ToPlayground[to_color][layer][row] = LEER;
 		  else
-		    ToPlayground[color][layer][row] = KABELENDE;
+		    ToPlayground[to_color][layer][row] = KABELENDE;
 		  break;
 
 		case EL_VERSTAERKER:
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
-		    ToPlayground[color][layer][row] = LEER;
+		    ToPlayground[to_color][layer][row] = LEER;
 		  else
-		    ToPlayground[color][layer][row] = VERSTAERKER;
+		    ToPlayground[to_color][layer][row] = VERSTAERKER;
 		  break;
 
 		case EL_FARBTAUSCHER:
@@ -869,11 +868,11 @@ InventPlayground (void)
 		      continue;
 		    }
 
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
-		    ToPlayground[color][layer][row] = LEER;
+		    ToPlayground[to_color][layer][row] = LEER;
 		  else
-		    ToPlayground[color][layer][row] = FARBTAUSCHER;
+		    ToPlayground[to_color][layer][row] = FARBTAUSCHER;
 		  break;
 
 		case EL_VERZWEIGUNG:
@@ -884,7 +883,7 @@ InventPlayground (void)
 		      break;
 		    }
 
-		  anElement = ToPlayground[color][layer - 1][row + 1];
+		  anElement = ToPlayground[to_color][layer - 1][row + 1];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
 		    {
 		      /* try again */
@@ -893,14 +892,14 @@ InventPlayground (void)
 		    }
 
 		  /* dont destroy verzweigungen in prev. layer */
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (anElement == VERZWEIGUNG_O
 		      || anElement == VERZWEIGUNG_U)
 		    {
 		      row--;
 		      break;
 		    }
-		  anElement = ToPlayground[color][layer - 1][row + 2];
+		  anElement = ToPlayground[to_color][layer - 1][row + 2];
 		  if (anElement == VERZWEIGUNG_O
 		      || anElement == VERZWEIGUNG_U)
 		    {
@@ -909,18 +908,18 @@ InventPlayground (void)
 		    }
 
 		  /* cut off kabels in last layer, if any */
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == CONNECTOR)
-		    ToPlayground[color][layer - 1][row] = KABELENDE;
+		    ToPlayground[to_color][layer - 1][row] = KABELENDE;
 
-		  anElement = ToPlayground[color][layer - 1][row + 2];
+		  anElement = ToPlayground[to_color][layer - 1][row + 2];
 		  if (BlockClass[anElement] == CONNECTOR)
-		    ToPlayground[color][layer - 1][row + 2] = KABELENDE;
+		    ToPlayground[to_color][layer - 1][row + 2] = KABELENDE;
 
 		  /* set the verzweigung itself */
-		  ToPlayground[color][layer][row] = VERZWEIGUNG_O;
-		  ToPlayground[color][layer][row + 1] = VERZWEIGUNG_M;
-		  ToPlayground[color][layer][row + 2] = VERZWEIGUNG_U;
+		  ToPlayground[to_color][layer][row] = VERZWEIGUNG_O;
+		  ToPlayground[to_color][layer][row + 1] = VERZWEIGUNG_M;
+		  ToPlayground[to_color][layer][row + 2] = VERZWEIGUNG_U;
 
 		  row += 2;
 		  break;
@@ -933,14 +932,14 @@ InventPlayground (void)
 		      break;
 		    }
 
-		  anElement = ToPlayground[color][layer - 1][row];
+		  anElement = ToPlayground[to_color][layer - 1][row];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
 		    {
 		      /* try again */
 		      row--;
 		      break;
 		    }
-		  anElement = ToPlayground[color][layer - 1][row + 2];
+		  anElement = ToPlayground[to_color][layer - 1][row + 2];
 		  if (BlockClass[anElement] == NON_CONNECTOR)
 		    {
 		      /* try again */
@@ -950,14 +949,14 @@ InventPlayground (void)
 
 
 		  /* cut off kabels in last layer, if any */
-		  anElement = ToPlayground[color][layer - 1][row + 1];
+		  anElement = ToPlayground[to_color][layer - 1][row + 1];
 		  if (BlockClass[anElement] == CONNECTOR)
-		    ToPlayground[color][layer - 1][row + 1] = KABELENDE;
+		    ToPlayground[to_color][layer - 1][row + 1] = KABELENDE;
 
 		  /* set the GATTER itself */
-		  ToPlayground[color][layer][row] = GATTER_O;
-		  ToPlayground[color][layer][row + 1] = GATTER_M;
-		  ToPlayground[color][layer][row + 2] = GATTER_U;
+		  ToPlayground[to_color][layer][row] = GATTER_O;
+		  ToPlayground[to_color][layer][row + 1] = GATTER_M;
+		  ToPlayground[to_color][layer][row + 2] = GATTER_U;
 
 		  row += 2;
 		  break;
@@ -973,7 +972,7 @@ InventPlayground (void)
 
 	}			/* for layer */
 
-    }				/* for color */
+    }				/* for to_color */
 
 }				/* InventPlayground */
 
@@ -986,10 +985,10 @@ InventPlayground (void)
 void
 ProcessPlayground (void)
 {
-  int color, layer, row;
+  int layer, row;
   int TurnActive = FALSE;
 
-  for (color = GELB; color < TO_COLORS; color++)
+  for (int to_color = GELB; to_color < TO_COLORS; to_color++)
     {
       for (layer = 1; layer < NUM_LAYERS; layer++)
 	{
@@ -997,33 +996,33 @@ ProcessPlayground (void)
 	    {
 	      if (layer == NUM_LAYERS - 1)
 		{
-		  if (IsActive (color, row))
-		    ActivationMap[color][layer][row] = ACTIVE1;
+		  if (IsActive (to_color, row))
+		    ActivationMap[to_color][layer][row] = ACTIVE1;
 		  else
-		    ActivationMap[color][layer][row] = INACTIVE;
+		    ActivationMap[to_color][layer][row] = INACTIVE;
 
 		  continue;
 		}		/* if last layer */
 
 	      TurnActive = FALSE;
 
-	      switch (ToPlayground[color][layer][row])
+	      switch (ToPlayground[to_color][layer][row])
 		{
 		case FARBTAUSCHER:
 		case VERZWEIGUNG_M:
 		case GATTER_O:
 		case GATTER_U:
 		case KABEL:
-		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
+		  if (ActivationMap[to_color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 		  break;
 
 		case VERSTAERKER:
-		  if (ActivationMap[color][layer - 1][row] >= ACTIVE1)
+		  if (ActivationMap[to_color][layer - 1][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
 		  /* Verstaerker halten sich aber auch selbst aktiv !! */
-		  if (ActivationMap[color][layer][row] >= ACTIVE1)
+		  if (ActivationMap[to_color][layer][row] >= ACTIVE1)
 		    TurnActive = TRUE;
 
 		  break;
@@ -1032,18 +1031,18 @@ ProcessPlayground (void)
 		  break;
 
 		case VERZWEIGUNG_O:
-		  if (ActivationMap[color][layer][row + 1] >= ACTIVE1)
+		  if (ActivationMap[to_color][layer][row + 1] >= ACTIVE1)
 		    TurnActive = TRUE;
 		  break;
 
 		case VERZWEIGUNG_U:
-		  if (ActivationMap[color][layer][row - 1] >= ACTIVE1)
+		  if (ActivationMap[to_color][layer][row - 1] >= ACTIVE1)
 		    TurnActive = TRUE;
 		  break;
 
 		case GATTER_M:
-		  if ((ActivationMap[color][layer][row - 1] >= ACTIVE1)
-		      && (ActivationMap[color][layer][row + 1] >= ACTIVE1))
+		  if ((ActivationMap[to_color][layer][row - 1] >= ACTIVE1)
+		      && (ActivationMap[to_color][layer][row + 1] >= ACTIVE1))
 		    TurnActive = TRUE;
 
 		  break;
@@ -1054,19 +1053,19 @@ ProcessPlayground (void)
 
 	      if (TurnActive)
 		{
-		  if (ActivationMap[color][layer][row] == INACTIVE)
-		    ActivationMap[color][layer][row] = ACTIVE1;
+		  if (ActivationMap[to_color][layer][row] == INACTIVE)
+		    ActivationMap[to_color][layer][row] = ACTIVE1;
 		  TurnActive = FALSE;
 		}
 	      else
-		ActivationMap[color][layer][row] = INACTIVE;
+		ActivationMap[to_color][layer][row] = INACTIVE;
 
 
 	    }			/* for row */
 
 	}			/* for layer */
 
-    }				/* for color */
+    }				/* for to_color */
 
   return;
 }				/* ProcessPlayground */
@@ -1178,20 +1177,17 @@ ProcessDisplayColumn (void)
 void
 ProcessCapsules (void)
 {
-  int row;
-  int color;
-
-  for (color = GELB; color <= VIOLETT; color++)
-    for (row = 0; row < NUM_LINES; row++)
+  for (int to_color = GELB; to_color <= VIOLETT; to_color++)
+    for (int row = 0; row < NUM_LINES; row++)
       {
-	if (CapsuleCountdown[color][0][row] > 0)
-	  CapsuleCountdown[color][0][row]--;
+	if (CapsuleCountdown[to_color][0][row] > 0)
+	  CapsuleCountdown[to_color][0][row]--;
 
-	if (CapsuleCountdown[color][0][row] == 0)
+	if (CapsuleCountdown[to_color][0][row] == 0)
 	  {
-	    CapsuleCountdown[color][0][row] = -1;
-	    ActivationMap[color][0][row] = INACTIVE;
-	    ToPlayground[color][0][row] = KABEL;
+	    CapsuleCountdown[to_color][0][row] = -1;
+	    ActivationMap[to_color][0][row] = INACTIVE;
+	    ToPlayground[to_color][0][row] = KABEL;
 	  }
 
       } /* for row */
@@ -1200,19 +1196,19 @@ ProcessCapsules (void)
 
 
 /*@Function============================================================
-@Desc: IsInactive(color, row): tells, wether a Column-connection
+@Desc: IsInactive(to_color, row): tells, wether a Column-connection
 						is active or not
 
 @Ret: TRUE/FALSE
 @Int:
 * $Function----------------------------------------------------------*/
 int
-IsActive (int color, int row)
+IsActive (int to_color, int row)
 {
   int CLayer = 3;		/* the connective Layer */
-  int TestElement = ToPlayground[color][CLayer - 1][row];
+  int TestElement = ToPlayground[to_color][CLayer - 1][row];
 
-  if ((ActivationMap[color][CLayer-1][row] >= ACTIVE1) &&
+  if ((ActivationMap[to_color][CLayer-1][row] >= ACTIVE1) &&
       (BlockClass[TestElement] == CONNECTOR))
     return TRUE;
   else
@@ -1229,16 +1225,16 @@ IsActive (int color, int row)
 void
 AnimateCurrents (void)
 {
-  int color, layer, row;
+  int layer, row;
 
-  for (color = GELB; color <= VIOLETT; color ++)
+  for (int to_color = GELB; to_color <= VIOLETT; to_color ++)
     for (layer = 0; layer < NUM_LAYERS; layer ++)
       for (row = 0; row < NUM_LINES; row ++)
-	if (ActivationMap[color][layer][row] >= ACTIVE1)
+	if (ActivationMap[to_color][layer][row] >= ACTIVE1)
 	  {
-	    ActivationMap[color][layer][row] ++;
-	    if (ActivationMap[color][layer][row] == NUM_PHASES)
-	      ActivationMap[color][layer][row] = ACTIVE1;
+	    ActivationMap[to_color][layer][row] ++;
+	    if (ActivationMap[to_color][layer][row] == NUM_PHASES)
+	      ActivationMap[to_color][layer][row] = ACTIVE1;
 	  }
 
   return;

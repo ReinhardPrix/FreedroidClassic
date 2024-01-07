@@ -45,9 +45,9 @@ EXTERN int ShipEmptyCounter;
 #define EXTERN extern
 #endif
 EXTERN void parse_command_line (int argc, char *const argv[]);
-EXTERN void Title ( char *MissionBriefingPointer );
+EXTERN void Title ( const char *MissionBriefingPointer );
 EXTERN void InitFreedroid (int argc, char *const argv[]);
-EXTERN void InitNewMission (char *MissionName);
+EXTERN void InitNewMission (const char *MissionName);
 EXTERN void CheckIfMissionIsComplete (void);
 EXTERN void ThouArtDefeated (void);
 EXTERN void ThouArtVictorious (void);
@@ -266,12 +266,12 @@ EXTERN void FreeMenuData ( void );
 EXTERN int LoadGameConfig (void);
 EXTERN int SaveGameConfig (void);
 EXTERN int sign (float x);
-EXTERN char* ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString );
-EXTERN int CountStringOccurences ( char* SearchString , char* TargetString ) ;
-EXTERN void ReadValueFromString(char* data, char* label, char* FormatString, void* dst);
-EXTERN char* ReadAndMallocAndTerminateFile( char* filename , char* File_End_String ) ;
-EXTERN char* LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer ) ;
-EXTERN char* find_file (const char *fname, char *subdir, int use_theme, int critical);
+EXTERN char* ReadAndMallocStringFromData ( const char* SearchString , const char* StartIndicationString , const char* EndIndicationString );
+EXTERN int CountStringOccurences ( const char* SearchString , const char* TargetString ) ;
+EXTERN void ReadValueFromString(const char* data, const char* label, const char* FormatString, void* dst);
+EXTERN char* ReadAndMallocAndTerminateFile( const char* filename , const char* File_End_String ) ;
+EXTERN char* LocateStringInData ( const char* SearchBeginPointer, const char* SearchTextPointer ) ;
+EXTERN char* find_file (const char *fname, const char *subdir, int use_theme, int critical);
 EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
 EXTERN void ComputeFPSForThisFrame(void);
@@ -279,14 +279,14 @@ EXTERN void StartTakingTimeForFPSCalculation(void);
 EXTERN int Get_Average_FPS ( void );
 EXTERN float Frame_Time (void);
 EXTERN void Activate_Conservative_Frame_Computation(void);
-EXTERN void DebugPrintf (int db_level, char *fmt, ...);
+EXTERN void DebugPrintf (int db_level, const char *fmt, ...);
 EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void Terminate (int);
 EXTERN void *MyMalloc (long);
-EXTERN int FS_filelength (FILE *f);
-EXTERN void init_progress (char *txt);
+EXTERN size_t FS_filelength (FILE *f);
+EXTERN void init_progress (const char *txt);
 EXTERN void update_progress (int percent);
 EXTERN void set_time_factor ( float timeFactor );
 
@@ -313,7 +313,7 @@ EXTERN int ClassOfDruid (int druidtype);
 #else
 #define EXTERN extern
 #endif
-EXTERN void ShowDeckMap (Level deck);
+EXTERN void ShowDeckMap (void);
 EXTERN void EnterLift (void);
 EXTERN void EnterKonsole (void);
 EXTERN int LevelEmpty (void);
@@ -339,10 +339,10 @@ EXTERN void AddInfluBurntText( void );
 EXTERN void AddStandingAndAimingText ( int Enum );
 EXTERN int DisplayText (const char *text, int startx, int starty, const SDL_Rect *clip);
 EXTERN void DisplayChar (unsigned char c);
-EXTERN int ScrollText (char *Text, SDL_Rect *rect , int SecondsMinimumDuration );
+EXTERN int ScrollText (char *Text, SDL_Rect *rect);
 EXTERN bool linebreak_needed (const char *textpos , const SDL_Rect *clip);
 EXTERN char *GetString (int MaxLen, int echo);
-EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...);
+EXTERN void printf_SDL (SDL_Surface *screen, int x, int y, const char *fmt, ...);
 EXTERN int putchar_SDL (SDL_Surface *Surface, int x, int y, int c);
 
 /* takeover.c */
@@ -359,7 +359,7 @@ EXTERN void PlayGame (void);
 EXTERN void EnemyMovements (void);
 
 EXTERN int set_takeover_rects (void);
-EXTERN void ShowPlayground ();
+EXTERN void ShowPlayground (void);
 EXTERN void InventPlayground (void);
 
 EXTERN void ProcessPlayground (void);

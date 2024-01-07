@@ -239,11 +239,11 @@ EnterLift (void)
  *
  *-----------------------------------------------------------------*/
 void
-ShowLifts (int level, int liftrow)
+ShowLifts (int levelnum, int liftrow)
 {
   SDL_Rect src, dst;
   int i;
-  SDL_Color lift_bg_color = {0,0,0};  /* black... */
+  SDL_Color lift_bg_color = {.r = 0,.g = 0, .b = 0};  /* black... */
   int xoffs = User_Rect.w/20;
   int yoffs = User_Rect.h/5;
 
@@ -259,10 +259,10 @@ ShowLifts (int level, int liftrow)
   dst.y += yoffs;
   SDL_BlitSurface (ship_off_pic, NULL, ne_screen, &dst);
 
-  if (level >= 0)
-    for (i=0; i<curShip.num_level_rects[level]; i++)
+  if (levelnum >= 0)
+    for (i=0; i<curShip.num_level_rects[levelnum]; i++)
       {
-	Copy_Rect (curShip.Level_Rects[level][i], src);
+	Copy_Rect (curShip.Level_Rects[levelnum][i], src);
 	Copy_Rect (src, dst);
 	dst.x += User_Rect.x + xoffs;   /* offset respective to User-Rectangle */
 	dst.y += User_Rect.y + yoffs;
@@ -402,7 +402,7 @@ EnterKonsole (void)
                 case 2:
                   ClearGraphMem();
                   DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE);
-                  ShowDeckMap (CurLevel);
+                  ShowDeckMap ();
                   PaintConsoleMenu(pos, 0);
                   break;
                 case 3:
@@ -499,7 +499,7 @@ PaintConsoleMenu (int pos, int flag)
  *            immediately
  *-----------------------------------------------------------------*/
 void
-ShowDeckMap (Level deck)
+ShowDeckMap (void)
 {
   finepoint tmp;
   tmp.x=Me.pos.x;

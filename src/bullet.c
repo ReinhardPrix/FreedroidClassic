@@ -48,6 +48,10 @@
 #define DRUIDHITDIST2		(0.3+MORE)*(Droid_Radius+MORE)
 // #define DRUIDHITDIST2		0
 
+// local prototypes
+int GetDirection (point robo, point bul);
+
+
 
 /*@Function============================================================
 @Desc: this function moves all the bullets according to their speeds.
@@ -271,7 +275,7 @@ GetDirection (point robo, point bul)
 void
 CheckBulletCollisions (int num)
 {
-  int level = CurLevel->levelnum;
+  int levelnum = CurLevel->levelnum;
   float xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
   static int FBTZaehler = 0;
@@ -315,7 +319,7 @@ CheckBulletCollisions (int num)
       for (i = 0; i < NumEnemys; i++)
 	{
 	  // !! dont't forget: Only droids on our level are harmed!! (bugfix)
-	  if (AllEnemys[i].levelnum != level)
+	  if (AllEnemys[i].levelnum != levelnum)
 	    continue;
 
 	  if ( IsVisible (&AllEnemys[i].pos) & (!Druidmap[AllEnemys[i].type].flashimmune) )
@@ -388,7 +392,7 @@ CheckBulletCollisions (int num)
 	  for (i = 0; i < NumEnemys; i++)
 	    {
 	      if (AllEnemys[i].status == OUT || AllEnemys[i].status == TERMINATED ||
-		  AllEnemys[i].levelnum != level)
+		  AllEnemys[i].levelnum != levelnum)
 		continue;
 
 	      xdist = CurBullet->pos.x - AllEnemys[i].pos.x;
@@ -454,7 +458,7 @@ void
 CheckBlastCollisions (int num)
 {
   int i;
-  int level = CurLevel->levelnum;
+  int levelnum = CurLevel->levelnum;
   Blast CurBlast = &(AllBlasts[num]);
   Bullet CurBullet;
   float dist;
@@ -482,7 +486,7 @@ CheckBlastCollisions (int num)
   for (i = 0; i < NumEnemys; i++)
     {
       if ((AllEnemys[i].status == OUT)
-	  || (AllEnemys[i].levelnum != level))
+	  || (AllEnemys[i].levelnum != levelnum))
 	continue;
 
       vdist.x = AllEnemys[i].pos.x - CurBlast->PX;

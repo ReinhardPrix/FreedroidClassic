@@ -51,7 +51,11 @@
 #define BACKGROUND_SONG_NAME_STRING "Name of background song for this level="
 
 void ResetLevelMap (Level Lev);
-void GetThisLevelsDroids( char* SectionPointer );
+void GetThisLevelsDroids( const char* SectionPointer );
+char *StructToMem(Level Lev);
+void GetAlerts (Level Lev);
+int IsWallBlock (int block);
+
 
 /*@Function============================================================
   @Desc: unsigned char GetMapBrick(Level deck, float x, float y): liefert
@@ -311,7 +315,7 @@ char *StructToMem(Level Lev)
 {
   char *LevelMem;
   int i, j;
-  int MemAmount=0;		/* the size of the level-data */
+  size_t MemAmount=0;		/* the size of the level-data */
   int xlen = Lev->xlen, ylen = Lev->ylen;
   int anz_wp;		/* number of Waypoints */
   char linebuf[500];		/* Buffer */
@@ -409,7 +413,7 @@ char *StructToMem(Level Lev)
 int SaveShip( const char *shipname)
 {
   char *LevelMem;		/* linear memory for one Level */
-  char *MapHeaderString;
+  const char *MapHeaderString;
   FILE *ShipFile;  // to this file we will save all the ship data...
   char filename[FILENAME_LEN+1];
   int level_anz;
@@ -1162,10 +1166,10 @@ to the specifications made in the file.
 ----------------------------------------------------------------------
 */
 void
-GetThisLevelsDroids( char* SectionPointer )
+GetThisLevelsDroids( const char* SectionPointer )
 {
   int OurLevelNumber;
-  char* SearchPointer;
+  const char* SearchPointer;
   char* EndOfThisLevelData;
   int MaxRand;
   int MinRand;

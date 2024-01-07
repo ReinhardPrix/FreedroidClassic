@@ -160,7 +160,7 @@ typedef struct
   float LastCrysoundTime;
   float LastTransferSoundTime;
   float TextVisibleTime;
-  char* TextToBeDisplayed;
+  const char* TextToBeDisplayed;
   gps Position_History_Ring_Buffer[ MAX_INFLU_POSITION_HISTORY ];
 }
 influence_t, *Influence_t;
@@ -180,7 +180,7 @@ typedef struct
   byte passable;		/* Zeit (counter), in der druid passable ist */
   float firewait;		/* gibt die Zeit bis zum naechsten Schuss an */
   float TextVisibleTime;
-  char* TextToBeDisplayed;
+  const char* TextToBeDisplayed;
   int NumberOfPeriodicSpecialStatements;
   char **PeriodicSpecialStatements;
 }

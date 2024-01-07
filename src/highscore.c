@@ -199,7 +199,12 @@ UpdateHighscores (void)
 
   tsec = time (NULL);
   timeinfo = gmtime (&tsec);
-  sprintf (new_entry->date, "20%02d/%02d/%02d", timeinfo->tm_year - 100, timeinfo->tm_mon +1, timeinfo->tm_mday );
+  size_t written = snprintf (new_entry->date, sizeof(new_entry->date), "20%02d/%02d/%02d",
+                          timeinfo->tm_year - 100, timeinfo->tm_mon +1, timeinfo->tm_mday );
+  if (written >= sizeof(new_entry->date))
+    {
+      DebugPrintf (0, "WARNING: truncated date entry?! %zd >= %zd?!", written, sizeof(new_entry->date) );
+    }
 
   new_entry->score = score;
   Highscores[entry] = new_entry;
