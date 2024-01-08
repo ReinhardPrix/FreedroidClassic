@@ -61,6 +61,8 @@
 
 #define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
 
+#define NUM_ELEM(x) ( sizeof((x)) / sizeof((x)[0]) )
+
 // ----------------------------------------
 // some input-related defines and macros
 

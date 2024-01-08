@@ -55,7 +55,7 @@ int fheight;  // font height of Menu-font
 typedef struct MenuEntry_s
 {
   const char *name;			/**< menu entry string */
-  const char *(*handler)();		/**< handler & info function for this menu entry (none if NULL) */
+  const char *(*handler)(MenuAction_t action);	/**< handler & info function for this menu entry (none if NULL) */
   const struct MenuEntry_s *submenu; 	/**< enter this submenu (if non-NULL) */
 } MenuEntry_t;
 
@@ -1243,7 +1243,7 @@ Cheatmenu (void)
   int x0, y0;
   Waypoint WpList;      /* pointer on current waypoint-list  */
   BFont_Info *font;
-  char *status;
+  const char *status;
 
   // Prevent distortion of framerate by the delay coming from
   // the time spend in the menu.
@@ -1452,7 +1452,7 @@ Cheatmenu (void)
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &LNum);
 	  free (input);
-	  ShowDeckMap (curShip.AllLevels[LNum]);
+	  ShowDeckMap ();
 	  getchar_raw ();
 	  break;
 

@@ -2,7 +2,7 @@ sounddir = $(pkgdatadir)/sound
 
 music = \
 	AnarchyMenu1.mod \
-	android-commando_hiscore.mod \
+	android-commando_hiscore.mod.ogg \
 	dreamfish-green_beret.mod \
 	dreamfish-sanxion.mod \
 	dreamfish-uridium2_loader.mod \

@@ -77,16 +77,16 @@ EXTERN SDL_Rect ProgressText_Rect;
 EXTERN float LastRefreshSound;
 EXTERN float LastGotIntoBlastSound;
 EXTERN float FPSover1;
-EXTERN char *Alertcolor[AL_LAST];
-EXTERN char *Shipnames[ALLSHIPS];
+EXTERN const char *Alertcolor[AL_LAST];
+EXTERN const char *Shipnames[ALLSHIPS];
 
-EXTERN char *Classname[];
-EXTERN char *Classes[];
-EXTERN char *Weaponnames[];
-EXTERN char *Sensornames[];
-EXTERN char *Brainnames[];
-EXTERN char *Drivenames[];
-EXTERN char *InfluenceModeNames[];
+EXTERN const char *Classname[];
+EXTERN const char *Classes[];
+EXTERN const char *Weaponnames[];
+EXTERN const char *Sensornames[];
+EXTERN const char *Brainnames[];
+EXTERN const char *Drivenames[];
+EXTERN const char *InfluenceModeNames[];
 EXTERN int ThisMessageTime;
 
 EXTERN influence_t Me;		/* the influence data */

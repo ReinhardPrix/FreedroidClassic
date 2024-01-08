@@ -46,18 +46,28 @@
 #define FIREDIST2	8 // according to the intro, the laser can be "focused on any target
                           // within a range of eight metres"
 
+// local prototypes
+void CheckDroidDistribution (int levelnum);
+int DirectLineWalkable( float x1 , float y1 , float x2 , float y2 );
+void PermanentHealRobots (void);
+void SelectNextWaypointClassical( int EnemyNum );
+int CheckIfWayIsFreeOfDroids ( float x1 , float y1 , float x2 , float y2 , int OurLevel , int ExceptedDroid );
+void MoveThisRobotThowardsHisWaypoint ( int EnemyNum );
+void SelectNextWaypointAdvanced ( int EnemyNum );
+void MoveThisEnemy( int EnemyNum );
+
 
 //----------------------------------------------------------------------
 // for debug purposes: check if there are any droid "piles" on this level
 //----------------------------------------------------------------------
 void
-CheckDroidDistribution (int level)
+CheckDroidDistribution (int levelnum)
 {
   int i;
   bool ok = TRUE;
 
   for (i=0; i< NumEnemys; i++)
-    if ( (AllEnemys[i].levelnum == level) && CheckEnemyEnemyCollision (i) )
+    if ( (AllEnemys[i].levelnum == levelnum) && CheckEnemyEnemyCollision (i) )
       {
 	DebugPrintf (0, "We found a droid collision of droid Nr: %d\n", i);
 	ok = FALSE;

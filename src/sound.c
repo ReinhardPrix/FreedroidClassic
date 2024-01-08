@@ -44,7 +44,7 @@
 // DO NOT CHANGE THE ORDER OF APPEARENCE IN THIS LIST unless you
 // also adjust the order of appearance in defs.h!
 
-char *SoundSampleFilenames[ALL_SOUNDS] = {
+const char *SoundSampleFilenames[ALL_SOUNDS] = {
    "ERRORSOUND_NILL.NOWAV",
    "Blast_Sound_0.wav",
    // "Collision_Sound_0.wav", // replaced by damage-dependent-sounds:  Collision_[Neutral|GotDamaged|DamagedEnemy]
@@ -85,7 +85,7 @@ char *SoundSampleFilenames[ALL_SOUNDS] = {
 Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
 #endif
 
-char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
+const char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
 #ifdef ANDROID
   "AnarchyMenu1.mod.ogg",                 // RED
   "starpaws.mod.ogg",                     // YELLOW
@@ -688,12 +688,11 @@ void
 FreeSounds ( void )
 {
 #ifdef HAVE_LIBSDL_MIXER
-  int i;
-  for (i = 0; i < sizeof(Loaded_WAV_Files)/sizeof(Loaded_WAV_Files[0]); i++) {
+  for (size_t i = 0; i < NUM_ELEM(Loaded_WAV_Files); i++) {
     if ( Loaded_WAV_Files[i] != NULL ) { Mix_FreeChunk ( Loaded_WAV_Files[i] ); }
   }
 
-  for ( i = 0; i < sizeof(MusicSongs)/sizeof(MusicSongs[0]); i ++ ) {
+  for ( size_t i = 0; i < NUM_ELEM(MusicSongs); i ++ ) {
     if ( MusicSongs[i] != NULL )  { Mix_FreeMusic ( MusicSongs[i] ); }
   }
 

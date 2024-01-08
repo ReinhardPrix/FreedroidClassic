@@ -191,7 +191,7 @@ AddInfluBurntText( void )
  *           1  if user pressed fire
  *-----------------------------------------------------------------*/
 int
-ScrollText (char *Text, SDL_Rect *rect, int SecondsMinimumDuration )
+ScrollText (char *Text, SDL_Rect *rect)
 {
   int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
   char *textpt;			/* bewegl. Textpointer */
@@ -645,11 +645,10 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
  *
  *-----------------------------------------------------------------*/
 void
-printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
+printf_SDL (SDL_Surface *screen, int x, int y, const char *fmt, ...)
 {
   va_list args;
-  int i, h, textlen;
-
+  int h, textlen;
 
   va_start (args, fmt);
 
@@ -661,7 +660,7 @@ printf_SDL (SDL_Surface *screen, int x, int y, char *fmt, ...)
 
   vsprintf (TextBuffer, fmt, args);
   textlen = 0;
-  for (i=0; i < strlen(TextBuffer); i++)
+  for (size_t i = 0; i < strlen(TextBuffer); i++)
     textlen += CharWidth (GetCurrentFont(), TextBuffer[i]);
 
   PutString (screen, x, y, TextBuffer);

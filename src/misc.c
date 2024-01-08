@@ -42,9 +42,9 @@
 #include "global.h"
 #include "proto.h"
 
-int read_variable (char *data, char *var_name, char *fmt, void *var);
+int read_variable (char *data, const char *var_name, const char *fmt, void *var);
 
-char *homedir = NULL;
+const char *homedir = NULL;
 
 long oneframedelay = 0;
 long tenframedelay = 0;
@@ -54,7 +54,7 @@ Uint32 One_Frame_SDL_Ticks;
 int framenr = 0;
 static float currentTimeFactor = 1.0;
 
-SDL_Color progress_color = {200, 20, 20};
+SDL_Color progress_color = {.r = 200, .g = 20, .b = 20};
 
 extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
@@ -79,7 +79,7 @@ int sign (float x)
 // returns ERR if not found or could not be read, OK if found&read
 // ----------------------------------------------------------------------
 int
-read_variable (char *data, char *var_name, char *fmt, void *var)
+read_variable (char *data, const char *var_name, const char *fmt, void *var)
 {
   char *found = NULL;
   int ret;
@@ -320,7 +320,7 @@ it, copys it there and returns it.
 The original source string specified should in no way be modified.
 ----------------------------------------------------------------------*/
 char*
-ReadAndMallocStringFromData ( char* SearchString , char* StartIndicationString , char* EndIndicationString )
+ReadAndMallocStringFromData ( const char* SearchString , const char* StartIndicationString , const char* EndIndicationString )
 {
   char* SearchPointer;
   char* EndOfStringPointer;
@@ -402,10 +402,10 @@ other string.
 ----------------------------------------------------------------------
 */
 int
-CountStringOccurences ( char* SearchString , char* TargetString )
+CountStringOccurences ( const char* SearchString , const char* TargetString )
 {
   int Counter=0;
-  char* CountPointer;
+  const char* CountPointer;
 
   CountPointer = SearchString;
 
@@ -426,7 +426,7 @@ can easily be treated like a common string.
 ----------------------------------------------------------------------
 */
 char*
-ReadAndMallocAndTerminateFile( char* filename , char* File_End_String )
+ReadAndMallocAndTerminateFile( const char* filename , const char* File_End_String )
 {
   struct stat stbuf;
   FILE *DataFile;
@@ -553,7 +553,7 @@ we are searching is found in the main text.
 ----------------------------------------------------------------------
 */
 char*
-LocateStringInData ( char* SearchBeginPointer, char* SearchTextPointer )
+LocateStringInData ( const char* SearchBeginPointer, const char* SearchTextPointer )
 {
   char* temp;
 
@@ -599,7 +599,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
  *
  *----------------------------------------------------------------------*/
 void
-ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
+ReadValueFromString (const char* data, const char* label, const char* FormatString, void* dst)
 {
   char *pos;
 
@@ -639,7 +639,7 @@ ReadValueFromString (char* data, char* label, char* FormatString, void* dst)
  *
  *-----------------------------------------------------------------*/
 char *
-find_file (const char *fname, char *subdir, int use_theme, int critical)
+find_file (const char *fname, const char *subdir, int use_theme, int critical)
 {
   static char File_Path[2048] = "";   /* hope this will be enough */
   int len = sizeof(File_Path);
@@ -708,9 +708,11 @@ find_file (const char *fname, char *subdir, int use_theme, int critical)
 	    DebugPrintf (0, " in theme-dir: graphics/%s_theme/ \n", GameConfig.Theme_Name);
 	  DebugPrintf (0, "...cannot run without it!\n");
 	  Terminate (ERR);
+          break;
 	default:
 	  DebugPrintf (0, "ERROR in find_file(): Code should never reach this line!! Harakiri\n");
 	  Terminate (ERR);
+          break;
 	}
     }
 
@@ -909,7 +911,7 @@ Activate_Conservative_Frame_Computation(void)
 @Ret: none
 * $Function----------------------------------------------------------*/
 void
-DebugPrintf (int db_level, char *fmt, ...)
+DebugPrintf (int db_level, const char *fmt, ...)
 {
   va_list args;
   static char buffer[5000+1];
@@ -1100,7 +1102,7 @@ MyMalloc (long Mamount)
  * FS_filelength().. (taken from quake2)
  * 		contrary to stat() this fct is nice and portable,
  *----------------------------------------------------------------------*/
-int
+size_t
 FS_filelength (FILE *f)
 {
   int		pos;
@@ -1118,7 +1120,7 @@ FS_filelength (FILE *f)
  * show_progress: display empty progress meter with given text
  *----------------------------------------------------------------------*/
 void
-init_progress (char *text)
+init_progress (const char *text)
 {
   char *fpath;
   SDL_Rect dst;

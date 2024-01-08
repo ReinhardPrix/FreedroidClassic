@@ -46,6 +46,7 @@
 void Show_Waypoints(void);
 void DeleteWaypoint (level *level, int num);
 void CreateWaypoint (level *level, int BlockX, int BlockY);
+void Highlight_Current_Block(void);
 
 
 // ----- function definitions --------------------
@@ -219,7 +220,7 @@ LevelEditor(void)
   int OriginWaypoint = (-1);
   char* NumericInputString;
   SDL_Rect rect;
-  waypoint *SrcWp;
+  waypoint *SrcWp = NULL;
 
   int KeymapOffset = 15;
 

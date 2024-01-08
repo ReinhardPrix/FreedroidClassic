@@ -59,55 +59,55 @@ void PutString (SDL_Surface * Surface, int x, int y, const char *text);
 void PutStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, const char *text);
 
 /* Write a left-aligned string on the "Surface" with the current font */
-void LeftPutString (SDL_Surface * Surface, int y, char *text);
+void LeftPutString (SDL_Surface * Surface, int y, const char *text);
 
 /* Write a left-aligned string on the "Surface" with the specified font */
 void LeftPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			char *text);
+			const char *text);
 
 /* Write a center-aligned string on the "Surface" with the current font */
-void CenteredPutString (SDL_Surface * Surface, int y, char *text);
+void CenteredPutString (SDL_Surface * Surface, int y, const char *text);
 
 /* Write a center-aligned string on the "Surface" with the specified font */
 void CenteredPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			    char *text);
+			    const char *text);
 
 /* Write a right-aligned string on the "Surface" with the specified font */
-void RightPutString (SDL_Surface * Surface, int y, char *text);
+void RightPutString (SDL_Surface * Surface, int y, const char *text);
 
 /* Write a right-aligned string on the "Surface" with the specified font */
 void RightPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			 char *text);
+			 const char *text);
 
 /* Write a justify-aligned string on the "Surface" with the specified font */
-void JustifiedPutString (SDL_Surface * Surface, int y, char *text);
+void JustifiedPutString (SDL_Surface * Surface, int y, const char *text);
 
 /* Write a justify-aligned string on the "Surface" with the specified font */
 void JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font,
-			     int y, char *text);
+			     int y, const char *text);
 
 
 /* The following functions do the same task but have the classic "printf" sintax */
 
-void PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...);
+void PrintString (SDL_Surface * Surface, int x, int y, const char *fmt, ...);
 void PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x,
-		      int y, char *fmt, ...);
+		      int y, const char *fmt, ...);
 
-void CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void CenteredPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font,
-			      int y, char *fmt, ...);
+			      int y, const char *fmt, ...);
 
-void RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void RightPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			   char *fmt, ...);
+			   const char *fmt, ...);
 
-void LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void LeftPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			  char *fmt, ...);
+			  const char *fmt, ...);
 
-void JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...);
+void JustifiedPrintString (SDL_Surface * Surface, int y, const char *fmt, ...);
 void JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font,
-			       int y, char *fmt, ...);
+			       int y, const char *fmt, ...);
 
 /* Returns a new font colored with the color (r,g,b) */
 BFont_Info *SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b);

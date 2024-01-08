@@ -40,18 +40,21 @@
 #include "text.h"
 #include <getopt.h>
 
-void Init_Game_Data( char* Datafilename );
-void Get_Bullet_Data ( char* DataPointer );
-
-void FindAllThemes (void);
-void FreeDruidmap ( void );
-
 char* DebriefingText;
 char DebriefingSong[500];
 char NextMissionName[500];
 char Previous_Mission_Name[500];
 
 #define MISSION_COMPLETE_BONUS 1000
+
+// local prototypes
+void Init_Game_Data( const char* Datafilename );
+void Get_Bullet_Data ( const char* DataPointer );
+void FindAllThemes (void);
+void FreeDruidmap ( void );
+void Get_General_Game_Constants (const char *data);
+void Get_Robot_Data ( void* DataPointer );
+
 
 /*@Function============================================================
 @Desc: This function loads all the constant variables of the game from
@@ -60,7 +63,7 @@ char Previous_Mission_Name[500];
 @Ret:
 * $Function----------------------------------------------------------*/
 void
-Get_General_Game_Constants (char *data)
+Get_General_Game_Constants (const char *data)
 {
 #define CONSTANTS_SECTION_BEGIN_STRING "*** Start of General Game Constants Section: ***"
 #define CONSTANTS_SECTION_END_STRING "*** End of General Game Constants Section: ***"
@@ -112,10 +115,9 @@ Get_General_Game_Constants (char *data)
  ----------------------------------------------------------------------*/
 
 void
-Get_Bullet_Data ( char* DataPointer )
+Get_Bullet_Data ( const char* DataPointer )
 {
-  char *BulletPointer;
-  int i;
+  const char *BulletPointer;
   int BulletIndex=0;
 
   float bullet_speed_calibrator;
@@ -215,7 +217,7 @@ Get_Bullet_Data ( char* DataPointer )
   // Now that all the calibrations factors have been read in, we can start to
   // apply them to all the bullet types
   //
-  for ( i = 0 ; i < Number_Of_Bullet_Types ; i++ )
+  for ( int i = 0 ; i < Number_Of_Bullet_Types ; i++ )
     {
       Bulletmap[i].speed *= bullet_speed_calibrator;
       Bulletmap[i].damage *= bullet_damage_calibrator;
@@ -236,7 +238,6 @@ Get_Robot_Data ( void* DataPointer )
 {
   int RobotIndex = 0;
   char *RobotPointer;
-  int i;
 
   float maxspeed_calibrator;
   float acceleration_calibrator;
@@ -407,7 +408,7 @@ Get_Robot_Data ( void* DataPointer )
   DebugPrintf ( 1 , "\n\nThat must have been the last robot.  We're done reading the robot data.");
   DebugPrintf ( 1 , "\n\nApplying the calibration factors to all droids...");
 
-  for ( i=0; i< Number_Of_Droid_Types ; i++ )
+  for ( int i=0; i< Number_Of_Droid_Types ; i++ )
     {
       Druidmap[i].maxspeed *= maxspeed_calibrator;
       Druidmap[i].accel *= acceleration_calibrator;
@@ -427,7 +428,7 @@ Get_Robot_Data ( void* DataPointer )
 @Ret:
 * $Function----------------------------------------------------------*/
 void
-Init_Game_Data ( char * Datafilename )
+Init_Game_Data ( const char * Datafilename )
 {
   char *fpath;
   char *Data;
@@ -584,7 +585,7 @@ parse_command_line (int argc, char *const argv[])
  *
  *-----------------------------------------------------------------*/
 void
-InitNewMission ( char *MissionName )
+InitNewMission ( const char *MissionName )
 {
   char *fpath;
   int i;
@@ -954,9 +955,9 @@ InitFreedroid (int argc, char *const argv[])
  *
  *-----------------------------------------------------------------*/
 void
-Title ( char *MissionBriefingPointer )
+Title ( const char *MissionBriefingPointer )
 {
-  char* NextSubsectionStartPointer;
+  const char* NextSubsectionStartPointer;
   char* PreparedBriefingText = NULL;
   char* TerminationPointer;
   char Buffer[500];
@@ -1006,7 +1007,7 @@ Title ( char *MissionBriefingPointer )
       Copy_Rect(Full_User_Rect, rect);
       rect.x += 10;
       rect.w -= 10; //leave some border
-      if (ScrollText ( PreparedBriefingText, &rect , 0 ) == 1) {
+      if (ScrollText ( PreparedBriefingText, &rect) == 1) {
 	break;  // User pressed 'fire'
       }
     } // while(1)
@@ -1052,7 +1053,7 @@ ThouArtVictorious(void)
   rect.x += 10;
   rect.w -= 20;  //leave some border
   SetCurrentFont( Para_BFont);
-  ScrollText (DebriefingText , &rect , 6 );
+  ScrollText (DebriefingText , &rect);
 
   wait_for_all_keys_released();
 
@@ -1177,7 +1178,6 @@ FindAllThemes (void)
   struct stat buf;
   struct dirent *entry;
   char *pos;
-  int len;
   FILE *fp;
   classic_theme_index = 0;	// default: override when we actually find 'classic' theme
 
@@ -1224,14 +1224,14 @@ FindAllThemes (void)
 	    continue;
 
 	  // yes!! -> found a possible theme-dir
-	  len = strlen(entry->d_name)-strlen("_theme");
-	  if (len >= 100)
+	  size_t len = strlen(entry->d_name) - strlen("_theme");
+	  if (len >= NUM_ELEM(tname))
 	    {
-	      DebugPrintf (0, "WARNING: theme-name of '%s' longer than allowed 100 chars... discarded!\n",
-			   entry->d_name);
+	      DebugPrintf (0, "WARNING: theme-name of '%s' longer than allowed %d chars... discarded!\n",
+			   entry->d_name, NUM_ELEM(tname) );
 	      continue;
 	    }
-	  strncpy (tname, entry->d_name, len);
+	  memcpy (tname, entry->d_name, len * sizeof(tname[0]));
 	  tname[len]= '\0';  // null-terminate!
 	  DebugPrintf (1, "Hmm, seems we found a new theme: %s\n", tname);
 	  // check readabiltiy of "config.theme"

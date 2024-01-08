@@ -12,9 +12,12 @@
 BFont_Info *CurrentFont;
 
 
+void InitFont (BFont_Info * Font);
+
 /* utility functions */
 Uint32 GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y);
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
+int count (const char *text);
 
 
 void
@@ -298,7 +301,7 @@ TextWidthFont (BFont_Info * Font, const char *text)
 
 /* counts the spaces of the strings */
 int
-count (char *text)
+count (const char *text)
 {
   char *p = NULL;
   int pos = -1;
@@ -313,14 +316,14 @@ count (char *text)
 }
 
 void
-JustifiedPutString (SDL_Surface * Surface, int y, char *text)
+JustifiedPutString (SDL_Surface * Surface, int y, const char *text)
 {
   JustifiedPutStringFont (Surface, CurrentFont, y, text);
 }
 
 void
 JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			char *text)
+			const char *text)
 {
   int spaces = 0;
   int gap;
@@ -377,12 +380,13 @@ JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 		}
 	    }
 	  strtmp = NULL;
+          size_t len = strlen (&text[pos + 1]) + 1;
 	  strtmp =
-	    (char *) calloc (strlen (&text[pos + 1]) + 1, sizeof (char));
+	    (char *) calloc (len, sizeof (char));
 
 	  if (strtmp != NULL)
 	    {
-	      strncpy (strtmp, &text[pos + 1], strlen (&text[pos + 1]));
+	      memcpy (strtmp, &text[pos + 1], len);
 	      PutStringFont (Surface, Font, xpos, y, strtmp);
 	      free (strtmp);
 	    }
@@ -391,42 +395,42 @@ JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-CenteredPutString (SDL_Surface * Surface, int y, char *text)
+CenteredPutString (SDL_Surface * Surface, int y, const char *text)
 {
   CenteredPutStringFont (Surface, CurrentFont, y, text);
 }
 
 void
 CenteredPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		       char *text)
+		       const char *text)
 {
   PutStringFont (Surface, Font,
 		 Surface->w / 2 - TextWidthFont (Font, text) / 2, y, text);
 }
 
 void
-RightPutString (SDL_Surface * Surface, int y, char *text)
+RightPutString (SDL_Surface * Surface, int y, const char *text)
 {
   RightPutStringFont (Surface, CurrentFont, y, text);
 }
 
 void
 RightPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		    char *text)
+		    const char *text)
 {
   PutStringFont (Surface, Font, Surface->w - TextWidthFont (Font, text) - 1,
 		 y, text);
 }
 
 void
-LeftPutString (SDL_Surface * Surface, int y, char *text)
+LeftPutString (SDL_Surface * Surface, int y, const char *text)
 {
   LeftPutStringFont (Surface, CurrentFont, y, text);
 }
 
 void
 LeftPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		   char *text)
+		   const char *text)
 {
   PutStringFont (Surface, Font, 0, y, text);
 }
@@ -434,7 +438,7 @@ LeftPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 /******/
 
 void
-PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...)
+PrintString (SDL_Surface * Surface, int x, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -453,7 +457,7 @@ PrintString (SDL_Surface * Surface, int x, int y, char *fmt, ...)
 
 void
 PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
-		 char *fmt, ...)
+		 const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -469,7 +473,7 @@ PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
 }
 
 void
-CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+CenteredPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -486,7 +490,7 @@ CenteredPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			 char *fmt, ...)
+			 const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -503,7 +507,7 @@ CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+RightPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -520,7 +524,7 @@ RightPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		      char *fmt, ...)
+		      const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -536,7 +540,7 @@ RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+LeftPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -553,7 +557,7 @@ LeftPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-		     char *fmt, ...)
+		     const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -569,7 +573,7 @@ LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 }
 
 void
-JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
+JustifiedPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
 {
   va_list args;
   char *temp;
@@ -586,7 +590,7 @@ JustifiedPrintString (SDL_Surface * Surface, int y, char *fmt, ...)
 
 void
 JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
-			  char *fmt, ...)
+			  const char *fmt, ...)
 {
   va_list args;
   char *temp;

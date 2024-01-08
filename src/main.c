@@ -57,7 +57,6 @@ void UpdateCountersForThisFrame (void);
 int
 main (int argc, char * argv[])
 {
-  int i, level;
   Uint32 now;
   float scale;
 
@@ -88,10 +87,10 @@ main (int argc, char * argv[])
       // scale Level-pic rects
       if ( (scale = GameConfig.scale) != 1.0)
 	{
-	  for (level = 0; level < curShip.num_levels; level++)
-	    for (i=0; i<curShip.num_level_rects[level]; i++)
-	      ScaleRect (curShip.Level_Rects[level][i], scale);
-	  for (i=0; i < curShip.num_lift_rows; i++)
+	  for (int levelnum = 0; levelnum < curShip.num_levels; levelnum++)
+	    for (int i=0; i<curShip.num_level_rects[levelnum]; i++)
+	      ScaleRect (curShip.Level_Rects[levelnum][i], scale);
+	  for (int i=0; i < curShip.num_lift_rows; i++)
 	    ScaleRect (curShip.LiftRow_Rect[i], scale);
 	}
 
@@ -141,7 +140,7 @@ main (int argc, char * argv[])
 
 	  Assemble_Combat_Picture ( DO_SCREEN_UPDATE );
 
-	  for (i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
+	  for (int i = 0; i < MAXBULLETS; i++) CheckBulletCollisions (i);
 
 	  MoveInfluence ();	// change Influ-speed depending on keys pressed, but
 	                        // also change his status and position and "phase" of rotation
@@ -199,8 +198,6 @@ function.
 void
 UpdateCountersForThisFrame (void)
 {
-  int i;
-
   // Here are some things, that were previously done by some periodic */
   // interrupt function
   ThisMessageTime++;
@@ -241,7 +238,7 @@ UpdateCountersForThisFrame (void)
   RealScore += AlertLevel * AlertBonusPerSec * Frame_Time();
 
 
-  for (i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
+  for (int i = 0; i < MAX_ENEMYS_ON_SHIP ; i++)
     {
 
       if (AllEnemys[i].status == OUT ) continue;

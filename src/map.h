@@ -97,7 +97,7 @@ enum _colornames
 #if  (defined _gen_c) || (defined _map_c)
 
 /* Color - names */
-char *ColorNames[] = {
+const char *ColorNames[] = {
   "Red",
   "Yellow",
   "Green",
@@ -107,7 +107,7 @@ char *ColorNames[] = {
   "Dark"
 };
 
-int numLevelColors = sizeof(ColorNames)/sizeof(ColorNames[0]);
+int numLevelColors = NUM_ELEM(ColorNames);
 #else
 extern char *ColorNames[];
 extern int numLevelColors;
