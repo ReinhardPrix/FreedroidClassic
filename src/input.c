@@ -611,22 +611,22 @@ getchar_raw (void)
 	  axis = event.jaxis.axis;
           if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
 	    {
-	      if (joy_sensitivity*event.jaxis.value > 10000)   /* about half tilted */
+	      if (joy_sensitivity*event.jaxis.value > JOY_DEAD_ZONE)   /* about half tilted */
 		{
 		  Returnkey = JOY_RIGHT;
 		}
-	      else if (joy_sensitivity*event.jaxis.value < -10000)
+	      else if (joy_sensitivity*event.jaxis.value < -JOY_DEAD_ZONE)
 		{
 		  Returnkey = JOY_LEFT;
 		}
             }
           else if ((axis == 1) || ((joy_num_axes >=5) && (axis == 4))) /* y-axis */
 	    {
-	      if (joy_sensitivity*event.jaxis.value > 10000)
+	      if (joy_sensitivity*event.jaxis.value > JOY_DEAD_ZONE)
 		{
 		  Returnkey = JOY_DOWN;
 		}
-	      else if (joy_sensitivity*event.jaxis.value < -10000)
+	      else if (joy_sensitivity*event.jaxis.value < -JOY_DEAD_ZONE)
 		{
                   Returnkey = JOY_UP;
 		}
