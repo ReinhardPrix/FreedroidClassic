@@ -46,6 +46,13 @@
 #define SDL_BUTTON_WHEELDOWN 5
 #endif
 
+#define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
+#ifndef ANDROID
+#define JOY_DEAD_ZONE 10000   // joystick tilt ignored below this value
+#else
+#define JOY_DEAD_ZONE 0   // make android controls more reactive
+#endif
+
 bool show_cursor;    // show mouse-cursor or not?
 #define CURSOR_KEEP_VISIBLE  3000   // ticks to keep mouse-cursor visible without mouse-input
 

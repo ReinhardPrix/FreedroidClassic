@@ -34,9 +34,6 @@
 
 #define MAX_THEMES  100
 
-#define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
-#define JOY_DEAD_ZONE 10000   // joystick tilt ignored below this value
-
 #define RESET 0x01
 #define UPDATE 0x02
 #define INIT_ONLY 0x04
