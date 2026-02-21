@@ -27,6 +27,7 @@
 #define _struct_h
 
 #include "defs.h"
+#include <stdbool.h>
 
 #ifndef _BYTE
 typedef unsigned char byte;
@@ -36,11 +37,6 @@ typedef unsigned char byte;
 typedef unsigned word;
 #define _WORD
 #endif
-#ifndef _BOOL
-typedef char bool;
-#define _BOOL
-#endif
-
 typedef struct
 {
   int num_themes;
