@@ -1,9 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT(freedroid, 1.2.4)
 
-dnl Setup for automake
-SDL_VERSION=1.2.3
-
 dnl Detect the canonical host and target build environment
 
 AC_CANONICAL_HOST
@@ -18,6 +15,7 @@ AM_CONFIG_HEADER(config.h)
 #AC_PROG_AWK
 AC_PROG_CC
 AC_PROG_MAKE_SET
+PKG_PROG_PKG_CONFIG
 
 AM_PROG_CC_C_O
 
@@ -34,21 +32,18 @@ if test x$have_x = xyes; then
 	CFLAGS="$CFLAGS $X_CFLAGS"
 fi
 
-## Check for SDL
-AC_MSG_NOTICE([[Checking for compulsory SDL libraries:]])
+## Check for SDL2
+AC_MSG_NOTICE([[Checking for compulsory SDL2 libraries:]])
 
-AM_PATH_SDL($SDL_VERSION,
-            :,
-	    AC_MSG_ERROR([*** SDL version $SDL_VERSION not found!])
-)
-CFLAGS="$CFLAGS $SDL_CFLAGS"
-LIBS="$LIBS $SDL_LIBS"
+PKG_CHECK_MODULES([SDL2], [sdl2],,
+	AC_MSG_ERROR([*** SDL2 not found!]))
+PKG_CHECK_MODULES([SDL2_IMAGE], [SDL2_image],,
+	AC_MSG_ERROR([*** SDL2_image not found!]))
+PKG_CHECK_MODULES([SDL2_GFX], [SDL2_gfx],,
+	AC_MSG_ERROR([*** SDL2_gfx not found!]))
 
-AC_CHECK_LIB([SDL], [SDL_Init],, AC_MSG_ERROR([
---------------------------------------------------
-SDL library needed for Freedroid!
-see http://www.libsdl.org/
---------------------------------------------------]))
+CFLAGS="$CFLAGS $SDL2_CFLAGS $SDL2_IMAGE_CFLAGS $SDL2_GFX_CFLAGS"
+LIBS="$LIBS $SDL2_LIBS $SDL2_IMAGE_LIBS $SDL2_GFX_LIBS"
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,AC_MSG_ERROR([
 --------------------------------------------------
@@ -82,13 +77,18 @@ see http://sourceforge.net/projects/sdlgfx/
 --------------------------------------------------]))
 
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
-AC_CHECK_LIB([SDL_mixer], [Mix_OpenAudio],, AC_MSG_WARN([
+PKG_CHECK_MODULES([SDL2_MIXER], [SDL2_mixer], [
+	CFLAGS="$CFLAGS $SDL2_MIXER_CFLAGS"
+	LIBS="$LIBS $SDL2_MIXER_LIBS"
+	AC_DEFINE([HAVE_LIBSDL_MIXER], [1], [Define if SDL2_mixer is available])
+], [
+	AC_MSG_WARN([
 --------------------------------------------------
-libSDL_mixer not found!
-you need the SDL_mixer library if you want sound!
-(see see http://www.libsdl.org/)
+SDL2_mixer not found!
+you need SDL2_mixer if you want sound!
 --> compiling without sound support
---------------------------------------------------]))
+--------------------------------------------------])
+])
 
 AC_CHECK_LIB([vorbis], [main],, AC_MSG_WARN([
 --------------------------------------------------

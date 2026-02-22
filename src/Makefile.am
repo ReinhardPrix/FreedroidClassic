@@ -33,6 +33,8 @@ freedroid_SOURCES = \
 		menu.c \
 		misc.c \
 		proto.h \
+		sdl_compat.c \
+		sdl_compat.h \
 		ship.c \
 		sound.c \
 		struct.h \

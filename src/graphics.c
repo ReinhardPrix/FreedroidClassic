@@ -43,7 +43,6 @@
 #include "text.h"
 #include "takeover.h"
 
-const SDL_VideoInfo *vid_info;	/* info about current video mode */
 int vid_bpp;
 
 int fonts_loaded = FALSE;
@@ -903,7 +902,7 @@ Init_Video (void)
   char vid_driver[81];
   Uint32 vid_flags;  		/* flags for SDL video mode */
   char *fpath;
-  const char *YN[2] = {"no", "yes"};
+  SDL_DisplayMode dm;
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 )
@@ -928,28 +927,23 @@ Init_Video (void)
   atexit (SDL_Quit);
 
 
-  vid_info = SDL_GetVideoInfo (); /* just curious */
-  SDL_VideoDriverName (vid_driver, 80);
+  const char *driver = SDL_GetCurrentVideoDriver();
+  if (!driver) driver = "unknown";
+  snprintf(vid_driver, sizeof(vid_driver), "%s", driver);
 #ifdef ANDROID
   vid_bpp = 16; // Hardcoded Android default
 #else
-  vid_bpp = vid_info->vfmt->BitsPerPixel;
+  if (SDL_GetDesktopDisplayMode(0, &dm) == 0)
+    vid_bpp = SDL_BITSPERPIXEL(dm.format);
+  else
+    vid_bpp = 32;
 #endif
 
   DebugPrintf (0, "Video info summary from SDL:\n");
   DebugPrintf (0, "----------------------------------------------------------------------\n");
-  DebugPrintf (0, "Is it possible to create hardware surfaces: %s\n" , YN[vid_info->hw_available]);
-  DebugPrintf (0, "Is there a window manager available: %s\n", YN[vid_info->wm_available]);
-  DebugPrintf (0, "Are hardware to hardware blits accelerated: %s\n", YN[vid_info->blit_hw]);
-  DebugPrintf (0, "Are hardware to hardware colorkey blits accelerated: %s\n", YN[vid_info->blit_hw_CC]);
-  DebugPrintf (0, "Are hardware to hardware alpha blits accelerated: %s\n", YN[vid_info->blit_hw_A]);
-  DebugPrintf (0, "Are software to hardware blits accelerated: %s\n", YN[vid_info->blit_sw]);
-  DebugPrintf (0, "Are software to hardware colorkey blits accelerated: %s\n", YN[vid_info->blit_sw_CC]);
-  DebugPrintf (0, "Are software to hardware alpha blits accelerated: %s\n", YN[vid_info->blit_sw_A]);
-  DebugPrintf (0, "Are color fills accelerated: %s\n", YN[vid_info->blit_fill]);
-  DebugPrintf (0, "Total amount of video memory in Kilobytes: %d\n", vid_info->video_mem);
-  DebugPrintf (0, "Pixel format of the video device: bpp = %d, bytes/pixel = %d\n",
-	       vid_bpp, vid_info->vfmt->BytesPerPixel);
+  if (SDL_GetDesktopDisplayMode(0, &dm) == 0)
+    DebugPrintf (0, "Desktop display mode: %dx%d @ %dHz\n", dm.w, dm.h, dm.refresh_rate);
+  DebugPrintf (0, "Pixel format of the video device: bpp = %d\n", vid_bpp);
   DebugPrintf (0, "Video Driver Name: %s\n", vid_driver);
   DebugPrintf (0, "----------------------------------------------------------------------\n");
 
@@ -958,8 +952,7 @@ Init_Video (void)
   vid_flags = 0;
   if (GameConfig.UseFullscreen) vid_flags |= SDL_FULLSCREEN;
 
-  if (vid_info->wm_available)  /* if there's a window-manager */
-    {
+  {
       SDL_WM_SetCaption ("Freedroid", "");
       fpath = find_file (ICON_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
       if ( fpath == NULL ) {
@@ -981,9 +974,6 @@ Init_Video (void)
 		   Screen_Rect.w, Screen_Rect.h, SDL_GetError());
       exit(-1);
     }
-
-  vid_info = SDL_GetVideoInfo (); /* info about current video mode */
-
   DebugPrintf(1, "Got video mode: ");
 
   SDL_SetGamma( 1 , 1 , 1 );
