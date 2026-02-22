@@ -139,7 +139,10 @@ FD_DisplayFormat(SDL_Surface *surface)
 SDL_Surface *
 FD_DisplayFormatAlpha(SDL_Surface *surface)
 {
-	return FD_DisplayFormat(surface);
+	if (!surface)
+		return NULL;
+
+	return SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
 }
 
 int
@@ -159,6 +162,7 @@ FD_SetGamma(float red, float green, float blue)
 int
 FD_SetAlpha(SDL_Surface *surface, Uint32 flags, Uint8 alpha)
 {
+
 	if (!surface)
 		return -1;
 

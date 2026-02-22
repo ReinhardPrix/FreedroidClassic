@@ -261,6 +261,8 @@ PutInfluence ( int x, int y)
 
   DebugPrintf (2, "\nvoid PutInfluence(void): real function call confirmed.");
 
+  SDL_FillRect (BuildBlock, NULL, SDL_MapRGBA (BuildBlock->format, 0, 0, 0, 0));
+
   // Now we draw the hat and shoes of the influencer
   SDL_BlitSurface( InfluencerSurfacePointer[ (int) floorf (Me.phase) ], NULL , BuildBlock, NULL);
 
@@ -389,6 +391,7 @@ PutEnemy (int Enum , int x , int y)
 
   //--------------------
   // First blit just the enemy hat and shoes.
+  SDL_FillRect (BuildBlock, NULL, SDL_MapRGBA (BuildBlock->format, 0, 0, 0, 0));
   SDL_BlitSurface (EnemySurfacePointer[phase], NULL, BuildBlock, NULL);
 
   //--------------------
