@@ -64,18 +64,6 @@ libpng needed to run Freedroid
 see http://www.libpng.org/pub/png/libpng.html
 --------------------------------------------------]))
 
-AC_CHECK_LIB([SDL_image], [IMG_LoadJPG_RW],, AC_MSG_ERROR([
---------------------------------------------------
-SDL_image library needed for Freedroid!
-see http://www.libsdl.org/
---------------------------------------------------]))
-
-AC_CHECK_LIB([SDL_gfx], [zoomSurface],, AC_MSG_ERROR([
---------------------------------------------------
-SDL_gfx needed to run Freedroid
-see http://sourceforge.net/projects/sdlgfx/
---------------------------------------------------]))
-
 AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
 PKG_CHECK_MODULES([SDL2_MIXER], [SDL2_mixer], [
 	CFLAGS="$CFLAGS $SDL2_MIXER_CFLAGS"

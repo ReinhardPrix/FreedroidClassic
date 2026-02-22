@@ -51,7 +51,7 @@ freedroid_SOURCES = \
 freedroidDebug_CFLAGS = $(AM_CFLAGS) -g3 -Og -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-common
 freedroidDebug_SOURCES = $(freedroid_SOURCES)
 
-freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(top_srcdir)\"
+freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(abs_top_srcdir)\"
 freedroidDebug_CPPFLAGS = $(freedroid_CPPFLAGS)
 
 WINDRES = i586-mingw32msvc-windres
