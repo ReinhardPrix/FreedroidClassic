@@ -683,6 +683,7 @@ InitPictures (void)
       //  create the tmp block-build storage
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
       BuildBlock = SDL_DisplayFormatAlpha (tmp);
+      SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_FreeSurface (tmp);
 
       // takeover background pics
@@ -838,6 +839,9 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
   SDL_Rect src, dim;
   SDL_Surface *ret;
   int usealpha;
+  int use_colorkey = FALSE;
+  Uint32 colorkey = 0;
+  SDL_BlendMode old_blend_mode = SDL_BLENDMODE_NONE;
 
   if (!fpath && !pic)		/* we need some info.. */
     return (NULL);
@@ -872,19 +876,48 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
   else
     usealpha = FALSE;
 
+  if (SDL_GetColorKey(pic, &colorkey) == 0)
+    use_colorkey = TRUE;
+
   if (usealpha)
-    SDL_SetAlpha (pic, 0, 0);	/* clear per-surf alpha for internal blit */
-  tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, vid_bpp, 0, 0, 0, 0);
-  if (usealpha)
-    ret = SDL_DisplayFormatAlpha (tmp);
+    {
+      SDL_SetAlpha (pic, 0, 0);	/* clear per-surf alpha for internal blit */
+      SDL_GetSurfaceBlendMode(pic, &old_blend_mode);
+      SDL_SetSurfaceBlendMode(pic, SDL_BLENDMODE_NONE);
+      ret = SDL_CreateRGBSurfaceWithFormat (0, dim.w, dim.h, 32, SDL_PIXELFORMAT_ARGB8888);
+      SDL_FillRect (ret, NULL, 0);
+    }
   else
-    ret = SDL_DisplayFormat (tmp);
-  SDL_FreeSurface (tmp);
+    {
+      Uint32 fill_color = 0;
+
+      tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, vid_bpp, 0, 0, 0, 0);
+      if (use_colorkey)
+        {
+          Uint8 r, g, b;
+
+          ret = SDL_DisplayFormatAlpha (tmp);
+          SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
+          fill_color = SDL_MapRGB (ret->format, r, g, b);
+        }
+      else
+        ret = SDL_DisplayFormat (tmp);
+      SDL_FillRect (ret, NULL, fill_color);
+      SDL_FreeSurface (tmp);
+    }
 
   Set_Rect (src, col * (dim.w + 2), line * (dim.h + 2), dim.w, dim.h);
   SDL_BlitSurface (pic, &src, ret, NULL);
   if (usealpha)
+    SDL_SetSurfaceBlendMode(pic, old_blend_mode);
+  if (usealpha)
     SDL_SetAlpha (ret, SDL_SRCALPHA | SDL_RLEACCEL, SDL_ALPHA_OPAQUE);
+  else if (use_colorkey)
+    {
+      Uint8 r, g, b;
+      SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
+      SDL_SetColorKey (ret, SDL_SRCCOLORKEY, SDL_MapRGB (ret->format, r, g, b));
+    }
 
   return (ret);
 
@@ -1335,6 +1368,7 @@ ScaleGraphics (float scale)
       FreeIfUsed (BuildBlock);
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
       BuildBlock = SDL_DisplayFormatAlpha (tmp);
+      SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_FreeSurface (tmp);
 
       // takeover pics
