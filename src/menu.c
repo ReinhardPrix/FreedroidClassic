@@ -44,7 +44,6 @@
 // ----- global variables --------------------
 extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
-extern char *keystr[INPUT_LAST];
 
 
 SDL_Surface *Menu_Background = NULL;
@@ -1216,9 +1215,9 @@ Display_Key_Config (int selx, int sely)
   for (i=0; i < CMD_LAST; i++)
     {
       PrintStringFont (ne_screen, Font0_BFont,  startx, starty+(posy)*lheight, cmd_strings[i]);
-      PrintStringFont (ne_screen, PosFont(1,1+i), col1, starty+(posy)*lheight, keystr[key_cmds[i][0]]);
-      PrintStringFont (ne_screen, PosFont(2,1+i), col2, starty+(posy)*lheight, keystr[key_cmds[i][1]]);
-      PrintStringFont (ne_screen, PosFont(3,1+i), col3, starty+(posy)*lheight, keystr[key_cmds[i][2]]);
+      PrintStringFont (ne_screen, PosFont(1,1+i), col1, starty+(posy)*lheight, GetKeyString(key_cmds[i][0]));
+      PrintStringFont (ne_screen, PosFont(2,1+i), col2, starty+(posy)*lheight, GetKeyString(key_cmds[i][1]));
+      PrintStringFont (ne_screen, PosFont(3,1+i), col3, starty+(posy)*lheight, GetKeyString(key_cmds[i][2]));
       posy ++;
     }
 

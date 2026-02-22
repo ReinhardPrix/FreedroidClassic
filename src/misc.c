@@ -59,6 +59,80 @@ SDL_Color progress_color = {.r = 200, .g = 20, .b = 20};
 extern int key_cmds[CMD_LAST][3];
 extern char *cmd_strings[CMD_LAST];
 
+static int
+NormalizeLegacySDL1Keycode(int key)
+{
+  switch (key)
+    {
+    case 256: return SDLK_KP0;
+    case 257: return SDLK_KP1;
+    case 258: return SDLK_KP2;
+    case 259: return SDLK_KP3;
+    case 260: return SDLK_KP4;
+    case 261: return SDLK_KP5;
+    case 262: return SDLK_KP6;
+    case 263: return SDLK_KP7;
+    case 264: return SDLK_KP8;
+    case 265: return SDLK_KP9;
+    case 266: return SDLK_KP_PERIOD;
+    case 267: return SDLK_KP_DIVIDE;
+    case 268: return SDLK_KP_MULTIPLY;
+    case 269: return SDLK_KP_MINUS;
+    case 270: return SDLK_KP_PLUS;
+    case 271: return SDLK_KP_ENTER;
+    case 272: return SDLK_KP_EQUALS;
+    case 273: return SDLK_UP;
+    case 274: return SDLK_DOWN;
+    case 275: return SDLK_RIGHT;
+    case 276: return SDLK_LEFT;
+    case 277: return SDLK_INSERT;
+    case 278: return SDLK_HOME;
+    case 279: return SDLK_END;
+    case 280: return SDLK_PAGEUP;
+    case 281: return SDLK_PAGEDOWN;
+    case 282: return SDLK_F1;
+    case 283: return SDLK_F2;
+    case 284: return SDLK_F3;
+    case 285: return SDLK_F4;
+    case 286: return SDLK_F5;
+    case 287: return SDLK_F6;
+    case 288: return SDLK_F7;
+    case 289: return SDLK_F8;
+    case 290: return SDLK_F9;
+    case 291: return SDLK_F10;
+    case 292: return SDLK_F11;
+    case 293: return SDLK_F12;
+    case 294: return SDLK_F13;
+    case 295: return SDLK_F14;
+    case 296: return SDLK_F15;
+    case 300: return SDLK_NUMLOCK;
+    case 301: return SDLK_CAPSLOCK;
+    case 302: return SDLK_SCROLLOCK;
+    case 303: return SDLK_RSHIFT;
+    case 304: return SDLK_LSHIFT;
+    case 305: return SDLK_RCTRL;
+    case 306: return SDLK_LCTRL;
+    case 307: return SDLK_RALT;
+    case 308: return SDLK_LALT;
+    case 309: return SDLK_RMETA;
+    case 310: return SDLK_LMETA;
+    case 311: return SDLK_LSUPER;
+    case 312: return SDLK_RSUPER;
+    case 313: return SDLK_MODE;
+    case 314: return SDLK_COMPOSE;
+    case 315: return SDLK_HELP;
+    case 316: return SDLK_PRINT;
+    case 317: return SDLK_SYSREQ;
+    case 318: return SDLK_BREAK;
+    case 319: return SDLK_MENU;
+    case 320: return SDLK_POWER;
+    case 321: return SDLK_EURO;
+    case 322: return SDLK_UNDO;
+    default:
+      return key;
+    }
+}
+
 // ------------------------------------------------------------
 // just a plain old sign-function
 // ------------------------------------------------------------
@@ -249,6 +323,9 @@ LoadGameConfig (void)
       int status = read_variable (data, cmd_strings[i], "%s", &lbuf);
       if ( status == OK ) {
         sscanf (lbuf, "%d_%d_%d", &(key_cmds[i][0]), &(key_cmds[i][1]), &(key_cmds[i][2]) );
+        key_cmds[i][0] = NormalizeLegacySDL1Keycode(key_cmds[i][0]);
+        key_cmds[i][1] = NormalizeLegacySDL1Keycode(key_cmds[i][1]);
+        key_cmds[i][2] = NormalizeLegacySDL1Keycode(key_cmds[i][2]);
       }
     }
 

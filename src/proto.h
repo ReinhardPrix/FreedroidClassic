@@ -236,6 +236,7 @@ EXTERN bool NoDirectionPressed (void);
 EXTERN bool cmd_is_active(enum _cmds cmd);
 EXTERN bool cmd_is_activeR(enum _cmds cmd);
 EXTERN void init_keystr (void);
+EXTERN const char *GetKeyString (int key);
 
 /* menu.c */
 #undef EXTERN
