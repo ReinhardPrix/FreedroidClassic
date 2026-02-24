@@ -500,6 +500,10 @@ GetString (int MaxLen, int echo)
   finished = FALSE;
   curpos = 0;
 
+#if !defined ARCADEINPUT
+  SDL_StartTextInput ();
+#endif
+
   while ( !finished  )
     {
       Copy_Rect( store_rect, tmp_rect);
@@ -564,26 +568,48 @@ GetString (int MaxLen, int echo)
  	  if ( curpos > 0 ) curpos --;
         } // (el)ifs Pressed
 #else // NORMAL INPUT
-      key = getchar_raw ();
 
-      if (key == SDLK_RETURN)
+      while (!finished)
 	{
-	  input[curpos] = 0;
-	  finished = TRUE;
-	}
-      else if ( (key < SDLK_DELETE) && isprint (key) && (curpos < MaxLen) )
-	{
-	  /* printable characters are entered in string */
-	  input[curpos] = (char) key;
-	  curpos ++;
-	}
-      else if (key == SDLK_BACKSPACE)
-	{
-	  if ( curpos > 0 ) curpos --;
-	  input[curpos] = '.';
+	  SDL_Event event;
+	  SDL_WaitEvent (&event);
+
+	  if (event.type == SDL_TEXTINPUT)
+	    {
+	      const unsigned char c = (unsigned char)event.text.text[0];
+	      if (c && isprint(c) && (curpos < MaxLen))
+		{
+		  input[curpos] = (char)c;
+		  curpos ++;
+		  if (curpos < MaxLen)
+		    input[curpos] = emptychar;
+		  break;
+		}
+	      continue;
+	    }
+
+	  if (event.type == SDL_KEYDOWN)
+	    {
+	      key = (int)event.key.keysym.sym;
+	      if ((key == SDLK_RETURN) || (key == SDLK_KP_ENTER))
+		{
+		  input[curpos] = 0;
+		  finished = TRUE;
+		}
+	      else if (key == SDLK_BACKSPACE)
+		{
+		  if ( curpos > 0 ) curpos --;
+		  input[curpos] = emptychar;
+		}
+	      break;
+	    }
 	}
 #endif // ARCADEINPUT
     } /* while(!finished) */
+
+#if !defined ARCADEINPUT
+  SDL_StopTextInput ();
+#endif
 
 
   DebugPrintf (2, "\n\nchar *GetString(..):  The final string is:\n");
