@@ -50,6 +50,7 @@ char *portrait_raw_mem[NUM_DROIDS];
 
 // local prototypes
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
+static SDL_Surface *ScaleSurfaceNearest (SDL_Surface *src, float scale);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 SDL_RWops *load_raw_pic (const char *fpath, char **raw_mem );
@@ -449,10 +450,10 @@ SetCombatScaleTo(float scale)
 	// if there's already a rescaled version, free it
 	if (MapBlockSurfacePointer[j][i] != OrigMapBlockSurfacePointer[j][i])
 	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
-	// then zoom..
-	tmp = zoomSurface(OrigMapBlockSurfacePointer[j][i], scale, scale, 0);
+	// then scale..
+	tmp = ScaleSurfaceNearest (OrigMapBlockSurfacePointer[j][i], scale);
         if ( tmp == NULL ) {
-          DebugPrintf (0, "ERROR: zoomSurface() failed for scale = %g.\n", scale);
+          DebugPrintf (0, "ERROR: ScaleSurfaceNearest() failed for scale = %g.\n", scale);
           Terminate (ERR);
         }
 	// and optimize
@@ -1117,6 +1118,70 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
     }
 } // void putpixel(...)
 
+static SDL_Surface *
+ScaleSurfaceNearest (SDL_Surface *src, float scale)
+{
+  SDL_Surface *dst;
+  SDL_BlendMode blend_mode = SDL_BLENDMODE_NONE;
+  Uint8 alpha_mod = 255;
+  Uint8 r_mod = 255, g_mod = 255, b_mod = 255;
+  Uint32 color_key = 0;
+  int have_colorkey = FALSE;
+  int dst_w, dst_h;
+  int x, y;
+
+  if ((src == NULL) || (scale <= 0.0f))
+    return NULL;
+
+  dst_w = (int) lroundf ((float) src->w * scale);
+  dst_h = (int) lroundf ((float) src->h * scale);
+  if (dst_w < 1) dst_w = 1;
+  if (dst_h < 1) dst_h = 1;
+
+  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
+					src->format->BitsPerPixel,
+					src->format->format);
+  if (dst == NULL)
+    return NULL;
+
+  if (SDL_GetColorKey (src, &color_key) == 0)
+    have_colorkey = TRUE;
+  SDL_GetSurfaceBlendMode (src, &blend_mode);
+  SDL_GetSurfaceAlphaMod (src, &alpha_mod);
+  SDL_GetSurfaceColorMod (src, &r_mod, &g_mod, &b_mod);
+
+  if (SDL_MUSTLOCK (src)) SDL_LockSurface (src);
+  if (SDL_MUSTLOCK (dst)) SDL_LockSurface (dst);
+
+  for (y = 0; y < dst_h; y++)
+    {
+      int src_y = (int) floorf (((float) y + 0.5f) / scale);
+      if (src_y < 0) src_y = 0;
+      if (src_y >= src->h) src_y = src->h - 1;
+
+      for (x = 0; x < dst_w; x++)
+	{
+	  int src_x = (int) floorf (((float) x + 0.5f) / scale);
+	  if (src_x < 0) src_x = 0;
+	  if (src_x >= src->w) src_x = src->w - 1;
+
+	  putpixel (dst, x, y, getpixel (src, src_x, src_y));
+	}
+    }
+
+  if (SDL_MUSTLOCK (dst)) SDL_UnlockSurface (dst);
+  if (SDL_MUSTLOCK (src)) SDL_UnlockSurface (src);
+
+  if (have_colorkey)
+    SDL_SetColorKey (dst, SDL_SRCCOLORKEY, color_key);
+
+  SDL_SetSurfaceBlendMode (dst, blend_mode);
+  SDL_SetSurfaceAlphaMod (dst, alpha_mod);
+  SDL_SetSurfaceColorMod (dst, r_mod, g_mod, b_mod);
+
+  return dst;
+}
+
 /*----------------------------------------------------------------------
  *
  *----------------------------------------------------------------------*/
@@ -1420,9 +1485,9 @@ ScalePic (SDL_Surface **pic, float scale)
     return;
 
   tmp = *pic;
-  *pic = zoomSurface (tmp, scale, scale, 0);
+  *pic = ScaleSurfaceNearest (tmp, scale);
   if ( (*pic) == NULL ) {
-    DebugPrintf (0, "ERROR: zoomSurface() failed for scale = %g.\n", scale);
+    DebugPrintf (0, "ERROR: ScaleSurfaceNearest() failed for scale = %g.\n", scale);
     Terminate (ERR);
   }
   SDL_FreeSurface (tmp);
