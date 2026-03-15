@@ -707,7 +707,8 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
       // Now the text should be ready and its
       // time to display it...
-      if ( (strcmp( left_box , previous_left_box )) ||
+      if ( BannerIsDestroyed ||
+	   (strcmp( left_box , previous_left_box )) ||
 	   (strcmp( right_box , previous_right_box )) ||
 	   ( flags & BANNER_FORCE_UPDATE ) )
 	{

@@ -1508,13 +1508,12 @@ ScaleStatRects (float scale)
 void
 toggle_fullscreen (void)
 {
-  Uint32 vid_flags = ne_screen->flags;
+  Uint32 vid_flags = 0;
+  int want_fullscreen = !GameConfig.UseFullscreen;
 
   //  SDL_WM_ToggleFullScreen (ne_screen);
 
-  if (GameConfig.UseFullscreen)
-    vid_flags &= ~SDL_FULLSCREEN;
-  else
+  if (want_fullscreen)
     vid_flags |= SDL_FULLSCREEN;
 
   if( !(ne_screen = SDL_SetVideoMode ( Screen_Rect.w, Screen_Rect.h, 0, vid_flags)) )
@@ -1525,12 +1524,8 @@ toggle_fullscreen (void)
       Terminate (ERR);
     }
 
-  if ( ne_screen->flags != vid_flags )
-    {
-      DebugPrintf (0, "WARNING: Failed to toggle windowed/fullscreen mode!\n");
-    }
-  else
-    GameConfig.UseFullscreen = !GameConfig.UseFullscreen;
+  GameConfig.UseFullscreen = want_fullscreen;
+  BannerIsDestroyed = TRUE;
 
   return;
 }
