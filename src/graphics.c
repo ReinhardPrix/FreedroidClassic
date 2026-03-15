@@ -1547,7 +1547,8 @@ FreeGraphics ( void )
     free ( portrait_raw_mem[i] );
   }
 
-  SDL_FreeSurface ( ne_screen );
+  FD_DestroyWindow ();
+  ne_screen = NULL;
 
   FreeSurfaceArrary ( EnemySurfacePointer );
   FreeSurfaceArrary ( InfluencerSurfacePointer );

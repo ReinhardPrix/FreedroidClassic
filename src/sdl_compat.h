@@ -18,6 +18,7 @@ SDL_Surface *FD_DisplayFormatAlpha(SDL_Surface *surface);
 int FD_SetGamma(float red, float green, float blue);
 int FD_SetAlpha(SDL_Surface *surface, Uint32 flags, Uint8 alpha);
 void FD_WarpMouse(Uint16 x, Uint16 y);
+void FD_DestroyWindow(void);
 
 #ifdef __cplusplus
 }
