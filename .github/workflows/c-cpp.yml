@@ -27,7 +27,7 @@ jobs:
           libsdl2-mixer-dev
 
     - name: Bootstrap autotools
-      run: ./autogen.sh
+      run: ./00boot
 
     - name: Configure
       run: ./configure

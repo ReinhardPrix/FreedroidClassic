@@ -9,7 +9,7 @@ AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 ##AM_MAINTAINER_MODE
 
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 #AC_PROG_AWK
@@ -87,16 +87,13 @@ Freedroid to be able to play Ogg files (e.g. the Intro theme)
 
 
 # Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h time.h unistd.h dirent.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
-AC_HEADER_TIME
 
 # Checks for library functions.
-AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([memset sqrt strstr strtok strcspn strspn rand])
 
 dnl Don't Check for getopt_long
