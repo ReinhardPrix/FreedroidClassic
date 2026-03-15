@@ -1174,6 +1174,13 @@ Duplicate_Font ( const BFont_Info * in_font )
     Terminate ( ERR );
   }
 
+  if (out_font->Surface->format->Amask != 0)
+    {
+      SDL_SetColorKey (out_font->Surface, 0, 0);
+      SDL_SetSurfaceBlendMode (out_font->Surface, SDL_BLENDMODE_BLEND);
+      SDL_SetSurfaceAlphaMod (out_font->Surface, 255);
+    }
+
   return out_font;
 }
 
