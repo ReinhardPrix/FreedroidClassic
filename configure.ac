@@ -39,11 +39,9 @@ PKG_CHECK_MODULES([SDL2], [sdl2],,
 	AC_MSG_ERROR([*** SDL2 not found!]))
 PKG_CHECK_MODULES([SDL2_IMAGE], [SDL2_image],,
 	AC_MSG_ERROR([*** SDL2_image not found!]))
-PKG_CHECK_MODULES([SDL2_GFX], [SDL2_gfx],,
-	AC_MSG_ERROR([*** SDL2_gfx not found!]))
 
-CFLAGS="$CFLAGS $SDL2_CFLAGS $SDL2_IMAGE_CFLAGS $SDL2_GFX_CFLAGS"
-LIBS="$LIBS $SDL2_LIBS $SDL2_IMAGE_LIBS $SDL2_GFX_LIBS"
+CFLAGS="$CFLAGS $SDL2_CFLAGS $SDL2_IMAGE_CFLAGS"
+LIBS="$LIBS $SDL2_LIBS $SDL2_IMAGE_LIBS"
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,AC_MSG_ERROR([
 --------------------------------------------------
