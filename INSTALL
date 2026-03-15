@@ -2,13 +2,12 @@
 
 Freedroid Installation
 ======================
-[ 0) if you have downloaded your source from the cvs-archive
-   you have to start by typing `./autogen.sh']
+0) if you have downloaded your source from the git repo you have to start by typing `./00boot`
 
-1) type `./configure'
-2) type `make' to compile the package
+1) type `./configure`
+2) type `make` to compile the package
 
-3)a) type `make install'. By default this will try to install in
+3)a) optionally type `make install`. By default this will try to install in
    /usr/local/, in which case you have to be root to do that.
    You can instead specify `--prefix=<yourdir>' to `configure', in
    which case `make install' will install in <yourdir>.
@@ -16,7 +15,7 @@ Freedroid Installation
 ALTERNATIVELY:
 
 3)b) you can run the game locally by typing:
-   `cd src' followed by `./freedroid'
+   `./src/freedroid` from the top dir
 
 Have fun!
 Reinhard
