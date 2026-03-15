@@ -135,6 +135,7 @@ EXTERN void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel);
 EXTERN void white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout);
 EXTERN void ScaleGraphics (float scale);
 EXTERN void ScalePic (SDL_Surface **pic, float scale);
+EXTERN SDL_Surface *RotateSurfaceNearest (SDL_Surface *src, float angle);
 EXTERN void ScaleStatRects (float scale);
 EXTERN void toggle_fullscreen (void);
 EXTERN SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);

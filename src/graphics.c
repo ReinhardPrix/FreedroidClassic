@@ -1182,6 +1182,91 @@ ScaleSurfaceNearest (SDL_Surface *src, float scale)
   return dst;
 }
 
+SDL_Surface *
+RotateSurfaceNearest (SDL_Surface *src, float angle)
+{
+  SDL_Surface *dst;
+  SDL_BlendMode blend_mode = SDL_BLENDMODE_NONE;
+  Uint8 alpha_mod = 255;
+  Uint8 r_mod = 255, g_mod = 255, b_mod = 255;
+  Uint32 color_key = 0;
+  int have_colorkey = FALSE;
+  int dst_w, dst_h;
+  int x, y;
+  float radians;
+  float s, c;
+  float abs_s, abs_c;
+  float src_cx, src_cy, dst_cx, dst_cy;
+
+  if (src == NULL)
+    return NULL;
+
+  radians = -angle * (float) M_PI / 180.0f;
+  s = sinf (radians);
+  c = cosf (radians);
+  abs_s = fabsf (s);
+  abs_c = fabsf (c);
+
+  dst_w = (int) ceilf ((float) src->w * abs_c + (float) src->h * abs_s);
+  dst_h = (int) ceilf ((float) src->w * abs_s + (float) src->h * abs_c);
+  if (dst_w < 1) dst_w = 1;
+  if (dst_h < 1) dst_h = 1;
+
+  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
+					src->format->BitsPerPixel,
+					src->format->format);
+  if (dst == NULL)
+    return NULL;
+
+  if (SDL_GetColorKey (src, &color_key) == 0)
+    have_colorkey = TRUE;
+  SDL_GetSurfaceBlendMode (src, &blend_mode);
+  SDL_GetSurfaceAlphaMod (src, &alpha_mod);
+  SDL_GetSurfaceColorMod (src, &r_mod, &g_mod, &b_mod);
+
+  if (have_colorkey)
+    SDL_FillRect (dst, NULL, color_key);
+  else if (src->format->Amask != 0)
+    SDL_FillRect (dst, NULL, SDL_MapRGBA (dst->format, 0, 0, 0, 0));
+  else
+    SDL_FillRect (dst, NULL, 0);
+
+  src_cx = ((float) src->w - 1.0f) * 0.5f;
+  src_cy = ((float) src->h - 1.0f) * 0.5f;
+  dst_cx = ((float) dst_w - 1.0f) * 0.5f;
+  dst_cy = ((float) dst_h - 1.0f) * 0.5f;
+
+  if (SDL_MUSTLOCK (src)) SDL_LockSurface (src);
+  if (SDL_MUSTLOCK (dst)) SDL_LockSurface (dst);
+
+  for (y = 0; y < dst_h; y++)
+    {
+      float dy = (float) y - dst_cy;
+
+      for (x = 0; x < dst_w; x++)
+	{
+	  float dx = (float) x - dst_cx;
+	  int src_x = (int) lroundf (c * dx + s * dy + src_cx);
+	  int src_y = (int) lroundf (-s * dx + c * dy + src_cy);
+
+	  if ((src_x >= 0) && (src_x < src->w) && (src_y >= 0) && (src_y < src->h))
+	    putpixel (dst, x, y, getpixel (src, src_x, src_y));
+	}
+    }
+
+  if (SDL_MUSTLOCK (dst)) SDL_UnlockSurface (dst);
+  if (SDL_MUSTLOCK (src)) SDL_UnlockSurface (src);
+
+  if (have_colorkey)
+    SDL_SetColorKey (dst, SDL_SRCCOLORKEY, color_key);
+
+  SDL_SetSurfaceBlendMode (dst, blend_mode);
+  SDL_SetSurfaceAlphaMod (dst, alpha_mod);
+  SDL_SetSurfaceColorMod (dst, r_mod, g_mod, b_mod);
+
+  return dst;
+}
+
 /*----------------------------------------------------------------------
  *
  *----------------------------------------------------------------------*/
