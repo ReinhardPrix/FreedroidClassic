@@ -1,5 +1,6 @@
 ## Process this file with automake to produce Makefile.in
-##AM_CFLAGS=@CFLAGS@
+
+AM_CFLAGS = -g3 -Wall -W -Werror -Wunused -Wmissing-prototypes -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -fno-common -Wnested-externs -Wno-format-zero-length -fno-strict-aliasing -Wno-unused-result -Wno-unknown-pragmas -Wno-misleading-indentation -O3
 
 bin_PROGRAMS = freedroid
 
