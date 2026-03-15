@@ -192,3 +192,19 @@ FD_WarpMouse(Uint16 x, Uint16 y)
 		return;
 	SDL_WarpMouseInWindow(fd_window, x, y);
 }
+
+void
+FD_DestroyWindow(void)
+{
+	if (fd_window)
+	{
+		SDL_DestroyWindow(fd_window);
+		fd_window = NULL;
+	}
+
+	if (fd_icon)
+	{
+		SDL_FreeSurface(fd_icon);
+		fd_icon = NULL;
+	}
+}
