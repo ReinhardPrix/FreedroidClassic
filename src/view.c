@@ -524,7 +524,7 @@ PutBullet (int BulletNummer)
       for ( i=0; i<Bulletmap[ CurBullet->type ].phases ; i++ )
 	{
 	  CurBullet->SurfacePointer[i] =
-	    rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle , 1.0 , FALSE );
+	    RotateSurfaceNearest ( Bulletmap[CurBullet->type].SurfacePointer[ i ] , CurBullet->angle );
 	}
       DebugPrintf( 1 , "\nvoid PutBullet(i): This was the first time for this bullet, so images were generated... angle=%f" , CurBullet->angle);
       CurBullet->Surfaces_were_generated=TRUE;
@@ -542,7 +542,7 @@ PutBullet (int BulletNummer)
 
   SDL_BlitSurface( CurBullet->SurfacePointer[ PhaseOfBullet ] , NULL, ne_screen , &dst );
 #else
-  tmp = rotozoomSurface( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle , 1.0 , FALSE );
+  tmp = RotateSurfaceNearest ( Bulletmap[CurBullet->type].SurfacePointer[ PhaseOfBullet ] , CurBullet->angle );
 
   // WARNING!!! PAY ATTENTION HERE!! After the rotozoom was applied to the image, it is NO
   // LONGER of dimension Block_Rect.w times Block_Rect.h, but of the dimesions of the smallest
