@@ -316,6 +316,7 @@ ChooseColor (void)
 {
   int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
   int ColorChosen = FALSE;
+  int WaitForFreshConfirm = TRUE;
   char count_text[80];
 
   Uint32 prev_count_tick, count_tick_len;
@@ -347,7 +348,11 @@ ChooseColor (void)
         OpponentColor = VIOLETT;
       }
 
-      if ( action & ACTION_CLICK ) {
+      if (!FirePressed()) {
+        WaitForFreshConfirm = FALSE;
+      }
+
+      if ( (action & ACTION_CLICK) && !WaitForFreshConfirm ) {
         ColorChosen = TRUE;
       }
 
