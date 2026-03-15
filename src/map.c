@@ -1600,6 +1600,7 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
+      /* fall through */
     case H_HALBTUERE1:
     case H_ZUTUERE:
       if (Checkpos == LIGHT)
@@ -1665,6 +1666,7 @@ IsPassable (float x, float y, int Checkpos)
 	  ret = CENTER;
 	  break;
 	}
+      /* fall through */
     case V_HALBTUERE1:
     case V_ZUTUERE:
       if (Checkpos == LIGHT)
