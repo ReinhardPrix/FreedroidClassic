@@ -67,8 +67,17 @@ InitFont (BFont_Info * Font)
 
   Font->h = Font->Surface->h;
 
-  SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY,
-		   GetPixel (Font->Surface, 0, Font->Surface->h - 1));
+  if (Font->Surface->format->Amask != 0)
+    {
+      SDL_SetColorKey (Font->Surface, 0, 0);
+      SDL_SetSurfaceBlendMode (Font->Surface, SDL_BLENDMODE_BLEND);
+      SDL_SetSurfaceAlphaMod (Font->Surface, 255);
+    }
+  else
+    {
+      SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY,
+		       GetPixel (Font->Surface, 0, Font->Surface->h - 1));
+    }
 }
 
 
@@ -192,7 +201,16 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 	  if (SDL_MUSTLOCK (Font->Surface))
 	    SDL_UnlockSurface (Font->Surface);
 
-	  SDL_SetColorKey (surface, SDL_SRCCOLORKEY, color_key);
+	  if (surface->format->Amask != 0)
+	    {
+	      SDL_SetColorKey (surface, 0, 0);
+	      SDL_SetSurfaceBlendMode (surface, SDL_BLENDMODE_BLEND);
+	      SDL_SetSurfaceAlphaMod (surface, 255);
+	    }
+	  else
+	    {
+	      SDL_SetColorKey (surface, SDL_SRCCOLORKEY, color_key);
+	    }
 	}
 
       newfont->Surface = surface;
