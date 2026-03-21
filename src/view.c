@@ -228,8 +228,8 @@ Assemble_Combat_Picture (int mask)
 
   if ( mask & DO_SCREEN_UPDATE )
     {
-      SDL_UpdateRect (ne_screen, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
-      SDL_UpdateRect (ne_screen, TxtRect.x, TxtRect.y, TxtRect.w, TxtRect.h);
+      FD_UpdateRect (ne_screen, User_Rect.x, User_Rect.y, User_Rect.w, User_Rect.h);
+      FD_UpdateRect (ne_screen, TxtRect.x, TxtRect.y, TxtRect.w, TxtRect.h);
     }
 
   SDL_SetClipRect (ne_screen, NULL);
@@ -724,7 +724,7 @@ DisplayBanner (const char* left, const char* right,  int flags )
 
       // finally update the whole top status box
       if ( !(flags & BANNER_NO_SDL_UPDATE ) )
-	SDL_UpdateRect( ne_screen, 0, 0, Banner_Rect.w , Banner_Rect.h );
+	FD_UpdateRect( ne_screen, 0, 0, Banner_Rect.w , Banner_Rect.h );
       BannerIsDestroyed=FALSE;
       return;
     } /* if */

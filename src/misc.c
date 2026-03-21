@@ -1169,7 +1169,7 @@ init_progress (const char *text)
 
   printf_SDL (ne_screen, dst.x, dst.y, text);
 
-  SDL_Flip (ne_screen);
+  FD_Flip (ne_screen);
 
 } // init_progress()
 
@@ -1198,7 +1198,7 @@ update_progress (int percent)
   //  Fill_Rect (dst, progress_color);
   SDL_BlitSurface (progress_filler_pic, &src, ne_screen, &dst);
 
-  SDL_UpdateRects (ne_screen, 1, &dst);
+  FD_UpdateRects (ne_screen, 1, &dst);
 
   return;
 
