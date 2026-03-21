@@ -113,38 +113,6 @@ FD_WM_SetIcon(SDL_Surface *icon, Uint8 *mask)
 		SDL_SetWindowIcon(fd_window, fd_icon);
 }
 
-SDL_Surface *
-FD_DisplayFormat(SDL_Surface *surface)
-{
-	SDL_PixelFormat *fmt;
-
-	if (!surface)
-		return NULL;
-
-	if (fd_window)
-	{
-		SDL_Surface *window_surface = SDL_GetWindowSurface(fd_window);
-		if (window_surface)
-			return SDL_ConvertSurface(surface, window_surface->format, 0);
-	}
-
-	fmt = SDL_AllocFormat(SDL_PIXELFORMAT_ARGB8888);
-	if (!fmt)
-		return NULL;
-	SDL_Surface *ret = SDL_ConvertSurface(surface, fmt, 0);
-	SDL_FreeFormat(fmt);
-	return ret;
-}
-
-SDL_Surface *
-FD_DisplayFormatAlpha(SDL_Surface *surface)
-{
-	if (!surface)
-		return NULL;
-
-	return SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
-}
-
 int
 FD_SetGamma(float red, float green, float blue)
 {

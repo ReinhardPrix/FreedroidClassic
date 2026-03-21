@@ -13,8 +13,6 @@ void FD_UpdateRect(SDL_Surface *screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h);
 void FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects);
 void FD_WM_SetCaption(const char *title, const char *icon);
 void FD_WM_SetIcon(SDL_Surface *icon, Uint8 *mask);
-SDL_Surface *FD_DisplayFormat(SDL_Surface *surface);
-SDL_Surface *FD_DisplayFormatAlpha(SDL_Surface *surface);
 int FD_SetGamma(float red, float green, float blue);
 void FD_WarpMouse(Uint16 x, Uint16 y);
 void FD_DestroyWindow(void);

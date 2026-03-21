@@ -841,7 +841,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   if (!droid_background) // first call
     {
       tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
-      droid_background = FD_DisplayFormat (tmp);
+      droid_background = SDL_ConvertSurface (tmp, tmp->format, 0);
       SDL_FreeSurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       Copy_Rect (Portrait_Rect, src_rect);
@@ -869,11 +869,11 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  droid_pics = FD_DisplayFormat (tmp);
+	  droid_pics = SDL_ConvertSurface (tmp, tmp->format, 0);
 	} // else assume it's png ;)
       else
 	{
-	  droid_pics = FD_DisplayFormatAlpha (tmp);
+	  droid_pics = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
 	}
       SDL_FreeSurface (tmp);
       SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);

@@ -753,7 +753,7 @@ InitiateMenu (bool with_droids)
   MakeGridOnScreen( NULL );
 
   if (Menu_Background) SDL_FreeSurface (Menu_Background);
-  Menu_Background = FD_DisplayFormat (ne_screen);  // keep a global copy of background
+  Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);  // keep a global copy of background
 
   SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
   SetCurrentFont ( Menu_BFont );
