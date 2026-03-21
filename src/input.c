@@ -469,8 +469,8 @@ update_input (void)
 	  break;
 
 	case SDL_MOUSEMOTION:
-	  input_axis.x = event.button.x - UserCenter_x + 16;
-	  input_axis.y = event.button.y - UserCenter_y + 16;
+	  input_axis.x = event.motion.x - UserCenter_x + 16;
+	  input_axis.y = event.motion.y - UserCenter_y + 16;
 
 	  last_mouse_event = SDL_GetTicks ();
 
@@ -480,6 +480,8 @@ update_input (void)
 	case SDL_MOUSEBUTTONDOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
+	      input_axis.x = event.button.x - UserCenter_x + 16;
+	      input_axis.y = event.button.y - UserCenter_y + 16;
 	      set_input_state(MOUSE_BUTTON1, PRESSED);
 	      axis_is_active = TRUE;
 	    }
