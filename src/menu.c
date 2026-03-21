@@ -584,7 +584,7 @@ const char *handle_LE_Name ( MenuAction_t action )
   if ( action == ACTION_CLICK )
     {
       DisplayText ("New level name: ", Menu_Rect.x-2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect );
-      FD_Flip( ne_screen );
+      SDL_UpdateWindowSurface(FD_GetWindow());
       free ( CurLevel->Levelname );
       CurLevel->Levelname = GetString(15, 2);
       InitiateMenu (FALSE);
@@ -602,7 +602,7 @@ const char *handle_LE_Music ( MenuAction_t action )
   if ( action == ACTION_CLICK )
     {
       DisplayText ("Music filename: ", Menu_Rect.x - 2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect);
-      FD_Flip( ne_screen );
+      SDL_UpdateWindowSurface(FD_GetWindow());
       free ( CurLevel->Background_Song_Name );
       CurLevel->Background_Song_Name = GetString(20, 2);
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
@@ -633,7 +633,7 @@ const char *handle_LE_SaveShip ( MenuAction_t action )
       char output[512];
       snprintf ( output, sizeof(output)-1, "Ship saved as '%s'", fname );
       CenteredPutString (ne_screen, 3*FontHeight(Menu_BFont), output );
-      FD_Flip ( ne_screen );
+      SDL_UpdateWindowSurface(FD_GetWindow());
       wait_for_key_pressed();
       InitiateMenu (FALSE);
     }
@@ -686,7 +686,7 @@ const char *handle_QuitGame ( MenuAction_t action )
   int text_x = User_Rect.x + (User_Rect.w - text_width)/2;
   int text_y = User_Rect.y + (User_Rect.h - fheight)/2;
   PutString (ne_screen, text_x, text_y, quit_string);
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
 #ifdef GCW0
   while ( (!Gcw0AnyButtonPressed()) ) SDL_Delay(1);
@@ -910,12 +910,12 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
             }
           PutInfluence (influ_x, menu_y + (menu_pos - 0.5) * fheight);
 #ifndef ANDROID
-          FD_Flip( ne_screen );
+          SDL_UpdateWindowSurface(FD_GetWindow());
 #endif
           need_update = FALSE;
         }
 #ifdef ANDROID
-      FD_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
+      SDL_UpdateWindowSurface(FD_GetWindow());	// for responsive input on Android, we need to run this every cycle
 #endif
       action = getMenuAction( 250 );
 
@@ -1074,7 +1074,7 @@ ShowCredits (void)
   printf_SDL (ne_screen, col2, -1, "Android");
 
 
-  FD_Flip( ne_screen );
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   wait_for_key_pressed();
 
@@ -1221,7 +1221,7 @@ Display_Key_Config (int selx, int sely)
       posy ++;
     }
 
-  FD_Flip( ne_screen );
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   return;
 } // Display_Key_Config

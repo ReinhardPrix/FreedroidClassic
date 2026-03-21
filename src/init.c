@@ -903,7 +903,7 @@ InitFreedroid (int argc, char *const argv[])
   Init_Video ();
 
   DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL)); // show title pic
-  FD_Flip(ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   Load_Fonts (); // we need this for progress-meter!
 
@@ -1049,7 +1049,7 @@ ThouArtVictorious(void)
   Copy_Rect(Full_User_Rect, rect);
   SDL_SetClipRect ( ne_screen, NULL );
   MakeGridOnScreen (&rect);
-  FD_Flip(ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
   rect.x += 10;
   rect.w -= 20;  //leave some border
   SetCurrentFont( Para_BFont);
@@ -1122,7 +1122,7 @@ ThouArtDefeated (void)
   DisplayText ("Transmission", dst.x - h, dst.y - h, &User_Rect);
   DisplayText ("Terminated",  dst.x -h, dst.y + dst.h, &User_Rect);
   printf_SDL(ne_screen, -1, -1, "\n");
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   now = SDL_GetTicks ();
 
@@ -1324,7 +1324,7 @@ Win32Disclaimer (void)
 It is developed on a free operating system (GNU/Linux) using exclusively free tools. \
 For more information about Free Software see the GPL licence (in the file COPYING)\n\
 or visit http://www.gnu.org.\n\n\n Press fire to play.", rect.x, rect.y, &rect);
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   wait_for_key_pressed();
 

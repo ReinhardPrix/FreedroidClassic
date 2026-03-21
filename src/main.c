@@ -108,7 +108,7 @@ main (int argc, char * argv[])
 
       ClearGraphMem();
       DisplayBanner (NULL, NULL, BANNER_FORCE_UPDATE |BANNER_NO_SDL_UPDATE);
-      FD_Flip(ne_screen);
+      SDL_UpdateWindowSurface(FD_GetWindow());
 
       GameOver = FALSE;
 

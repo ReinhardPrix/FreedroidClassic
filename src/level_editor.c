@@ -260,7 +260,7 @@ LevelEditor(void)
 		       Full_User_Rect.y+Full_User_Rect.h - FontHeight(Font0_BFont),
 		       "Press F1 for keymap");
 
-      FD_Flip( ne_screen );
+      SDL_UpdateWindowSurface(FD_GetWindow());
 
       //--------------------
       // If the user of the Level editor pressed some cursor keys, move the
@@ -298,7 +298,7 @@ LevelEditor(void)
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "P...toggle wayPOINT on/off" ); k++;
 	  PutString ( ne_screen , KeymapOffset , (k) * FontHeight(Menu_BFont)  , "C...start/end waypoint CONNECTION" ); k++;
 
-	  FD_Flip ( ne_screen );
+	  SDL_UpdateWindowSurface(FD_GetWindow());
 	  while (!FirePressedR() && !EscapePressedR() && !ReturnPressedR() ) SDL_Delay(1);
 	}
 
@@ -312,7 +312,7 @@ LevelEditor(void)
       if ( KeyIsPressedR ('e') )
 	{
 	  CenteredPutString   ( ne_screen ,  6*FontHeight(Menu_BFont), "Please enter new value: ");
-	  FD_Flip( ne_screen );
+	  SDL_UpdateWindowSurface(FD_GetWindow());
 	  NumericInputString = GetString (10, 2);
 	  sscanf( NumericInputString , "%d" , &SpecialMapValue );
 	  if ( SpecialMapValue >= NUM_MAP_BLOCKS ) SpecialMapValue=0;

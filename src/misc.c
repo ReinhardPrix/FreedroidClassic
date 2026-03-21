@@ -1169,7 +1169,7 @@ init_progress (const char *text)
 
   printf_SDL (ne_screen, dst.x, dst.y, text);
 
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
 } // init_progress()
 

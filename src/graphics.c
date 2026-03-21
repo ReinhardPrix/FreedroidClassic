@@ -349,7 +349,7 @@ TakeScreenshot(void)
   Number_Of_Screenshot++;
   DisplayBanner ("Screenshot", NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
   MakeGridOnScreen(NULL);
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
   Play_Sound (SCREENSHOT_SOUND);
 
   while (cmd_is_active(CMD_SCREENSHOT)) SDL_Delay(1);
@@ -1046,7 +1046,7 @@ ClearGraphMem ( void )
 
   // Now we fill the screen with black color...
   SDL_FillRect( ne_screen , NULL , 0 );
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   return;
 } // ClearGraphMem( void )

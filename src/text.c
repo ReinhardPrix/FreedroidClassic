@@ -223,7 +223,7 @@ ScrollText (char *Text, SDL_Rect *rect)
 	  ret = 0;  /* Text has been scrolled outside Rect */
 	  break;
 	}
-      FD_Flip (ne_screen);
+      SDL_UpdateWindowSurface(FD_GetWindow());
 
       if (!GameConfig.HogCPU)
 	SDL_Delay(1);
@@ -275,7 +275,7 @@ ScrollText (char *Text, SDL_Rect *rect)
     } /* while 1 */
 
   SDL_BlitSurface (Background, NULL, ne_screen, NULL);
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
   SDL_FreeSurface( Background );
 
   return (ret);
@@ -509,7 +509,7 @@ GetString (int MaxLen, int echo)
       Copy_Rect( store_rect, tmp_rect);
       SDL_BlitSurface (store, NULL, ne_screen, &tmp_rect);
       PutString (ne_screen, x0, y0, input);
-      FD_Flip (ne_screen);
+      SDL_UpdateWindowSurface(FD_GetWindow());
 
 #ifdef ARCADEINPUT
       if ( inputchar < 0 ) inputchar+=(ARCADEINPUTMAX+1); //+1 because we chose (>)1 past the point...
@@ -654,7 +654,7 @@ putchar_SDL (SDL_Surface *Surface, int x, int y, int c)
 
   ret = PutChar (Surface, x, y, c);
 
-  FD_Flip (Surface);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   return (ret);
 }

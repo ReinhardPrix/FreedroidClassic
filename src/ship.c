@@ -278,7 +278,7 @@ ShowLifts (int levelnum, int liftrow)
       SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
     }
 
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   return;
 
@@ -426,12 +426,12 @@ EnterKonsole (void)
       if ( need_update ) {
         PaintConsoleMenu (pos, UPDATE_ONLY);
 #ifndef ANDROID
-        FD_Flip (ne_screen);
+        SDL_UpdateWindowSurface(FD_GetWindow());
 #endif
         need_update = FALSE;
       }
 #ifdef ANDROID
-      FD_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
+      SDL_UpdateWindowSurface(FD_GetWindow());	// for responsive input on Android, we need to run this every cycle
 #endif
       SDL_Delay(1);	// don't hog CPU
     } // while(!finished)
@@ -514,7 +514,7 @@ ShowDeckMap (void)
 
   Assemble_Combat_Picture( ONLY_SHOW_MAP|SHOW_FULL_MAP );
 
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
@@ -806,7 +806,7 @@ Sensors  1: %s\n\
       FD_UpdateRects (ne_screen, 1, &Cons_Text_Rect);
     }
   else
-    FD_Flip (ne_screen);
+    SDL_UpdateWindowSurface(FD_GetWindow());
 
   return;
 
