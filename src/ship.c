@@ -358,8 +358,9 @@ EnterKonsole (void)
               if (show_cursor)
                 {
                   mousemove_buf = last_mouse_event;
-                  FD_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-                                Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  SDL_WarpMouseInWindow (FD_GetWindow(),
+                                         Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                         Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
@@ -376,8 +377,9 @@ EnterKonsole (void)
               if (show_cursor)
                 {
                   mousemove_buf = last_mouse_event;
-                  FD_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-                                Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  SDL_WarpMouseInWindow (FD_GetWindow(),
+                                         Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                         Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
