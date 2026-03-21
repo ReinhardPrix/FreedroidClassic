@@ -185,7 +185,7 @@ UpdateHighscores (void)
   DisplayText ("Act = toggle case, Fire to enter,",  dst.x - 5*h, dst.y + dst.h + h, &User_Rect);
   DisplayText ("Start when ready: ",  dst.x - 5*h, dst.y + dst.h + h*2, &User_Rect);
 #endif
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   SDL_SetClipRect (ne_screen, NULL);
 #if !defined ANDROID
@@ -262,7 +262,7 @@ ShowHighscores (void)
       if (Highscores[i]->score >= 0)
 	PrintString (ne_screen, x3, y0 + (i+2)*height, "%ld", Highscores[i]->score);
     }
-  FD_Flip (ne_screen);
+  SDL_UpdateWindowSurface(FD_GetWindow());
 
   wait_for_key_pressed();
 

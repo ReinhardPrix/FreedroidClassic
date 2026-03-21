@@ -8,13 +8,13 @@ extern "C" {
 #endif
 
 SDL_Surface *FD_SetVideoMode(int width, int height, int bpp, Uint32 flags);
-int FD_Flip(SDL_Surface *screen);
 void FD_UpdateRect(SDL_Surface *screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h);
 void FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects);
 void FD_WM_SetCaption(const char *title, const char *icon);
 void FD_WM_SetIcon(SDL_Surface *icon, Uint8 *mask);
 int FD_SetGamma(float red, float green, float blue);
 void FD_WarpMouse(Uint16 x, Uint16 y);
+SDL_Window *FD_GetWindow(void);
 void FD_DestroyWindow(void);
 
 #ifdef __cplusplus

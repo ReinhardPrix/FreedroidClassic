@@ -40,15 +40,6 @@ FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 	return SDL_GetWindowSurface(fd_window);
 }
 
-int
-FD_Flip(SDL_Surface *screen)
-{
-	(void)screen;
-	if (!fd_window)
-		return -1;
-	return SDL_UpdateWindowSurface(fd_window);
-}
-
 void
 FD_UpdateRect(SDL_Surface *screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h)
 {
@@ -133,6 +124,12 @@ FD_WarpMouse(Uint16 x, Uint16 y)
 	if (!fd_window)
 		return;
 	SDL_WarpMouseInWindow(fd_window, x, y);
+}
+
+SDL_Window *
+FD_GetWindow(void)
+{
+	return fd_window;
 }
 
 void
