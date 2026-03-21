@@ -603,9 +603,6 @@ GetString (int MaxLen, int echo)
 		}
 	      break;
 	    }
-
-	  SDL_PushEvent (&event);
-	  update_input ();
 	}
 #endif // ARCADEINPUT
     } /* while(!finished) */
