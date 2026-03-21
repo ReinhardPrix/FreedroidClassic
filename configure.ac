@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroid, 1.2.4)
+AC_INIT(freedroid, 1.9.0)
 
 dnl Detect the canonical host and target build environment
 
