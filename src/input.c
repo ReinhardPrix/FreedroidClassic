@@ -503,6 +503,15 @@ update_input (void)
 	  last_mouse_event = SDL_GetTicks();
 	  break;
 
+	case SDL_MOUSEWHEEL:
+	  if (event.wheel.y > 0)
+	    WheelUpEvents ++;
+	  else if (event.wheel.y < 0)
+	    WheelDownEvents ++;
+
+	  last_mouse_event = SDL_GetTicks();
+	  break;
+
         case SDL_MOUSEBUTTONUP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
@@ -607,6 +616,13 @@ getchar_raw (void)
 	  else if (event.button.button == SDL_BUTTON_WHEELUP)
 	    Returnkey = MOUSE_WHEELUP;
 	  else if (event.button.button == SDL_BUTTON_WHEELDOWN)
+	    Returnkey = MOUSE_WHEELDOWN;
+	  break;
+
+	case SDL_MOUSEWHEEL:
+	  if (event.wheel.y > 0)
+	    Returnkey = MOUSE_WHEELUP;
+	  else if (event.wheel.y < 0)
 	    Returnkey = MOUSE_WHEELDOWN;
 	  break;
 
