@@ -203,7 +203,7 @@ ScrollText (char *Text, SDL_Rect *rect)
   Uint32 prev_tick, now;
   bool just_started = TRUE;
 
-  Background = FD_DisplayFormat( ne_screen );
+  Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);
 
   // first_tick = SDL_GetTicks ();
 

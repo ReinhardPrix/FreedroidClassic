@@ -457,7 +457,7 @@ SetCombatScaleTo(float scale)
           Terminate (ERR);
         }
 	// and optimize
-	MapBlockSurfacePointer[j][i]=FD_DisplayFormat (tmp);
+	MapBlockSurfacePointer[j][i] = SDL_ConvertSurface (tmp, tmp->format, 0);
 	SDL_FreeSurface(tmp); // free the old surface
       }
 
@@ -687,7 +687,7 @@ InitPictures (void)
     {
       //  create the tmp block-build storage
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = FD_DisplayFormatAlpha (tmp);
+      BuildBlock = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_FreeSurface (tmp);
 
@@ -903,12 +903,12 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
         {
           Uint8 r, g, b;
 
-          ret = FD_DisplayFormatAlpha (tmp);
+          ret = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
           SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
           fill_color = SDL_MapRGB (ret->format, r, g, b);
         }
       else
-        ret = FD_DisplayFormat (tmp);
+        ret = SDL_ConvertSurface (tmp, tmp->format, 0);
       SDL_FillRect (ret, NULL, fill_color);
       SDL_FreeSurface (tmp);
     }
@@ -1375,13 +1375,13 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 
   // produce the tiles
   tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, vid_bpp, 0, 0, 0, 0);
-  tmp2 = FD_DisplayFormat (tmp);
+  tmp2 = SDL_ConvertSurface (tmp, tmp->format, 0);
   SDL_FreeSurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
   //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
   for (int i=0; i< NOISE_TILES; i++)
     {
-      noise_tiles[i] = FD_DisplayFormat(tmp2);
+      noise_tiles[i] = SDL_ConvertSurface (tmp2, tmp2->format, 0);
 
       for (x = 0; x < rect->w; x++)
 	for (y = 0; y < rect->h; y++)
@@ -1546,7 +1546,7 @@ ScaleGraphics (float scale)
       //  create a new tmp block-build storage
       FreeIfUsed (BuildBlock);
       tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = FD_DisplayFormatAlpha (tmp);
+      BuildBlock = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_FreeSurface (tmp);
 
