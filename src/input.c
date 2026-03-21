@@ -734,7 +734,7 @@ int
 any_key_just_pressed (void)
 {
 #ifdef ANDROID
-    SDL_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
+    FD_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
 #endif
   update_input();
 
@@ -757,7 +757,7 @@ bool
 any_key_is_pressedR (void)
 {
 #ifdef ANDROID
-  SDL_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
+  FD_Flip(ne_screen);	// make sure we keep updating screen to read out Android inputs
 #endif
   update_input();
 

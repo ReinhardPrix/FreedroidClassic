@@ -93,18 +93,6 @@ void FD_DestroyWindow(void);
 #define SDLK_EURO SDLK_CURRENCYUNIT
 #endif
 
-#define SDL_SetVideoMode FD_SetVideoMode
-#define SDL_Flip FD_Flip
-#define SDL_UpdateRect FD_UpdateRect
-#define SDL_UpdateRects FD_UpdateRects
-#define SDL_WM_SetCaption FD_WM_SetCaption
-#define SDL_WM_SetIcon FD_WM_SetIcon
-#define SDL_DisplayFormat FD_DisplayFormat
-#define SDL_DisplayFormatAlpha FD_DisplayFormatAlpha
-#define SDL_SetGamma FD_SetGamma
-#define SDL_SetAlpha FD_SetAlpha
-#define SDL_WarpMouse FD_WarpMouse
-
 typedef SDL_Keymod SDLMod;
 
 #endif

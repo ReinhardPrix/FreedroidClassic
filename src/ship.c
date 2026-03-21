@@ -278,7 +278,7 @@ ShowLifts (int levelnum, int liftrow)
       SDL_BlitSurface (ship_on_pic, &src, ne_screen, &dst);
     }
 
-  SDL_Flip (ne_screen);
+  FD_Flip (ne_screen);
 
   return;
 
@@ -358,8 +358,8 @@ EnterKonsole (void)
               if (show_cursor)
                 {
                   mousemove_buf = last_mouse_event;
-                  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-                                 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  FD_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
@@ -376,8 +376,8 @@ EnterKonsole (void)
               if (show_cursor)
                 {
                   mousemove_buf = last_mouse_event;
-                  SDL_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
-                                 Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
+                  FD_WarpMouse (Cons_Menu_Rects[pos].x+Cons_Menu_Rects[pos].w/2,
+                                Cons_Menu_Rects[pos].y+Cons_Menu_Rects[pos].h/2);
                   update_input ();  // this sets a new last_mouse_event
                   last_mouse_event = mousemove_buf; //... which we override.. ;)
                 }
@@ -426,12 +426,12 @@ EnterKonsole (void)
       if ( need_update ) {
         PaintConsoleMenu (pos, UPDATE_ONLY);
 #ifndef ANDROID
-        SDL_Flip (ne_screen);
+        FD_Flip (ne_screen);
 #endif
         need_update = FALSE;
       }
 #ifdef ANDROID
-      SDL_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
+      FD_Flip( ne_screen );	// for responsive input on Android, we need to run this every cycle
 #endif
       SDL_Delay(1);	// don't hog CPU
     } // while(!finished)
@@ -514,7 +514,7 @@ ShowDeckMap (void)
 
   Assemble_Combat_Picture( ONLY_SHOW_MAP|SHOW_FULL_MAP );
 
-  SDL_Flip (ne_screen);
+  FD_Flip (ne_screen);
 
   Me.pos.x=tmp.x;
   Me.pos.y=tmp.y;
@@ -802,11 +802,11 @@ Sensors  1: %s\n\
 
   if (flags & UPDATE_ONLY)
     {
-      SDL_UpdateRects (ne_screen, 1, &Cons_Header_Rect);
-      SDL_UpdateRects (ne_screen, 1, &Cons_Text_Rect);
+      FD_UpdateRects (ne_screen, 1, &Cons_Header_Rect);
+      FD_UpdateRects (ne_screen, 1, &Cons_Text_Rect);
     }
   else
-    SDL_Flip (ne_screen);
+    FD_Flip (ne_screen);
 
   return;
 
@@ -841,7 +841,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   if (!droid_background) // first call
     {
       tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
-      droid_background = SDL_DisplayFormat (tmp);
+      droid_background = FD_DisplayFormat (tmp);
       SDL_FreeSurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       Copy_Rect (Portrait_Rect, src_rect);
@@ -869,11 +869,11 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  droid_pics = SDL_DisplayFormat (tmp);
+	  droid_pics = FD_DisplayFormat (tmp);
 	} // else assume it's png ;)
       else
 	{
-	  droid_pics = SDL_DisplayFormatAlpha (tmp);
+	  droid_pics = FD_DisplayFormatAlpha (tmp);
 	}
       SDL_FreeSurface (tmp);
       SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
@@ -914,7 +914,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       SDL_BlitSurface (droid_background, NULL, ne_screen, &dst);
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
-      SDL_UpdateRects (ne_screen, 1, &dst);
+      FD_UpdateRects (ne_screen, 1, &dst);
 
       last_frame_time = SDL_GetTicks();
     }

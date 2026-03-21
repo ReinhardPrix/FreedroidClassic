@@ -208,7 +208,7 @@ Takeover (int enemynum)
       InventPlayground ();
 
       ShowPlayground ();
-      SDL_Flip (ne_screen);
+      FD_Flip (ne_screen);
 
       ChooseColor ();
       wait_for_all_keys_released();
@@ -279,13 +279,13 @@ Takeover (int enemynum)
 
       DisplayBanner (message, NULL , 0 );
       ShowPlayground ();
-      SDL_Flip (ne_screen);
+      FD_Flip (ne_screen);
 
       wait_for_all_keys_released();
       now = SDL_GetTicks();
       while ((!FirePressedR()) && (SDL_GetTicks() - now < SHOW_WAIT) ) {
 #ifdef ANDROID
-        SDL_Flip(ne_screen);
+        FD_Flip(ne_screen);
 #endif
         SDL_Delay(1);
       }
@@ -371,7 +371,7 @@ ChooseColor (void)
       if (countdown == 0)
 	ColorChosen = TRUE;
 
-      SDL_Flip (ne_screen);
+      FD_Flip (ne_screen);
       SDL_Delay(1); // don't hog CPU
     } /* while(!ColorChosen) */
 
@@ -489,7 +489,7 @@ PlayGame (void)
           ShowPlayground ();
 	} // if do_update_move
 
-      SDL_Flip (ne_screen);
+      FD_Flip (ne_screen);
       SDL_Delay(1);
     }	/* while !FinishTakeover */
 
@@ -517,7 +517,7 @@ PlayGame (void)
       ProcessDisplayColumn ();
       ShowPlayground ();
       SDL_Delay(1);
-      SDL_Flip (ne_screen);
+      FD_Flip (ne_screen);
     }	/* while (countdown) */
 
   wait_for_all_keys_released();
