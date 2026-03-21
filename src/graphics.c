@@ -623,8 +623,12 @@ InitPictures (void)
       InfluencerSurfacePointer[col] = Load_Block (NULL, 0, col, &OrigBlock_Rect, 0);
       EnemySurfacePointer[col] = Load_Block (NULL, 1, col, &OrigBlock_Rect, 0);
       /* Droid pics are only used in _internal_ blits ==> clear per-surf alpha */
-      FD_SetAlpha (InfluencerSurfacePointer[col], 0, 0);
-      FD_SetAlpha (EnemySurfacePointer[col], 0, 0);
+      SDL_SetSurfaceBlendMode (InfluencerSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (InfluencerSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (InfluencerSurfacePointer[col], 0);
+      SDL_SetSurfaceBlendMode (EnemySurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (EnemySurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (EnemySurfacePointer[col], 0);
     }
 
   //  SDL_SetAlpha( Me.pic, SDL_SRCALPHA, SDL_ALPHA_OPAQUE);
@@ -882,7 +886,9 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
 
   if (usealpha)
     {
-      FD_SetAlpha (pic, 0, 0);	/* clear per-surf alpha for internal blit */
+      SDL_SetSurfaceBlendMode (pic, SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (pic, 255);
+      SDL_SetSurfaceRLE (pic, 0);	/* clear per-surf alpha for internal blit */
       SDL_GetSurfaceBlendMode(pic, &old_blend_mode);
       SDL_SetSurfaceBlendMode(pic, SDL_BLENDMODE_NONE);
       ret = SDL_CreateRGBSurfaceWithFormat (0, dim.w, dim.h, 32, SDL_PIXELFORMAT_ARGB8888);
@@ -912,7 +918,11 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
   if (usealpha)
     SDL_SetSurfaceBlendMode(pic, old_blend_mode);
   if (usealpha)
-    FD_SetAlpha (ret, SDL_SRCALPHA | SDL_RLEACCEL, SDL_ALPHA_OPAQUE);
+    {
+      SDL_SetSurfaceBlendMode (ret, SDL_BLENDMODE_BLEND);
+      SDL_SetSurfaceAlphaMod (ret, SDL_ALPHA_OPAQUE);
+      SDL_SetSurfaceRLE (ret, 1);
+    }
   else if (use_colorkey)
     {
       Uint8 r, g, b;
@@ -1449,8 +1459,12 @@ ScaleGraphics (float scale)
   for (col = 0; col < 10; col++)
     {
       /* Digits are only used in _internal_ blits ==> clear per-surf alpha */
-      FD_SetAlpha (InfluDigitSurfacePointer[col], 0, 0);
-      FD_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0);
+      SDL_SetSurfaceBlendMode (InfluDigitSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (InfluDigitSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (InfluDigitSurfacePointer[col], 0);
+      SDL_SetSurfaceBlendMode (EnemyDigitSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (EnemyDigitSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (EnemyDigitSurfacePointer[col], 0);
     }
   if (scale == 1.0)
     return;
@@ -1482,8 +1496,12 @@ ScaleGraphics (float scale)
       ScalePic (&InfluencerSurfacePointer[col], scale);
       ScalePic (&EnemySurfacePointer[col], scale);
       /* Droid pics are only used in _internal_ blits ==> clear per-surf alpha */
-      FD_SetAlpha (InfluencerSurfacePointer[col], 0, 0);
-      FD_SetAlpha (EnemySurfacePointer[col], 0, 0);
+      SDL_SetSurfaceBlendMode (InfluencerSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (InfluencerSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (InfluencerSurfacePointer[col], 0);
+      SDL_SetSurfaceBlendMode (EnemySurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (EnemySurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (EnemySurfacePointer[col], 0);
     }
 
   //  printf_SDL (ne_screen, -1, -1, ".");
@@ -1506,8 +1524,12 @@ ScaleGraphics (float scale)
       ScalePic (&InfluDigitSurfacePointer[col], scale);
       ScalePic (&EnemyDigitSurfacePointer[col], scale);
       /* Digits are only used in _internal_ blits ==> clear per-surf alpha */
-      FD_SetAlpha (InfluDigitSurfacePointer[col], 0, 0);
-      FD_SetAlpha (EnemyDigitSurfacePointer[col], 0, 0);
+      SDL_SetSurfaceBlendMode (InfluDigitSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (InfluDigitSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (InfluDigitSurfacePointer[col], 0);
+      SDL_SetSurfaceBlendMode (EnemyDigitSurfacePointer[col], SDL_BLENDMODE_NONE);
+      SDL_SetSurfaceAlphaMod (EnemyDigitSurfacePointer[col], 255);
+      SDL_SetSurfaceRLE (EnemyDigitSurfacePointer[col], 0);
     }
   //  printf_SDL (ne_screen, -1, -1, ".");
 

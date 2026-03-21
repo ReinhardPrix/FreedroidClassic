@@ -159,32 +159,6 @@ FD_SetGamma(float red, float green, float blue)
 	return SDL_SetWindowBrightness(fd_window, avg);
 }
 
-int
-FD_SetAlpha(SDL_Surface *surface, Uint32 flags, Uint8 alpha)
-{
-
-	if (!surface)
-		return -1;
-
-	if (flags & SDL_SRCALPHA)
-	{
-		SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
-		SDL_SetSurfaceAlphaMod(surface, alpha);
-	}
-	else
-	{
-		SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_NONE);
-		SDL_SetSurfaceAlphaMod(surface, 255);
-	}
-
-	if (flags & SDL_RLEACCEL)
-		SDL_SetSurfaceRLE(surface, 1);
-	else
-		SDL_SetSurfaceRLE(surface, 0);
-
-	return 0;
-}
-
 void
 FD_WarpMouse(Uint16 x, Uint16 y)
 {
