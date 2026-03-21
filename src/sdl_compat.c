@@ -118,14 +118,6 @@ FD_SetGamma(float red, float green, float blue)
 	return SDL_SetWindowBrightness(fd_window, avg);
 }
 
-void
-FD_WarpMouse(Uint16 x, Uint16 y)
-{
-	if (!fd_window)
-		return;
-	SDL_WarpMouseInWindow(fd_window, x, y);
-}
-
 SDL_Window *
 FD_GetWindow(void)
 {
