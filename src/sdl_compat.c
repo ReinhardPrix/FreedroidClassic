@@ -1,19 +1,6 @@
 #include "system.h"
 
 static SDL_Window *fd_window = NULL;
-static char fd_title[128] = "Freedroid";
-static SDL_Surface *fd_icon = NULL;
-
-static void
-FD_ApplyWindowState(void)
-{
-	if (!fd_window)
-		return;
-
-	SDL_SetWindowTitle(fd_window, fd_title);
-	if (fd_icon)
-		SDL_SetWindowIcon(fd_window, fd_icon);
-}
 
 SDL_Surface *
 FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
@@ -31,12 +18,11 @@ FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 		fd_window = NULL;
 	}
 
-	fd_window = SDL_CreateWindow(fd_title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	fd_window = SDL_CreateWindow("Freedroid", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 					 width, height, window_flags);
 	if (!fd_window)
 		return NULL;
 
-	FD_ApplyWindowState();
 	return SDL_GetWindowSurface(fd_window);
 }
 
@@ -76,34 +62,6 @@ FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects)
 	SDL_UpdateWindowSurfaceRects(fd_window, rects, numrects);
 }
 
-void
-FD_WM_SetCaption(const char *title, const char *icon)
-{
-	(void)icon;
-	if (title)
-	{
-		snprintf(fd_title, sizeof(fd_title), "%s", title);
-		fd_title[sizeof(fd_title) - 1] = '\0';
-	}
-	if (fd_window)
-		SDL_SetWindowTitle(fd_window, fd_title);
-}
-
-void
-FD_WM_SetIcon(SDL_Surface *icon, Uint8 *mask)
-{
-	(void)mask;
-	if (fd_icon)
-	{
-		SDL_FreeSurface(fd_icon);
-		fd_icon = NULL;
-	}
-	if (icon)
-		fd_icon = SDL_ConvertSurface(icon, icon->format, 0);
-	if (fd_window && fd_icon)
-		SDL_SetWindowIcon(fd_window, fd_icon);
-}
-
 int
 FD_SetGamma(float red, float green, float blue)
 {
@@ -131,11 +89,5 @@ FD_DestroyWindow(void)
 	{
 		SDL_DestroyWindow(fd_window);
 		fd_window = NULL;
-	}
-
-	if (fd_icon)
-	{
-		SDL_FreeSurface(fd_icon);
-		fd_icon = NULL;
 	}
 }

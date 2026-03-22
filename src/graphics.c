@@ -51,6 +51,7 @@ char *portrait_raw_mem[NUM_DROIDS];
 // local prototypes
 void PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel);
 static SDL_Surface *ScaleSurfaceNearest (SDL_Surface *src, float scale);
+static void ApplyWindowMetadata (void);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
 SDL_RWops *load_raw_pic (const char *fpath, char **raw_mem );
@@ -945,7 +946,6 @@ Init_Video (void)
 {
   char vid_driver[81];
   Uint32 vid_flags;  		/* flags for SDL video mode */
-  char *fpath;
   SDL_DisplayMode dm;
 
   /* Initialize the SDL library */
@@ -996,28 +996,13 @@ Init_Video (void)
   vid_flags = 0;
   if (GameConfig.UseFullscreen) vid_flags |= SDL_FULLSCREEN;
 
-  {
-      FD_WM_SetCaption ("Freedroid", "");
-      fpath = find_file (ICON_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
-      if ( fpath == NULL ) {
-        DebugPrintf ( 0, "Could not find icon file '%s'\n", ICON_FILE );
-      } else {
-        SDL_Surface *img = IMG_Load (fpath);
-        if ( img == NULL ) {
-          DebugPrintf ( 0, "IMG_Load failed for icon file '%s'\n", fpath );
-        } else {
-          FD_WM_SetIcon( img, NULL);
-          SDL_FreeSurface ( img );
-        }
-      }
-    }
-
   if( !(ne_screen = FD_SetVideoMode ( Screen_Rect.w, Screen_Rect.h , 0 , vid_flags)) )
     {
       DebugPrintf (0, "ERORR: Couldn't set %d x %d video mode. SDL: %s\n",
 		   Screen_Rect.w, Screen_Rect.h, SDL_GetError());
       exit(-1);
     }
+  ApplyWindowMetadata ();
   DebugPrintf(1, "Got video mode: ");
 
   FD_SetGamma( 1 , 1 , 1 );
@@ -1275,6 +1260,34 @@ RotateSurfaceNearest (SDL_Surface *src, float angle)
   SDL_SetSurfaceColorMod (dst, r_mod, g_mod, b_mod);
 
   return dst;
+}
+
+static void
+ApplyWindowMetadata (void)
+{
+  char *fpath;
+  SDL_Surface *img;
+  SDL_Window *window = FD_GetWindow ();
+
+  if (window == NULL)
+    return;
+
+  SDL_SetWindowTitle (window, "Freedroid");
+
+  fpath = find_file (ICON_FILE, GRAPHICS_DIR, NO_THEME, WARNONLY);
+  if ( fpath == NULL ) {
+    DebugPrintf ( 0, "Could not find icon file '%s'\n", ICON_FILE );
+    return;
+  }
+
+  img = IMG_Load (fpath);
+  if ( img == NULL ) {
+    DebugPrintf ( 0, "IMG_Load failed for icon file '%s'\n", fpath );
+    return;
+  }
+
+  SDL_SetWindowIcon (window, img);
+  SDL_FreeSurface (img);
 }
 
 /*----------------------------------------------------------------------
@@ -1695,6 +1708,8 @@ toggle_fullscreen (void)
       DebugPrintf (0, "SDL-Error: %s\n", SDL_GetError() );
       Terminate (ERR);
     }
+
+  ApplyWindowMetadata ();
 
   GameConfig.UseFullscreen = want_fullscreen;
   BannerIsDestroyed = TRUE;
