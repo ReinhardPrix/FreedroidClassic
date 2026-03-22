@@ -1437,7 +1437,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       SDL_SetClipRect (ne_screen, NULL);
       // set it
       SDL_BlitSurface (noise_tiles[next_tile], NULL, ne_screen, rect);
-      FD_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
+      SDL_UpdateWindowSurfaceRects (FD_GetWindow(), rect, 1);
       SDL_Delay(25);
 
       if ( (timeout != 0) && ((int)(SDL_GetTicks() - now) > timeout) )

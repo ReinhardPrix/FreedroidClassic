@@ -1198,7 +1198,7 @@ update_progress (int percent)
   //  Fill_Rect (dst, progress_color);
   SDL_BlitSurface (progress_filler_pic, &src, ne_screen, &dst);
 
-  FD_UpdateRects (ne_screen, 1, &dst);
+  SDL_UpdateWindowSurfaceRects (FD_GetWindow(), &dst, 1);
 
   return;
 

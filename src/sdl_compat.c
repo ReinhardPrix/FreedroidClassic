@@ -26,42 +26,6 @@ FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 	return SDL_GetWindowSurface(fd_window);
 }
 
-void
-FD_UpdateRect(SDL_Surface *screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h)
-{
-	SDL_Rect rect;
-
-	(void)screen;
-	if (!fd_window)
-		return;
-
-	if (w == 0 || h == 0)
-	{
-		SDL_UpdateWindowSurface(fd_window);
-		return;
-	}
-
-	rect.x = x;
-	rect.y = y;
-	rect.w = w;
-	rect.h = h;
-	SDL_UpdateWindowSurfaceRects(fd_window, &rect, 1);
-}
-
-void
-FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects)
-{
-	(void)screen;
-	if (!fd_window)
-		return;
-	if (numrects <= 0 || !rects)
-	{
-		SDL_UpdateWindowSurface(fd_window);
-		return;
-	}
-	SDL_UpdateWindowSurfaceRects(fd_window, rects, numrects);
-}
-
 SDL_Window *
 FD_GetWindow(void)
 {

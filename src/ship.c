@@ -806,8 +806,8 @@ Sensors  1: %s\n\
 
   if (flags & UPDATE_ONLY)
     {
-      FD_UpdateRects (ne_screen, 1, &Cons_Header_Rect);
-      FD_UpdateRects (ne_screen, 1, &Cons_Text_Rect);
+      SDL_UpdateWindowSurfaceRects (FD_GetWindow(), &Cons_Header_Rect, 1);
+      SDL_UpdateWindowSurfaceRects (FD_GetWindow(), &Cons_Text_Rect, 1);
     }
   else
     SDL_UpdateWindowSurface(FD_GetWindow());
@@ -918,7 +918,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       SDL_BlitSurface (droid_background, NULL, ne_screen, &dst);
       SDL_BlitSurface (droid_pics, &src_rect, ne_screen, &dst);
 
-      FD_UpdateRects (ne_screen, 1, &dst);
+      SDL_UpdateWindowSurfaceRects (FD_GetWindow(), &dst, 1);
 
       last_frame_time = SDL_GetTicks();
     }

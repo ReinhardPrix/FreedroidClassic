@@ -692,7 +692,15 @@ printf_SDL (SDL_Surface *screen, int x, int y, const char *fmt, ...)
   PutString (screen, x, y, TextBuffer);
   h = FontHeight (GetCurrentFont()) + 2;
 
-  FD_UpdateRect (screen, x, y, textlen, h);  // update the relevant line
+  if (screen == ne_screen)
+    {
+      SDL_Rect dst;
+      dst.x = x;
+      dst.y = y;
+      dst.w = textlen;
+      dst.h = h;
+      SDL_UpdateWindowSurfaceRects (FD_GetWindow(), &dst, 1);  // update the relevant line
+    }
 
   if (TextBuffer[strlen(TextBuffer)-1] == '\n')
     {
