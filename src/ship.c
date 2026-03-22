@@ -351,6 +351,7 @@ EnterKonsole (void)
               break;
 
             case ACTION_UP:
+            case ACTION_UP_WHEEL:
               if (pos > 0) pos--;
               else pos = 3;
               // when warping the mouse-cursor: don't count that as a mouse-activity
@@ -370,6 +371,7 @@ EnterKonsole (void)
               break;
 
             case ACTION_DOWN:
+            case ACTION_DOWN_WHEEL:
               if (pos < 3) pos++;
               else pos = 0;
               // when warping the mouse-cursor: don't count that as a mouse-activity
