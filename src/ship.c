@@ -253,7 +253,7 @@ ShowLifts (int levelnum, int liftrow)
 
   /* First blit ship "lights off" */
   Copy_Rect (User_Rect, dst);
-  SDL_SetClipRect (ne_screen, &dst);
+  SDL_SetSurfaceClipRect (ne_screen, &dst);
   Copy_Rect (User_Rect, dst);
   dst.x += xoffs;
   dst.y += yoffs;
@@ -473,7 +473,7 @@ PaintConsoleMenu (int pos, int flag)
   if ( !(flag & UPDATE_ONLY) )
     {
       ClearGraphMem ();
-      SDL_SetClipRect ( ne_screen , NULL );
+      SDL_SetSurfaceClipRect ( ne_screen , NULL );
       SDL_BlitSurface( console_bg_pic1 , NULL , ne_screen , NULL );
 
       DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
@@ -706,7 +706,7 @@ show_droid_info (int droidtype, int page, int flags)
   bool show_arrows = FALSE;
   int lineskip, lastline;
 
-  SDL_SetClipRect ( ne_screen , NULL );
+  SDL_SetSurfaceClipRect ( ne_screen , NULL );
   SetCurrentFont( Para_BFont );
 
   lineskip = FontHeight (GetCurrentFont()) * TEXT_STRETCH;
@@ -773,11 +773,11 @@ Sensors  1: %s\n\
   // it for each menu-rect:
   if (flags & UPDATE_ONLY)
     {
-      SDL_SetClipRect (ne_screen, &Cons_Text_Rect);
+      SDL_SetSurfaceClipRect (ne_screen, &Cons_Text_Rect);
       SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
-      SDL_SetClipRect (ne_screen, &Cons_Header_Rect);
+      SDL_SetSurfaceClipRect (ne_screen, &Cons_Header_Rect);
       SDL_BlitSurface (console_bg_pic2, NULL, ne_screen, NULL);
-      SDL_SetClipRect (ne_screen, NULL);
+      SDL_SetSurfaceClipRect (ne_screen, NULL);
     }
   else // otherwise we just redraw the whole screen
     {
@@ -840,13 +840,13 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
   bool need_new_frame = FALSE;
   int num_frames;
 
-  SDL_SetClipRect (ne_screen, &dst);
+  SDL_SetSurfaceClipRect (ne_screen, &dst);
 
   if (!droid_background) // first call
     {
       tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
       droid_background = SDL_ConvertSurface (tmp, tmp->format, 0);
-      SDL_FreeSurface (tmp);
+      SDL_DestroySurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       Copy_Rect (Portrait_Rect, src_rect);
     }
@@ -860,11 +860,11 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
   if ( (droid_type != last_droid_type) || (droid_pics == NULL))
     { // we need to unpack the droid-pics into our local storage
-      if (droid_pics) SDL_FreeSurface (droid_pics);
+      if (droid_pics) SDL_DestroySurface (droid_pics);
       droid_pics = NULL;
-      tmp = IMG_Load_RW (packed_portraits[droid_type], 0);
+      tmp = IMG_Load_IO (packed_portraits[droid_type], false);
       // important: return seek-position to beginning of RWops for next operation to succeed!
-      SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
+      SDL_SeekIO (packed_portraits[droid_type], 0, SEEK_SET);
       if (!tmp)
 	{
 	  DebugPrintf (0, "ERROR: failed to unpack droid-portraits of droid-type %d\n", droid_type);
@@ -877,10 +877,10 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 	} // else assume it's png ;)
       else
 	{
-	  droid_pics = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+	  droid_pics = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
 	}
-      SDL_FreeSurface (tmp);
-      SDL_RWseek (packed_portraits[droid_type], 0, SEEK_SET);
+      SDL_DestroySurface (tmp);
+      SDL_SeekIO (packed_portraits[droid_type], 0, SEEK_SET);
 
 
       // do we have to scale the droid pics
@@ -923,7 +923,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       last_frame_time = SDL_GetTicks();
     }
 
-  SDL_SetClipRect (ne_screen, NULL);
+  SDL_SetSurfaceClipRect (ne_screen, NULL);
 
   return;
 
@@ -989,8 +989,8 @@ AlertLevelWarning (void)
 void
 FreeDroidPics ( void )
 {
-  SDL_FreeSurface ( droid_pics );
-  SDL_FreeSurface ( droid_background );
+  SDL_DestroySurface ( droid_pics );
+  SDL_DestroySurface ( droid_background );
   return;
 
 }

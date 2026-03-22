@@ -670,9 +670,9 @@ ShowPlayground (void)
   xoffs = Classic_User_Rect.x;
   yoffs = Classic_User_Rect.y;
 
-  //  SDL_SetColorKey (ne_screen, 0, 0);
-  //  SDL_SetClipRect (ne_screen , &User_Rect);
-  SDL_SetClipRect (ne_screen , NULL);
+  //  SDL_SetSurfaceColorKey (ne_screen, 0, 0);
+  //  SDL_SetSurfaceClipRect (ne_screen , &User_Rect);
+  SDL_SetSurfaceClipRect (ne_screen , NULL);
 
   //  Fill_Rect (User_Rect, to_bg_color);
   SDL_BlitSurface (takeover_bg_pic, &User_Rect, ne_screen, &User_Rect);

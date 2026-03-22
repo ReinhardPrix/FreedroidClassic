@@ -57,7 +57,7 @@
 #define Copy_Rect(src, dst) do {\
 (dst).x = (src).x; (dst).y = (src).y; (dst).w = (src).w; (dst).h = (src).h; } while(0)
 
-#define FreeIfUsed(pt) do { if ((pt)) SDL_FreeSurface((pt)); } while(0)
+#define FreeIfUsed(pt) do { if ((pt)) SDL_DestroySurface((pt)); } while(0)
 
 #define NUM_ELEM(x) ( sizeof((x)) / sizeof((x)[0]) )
 
@@ -113,9 +113,9 @@ enum _cmds {
 #define ReturnPressed() (KeyIsPressed(SDLK_RETURN))
 #define ReturnPressedR() (KeyIsPressedR(SDLK_RETURN))
 
-#define ShiftPressed() ModIsPressed(KMOD_SHIFT)
-#define AltPressed() ModIsPressed(KMOD_ALT)
-#define CtrlPressed() ModIsPressed(KMOD_CTRL)
+#define ShiftPressed() ModIsPressed(SDL_KMOD_SHIFT)
+#define AltPressed() ModIsPressed(SDL_KMOD_ALT)
+#define CtrlPressed() ModIsPressed(SDL_KMOD_CTRL)
 
 #define MouseLeftPressed() KeyIsPressed(MOUSE_BUTTON1)
 #define MouseLeftPressedR() KeyIsPressedR(MOUSE_BUTTON1)

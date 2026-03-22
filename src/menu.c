@@ -740,7 +740,7 @@ InitiateMenu (bool with_droids)
   //
   Activate_Conservative_Frame_Computation();
 
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   Me.status=MENU;
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -749,10 +749,10 @@ InitiateMenu (bool with_droids)
   else
     Assemble_Combat_Picture (ONLY_SHOW_MAP);
 
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   MakeGridOnScreen( NULL );
 
-  if (Menu_Background) SDL_FreeSurface (Menu_Background);
+  if (Menu_Background) SDL_DestroySurface (Menu_Background);
   Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);  // keep a global copy of background
 
   SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
@@ -1029,7 +1029,7 @@ ShowCredits (void)
   em = CharWidth (Menu_BFont, 'm');
 
   Copy_Rect (Screen_Rect, screen);
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL));
   MakeGridOnScreen (&screen);
 
@@ -1500,7 +1500,7 @@ Cheatmenu (void)
 void
 FreeMenuData ( void )
 {
-  SDL_FreeSurface (Menu_Background);
+  SDL_DestroySurface (Menu_Background);
   return;
 }
 #undef _menu_c

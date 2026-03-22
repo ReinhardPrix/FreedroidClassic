@@ -67,15 +67,15 @@ InitFont (BFont_Info * Font)
 
   Font->h = Font->Surface->h;
 
-  if (Font->Surface->format->Amask != 0)
+  if (SDL_GetPixelFormatDetails(Font->Surface->format)->Amask != 0)
     {
-      SDL_SetColorKey (Font->Surface, 0, 0);
+      SDL_SetSurfaceColorKey (Font->Surface, 0, 0);
       SDL_SetSurfaceBlendMode (Font->Surface, SDL_BLENDMODE_BLEND);
       SDL_SetSurfaceAlphaMod (Font->Surface, 255);
     }
   else
     {
-      SDL_SetColorKey (Font->Surface, SDL_SRCCOLORKEY,
+      SDL_SetSurfaceColorKey (Font->Surface, SDL_SRCCOLORKEY,
 		       GetPixel (Font->Surface, 0, Font->Surface->h - 1));
     }
 }
@@ -128,7 +128,7 @@ LoadFont (char *filename, float scale)
 void
 FreeFont (BFont_Info * Font)
 {
-  SDL_FreeSurface (Font->Surface);
+  SDL_DestroySurface (Font->Surface);
   MyFree (Font);
 }
 
@@ -201,15 +201,15 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 	  if (SDL_MUSTLOCK (Font->Surface))
 	    SDL_UnlockSurface (Font->Surface);
 
-	  if (surface->format->Amask != 0)
+	  if (SDL_GetPixelFormatDetails(surface->format)->Amask != 0)
 	    {
-	      SDL_SetColorKey (surface, 0, 0);
+	      SDL_SetSurfaceColorKey (surface, 0, 0);
 	      SDL_SetSurfaceBlendMode (surface, SDL_BLENDMODE_BLEND);
 	      SDL_SetSurfaceAlphaMod (surface, 255);
 	    }
 	  else
 	    {
-	      SDL_SetColorKey (surface, SDL_SRCCOLORKEY, color_key);
+	      SDL_SetSurfaceColorKey (surface, SDL_SRCCOLORKEY, color_key);
 	    }
 	}
 
@@ -631,7 +631,7 @@ JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 void
 PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
 {
-  int bpp = surface->format->BytesPerPixel;
+  int bpp = SDL_BYTESPERPIXEL(surface->format);
   /* Here p is the address to the pixel we want to set */
   Uint8 *p = (Uint8 *) surface->pixels + y * surface->pitch + x * bpp;
 
@@ -681,7 +681,7 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
   if (X >= Surface->w)
     DebugPrintf (2, "x too big in GetPixel!");
 
-  Bpp = Surface->format->BytesPerPixel;
+  Bpp = SDL_BYTESPERPIXEL(Surface->format);
 
   bits = ((Uint8 *) Surface->pixels) + Y * Surface->pitch + X * Bpp;
 
@@ -697,9 +697,12 @@ GetPixel (SDL_Surface * Surface, Sint32 X, Sint32 Y)
     case 3:
       {				// Format/endian independent
 	Uint8 r, g, b;
-	r = *((bits) + Surface->format->Rshift / 8);
-	g = *((bits) + Surface->format->Gshift / 8);
-	b = *((bits) + Surface->format->Bshift / 8);
+	{
+	  const SDL_PixelFormatDetails *fmt = SDL_GetPixelFormatDetails(Surface->format);
+	  r = *((bits) + fmt->Rshift / 8);
+	  g = *((bits) + fmt->Gshift / 8);
+	  b = *((bits) + fmt->Bshift / 8);
+	}
 	return SDL_MapRGB (Surface->format, r, g, b);
       }
       break;

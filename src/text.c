@@ -268,7 +268,7 @@ ScrollText (char *Text, SDL_Rect *rect)
 
   SDL_BlitSurface (Background, NULL, ne_screen, NULL);
   SDL_UpdateWindowSurface(FD_GetWindow());
-  SDL_FreeSurface( Background );
+  SDL_DestroySurface( Background );
 
   return (ret);
 }				// void ScrollText(void)
@@ -307,9 +307,9 @@ DisplayText (const char *Text, int startx, int starty, const SDL_Rect *clip)
   if ( startx != -1 ) MyCursorX = startx;
   if ( starty != -1 ) MyCursorY = starty;
 
-  SDL_GetClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
+  SDL_GetSurfaceClipRect (ne_screen, &store_clip);  /* store previous clip-rect */
   if (clip)
-    SDL_SetClipRect (ne_screen, clip);
+    SDL_SetSurfaceClipRect (ne_screen, clip);
   else
     {
       clip = & Temp_Clipping_Rect;
@@ -343,7 +343,7 @@ DisplayText (const char *Text, int startx, int starty, const SDL_Rect *clip)
 
     } // while !FensterVoll()
 
-   SDL_SetClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
+   SDL_SetSurfaceClipRect (ne_screen, &store_clip); /* restore previous clip-rect */
 
   /*
    * ScrollText() wants to know if we still wrote something inside the
@@ -493,7 +493,7 @@ GetString (int MaxLen, int echo)
   curpos = 0;
 
 #if !defined ARCADEINPUT
-  SDL_StartTextInput ();
+  SDL_StartTextInput (FD_GetWindow());
 #endif
 
   while ( !finished  )
@@ -566,7 +566,7 @@ GetString (int MaxLen, int echo)
 	  SDL_Event event;
 	  SDL_WaitEvent (&event);
 
-	  if (event.type == SDL_TEXTINPUT)
+	  if (event.type == SDL_EVENT_TEXT_INPUT)
 	    {
 	      const unsigned char c = (unsigned char)event.text.text[0];
 	      if (c && isprint(c) && (curpos < MaxLen))
@@ -580,9 +580,9 @@ GetString (int MaxLen, int echo)
 	      continue;
 	    }
 
-	  if (event.type == SDL_KEYDOWN)
+	  if (event.type == SDL_EVENT_KEY_DOWN)
 	    {
-	      key = (int)event.key.keysym.sym;
+	      key = (int)event.key.key;
 	      if ((key == SDLK_RETURN) || (key == SDLK_KP_ENTER))
 		{
 		  input[curpos] = 0;
@@ -600,7 +600,7 @@ GetString (int MaxLen, int echo)
     } /* while(!finished) */
 
 #if !defined ARCADEINPUT
-  SDL_StopTextInput ();
+  SDL_StopTextInput (FD_GetWindow());
 #endif
 
 
