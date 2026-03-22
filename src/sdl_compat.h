@@ -8,8 +8,6 @@ extern "C" {
 #endif
 
 SDL_Surface *FD_SetVideoMode(int width, int height, int bpp, Uint32 flags);
-void FD_UpdateRect(SDL_Surface *screen, Sint32 x, Sint32 y, Uint32 w, Uint32 h);
-void FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects);
 SDL_Window *FD_GetWindow(void);
 void FD_DestroyWindow(void);
 
