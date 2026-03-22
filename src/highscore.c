@@ -187,7 +187,7 @@ UpdateHighscores (void)
 #endif
   SDL_UpdateWindowSurface(FD_GetWindow());
 
-  SDL_SetClipRect (ne_screen, NULL);
+  SDL_SetSurfaceClipRect (ne_screen, NULL);
 #if !defined ANDROID
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);

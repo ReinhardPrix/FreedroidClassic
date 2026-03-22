@@ -31,6 +31,8 @@
 
 #define _main_c
 
+#include <SDL3/SDL_main.h>
+
 #include "system.h"
 
 #include "defs.h"
@@ -75,7 +77,7 @@ main (int argc, char * argv[])
 
   SDL_ShowCursor (SDL_DISABLE);
 
-#ifdef __WIN32__
+#ifdef SDL_PLATFORM_WIN32
   // spread the word :)
   Win32Disclaimer ();
 #endif

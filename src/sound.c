@@ -212,6 +212,9 @@ Continuing with sound disabled\n");
 void
 Set_BG_Music_Volume(float NewVolume)
 {
+#ifndef HAVE_LIBSDL_MIXER
+  (void)NewVolume;
+#endif
 
 #ifndef HAVE_LIBSDL_MIXER
   return;
@@ -226,6 +229,9 @@ Set_BG_Music_Volume(float NewVolume)
 void
 Set_Sound_FX_Volume(float NewVolume)
 {
+#ifndef HAVE_LIBSDL_MIXER
+  (void)NewVolume;
+#endif
 #ifdef HAVE_LIBSDL_MIXER
   int i;
 #endif
@@ -303,6 +309,9 @@ Technical details:
 void
 Switch_Background_Music_To ( const char* filename_raw )
 {
+#ifndef HAVE_LIBSDL_MIXER
+  (void)filename_raw;
+#endif
 #ifdef HAVE_LIBSDL_MIXER
   char* fpath;
   static int prev_color = -1;
@@ -323,7 +332,7 @@ Switch_Background_Music_To ( const char* filename_raw )
     }
 
   // rp: lets cheat when using Mingw32
-#if (!defined __WIN32__  && !defined HAVE_LIBVORBIS)
+#if (!defined SDL_PLATFORM_WIN32  && !defined HAVE_LIBVORBIS)
   if (strstr (filename_raw, ".ogg"))
     {
       DebugPrintf (1, "\n\nWARNING: no ogg vorbis libs were found when configuring,\n\
@@ -383,6 +392,9 @@ Switch_Background_Music_To ( const char* filename_raw )
 void
 Play_Sound (int Tune)
 {
+#ifndef HAVE_LIBSDL_MIXER
+  (void)Tune;
+#endif
 #ifndef HAVE_LIBSDL_MIXER
   return;
 #else

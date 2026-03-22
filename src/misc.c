@@ -90,7 +90,7 @@ InitConfigDir (void)
   if (stat (ConfigDir, &statbuf) == -1)
     {
       DebugPrintf (0, "Couldn't stat Config-dir %s, I'll try to create it...", ConfigDir);
-#if __WIN32__
+#if SDL_PLATFORM_WIN32
       _mkdir (ConfigDir);
       DebugPrintf (0, "Found config-dir '%s'\n", ConfigDir );
 #else
@@ -222,7 +222,7 @@ LoadGameConfig (void)
   DebugPrintf (2, "Wanted to read %d bytes, got %d bytes\n", size, read_size);
 
   // windoze doesn't seem to be its numbers right, so let's just close our eyes here..
-#ifndef __WIN32__
+#ifndef SDL_PLATFORM_WIN32
   if ( read_size != size )
     {
       DebugPrintf (0, "WARNING: error in reading config-file %s\n Giving up...", fname);
@@ -1137,7 +1137,7 @@ init_progress (const char *text)
       ScaleRect (ProgressText_Rect, GameConfig.scale);
     }
 
-  SDL_SetClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
+  SDL_SetSurfaceClipRect( ne_screen , NULL );  // this unsets the clipping rectangle
   SDL_BlitSurface( progress_meter_pic, NULL, ne_screen , &ProgressMeter_Rect );
 
   Copy_Rect (ProgressText_Rect, dst);

@@ -5,7 +5,7 @@ static SDL_Window *fd_window = NULL;
 SDL_Surface *
 FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 {
-	Uint32 window_flags = SDL_WINDOW_SHOWN;
+	Uint32 window_flags = 0;
 
 	(void)bpp;
 
@@ -18,8 +18,7 @@ FD_SetVideoMode(int width, int height, int bpp, Uint32 flags)
 		fd_window = NULL;
 	}
 
-	fd_window = SDL_CreateWindow("Freedroid", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-					 width, height, window_flags);
+	fd_window = SDL_CreateWindow("Freedroid", width, height, window_flags);
 	if (!fd_window)
 		return NULL;
 

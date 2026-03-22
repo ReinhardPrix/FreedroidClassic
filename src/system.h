@@ -28,6 +28,9 @@
  *           and take into account the AC-defined conditionals
  */
 
+#ifndef _system_h
+#define _system_h
+
 #include "config.h"
 
 #include <stdio.h>
@@ -76,17 +79,79 @@
 #include <dirent.h>
 #endif
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 #ifdef HAVE_LIBSDL_MIXER
-#include <SDL2/SDL_mixer.h>
+#include <SDL3_mixer/SDL_mixer.h>
 #endif
 
 #include "sdl_compat.h"
+
+static inline SDL_Surface *
+FD_CreateRGBSurfaceCompat(Uint32 flags, int w, int h, int depth,
+			 Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask)
+{
+	(void)flags;
+	return SDL_CreateSurface(w, h, SDL_GetPixelFormatForMasks(depth, Rmask, Gmask, Bmask, Amask));
+}
+
+static inline SDL_Surface *
+FD_CreateRGBSurfaceWithFormatCompat(Uint32 flags, int w, int h, int depth, SDL_PixelFormat format)
+{
+	(void)flags;
+	(void)depth;
+	return SDL_CreateSurface(w, h, format);
+}
+
+static inline SDL_Surface *
+FD_ConvertSurfaceCompat(SDL_Surface *surface, SDL_PixelFormat format, Uint32 flags)
+{
+	(void)flags;
+	return SDL_ConvertSurface(surface, format);
+}
+
+static inline int
+FD_NumJoysticksCompat(void)
+{
+	int count = 0;
+	SDL_JoystickID *sticks = SDL_GetJoysticks(&count);
+	if (sticks) {
+		SDL_free(sticks);
+	}
+	return count;
+}
+
+static inline void
+FD_JoystickEventStateCompat(int enabled)
+{
+	SDL_SetJoystickEventsEnabled(enabled != 0);
+}
+
+static inline bool
+FD_ShowCursorCompat(int toggle)
+{
+	return toggle ? SDL_ShowCursor() : SDL_HideCursor();
+}
+
+#define SDL_CreateRGBSurface FD_CreateRGBSurfaceCompat
+#define SDL_CreateRGBSurfaceWithFormat FD_CreateRGBSurfaceWithFormatCompat
+#define SDL_ConvertSurface FD_ConvertSurfaceCompat
+#define SDL_MapRGB(format, r, g, b) SDL_MapRGB(SDL_GetPixelFormatDetails(format), NULL, r, g, b)
+#define SDL_MapRGBA(format, r, g, b, a) SDL_MapRGBA(SDL_GetPixelFormatDetails(format), NULL, r, g, b, a)
+#define SDL_GetRGB(pixel, format, r, g, b) SDL_GetRGB(pixel, SDL_GetPixelFormatDetails(format), NULL, r, g, b)
+#define SDL_GetRGBA(pixel, format, r, g, b, a) SDL_GetRGBA(pixel, SDL_GetPixelFormatDetails(format), NULL, r, g, b, a)
+#define IMG_GetError SDL_GetError
+#define SDL_NumJoysticks FD_NumJoysticksCompat
+#define SDL_JoystickEventState FD_JoystickEventStateCompat
+#define SDL_ENABLE 1
+#define SDL_DISABLE 0
+#define SDL_ShowCursor(toggle) FD_ShowCursorCompat(toggle)
 
 #ifdef GCW0
 #ifndef ARCADEINPUT
 #define ARCADEINPUT
 #endif
+#endif
+
 #endif
