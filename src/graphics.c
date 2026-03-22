@@ -1005,7 +1005,7 @@ Init_Video (void)
   ApplyWindowMetadata ();
   DebugPrintf(1, "Got video mode: ");
 
-  FD_SetGamma( 1 , 1 , 1 );
+  SDL_SetWindowBrightness (FD_GetWindow(), 1.0f);
   GameConfig.Current_Gamma_Correction=1;
 
   return;

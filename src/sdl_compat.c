@@ -62,20 +62,6 @@ FD_UpdateRects(SDL_Surface *screen, int numrects, SDL_Rect *rects)
 	SDL_UpdateWindowSurfaceRects(fd_window, rects, numrects);
 }
 
-int
-FD_SetGamma(float red, float green, float blue)
-{
-	float avg;
-
-	if (!fd_window)
-		return -1;
-
-	avg = (red + green + blue) / 3.0f;
-	if (avg < 0.0f)
-		avg = 0.0f;
-	return SDL_SetWindowBrightness(fd_window, avg);
-}
-
 SDL_Window *
 FD_GetWindow(void)
 {
