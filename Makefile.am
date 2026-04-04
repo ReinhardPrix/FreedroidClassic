@@ -4,6 +4,11 @@ man_MANS = freedroid.6
 
 EXTRA_DIST = $(man_MANS) mac-osx
 
+.PHONY: strict
+
+strict:
+	$(MAKE) WERROR_CFLAGS=-Werror all
+
 ## Win32 specific stuff follows here
 
 win_txts = COPYING AUTHORS README Releasetext freedroid-man
@@ -34,4 +39,3 @@ android-data:
 	mkdir -p AndroidData
 	zip -r AndroidData/data-1.2.2.zip graphics/ sound/*.wav sound/*.ogg map/
 	cp graphics/title.jpg AndroidData/logo.jpg
-
