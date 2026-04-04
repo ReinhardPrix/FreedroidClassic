@@ -278,7 +278,6 @@ CheckBulletCollisions (int num)
   int levelnum = CurLevel->levelnum;
   float xdist, ydist;
   Bullet CurBullet = &AllBullets[num];
-  static int FBTZaehler = 0;
   finepoint step;
   int num_check_steps, stepnum;
   int i;
@@ -408,7 +407,6 @@ CheckBulletCollisions (int num)
 
 		  if (!CurBullet->mine)
 		    {
-		      FBTZaehler++;
 		    }
 		  CurBullet->type = OUT;
 		  CurBullet->mine = FALSE;

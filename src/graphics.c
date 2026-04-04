@@ -1054,7 +1054,11 @@ getpixel(SDL_Surface *surface, int x, int y)
       return *p;
 
     case 2:
-      return *(Uint16 *)p;
+      {
+        Uint16 pixel16;
+        memcpy (&pixel16, p, sizeof (pixel16));
+        return pixel16;
+      }
 
     case 3:
       if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
@@ -1063,7 +1067,11 @@ getpixel(SDL_Surface *surface, int x, int y)
 	return p[0] | p[1] << 8 | p[2] << 16;
 
     case 4:
-      return *(Uint32 *)p;
+      {
+        Uint32 pixel32;
+        memcpy (&pixel32, p, sizeof (pixel32));
+        return pixel32;
+      }
 
     default:
       return 0;       /* shouldn't happen, but avoids warnings */
@@ -1092,7 +1100,10 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         break;
 
     case 2:
-        *(Uint16 *)p = pixel;
+        {
+          Uint16 pixel16 = (Uint16) pixel;
+          memcpy (p, &pixel16, sizeof (pixel16));
+        }
         break;
 
     case 3:
@@ -1108,7 +1119,7 @@ void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
         break;
 
     case 4:
-        *(Uint32 *)p = pixel;
+        memcpy (p, &pixel, sizeof (pixel));
         break;
     }
 } // void putpixel(...)

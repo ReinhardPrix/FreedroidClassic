@@ -193,8 +193,6 @@ AddInfluBurntText( void )
 int
 ScrollText (char *Text, SDL_Rect *rect)
 {
-  int Number_Of_Line_Feeds = 0;		/* Anzahl der Textzeilen */
-  char *textpt;			/* bewegl. Textpointer */
   float InsertLine = 1.0*rect->y;
   int speed = 30;   // in pixel / sec
   int maxspeed = 150;
@@ -206,12 +204,6 @@ ScrollText (char *Text, SDL_Rect *rect)
   Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);
 
   // first_tick = SDL_GetTicks ();
-
-  // count the number of lines in the text
-  textpt = Text;
-  while (*textpt++)
-    if (*textpt == '\n')
-      Number_Of_Line_Feeds++;
 
   wait_for_all_keys_released();
   while (1)

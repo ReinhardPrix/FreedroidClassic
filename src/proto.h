@@ -272,7 +272,7 @@ EXTERN char* ReadAndMallocStringFromData ( const char* SearchString , const char
 EXTERN int CountStringOccurences ( const char* SearchString , const char* TargetString ) ;
 EXTERN void ReadValueFromString(const char* data, const char* label, const char* FormatString, void* dst);
 EXTERN char* ReadAndMallocAndTerminateFile( const char* filename , const char* File_End_String ) ;
-EXTERN char* LocateStringInData ( const char* SearchBeginPointer, const char* SearchTextPointer ) ;
+EXTERN const char* LocateStringInData ( const char* SearchBeginPointer, const char* SearchTextPointer ) ;
 EXTERN char* find_file (const char *fname, const char *subdir, int use_theme, int critical);
 EXTERN void CheckForTriggeredEvents ( void );
 EXTERN void Pause (void);
