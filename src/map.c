@@ -967,7 +967,7 @@ GetLiftConnections (char *filename)
 {
   char *fpath;
   char *Data;
-  char *EntryPointer;
+  const char *EntryPointer;
   int i;
   int Label;
   int DeckIndex;
@@ -1170,7 +1170,7 @@ GetThisLevelsDroids( const char* SectionPointer )
 {
   int OurLevelNumber;
   const char* SearchPointer;
-  char* EndOfThisLevelData;
+  const char* EndOfThisLevelData;
   int MaxRand;
   int MinRand;
   int RealNumberOfRandomDroids;
@@ -1189,7 +1189,6 @@ GetThisLevelsDroids( const char* SectionPointer )
   // printf("\nReceived another levels droid section for decoding. It reads: %s " , SectionPointer );
 
   EndOfThisLevelData = LocateStringInData ( SectionPointer , DROIDS_LEVEL_END_INDICATION_STRING );
-  EndOfThisLevelData[0]=0;
 
   // Now we read in the level number for this level
   ReadValueFromString (SectionPointer, DROIDS_LEVEL_INDICATION_STRING, "%d", &OurLevelNumber);
@@ -1202,7 +1201,9 @@ GetThisLevelsDroids( const char* SectionPointer )
 
   DifferentRandomTypes=0;
   SearchPointer = SectionPointer;
-  while ( ( SearchPointer = strstr ( SearchPointer , ALLOWED_TYPE_INDICATION_STRING)) != NULL)
+  while ( SearchPointer < EndOfThisLevelData &&
+	  ( SearchPointer = strstr ( SearchPointer , ALLOWED_TYPE_INDICATION_STRING)) != NULL &&
+	  SearchPointer < EndOfThisLevelData)
     {
       SearchPointer += strlen ( ALLOWED_TYPE_INDICATION_STRING );
       strncpy( TypeIndicationString , SearchPointer , 3 ); // Every type is 3 characters long

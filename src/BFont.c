@@ -321,7 +321,7 @@ TextWidthFont (BFont_Info * Font, const char *text)
 int
 count (const char *text)
 {
-  char *p = NULL;
+  const char *p = NULL;
   int pos = -1;
   int i = 0;
   /* Calculate the space occupied by the text without spaces */
@@ -349,7 +349,7 @@ JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
   int dif;
 
   char *strtmp;
-  char *p;
+  const char *p;
   int pos = -1;
   int xpos = 0;
 
@@ -642,7 +642,10 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       break;
 
     case 2:
-      *(Uint16 *) p = pixel;
+      {
+        Uint16 pixel16 = (Uint16) pixel;
+        memcpy (p, &pixel16, sizeof (pixel16));
+      }
       break;
 
     case 3:
@@ -661,7 +664,7 @@ PutPixel (SDL_Surface * surface, int x, int y, Uint32 pixel)
       break;
 
     case 4:
-      *(Uint32 *) p = pixel;
+      memcpy (p, &pixel, sizeof (pixel));
       break;
     }
 }

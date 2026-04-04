@@ -340,8 +340,8 @@ The original source string specified should in no way be modified.
 char*
 ReadAndMallocStringFromData ( const char* SearchString , const char* StartIndicationString , const char* EndIndicationString )
 {
-  char* SearchPointer;
-  char* EndOfStringPointer;
+  const char* SearchPointer;
+  const char* EndOfStringPointer;
   char* ReturnString = NULL;
   int StringLength;
 
@@ -570,10 +570,10 @@ The return value is a pointer to the first instance where the substring
 we are searching is found in the main text.
 ----------------------------------------------------------------------
 */
-char*
+const char*
 LocateStringInData ( const char* SearchBeginPointer, const char* SearchTextPointer )
 {
-  char* temp;
+  const char* temp;
 
   if ( ( temp = strstr ( SearchBeginPointer , SearchTextPointer ) ) == NULL)
     {
@@ -619,7 +619,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
 void
 ReadValueFromString (const char* data, const char* label, const char* FormatString, void* dst)
 {
-  char *pos;
+  const char *pos;
 
   // Now we locate the label in data and position pointer right after the label
   pos = LocateStringInData (data, label); // ..will Terminate itself if not found...

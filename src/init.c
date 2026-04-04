@@ -237,7 +237,7 @@ void
 Get_Robot_Data ( void* DataPointer )
 {
   int RobotIndex = 0;
-  char *RobotPointer;
+  const char *RobotPointer;
 
   float maxspeed_calibrator;
   float acceleration_calibrator;
@@ -590,7 +590,7 @@ InitNewMission ( const char *MissionName )
   char *fpath;
   int i;
   char *MainMissionPointer;
-  char *BriefingSectionPointer;
+  const char *BriefingSectionPointer;
   char *StartPointPointer;
   char Buffer[500];
   int NumberOfStartPoints=0;
@@ -959,7 +959,7 @@ Title ( const char *MissionBriefingPointer )
 {
   const char* NextSubsectionStartPointer;
   char* PreparedBriefingText = NULL;
-  char* TerminationPointer;
+  const char* TerminationPointer;
   char Buffer[500];
   int ThisTextLength;
   SDL_Rect rect;
