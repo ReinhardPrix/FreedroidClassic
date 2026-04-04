@@ -155,7 +155,7 @@ UpdateHighscores (void)
     return;
 
   /* ok, the last one always has to go... */
-  free (Highscores[num_highscores-1]);
+  MyFree (Highscores[num_highscores-1]);
 
   /* now shuffle down the lower scores to make space */
   for (i=num_highscores-1; i> entry; i--)
@@ -191,7 +191,7 @@ UpdateHighscores (void)
 #if !defined ANDROID
   tmp_name = GetString (MAX_NAME_LEN, 2);
   strcpy (new_entry->name, tmp_name);
-  free (tmp_name);
+  MyFree (tmp_name);
 #else
   strcpy (new_entry->name, "Player");
 #endif

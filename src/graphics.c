@@ -559,7 +559,7 @@ not resolve.... Sorry, if that interrupts a major game of yours.....\n\
   ReadValueFromString (Data, DIGIT_THREE_POSITION_X_STRING, "%hd", &ThirdDigit_Rect.x);
   ReadValueFromString (Data, DIGIT_THREE_POSITION_Y_STRING, "%hd", &ThirdDigit_Rect.y);
 
-  free (Data);
+  MyFree (Data);
 
   return;
 
@@ -1731,7 +1731,7 @@ FreeGraphics ( void )
 
   size_t num_raw_mem = sizeof(portrait_raw_mem)/sizeof(portrait_raw_mem[0]);
   for ( size_t i = 0; i < num_raw_mem; i++) {
-    free ( portrait_raw_mem[i] );
+    MyFree ( portrait_raw_mem[i] );
   }
 
   FD_DestroyWindow ();
@@ -1776,7 +1776,7 @@ FreeGraphics ( void )
     if ( fonts[i] != NULL ) {
         SDL_FreeSurface ( fonts[i]->Surface );
       }
-    free ( fonts[i] );
+    MyFree ( fonts[i] );
   }
 
   // free Load_Block()-internal buffer

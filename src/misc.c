@@ -227,7 +227,7 @@ LoadGameConfig (void)
     {
       DebugPrintf (0, "WARNING: error in reading config-file %s\n Giving up...", fname);
       fclose (fp);
-      free (data);
+      MyFree (data);
       return (ERR);
     }
 #endif
@@ -237,7 +237,7 @@ LoadGameConfig (void)
   if ( read_variable (data, VERSION_STRING, "%s", version_string) == ERR)
     {
       DebugPrintf (0, "Version string could not be read in config-file...\n");
-      free (data);
+      MyFree (data);
       return (ERR);
     }
 
@@ -270,7 +270,7 @@ LoadGameConfig (void)
       }
     }
 
-  free (data);
+  MyFree (data);
 
   return (OK);
 
@@ -1086,35 +1086,12 @@ Terminate (int ExitCode)
 
   // ----- exit
   DebugPrintf(0, "Thank you for playing Freedroid.\n\n");
+  MyCheckMemoryLeaks ();
   SDL_Quit();
   exit (ExitCode);
   return;
 }  // void Terminate(int ExitCode)
 
-
-/*@Function============================================================
-@Desc: This function usese calloc, so memory is automatically 0-initialized!
-       The function also checks for success and terminates in case of
-       "out of memory", so we dont need to do this always in the code.
-@Ret:
-* $Function----------------------------------------------------------*/
-void *
-MyMalloc (long Mamount)
-{
-  void *Mptr = NULL;
-
-  // make Gnu-compatible even if on a broken system:
-  if (Mamount == 0)
-    Mamount = 1;
-
-  if ((Mptr = calloc (1, (size_t) Mamount)) == NULL)
-    {
-      DebugPrintf (0, " MyMalloc(%ld) did not succeed!\n", Mamount);
-      Terminate(ERR);
-    }
-
-  return Mptr;
-}				// void* MyMalloc(long Mamount)
 
 /*----------------------------------------------------------------------
  * FS_filelength().. (taken from quake2)

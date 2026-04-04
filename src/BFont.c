@@ -115,7 +115,7 @@ LoadFont (char *filename, float scale)
 	  else
 	    {
 	      /* free memory allocated for the BFont_Info structure */
-	      free (Font);
+	      MyFree (Font);
 	      Font = NULL;
 	    }
 	}
@@ -129,7 +129,7 @@ void
 FreeFont (BFont_Info * Font)
 {
   SDL_FreeSurface (Font->Surface);
-  free (Font);
+  MyFree (Font);
 }
 
 BFont_Info *
@@ -145,7 +145,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
   Uint8 new_r, new_g, new_b;
   Uint32 color_key;
 
-  newfont = (BFont_Info *) malloc (sizeof (BFont_Info));
+  newfont = (BFont_Info *) MyMalloc (sizeof (BFont_Info));
   if (newfont != NULL)
     {
 
@@ -378,7 +378,7 @@ JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 	      p = strstr (&text[pos + 1], " ");
 	      strtmp = NULL;
 	      strtmp =
-		(char *) calloc ((p - &text[pos + 1]) + 1, sizeof (char));
+		(char *) MyCalloc ((p - &text[pos + 1]) + 1, sizeof (char));
 	      if (strtmp != NULL)
 		{
 		  strncpy (strtmp, &text[pos + 1], (p - &text[pos + 1]));
@@ -394,19 +394,19 @@ JustifiedPutStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
 		    }
 		  pos = p - text;
 		  spaces--;
-		  free (strtmp);
+		  MyFree (strtmp);
 		}
 	    }
 	  strtmp = NULL;
           size_t len = strlen (&text[pos + 1]) + 1;
 	  strtmp =
-	    (char *) calloc (len, sizeof (char));
+	    (char *) MyCalloc (len, sizeof (char));
 
 	  if (strtmp != NULL)
 	    {
 	      memcpy (strtmp, &text[pos + 1], len);
 	      PutStringFont (Surface, Font, xpos, y, strtmp);
-	      free (strtmp);
+	      MyFree (strtmp);
 	    }
 	}
     }
@@ -468,7 +468,7 @@ PrintString (SDL_Surface * Surface, int x, int y, const char *fmt, ...)
 
       PutStringFont (Surface, CurrentFont, x, y, temp);
 
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -485,7 +485,7 @@ PrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y,
     {
       vsprintf (temp, fmt, args);
       PutStringFont (Surface, Font, x, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -501,7 +501,7 @@ CenteredPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
     {
       vsprintf (temp, fmt, args);
       CenteredPutString (Surface, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -518,7 +518,7 @@ CenteredPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
     {
       vsprintf (temp, fmt, args);
       CenteredPutStringFont (Surface, Font, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 
@@ -535,7 +535,7 @@ RightPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
     {
       vsprintf (temp, fmt, args);
       RightPutString (Surface, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -552,7 +552,7 @@ RightPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
     {
       vsprintf (temp, fmt, args);
       RightPutStringFont (Surface, Font, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -568,7 +568,7 @@ LeftPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
     {
       vsprintf (temp, fmt, args);
       LeftPutString (Surface, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -585,7 +585,7 @@ LeftPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
     {
       vsprintf (temp, fmt, args);
       LeftPutStringFont (Surface, Font, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -601,7 +601,7 @@ JustifiedPrintString (SDL_Surface * Surface, int y, const char *fmt, ...)
     {
       vsprintf (temp, fmt, args);
       JustifiedPutString (Surface, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }
@@ -618,7 +618,7 @@ JustifiedPrintStringFont (SDL_Surface * Surface, BFont_Info * Font, int y,
     {
       vsprintf (temp, fmt, args);
       JustifiedPutStringFont (Surface, Font, y, temp);
-      free (temp);
+      MyFree (temp);
     }
   va_end (args);
 }

@@ -265,7 +265,7 @@ LoadShip (char *filename)
   Buffer = ReadAndMallocStringFromData (ShipData, AREA_NAME_STRING, "\"");
   strncpy (curShip.AreaName, Buffer, 99);
   curShip.AreaName[99]='\0';
-  free (Buffer);
+  MyFree (Buffer);
 
   //--------------------
   // Now we count the number of levels and remember their start-addresses.
@@ -299,7 +299,7 @@ LoadShip (char *filename)
       InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
     }
 
-  free (ShipData);
+  MyFree (ShipData);
 
   return OK;
 
@@ -505,7 +505,7 @@ freedroid-discussion@lists.sourceforge.net\n\
       LevelMem = StructToMem(curShip.AllLevels[array_num]);
       fwrite(LevelMem, strlen(LevelMem), sizeof(char), ShipFile);
 
-      free(LevelMem);
+      MyFree(LevelMem);
     }
 
   //--------------------
@@ -1079,7 +1079,7 @@ GetLiftConnections (char *filename)
 
   curShip.num_lifts = Label;
 
-  free ( Data );
+  MyFree ( Data );
   return OK;
 }; // int GetLiftConnections(char *shipname)
 
@@ -1153,7 +1153,7 @@ GetCrew (char *filename)
       NumEnemys++;
     }
 
-  free ( MainDroidsFilePointer );
+  MyFree ( MainDroidsFilePointer );
   return (OK);
 } /* GetCrew () */
 
@@ -1796,13 +1796,13 @@ FreeLevelMemory ( level* lvl )
     return;
   }
 
-  free ( lvl->Levelname );
-  free ( lvl->Background_Song_Name );
-  free ( lvl->Level_Enter_Comment );
+  MyFree ( lvl->Levelname );
+  MyFree ( lvl->Background_Song_Name );
+  MyFree ( lvl->Level_Enter_Comment );
 
   int row;
   for ( row = 0; row < lvl->ylen; row ++ ) {
-    free ( lvl->map[row] );
+    MyFree ( lvl->map[row] );
   }
   return;
 }
@@ -1813,7 +1813,7 @@ FreeShipMemory ( void )
   int i;
   for (i = 0; i < curShip.num_levels; i++) {
     FreeLevelMemory ( curShip.AllLevels[i] );
-    free ( curShip.AllLevels[i] );
+    MyFree ( curShip.AllLevels[i] );
   }
 
   return;

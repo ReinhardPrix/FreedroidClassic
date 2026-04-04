@@ -20,6 +20,7 @@ freedroid_SOURCES = \
 		config.h \
 		defs.h \
 		enemy.c \
+		fd_memory.c \
 		global.h \
 		graphics.c \
 		highscore.c \
