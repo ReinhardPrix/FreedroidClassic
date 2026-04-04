@@ -457,7 +457,7 @@ Init_Game_Data ( const char * Datafilename )
   ReadValueFromString (Data, BLAST_TWO_TOTAL_AMOUNT_OF_TIME_STRING, "%f", &Blastmap[1].total_animation_time);
 
 
-  free ( Data );
+  MyFree ( Data );
 
   return;
 
@@ -737,7 +737,7 @@ InitNewMission ( const char *MissionName )
   // must be read in as well
   ReadValueFromString (MainMissionPointer, MISSION_ENDTITLE_SONG_NAME_STRING, "%s", DebriefingSong);
 
-  if (DebriefingText) free(DebriefingText);
+  if (DebriefingText) MyFree(DebriefingText);
   DebriefingText =
     ReadAndMallocStringFromData (MainMissionPointer, MISSION_ENDTITLE_BEGIN_STRING, MISSION_ENDTITLE_END_STRING);
 
@@ -830,7 +830,7 @@ InitNewMission ( const char *MissionName )
 
   DebugPrintf (1, "done."); // this matches the printf at the beginning of this function
 
-  free (MainMissionPointer);
+  MyFree (MainMissionPointer);
 
   return;
 
@@ -999,7 +999,7 @@ Title ( const char *MissionBriefingPointer )
 	  Terminate(ERR);
 	}
       ThisTextLength=TerminationPointer-NextSubsectionStartPointer;
-      free ( PreparedBriefingText );
+      MyFree ( PreparedBriefingText );
       PreparedBriefingText = MyMalloc (ThisTextLength + 10);
       strncpy ( PreparedBriefingText , NextSubsectionStartPointer , ThisTextLength );
       PreparedBriefingText[ThisTextLength]=0;
@@ -1012,7 +1012,7 @@ Title ( const char *MissionBriefingPointer )
       }
     } // while(1)
 
-  free ( PreparedBriefingText );
+  MyFree ( PreparedBriefingText );
   PreparedBriefingText = NULL;
   return;
 
@@ -1185,7 +1185,7 @@ FindAllThemes (void)
   AllThemes.num_themes = 0;
   for (i=0; i< MAX_THEMES; i++)
     {
-      if (AllThemes.theme_name[i]) free(AllThemes.theme_name[i]);
+      if (AllThemes.theme_name[i]) MyFree(AllThemes.theme_name[i]);
       AllThemes.theme_name[i] = NULL;
     }
 
@@ -1339,9 +1339,9 @@ FreeDruidmap ( void )
   }
   int i;
   for (i=0; i < Number_Of_Droid_Types; i++) {
-    free (Druidmap[i].notes);
+    MyFree (Druidmap[i].notes);
   }
-  free(Druidmap);
+  MyFree(Druidmap);
   Druidmap = NULL;
 
   return;
@@ -1361,7 +1361,7 @@ FreeGameMem ( void )
           SDL_FreeSurface ( Bulletmap[i].SurfacePointer[j] );
         }
       }
-      free ( Bulletmap );
+      MyFree ( Bulletmap );
       Bulletmap = NULL;
     }
 
@@ -1381,14 +1381,14 @@ FreeGameMem ( void )
   // free highscores list
   if ( Highscores != NULL ) {
     for ( i = 0; i < num_highscores; i ++ ) {
-      free ( Highscores[i] );
+      MyFree ( Highscores[i] );
     }
-    free ( Highscores );
+    MyFree ( Highscores );
     Highscores = NULL;
   }
 
   // free constant text blobs
-  free ( DebriefingText );
+  MyFree ( DebriefingText );
   DebriefingText = NULL;
 
   return;

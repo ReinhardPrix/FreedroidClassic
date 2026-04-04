@@ -286,7 +286,15 @@ EXTERN int MyRandom (int);
 EXTERN void Armageddon (void);
 EXTERN void Teleport (int LNum, int X, int Y);
 EXTERN void Terminate (int);
-EXTERN void *MyMalloc (long);
+EXTERN void *MyMallocLong (long, const char *, int);
+EXTERN void *MyCallocLong (size_t, size_t, const char *, int);
+EXTERN void *MyReallocLong (void *, size_t, const char *, int);
+EXTERN void MyFreeLong (void *, const char *, int);
+EXTERN void MyCheckMemoryLeaks (void);
+#define MyMalloc(n) MyMallocLong((n), __FILE__, __LINE__)
+#define MyCalloc(m, n) MyCallocLong((m), (n), __FILE__, __LINE__)
+#define MyRealloc(p, n) MyReallocLong((p), (n), __FILE__, __LINE__)
+#define MyFree(p) MyFreeLong((p), __FILE__, __LINE__)
 EXTERN size_t FS_filelength (FILE *f);
 EXTERN void init_progress (const char *txt);
 EXTERN void update_progress (int percent);

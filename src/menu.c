@@ -537,7 +537,7 @@ const char *handle_LE_SizeX ( MenuAction_t action )
   int row;
   for ( row = 0 ; row < CurLevel->ylen ; row++ )
     {
-      CurLevel->map[row] = realloc( CurLevel->map[row], newmem );
+      CurLevel->map[row] = MyRealloc( CurLevel->map[row], newmem );
       if ( CurLevel->map[row] == NULL ) {
         DebugPrintf ( 0, "Failed to re-allocate to %z bytes in map row %d\n", newmem, row );
         Terminate(ERR);
@@ -562,7 +562,7 @@ const char *handle_LE_SizeY ( MenuAction_t action )
   menuChangeInt ( action, &(CurLevel->ylen), 1, 0, MAX_MAP_ROWS-1 );
   if ( oldylen > CurLevel->ylen )
     {
-      free ( CurLevel->map[oldylen - 1] );
+      MyFree ( CurLevel->map[oldylen - 1] );
       CurLevel->map[oldylen - 1] = NULL;
     }
   else if ( oldylen < CurLevel->ylen )
@@ -585,7 +585,7 @@ const char *handle_LE_Name ( MenuAction_t action )
     {
       DisplayText ("New level name: ", Menu_Rect.x-2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect );
       SDL_UpdateWindowSurface(FD_GetWindow());
-      free ( CurLevel->Levelname );
+      MyFree ( CurLevel->Levelname );
       CurLevel->Levelname = GetString(15, 2);
       InitiateMenu (FALSE);
     }
@@ -603,7 +603,7 @@ const char *handle_LE_Music ( MenuAction_t action )
     {
       DisplayText ("Music filename: ", Menu_Rect.x - 2*fheight, Menu_Rect.y - 3*fheight, &Full_User_Rect);
       SDL_UpdateWindowSurface(FD_GetWindow());
-      free ( CurLevel->Background_Song_Name );
+      MyFree ( CurLevel->Background_Song_Name );
       CurLevel->Background_Song_Name = GetString(20, 2);
       Switch_Background_Music_To ( CurLevel->Background_Song_Name );
     }
@@ -1295,7 +1295,7 @@ Cheatmenu (void)
 	  printf_SDL (ne_screen, -1, -1, "New zoom factor: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%f", &CurrentCombatScaleFactor);
-	  free (input);
+	  MyFree (input);
 	  SetCombatScaleTo (CurrentCombatScaleFactor);
 	  break;
 
@@ -1393,7 +1393,7 @@ Cheatmenu (void)
 	  printf_SDL (ne_screen, x0, y0, "Enter Level, X, Y: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d, %d, %d\n", &LNum, &X, &Y);
-	  free (input);
+	  MyFree (input);
 	  Teleport (LNum, X, Y);
 	  break;
 
@@ -1420,7 +1420,7 @@ Cheatmenu (void)
 	      printf_SDL (ne_screen, x0, y0+20, "You are now a %s. Have fun!\n", input);
 	      getchar_raw ();
 	    }
-	  free (input);
+	  MyFree (input);
 	  break;
 
 	case 'i': /* togge Invincible mode */
@@ -1433,7 +1433,7 @@ Cheatmenu (void)
 	  printf_SDL (ne_screen, -1, -1, "Enter your new energy: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &num);
-	  free (input);
+	  MyFree (input);
 	  Me.energy = (float) num;
 	  if (Me.energy > Me.health) Me.health = Me.energy;
 	  break;
@@ -1450,7 +1450,7 @@ Cheatmenu (void)
 	  printf_SDL (ne_screen, -1, -1, "\nLevelnum: ");
 	  input = GetString (40, 2);
 	  sscanf (input, "%d", &LNum);
-	  free (input);
+	  MyFree (input);
 	  ShowDeckMap ();
 	  getchar_raw ();
 	  break;
