@@ -1352,6 +1352,16 @@ FreeGameMem ( void )
 {
   int i, j;
 
+  for ( i = 0; i < MAX_THEMES; i++ )
+    {
+      if ( AllThemes.theme_name[i] != NULL )
+        {
+          MyFree ( AllThemes.theme_name[i] );
+          AllThemes.theme_name[i] = NULL;
+        }
+    }
+  AllThemes.num_themes = 0;
+
   // free bullet map
   if ( Bulletmap != NULL )
     {
