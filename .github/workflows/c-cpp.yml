@@ -7,8 +7,23 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  ubuntu-build:
+    name: ubuntu/${{ matrix.name }}
+    runs-on: ${{ matrix.runs_on }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: gcc
+            runs_on: ubuntu-24.04
+            cc: gcc
+            make_target: all
+          - name: clang-strict
+            runs_on: ubuntu-latest
+            cc: clang
+            make_target: strict
+    env:
+      CC: ${{ matrix.cc }}
 
     steps:
     - uses: actions/checkout@v4
@@ -32,4 +47,51 @@ jobs:
       run: ./configure
 
     - name: Build
-      run: make -j"$(nproc)"
+      run: make -j"$(nproc)" ${{ matrix.make_target }}
+
+  arch-build:
+    name: arch/${{ matrix.name }}
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: gcc
+            cc: gcc
+            make_target: all
+          - name: clang-strict
+            cc: clang
+            make_target: strict
+    env:
+      CC: ${{ matrix.cc }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install build dependencies
+      run: |
+        pacman -Syu --noconfirm --needed \
+          autoconf \
+          automake \
+          gcc \
+          clang \
+          libjpeg-turbo \
+          libpng \
+          libtool \
+          libvorbis \
+          make \
+          pkgconf \
+          sdl2 \
+          sdl2_image \
+          sdl2_mixer
+
+    - name: Bootstrap autotools
+      run: ./00boot
+
+    - name: Configure
+      run: ./configure
+
+    - name: Build
+      run: make -j"$(nproc)" ${{ matrix.make_target }}
