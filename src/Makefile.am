@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CFLAGS = -Wall -W -Werror -Wunused -Wmissing-prototypes -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -fno-common -Wnested-externs -Wno-format-zero-length -fno-strict-aliasing -Wno-unused-result -Wno-unknown-pragmas -Wno-misleading-indentation
+AM_CFLAGS = -Wall -W $(WERROR_CFLAGS) -Wunused -Wmissing-prototypes -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -fno-common -Wnested-externs -Wno-format-zero-length -fno-strict-aliasing -Wno-unused-result -Wno-unknown-pragmas -Wno-misleading-indentation
 
 bin_PROGRAMS = freedroid
 
@@ -59,3 +59,8 @@ freedroidDebug_CPPFLAGS = $(freedroid_CPPFLAGS)
 WINDRES = i586-mingw32msvc-windres
 freedroid.coff: freedroid.rc ../graphics/paraicon.ico
 	$(WINDRES) -i freedroid.rc -o freedroid.coff -O COFF
+
+.PHONY: strict
+
+strict:
+	$(MAKE) WERROR_CFLAGS=-Werror all
