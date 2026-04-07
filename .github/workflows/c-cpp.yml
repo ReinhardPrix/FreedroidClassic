@@ -7,48 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  ubuntu-build:
-    name: ubuntu/${{ matrix.name }}
-    runs-on: ${{ matrix.runs_on }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: gcc
-            runs_on: ubuntu-24.04
-            cc: gcc
-            make_target: all
-          - name: clang-strict
-            runs_on: ubuntu-latest
-            cc: clang
-            make_target: strict
-    env:
-      CC: ${{ matrix.cc }}
-
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install build dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y \
-          autoconf \
-          automake \
-          libtool \
-          pkg-config \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev
-
-    - name: Bootstrap autotools
-      run: ./00boot
-
-    - name: Configure
-      run: ./configure
-
-    - name: Build
-      run: make -j"$(nproc)" ${{ matrix.make_target }}
-
   arch-build:
     name: arch/${{ matrix.name }}
     runs-on: ubuntu-latest
@@ -83,9 +41,9 @@ jobs:
           libvorbis \
           make \
           pkgconf \
-          sdl2 \
-          sdl2_image \
-          sdl2_mixer
+          sdl3 \
+          sdl3_image \
+          sdl3_mixer
 
     - name: Bootstrap autotools
       run: ./00boot

@@ -38,14 +38,6 @@
 #include "global.h"
 #include "proto.h"
 
-// earlier SDL versions didn't define these...
-#ifndef SDL_BUTTON_WHEELUP
-#define SDL_BUTTON_WHEELUP 4
-#endif
-#ifndef SDL_BUTTON_WHEELDOWN
-#define SDL_BUTTON_WHEELDOWN 5
-#endif
-
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 #ifndef ANDROID
 #define JOY_DEAD_ZONE 10000   // joystick tilt ignored below this value
@@ -279,7 +271,7 @@ void Init_Joy (void)
 {
   int num_joy;
 
-  if (SDL_InitSubSystem (SDL_INIT_JOYSTICK) == -1)
+  if (!SDL_InitSubSystem (SDL_INIT_JOYSTICK))
     {
       fprintf(stderr, "Couldn't initialize SDL-Joystick: %s\n", SDL_GetError());
       Terminate(ERR);
@@ -287,19 +279,23 @@ void Init_Joy (void)
       DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
 
 
-  DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
+  {
+    SDL_JoystickID *sticks = SDL_GetJoysticks(&num_joy);
+    SDL_free(sticks);
+  }
+  DebugPrintf (1, " %d Joysticks found!\n", num_joy);
 
   if (num_joy > 0)
-    joy = SDL_JoystickOpen (0);
+    joy = SDL_OpenJoystick (0);
 
   if (joy)
     {
-      DebugPrintf (1, "Identifier: %s\n", SDL_JoystickName (0));
-      DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_JoystickNumAxes(joy));
-      DebugPrintf (1, "Number of Buttons: %d\n", SDL_JoystickNumButtons(joy));
+      DebugPrintf (1, "Identifier: %s\n", SDL_GetJoystickName (0));
+      DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_GetNumJoystickAxes(joy));
+      DebugPrintf (1, "Number of Buttons: %d\n", SDL_GetNumJoystickButtons(joy));
 
       /* aktivate Joystick event handling */
-      SDL_JoystickEventState (SDL_ENABLE);
+      SDL_SetJoystickEventsEnabled(true);
 
     }
   else
@@ -357,28 +353,28 @@ update_input (void)
     {
       switch( event.type )
 	{
-	case SDL_QUIT:
+	case SDL_EVENT_QUIT:
 	  printf("\n\nUser requested termination...\n\nTerminating...");
 	  Terminate(0);
 	  break;
 	  /* Look for a keypress */
 
-	case SDL_KEYDOWN:
-	  current_modifiers = event.key.keysym.mod;
-	  set_input_state(event.key.keysym.sym, PRESSED);
+	case SDL_EVENT_KEY_DOWN:
+	  current_modifiers = event.key.mod;
+	  set_input_state(event.key.key, PRESSED);
 #ifdef GCW0
 	  if ( input_axis.x || input_axis.y ) axis_is_active = TRUE; // 4 GCW-0 ; breaks cursor keys after axis has been active...
 #endif
 	  break;
-	case SDL_KEYUP:
-	  current_modifiers = event.key.keysym.mod;
-	  set_input_state(event.key.keysym.sym, RELEASED);
+	case SDL_EVENT_KEY_UP:
+	  current_modifiers = event.key.mod;
+	  set_input_state(event.key.key, RELEASED);
 #ifdef GCW0
 	  axis_is_active = FALSE;
 #endif
 	  break;
 
-	case SDL_JOYAXISMOTION:
+	case SDL_EVENT_JOYSTICK_AXIS_MOTION:
 	  axis = event.jaxis.axis;
 	  if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
 	    {
@@ -428,7 +424,7 @@ update_input (void)
 
 	  break;
 
-	case SDL_JOYBUTTONDOWN:
+	case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
 	  // first button
 	  if (event.jbutton.button == 0)
 	    set_input_state(JOY_BUTTON1, PRESSED);
@@ -448,7 +444,7 @@ update_input (void)
 	  axis_is_active = TRUE;
 	  break;
 
-	case SDL_JOYBUTTONUP:
+	case SDL_EVENT_JOYSTICK_BUTTON_UP:
 	  // first button
 	  if (event.jbutton.button == 0)
 	    set_input_state(JOY_BUTTON1, FALSE);
@@ -468,7 +464,7 @@ update_input (void)
 	  axis_is_active = FALSE;
 	  break;
 
-	case SDL_MOUSEMOTION:
+	case SDL_EVENT_MOUSE_MOTION:
 	  input_axis.x = event.motion.x - UserCenter_x + 16;
 	  input_axis.y = event.motion.y - UserCenter_y + 16;
 
@@ -477,7 +473,7 @@ update_input (void)
 	  break;
 
 	  /* Mouse control */
-	case SDL_MOUSEBUTTONDOWN:
+	case SDL_EVENT_MOUSE_BUTTON_DOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      input_axis.x = event.button.x - UserCenter_x + 16;
@@ -492,18 +488,10 @@ update_input (void)
 	  if (event.button.button == SDL_BUTTON_MIDDLE)
 	    set_input_state(MOUSE_BUTTON3, PRESSED);
 
-	  // wheel events are immediately released, so we rather
-	  // count the number of not yet read-out events
-	  if (event.button.button == SDL_BUTTON_WHEELUP)
-	      WheelUpEvents ++;
-
-	  if (event.button.button == SDL_BUTTON_WHEELDOWN)
-	      WheelDownEvents ++;
-
 	  last_mouse_event = SDL_GetTicks();
 	  break;
 
-	case SDL_MOUSEWHEEL:
+	case SDL_EVENT_MOUSE_WHEEL:
 	  if (event.wheel.y > 0)
 	    WheelUpEvents ++;
 	  else if (event.wheel.y < 0)
@@ -512,7 +500,7 @@ update_input (void)
 	  last_mouse_event = SDL_GetTicks();
 	  break;
 
-        case SDL_MOUSEBUTTONUP:
+        case SDL_EVENT_MOUSE_BUTTON_UP:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    {
 	      set_input_state(MOUSE_BUTTON1, FALSE);
@@ -558,18 +546,16 @@ getchar_raw (void)
 
       switch (event.type)
 	{
-	case SDL_KEYDOWN:
+	case SDL_EVENT_KEY_DOWN:
 	  /*
-	   * here we use the fact that, I cite from SDL_keyboard.h:
-	   * "The keyboard syms have been cleverly chosen to map to ASCII"
-	   * ... I hope that this design feature is portable, and durable ;)
+	   * Menu/name-entry input still treats printable SDL keycodes like ASCII.
 	   */
-	  Returnkey = (int) event.key.keysym.sym;
-	  if ( event.key.keysym.mod & KMOD_SHIFT )
-	    Returnkey = toupper( (int)event.key.keysym.sym );
+	  Returnkey = (int) event.key.key;
+	  if ( event.key.mod & SDL_KMOD_SHIFT )
+	    Returnkey = toupper( (int)event.key.key );
 	  break;
 
-	case SDL_JOYBUTTONDOWN:
+	case SDL_EVENT_JOYSTICK_BUTTON_DOWN:
 	  if (event.jbutton.button == 0)
 	    Returnkey = JOY_BUTTON1;
 	  else if (event.jbutton.button == 1)
@@ -580,7 +566,7 @@ getchar_raw (void)
 	    Returnkey = JOY_BUTTON4;
 	  break;
 
-        case SDL_JOYAXISMOTION:
+        case SDL_EVENT_JOYSTICK_AXIS_MOTION:
 	  axis = event.jaxis.axis;
           if (axis == 0 || ((joy_num_axes >= 5) && (axis == 3)) ) /* x-axis */
 	    {
@@ -606,20 +592,16 @@ getchar_raw (void)
             }
           break;
 
-	case SDL_MOUSEBUTTONDOWN:
+	case SDL_EVENT_MOUSE_BUTTON_DOWN:
 	  if (event.button.button == SDL_BUTTON_LEFT)
 	    Returnkey = MOUSE_BUTTON1;
 	  else if (event.button.button == SDL_BUTTON_RIGHT)
 	    Returnkey = MOUSE_BUTTON2;
 	  else if (event.button.button == SDL_BUTTON_MIDDLE)
 	    Returnkey = MOUSE_BUTTON3;
-	  else if (event.button.button == SDL_BUTTON_WHEELUP)
-	    Returnkey = MOUSE_WHEELUP;
-	  else if (event.button.button == SDL_BUTTON_WHEELDOWN)
-	    Returnkey = MOUSE_WHEELDOWN;
 	  break;
 
-	case SDL_MOUSEWHEEL:
+	case SDL_EVENT_MOUSE_WHEEL:
 	  if (event.wheel.y > 0)
 	    Returnkey = MOUSE_WHEELUP;
 	  else if (event.wheel.y < 0)

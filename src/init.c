@@ -971,12 +971,11 @@ Title ( const char *MissionBriefingPointer )
   ReadValueFromString (MissionBriefingPointer, BRIEFING_TITLE_SONG_STRING, "%s", Buffer);
   Switch_Background_Music_To (Buffer);
 
-  SDL_SetClipRect ( ne_screen, NULL );
+  SDL_SetSurfaceClipRect ( ne_screen, NULL );
   ReadValueFromString (MissionBriefingPointer, BRIEFING_TITLE_PICTURE_STRING, "%s", Buffer);
   DisplayImage ( find_file(Buffer, GRAPHICS_DIR, NO_THEME, CRITICAL) );
   MakeGridOnScreen( (SDL_Rect*) &Screen_Rect );
   Me.status=BRIEFING;
-  //  SDL_Flip (ne_screen);
 
   SetCurrentFont( Para_BFont );
 
@@ -1028,7 +1027,7 @@ ThouArtVictorious(void)
 
   Switch_Background_Music_To ( DebriefingSong );
 
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
   ShowScore = (long)RealScore;
   Me.status = VICTORY;
@@ -1047,7 +1046,7 @@ ThouArtVictorious(void)
     }
 
   Copy_Rect(Full_User_Rect, rect);
-  SDL_SetClipRect ( ne_screen, NULL );
+  SDL_SetSurfaceClipRect ( ne_screen, NULL );
   MakeGridOnScreen (&rect);
   SDL_UpdateWindowSurface(FD_GetWindow());
   rect.x += 10;
@@ -1074,7 +1073,7 @@ ThouArtDefeated (void)
   int h;
 
   Me.status = TERMINATED;
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
   ExplodeInfluencer ();
 
@@ -1100,9 +1099,7 @@ ThouArtDefeated (void)
     }
   set_time_factor ( 1.0 );
 
-#ifdef HAVE_LIBSDL_MIXER
-  Mix_HaltMusic ();
-#endif
+  Stop_Background_Music();
 
   // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
   Activate_Conservative_Frame_Computation ();
@@ -1311,7 +1308,7 @@ Win32Disclaimer (void)
 {
   SDL_Rect rect;
 
-  SDL_SetClipRect ( ne_screen, NULL );
+  SDL_SetSurfaceClipRect ( ne_screen, NULL );
   DisplayImage (find_file (TITLE_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL)); // show title pic
   MakeGridOnScreen( (SDL_Rect*) &Screen_Rect );
 
@@ -1368,7 +1365,7 @@ FreeGameMem ( void )
       int num_pics = sizeof(Bulletmap[0].SurfacePointer)/sizeof(Bulletmap[0].SurfacePointer[0]);
       for ( i = 0; i < Number_Of_Bullet_Types; i ++ ) {
         for ( j = 0; j < num_pics; j ++ ) {
-          SDL_FreeSurface ( Bulletmap[i].SurfacePointer[j] );
+          SDL_DestroySurface ( Bulletmap[i].SurfacePointer[j] );
         }
       }
       MyFree ( Bulletmap );
@@ -1380,7 +1377,7 @@ FreeGameMem ( void )
   int num_blastphases = sizeof(Blastmap[0].SurfacePointer)/sizeof(Blastmap[0].SurfacePointer[0]);
   for ( i = 0; i < num_blasttypes; i ++ ) {
     for ( j = 0; j < num_blastphases; j ++ ) {
-      SDL_FreeSurface ( Blastmap[i].SurfacePointer[j] );
+      SDL_DestroySurface ( Blastmap[i].SurfacePointer[j] );
       Blastmap[i].SurfacePointer[j] = NULL;
     }
   }

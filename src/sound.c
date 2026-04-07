@@ -40,6 +40,21 @@
 #include "global.h"
 #include "proto.h"
 
+#define FD_SFX_TRACKS 20
+
+static MIX_Mixer *fd_mixer;
+static MIX_Audio *Loaded_WAV_Files[ALL_SOUNDS];
+static MIX_Audio *MusicSongs[NUM_COLORS];
+static MIX_Audio *Tmp_MOD_File;
+static MIX_Track *fd_music_track;
+static MIX_Track *fd_sfx_tracks[FD_SFX_TRACKS];
+static size_t fd_next_sfx_track;
+
+static bool FD_LoadAudioFile(MIX_Audio **audio, const char *filename, bool predecode);
+static MIX_Track *FD_GetNextSfxTrack(void);
+static bool FD_PlayTrack(MIX_Track *track, MIX_Audio *audio, int loops);
+static void FD_StopBackgroundMusic(void);
+
 // The following is the definition of the sound file names used in freedroid
 // DO NOT CHANGE THE ORDER OF APPEARENCE IN THIS LIST unless you
 // also adjust the order of appearance in defs.h!
@@ -81,10 +96,6 @@ const char *SoundSampleFilenames[ALL_SOUNDS] = {
    "Screenshot.wav"
 };
 
-#ifdef HAVE_LIBSDL_MIXER
-Mix_Chunk *Loaded_WAV_Files[ALL_SOUNDS];
-#endif
-
 const char *MusicFiles [NUM_COLORS] = {  // we have a background song per color now
 #ifdef ANDROID
   "AnarchyMenu1.mod.ogg",                 // RED
@@ -109,24 +120,94 @@ const char *MusicFiles [NUM_COLORS] = {  // we have a background song per color 
 #endif // ANDROID
 };
 
-#ifdef HAVE_LIBSDL_MIXER
-Mix_Music *MusicSongs[NUM_COLORS];
-Mix_Music *Tmp_MOD_File;
-#endif
+static bool
+FD_LoadAudioFile(MIX_Audio **audio, const char *filename, bool predecode)
+{
+  char *fpath;
+
+  *audio = NULL;
+  fpath = find_file(filename, SOUND_DIR, NO_THEME, WARNONLY);
+  if (fpath == NULL) {
+    DebugPrintf(0, "\nError loading sound-file: %s\n", filename);
+    return false;
+  }
+
+  *audio = MIX_LoadAudio(fd_mixer, fpath, predecode);
+  if (*audio == NULL) {
+    DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
+    return false;
+  }
+
+  return true;
+}
+
+static MIX_Track *
+FD_GetNextSfxTrack(void)
+{
+  size_t i;
+
+  for (i = 0; i < NUM_ELEM(fd_sfx_tracks); i++) {
+    size_t index = (fd_next_sfx_track + i) % NUM_ELEM(fd_sfx_tracks);
+    MIX_Track *track = fd_sfx_tracks[index];
+
+    if (track != NULL && !MIX_TrackPlaying(track) && !MIX_TrackPaused(track)) {
+      fd_next_sfx_track = (index + 1) % NUM_ELEM(fd_sfx_tracks);
+      return track;
+    }
+  }
+
+  fd_next_sfx_track = (fd_next_sfx_track + 1) % NUM_ELEM(fd_sfx_tracks);
+  return fd_sfx_tracks[fd_next_sfx_track];
+}
+
+static bool
+FD_PlayTrack(MIX_Track *track, MIX_Audio *audio, int loops)
+{
+  SDL_PropertiesID options = 0;
+  bool success = false;
+
+  if (track == NULL || audio == NULL) {
+    return false;
+  }
+
+  if (!MIX_SetTrackAudio(track, audio)) {
+    return false;
+  }
+
+  if (loops != 0) {
+    options = SDL_CreateProperties();
+    if (options == 0) {
+      return false;
+    }
+    if (!SDL_SetNumberProperty(options, MIX_PROP_PLAY_LOOPS_NUMBER, loops)) {
+      SDL_DestroyProperties(options);
+      return false;
+    }
+  }
+
+  success = MIX_PlayTrack(track, options);
+  if (options != 0) {
+    SDL_DestroyProperties(options);
+  }
+
+  return success;
+}
+
+static void
+FD_StopBackgroundMusic(void)
+{
+  if (fd_music_track == NULL) {
+    return;
+  }
+
+  MIX_StopTrack(fd_music_track, 0);
+}
 
 void
 Init_Audio(void)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
-  char *fpath;
   int i;
-  int audio_rate = MIX_DEFAULT_FREQUENCY; //  22050;
-  Uint16 audio_format = MIX_DEFAULT_FORMAT;
-  int audio_channels = 2;	// = stereo
-  //  int audio_buffers = 4096;
-  int audio_buffers = 100; // higher = less risk of sound skips, but more lag
+  SDL_AudioSpec mixer_spec;
 
   DebugPrintf(1, "\nInitializing SDL Audio Systems....\n");
 
@@ -135,7 +216,7 @@ Init_Audio(void)
 
   // Now SDL_AUDIO is initialized here:
 
-  if ( SDL_InitSubSystem ( SDL_INIT_AUDIO ) == -1 )
+  if ( !SDL_InitSubSystem ( SDL_INIT_AUDIO ) )
     {
       DebugPrintf (0, "WARNING: SDL Sound subsystem could not be initialized.\n\
 Continuing with sound disabled\n");
@@ -145,21 +226,47 @@ Continuing with sound disabled\n");
   else
     DebugPrintf(1, "SDL Audio initialisation successful.\n");
 
-  // Now that we have initialized the audio SubSystem, we must open
-  // an audio channel.  This will be done here (see code from Mixer-Tutorial):
+  if (!MIX_Init()) {
+    DebugPrintf(0, "WARNING: SDL_mixer could not be initialized.\n");
+    DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
+    sound_on = FALSE;
+    return;
+  }
 
-  if ( Mix_OpenAudio(audio_rate, audio_format, audio_channels, audio_buffers) )
-    {
-      DebugPrintf (0, "WARNING: SDL audio channel could not be opened. \n");
-      DebugPrintf (0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", Mix_GetError());
+  SDL_zero(mixer_spec);
+  mixer_spec.freq = 44100;
+  mixer_spec.format = SDL_AUDIO_S16;
+  mixer_spec.channels = 2;
+
+  fd_mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &mixer_spec);
+  if (fd_mixer == NULL) {
+    DebugPrintf(0, "WARNING: SDL audio mixer could not be opened.\n");
+    DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
+    sound_on = FALSE;
+    MIX_Quit();
+    return;
+  }
+  DebugPrintf(1, "\nSuccessfully opened SDL audio mixer.");
+
+  fd_music_track = MIX_CreateTrack(fd_mixer);
+  if (fd_music_track == NULL) {
+    DebugPrintf(0, "WARNING: could not create SDL music track.\n");
+    DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
+    sound_on = FALSE;
+    FreeSounds();
+    return;
+  }
+
+  for (i = 0; i < FD_SFX_TRACKS; i++) {
+    fd_sfx_tracks[i] = MIX_CreateTrack(fd_mixer);
+    if (fd_sfx_tracks[i] == NULL) {
+      DebugPrintf(0, "WARNING: could not create all SDL sound-effect tracks.\n");
+      DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
       sound_on = FALSE;
+      FreeSounds();
       return;
     }
-  else
-    DebugPrintf (1, "\nSuccessfully opened SDL audio channel." );
-
-  if (Mix_AllocateChannels(20) != 20)
-    DebugPrintf (0, "\nWARNING: could not get all 20 mixer-channels I asked for...\n");
+  }
 
   // Now that the audio channel is opend, its time to load all the
   // WAV files into memory, something we NEVER did while using the yiff,
@@ -168,13 +275,12 @@ Continuing with sound disabled\n");
   Loaded_WAV_Files[0]=NULL;
   for (i = 1; i < ALL_SOUNDS; i++)
     {
-      fpath = find_file (SoundSampleFilenames[ i ], SOUND_DIR, NO_THEME, WARNONLY);
-      if (fpath) Loaded_WAV_Files[ i ] = Mix_LoadWAV(fpath);
-      if ( Loaded_WAV_Files[i] == NULL )
+
+      if (!FD_LoadAudioFile(&Loaded_WAV_Files[i], SoundSampleFilenames[i], true))
 	{
 	  DebugPrintf (0, "Could not load Sound-sample: %s\n", SoundSampleFilenames[ i ]);
-	  DebugPrintf (0, "WARNING: Continuing with sound disabled. Error = %d\n", Mix_GetError());
 	  sound_on = FALSE;
+	  FreeSounds();
 	  return;
 	} // if ( !Loaded_WAV...
       else
@@ -183,13 +289,12 @@ Continuing with sound disabled\n");
 
   for (i = 0; i < NUM_COLORS; i++)
     {
-      fpath = find_file ( MusicFiles [ i ], SOUND_DIR, NO_THEME, WARNONLY);
-      if (fpath) MusicSongs [ i ] = Mix_LoadMUS( fpath );
-      if ( MusicSongs[ i ] == NULL )
+
+      if (!FD_LoadAudioFile(&MusicSongs[i], MusicFiles[i], false))
 	{
 	  DebugPrintf ( 0, "\nError loading sound-file: %s\n", MusicFiles[ i ]);
-	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
 	  sound_on = FALSE;
+	  FreeSounds();
 	  return;
 	} // if ( !Loaded_WAV...
       else
@@ -206,43 +311,27 @@ Continuing with sound disabled\n");
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);
-#endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
 void
 Set_BG_Music_Volume(float NewVolume)
 {
-
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   if ( !sound_on ) return;
 
-  Mix_VolumeMusic( (int) rintf( NewVolume * MIX_MAX_VOLUME ) );
-
-#endif // HAVE_LIBSDL_MIXER
+  MIX_SetTrackGain(fd_music_track, NewVolume);
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void
 Set_Sound_FX_Volume(float NewVolume)
 {
-#ifdef HAVE_LIBSDL_MIXER
   int i;
-#endif
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
   // This is done here for the Files 1,2,3 and 4, since these
   // are background music files.
-  for ( i=1 ; i<ALL_SOUNDS ; i++ )
-    {
-      Mix_VolumeChunk( Loaded_WAV_Files[i], (int) rintf(NewVolume* MIX_MAX_VOLUME) );
-    }
-
-#endif // HAVE_LIBSDL_MIXER
+  for ( i=0 ; i<FD_SFX_TRACKS ; i++ )
+    MIX_SetTrackGain(fd_sfx_tracks[i], NewVolume);
 
 } // void Set_BG_Music_Volume(float NewVolume)
 
@@ -303,27 +392,20 @@ Technical details:
 void
 Switch_Background_Music_To ( const char* filename_raw )
 {
-#ifdef HAVE_LIBSDL_MIXER
-  char* fpath;
   static int prev_color = -1;
   static bool paused = FALSE;
-#endif
-
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
 
   if ( !sound_on ) return;
 
   if ( filename_raw == NULL )
     {
-      Mix_PauseMusic(); // pause currently played background music
+      MIX_PauseTrack(fd_music_track);
       paused = TRUE;
       return;
     }
 
   // rp: lets cheat when using Mingw32
-#if (!defined __WIN32__  && !defined HAVE_LIBVORBIS)
+#if (!defined SDL_PLATFORM_WIN32  && !defined HAVE_LIBVORBIS)
   if (strstr (filename_raw, ".ogg"))
     {
       DebugPrintf (1, "\n\nWARNING: no ogg vorbis libs were found when configuring,\n\
@@ -340,38 +422,48 @@ Switch_Background_Music_To ( const char* filename_raw )
     {
       if (paused && (prev_color == CurLevel->color) )  // current level-song was just paused
 	{
-	  Mix_ResumeMusic ();
+	  MIX_ResumeTrack(fd_music_track);
 	  paused = FALSE;
 	}
       else
 	{
-	  Mix_PlayMusic (MusicSongs[CurLevel->color], -1);
+	  if (!FD_PlayTrack(fd_music_track, MusicSongs[CurLevel->color], -1)) {
+	    DebugPrintf(0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", SDL_GetError());
+	    return;
+	  }
 	  paused = FALSE;
 	  prev_color = CurLevel->color;
 	}
     }
   else  // not using BYCOLOR mechanism: just play specified song
     {
-      if (Tmp_MOD_File) Mix_FreeMusic(Tmp_MOD_File);
-      fpath = find_file (filename_raw, SOUND_DIR, NO_THEME, WARNONLY);
-      if ( fpath == NULL ) {
-        DebugPrintf (0, "\nError loading sound-file: %s\n", filename_raw);
+      if (Tmp_MOD_File) {
+        MIX_DestroyAudio(Tmp_MOD_File);
+        Tmp_MOD_File = NULL;
+      }
+
+      if (!FD_LoadAudioFile(&Tmp_MOD_File, filename_raw, false)) {
         return;
       }
-      Tmp_MOD_File = Mix_LoadMUS (fpath);
-      if ( Tmp_MOD_File == NULL )
-	{
-	  DebugPrintf (0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", Mix_GetError());
-          return;
-        }
-      Mix_PlayMusic (Tmp_MOD_File, -1);
+
+      if (!FD_PlayTrack(fd_music_track, Tmp_MOD_File, -1)) {
+	DebugPrintf(0, "SDL Mixer Error: %s\n Continuing with sound disabled\n", SDL_GetError());
+	return;
+      }
+      paused = FALSE;
     }
 
-  Mix_VolumeMusic ( (int) rintf( GameConfig.Current_BG_Music_Volume * MIX_MAX_VOLUME ) );
-
-#endif // HAVE_LIBSDL_MIXER
+  MIX_SetTrackGain(fd_music_track, GameConfig.Current_BG_Music_Volume);
 
 }; // void Switch_Background_Music_To(int Tune)
+
+void
+Stop_Background_Music(void)
+{
+  if (!sound_on) return;
+
+  FD_StopBackgroundMusic();
+}
 
 
 /*@Function============================================================
@@ -383,24 +475,19 @@ Switch_Background_Music_To ( const char* filename_raw )
 void
 Play_Sound (int Tune)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
-  int Newest_Sound_Channel=0;
+  MIX_Track *track;
 
   if ( !sound_on ) return;
 
-  Newest_Sound_Channel = Mix_PlayChannel (-1, Loaded_WAV_Files[Tune], 0);
-  if ( Newest_Sound_Channel == -1 )
+  track = FD_GetNextSfxTrack();
+  if (track == NULL || !FD_PlayTrack(track, Loaded_WAV_Files[Tune], 0))
     {
       DebugPrintf (0, "WARNING: Could not play sound-sample: %s Error: %s\n\
 This usually just means that too many samples where played at the same time\n",
-		   SoundSampleFilenames[ Tune ] , Mix_GetError() );
+		   SoundSampleFilenames[ Tune ] , SDL_GetError() );
     } // if ( ... = -1
   else
     DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-
-#endif // HAVE_LIBSDL_MIXER
 
 }  // void Play_Sound(int Tune)
 
@@ -687,21 +774,41 @@ DruidBlastSound (void)
 void
 FreeSounds ( void )
 {
-#ifdef HAVE_LIBSDL_MIXER
+  FD_StopBackgroundMusic();
+
   for (size_t i = 0; i < NUM_ELEM(Loaded_WAV_Files); i++) {
-    if ( Loaded_WAV_Files[i] != NULL ) { Mix_FreeChunk ( Loaded_WAV_Files[i] ); }
+    if ( Loaded_WAV_Files[i] != NULL ) { MIX_DestroyAudio ( Loaded_WAV_Files[i] ); }
+    Loaded_WAV_Files[i] = NULL;
   }
 
   for ( size_t i = 0; i < NUM_ELEM(MusicSongs); i ++ ) {
-    if ( MusicSongs[i] != NULL )  { Mix_FreeMusic ( MusicSongs[i] ); }
+    if ( MusicSongs[i] != NULL )  { MIX_DestroyAudio ( MusicSongs[i] ); }
+    MusicSongs[i] = NULL;
   }
 
-  if ( Tmp_MOD_File ) { Mix_FreeMusic ( Tmp_MOD_File ); }
+  if ( Tmp_MOD_File ) {
+    MIX_DestroyAudio ( Tmp_MOD_File );
+    Tmp_MOD_File = NULL;
+  }
 
-  Mix_CloseAudio ();
-  SDL_CloseAudio ();
+  for ( size_t i = 0; i < NUM_ELEM(fd_sfx_tracks); i++ ) {
+    if ( fd_sfx_tracks[i] != NULL ) {
+      MIX_DestroyTrack(fd_sfx_tracks[i]);
+      fd_sfx_tracks[i] = NULL;
+    }
+  }
 
-#endif
+  if (fd_music_track != NULL) {
+    MIX_DestroyTrack(fd_music_track);
+    fd_music_track = NULL;
+  }
+
+  if (fd_mixer != NULL) {
+    MIX_DestroyMixer(fd_mixer);
+    fd_mixer = NULL;
+  }
+
+  MIX_Quit();
   return;
 }
 #undef _sound_c

@@ -740,7 +740,7 @@ InitiateMenu (bool with_droids)
   //
   Activate_Conservative_Frame_Computation();
 
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   Me.status=MENU;
   ClearGraphMem();
   DisplayBanner (NULL, NULL,  BANNER_NO_SDL_UPDATE | BANNER_FORCE_UPDATE );
@@ -749,13 +749,13 @@ InitiateMenu (bool with_droids)
   else
     Assemble_Combat_Picture (ONLY_SHOW_MAP);
 
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   MakeGridOnScreen( NULL );
 
-  if (Menu_Background) SDL_FreeSurface (Menu_Background);
-  Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);  // keep a global copy of background
+  if (Menu_Background) SDL_DestroySurface (Menu_Background);
+  Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format);  // keep a global copy of background
 
-  SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
+  SDL_HideCursor ();  // deactivate mouse-cursor in menus
   SetCurrentFont ( Menu_BFont );
   fheight = FontHeight (GetCurrentFont()) + 2;
 
@@ -997,7 +997,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
     } // while !finished
 
   ClearGraphMem();
-  SDL_ShowCursor ( SDL_ENABLE );  // reactivate mouse-cursor for game
+  SDL_ShowCursor ();  // reactivate mouse-cursor for game
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed = TRUE;
@@ -1029,7 +1029,7 @@ ShowCredits (void)
   em = CharWidth (Menu_BFont, 'm');
 
   Copy_Rect (Screen_Rect, screen);
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
   DisplayImage ( find_file(CREDITS_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL));
   MakeGridOnScreen (&screen);
 
@@ -1500,7 +1500,7 @@ Cheatmenu (void)
 void
 FreeMenuData ( void )
 {
-  SDL_FreeSurface (Menu_Background);
+  SDL_DestroySurface (Menu_Background);
   return;
 }
 #undef _menu_c

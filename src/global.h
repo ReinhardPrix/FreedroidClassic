@@ -190,7 +190,7 @@ EXTERN int BannerIsDestroyed;
 
 EXTERN SDL_Surface *banner_pic;      /* the banner pic */
 EXTERN SDL_Surface *pic999;
-EXTERN SDL_RWops *packed_portraits[NUM_DROIDS];
+EXTERN SDL_IOStream *packed_portraits[NUM_DROIDS];
 
 EXTERN SDL_Surface *Decal_pics[NUM_DECAL_PICS];
 

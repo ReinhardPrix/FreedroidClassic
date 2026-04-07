@@ -54,7 +54,7 @@ static SDL_Surface *ScaleSurfaceNearest (SDL_Surface *src, float scale);
 static void ApplyWindowMetadata (void);
 int Load_Fonts (void);
 SDL_Surface *Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags);
-SDL_RWops *load_raw_pic (const char *fpath, char **raw_mem );
+SDL_IOStream *load_raw_pic (const char *fpath, char **raw_mem );
 BFont_Info *Duplicate_Font ( const BFont_Info * in_font );
 void LoadThemeConfigurationFile(void);
 
@@ -198,17 +198,15 @@ ApplyFilter (SDL_Surface *surf, float fred, float fgreen, float fblue)
 void
 GetRGBA ( SDL_Surface* surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a)
 {
-  SDL_PixelFormat *fmt;
   Uint32 pixel;
 
   //--------------------
   // First we extract the pixel itself and the
   // format information we need.
   //
-  fmt = surface -> format ;
   pixel = * ( ( ( Uint32* ) surface -> pixels ) + x + y * surface->w )  ;
 
-  SDL_GetRGBA (pixel, fmt, r, g, b, a);
+  SDL_GetRGBA (pixel, surface->format, r, g, b, a);
 
 }; // int GetRGBA
 
@@ -420,7 +418,7 @@ DisplayImage(char *datafile)
 
   SDL_BlitSurface(image, NULL, ne_screen, NULL);
 
-  SDL_FreeSurface(image);
+  SDL_DestroySurface(image);
 
   return;
 
@@ -450,7 +448,7 @@ SetCombatScaleTo(float scale)
       {
 	// if there's already a rescaled version, free it
 	if (MapBlockSurfacePointer[j][i] != OrigMapBlockSurfacePointer[j][i])
-	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
+	  SDL_DestroySurface (MapBlockSurfacePointer[j][i]);
 	// then scale..
 	tmp = ScaleSurfaceNearest (OrigMapBlockSurfacePointer[j][i], scale);
         if ( tmp == NULL ) {
@@ -458,8 +456,8 @@ SetCombatScaleTo(float scale)
           Terminate (ERR);
         }
 	// and optimize
-	MapBlockSurfacePointer[j][i] = SDL_ConvertSurface (tmp, tmp->format, 0);
-	SDL_FreeSurface(tmp); // free the old surface
+	MapBlockSurfacePointer[j][i] = SDL_ConvertSurface (tmp, tmp->format);
+	SDL_DestroySurface(tmp); // free the old surface
       }
 
   Copy_Rect (origBlock, Block_Rect);   // always scale with respect to original size!
@@ -687,10 +685,11 @@ InitPictures (void)
   if (first_call)
     {
       //  create the tmp block-build storage
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+      tmp = SDL_CreateSurface(Block_Rect.w, Block_Rect.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
-      SDL_FreeSurface (tmp);
+      SDL_DestroySurface (tmp);
 
       // takeover background pics
       fpath = find_file (TAKEOVER_BG_PIC_FILE, GRAPHICS_DIR, NO_THEME, CRITICAL);
@@ -781,9 +780,9 @@ InitPictures (void)
 
 
 /*----------------------------------------------------------------------
- * load a pic into memory and return the SDL_RWops pointer to it
+ * load a pic into memory and return the SDL_IOStream pointer to it
  *----------------------------------------------------------------------*/
-SDL_RWops *
+SDL_IOStream *
 load_raw_pic (const char *fpath, char **raw_mem )
 {
     FILE *fp;
@@ -818,7 +817,7 @@ load_raw_pic (const char *fpath, char **raw_mem )
     fclose (fp);
 
 
-    return (SDL_RWFromMem( (*raw_mem), size) );
+    return (SDL_IOFromMem( (*raw_mem), size) );
 
 }
 
@@ -853,14 +852,14 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
     return (NULL);
 
   if ( (pic != NULL) && (flags == FREE_ONLY) ) {
-    SDL_FreeSurface (pic);
+    SDL_DestroySurface (pic);
     return NULL;
   }
 
   if (fpath) // initialize: read & malloc new pic, dont' return a copy!!
     {
       if (pic)  // previous pic?
-	SDL_FreeSurface (pic);
+	SDL_DestroySurface (pic);
       pic = IMG_Load (fpath);
 
     }
@@ -877,12 +876,12 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
       Set_Rect (dim, 0, 0, block->w, block->h);
     }
 
-  if (pic->format->Amask != 0)
+  if (SDL_GetPixelFormatDetails(pic->format)->Amask != 0)
     usealpha = TRUE;
   else
     usealpha = FALSE;
 
-  if (SDL_GetColorKey(pic, &colorkey) == 0)
+  if (SDL_GetSurfaceColorKey(pic, &colorkey) == 0)
     use_colorkey = TRUE;
 
   if (usealpha)
@@ -892,26 +891,27 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
       SDL_SetSurfaceRLE (pic, 0);	/* clear per-surf alpha for internal blit */
       SDL_GetSurfaceBlendMode(pic, &old_blend_mode);
       SDL_SetSurfaceBlendMode(pic, SDL_BLENDMODE_NONE);
-      ret = SDL_CreateRGBSurfaceWithFormat (0, dim.w, dim.h, 32, SDL_PIXELFORMAT_ARGB8888);
-      SDL_FillRect (ret, NULL, 0);
+      ret = SDL_CreateSurface(dim.w, dim.h, SDL_PIXELFORMAT_ARGB8888);
+      SDL_FillSurfaceRect (ret, NULL, 0);
     }
   else
     {
       Uint32 fill_color = 0;
 
-      tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, vid_bpp, 0, 0, 0, 0);
+      tmp = SDL_CreateSurface(dim.w, dim.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
       if (use_colorkey)
         {
           Uint8 r, g, b;
 
-          ret = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+	  ret = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
           SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
           fill_color = SDL_MapRGB (ret->format, r, g, b);
         }
       else
-        ret = SDL_ConvertSurface (tmp, tmp->format, 0);
-      SDL_FillRect (ret, NULL, fill_color);
-      SDL_FreeSurface (tmp);
+	ret = SDL_ConvertSurface (tmp, tmp->format);
+      SDL_FillSurfaceRect (ret, NULL, fill_color);
+      SDL_DestroySurface (tmp);
     }
 
   Set_Rect (src, col * (dim.w + 2), line * (dim.h + 2), dim.w, dim.h);
@@ -928,7 +928,7 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
     {
       Uint8 r, g, b;
       SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
-      SDL_SetColorKey (ret, SDL_SRCCOLORKEY, SDL_MapRGB (ret->format, r, g, b));
+      SDL_SetSurfaceColorKey (ret, SDL_SRCCOLORKEY, SDL_MapRGB (ret->format, r, g, b));
     }
 
   return (ret);
@@ -946,26 +946,16 @@ Init_Video (void)
 {
   char vid_driver[81];
   Uint32 vid_flags;  		/* flags for SDL video mode */
-  SDL_DisplayMode dm;
 
   /* Initialize the SDL library */
   // if ( SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 )
 
-  if ( SDL_Init (SDL_INIT_VIDEO) == -1 )
+  if ( !SDL_Init (SDL_INIT_VIDEO) )
     {
       fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
       Terminate(ERR);
     } else
       DebugPrintf(1, "\nSDL Video initialisation successful.\n");
-
-  // Now SDL_TIMER is initialized here:
-
-  if ( SDL_InitSubSystem ( SDL_INIT_TIMER ) == -1 )
-    {
-      fprintf(stderr, "Couldn't initialize SDL: %s\n",SDL_GetError());
-      Terminate(ERR);
-    } else
-      DebugPrintf(1, "\nSDL Timer initialisation successful.\n");
 
   /* clean up on exit */
   atexit (SDL_Quit);
@@ -977,16 +967,22 @@ Init_Video (void)
 #ifdef ANDROID
   vid_bpp = 16; // Hardcoded Android default
 #else
-  if (SDL_GetDesktopDisplayMode(0, &dm) == 0)
-    vid_bpp = SDL_BITSPERPIXEL(dm.format);
-  else
-    vid_bpp = 32;
+  {
+    const SDL_DisplayMode *desktop_mode = SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay());
+    if (desktop_mode)
+      vid_bpp = SDL_BITSPERPIXEL(desktop_mode->format);
+    else
+      vid_bpp = 32;
+  }
 #endif
 
   DebugPrintf (0, "Video info summary from SDL:\n");
   DebugPrintf (0, "----------------------------------------------------------------------\n");
-  if (SDL_GetDesktopDisplayMode(0, &dm) == 0)
-    DebugPrintf (0, "Desktop display mode: %dx%d @ %dHz\n", dm.w, dm.h, dm.refresh_rate);
+  {
+    const SDL_DisplayMode *desktop_mode = SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay());
+    if (desktop_mode)
+      DebugPrintf (0, "Desktop display mode: %dx%d @ %gHz\n", desktop_mode->w, desktop_mode->h, desktop_mode->refresh_rate);
+  }
   DebugPrintf (0, "Pixel format of the video device: bpp = %d\n", vid_bpp);
   DebugPrintf (0, "Video Driver Name: %s\n", vid_driver);
   DebugPrintf (0, "----------------------------------------------------------------------\n");
@@ -1005,7 +1001,6 @@ Init_Video (void)
   ApplyWindowMetadata ();
   DebugPrintf(1, "Got video mode: ");
 
-  SDL_SetWindowBrightness (FD_GetWindow(), 1.0f);
   GameConfig.Current_Gamma_Correction=1;
 
   return;
@@ -1027,10 +1022,10 @@ ClearGraphMem ( void )
   BannerIsDestroyed=TRUE;
 
   //
-  SDL_SetClipRect( ne_screen, NULL );
+  SDL_SetSurfaceClipRect( ne_screen, NULL );
 
   // Now we fill the screen with black color...
-  SDL_FillRect( ne_screen , NULL , 0 );
+  SDL_FillSurfaceRect( ne_screen , NULL , 0 );
   SDL_UpdateWindowSurface(FD_GetWindow());
 
   return;
@@ -1044,7 +1039,7 @@ ClearGraphMem ( void )
 Uint32
 getpixel(SDL_Surface *surface, int x, int y)
 {
-  int bpp = surface->format->BytesPerPixel;
+  int bpp = SDL_BYTESPERPIXEL(surface->format);
   /* Here p is the address to the pixel we want to retrieve */
   Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
@@ -1086,7 +1081,7 @@ getpixel(SDL_Surface *surface, int x, int y)
  */
 void putpixel(SDL_Surface *surface, int x, int y, Uint32 pixel)
 {
-    int bpp = surface->format->BytesPerPixel;
+    int bpp = SDL_BYTESPERPIXEL(surface->format);
     /* Here p is the address to the pixel we want to set */
     Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
 
@@ -1144,13 +1139,11 @@ ScaleSurfaceNearest (SDL_Surface *src, float scale)
   if (dst_w < 1) dst_w = 1;
   if (dst_h < 1) dst_h = 1;
 
-  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
-					src->format->BitsPerPixel,
-					src->format->format);
+  dst = SDL_CreateSurface(dst_w, dst_h, src->format);
   if (dst == NULL)
     return NULL;
 
-  if (SDL_GetColorKey (src, &color_key) == 0)
+  if (SDL_GetSurfaceColorKey (src, &color_key) == 0)
     have_colorkey = TRUE;
   SDL_GetSurfaceBlendMode (src, &blend_mode);
   SDL_GetSurfaceAlphaMod (src, &alpha_mod);
@@ -1179,7 +1172,7 @@ ScaleSurfaceNearest (SDL_Surface *src, float scale)
   if (SDL_MUSTLOCK (src)) SDL_UnlockSurface (src);
 
   if (have_colorkey)
-    SDL_SetColorKey (dst, SDL_SRCCOLORKEY, color_key);
+    SDL_SetSurfaceColorKey (dst, SDL_SRCCOLORKEY, color_key);
 
   SDL_SetSurfaceBlendMode (dst, blend_mode);
   SDL_SetSurfaceAlphaMod (dst, alpha_mod);
@@ -1218,24 +1211,22 @@ RotateSurfaceNearest (SDL_Surface *src, float angle)
   if (dst_w < 1) dst_w = 1;
   if (dst_h < 1) dst_h = 1;
 
-  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
-					src->format->BitsPerPixel,
-					src->format->format);
+  dst = SDL_CreateSurface(dst_w, dst_h, src->format);
   if (dst == NULL)
     return NULL;
 
-  if (SDL_GetColorKey (src, &color_key) == 0)
+  if (SDL_GetSurfaceColorKey (src, &color_key) == 0)
     have_colorkey = TRUE;
   SDL_GetSurfaceBlendMode (src, &blend_mode);
   SDL_GetSurfaceAlphaMod (src, &alpha_mod);
   SDL_GetSurfaceColorMod (src, &r_mod, &g_mod, &b_mod);
 
   if (have_colorkey)
-    SDL_FillRect (dst, NULL, color_key);
-  else if (src->format->Amask != 0)
-    SDL_FillRect (dst, NULL, SDL_MapRGBA (dst->format, 0, 0, 0, 0));
+    SDL_FillSurfaceRect (dst, NULL, color_key);
+  else if (SDL_GetPixelFormatDetails(src->format)->Amask != 0)
+    SDL_FillSurfaceRect (dst, NULL, SDL_MapRGBA (dst->format, 0, 0, 0, 0));
   else
-    SDL_FillRect (dst, NULL, 0);
+    SDL_FillSurfaceRect (dst, NULL, 0);
 
   src_cx = ((float) src->w - 1.0f) * 0.5f;
   src_cy = ((float) src->h - 1.0f) * 0.5f;
@@ -1264,7 +1255,7 @@ RotateSurfaceNearest (SDL_Surface *src, float angle)
   if (SDL_MUSTLOCK (src)) SDL_UnlockSurface (src);
 
   if (have_colorkey)
-    SDL_SetColorKey (dst, SDL_SRCCOLORKEY, color_key);
+    SDL_SetSurfaceColorKey (dst, SDL_SRCCOLORKEY, color_key);
 
   SDL_SetSurfaceBlendMode (dst, blend_mode);
   SDL_SetSurfaceAlphaMod (dst, alpha_mod);
@@ -1298,7 +1289,7 @@ ApplyWindowMetadata (void)
   }
 
   SDL_SetWindowIcon (window, img);
-  SDL_FreeSurface (img);
+  SDL_DestroySurface (img);
 }
 
 /*----------------------------------------------------------------------
@@ -1352,15 +1343,15 @@ Duplicate_Font ( const BFont_Info * in_font )
   BFont_Info *out_font = MyMalloc ( sizeof(out_font[0]) );
 
   memcpy ( out_font, in_font, sizeof(out_font[0]) );
-  out_font->Surface = SDL_ConvertSurface ( in_font->Surface, in_font->Surface->format, in_font->Surface->flags);
+  out_font->Surface = SDL_ConvertSurface ( in_font->Surface, in_font->Surface->format);
   if ( out_font->Surface == NULL ) {
     DebugPrintf ( 0, "Duplicate_Font: failed to copy SDL_Surface using SDL_ConvertSurface()\n");
     Terminate ( ERR );
   }
 
-  if (out_font->Surface->format->Amask != 0)
+  if (SDL_GetPixelFormatDetails(out_font->Surface->format)->Amask != 0)
     {
-      SDL_SetColorKey (out_font->Surface, 0, 0);
+      SDL_SetSurfaceColorKey (out_font->Surface, 0, 0);
       SDL_SetSurfaceBlendMode (out_font->Surface, SDL_BLENDMODE_BLEND);
       SDL_SetSurfaceAlphaMod (out_font->Surface, 255);
     }
@@ -1398,25 +1389,23 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
     }
 
   // produce the tiles
-  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, vid_bpp, 0, 0, 0, 0);
-  tmp2 = SDL_ConvertSurface (tmp, tmp->format, 0);
-  SDL_FreeSurface (tmp);
+  tmp = SDL_CreateSurface(rect->w, rect->h,
+			  SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+  tmp2 = SDL_ConvertSurface (tmp, tmp->format);
+  SDL_DestroySurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
   //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
   for (int i=0; i< NOISE_TILES; i++)
     {
-      noise_tiles[i] = SDL_ConvertSurface (tmp2, tmp2->format, 0);
+	  noise_tiles[i] = SDL_ConvertSurface (tmp2, tmp2->format);
 
       for (x = 0; x < rect->w; x++)
 	for (y = 0; y < rect->h; y++)
 	  if (rand()%100 > signal_strengh)
 	    PutPixel (noise_tiles[i], x, y, grey[rand()%NOISE_COLORS]);
 
-      //      printf_SDL (ne_screen, -1, -1, " %d", i+1);
-      //      SDL_BlitSurface (noise_tiles[i], NULL, ne_screen, rect);
-      //      SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
-    }
-  SDL_FreeSurface (tmp2);
+	}
+  SDL_DestroySurface (tmp2);
 
   memset(used_tiles,-1, sizeof(used_tiles));
   // let's go
@@ -1444,8 +1433,8 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
       used_tiles[sizeof(used_tiles)-1] = next_tile;
 
       // make sure we can blit the full rect without clipping! (would change *rect!)
-      SDL_GetClipRect (ne_screen, &clip_rect);
-      SDL_SetClipRect (ne_screen, NULL);
+      SDL_GetSurfaceClipRect (ne_screen, &clip_rect);
+      SDL_SetSurfaceClipRect (ne_screen, NULL);
       // set it
       SDL_BlitSurface (noise_tiles[next_tile], NULL, ne_screen, rect);
       SDL_UpdateWindowSurfaceRects (FD_GetWindow(), rect, 1);
@@ -1461,10 +1450,10 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
     } // while (! finished)
 
   //restore previous clip-rectange
-  SDL_SetClipRect (ne_screen, &clip_rect);
+  SDL_SetSurfaceClipRect (ne_screen, &clip_rect);
 
   for (int i=0; i<NOISE_TILES; i++)
-    SDL_FreeSurface (noise_tiles[i]);
+    SDL_DestroySurface (noise_tiles[i]);
 
   return;
 }
@@ -1569,10 +1558,11 @@ ScaleGraphics (float scale)
     {
       //  create a new tmp block-build storage
       FreeIfUsed (BuildBlock);
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_ConvertSurfaceFormat (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+      tmp = SDL_CreateSurface(Block_Rect.w, Block_Rect.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
-      SDL_FreeSurface (tmp);
+      SDL_DestroySurface (tmp);
 
       // takeover pics
       ScalePic (&takeover_bg_pic, scale);
@@ -1621,7 +1611,7 @@ ScalePic (SDL_Surface **pic, float scale)
     DebugPrintf (0, "ERROR: ScaleSurfaceNearest() failed for scale = %g.\n", scale);
     Terminate (ERR);
   }
-  SDL_FreeSurface (tmp);
+  SDL_DestroySurface (tmp);
 
   return;
 
@@ -1707,8 +1697,6 @@ toggle_fullscreen (void)
   Uint32 vid_flags = 0;
   int want_fullscreen = !GameConfig.UseFullscreen;
 
-  //  SDL_WM_ToggleFullScreen (ne_screen);
-
   if (want_fullscreen)
     vid_flags |= SDL_FULLSCREEN;
 
@@ -1728,7 +1716,7 @@ toggle_fullscreen (void)
   return;
 }
 
-#define FreeSurfaceArrary(arr) do{   for ( size_t i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {   SDL_FreeSurface ( arr[i] ); } } while(0)
+#define FreeSurfaceArrary(arr) do{   for ( size_t i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {   SDL_DestroySurface ( arr[i] ); } } while(0)
 void
 FreeGraphics ( void )
 {
@@ -1736,7 +1724,7 @@ FreeGraphics ( void )
   // free RWops structures
   for ( size_t i = 0; i < num_packed_portraits; i ++ ) {
     if ( packed_portraits[i] != NULL ) {
-      SDL_RWclose( packed_portraits[i] );
+      SDL_CloseIO( packed_portraits[i] );
     }
   }
 
@@ -1756,36 +1744,36 @@ FreeGraphics ( void )
 
   for ( int i = 0; i < NUM_COLORS; i ++ ) {
     for ( int j = 0; j < NUM_MAP_BLOCKS; j ++ ) {
-      SDL_FreeSurface ( OrigMapBlockSurfacePointer[i][j] );
+      SDL_DestroySurface ( OrigMapBlockSurfacePointer[i][j] );
     }
   }
 
-  SDL_FreeSurface ( BuildBlock );
-  SDL_FreeSurface ( banner_pic );
-  SDL_FreeSurface ( pic999 );
-  // SDL_RWops *packed_portraits[NUM_DROIDS];
-  SDL_FreeSurface ( takeover_bg_pic );
-  SDL_FreeSurface ( console_pic );
-  SDL_FreeSurface ( console_bg_pic1 );
-  SDL_FreeSurface ( console_bg_pic2 );
+  SDL_DestroySurface ( BuildBlock );
+  SDL_DestroySurface ( banner_pic );
+  SDL_DestroySurface ( pic999 );
+  // SDL_IOStream *packed_portraits[NUM_DROIDS];
+  SDL_DestroySurface ( takeover_bg_pic );
+  SDL_DestroySurface ( console_pic );
+  SDL_DestroySurface ( console_bg_pic1 );
+  SDL_DestroySurface ( console_bg_pic2 );
 
-  SDL_FreeSurface ( arrow_up );
-  SDL_FreeSurface ( arrow_down );
-  SDL_FreeSurface ( arrow_right );
-  SDL_FreeSurface ( arrow_left );
+  SDL_DestroySurface ( arrow_up );
+  SDL_DestroySurface ( arrow_down );
+  SDL_DestroySurface ( arrow_right );
+  SDL_DestroySurface ( arrow_left );
 
-  SDL_FreeSurface ( ship_off_pic );
-  SDL_FreeSurface ( ship_on_pic );
-  SDL_FreeSurface ( progress_meter_pic );
-  SDL_FreeSurface ( progress_filler_pic );
-  SDL_FreeSurface ( to_blocks );
+  SDL_DestroySurface ( ship_off_pic );
+  SDL_DestroySurface ( ship_on_pic );
+  SDL_DestroySurface ( progress_meter_pic );
+  SDL_DestroySurface ( progress_filler_pic );
+  SDL_DestroySurface ( to_blocks );
 
   // free fonts
   BFont_Info *fonts[] = { Menu_BFont, Para_BFont, Highscore_BFont, Font0_BFont, Font1_BFont, Font2_BFont };
   size_t num_fonts = sizeof(fonts) / sizeof(fonts[0]);
   for ( size_t i = 0; i < num_fonts; i ++ ) {
     if ( fonts[i] != NULL ) {
-        SDL_FreeSurface ( fonts[i]->Surface );
+        SDL_DestroySurface ( fonts[i]->Surface );
       }
     MyFree ( fonts[i] );
   }
@@ -1794,8 +1782,8 @@ FreeGraphics ( void )
   Load_Block (NULL, 0, 0, NULL, FREE_ONLY);
 
   // free cursors
-  SDL_FreeCursor ( crosshair_cursor );
-  SDL_FreeCursor ( arrow_cursor );
+  SDL_DestroyCursor ( crosshair_cursor );
+  SDL_DestroyCursor ( arrow_cursor );
 
   return;
 }

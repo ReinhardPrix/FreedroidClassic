@@ -17,6 +17,17 @@ AC_PROG_CC
 AC_PROG_MAKE_SET
 PKG_PROG_PKG_CONFIG
 
+AC_ARG_WITH([sdl-prefix],
+	AS_HELP_STRING([--with-sdl-prefix=DIR], [Prefix containing SDL3 pkgconfig files (adds DIR/lib/pkgconfig to PKG_CONFIG_PATH)]),
+	[fd_sdl_prefix="$withval"],
+	[fd_sdl_prefix=""])
+
+if test "x$fd_sdl_prefix" != "x"; then
+	PKG_CONFIG_PATH="$fd_sdl_prefix/lib/pkgconfig:$PKG_CONFIG_PATH"
+	export PKG_CONFIG_PATH
+	AC_MSG_NOTICE([Using SDL pkg-config prefix: $fd_sdl_prefix])
+fi
+
 AM_PROG_CC_C_O
 
 # Checks for libraries.
@@ -32,16 +43,16 @@ if test x$have_x = xyes; then
 	CFLAGS="$CFLAGS $X_CFLAGS"
 fi
 
-## Check for SDL2
-AC_MSG_NOTICE([[Checking for compulsory SDL2 libraries:]])
+## Check for SDL3
+AC_MSG_NOTICE([[Checking for compulsory SDL3 libraries:]])
 
-PKG_CHECK_MODULES([SDL2], [sdl2],,
-	AC_MSG_ERROR([*** SDL2 not found!]))
-PKG_CHECK_MODULES([SDL2_IMAGE], [SDL2_image],,
-	AC_MSG_ERROR([*** SDL2_image not found!]))
+PKG_CHECK_MODULES([SDL3], [sdl3],,
+	AC_MSG_ERROR([*** SDL3 not found!]))
+PKG_CHECK_MODULES([SDL3_IMAGE], [sdl3-image],,
+	AC_MSG_ERROR([*** SDL3_image not found!]))
 
-CFLAGS="$CFLAGS $SDL2_CFLAGS $SDL2_IMAGE_CFLAGS"
-LIBS="$LIBS $SDL2_LIBS $SDL2_IMAGE_LIBS"
+CFLAGS="$CFLAGS $SDL3_CFLAGS $SDL3_IMAGE_CFLAGS"
+LIBS="$LIBS $SDL3_LIBS $SDL3_IMAGE_LIBS"
 
 AC_CHECK_LIB([jpeg], [jpeg_start_compress],,AC_MSG_ERROR([
 --------------------------------------------------
@@ -62,19 +73,12 @@ libpng needed to run Freedroid
 see http://www.libpng.org/pub/png/libpng.html
 --------------------------------------------------]))
 
-AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
-PKG_CHECK_MODULES([SDL2_MIXER], [SDL2_mixer], [
-	CFLAGS="$CFLAGS $SDL2_MIXER_CFLAGS"
-	LIBS="$LIBS $SDL2_MIXER_LIBS"
-	AC_DEFINE([HAVE_LIBSDL_MIXER], [1], [Define if SDL2_mixer is available])
-], [
-	AC_MSG_WARN([
---------------------------------------------------
-SDL2_mixer not found!
-you need SDL2_mixer if you want sound!
---> compiling without sound support
---------------------------------------------------])
-])
+AC_MSG_NOTICE([[Checking for required SDL3 libraries:]])
+PKG_CHECK_MODULES([SDL3_MIXER], [sdl3-mixer],,
+	AC_MSG_ERROR([*** SDL3_mixer not found!]))
+
+CFLAGS="$CFLAGS $SDL3_MIXER_CFLAGS"
+LIBS="$LIBS $SDL3_MIXER_LIBS"
 
 AC_CHECK_LIB([vorbis], [main],, AC_MSG_WARN([
 --------------------------------------------------

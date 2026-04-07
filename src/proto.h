@@ -182,6 +182,7 @@ EXTERN void Init_Audio(void);
 EXTERN void Set_BG_Music_Volume(float);
 EXTERN void Set_Sound_FX_Volume(float);
 EXTERN void Switch_Background_Music_To ( const char * filename_raw );
+EXTERN void Stop_Background_Music(void);
 EXTERN void Play_Sound (int);
 EXTERN void GotHitSound (void);
 EXTERN void GotIntoBlastSound (void);

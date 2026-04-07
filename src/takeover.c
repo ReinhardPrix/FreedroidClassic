@@ -161,7 +161,7 @@ Takeover (int enemynum)
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
-  SDL_ShowCursor (SDL_DISABLE); // no mouse-cursor in takeover game!
+  SDL_HideCursor (); // no mouse-cursor in takeover game!
 
   show_droid_info ( Me.type, -1 , 0);
   show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, UPDATE);
@@ -670,9 +670,9 @@ ShowPlayground (void)
   xoffs = Classic_User_Rect.x;
   yoffs = Classic_User_Rect.y;
 
-  //  SDL_SetColorKey (ne_screen, 0, 0);
-  //  SDL_SetClipRect (ne_screen , &User_Rect);
-  SDL_SetClipRect (ne_screen , NULL);
+  //  SDL_SetSurfaceColorKey (ne_screen, 0, 0);
+  //  SDL_SetSurfaceClipRect (ne_screen , &User_Rect);
+  SDL_SetSurfaceClipRect (ne_screen , NULL);
 
   //  Fill_Rect (User_Rect, to_bg_color);
   SDL_BlitSurface (takeover_bg_pic, &User_Rect, ne_screen, &User_Rect);
