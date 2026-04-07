@@ -976,7 +976,6 @@ Title ( const char *MissionBriefingPointer )
   DisplayImage ( find_file(Buffer, GRAPHICS_DIR, NO_THEME, CRITICAL) );
   MakeGridOnScreen( (SDL_Rect*) &Screen_Rect );
   Me.status=BRIEFING;
-  //  SDL_Flip (ne_screen);
 
   SetCurrentFont( Para_BFont );
 

@@ -548,9 +548,7 @@ getchar_raw (void)
 	{
 	case SDL_EVENT_KEY_DOWN:
 	  /*
-	   * here we use the fact that, I cite from SDL_keyboard.h:
-	   * "The keyboard syms have been cleverly chosen to map to ASCII"
-	   * ... I hope that this design feature is portable, and durable ;)
+	   * Menu/name-entry input still treats printable SDL keycodes like ASCII.
 	   */
 	  Returnkey = (int) event.key.key;
 	  if ( event.key.mod & SDL_KMOD_SHIFT )

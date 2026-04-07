@@ -1404,10 +1404,7 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
 	  if (rand()%100 > signal_strengh)
 	    PutPixel (noise_tiles[i], x, y, grey[rand()%NOISE_COLORS]);
 
-      //      printf_SDL (ne_screen, -1, -1, " %d", i+1);
-      //      SDL_BlitSurface (noise_tiles[i], NULL, ne_screen, rect);
-      //      SDL_UpdateRect (ne_screen, rect->x, rect->y, rect->w, rect->h);
-    }
+	}
   SDL_DestroySurface (tmp2);
 
   memset(used_tiles,-1, sizeof(used_tiles));
@@ -1699,8 +1696,6 @@ toggle_fullscreen (void)
 {
   Uint32 vid_flags = 0;
   int want_fullscreen = !GameConfig.UseFullscreen;
-
-  //  SDL_WM_ToggleFullScreen (ne_screen);
 
   if (want_fullscreen)
     vid_flags |= SDL_FULLSCREEN;
