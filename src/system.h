@@ -81,10 +81,7 @@
 
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
-
-#ifdef HAVE_LIBSDL_MIXER
 #include <SDL3_mixer/SDL_mixer.h>
-#endif
 
 #include "sdl_compat.h"
 

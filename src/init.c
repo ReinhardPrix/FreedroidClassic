@@ -1099,9 +1099,7 @@ ThouArtDefeated (void)
     }
   set_time_factor ( 1.0 );
 
-#ifdef HAVE_LIBSDL_MIXER
   Stop_Background_Music();
-#endif
 
   // important!!: don't forget to stop fps calculation here (bugfix: enemy piles after gameOver)
   Activate_Conservative_Frame_Computation ();

@@ -22,11 +22,6 @@ AC_ARG_WITH([sdl-prefix],
 	[fd_sdl_prefix="$withval"],
 	[fd_sdl_prefix=""])
 
-AC_ARG_ENABLE([sdl3-mixer],
-	AS_HELP_STRING([--enable-sdl3-mixer], [Build with SDL3_mixer sound support]),
-	[fd_enable_sdl3_mixer="$enableval"],
-	[fd_enable_sdl3_mixer="no"])
-
 if test "x$fd_sdl_prefix" != "x"; then
 	PKG_CONFIG_PATH="$fd_sdl_prefix/lib/pkgconfig:$PKG_CONFIG_PATH"
 	export PKG_CONFIG_PATH
@@ -78,23 +73,12 @@ libpng needed to run Freedroid
 see http://www.libpng.org/pub/png/libpng.html
 --------------------------------------------------]))
 
-AC_MSG_NOTICE([[Checking for optional SDL libraries:]])
-if test "x$fd_enable_sdl3_mixer" = "xyes"; then
-	PKG_CHECK_MODULES([SDL3_MIXER], [sdl3-mixer], [
-		CFLAGS="$CFLAGS $SDL3_MIXER_CFLAGS"
-		LIBS="$LIBS $SDL3_MIXER_LIBS"
-		AC_DEFINE([HAVE_LIBSDL_MIXER], [1], [Define if SDL3_mixer is available])
-	], [
-		AC_MSG_WARN([
---------------------------------------------------
-SDL3_mixer not found!
-you need SDL3_mixer if you want sound!
---> compiling without sound support
---------------------------------------------------])
-	])
-else
-	AC_MSG_NOTICE([SDL3_mixer disabled for this migration checkpoint])
-fi
+AC_MSG_NOTICE([[Checking for required SDL3 libraries:]])
+PKG_CHECK_MODULES([SDL3_MIXER], [sdl3-mixer],,
+	AC_MSG_ERROR([*** SDL3_mixer not found!]))
+
+CFLAGS="$CFLAGS $SDL3_MIXER_CFLAGS"
+LIBS="$LIBS $SDL3_MIXER_LIBS"
 
 AC_CHECK_LIB([vorbis], [main],, AC_MSG_WARN([
 --------------------------------------------------

@@ -42,7 +42,6 @@
 
 #define FD_SFX_TRACKS 20
 
-#ifdef HAVE_LIBSDL_MIXER
 static MIX_Mixer *fd_mixer;
 static MIX_Audio *Loaded_WAV_Files[ALL_SOUNDS];
 static MIX_Audio *MusicSongs[NUM_COLORS];
@@ -55,7 +54,6 @@ static bool FD_LoadAudioFile(MIX_Audio **audio, const char *filename, bool prede
 static MIX_Track *FD_GetNextSfxTrack(void);
 static bool FD_PlayTrack(MIX_Track *track, MIX_Audio *audio, int loops);
 static void FD_StopBackgroundMusic(void);
-#endif
 
 // The following is the definition of the sound file names used in freedroid
 // DO NOT CHANGE THE ORDER OF APPEARENCE IN THIS LIST unless you
@@ -122,7 +120,6 @@ const char *MusicFiles [NUM_COLORS] = {  // we have a background song per color 
 #endif // ANDROID
 };
 
-#ifdef HAVE_LIBSDL_MIXER
 static bool
 FD_LoadAudioFile(MIX_Audio **audio, const char *filename, bool predecode)
 {
@@ -205,14 +202,10 @@ FD_StopBackgroundMusic(void)
 
   MIX_StopTrack(fd_music_track, 0);
 }
-#endif
 
 void
 Init_Audio(void)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   int i;
   SDL_AudioSpec mixer_spec;
 
@@ -318,38 +311,20 @@ Continuing with sound disabled\n");
 
   // DebugPrintf (1, "done.");
   // fflush(stdout);
-#endif // HAVE_SDL_MIXER
 } // void InitAudio(void)
 
 void
 Set_BG_Music_Volume(float NewVolume)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  (void)NewVolume;
-#endif
-
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   if ( !sound_on ) return;
 
   MIX_SetTrackGain(fd_music_track, NewVolume);
-
-#endif // HAVE_LIBSDL_MIXER
 } // void Set_BG_Music_Volume(float NewVolume)
 
 void
 Set_Sound_FX_Volume(float NewVolume)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  (void)NewVolume;
-#endif
-#ifdef HAVE_LIBSDL_MIXER
   int i;
-#endif
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   if ( !sound_on ) return;
 
   // Set the volume IN the loaded files, if SDL is used...
@@ -357,8 +332,6 @@ Set_Sound_FX_Volume(float NewVolume)
   // are background music files.
   for ( i=0 ; i<FD_SFX_TRACKS ; i++ )
     MIX_SetTrackGain(fd_sfx_tracks[i], NewVolume);
-
-#endif // HAVE_LIBSDL_MIXER
 
 } // void Set_BG_Music_Volume(float NewVolume)
 
@@ -419,17 +392,8 @@ Technical details:
 void
 Switch_Background_Music_To ( const char* filename_raw )
 {
-#ifndef HAVE_LIBSDL_MIXER
-  (void)filename_raw;
-#endif
-#ifdef HAVE_LIBSDL_MIXER
   static int prev_color = -1;
   static bool paused = FALSE;
-#endif
-
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
 
   if ( !sound_on ) return;
 
@@ -491,20 +455,14 @@ Switch_Background_Music_To ( const char* filename_raw )
 
   MIX_SetTrackGain(fd_music_track, GameConfig.Current_BG_Music_Volume);
 
-#endif // HAVE_LIBSDL_MIXER
-
 }; // void Switch_Background_Music_To(int Tune)
 
 void
 Stop_Background_Music(void)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   if (!sound_on) return;
 
   FD_StopBackgroundMusic();
-#endif
 }
 
 
@@ -517,12 +475,6 @@ Stop_Background_Music(void)
 void
 Play_Sound (int Tune)
 {
-#ifndef HAVE_LIBSDL_MIXER
-  (void)Tune;
-#endif
-#ifndef HAVE_LIBSDL_MIXER
-  return;
-#else
   MIX_Track *track;
 
   if ( !sound_on ) return;
@@ -536,8 +488,6 @@ This usually just means that too many samples where played at the same time\n",
     } // if ( ... = -1
   else
     DebugPrintf( 2 , "\nSuccessfully playing file %s.", SoundSampleFilenames[ Tune ]);
-
-#endif // HAVE_LIBSDL_MIXER
 
 }  // void Play_Sound(int Tune)
 
@@ -824,7 +774,6 @@ DruidBlastSound (void)
 void
 FreeSounds ( void )
 {
-#ifdef HAVE_LIBSDL_MIXER
   FD_StopBackgroundMusic();
 
   for (size_t i = 0; i < NUM_ELEM(Loaded_WAV_Files); i++) {
@@ -860,8 +809,6 @@ FreeSounds ( void )
   }
 
   MIX_Quit();
-
-#endif
   return;
 }
 #undef _sound_c
