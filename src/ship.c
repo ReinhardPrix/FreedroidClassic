@@ -458,9 +458,8 @@ EnterKonsole (void)
  * @Desc: diese Funktion zeigt die m"oglichen Auswahlpunkte des Menus
  *    Sie soll die Schriftfarben nicht ver"andern
  *
- *  NOTE: this function does not actually _display_ anything yet,
- *        it just prepares the display, so you need
- *        to call SDL_Flip() to display the result!
+ *  NOTE: this function does not actually update the window yet;
+ *        it only prepares the console menu on the screen surface.
  *  pos  : 0<=pos<=3: which menu-position is currently active?
  *  flag : UPDATE_ONLY  only update the console-menu bar, not text & background
  *-----------------------------------------------------------------*/
