@@ -38,14 +38,6 @@
 #include "global.h"
 #include "proto.h"
 
-// earlier SDL versions didn't define these...
-#ifndef SDL_BUTTON_WHEELUP
-#define SDL_BUTTON_WHEELUP 4
-#endif
-#ifndef SDL_BUTTON_WHEELDOWN
-#define SDL_BUTTON_WHEELDOWN 5
-#endif
-
 #define JOY_MAX_VAL 32767     // maximal amplitude of joystick axis values
 #ifndef ANDROID
 #define JOY_DEAD_ZONE 10000   // joystick tilt ignored below this value
@@ -496,14 +488,6 @@ update_input (void)
 	  if (event.button.button == SDL_BUTTON_MIDDLE)
 	    set_input_state(MOUSE_BUTTON3, PRESSED);
 
-	  // wheel events are immediately released, so we rather
-	  // count the number of not yet read-out events
-	  if (event.button.button == SDL_BUTTON_WHEELUP)
-	      WheelUpEvents ++;
-
-	  if (event.button.button == SDL_BUTTON_WHEELDOWN)
-	      WheelDownEvents ++;
-
 	  last_mouse_event = SDL_GetTicks();
 	  break;
 
@@ -617,10 +601,6 @@ getchar_raw (void)
 	    Returnkey = MOUSE_BUTTON2;
 	  else if (event.button.button == SDL_BUTTON_MIDDLE)
 	    Returnkey = MOUSE_BUTTON3;
-	  else if (event.button.button == SDL_BUTTON_WHEELUP)
-	    Returnkey = MOUSE_WHEELUP;
-	  else if (event.button.button == SDL_BUTTON_WHEELDOWN)
-	    Returnkey = MOUSE_WHEELDOWN;
 	  break;
 
 	case SDL_EVENT_MOUSE_WHEEL:
