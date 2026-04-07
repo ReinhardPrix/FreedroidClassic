@@ -36,9 +36,9 @@ jobs:
           automake \
           libtool \
           pkg-config \
-          libsdl2-dev \
-          libsdl2-image-dev \
-          libsdl2-mixer-dev
+          libsdl3-dev \
+          libsdl3-image-dev \
+          libsdl3-mixer-dev
 
     - name: Bootstrap autotools
       run: ./00boot
@@ -83,9 +83,9 @@ jobs:
           libvorbis \
           make \
           pkgconf \
-          sdl2 \
-          sdl2_image \
-          sdl2_mixer
+          sdl3 \
+          sdl3_image \
+          sdl3_mixer
 
     - name: Bootstrap autotools
       run: ./00boot
