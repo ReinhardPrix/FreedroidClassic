@@ -27,10 +27,6 @@ void FD_DestroyWindow(void);
 #define SDL_SRCALPHA 0x00010000u
 #endif
 
-#ifndef SDLK_LAST
-#define SDLK_LAST 512
-#endif
-
 #ifndef SDLK_KP0
 #define SDLK_KP0 SDLK_KP_0
 #define SDLK_KP1 SDLK_KP_1
