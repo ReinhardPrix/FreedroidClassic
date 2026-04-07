@@ -64,8 +64,10 @@
 // ----------------------------------------
 // some input-related defines and macros
 
+#define FD_INPUT_BASE 0x100000
+
 enum  _pointer_states {
-  MOUSE_UP = SDLK_LAST+1,
+  MOUSE_UP = FD_INPUT_BASE,
   MOUSE_RIGHT,
   MOUSE_DOWN,
   MOUSE_LEFT,
