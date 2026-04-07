@@ -51,9 +51,6 @@ static MIX_Track *fd_music_track;
 static MIX_Track *fd_sfx_tracks[FD_SFX_TRACKS];
 static size_t fd_next_sfx_track;
 
-static const char *FD_TAG_MUSIC = "music";
-static const char *FD_TAG_SFX = "sfx";
-
 static bool FD_LoadAudioFile(MIX_Audio **audio, const char *filename, bool predecode);
 static MIX_Track *FD_GetNextSfxTrack(void);
 static bool FD_PlayTrack(MIX_Track *track, MIX_Audio *audio, int loops);
@@ -259,7 +256,7 @@ Continuing with sound disabled\n");
   DebugPrintf(1, "\nSuccessfully opened SDL audio mixer.");
 
   fd_music_track = MIX_CreateTrack(fd_mixer);
-  if (fd_music_track == NULL || !MIX_TagTrack(fd_music_track, FD_TAG_MUSIC)) {
+  if (fd_music_track == NULL) {
     DebugPrintf(0, "WARNING: could not create SDL music track.\n");
     DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
     sound_on = FALSE;
@@ -269,7 +266,7 @@ Continuing with sound disabled\n");
 
   for (i = 0; i < FD_SFX_TRACKS; i++) {
     fd_sfx_tracks[i] = MIX_CreateTrack(fd_mixer);
-    if (fd_sfx_tracks[i] == NULL || !MIX_TagTrack(fd_sfx_tracks[i], FD_TAG_SFX)) {
+    if (fd_sfx_tracks[i] == NULL) {
       DebugPrintf(0, "WARNING: could not create all SDL sound-effect tracks.\n");
       DebugPrintf(0, "SDL Mixer Error: %s\nContinuing with sound disabled\n", SDL_GetError());
       sound_on = FALSE;
