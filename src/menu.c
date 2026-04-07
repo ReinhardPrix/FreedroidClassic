@@ -753,9 +753,9 @@ InitiateMenu (bool with_droids)
   MakeGridOnScreen( NULL );
 
   if (Menu_Background) SDL_DestroySurface (Menu_Background);
-  Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);  // keep a global copy of background
+  Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format);  // keep a global copy of background
 
-  SDL_ShowCursor (SDL_DISABLE);  // deactivate mouse-cursor in menus
+  SDL_HideCursor ();  // deactivate mouse-cursor in menus
   SetCurrentFont ( Menu_BFont );
   fheight = FontHeight (GetCurrentFont()) + 2;
 
@@ -997,7 +997,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
     } // while !finished
 
   ClearGraphMem();
-  SDL_ShowCursor ( SDL_ENABLE );  // reactivate mouse-cursor for game
+  SDL_ShowCursor ();  // reactivate mouse-cursor for game
   // Since we've faded out the whole scren, it can't hurt
   // to have the top status bar redrawn...
   BannerIsDestroyed = TRUE;

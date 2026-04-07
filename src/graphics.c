@@ -456,7 +456,7 @@ SetCombatScaleTo(float scale)
           Terminate (ERR);
         }
 	// and optimize
-	MapBlockSurfacePointer[j][i] = SDL_ConvertSurface (tmp, tmp->format, 0);
+	MapBlockSurfacePointer[j][i] = SDL_ConvertSurface (tmp, tmp->format);
 	SDL_DestroySurface(tmp); // free the old surface
       }
 
@@ -685,8 +685,9 @@ InitPictures (void)
   if (first_call)
     {
       //  create the tmp block-build storage
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+      tmp = SDL_CreateSurface(Block_Rect.w, Block_Rect.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_DestroySurface (tmp);
 
@@ -890,24 +891,25 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
       SDL_SetSurfaceRLE (pic, 0);	/* clear per-surf alpha for internal blit */
       SDL_GetSurfaceBlendMode(pic, &old_blend_mode);
       SDL_SetSurfaceBlendMode(pic, SDL_BLENDMODE_NONE);
-      ret = SDL_CreateRGBSurfaceWithFormat (0, dim.w, dim.h, 32, SDL_PIXELFORMAT_ARGB8888);
+      ret = SDL_CreateSurface(dim.w, dim.h, SDL_PIXELFORMAT_ARGB8888);
       SDL_FillSurfaceRect (ret, NULL, 0);
     }
   else
     {
       Uint32 fill_color = 0;
 
-      tmp = SDL_CreateRGBSurface (0, dim.w, dim.h, vid_bpp, 0, 0, 0, 0);
+      tmp = SDL_CreateSurface(dim.w, dim.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
       if (use_colorkey)
         {
           Uint8 r, g, b;
 
-          ret = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+	  ret = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
           SDL_GetRGB (colorkey, pic->format, &r, &g, &b);
           fill_color = SDL_MapRGB (ret->format, r, g, b);
         }
       else
-        ret = SDL_ConvertSurface (tmp, tmp->format, 0);
+	ret = SDL_ConvertSurface (tmp, tmp->format);
       SDL_FillSurfaceRect (ret, NULL, fill_color);
       SDL_DestroySurface (tmp);
     }
@@ -1137,9 +1139,7 @@ ScaleSurfaceNearest (SDL_Surface *src, float scale)
   if (dst_w < 1) dst_w = 1;
   if (dst_h < 1) dst_h = 1;
 
-  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
-					SDL_BITSPERPIXEL(src->format),
-					src->format);
+  dst = SDL_CreateSurface(dst_w, dst_h, src->format);
   if (dst == NULL)
     return NULL;
 
@@ -1211,9 +1211,7 @@ RotateSurfaceNearest (SDL_Surface *src, float angle)
   if (dst_w < 1) dst_w = 1;
   if (dst_h < 1) dst_h = 1;
 
-  dst = SDL_CreateRGBSurfaceWithFormat (0, dst_w, dst_h,
-					SDL_BITSPERPIXEL(src->format),
-					src->format);
+  dst = SDL_CreateSurface(dst_w, dst_h, src->format);
   if (dst == NULL)
     return NULL;
 
@@ -1345,7 +1343,7 @@ Duplicate_Font ( const BFont_Info * in_font )
   BFont_Info *out_font = MyMalloc ( sizeof(out_font[0]) );
 
   memcpy ( out_font, in_font, sizeof(out_font[0]) );
-  out_font->Surface = SDL_ConvertSurface ( in_font->Surface, in_font->Surface->format, in_font->Surface->flags);
+  out_font->Surface = SDL_ConvertSurface ( in_font->Surface, in_font->Surface->format);
   if ( out_font->Surface == NULL ) {
     DebugPrintf ( 0, "Duplicate_Font: failed to copy SDL_Surface using SDL_ConvertSurface()\n");
     Terminate ( ERR );
@@ -1391,14 +1389,15 @@ white_noise (SDL_Surface *bitmap, SDL_Rect *rect, int timeout)
     }
 
   // produce the tiles
-  tmp = SDL_CreateRGBSurface(0, rect->w, rect->h, vid_bpp, 0, 0, 0, 0);
-  tmp2 = SDL_ConvertSurface (tmp, tmp->format, 0);
+  tmp = SDL_CreateSurface(rect->w, rect->h,
+			  SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+  tmp2 = SDL_ConvertSurface (tmp, tmp->format);
   SDL_DestroySurface (tmp);
   SDL_BlitSurface (bitmap, rect, tmp2, NULL);
   //  printf_SDL (ne_screen, rect->x + 10, rect->y + rect->h/2, "Preparing noise-tiles ");
   for (int i=0; i< NOISE_TILES; i++)
     {
-      noise_tiles[i] = SDL_ConvertSurface (tmp2, tmp2->format, 0);
+	  noise_tiles[i] = SDL_ConvertSurface (tmp2, tmp2->format);
 
       for (x = 0; x < rect->w; x++)
 	for (y = 0; y < rect->h; y++)
@@ -1562,8 +1561,9 @@ ScaleGraphics (float scale)
     {
       //  create a new tmp block-build storage
       FreeIfUsed (BuildBlock);
-      tmp = SDL_CreateRGBSurface( 0 , Block_Rect.w, Block_Rect.h, vid_bpp, 0, 0, 0, 0);
-      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+      tmp = SDL_CreateSurface(Block_Rect.w, Block_Rect.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+      BuildBlock = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
       SDL_SetSurfaceBlendMode (BuildBlock, SDL_BLENDMODE_BLEND);
       SDL_DestroySurface (tmp);
 

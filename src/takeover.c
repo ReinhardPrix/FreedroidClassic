@@ -161,7 +161,7 @@ Takeover (int enemynum)
 
   Me.status = MOBILE; /* the new status _after_ the takeover game */
 
-  SDL_ShowCursor (SDL_DISABLE); // no mouse-cursor in takeover game!
+  SDL_HideCursor (); // no mouse-cursor in takeover game!
 
   show_droid_info ( Me.type, -1 , 0);
   show_droid_portrait (Cons_Droid_Rect, Me.type, DROID_ROTATION_TIME, UPDATE);

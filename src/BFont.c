@@ -160,8 +160,7 @@ SetFontColor (BFont_Info * Font, Uint8 r, Uint8 g, Uint8 b)
 	}
 
       surface =
-	SDL_ConvertSurface (Font->Surface, Font->Surface->format,
-			    Font->Surface->flags);
+	SDL_ConvertSurface (Font->Surface, Font->Surface->format);
       if (surface != NULL)
 	{
 
