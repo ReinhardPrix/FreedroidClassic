@@ -15,11 +15,11 @@ jobs:
       matrix:
         include:
           - name: gcc
-            runs_on: ubuntu-latest
+            runs_on: ubuntu-25.04
             cc: gcc
             make_target: all
           - name: clang-strict
-            runs_on: ubuntu-latest
+            runs_on: ubuntu-25.04
             cc: clang
             make_target: strict
     env:
