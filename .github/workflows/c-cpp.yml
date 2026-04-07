@@ -15,7 +15,7 @@ jobs:
       matrix:
         include:
           - name: gcc
-            runs_on: ubuntu-24.04
+            runs_on: ubuntu-latest
             cc: gcc
             make_target: all
           - name: clang-strict
