@@ -52,7 +52,7 @@ Uint32 One_Frame_SDL_Ticks;
 int framenr = 0;
 static float currentTimeFactor = 1.0;
 
-#define CONFIG_FILE_BASENAME "config-sdl2"
+#define CONFIG_FILE_BASENAME "config-sdl3"
 
 SDL_Color progress_color = {.r = 200, .g = 20, .b = 20};
 
