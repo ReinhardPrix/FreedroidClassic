@@ -287,7 +287,11 @@ void Init_Joy (void)
       DebugPrintf(1, "\nSDL Joystick initialisation successful.\n");
 
 
-  DebugPrintf (1, " %d Joysticks found!\n", num_joy = SDL_NumJoysticks ());
+  {
+    SDL_JoystickID *sticks = SDL_GetJoysticks(&num_joy);
+    SDL_free(sticks);
+  }
+  DebugPrintf (1, " %d Joysticks found!\n", num_joy);
 
   if (num_joy > 0)
     joy = SDL_OpenJoystick (0);
@@ -299,7 +303,7 @@ void Init_Joy (void)
       DebugPrintf (1, "Number of Buttons: %d\n", SDL_GetNumJoystickButtons(joy));
 
       /* aktivate Joystick event handling */
-      SDL_JoystickEventState (SDL_ENABLE);
+      SDL_SetJoystickEventsEnabled(true);
 
     }
   else

@@ -89,7 +89,7 @@ EnterLift (void)
    * by turning off transfer mode as soon as the influ enters the lift */
   Me.status= ELEVATOR;
 
-  SDL_ShowCursor(SDL_DISABLE);
+  SDL_HideCursor();
 
   curLevel = CurLevel->levelnum;
 
@@ -247,7 +247,7 @@ ShowLifts (int levelnum, int liftrow)
   int xoffs = User_Rect.w/20;
   int yoffs = User_Rect.h/5;
 
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
   // fill the user fenster with some color
   Fill_Rect (User_Rect, lift_bg_color);
 
@@ -329,8 +329,8 @@ EnterKonsole (void)
   bool need_update = TRUE;
   while ( !finished )
     {
-      if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
-      else SDL_ShowCursor (SDL_DISABLE);
+      if (show_cursor) SDL_ShowCursor ();
+	      else SDL_HideCursor ();
 
       // check if the mouse-cursor is on any of the console-menu points
       for (i=0; i < 4; i++)
@@ -448,7 +448,7 @@ EnterKonsole (void)
 
   SDL_SetCursor (crosshair_cursor);
   if (!show_cursor)
-    SDL_ShowCursor (SDL_DISABLE);
+    SDL_HideCursor ();
 
   return;
 
@@ -512,7 +512,7 @@ ShowDeckMap (void)
   Me.pos.x = CurLevel->xlen/2;
   Me.pos.y = CurLevel->ylen/2;
 
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
   SetCombatScaleTo( 0.25 );
 
@@ -600,8 +600,8 @@ GreatDruidShow (void)
     {
       show_droid_portrait (Cons_Droid_Rect, droidtype, DROID_ROTATION_TIME, 0);
 
-      if (show_cursor) SDL_ShowCursor (SDL_ENABLE);
-      else SDL_ShowCursor (SDL_DISABLE);
+      if (show_cursor) SDL_ShowCursor ();
+	      else SDL_HideCursor ();
 
       if ( need_update )
 	{
@@ -844,8 +844,9 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 
   if (!droid_background) // first call
     {
-      tmp = SDL_CreateRGBSurface (0, dst.w, dst.h, vid_bpp, 0, 0, 0, 0);
-      droid_background = SDL_ConvertSurface (tmp, tmp->format, 0);
+      tmp = SDL_CreateSurface(dst.w, dst.h,
+			      SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
+      droid_background = SDL_ConvertSurface (tmp, tmp->format);
       SDL_DestroySurface (tmp);
       SDL_BlitSurface (ne_screen, &dst, droid_background, NULL);
       Copy_Rect (Portrait_Rect, src_rect);
@@ -873,11 +874,11 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
       // now see if its a jpg, then we add some transparency by color-keying:
       if (IMG_isJPG(packed_portraits[droid_type]))
 	{
-	  droid_pics = SDL_ConvertSurface (tmp, tmp->format, 0);
+	  droid_pics = SDL_ConvertSurface (tmp, tmp->format);
 	} // else assume it's png ;)
       else
 	{
-	  droid_pics = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888, 0);
+	  droid_pics = SDL_ConvertSurface (tmp, SDL_PIXELFORMAT_ARGB8888);
 	}
       SDL_DestroySurface (tmp);
       SDL_SeekIO (packed_portraits[droid_type], 0, SEEK_SET);

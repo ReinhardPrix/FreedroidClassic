@@ -1028,7 +1028,7 @@ ThouArtVictorious(void)
 
   Switch_Background_Music_To ( DebriefingSong );
 
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
   ShowScore = (long)RealScore;
   Me.status = VICTORY;
@@ -1074,7 +1074,7 @@ ThouArtDefeated (void)
   int h;
 
   Me.status = TERMINATED;
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
   ExplodeInfluencer ();
 

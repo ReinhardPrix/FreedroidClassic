@@ -201,7 +201,7 @@ ScrollText (char *Text, SDL_Rect *rect)
   Uint32 prev_tick, now;
   bool just_started = TRUE;
 
-  Background = SDL_ConvertSurface (ne_screen, ne_screen->format, 0);
+  Background = SDL_ConvertSurface (ne_screen, ne_screen->format);
 
   // first_tick = SDL_GetTicks ();
 
@@ -469,7 +469,8 @@ GetString (int MaxLen, int echo)
   y0 = MyCursorY;
   height = FontHeight (GetCurrentFont());
 
-  store = SDL_CreateRGBSurface(0, Screen_Rect.w, height, vid_bpp, 0, 0, 0, 0);
+  store = SDL_CreateSurface(Screen_Rect.w, height,
+			    SDL_GetPixelFormatForMasks(vid_bpp, 0, 0, 0, 0));
   Set_Rect (store_rect, x0, y0, Screen_Rect.w, height);
   SDL_BlitSurface (ne_screen, &store_rect, store, NULL);
 

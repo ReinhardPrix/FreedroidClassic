@@ -75,7 +75,7 @@ main (int argc, char * argv[])
   now = SDL_GetTicks();
   InitFreedroid (argc, argv);   // Initialisation of global variables and arrays
 
-  SDL_ShowCursor (SDL_DISABLE);
+  SDL_HideCursor ();
 
 #ifdef SDL_PLATFORM_WIN32
   // spread the word :)
@@ -115,7 +115,7 @@ main (int argc, char * argv[])
       GameOver = FALSE;
 
       SDL_SetCursor (crosshair_cursor); // default cursor is a crosshair
-      SDL_ShowCursor (SDL_ENABLE);
+      SDL_ShowCursor ();
 
       while (!GameOver && !QuitProgram)
 	{
@@ -125,8 +125,8 @@ main (int argc, char * argv[])
 
 	  ReactToSpecialKeys();
 
-	  if (show_cursor) SDL_ShowCursor(SDL_ENABLE);
-	  else SDL_ShowCursor(SDL_DISABLE);
+	  if (show_cursor) SDL_ShowCursor();
+	  else SDL_HideCursor();
 
 	  MoveLevelDoors ();
 
