@@ -264,18 +264,18 @@ PutChar (SDL_Surface * Surface, int x, int y, int c)
 int
 PutCharFont (SDL_Surface * Surface, BFont_Info * Font, int x, int y, int c)
 {
-  int r = 0;
+  int r;
   SDL_Rect dest;
 
-  dest.w = CharWidth (Font, ' ');
-  dest.h = FontHeight (Font);
+  r = CharWidth (Font, c);
+  dest.w = r;
+  dest.h = Font->Chars[c].h;
   dest.x = x;
   dest.y = y;
   if (c != ' ')
     {
       SDL_BlitSurface (Font->Surface, &Font->Chars[c], Surface, &dest);
     }
-  r = dest.w;
   return r;
 }
 
