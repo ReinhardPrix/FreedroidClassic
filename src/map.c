@@ -1003,6 +1003,26 @@ InterpretMap (Level Lev)
 @Ret: 	OK | ERR
 @Int:
 * $Function----------------------------------------------------------*/
+bool
+LiftDestinationValid (int index)
+{
+  int i;
+  Lift destination;
+
+  if (index < 0 || index > curShip.num_lifts || index >= MAX_LIFTS)
+    return FALSE;
+  destination = &curShip.AllLifts[index];
+  for (i = 0; i < curShip.num_levels; i++)
+    {
+      Level lev = curShip.AllLevels[i];
+      if (lev != NULL && lev->levelnum == destination->level)
+        return destination->x >= 0 && destination->x < lev->xlen &&
+               destination->y >= 0 && destination->y < lev->ylen &&
+               lev->map[destination->y][destination->x] == LIFT;
+    }
+  return FALSE;
+}
+
 int
 GetLiftConnections (char *filename)
 {
@@ -1011,6 +1031,7 @@ GetLiftConnections (char *filename)
   const char *EntryPointer;
   int i;
   int Label;
+  int num_lifts = 0;
   int DeckIndex;
   int RectIndex;
   int ElevatorIndex;
@@ -1057,6 +1078,8 @@ GetLiftConnections (char *filename)
       ReadValueFromString (EntryPointer, "ElRowW=", "%d", &w);
       ReadValueFromString (EntryPointer, "ElRowH=", "%d", &h);
 
+      if (ElevatorIndex != curShip.num_lift_rows || ElevatorIndex >= MAX_LIFT_ROWS)
+        goto invalid_lifts;
       curShip.LiftRow_Rect[ElevatorIndex].x = x;
       curShip.LiftRow_Rect[ElevatorIndex].y = y;
       curShip.LiftRow_Rect[ElevatorIndex].w = w;
@@ -1080,7 +1103,10 @@ GetLiftConnections (char *filename)
       ReadValueFromString (EntryPointer, "RectNumber=", "%d", &RectIndex);
       EntryPointer ++;  // to prevent doubly taking this entry
 
-      curShip.num_level_rects[ DeckIndex ] ++; // count the number of rects for this deck one up
+      if (DeckIndex < 0 || DeckIndex >= curShip.num_levels ||
+          RectIndex != curShip.num_level_rects[DeckIndex] || RectIndex >= MAX_LEVEL_RECTS)
+        goto invalid_lifts;
+      curShip.num_level_rects[DeckIndex]++;
 
       ReadValueFromString (EntryPointer, "DeckX=", "%d", &x);
       ReadValueFromString (EntryPointer, "DeckY=", "%d", &y);
@@ -1107,6 +1133,9 @@ GetLiftConnections (char *filename)
   while ( ( EntryPointer = strstr( EntryPointer , "Label=" ) ) != NULL )
     {
       ReadValueFromString (EntryPointer, "Label=", "%d", &Label);
+      if (Label != num_lifts || Label >= MAX_LIFTS)
+        goto invalid_lifts;
+      num_lifts++;
       CurLift = &(curShip.AllLifts[Label]);
       EntryPointer++; // to avoid doubly taking this entry
 
@@ -1118,10 +1147,29 @@ GetLiftConnections (char *filename)
       ReadValueFromString (EntryPointer, "LiftRow=", "%d", &(CurLift->lift_row));
     }
 
-  curShip.num_lifts = Label;
+  curShip.num_lifts = num_lifts - 1;
+  for (i = 0; i < num_lifts; i++)
+    {
+      CurLift = &curShip.AllLifts[i];
+      if (CurLift->level < 0 || CurLift->level >= curShip.num_levels ||
+          CurLift->lift_row < 0 || CurLift->lift_row >= curShip.num_lift_rows ||
+          CurLift->up < -1 || CurLift->up >= num_lifts ||
+          CurLift->down < -1 || CurLift->down >= num_lifts ||
+          (CurLift->x != 99 && !LiftDestinationValid (i)))
+        {
+          DebugPrintf (0, "ERROR: invalid lift %d on level %d at (%d,%d); check .elevators against the map.\n",
+                       i, CurLift->level, CurLift->x, CurLift->y);
+          goto invalid_lifts;
+        }
+    }
 
-  MyFree ( Data );
+  MyFree (Data);
   return OK;
+
+invalid_lifts:
+  DebugPrintf (0, "ERROR: invalid elevator definitions in %s.\n", filename);
+  MyFree (Data);
+  return ERR;
 }; // int GetLiftConnections(char *shipname)
 
 /*-----------------------------------------------------------------

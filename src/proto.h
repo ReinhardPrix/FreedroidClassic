@@ -161,6 +161,7 @@ EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
 EXTERN int GetLiftConnections (char *shipname);
+EXTERN bool LiftDestinationValid (int index);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
