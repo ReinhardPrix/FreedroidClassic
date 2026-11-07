@@ -451,6 +451,7 @@ SetCombatScaleTo(float scale)
 	// if there's already a rescaled version, free it
 	if (MapBlockSurfacePointer[j][i] != OrigMapBlockSurfacePointer[j][i])
 	  SDL_FreeSurface (MapBlockSurfacePointer[j][i]);
+	MapBlockSurfacePointer[j][i] = NULL;
 	// then scale..
 	tmp = ScaleSurfaceNearest (OrigMapBlockSurfacePointer[j][i], scale);
         if ( tmp == NULL ) {
@@ -609,7 +610,11 @@ InitPictures (void)
   for (line = 0; line < NUM_COLORS; line ++)
     for (col = 0; col < NUM_MAP_BLOCKS; col ++)
       {
+	if (MapBlockSurfacePointer[line][col] != OrigMapBlockSurfacePointer[line][col])
+	  SDL_FreeSurface (MapBlockSurfacePointer[line][col]);
+	MapBlockSurfacePointer[line][col] = NULL;
 	FreeIfUsed (OrigMapBlockSurfacePointer[line][col]);
+	OrigMapBlockSurfacePointer[line][col] = NULL;
 	OrigMapBlockSurfacePointer[line][col] = Load_Block (NULL, line, col, &OrigBlock_Rect,0);
 	MapBlockSurfacePointer[line][col] = OrigMapBlockSurfacePointer[line][col];
       }
@@ -1756,6 +1761,8 @@ FreeGraphics ( void )
 
   for ( int i = 0; i < NUM_COLORS; i ++ ) {
     for ( int j = 0; j < NUM_MAP_BLOCKS; j ++ ) {
+      if (MapBlockSurfacePointer[i][j] != OrigMapBlockSurfacePointer[i][j])
+        SDL_FreeSurface (MapBlockSurfacePointer[i][j]);
       SDL_FreeSurface ( OrigMapBlockSurfacePointer[i][j] );
     }
   }

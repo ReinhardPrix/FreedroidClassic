@@ -608,6 +608,7 @@ GetString (int MaxLen, int echo)
   DebugPrintf (2,  input );
   DebugPrintf (2, "\n\n");
 
+  SDL_FreeSurface (store);
 
   return (input);
 
