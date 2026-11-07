@@ -767,13 +767,28 @@ InitNewMission ( const char *MissionName )
       StartPointPointer += strlen ( MISSION_START_POINT_STRING );
     }
   StartPointPointer = strstr( StartPointPointer , "Level=" ) + strlen( "Level=" );
-  sscanf( StartPointPointer , "%d" , &StartingLevel );
-  CurLevel = curShip.AllLevels[ StartingLevel ];
+  if (sscanf (StartPointPointer, "%d", &StartingLevel) != 1 ||
+      StartingLevel < 0 || StartingLevel >= curShip.num_levels)
+    {
+      DebugPrintf (0, "ERROR: invalid mission starting level.\n");
+      Terminate (ERR);
+    }
+  CurLevel = curShip.AllLevels[StartingLevel];
   StartPointPointer = strstr( StartPointPointer , "XPos=" ) + strlen( "XPos=" );
-  sscanf( StartPointPointer , "%d" , &StartingXPos );
+  if (sscanf (StartPointPointer, "%d", &StartingXPos) != 1 ||
+      StartingXPos < 0 || StartingXPos >= CurLevel->xlen)
+    {
+      DebugPrintf (0, "ERROR: mission starting X coordinate is outside level %d.\n", StartingLevel);
+      Terminate (ERR);
+    }
   Me.pos.x=StartingXPos;
   StartPointPointer = strstr( StartPointPointer , "YPos=" ) + strlen( "YPos=" );
-  sscanf( StartPointPointer , "%d" , &StartingYPos );
+  if (sscanf (StartPointPointer, "%d", &StartingYPos) != 1 ||
+      StartingYPos < 0 || StartingYPos >= CurLevel->ylen)
+    {
+      DebugPrintf (0, "ERROR: mission starting Y coordinate is outside level %d.\n", StartingLevel);
+      Terminate (ERR);
+    }
   Me.pos.y=StartingYPos;
   DebugPrintf ( 1 , "\nFinal starting position: Level=%d XPos=%d YPos=%d." ,
 		StartingLevel, StartingXPos, StartingYPos );

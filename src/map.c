@@ -280,8 +280,20 @@ LoadShip (char *filename)
   while ((endpt = strstr (endpt, LEVEL_END_STRING)) != NULL)
     {
       endpt += strlen (LEVEL_END_STRING);
-      level_anz++;
+      if (++level_anz >= MAX_LEVELS)
+        {
+          DebugPrintf (0, "ERROR: too many levels in ship (maximum %d).\n", MAX_LEVELS - 1);
+          MyFree (ShipData);
+          return ERR;
+        }
       LevelStart[level_anz] = endpt + 1;
+    }
+
+  if (level_anz == 0)
+    {
+      DebugPrintf (0, "ERROR: ship contains no levels.\n");
+      MyFree (ShipData);
+      return ERR;
     }
 
   /* init the level-structs */
@@ -294,9 +306,16 @@ LoadShip (char *filename)
       if (curShip.AllLevels[i] == NULL)
 	{
 	  DebugPrintf (0, "ERROR: reading of level %d failed\n", i);
+          MyFree (ShipData);
 	  return (ERR);
 	}
-      InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and lifts
+      if (curShip.AllLevels[i]->levelnum != i)
+        {
+          DebugPrintf (0, "ERROR: expected level %d, found %d.\n", i, curShip.AllLevels[i]->levelnum);
+          MyFree (ShipData);
+          return ERR;
+        }
+      InterpretMap (curShip.AllLevels[i]); // initialize doors, refreshes and alerts
     }
 
   MyFree (ShipData);
@@ -574,9 +593,14 @@ LevelToStruct (char *data)
       DebugPrintf( 0 , "No Levelnumber entry found! Terminating! ");
       Terminate(ERR);
     }
-  sscanf ( DataPointer , "Levelnumber: %u \n xlen of this level: %u \n ylen of this level: %u \n color of this level: %u",
-	  &(loadlevel->levelnum), &(loadlevel->xlen),
-	  &(loadlevel->ylen), &(loadlevel->color));
+  if (sscanf (DataPointer, "Levelnumber: %d \n xlen of this level: %d \n ylen of this level: %d \n color of this level: %d",
+              &loadlevel->levelnum, &loadlevel->xlen,
+              &loadlevel->ylen, &loadlevel->color) != 4 ||
+      loadlevel->levelnum < 0 || loadlevel->levelnum >= MAX_LEVELS ||
+      loadlevel->xlen < 1 || loadlevel->xlen > MAX_MAP_COLS ||
+      loadlevel->ylen < 1 || loadlevel->ylen > MAX_MAP_ROWS ||
+      loadlevel->color < 0 || loadlevel->color >= NUM_COLORS)
+    goto invalid;
 
   DebugPrintf( 2 , "\nLevelnumber : %d ", loadlevel->levelnum );
   DebugPrintf( 2 , "\nxlen of this level: %d ", loadlevel->xlen );
@@ -589,15 +613,15 @@ LevelToStruct (char *data)
 
   // find the map data
   if ((map_begin = strstr (data, MAP_BEGIN_STRING)) == NULL)
-    return(NULL);
+    goto invalid;
 
   /* set position to Waypoint-Data */
   if ((wp_begin = strstr (data, WP_BEGIN_STRING)) == NULL)
-    return(NULL);
+    goto invalid;
 
   // find end of level-data
   if ((level_end = strstr (data, LEVEL_END_STRING)) == NULL)
-    return(NULL);
+    goto invalid;
 
   /* now scan the map */
   next_line = map_begin;
@@ -607,19 +631,16 @@ LevelToStruct (char *data)
   for (i = 0; i < loadlevel->ylen; i++)
     {
       if ((this_line = strtok (NULL, "\n")) == NULL)
-	return(NULL);
+        goto invalid;
       loadlevel->map[i] = MyMalloc( loadlevel->xlen * sizeof( loadlevel->map[0][0] ) );
       pos = this_line;
       pos += strspn (pos, WHITE_SPACE);  // skip initial whitespace
 
       for (k=0; k < loadlevel->xlen; k++)
 	{
-	  if (*pos == '\0')
-	    return (NULL);
-	  res = sscanf (pos, "%d", &tmp);
-          *(loadlevel->map[i]+k) = (char)tmp;
-	  if ( (res == 0) || (res == EOF) )
-	    return (NULL);
+          if (sscanf (pos, "%d", &tmp) != 1 || tmp < 0 || tmp >= NUM_MAP_BLOCKS)
+            goto invalid;
+          loadlevel->map[i][k] = (char)tmp;
 	  pos += strcspn (pos, WHITE_SPACE);  // skip last token
 	  pos += strspn (pos, WHITE_SPACE);   // skip initial whitespace of next one
 
@@ -632,20 +653,25 @@ LevelToStruct (char *data)
 
   for (i=0; i<MAXWAYPOINTS ; i++)
     {
-      if ( (this_line = strtok (NULL, "\n")) == NULL)
-	return (NULL);
+      if ((this_line = strtok (NULL, "\n")) == NULL)
+        goto invalid;
       if (this_line == level_end)
 	{
 	  loadlevel->num_waypoints = i;
 	  break;
 	}
 
-      sscanf( this_line , "Nr.=%d \t x=%d \t y=%d" , &nr , &x , &y );
+      if (sscanf (this_line, "Nr.=%d \t x=%d \t y=%d", &nr, &x, &y) != 3 ||
+          nr != i || x < 0 || x >= loadlevel->xlen || y < 0 || y >= loadlevel->ylen)
+        goto invalid;
 
       loadlevel->AllWaypoints[i].x=x;
       loadlevel->AllWaypoints[i].y=y;
+      loadlevel->num_waypoints = i + 1;
 
       pos = strstr (this_line, CONNECTION_STRING);
+      if (pos == NULL)
+        goto invalid;
       pos += strlen (CONNECTION_STRING);	// skip connection-string
       pos += strspn (pos, WHITE_SPACE); 		// skip initial whitespace
 
@@ -654,8 +680,12 @@ LevelToStruct (char *data)
 	  if (*pos == '\0')
 	    break;
 	  res = sscanf( pos , "%d" , &connection );
-	  if ( (connection == -1) || (res == 0) || (res == EOF) )
-	    break;
+          if (res != 1)
+            goto invalid;
+          if (connection == -1)
+            break;
+          if (connection < 0 || connection >= MAXWAYPOINTS)
+            goto invalid;
 	  loadlevel->AllWaypoints[i].connections[k]=connection;
 
 	  pos += strcspn (pos, WHITE_SPACE); // skip last token
@@ -667,7 +697,21 @@ LevelToStruct (char *data)
 
     } // for i < MAXWAYPOINTS
 
+  if (i == MAXWAYPOINTS && strtok (NULL, "\n") != level_end)
+    goto invalid;
+  for (i = 0; i < loadlevel->num_waypoints; i++)
+    for (k = 0; k < loadlevel->AllWaypoints[i].num_connections; k++)
+      if (loadlevel->AllWaypoints[i].connections[k] >= loadlevel->num_waypoints)
+        goto invalid;
+
   return (loadlevel);
+
+invalid:
+  DebugPrintf (0, "ERROR: invalid dimensions, map data, or waypoints in level %d.\n",
+               loadlevel->levelnum);
+  FreeLevelMemory (loadlevel);
+  MyFree (loadlevel);
+  return NULL;
 
 } /* LevelToStruct */
 
@@ -1799,7 +1843,7 @@ FreeLevelMemory ( level* lvl )
   MyFree ( lvl->Level_Enter_Comment );
 
   int row;
-  for ( row = 0; row < lvl->ylen; row ++ ) {
+  for ( row = 0; row < lvl->ylen && row < MAX_MAP_ROWS; row ++ ) {
     MyFree ( lvl->map[row] );
   }
   return;
@@ -1812,7 +1856,9 @@ FreeShipMemory ( void )
   for (i = 0; i < curShip.num_levels; i++) {
     FreeLevelMemory ( curShip.AllLevels[i] );
     MyFree ( curShip.AllLevels[i] );
+    curShip.AllLevels[i] = NULL;
   }
+  curShip.num_levels = 0;
 
   return;
 }
