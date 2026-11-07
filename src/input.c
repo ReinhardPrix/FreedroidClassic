@@ -341,20 +341,11 @@ ReactToSpecialKeys(void)
 //----------------------------------------------------------------------
 // main input-reading routine
 //----------------------------------------------------------------------
-int
-update_input (void)
+static void
+handle_input_event (SDL_Event event)
 {
   Uint8 axis;
-  SDL_Event event;
-  
-  // switch mouse-cursor visibility as a function of time of last activity
-  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
-    show_cursor = FALSE;
-  else
-    show_cursor = TRUE;
 
-  while( SDL_PollEvent( &event ) )
-    {
       switch( event.type )
 	{
 	case SDL_QUIT:
@@ -530,8 +521,21 @@ update_input (void)
  	default:
  	  break;
  	}
+}
 
-    }
+int
+update_input (void)
+{
+  SDL_Event event;
+
+  // switch mouse-cursor visibility as a function of time of last activity
+  if (SDL_GetTicks () - last_mouse_event > CURSOR_KEEP_VISIBLE)
+    show_cursor = FALSE;
+  else
+    show_cursor = TRUE;
+
+  while (SDL_PollEvent (&event))
+    handle_input_event (event);
 
   return 0;
 }
@@ -554,7 +558,11 @@ getchar_raw (void)
 
   while ( !Returnkey )
     {
-      SDL_WaitEvent (&event);    /* wait for next event */
+      if (!SDL_WaitEvent (&event))
+        {
+          DebugPrintf (0, "SDL_WaitEvent failed: %s\n", SDL_GetError ());
+          Terminate (ERR);
+        }
 
       switch (event.type)
 	{
@@ -627,8 +635,7 @@ getchar_raw (void)
 	  break;
 
 	default:
-	  SDL_PushEvent (&event);  /* put this event back into the queue */
-	  update_input ();  /* and treat it the usual way */
+	  handle_input_event (event);
 	  continue;
 	}
 
