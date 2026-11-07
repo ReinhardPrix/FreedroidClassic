@@ -241,8 +241,6 @@ Takeover (int enemynum)
 
 	  RealScore += Druidmap[OpponentType].score;
 
-	  DeathCount += OpponentType * OpponentType;   // quadratic "importance", max=529
-
 	  AllEnemys[enemynum].status = OUT; // removed droid silently (no blast!)
 
 	  if (LeaderColor != YourColor)	/* only won because of InvincibleMode */
