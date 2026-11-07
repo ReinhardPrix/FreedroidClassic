@@ -1088,6 +1088,10 @@ Terminate (int ExitCode)
   DebugPrintf(0, "Thank you for playing Freedroid.\n\n");
   MyCheckMemoryLeaks ();
   SDL_Quit();
+  int outstanding = SDL_GetNumAllocations ();
+  if (outstanding > 0)
+    fprintf (stderr, "SDL: %d allocation(s) still live after shutdown.\n",
+             outstanding);
   exit (ExitCode);
   return;
 }  // void Terminate(int ExitCode)
