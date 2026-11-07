@@ -52,6 +52,8 @@ freedroid_SOURCES = \
 ## clang santizer flags: turn on clang's memory-leak sanitizer, see https://clang.llvm.org/docs/AddressSanitizer.html
 freedroidDebug_CFLAGS = $(AM_CFLAGS) -g3 -Og -fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-common
 freedroidDebug_SOURCES = $(freedroid_SOURCES)
+freedroidDebug_LDFLAGS = $(DEBUG_SDL_LDFLAGS)
+freedroidDebug_DEPENDENCIES = $(DEBUG_SDL_LIBRARY)
 
 freedroid_CPPFLAGS = -DLOCAL_DATADIR=\"$(abs_top_srcdir)\"
 freedroidDebug_CPPFLAGS = $(freedroid_CPPFLAGS)
