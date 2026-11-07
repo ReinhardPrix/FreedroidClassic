@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT(freedroid, 1.9.0)
+AC_INIT(freedroid, 1.9.2-sdl2-port)
 
 dnl Detect the canonical host and target build environment
 
