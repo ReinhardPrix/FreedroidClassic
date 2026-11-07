@@ -572,7 +572,8 @@ MoveThisEnemy( int EnemyNum )
       ThisRobot->status = TERMINATED;
       RealScore += Druidmap[ ThisRobot->type ].score;
 
-      DeathCount += ThisRobot->type * ThisRobot->type;   // quadratic "importance", max=529
+      /* Original C64 alert uses a saturating byte counter. */
+      DeathCount = fminf (255.0f, DeathCount + ThisRobot->type);
 
       StartBlast ( ThisRobot->pos.x, ThisRobot->pos.y, DRUIDBLAST);
       if (LevelEmpty ())
