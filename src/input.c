@@ -355,6 +355,8 @@ handle_input_event (SDL_Event event)
 	  /* Look for a keypress */
 
 	case SDL_KEYDOWN:
+	  if (event.key.repeat)
+	    break;
 	  current_modifiers = event.key.keysym.mod;
 	  set_input_state(event.key.keysym.sym, PRESSED);
 #ifdef GCW0
