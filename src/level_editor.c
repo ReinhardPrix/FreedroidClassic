@@ -506,7 +506,7 @@ DeleteWaypoint (level *Lev, int num)
   if (num == wpmax)
     WpList[num].num_connections = 0;
   else // otherwise shift down all higher waypoints
-    memcpy (&WpList[num], &WpList[num+1], (wpmax - num) * sizeof(waypoint) );
+    memmove (&WpList[num], &WpList[num+1], (wpmax - num) * sizeof(waypoint) );
 
   // now there's one less:
   Lev->num_waypoints --;
@@ -521,7 +521,7 @@ DeleteWaypoint (level *Lev, int num)
 	if (ThisWp->connections[j] == num)
 	  {
 	    // move all connections after this one down
-	    memcpy (&(ThisWp->connections[j]), &(ThisWp->connections[j+1]),
+	    memmove (&(ThisWp->connections[j]), &(ThisWp->connections[j+1]),
 		    (ThisWp->num_connections-1 - j)*sizeof(int));
 	    ThisWp->num_connections --;
 	    j --;  // just to be sure... check the next connection as well...(they have been shifted!)
