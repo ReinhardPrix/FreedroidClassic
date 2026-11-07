@@ -93,9 +93,11 @@ EnterLift (void)
 
   curLevel = CurLevel->levelnum;
 
-  if ((curLift = GetCurrentLift ()) == -1)
+  if ((curLift = GetCurrentLift ()) == -1 || !LiftDestinationValid (curLift))
     {
-      printf ("Lift out of order, I'm so sorry !");
+      DebugPrintf (0, "Lift out of order: check its coordinates in .elevators.\n");
+      Me.status = MOBILE;
+      SDL_ShowCursor ();
       return;
     }
 
@@ -134,7 +136,7 @@ EnterLift (void)
               last_move_tick = SDL_GetTicks();
               if (upLift != -1)
                 {			/* gibt es noch einen Lift hoeher ? */
-                  if (curShip.AllLifts[upLift].x == 99)
+                  if (!LiftDestinationValid (upLift))
                     {
                       DebugPrintf (0, "Lift out of order, so sorry ..");
                     }
@@ -155,7 +157,7 @@ EnterLift (void)
               last_move_tick = SDL_GetTicks();
               if (downLift != -1)
                 {			/* gibt es noch einen Lift tiefer ? */
-                  if (curShip.AllLifts[downLift].x == 99)
+                  if (!LiftDestinationValid (downLift))
                     {
                       DebugPrintf (0, "Lift Out of order, so sorry ..");
                     }

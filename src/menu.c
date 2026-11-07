@@ -530,22 +530,9 @@ const char *handle_LE_SizeX ( MenuAction_t action )
     return buf;
   }
 
-  int oldxlen = CurLevel->xlen;
-  menuChangeInt ( action, &(CurLevel->xlen), 1, 0, MAX_MAP_COLS-1 );
-  size_t newmem = CurLevel->xlen * sizeof( CurLevel->map[0][0] );
-  // adjust memory sizes for new value
-  int row;
-  for ( row = 0 ; row < CurLevel->ylen ; row++ )
-    {
-      CurLevel->map[row] = MyRealloc( CurLevel->map[row], newmem );
-      if ( CurLevel->map[row] == NULL ) {
-        DebugPrintf ( 0, "Failed to re-allocate to %z bytes in map row %d\n", newmem, row );
-        Terminate(ERR);
-      }
-      if ( CurLevel->xlen > oldxlen ) { // fill new map area with VOID
-        CurLevel->map[ row ] [ CurLevel->xlen - 1 ] = VOID;
-      }
-    }
+  int xlen = CurLevel->xlen;
+  menuChangeInt (action, &xlen, 1, 1, MAX_MAP_COLS-1);
+  ResizeLevel (xlen, CurLevel->ylen);
   InitiateMenu(FALSE);
   return NULL;
 }
@@ -558,18 +545,9 @@ const char *handle_LE_SizeY ( MenuAction_t action )
     return buf;
   }
 
-  int oldylen = CurLevel->ylen;
-  menuChangeInt ( action, &(CurLevel->ylen), 1, 0, MAX_MAP_ROWS-1 );
-  if ( oldylen > CurLevel->ylen )
-    {
-      MyFree ( CurLevel->map[oldylen - 1] );
-      CurLevel->map[oldylen - 1] = NULL;
-    }
-  else if ( oldylen < CurLevel->ylen )
-    {
-      CurLevel->map[ CurLevel->ylen-1 ] = MyMalloc ( CurLevel->xlen * sizeof( CurLevel->map[0][0] ) );
-      memset ( CurLevel->map[ CurLevel->ylen-1 ], VOID, CurLevel->xlen * sizeof( CurLevel->map[0][0] ) );
-    }
+  int ylen = CurLevel->ylen;
+  menuChangeInt (action, &ylen, 1, 1, MAX_MAP_ROWS-1);
+  ResizeLevel (CurLevel->xlen, ylen);
 
   InitiateMenu (FALSE);
   return NULL;

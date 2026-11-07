@@ -161,6 +161,7 @@ EXTERN Level LevelToStruct (char *data);
 EXTERN int GetDoors (Level Lev);
 EXTERN int GetRefreshes (Level Lev);
 EXTERN int GetLiftConnections (char *shipname);
+EXTERN bool LiftDestinationValid (int index);
 EXTERN int GetCrew (char *shipname);
 
 EXTERN void AnimateRefresh (void);
@@ -255,6 +256,7 @@ EXTERN void showMainMenu (void);
 EXTERN void showLevelEditorMenu (void);
 EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
+EXTERN void ResizeLevel (int xlen, int ylen);
 EXTERN MenuAction_t getMenuAction ( Uint32 wait_repeat_ticks );
 EXTERN const char *handle_QuitGame ( MenuAction_t action );
 EXTERN void FreeMenuData ( void );
