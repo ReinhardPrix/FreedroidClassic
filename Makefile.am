@@ -17,6 +17,7 @@ debug:
 		-DSDL_SHARED=ON -DSDL_STATIC=OFF -DSDL_TESTS=OFF -DSDL_TEST_LIBRARY=OFF
 	+cmake --build "$(DEBUG_SDL_BUILD)"
 	cmake --install "$(DEBUG_SDL_BUILD)"
+	$(RM) src/freedroidDebug
 	$(MAKE) -C src freedroidDebug \
 		DEBUG_SDL_LDFLAGS="-L$(DEBUG_SDL_PREFIX)/lib -Wl,-rpath,$(DEBUG_SDL_PREFIX)/lib" \
 		DEBUG_SDL_LIBRARY="$(DEBUG_SDL_PREFIX)/lib/libSDL3.so"
