@@ -255,6 +255,7 @@ EXTERN void showMainMenu (void);
 EXTERN void showLevelEditorMenu (void);
 EXTERN bool LevelEditMenu (void);
 EXTERN void LevelEditor(void);
+EXTERN void ResizeLevel (int xlen, int ylen);
 EXTERN MenuAction_t getMenuAction ( Uint32 wait_repeat_ticks );
 EXTERN const char *handle_QuitGame ( MenuAction_t action );
 EXTERN void FreeMenuData ( void );

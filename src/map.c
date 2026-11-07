@@ -703,10 +703,7 @@ GetDoors (Level Lev)
 	  // if (brick == '=' || brick == '"')
 	  if ( brick == V_ZUTUERE || brick == H_ZUTUERE )
 	    {
-	      Lev->doors[curdoor].x = col;
-	      Lev->doors[curdoor++].y = line;
-
-	      if (curdoor > MAX_DOORS_ON_LEVEL)
+	      if (curdoor >= MAX_DOORS_ON_LEVEL)
 		{
       fprintf(stderr, "\n\
 \n\
@@ -731,6 +728,8 @@ Sorry...\n\
 \n" , Lev->levelnum , MAX_DOORS_ON_LEVEL );
 		  Terminate(ERR);
 		}
+              Lev->doors[curdoor].x = col;
+              Lev->doors[curdoor++].y = line;
 
 	    }			/* if */
 	}			/* for */
@@ -765,10 +764,7 @@ GetRefreshes (Level Lev)
       {
 	if (Lev->map[row][col] == REFRESH1 )
 	  {
-	    Lev->refreshes[curref].x = col;
-	    Lev->refreshes[curref++].y = row;
-
-	    if (curref > MAX_REFRESHES_ON_LEVEL)
+	    if (curref >= MAX_REFRESHES_ON_LEVEL)
 	      {
 		fprintf(stderr, "\n\
 \n\
@@ -794,6 +790,8 @@ Sorry...\n\
 		Terminate(ERR);
 		return ERR;
 	      }
+            Lev->refreshes[curref].x = col;
+            Lev->refreshes[curref++].y = row;
 	  }			/* if */
       }				/* for */
   return curref;
@@ -823,16 +821,15 @@ GetAlerts (Level Lev)
       {
 	if (Lev->map[row][col] == ALERT_GREEN)
 	  {
-	    Lev->alerts[curref].x = col;
-	    Lev->alerts[curref++].y = row;
-
-	    if (curref > MAX_ALERTS_ON_LEVEL)
+	    if (curref >= MAX_ALERTS_ON_LEVEL)
 	      {
 		DebugPrintf(0, "WARNING: more alert-tiles found on level %d than allowed (%d)!!",
 			    Lev->levelnum, MAX_ALERTS_ON_LEVEL);
 		DebugPrintf(0, "Remaining Alerts will be inactive... \n");
-		break;
+		return;
 	      }
+            Lev->alerts[curref].x = col;
+            Lev->alerts[curref++].y = row;
 	  }    // if alert found
 
       }	// for cols

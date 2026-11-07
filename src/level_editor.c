@@ -231,6 +231,10 @@ LevelEditor(void)
     {
       if ( cmd_is_activeR ( CMD_MENU ) ) {
 	showLevelEditorMenu();
+        Me.pos.x = fmaxf (0, fminf (Me.pos.x, CurLevel->xlen - 1));
+        Me.pos.y = fmaxf (0, fminf (Me.pos.y, CurLevel->ylen - 1));
+        OriginWaypoint = -1;
+        SrcWp = NULL;
         if ( quit_LevelEditor ) {
           Done = TRUE;
           CurrentCombatScaleFactor = 1;
@@ -484,6 +488,8 @@ LevelEditor(void)
 
     } // while (!Done)
 
+  ResetLevelMap (CurLevel);
+  InterpretMap (CurLevel);
   ShuffleEnemys ();  // now make sure droids get redestributed correctly!
 
   Copy_Rect (rect, User_Rect);
@@ -494,6 +500,64 @@ LevelEditor(void)
 } // void LevelEditor(void)
 
 
+
+void
+ResizeLevel (int xlen, int ylen)
+{
+  int oldxlen = CurLevel->xlen;
+  int oldylen = CurLevel->ylen;
+  int row, i;
+
+  if (xlen < 1 || xlen > MAX_MAP_COLS || ylen < 1 || ylen > MAX_MAP_ROWS)
+    {
+      DebugPrintf (0, "Invalid level dimensions: %d x %d\n", xlen, ylen);
+      return;
+    }
+  if (xlen == oldxlen && ylen == oldylen)
+    return;
+
+  for (row = ylen; row < oldylen; row++)
+    {
+      MyFree (CurLevel->map[row]);
+      CurLevel->map[row] = NULL;
+    }
+  for (row = 0; row < ylen; row++)
+    {
+      if (row < oldylen)
+        {
+          CurLevel->map[row] = MyRealloc (CurLevel->map[row], xlen);
+          if (xlen > oldxlen)
+            memset (CurLevel->map[row] + oldxlen, VOID, xlen - oldxlen);
+        }
+      else
+        {
+          CurLevel->map[row] = MyMalloc (xlen);
+          memset (CurLevel->map[row], VOID, xlen);
+        }
+    }
+  CurLevel->xlen = xlen;
+  CurLevel->ylen = ylen;
+
+  for (i = CurLevel->num_waypoints - 1; i >= 0; i--)
+    if (CurLevel->AllWaypoints[i].x >= xlen || CurLevel->AllWaypoints[i].y >= ylen)
+      DeleteWaypoint (CurLevel, i);
+
+  Me.pos.x = fmaxf (0, fminf (Me.pos.x, xlen - 1));
+  Me.pos.y = fmaxf (0, fminf (Me.pos.y, ylen - 1));
+  Me.speed.x = Me.speed.y = 0;
+  InitInfluPositionHistory ();
+  ResetLevelMap (CurLevel);
+  InterpretMap (CurLevel);
+
+  if (xlen < oldxlen || ylen < oldylen)
+    {
+      ShuffleEnemys ();
+      for (i = 0; i < MAXBULLETS; i++)
+        DeleteBullet (i);
+      for (i = 0; i < MAXBLASTS; i++)
+        DeleteBlast (i);
+    }
+}
 
 // delete given waypoint num (and all its connections) on level Lev
 void
