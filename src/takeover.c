@@ -314,7 +314,7 @@ Takeover (int enemynum)
 void
 ChooseColor (void)
 {
-  int countdown = 100;  /* duration in 1/10 seconds given for color choosing */
+  int countdown = 110;  /* duration in 1/10 seconds given for color choosing */
   int ColorChosen = FALSE;
   int WaitForFreshConfirm = TRUE;
   char count_text[80];
@@ -388,7 +388,7 @@ ChooseColor (void)
 void
 PlayGame (void)
 {
-  int countdown = 100;   /* lenght of Game in 1/10 seconds */
+  int countdown = 110;   /* length of game in 1/10 seconds */
   char count_text[80];
   int FinishTakeover = FALSE;
   int row;
