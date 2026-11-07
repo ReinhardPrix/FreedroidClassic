@@ -348,7 +348,11 @@ LevelEditor(void)
 
 	  // if its waypoint already, this waypoint must be deleted.
 	  if (i < CurLevel->num_waypoints)
-	    DeleteWaypoint (CurLevel, i);
+	    {
+	      DeleteWaypoint (CurLevel, i);
+	      OriginWaypoint = -1;
+	      SrcWp = NULL;
+	    }
 	  else // if its not a waypoint already, it must be made into one
 	    CreateWaypoint (CurLevel, BlockX, BlockY);
 
