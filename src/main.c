@@ -59,7 +59,7 @@ void UpdateCountersForThisFrame (void);
 int
 main (int argc, char * argv[])
 {
-  Uint32 now;
+  Uint64 now;
   float scale;
 
   GameOver = FALSE;

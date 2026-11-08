@@ -50,7 +50,7 @@ bool show_cursor;    // show mouse-cursor or not?
 
 int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
-Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
+Uint64 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
 
 SDLMod current_modifiers;
 

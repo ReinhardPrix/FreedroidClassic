@@ -767,7 +767,7 @@ getMenuAction ( Uint32 wait_repeat_ticks )
   }
 
   // ----- up/down motion: allow for key-repeat, but carefully control repeat rate (modelled on takeover game)
-  static Uint32 last_movekey_time = 0;
+  static Uint64 last_movekey_time = 0;
 
   static int up    = FALSE;
   static int down  = FALSE;
@@ -863,7 +863,7 @@ ShowMenu ( const MenuEntry_t MenuEntries[] )
 
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
-  static Uint32 last_move_tick = 0;
+  static Uint64 last_move_tick = 0;
   bool finished = FALSE;
   quit_Menu = FALSE;
   bool need_update = TRUE;
@@ -1076,7 +1076,7 @@ Key_Config_Menu (void)
   int newkey = -1;
   MenuAction_t action = ACTION_NONE;
   const Uint32 wait_move_ticks = 100;
-  static Uint32 last_move_tick = 0;
+  static Uint64 last_move_tick = 0;
 
   bool finished = FALSE;
   while (!finished)

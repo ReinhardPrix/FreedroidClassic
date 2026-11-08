@@ -41,7 +41,7 @@
 #include "takeover.h"
 #include "map.h"
 
-Uint32 cur_time;  		/* current time in ms */
+Uint64 cur_time;  		/* current time in ms */
 
 /* Class seperation of the blocks */
 int BlockClass[TO_BLOCKS] = {
@@ -144,7 +144,7 @@ Takeover (int enemynum)
   static int RejectEnergy = 0;	/* your energy if you're rejected */
   const char *message;
   SDL_Rect buf;
-  Uint32 now;
+  Uint64 now;
 
   /* Prevent distortion of framerate by the delay coming from
    * the time spend in the menu.
@@ -317,7 +317,8 @@ ChooseColor (void)
   int WaitForFreshConfirm = TRUE;
   char count_text[80];
 
-  Uint32 prev_count_tick, count_tick_len;
+  Uint64 prev_count_tick;
+  Uint32 count_tick_len;
 
   count_tick_len = 100; 	/* countdown in 1/10 second steps */
 
@@ -391,8 +392,8 @@ PlayGame (void)
   int FinishTakeover = FALSE;
   int row;
 
-  Uint32 prev_count_tick = 0, count_tick_len;  /* tick vars for count-down */
-  Uint32 prev_move_tick = 0, move_tick_len;    /* tick vars for motion */
+  Uint64 prev_count_tick = 0, prev_move_tick = 0;
+  Uint32 count_tick_len, move_tick_len;
 
   count_tick_len = 100;   /* countdown in 1/10 second steps */
   move_tick_len  = 60;    /* allow motion at this tick-speed in ms */

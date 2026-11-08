@@ -198,7 +198,7 @@ ScrollText (char *Text, SDL_Rect *rect)
   int maxspeed = 150;
   SDL_Surface* Background;
   int ret = 0;
-  Uint32 prev_tick, now;
+  Uint64 prev_tick, now;
   bool just_started = TRUE;
 
   Background = SDL_ConvertSurface (ne_screen, ne_screen->format);
@@ -479,7 +479,7 @@ GetString (int MaxLen, int echo)
 #ifdef ARCADEINPUT
   char emptychar=' '; //for "empty" input line / backspace etc...
   int blink_time=200; // For adjusting fast <->slow blink; in ms
-  static Uint32 last_frame_time; //  = SDL_GetTicks();
+  static Uint64 last_frame_time; //  = SDL_GetTicks();
   Uint32 frame_duration;
 
   int inputchar=17; // initial char = A

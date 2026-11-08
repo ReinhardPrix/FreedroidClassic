@@ -6,6 +6,11 @@
 #include <assert.h>
 
 SDL_Rect User_Rect;
+extern bool show_cursor;
+static Uint64 ticks;
+
+/* The test build redirects game calls to SDL_GetTicks to this clock. */
+Uint64 SDLCALL SDL_GetTicks (void) { return ticks; }
 
 void DebugPrintf (int level, const char *fmt, ...)
 {
@@ -51,8 +56,34 @@ static void check_joystick (void)
   SDL_Quit ();
 }
 
+static void check_ticks (void)
+{
+  const Uint64 times[] = {0xffffffffULL - 100, 0xffffffffULL + 100,
+                          0x1ffffffffULL + 100};
+  assert (SDL_Init (SDL_INIT_EVENTS));
+  for (size_t i = 0; i < sizeof(times) / sizeof(times[0]); i++)
+    {
+      SDL_Event event = {0};
+      ticks = times[i];
+      event.type = SDL_EVENT_MOUSE_MOTION;
+      assert (SDL_PushEvent (&event));
+      update_input ();
+      assert (last_mouse_event == ticks);
+      update_input ();
+      assert (show_cursor);
+      ticks += 2999;
+      update_input ();
+      assert (show_cursor);
+      ticks += 2;
+      update_input ();
+      assert (!show_cursor);
+    }
+  SDL_Quit ();
+}
+
 int main (void)
 {
   check_joystick ();
+  check_ticks ();
   return 0;
 }

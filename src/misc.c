@@ -47,8 +47,8 @@ int read_variable (char *data, const char *var_name, const char *fmt, void *var)
 long oneframedelay = 0;
 long tenframedelay = 0;
 long onehundredframedelay = 0;
-Uint32 Now_SDL_Ticks;
-Uint32 One_Frame_SDL_Ticks;
+Uint64 Now_SDL_Ticks;
+Uint64 One_Frame_SDL_Ticks;
 int framenr = 0;
 static float currentTimeFactor = 1.0;
 
