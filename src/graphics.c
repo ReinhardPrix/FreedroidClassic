@@ -886,7 +886,7 @@ Load_Block (char *fpath, int line, int col, SDL_Rect * block, int flags)
   else
     usealpha = FALSE;
 
-  if (SDL_GetSurfaceColorKey(pic, &colorkey) == 0)
+  if (SDL_GetSurfaceColorKey(pic, &colorkey))
     use_colorkey = TRUE;
 
   if (usealpha)
@@ -1148,7 +1148,7 @@ ScaleSurfaceNearest (SDL_Surface *src, float scale)
   if (dst == NULL)
     return NULL;
 
-  if (SDL_GetSurfaceColorKey (src, &color_key) == 0)
+  if (SDL_GetSurfaceColorKey (src, &color_key))
     have_colorkey = TRUE;
   SDL_GetSurfaceBlendMode (src, &blend_mode);
   SDL_GetSurfaceAlphaMod (src, &alpha_mod);
@@ -1220,7 +1220,7 @@ RotateSurfaceNearest (SDL_Surface *src, float angle)
   if (dst == NULL)
     return NULL;
 
-  if (SDL_GetSurfaceColorKey (src, &color_key) == 0)
+  if (SDL_GetSurfaceColorKey (src, &color_key))
     have_colorkey = TRUE;
   SDL_GetSurfaceBlendMode (src, &blend_mode);
   SDL_GetSurfaceAlphaMod (src, &alpha_mod);
