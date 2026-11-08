@@ -732,6 +732,7 @@ InitiateMenu (bool with_droids)
 
   if (Menu_Background) SDL_DestroySurface (Menu_Background);
   Menu_Background = SDL_ConvertSurface (ne_screen, ne_screen->format);  // keep a global copy of background
+  SDL_SetSurfaceBlendMode (Menu_Background, SDL_BLENDMODE_NONE);
 
   SDL_HideCursor ();  // deactivate mouse-cursor in menus
   SetCurrentFont ( Menu_BFont );
