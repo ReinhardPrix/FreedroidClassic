@@ -1038,7 +1038,7 @@ void
 ThouArtVictorious(void)
 {
   SDL_Rect rect;
-  Uint32 now;
+  Uint64 now;
 
   Switch_Background_Music_To ( DebriefingSong );
 
@@ -1083,7 +1083,7 @@ ThouArtVictorious(void)
 void
 ThouArtDefeated (void)
 {
-  Uint32 now, delay;
+  Uint64 now, delay;
   SDL_Rect dst;
   int h;
 

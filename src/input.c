@@ -50,7 +50,7 @@ bool show_cursor;    // show mouse-cursor or not?
 
 int WheelUpEvents=0;    // count number of not read-out wheel events
 int WheelDownEvents=0;
-Uint32 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
+Uint64 last_mouse_event = 0;  // record when last mouse event took place (SDL ticks)
 
 SDLMod current_modifiers;
 
@@ -281,16 +281,14 @@ void Init_Joy (void)
 
   {
     SDL_JoystickID *sticks = SDL_GetJoysticks(&num_joy);
+    joy = (sticks && num_joy > 0) ? SDL_OpenJoystick (sticks[0]) : NULL;
     SDL_free(sticks);
   }
   DebugPrintf (1, " %d Joysticks found!\n", num_joy);
 
-  if (num_joy > 0)
-    joy = SDL_OpenJoystick (0);
-
   if (joy)
     {
-      DebugPrintf (1, "Identifier: %s\n", SDL_GetJoystickName (0));
+      DebugPrintf (1, "Identifier: %s\n", SDL_GetJoystickName (joy));
       DebugPrintf (1, "Number of Axes: %d\n", joy_num_axes = SDL_GetNumJoystickAxes(joy));
       DebugPrintf (1, "Number of Buttons: %d\n", SDL_GetNumJoystickButtons(joy));
 

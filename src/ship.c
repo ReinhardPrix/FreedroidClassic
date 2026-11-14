@@ -114,7 +114,7 @@ EnterLift (void)
   DisplayBanner (NULL, NULL,  BANNER_FORCE_UPDATE );
 
   const Uint32 wait_move_ticks = 100;
-  static Uint32 last_move_tick = 0;
+  static Uint64 last_move_tick = 0;
   MenuAction_t action = ACTION_NONE;
   bool finished = FALSE;
   while ( !finished )
@@ -299,7 +299,8 @@ This function runs the consoles. This means the following duties:
 void
 EnterKonsole (void)
 {
-  int i, pos, mousemove_buf;
+  int i, pos;
+  Uint64 mousemove_buf;
   SDL_Rect TmpRect;
   // Prevent distortion of framerate by the delay coming from
   // the time spend in the menu.
@@ -325,7 +326,7 @@ EnterKonsole (void)
 
   /* Gesamtkonsolenschleife */
   const Uint32 wait_move_ticks = 100;
-  static Uint32 last_move_tick = 0;
+  static Uint64 last_move_tick = 0;
   MenuAction_t action = ACTION_NONE;
   bool finished = FALSE;
   bool need_update = TRUE;
@@ -595,7 +596,7 @@ GreatDruidShow (void)
   wait_for_all_keys_released();
   bool need_update = TRUE;
   const Uint32 wait_move_ticks = 100;
-  static Uint32 last_move_tick = 0;
+  static Uint64 last_move_tick = 0;
 
   while (!finished)
     {
@@ -834,7 +835,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 {
   static int frame_num = 0;
   static int last_droid_type = -1;
-  static Uint32 last_frame_time = 0;
+  static Uint64 last_frame_time = 0;
   static SDL_Rect src_rect;
   SDL_Surface *tmp;
   Uint32 frame_duration;
@@ -939,7 +940,7 @@ show_droid_portrait (SDL_Rect dst, int droid_type, float cycle_time, int flags)
 void
 AlertLevelWarning (void)
 {
-  static Uint32 last_siren = 0;
+  static Uint64 last_siren = 0;
   //  static Uint32 last_blink = 0;
   int i, posx, posy;
   int cur_alert = 0;
